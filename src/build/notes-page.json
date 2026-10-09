@@ -1,0 +1,66 @@
+{
+ "lede": "204 questions, about one in seven of the bank’s Reading and Writing questions outside grammar. The notes are background; the goal sentence decides the answer. With the notes hidden, reading only the goal and the four choices, Claude picked College Board’s answer on 203 of 204.",
+ "stepsTitle": "Four steps",
+ "steps": [
+  {
+   "title": "Read the goal first",
+   "text": "It is the last line of the notes: “The student wants to …”. Name what it asks for in two or three words: a similarity, the aim of the study, an introduction for a new audience."
+  },
+  {
+   "title": "Read the four choices",
+   "text": "Skip the notes for now. Ask of each choice: does it do that? Not: is it true?"
+  },
+  {
+   "title": "Drop accurate choices that do a different job",
+   "text": "College Board’s own explanations say “this choice doesn’t [the goal’s verb] …” for about 439 of the 612 wrong choices. Wrong choices are usually true; they just do something else."
+  },
+  {
+   "title": "Check facts only if two survive",
+   "text": "The one goal-only miss had two choices that both seemed to say where to see a painting; only the notes showed which city was right."
+  }
+ ],
+ "goalsIntro": "The goal’s verb and its object tell you what the right choice must contain. Counts are of the 204 notes questions.",
+ "goals": [
+  {
+   "goal": "Emphasize a similarity",
+   "n": 17,
+   "right": "Names both things and what they share. “Both”, “similar”, “like”, “also”, “same”, “share”, “as well” or “likewise” is in 14 of 17 right answers and 6 of 51 wrong ones.",
+   "trap": "A true fact about only one of the two."
+  },
+  {
+   "goal": "Emphasize a difference or contrast",
+   "n": 24,
+   "right": "Sets the two against each other in one sentence (whereas, while, unlike, but, than): 22 of 24 right answers.",
+   "trap": "Facts about each side, but no contrast between them."
+  },
+  {
+   "goal": "Present the aim of a study",
+   "n": 9,
+   "right": "Says what the researchers wanted to find out (“to determine”, “wanted to learn”): 6 of 9 right answers, 1 of 27 wrong ones.",
+   "trap": "How the study was done, or what it found."
+  },
+  {
+   "goal": "Introduce something to an unfamiliar audience",
+   "n": 9,
+   "right": "Explains who or what the thing is, not just its name.",
+   "trap": "A name dropped with no explanation, as if the reader already knows it."
+  },
+  {
+   "goal": "Make a generalization",
+   "n": 9,
+   "right": "A broad statement about a kind of thing, with few specific names (1.4 capitalized names per right answer against 2.0 per wrong one).",
+   "trap": "One specific case."
+  },
+  {
+   "goal": "Provide a quotation",
+   "n": 6,
+   "right": "The quotation that does the job the goal names. 9 of the 18 wrong choices also quote someone, so check what the quote says.",
+   "trap": "A real quotation on a different point."
+  }
+ ],
+ "traps": [
+  "The goal’s first verb, across the 204: emphasize 65, present 20, explain 16, specify 13, describe 12. Each one names the job; the wrong choices do a neighbouring job.",
+  "Watch for “only one of the two” on similarity and contrast goals, and for “how” instead of “why” on aim goals."
+ ],
+ "caveat": "The goal-only test was run by Claude on all 204 notes questions with the notes removed, then scored against College Board’s key. The tell counts are pattern matches on the choices, and the “doesn’t” count is a pattern match on College Board’s explanations, so both are close, not exact."
+}
