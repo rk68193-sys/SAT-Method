@@ -7,7 +7,9 @@ A free single-page study site for the digital SAT, in two subjects:
 
 Open `index.html`, or the GitHub Pages site (Settings → Pages → Deploy from a branch → `main`, `/ (root)`). Math questions are images in `m/` (`q` = question, `r` = explanation, `qn`/`rn` = the same text re-wrapped for phones), so the site needs those folders next to `index.html`.
 
-Progress is saved in your browser only.
+Every page has the same layout: the subjects at the top (Home, Reading & Writing, Math), the pages of the current subject as tabs underneath, a short "On this page" line, and a footer listing every page. **Appearance** (top right) switches between Match my device, Light, Dark, Purple, Blue, Pink and Green. **Suggest** opens a form for ideas, corrections and tips; sending it opens a ready-filled GitHub issue on this repository (posting needs a GitHub account), or the text can be copied instead. The same page has **My notes**, a private scratchpad.
+
+Progress, notes and the chosen appearance are saved in your browser only.
 
 ## Rebuilding
 
