@@ -75,3 +75,41 @@ facts=dict(grid=len(grid),gridFrac=fr,gridNeg=ng,sol=len(sol),solHard=sum(q['dif
 data['facts']=facts
 json.dump(data,open('mdata.json','w'),ensure_ascii=False,separators=(',',':'))
 print(facts)
+# ---- patterns, rare patterns, Desmos playbook
+from mpatterns import P as PRULES, rare as RRULES
+from mpatcontent import PATTERNS, RARE, DESMOS, GOTCHAS, TYPE_DESMOS
+ver=json.load(open('verified.json'))
+pids=[p['id'] for p in PATTERNS]
+assert set(pids)<=set(PRULES), set(pids)-set(PRULES)
+byid={q['id']:q for q in qs}
+for q in qs: q['k'],q['t']=q['_k'],q['_t']
+mask={}
+for q in qs:
+    m=0
+    for i,pid in enumerate(pids):
+        if PRULES[pid](q): m|=1<<i
+    mask[q['id']]=m
+for r in rows: r.append(mask[r[0]])
+pats=[]
+for i,p in enumerate(PATTERNS):
+    L=[q for q in qs if mask[q['id']]>>i&1]
+    tc=C.Counter(q['_t'] for q in L)
+    pats.append(dict(p,n=len(L),E=sum(q['diff']=='Easy' for q in L),M=sum(q['diff']=='Medium' for q in L),H=sum(q['diff']=='Hard' for q in L),
+        skills=sorted({q['_k'] for q in L},key=lambda k:-sum(1 for q in L if q['_k']==k)),types=[t for t,_ in tc.most_common() if tc[t]>=3][:12]))
+rares=[]
+for r in RARE:
+    L=[q for q in qs if RRULES[r['key']](q)]
+    rares.append(dict(r,n=len(L),H=sum(q['diff']=='Hard' for q in L),ids=[q['id'] for q in L]))
+moves={m['id']:m for m in DESMOS}
+for p in pats:
+    for d in p['desmos']: assert d in moves,d
+for t in order:
+    assert t in TYPE_DESMOS, t
+    mv,txt=TYPE_DESMOS[t]; assert mv is None or mv in moves,(t,mv)
+    types[t]['dmove']=mv; types[t]['dtext']=txt
+allproof={x for m in DESMOS for x in m['proof']}|{x for p in PATTERNS for x in p['proof']}|{x for r in RARE for x in r['proof']}
+missing=[x for x in allproof if x not in ver]; assert not missing, missing
+data.update(patterns=pats,rare=rares,desmos=DESMOS,gotchas=GOTCHAS,verified={k:dict(how=v[0],got=v[1]) for k,v in ver.items()},nver=len(ver))
+data['bankHard']=round(100*tot['H']/tot['n'])
+json.dump(data,open('mdata.json','w'),ensure_ascii=False,separators=(',',':'))
+print('patterns',[(p['id'],p['n'],round(100*p['H']/p['n'])) for p in pats]); print('mdata bytes',os.path.getsize('mdata.json'))

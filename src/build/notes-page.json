@@ -59,7 +59,7 @@
   }
  ],
  "traps": [
-  "The goal’s first verb, across the 204: emphasize 65, present 20, explain 16, specify 13, describe 12. Each one names the job; the wrong choices do a neighbouring job.",
+  "The goal’s first verb, across the 204: emphasize 65, present 20, explain 16, specify 13, describe 12. Each one names the job; the wrong choices do a neighboring job.",
   "Watch for “only one of the two” on similarity and contrast goals, and for “how” instead of “why” on aim goals."
  ],
  "caveat": "The goal-only test was run by Claude on all 204 notes questions with the notes removed, then scored against College Board’s key. The tell counts are pattern matches on the choices, and the “doesn’t” count is a pattern match on College Board’s explanations, so both are close, not exact."

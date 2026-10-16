@@ -10,9 +10,11 @@
     math: { name: 'Math', icon: 'calc', items: [
       ['mstart', 'math', 'Start here', 'How to approach every math question'],
       ['mlearn', 'm-learn', 'Lessons', '19 skills explained from scratch'],
+      ['mpat', 'm-patterns', 'Big patterns', 'A dozen ideas under every question'],
+      ['mdes', 'm-desmos', 'Desmos', MD.desmos.length + ' calculator moves, step by step'],
+      ['mshort', 'm-short', 'Shortcuts', 'Faster ways by hand'],
       ['mtypes', 'm-types', 'Question finder', 'Which kind of question is this?'],
-      ['mshort', 'm-short', 'Shortcuts', 'Faster ways to the right answer'],
-      ['mref', 'm-ref', 'Formulas & Desmos', 'What to learn, when to use the calculator'],
+      ['mref', 'm-ref', 'Formulas', 'What to learn, how to type answers'],
       ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real questions with answers']] }
   };
   var VIEW_SUBJ = { home: 'home' };
@@ -32,6 +34,8 @@
     if (subj === 'home') { host.innerHTML = ''; bar.hidden = true; return; }
     bar.hidden = false;
     var S = SUBJ[subj];
+    host.style.setProperty('--secn', S.items.length);
+    host.setAttribute('data-n', S.items.length);
     host.innerHTML = '<p class="secnav-t"><span class="ico">' + ICON[S.icon] + '</span>' + S.name + '</p><div class="secnav-l">' +
       S.items.map(function (it) { return '<a href="#' + it[1] + '" data-view="' + it[0] + '"><b>' + it[2] + '</b><span>' + it[3] + '</span></a>'; }).join('') + '</div>';
   }
@@ -62,12 +66,12 @@
       cont +
       '<div class="hsubjs">' +
         card('rw', 'Reading passages, grammar and transitions. 54 questions on the test, in two parts.', ['1,845 bank questions studied', 'A routine for every question type']) +
-        card('math', 'Algebra, advanced math, data and geometry. 44 questions on the test, in two parts.', [mfmt(MQ.length) + ' real questions to practise', MORDER.length + ' question types, each with a method']) +
+        card('math', 'Algebra, advanced math, data and geometry. 44 questions on the test, in two parts.', [mfmt(MQ.length) + ' real questions to practice', MORDER.length + ' question types, each with a method', MD.desmos.length + ' Desmos moves, checked on real questions']) +
       '</div>' +
       '<section class="hhow"><h2 class="h2">How to use this site</h2><ol class="hsteps">' +
         '<li><b>Pick a subject.</b><span>Use the big buttons at the top of every page to switch between Home, Reading & Writing and Math.</span></li>' +
         '<li><b>Read “Start here”.</b><span>Five minutes. It tells you what the test asks and the routine to use.</span></li>' +
-        '<li><b>Learn one lesson, then practise it.</b><span>Every lesson ends with a button that gives you real questions on just that topic.</span></li>' +
-        '<li><b>Come back any time.</b><span>Your progress is saved on this device, in this browser' + (mt ? ': ' + plural(mt, 'math question') + ' practised so far' : '') + '.</span></li>' +
+        '<li><b>Learn one lesson, then practice it.</b><span>Every lesson ends with a button that gives you real questions on just that topic.</span></li>' +
+        '<li><b>Come back any time.</b><span>Your progress is saved on this device, in this browser' + (mt ? ': ' + plural(mt, 'math question') + ' practiced so far' : '') + '.</span></li>' +
       '</ol></section></div>';
   }

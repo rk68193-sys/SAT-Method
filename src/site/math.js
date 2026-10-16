@@ -1,7 +1,7 @@
   /* =================== Math =================== */
   var MD = D.math, MORDER = MD.order, MQ = [], MQBY = {}, MSK = MD.skills, MTY = MD.types;
   MD.qs.forEach(function (r) {
-    var q = { id: r[0], t: MORDER[r[1]], d: 'EMH'[r[2]], mc: !!r[3], a: r[4], qw: r[5], qh: r[6], rw: r[7], rh: r[8], qnw: r[9], qnh: r[10], rnw: r[11], rnh: r[12] };
+    var q = { id: r[0], t: MORDER[r[1]], d: 'EMH'[r[2]], mc: !!r[3], a: r[4], qw: r[5], qh: r[6], rw: r[7], rh: r[8], qnw: r[9], qnh: r[10], rnw: r[11], rnh: r[12], pm: r[13] };
     q.k = MTY[q.t].skill; MQ.push(q); MQBY[q.id] = q;
   });
   var MDOM = {};
@@ -39,9 +39,16 @@
       '<div class="mhow"><p class="mtag">What to do</p>' + mStepList(T.steps) + '</div>' +
       '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' +
       (T.tip ? '<p class="mtip"><span class="mtag">Tip</span> ' + esc(T.tip) + '</p>' : '') +
-      (T.desmos ? '<p class="mtip"><span class="mtag">Desmos</span> ' + esc(T.desmos) + '</p>' : '') +
-      (opts.noPractice ? '' : '<p class="row" style="margin-top:.8rem"><a class="btn sm" href="#mp-' + t + '">Practise these ' + T.n + '</a>' + (opts.showSkill ? ' <a class="linkbtn" href="#m-' + T.skill + '">' + esc(MSK[T.skill].name) + ' lesson</a>' : '') + '</p>') +
+      mDesLine(T) +
+      (opts.noPractice ? '' : '<p class="row" style="margin-top:.8rem"><a class="btn sm" href="#mp-' + t + '">Practice these ' + T.n + '</a>' + (opts.showSkill ? ' <a class="linkbtn" href="#m-' + T.skill + '">' + esc(MSK[T.skill].name) + ' lesson</a>' : '') + '</p>') +
       '</article>';
+  }
+  var MMOVE = {};
+  MD.desmos.forEach(function (m, i) { m.n = i + 1; MMOVE[m.id] = m; });
+  function mDesLine(T) {
+    if (!T.dtext) { return ''; }
+    var m = T.dmove ? MMOVE[T.dmove] : null;
+    return '<p class="mtip mdesline"><span class="mtag des">Desmos</span> ' + (m ? '<a class="mmove" href="#md-' + m.id + '">Move ' + m.n + ': ' + esc(m.name) + '</a> ' : '') + esc(T.dtext) + '</p>';
   }
   function mHead(eyebrow, title, lede) {
     return '<header class="mhead"><p class="eyebrow">' + eyebrow + '</p><h2 class="vtitle">' + title + '</h2>' + (lede ? '<p class="lede">' + lede + '</p>' : '') + '</header>';
@@ -66,7 +73,7 @@
         '<li><b>Read the last sentence first.</b><span>It is the real question. Everything above it is information.</span></li>' +
         '<li><b>Name the question type.</b><span>Certain words give it away: “margin of error”, “line of best fit”, “in terms of”, “vertex”. The <a href="#m-types">Question finder</a> lists them.</span></li>' +
         '<li><b>Look for the three warning signs.</b><span>“no solution / infinitely many”, the word “constant”, and “positive” or “negative” as a condition. Each one means the question has a twist (below).</span></li>' +
-        '<li><b>Choose your tool.</b><span>Easy-looking questions: by hand, it is faster. Long algebra, a parabola, a circle, or two lines crossing: Desmos.</span></li>' +
+        '<li><b>Choose your tool.</b><span>Two steps or fewer: by hand, it is faster. Long algebra, a parabola, a circle, two lines crossing, a constant to find or a chain of percents: Desmos. The <a href="#m-desmos">Desmos playbook</a> has the exact keystrokes.</span></li>' +
         '<li><b>Solve, then read the last sentence again.</b><span>Is your number the thing it asked for? x, or x + y? The radius, or the diameter? This one habit catches the most common wrong answer.</span></li>' +
       '</ol></section>' +
       '<section class="sec"><h3 class="h2">What the test covers</h3><p class="lede">Four content areas. College Board’s own test plan says Algebra and Advanced Math are about 35% each and the other two about 15% each, so start with the first two.</p><div class="mdoms">' + doms + '</div></section>' +
@@ -84,14 +91,15 @@
         '<li><b>The answer letter tells you nothing you can use.</b> In the bank, D is right more often on Hard questions and B on Easy ones, but real tests can order choices differently. Never let it override your work.</li>' +
       '</ul></section>' +
       '<section class="sec"><h3 class="h2">Your progress</h3><div id="mstart-prog">' + mProgHTML() + '</div></section>' +
-      mNext([['m-learn', 'Next', 'Open the lessons'], ['m-practice', 'Or jump in', 'Practise real questions']]) +
+      '<section class="sec"><h3 class="h2">The ideas underneath</h3><p class="lede">About a dozen ideas connect almost every question type. The same move solves a percent chain, a growth model and a unit conversion; the same picture answers every “how many solutions” question. <a href="#m-patterns">See the big patterns</a>.</p></section>' +
+      mNext([['m-learn', 'Next', 'Open the lessons'], ['m-patterns', 'The big ideas', 'Big patterns'], ['m-desmos', 'The calculator', 'Desmos playbook'], ['m-practice', 'Or jump in', 'Practice real questions']]) +
       '</div>';
     viewEl.mstart.innerHTML = h;
   }
   function mProgHTML() {
     var tried = 0, right = 0;
     Object.keys(store.m).forEach(function (k) { var r = mDone(k); if (r && MQBY[k]) { tried++; right += r[0]; } });
-    if (!tried) { return '<p class="muted">Nothing practised yet. Your results are saved in this browser only.</p>'; }
+    if (!tried) { return '<p class="muted">Nothing practiced yet. Your results are saved in this browser only.</p>'; }
     var rows = MD.domains.map(function (d) {
       var s = d.skills.map(mSkillStats).reduce(function (a, x) { return { n: a.n + x.n, tried: a.tried + x.tried, right: a.right + x.right }; }, { n: 0, tried: 0, right: 0 });
       return '<div class="mprog-row"><span>' + esc(d.name) + '</span><span class="mbar"><i style="width:' + mpc(s.tried, s.n) + '%"></i></span><span class="num">' + s.tried + ' tried · ' + mpc(s.right, s.tried || 1) + '% right</span></div>';
@@ -108,7 +116,7 @@
           return '<section class="sec" id="m-learn-' + d.id + '"><div class="mdom-h"><h3 class="h2">' + esc(d.name) + '</h3><p class="mdom-spec">' + esc(d.spec) + '</p></div><p class="lede">' + esc(d.blurb) + '</p><div class="mskills">' +
             d.skills.map(function (k) {
               var S = MSK[k], st = mSkillStats(k);
-              return '<a class="mskill" href="#m-' + k + '"><b>' + esc(S.name) + '</b><span class="mskill-idea">' + esc(S.idea) + '</span><span class="mskill-meta">' + S.n + ' questions · ' + mpc(S.H, S.n) + '% Hard ' + mmix(S) + '</span>' + (st.tried ? '<span class="mskill-done">' + st.tried + ' practised · ' + mpc(st.right, st.tried) + '% right</span>' : '') + '</a>';
+              return '<a class="mskill" href="#m-' + k + '"><b>' + esc(S.name) + '</b><span class="mskill-idea">' + esc(S.idea) + '</span><span class="mskill-meta">' + S.n + ' questions · ' + mpc(S.H, S.n) + '% Hard ' + mmix(S) + '</span>' + (st.tried ? '<span class="mskill-done">' + st.tried + ' practiced · ' + mpc(st.right, st.tried) + '% right</span>' : '') + '</a>';
             }).join('') + '</div></section>';
         }).join('') + '</div>';
     }
@@ -128,8 +136,8 @@
         '<section class="msec"><h3 class="h3">The method</h3>' + mStepList(S.steps) + '</section>' +
         '<section class="msec"><h3 class="h3">Worked example</h3><div class="mex"><p class="mex-q">' + esc(ex.q) + '</p><ol class="mex-l">' + ex.lines.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol><p class="mex-c">' + esc(ex.check) + '</p></div><p class="fine">This example was written for this site; the practice questions are College Board’s.</p></section>' +
         '<section class="msec"><div class="mtrapbox"><p class="mtag bad">The trap</p><p>' + esc(S.trap) + '</p></div>' + (S.tip ? '<div class="mtipbox"><p class="mtag">Tip</p><p>' + esc(S.tip) + '</p></div>' : '') + '</section>' +
-        '<p class="row" style="margin-top:1.4rem"><a class="btn" href="#mp-' + k + '">Practise all ' + S.n + ' ' + esc(S.short.toLowerCase()) + ' questions</a></p>' +
-        '<section class="sec" id="m-types-' + k + '"><h3 class="h2">The ' + S.types.length + ' question types in this skill</h3><p class="lede">Every question in this skill belongs to one of these. Learn to recognise each one from the words in the question.</p>' +
+        '<p class="row" style="margin-top:1.4rem"><a class="btn" href="#mp-' + k + '">Practice all ' + S.n + ' ' + esc(S.short.toLowerCase()) + ' questions</a></p>' +
+        '<section class="sec" id="m-types-' + k + '"><h3 class="h2">The ' + S.types.length + ' question types in this skill</h3><p class="lede">Every question in this skill belongs to one of these. Learn to recognize each one from the words in the question.</p>' +
           '<div class="mtypes">' + S.types.slice().sort(function (a, b) { return MTY[b].n - MTY[a].n; }).map(function (t) { return mTypeCard(t); }).join('') + '</div></section>' +
         '</div><aside class="mlesson-side" aria-label="Skills in this area"><p class="label">' + esc(d.name) + '</p><ul>' + d.skills.map(function (x) { return '<li><a href="#m-' + x + '"' + (x === k ? ' aria-current="page"' : '') + '>' + esc(MSK[x].short) + '</a></li>'; }).join('') + '</ul></aside></div>' +
         mNext(nav) + '</div>';
@@ -214,7 +222,7 @@
     built.mshort = true;
     var F = MD.facts;
     viewEl.mshort.innerHTML = '<div class="wrap">' +
-      mHead('Math · Shortcuts', 'Faster ways to the right answer', 'Each shortcut is real mathematics, not a guessing trick. Use one when you recognise the shape; otherwise solve the normal way. The first two work on most multiple-choice questions (' + mfmt(F.mc) + ' of the ' + mfmt(MD.tot.n) + ' in the bank).') +
+      mHead('Math · Shortcuts', 'Faster ways to the right answer', 'Each shortcut is real mathematics, not a guessing trick. Use one when you recognize the shape; otherwise solve the normal way. The first two work on most multiple-choice questions (' + mfmt(F.mc) + ' of the ' + mfmt(MD.tot.n) + ' in the bank).') +
       '<div class="mshorts">' + MSHORT.map(function (s, i) {
         return '<article class="mshort" id="ms-' + s.id + '"><p class="mshort-n">' + (i + 1) + '</p><div><h3 class="h3">' + esc(s.t) + '</h3><p class="mspot"><span class="mtag">When</span> ' + esc(s.when) + '</p>' + mStepList(s.how) +
           '<div class="mex"><p class="mtag">Example</p><ol class="mex-l">' + s.ex.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol></div></div></article>';
@@ -224,7 +232,7 @@
         '<li><b>Trying the choices on a typed-in question.</b> About one question in four (' + mfmt(F.grid) + ' in the bank) has no choices. Solve those directly.</li>' +
         '<li><b>Using Desmos for everything.</b> On a two-step question, typing it in takes longer than doing it by hand.</li>' +
       '</ul></section>' +
-      mNext([['m-ref', 'Next', 'Formulas and Desmos'], ['m-practice', 'Try them out', 'Practise real questions']]) + '</div>';
+      mNext([['m-desmos', 'Next', 'Desmos playbook'], ['m-ref', 'Then', 'Formulas'], ['m-practice', 'Try them out', 'Practice real questions']]) + '</div>';
   }
 
   /* ---------- Math: formulas and Desmos ---------- */
@@ -235,17 +243,10 @@
     var off = [['Slope from two points', 'm = (y₂ − y₁) ÷ (x₂ − x₁)'], ['Line', 'y = mx + b; slope of Ax + By = C is −A/B'], ['Perpendicular slopes', 'm₁ × m₂ = −1'], ['Vertex form', 'y = a(x − h)² + k, vertex (h, k)'], ['Vertex x', 'x = −b ÷ 2a'], ['Quadratic formula', 'x = (−b ± √(b² − 4ac)) ÷ 2a'], ['Discriminant', 'b² − 4ac: positive 2, zero 1, negative 0 real solutions'], ['Sum and product of roots', '−b/a and c/a'], ['Circle equation', '(x − h)² + (y − k)² = r²'], ['Exponential model', 'y = a·bˣ; b = 1 + rate or 1 − rate'], ['Percent change', '(new − old) ÷ old'], ['SOH CAH TOA', 'sin = opp/hyp, cos = adj/hyp, tan = opp/adj'], ['Complementary angles', 'sin x° = cos(90° − x°)'], ['Polygon angles', 'Sum = 180(n − 2)'], ['Arc and sector', '(angle ÷ 360) × circumference or area'], ['Radians', 'π radians = 180°'], ['Exponent rules', 'xᵃxᵇ = xᵃ⁺ᵇ, (xᵃ)ᵇ = xᵃᵇ, x^(1/n) = n-th root']];
     function tbl(rows) { return '<div class="tablewrap"><table class="mtable"><tbody>' + rows.map(function (r) { return '<tr><th scope="row">' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</tbody></table></div>'; }
     viewEl.mref.innerHTML = '<div class="wrap">' +
-      mHead('Math · Formulas and Desmos', 'Formulas, Desmos and typing in answers', 'You get a formula sheet on test day. Know what is on it, learn what is not, and know when the built-in Desmos calculator saves time.') +
-      '<div class="mref2"><section><h3 class="h2">On the formula sheet</h3><p class="lede">No need to memorise these. Practise finding them quickly.</p>' + tbl(on) + '</section>' +
+      mHead('Math · Formulas', 'Formulas and typing in answers', 'You get a formula sheet on test day. Know what is on it, learn what is not, and know how to type in your own answers.') +
+      '<div class="mref2"><section><h3 class="h2">On the formula sheet</h3><p class="lede">No need to memorize these. Practice finding them quickly.</p>' + tbl(on) + '</section>' +
       '<section><h3 class="h2">Not on the sheet: learn these</h3><p class="lede">These come up again and again and are not printed for you.</p>' + tbl(off) + '</section></div>' +
-      '<section class="sec"><h3 class="h2">When Desmos helps</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>Question</th><th>What to do in Desmos</th></tr></thead><tbody>' +
-        [['Two lines crossing (systems)', 'Type both equations; click the crossing point.'], ['Maximum, minimum, vertex', 'Type the function; click the grey turning point.'], ['Zeros, x-intercepts', 'Type the function; click where it crosses the x-axis.'], ['Nonlinear equation', 'Type each side as y = …; the crossings are the solutions.'], ['Mean, median, spread', 'Type L = [3, 5, 8]; then mean(L), median(L), stdev(L).'], ['A constant to find', 'Use a slider for the constant and adjust it until the condition holds, or use ~ regression.'], ['Circle equations', 'It draws the circle, but does not mark the center. Read the center and radius from the grid; this works when they are whole numbers.']].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>'; }).join('') +
-      '</tbody></table></div><ul class="mfacts">' +
-        '<li><b>Clicked points show rounded decimals.</b> If the choices are fractions or roots, compare decimals.</li>' +
-        '<li><b>Degrees or radians?</b> Check the setting (wrench icon) before any trigonometry.</li>' +
-        '<li><b>Use x as the letter.</b> Desmos graphs y against x. To solve an equation in t, rewrite it with x.</li>' +
-        '<li><b>Short questions: skip it.</b> Typing a two-step question takes longer than solving it.</li>' +
-      '</ul></section>' +
+      '<section class="sec"><h3 class="h2">Desmos</h3><p class="lede">When the calculator saves time, and exactly what to type, is in the <a href="#m-desmos">Desmos playbook</a>: ' + MD.desmos.length + ' moves, each checked on real bank questions.</p></section>' +
       '<section class="sec"><h3 class="h2">Typing in your own answer</h3><ul class="mfacts">' +
         '<li>About one math question in four has no choices: you type the answer.</li>' +
         '<li>Fractions are fine: type 7/6. Do not type mixed numbers like 1 1/6.</li>' +
@@ -253,15 +254,44 @@
         '<li>Negative answers are allowed. Leave out units, commas, dollar signs and percent signs.</li>' +
         '<li>If more than one answer is correct, type just one.</li>' +
       '</ul></section>' +
-      mNext([['m-practice', 'Next', 'Practise real questions']]) + '</div>';
+      mNext([['m-desmos', 'Next', 'Desmos playbook'], ['m-practice', 'Or', 'Practice real questions']]) + '</div>';
   }
 
   /* ---------- Math: practice ---------- */
   var MP = null;                         /* the running set */
   var mpPreset = null;                   /* {kind:'skill'|'type'|'domain', id} from a link */
   function mpSettings() { var s = isObj(store.s.math) ? store.s.math : {}; return { topic: s.topic || 'all', diff: s.diff || 'all', n: s.n || 10, pick: s.pick || 'any', timer: s.timer !== false }; }
+  /* step 1: what kind of set; step 2: a short group of big buttons for that kind */
+  function mpKindHTML(topic) {
+    var kind = topic === 'all' ? 'all' : topic.split(':')[0];
+    var opts = [['all', 'Everything, mixed'], ['d', 'One area'], ['k', 'One skill'], ['p', 'One big pattern']];
+    if (kind === 't') { opts.push(['t', 'One question type']); }
+    return seg('mp-kind', '1 · What to practice', opts, kind);
+  }
+  function mpSubHTML(kind, topic) {
+    var cur = topic && topic.indexOf(kind + ':') === 0 ? topic.slice(kind.length + 1) : '';
+    function group(legend, opts) {
+      if (!cur && opts.length) { cur = opts[0][0]; }
+      return '<fieldset class="seg mpchips"><legend>' + legend + '</legend><div class="segrow">' + opts.map(function (o) {
+        return '<label><input type="radio" name="mp-sub" value="' + o[0] + '"' + (o[0] === cur ? ' checked' : '') + '><span>' + esc(o[1]) + (o[2] ? ' <small>' + o[2] + '</small>' : '') + '</span></label>';
+      }).join('') + '</div></fieldset>';
+    }
+    if (kind === 'd') { return group('Choose an area', MD.domains.map(function (d) { var n = d.skills.reduce(function (a, k) { return a + MSK[k].n; }, 0); return [d.id, d.name, n]; })); }
+    if (kind === 'k') {
+      if (!cur) { cur = MD.domains[0].skills[0]; }
+      return MD.domains.map(function (d) {
+        return '<fieldset class="seg mpchips"><legend>' + esc(d.name) + '</legend><div class="segrow">' + d.skills.map(function (k) {
+          return '<label><input type="radio" name="mp-sub" value="' + k + '"' + (k === cur ? ' checked' : '') + '><span>' + esc(MSK[k].short) + ' <small>' + MSK[k].n + '</small></span></label>';
+        }).join('') + '</div></fieldset>';
+      }).join('');
+    }
+    if (kind === 'p') { return group('Choose a pattern', MD.patterns.map(function (p) { return [p.id, p.name, p.n]; })); }
+    if (kind === 't') { return group('Question type', cur ? [[cur, MTY[cur].name, MTY[cur].n]] : []); }
+    return '';
+  }
   function mpTopicOptions(sel) {
     var h = '<option value="all"' + (sel === 'all' ? ' selected' : '') + '>Everything, mixed</option>';
+    h += '<optgroup label="Big patterns">' + MD.patterns.map(function (p) { return '<option value="p:' + p.id + '"' + (sel === 'p:' + p.id ? ' selected' : '') + '>Pattern: ' + esc(p.name) + '</option>'; }).join('') + '</optgroup>';
     MD.domains.forEach(function (d) {
       h += '<optgroup label="' + esc(d.name) + '"><option value="d:' + d.id + '"' + (sel === 'd:' + d.id ? ' selected' : '') + '>All of ' + esc(d.name) + '</option>';
       d.skills.forEach(function (k) {
@@ -272,12 +302,23 @@
     });
     return h;
   }
+  var MPAT = {};
+  MD.patterns.forEach(function (p, i) { MPAT[p.id] = i; });
+  /* one exact question, from a link such as #mq-4aaa9c42 */
+  function mpOne(id) {
+    var q = MQBY[id];
+    if (!q) { mpSetup(); return; }
+    clearInterval(mpInterval);
+    MP = { qs: [q], i: 0, res: [], timer: false, over: false, one: true };
+    mpShow();
+  }
   function mpPool(s) {
     return MQ.filter(function (q) {
       var tp = s.topic;
       if (tp.indexOf('d:') === 0 && MDOM[q.k].id !== tp.slice(2)) { return false; }
       if (tp.indexOf('k:') === 0 && q.k !== tp.slice(2)) { return false; }
       if (tp.indexOf('t:') === 0 && q.t !== tp.slice(2)) { return false; }
+      if (tp.indexOf('p:') === 0 && !(q.pm >> MPAT[tp.slice(2)] & 1)) { return false; }
       if (s.diff !== 'all' && q.d !== s.diff) { return false; }
       var r = mDone(q.id);
       if (s.pick === 'new' && r) { return false; }
@@ -294,26 +335,35 @@
     var s = mpSettings();
     if (mpPreset) { s.topic = mpPreset; mpPreset = null; }
     viewEl.mprac.innerHTML = '<div class="wrap">' +
-      mHead('Math · Practice', 'Practise real SAT questions', 'Every question is from College Board’s question bank, with College Board’s answer and explanation. After each one you also see how to solve that type of question.') +
+      mHead('Math · Practice', 'Practice real SAT questions', 'Every question is from College Board’s question bank, with College Board’s answer and explanation. After each one you also see how to solve that type of question.') +
       '<form class="mpset" id="mp-form"><div class="mpset-grid">' +
-        '<label class="field"><span class="label">1 · What to practise</span><select id="mp-topic">' + mpTopicOptions(s.topic) + '</select></label>' +
+        mpKindHTML(s.topic) + '<div id="mp-sub" class="mpsub"></div>' +
         seg('mp-diff', '2 · How hard', [['all', 'Any'], ['E', 'Easy'], ['M', 'Medium'], ['H', 'Hard']], s.diff) +
         seg('mp-n', '3 · How many', [[5, '5'], [10, '10'], [22, '22 (one module)']], s.n) +
         seg('mp-pick', '4 · Which ones', [['any', 'Any'], ['new', 'Not tried yet'], ['missed', 'Ones I missed']], s.pick) +
         '<label class="checkline"><input type="checkbox" id="mp-timer"' + (s.timer ? ' checked' : '') + '> Show a timer (about 95 seconds a question on the real test)</label>' +
-      '</div><p class="mpset-n" id="mp-count" aria-live="polite"></p><p class="row"><button class="btn big" type="submit" id="mp-go">Start practising</button></p></form>' +
+      '</div><p class="mpset-n" id="mp-count" aria-live="polite"></p><p class="row"><button class="btn big" type="submit" id="mp-go">Start practicing</button></p></form>' +
       '</div>';
     var form = $('#mp-form');
     function read() {
       var r = function (n) { var el = $('input[name="' + n + '"]:checked', form); return el ? el.value : ''; };
-      return { topic: $('#mp-topic').value, diff: r('mp-diff') || 'all', n: Number(r('mp-n')) || 10, pick: r('mp-pick') || 'any', timer: $('#mp-timer').checked };
+      var kind = r('mp-kind') || 'all', sub = r('mp-sub');
+      return { topic: kind === 'all' ? 'all' : (sub ? kind + ':' + sub : 'all'), diff: r('mp-diff') || 'all', n: Number(r('mp-n')) || 10, pick: r('mp-pick') || 'any', timer: $('#mp-timer').checked };
     }
     function count() {
       var st = read(), n = mpPool(st).length;
       $('#mp-count').textContent = n ? mfmt(n) + ' questions match. You will get ' + Math.min(n, st.n) + '.' : 'No questions match these choices. Try “Any” for difficulty or for which ones.';
       $('#mp-go').disabled = !n;
     }
-    form.addEventListener('change', count);
+    function drawSub(keep) {
+      var kind = (form.querySelector('input[name="mp-kind"]:checked') || {}).value || 'all';
+      $('#mp-sub').innerHTML = mpSubHTML(kind, keep);
+    }
+    form.addEventListener('change', function (e) {
+      if (e.target && e.target.name === 'mp-kind') { drawSub(''); }
+      count();
+    });
+    drawSub(s.topic);
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var st = read(); store.s.math = st; save();
@@ -420,7 +470,7 @@
     var fb = $('#mp-fb');
     fb.hidden = false; fb.className = 'mpfb ' + (ok ? 'ok' : 'no');
     fb.innerHTML = '<p class="mpverdict">' + (ok ? 'Correct.' : 'Not this time.') + ' <span>College Board’s answer: <b>' + esc(right) + '</b>' + (q.mc ? '' : (q.a.length > 1 ? ' (any of these is accepted)' : '')) + '</span>' + (MP.timer ? ' <span class="muted">· ' + secs + ' s</span>' : '') + '</p>' +
-      '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + (T.desmos ? '<p class="mtip"><span class="mtag">Desmos</span> ' + esc(T.desmos) + '</p>' : '') + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
+      '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + mDesLine(T) + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
       '<details class="mprat"' + (ok ? '' : ' open') + '><summary>College Board’s explanation</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>' +
       '<p class="row mpnext"><button class="btn big" type="button" id="mp-next">' + (last ? 'See my results' : 'Next question') + '</button><span class="fine">or press Enter</span></p>';
     $('#mp-next').addEventListener('click', mpNextQ);
@@ -445,7 +495,7 @@
         var q = MQBY[r.id];
         return '<li class="' + (r.ok ? 'ok' : 'no') + '"><span class="mpsum-v">' + (r.ok ? '✓' : '✗') + '</span><span>' + esc(MTY[q.t].name) + ' <span class="muted">· ' + MDIFF[q.d] + ' · ' + r.secs + ' s</span></span><a class="linkbtn" href="#mt-' + q.t + '">How to solve</a></li>';
       }).join('') + '</ol></section>' +
-      '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practise again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '</p></div>';
+      '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '</p></div>';
     $('#mp-again').addEventListener('click', mpSetup);
     var mm = $('#mp-miss');
     if (mm) { mm.addEventListener('click', function () { var pool = done.filter(function (r) { return !r.ok; }).map(function (r) { return MQBY[r.id]; }); MP = { qs: pool, i: 0, res: [], timer: MP.timer, over: false }; mpShow(); }); }
@@ -459,4 +509,106 @@
       if (n !== -1) { k = 'ABCD'[n]; }
       if (k.length === 1 && 'ABCD'.indexOf(k) !== -1) { e.preventDefault(); mpAnswer(k); }
     } else if (key === 'Enter' && tag !== 'BUTTON' && tag !== 'A' && tag !== 'SUMMARY') { e.preventDefault(); mpNextQ(); }
+  }
+
+  /* ---------- Math: big patterns and the Desmos playbook ---------- */
+  var MCOL = ['#c74440', '#2d70b3', '#388c46', '#6042a6', '#fa7e19', '#000000'];
+  function mDesBox(lines) {
+    return '<ol class="mdbox" aria-label="What to type in Desmos">' + lines.map(function (l, i) {
+      return '<li><span class="mdbox-n">' + (i + 1) + '</span><i style="background:' + MCOL[i % MCOL.length] + '"></i><code>' + esc(l) + '</code></li>';
+    }).join('') + '</ol>';
+  }
+  function mProof(ids) {
+    if (!ids || !ids.length) { return ''; }
+    return '<div class="mproof"><p class="mtag ok">Checked on real questions</p><ul>' + ids.map(function (id) {
+      var q = MQBY[id], v = MD.verified[id];
+      if (!q || !v) { return ''; }
+      return '<li><a class="mproof-a" href="#mq-' + id + '"><span class="mproof-id">' + id + '</span><span class="mdiff d' + q.d + '">' + MDIFF[q.d] + '</span><span class="mproof-how">' + esc(v.how) + '</span><span class="mproof-try">Try it →</span></a></li>';
+    }).join('') + '</ul></div>';
+  }
+  function mOpenAll(host) {
+    return '<p class="mopenall"><button class="linkbtn" type="button" data-openall="' + host + '">Open all</button> · <button class="linkbtn" type="button" data-closeall="' + host + '">Close all</button></p>';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('[data-openall],[data-closeall]') : null;
+    if (!b) { return; }
+    var open = b.hasAttribute('data-openall'), host = document.getElementById(b.getAttribute(open ? 'data-openall' : 'data-closeall'));
+    if (host) { $$('details', host).forEach(function (d) { d.open = open; }); }
+  });
+  function mReach(o) {
+    return '<p class="mreach"><b>' + mfmt(o.n) + '</b> questions · ' + (100 * o.n / MD.tot.n).toFixed(1) + '% of the bank · <b>' + mpc(o.H, o.n) + '%</b> Hard ' + mmix(o) + '</p>';
+  }
+  function buildMPat() {
+    if (built.mpat) { return; }
+    built.mpat = true;
+    var P = MD.patterns, anyN = 0;
+    MQ.forEach(function (q) { if (q.pm) { anyN++; } });
+    var multi = MQ.filter(function (q) { var c = 0, m = q.pm; while (m) { c += m & 1; m >>= 1; } return c >= 2; }).length;
+    var idx = P.map(function (p, i) {
+      return '<a class="mpidx" href="#mpat-' + p.id + '"><span class="mpidx-n">' + (i + 1) + '</span><b>' + esc(p.name) + '</b><span>' + mfmt(p.n) + ' questions · ' + mpc(p.H, p.n) + '% Hard</span></a>';
+    }).join('');
+    var cards = P.map(function (p, i) {
+      var moves = p.desmos.map(function (id) { var m = MMOVE[id]; return '<a class="mmove" href="#md-' + id + '">Move ' + m.n + ': ' + esc(m.name) + '</a>'; }).join(' ');
+      var first = MMOVE[p.desmos[0]];
+      var ex = p.example ? '<div class="mpex"><p class="mtag">Example</p><p class="mpex-q">' + esc(p.example.q) + '</p>' + mDesBox(p.example.desmos) + '<p class="mex-c">' + esc(p.example.result) + '</p></div>' : '';
+      return '<details class="mpat" id="mpat-' + p.id + '"><summary class="mpat-sum"><header class="mpat-h"><span class="mpat-n">' + (i + 1) + '</span><div><h3 class="h2">' + esc(p.name) + '</h3>' + mReach(p) + '</div></header>' +
+        '<p class="mpat-idea">' + esc(p.idea) + '</p><span class="mpat-more" aria-hidden="true"></span></summary><div class="mpat-body">' +
+        '<div class="mpat-grid"><div><p class="mtag">You will see</p><p>' + esc(p.spot) + '</p></div><div><p class="mtag">By hand</p><p>' + esc(p.hand) + '</p></div></div>' +
+        '<div class="mpat-des"><p class="mtag des">In Desmos</p><p class="mpat-moves">' + moves + '</p>' + (p.example ? '' : mDesBox(first.type)) + '</div>' +
+        ex +
+        '<p class="mpat-conn"><span class="mtag">Connects</span> ' + p.types.map(function (t) { return '<a class="mchip" href="#mt-' + t + '">' + esc(MTY[t].name) + '</a>'; }).join('') + '</p>' +
+        '<p class="mcheck"><span class="mtag">Is it really a pattern?</span> ' + esc(p.check) + '</p>' +
+        mProof(p.proof) +
+        '<p class="row" style="margin-top:.4rem"><a class="btn sm" href="#mpp-' + p.id + '">Practice this pattern (' + mfmt(p.n) + ')</a></p></div></details>';
+    }).join('');
+    var rare = MD.rare.slice().sort(function (a, b) { return b.H / Math.max(b.n, 1) - a.H / Math.max(a.n, 1); }).map(function (r) {
+      var m = r.desmos ? MMOVE[r.desmos] : null, tries = (r.proof.length ? r.proof : r.ids).slice(0, 2);
+      return '<article class="mrare"><h3 class="h3">' + esc(r.name) + '</h3><p class="mreach"><b>' + r.n + '</b> questions · <b>' + mpc(r.H, r.n) + '%</b> Hard</p><p>' + esc(r.trick) + '</p>' +
+        (m ? '<p><a class="mmove" href="#md-' + m.id + '">Move ' + m.n + ': ' + esc(m.name) + '</a></p>' : '') +
+        '<p class="mrare-try">' + tries.map(function (id) { return '<a class="linkbtn" href="#mq-' + id + '">Try ' + id + '</a>'; }).join(' · ') + '</p></article>';
+    }).join('');
+    viewEl.mpat.innerHTML = '<div class="wrap">' +
+      mHead('Math · Big patterns', 'A dozen ideas under every question', 'College Board sorts math into 19 skills, but the same few ideas keep solving questions in different skills. We tagged all ' + mfmt(MD.tot.n) + ' bank questions by the idea that solves them: ' + P.length + ' ideas reach ' + mpc(anyN, MD.tot.n) + '% of the bank, and ' + mpc(multi, MD.tot.n) + '% of questions use two or more. Learn the idea once and it works everywhere it appears.') +
+      '<div class="mnote"><p><b>How this was checked.</b> Each question was tagged from its type and from the method College Board’s own explanation uses, so the counts are close, not exact. Then ' + MD.nver + ' real bank questions were solved with the Desmos moves on this page and every answer was compared with College Board’s answer key: all ' + MD.nver + ' matched.</p></div>' +
+      '<nav class="mpidxs" aria-label="The patterns">' + idx + '</nav>' +
+      mOpenAll('mpats') + '<div class="mpats" id="mpats">' + cards + '</div>' +
+      '<section class="sec" id="mrare"><h3 class="h2">Rare patterns worth memorizing</h3><p class="lede">Each of these appears only a handful of times in the bank, but most are Hard, so one memorized trick can be worth a hard question. Sorted from most often Hard.</p><div class="mrares">' + rare + '</div></section>' +
+      mNext([['m-desmos', 'Next', 'Desmos playbook'], ['mpp-constant', 'Hardest pattern', 'Practice “A constant plus one fact”']]) + '</div>';
+  }
+  function buildMDes() {
+    if (built.mdes) { return; }
+    built.mdes = true;
+    var chooser = [
+      ['an equation with one unknown', 'both'], ['“how many solutions”, “sum of the solutions”', 'zero'], ['two kinds of tickets, coins, tents, mixtures', 'twolines'],
+      ['four number choices', 'list'], ['percents of percents, a chain of facts', 'chain'], ['a constant: “no solution”, “touches”, “passes through”', 'slide'],
+      ['“greatest integer value of the constant”', 'swapx'], ['“equivalent … where a, b, c are constants”, a table', 'fit'], ['maximum, minimum, vertex, zeros', 'dots'],
+      ['constants known only as “a > 7”, “0 < a < b”', 'legal'], ['x² + y² + Dx + Ey = F', 'circle'], ['mean, median, missing value', 'stats'],
+      ['inequalities, “which point is a solution”', 'shade'], ['f(3), f(x) = 10, “which table”', 'machine']
+    ].map(function (r) { var m = MMOVE[r[1]]; return '<tr><td>' + esc(r[0]) + '</td><td><a class="mmove" href="#md-' + m.id + '">Move ' + m.n + ': ' + esc(m.name) + '</a></td></tr>'; }).join('');
+    var moves = MD.desmos.map(function (m) {
+      var used = MORDER.filter(function (t) { return MTY[t].dmove === m.id; });
+      var nq = used.reduce(function (a, t) { return a + MTY[t].n; }, 0);
+      return '<details class="mmovecard" id="md-' + m.id + '"><summary class="mpat-sum"><header class="mpat-h"><span class="mpat-n des">' + m.n + '</span><div><h3 class="h2">' + esc(m.name) + '</h3><p class="mreach">' + esc(m.short) + (used.length ? ' · first choice for ' + plural(used.length, 'question type') + ', ' + mfmt(nq) + ' bank questions' : '') + '</p></div></header>' +
+        '<p><span class="mtag">Use it for</span> ' + esc(m.when) + '</p><span class="mpat-more" aria-hidden="true"></span></summary><div class="mpat-body">' +
+        '<div><p class="mtag des">Type this</p>' + mDesBox(m.type) + '</div>' +
+        '<p><span class="mtag">You will see</span> ' + esc(m.see) + '</p>' +
+        '<p><span class="mtag">Why it works</span> ' + esc(m.why) + '</p>' +
+        '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(m.watch) + '</p>' +
+        mProof(m.proof) + '</div></details>';
+    }).join('');
+    var bySkill = MD.domains.map(function (d) {
+      return '<details class="mtbld"><summary>' + esc(d.name) + ' <span class="muted">· ' + d.skills.reduce(function (a, k) { return a + MSK[k].types.length; }, 0) + ' question types</span></summary><div class="tablewrap"><table class="mtable mtbl"><tbody>' + d.skills.map(function (k) {
+        return '<tr class="mtbl-sk"><th colspan="2">' + esc(MSK[k].name) + '</th></tr>' + MSK[k].types.map(function (t) {
+          var T = MTY[t], m = T.dmove ? MMOVE[T.dmove] : null;
+          return '<tr><td><a href="#mt-' + t + '">' + esc(T.name) + '</a></td><td>' + (m ? '<a class="mmove" href="#md-' + m.id + '">' + m.n + ' · ' + esc(m.name) + '</a> ' : '<span class="muted">By hand · </span>') + esc(T.dtext) + '</td></tr>';
+        }).join('');
+      }).join('') + '</tbody></table></div></details>';
+    }).join('');
+    viewEl.mdes.innerHTML = '<div class="wrap">' +
+      mHead('Math · Desmos playbook', MD.desmos.length + ' Desmos moves, and exactly what to type', 'The digital SAT has the Desmos graphing calculator built in, for every math question. These moves turn the hardest algebra into reading a graph. Each one was checked on real questions from College Board’s bank: ' + MD.nver + ' questions solved, all ' + MD.nver + ' matching College Board’s answers.') +
+      '<section class="sec first"><h3 class="h2">Before you start: eight things Desmos does not tell you</h3><div class="mgotchas">' + MD.gotchas.map(function (g) { return '<div class="mgotcha"><b>' + esc(g[0]) + '</b><span>' + esc(g[1]) + '</span></div>'; }).join('') + '</div></section>' +
+      '<section class="sec"><h3 class="h2">Which move?</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>If the question has…</th><th>Use</th></tr></thead><tbody>' + chooser + '</tbody></table></div></section>' +
+      '<section class="sec"><h3 class="h2">The ' + MD.desmos.length + ' moves</h3><p class="lede">Tap a move to see what to type, what you will see, and the real questions it was checked on.</p>' + mOpenAll('mmoves') + '<div class="mmoves" id="mmoves">' + moves + '</div></section>' +
+      '<section class="sec" id="md-types"><h3 class="h2">Every question type, the Desmos way</h3><p class="lede">For each of the ' + MORDER.length + ' question types: the move to use, or why to do it by hand.</p><div class="mtblds">' + bySkill + '</div></section>' +
+      mNext([['m-patterns', 'The ideas behind the moves', 'Big patterns'], ['m-practice', 'Try the moves', 'Practice real questions']]) + '</div>';
   }
