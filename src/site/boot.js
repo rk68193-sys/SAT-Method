@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mshort', 'mref', 'mprac'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mshort', 'mref', 'mprac', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -69,6 +69,7 @@
     lastToken = token || 'home';
     if (!token || token === 'home') { showView('home'); buildHome(); toTop(); return; }
     if (routeMath(token)) { return; }
+    if (token === 'suggest' || token === 'suggest-notes') { showView('suggest'); buildSuggest(token === 'suggest-notes'); if (token === 'suggest') { toTop(); } return; }
     if (token === 'start' || token === 'top' || token === 'which') {
       showView('start'); buildStart(); refreshPath();
       if (token === 'which') { scrollToEl(document.getElementById('which')); } else { toTop(); }
@@ -140,6 +141,7 @@
     var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
     if (!a) { return; }
     e.preventDefault();
+    if (a.hasAttribute('data-skip')) { var mn = document.getElementById('main'); if (mn) { mn.scrollIntoView({ block: 'start' }); focusQuiet(mn); } return; }
     var href = a.getAttribute('href').slice(1);
     var dk = a.getAttribute('data-drill');
     if (dk && has(DR, dk)) { try { history.pushState(null, '', '#drills'); } catch (err) {} showView('drills'); buildDrills(); startDrill(dk); return; }

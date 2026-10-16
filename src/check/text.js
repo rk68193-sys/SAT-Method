@@ -6,7 +6,7 @@ const path = require('path'); const fs = require('fs'); const { chromium } = req
   const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 1280, height: 900 } })).newPage();
   await p.goto(file); await p.waitForTimeout(600);
   const tokens = await p.evaluate(() => {
-    const t = ['home','start','reading','shape','job','chunk','long','para','say','check','others','sets','measured','notesfirst','method','shortcuts','hard','lessons','part-a','part-b','part-c','drills','practice','lookup',
+    const t = ['home','suggest','start','reading','shape','job','chunk','long','para','say','check','others','sets','measured','notesfirst','method','shortcuts','hard','lessons','part-a','part-b','part-c','drills','practice','lookup',
       'math','m-learn','m-patterns','m-desmos','m-short','m-types','m-ref','m-practice'];
     for (let i = 1; i <= 19; i++) t.push('c' + i);
     for (let i = 1; i <= 17; i++) t.push('ex-' + i);
