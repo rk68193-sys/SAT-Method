@@ -26,6 +26,9 @@ Made from College Board's SAT Math question bank export (`questionbank-export-20
 
 Copy `mdata.json` into `src/build/` and the four image folders into `m/`.
 
+## Template layer and Patterns page
+`math/mdeep.py` adds the per-question template layer to `mdata.json` (templates, routes, the probability atlas, the Desmos feature index, families, answer-structure findings and corrections): `python3 -I src/math/mdeep.py src/build/mdata.json src/build/mdata.json --keep-types`. `math/rdeep.py` writes `build/rwdeep.json` (the Reading and Writing Patterns page: cards, cross-skill findings and corrections), which `assemble.py` embeds as `D.rwdeep`. Both read a `deep/` folder beside the script holding the per-question transcriptions and analyses made from College Board's export; that folder is not included. `--keep-types` keeps the question types already in `mdata.json` and only adds templates.
+
 ## Checks
 `node src/check/smoke.js index.html 390` (Reading and Writing) and `node src/check/msmoke.js index.html 390 light` (Math) load every view, look for script errors, failed requests and sideways scrolling, and run a practice set. `node src/check/suggest.js index.html` tries the Appearance menu, the Suggest form, My notes and the footer; `node src/check/skip.js index.html` the skip link. `node src/check/tshots.js index.html 390 dark shots home suggest` saves screenshots in any theme (`light`, `dark`, `purple`, `blue`, `pink`, `green`, `auto-light`, `auto-dark`). `node src/check/text.js index.html out.txt` dumps every page's visible text (with all collapsible parts open) for a spelling check; the site uses American spelling, and quoted College Board passages are left exactly as printed.
 

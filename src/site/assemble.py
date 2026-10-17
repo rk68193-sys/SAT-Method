@@ -3,7 +3,7 @@ b = os.path.dirname(os.path.abspath(__file__))
 S = os.path.dirname(b)
 shell = open(os.path.join(b, 'shell.html'), encoding='utf-8').read()
 css = open(os.path.join(b, 'app.css'), encoding='utf-8').read()
-parts = ['core.js', 'grammar.js', 'reasoning.js', 'data-patterns.js', 'review-findings.js', 'reading.js', 'para.js', 'drills.js', 'practice.js', 'start.js', 'lookup.js', 'math.js', 'home.js', 'boot.js']
+parts = ['core.js', 'grammar.js', 'reasoning.js', 'data-patterns.js', 'review-findings.js', 'reading.js', 'para.js', 'drills.js', 'practice.js', 'start.js', 'lookup.js', 'math.js', 'home.js', 'rwdeep.js', 'boot.js']
 js = "(function () {\n  'use strict';\n" + ''.join(open(os.path.join(b, p), encoding='utf-8').read() for p in parts) + "}());\n"
 open(os.path.join(b, 'bundle.js'), 'w', encoding='utf-8').write(js)
 data = json.load(open(os.path.join(S, 'build', 'data.json'), encoding='utf-8'))
@@ -19,6 +19,8 @@ annp = os.path.join(S, 'build', 'ann.json')
 data['ann'] = json.load(open(annp, encoding='utf-8')) if os.path.exists(annp) else {}
 mp = os.path.join(S, 'build', 'mdata.json')
 data['math'] = json.load(open(mp, encoding='utf-8'))
+rwp = os.path.join(S, 'build', 'rwdeep.json')
+if os.path.exists(rwp): data['rwdeep'] = json.load(open(rwp, encoding='utf-8'))
 np_ = os.path.join(S, 'build', 'notes-page.json')
 if os.path.exists(np_): data['ann']['notesPage'] = json.load(open(np_, encoding='utf-8'))
 blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')

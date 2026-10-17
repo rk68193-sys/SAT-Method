@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mshort', 'mref', 'mprac', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mshort', 'mref', 'mprac', 'rpat', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -69,10 +69,12 @@
     lastToken = token || 'home';
     if (!token || token === 'home') { showView('home'); buildHome(); toTop(); return; }
     if (routeMath(token)) { return; }
+    if (token === 'rpat' || /^rp-/.test(token)) { showView('rpat'); buildRPat(); if (token === 'rpat') { toTop(); } else { openTo(token); } return; }
     if ((m = /^rq-([0-9a-f]{8})$/.exec(token))) {
       var sourceItem = itemsAll().filter(function (it) { return it.id === m[1]; })[0];
       if (sourceItem) { showView('practice'); buildPractice(); timedStart([sourceItem], { tier: 'easy', hints: false }); toTop(); return; }
     }
+    if ((m = /^rq-([0-9a-f]{8})$/.exec(token)) && RBANK[m[1]]) { showView('rpat'); rwOne(m[1]); scrollToEl(document.getElementById('rp-one')); return; }
     if (token === 'suggest' || token === 'suggest-notes') { showView('suggest'); buildSuggest(token === 'suggest-notes'); if (token === 'suggest') { toTop(); } return; }
     if (token === 'start' || token === 'top' || token === 'which') {
       showView('start'); buildStart(); refreshPath();
@@ -132,6 +134,14 @@
     if (/^ms-/.test(token)) { showView('mshort'); buildMShort(); scrollToEl(document.getElementById(token)); return true; }
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
+    if ((m = /^mpt-(.+)$/.exec(token)) && has(MTMBY, m[1])) { mpPreset = 'm:' + m[1]; if (MP && !MP.over) { clearInterval(mpInterval); } showView('mprac'); mpSetup(); toTop(); return true; }
+    if ((m = /^tm-(.+)$/.exec(token)) && has(MTMBY, m[1])) {
+      var tmx = MTMBY[m[1]];
+      showView('mlearn'); mlearnView.show(MTY[tmx.pt].skill);
+      var tel = document.getElementById(token), det = tel ? tel.closest('details') : null;
+      if (det) { det.open = true; }
+      scrollToEl(tel); return true;
+    }
     if ((m = /^mp-(.+)$/.exec(token))) {
       var x = m[1];
       if (has(MTY, x)) { mpPreset = 't:' + x; } else if (has(MSK, x)) { mpPreset = 'k:' + x; } else { mpPreset = 'd:' + x; }
