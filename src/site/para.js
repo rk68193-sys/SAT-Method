@@ -115,3 +115,18 @@
     return h;
   }
   function wireNotes() {}
+  /* =================== Popular advice, checked against the bank =================== */
+  var VCLS = { 'Holds': 'v-hold', 'Partly': 'v-part', 'Rarely tested': 'v-rare', 'Not tested': 'v-rare' };
+  function adviceHTML() {
+    var A = D.advice;
+    var h = '<header><p class="eyebrow">Reading and grammar · checked</p><h2 class="vtitle">Popular advice, checked against the bank</h2>';
+    if (!A) { return h + '<p class="lede">This page is still being built.</p></header>'; }
+    h += '<p class="lede">' + esc(A.intro) + '</p></header>';
+    A.groups.forEach(function (g) {
+      h += '<section class="sec"><div class="sech"><h3 class="h2">' + esc(g.title) + '</h3></div><div class="advice">' + g.items.map(function (it) {
+        return '<div class="adv"><p class="advtip"><span class="verdict-chip ' + (VCLS[it.v] || '') + '">' + esc(it.v) + '</span>' + esc(it.tip) + '</p><p class="advwhy">' + esc(it.why) +
+          (it.href ? ' <a href="#' + it.href + '">See it</a>' : '') + '</p></div>';
+      }).join('') + '</div></section>';
+    });
+    return h + '<p class="fine" style="margin-top:2rem">' + esc(A.note) + '</p>';
+  }

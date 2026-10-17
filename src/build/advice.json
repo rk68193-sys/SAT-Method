@@ -1,0 +1,205 @@
+{
+ "intro": "Tips from the James Lu SAT YouTube channel (videos on vocabulary, grammar, transitions, punctuation, verbs and reading), paraphrased and checked against College Board’s question bank and the two guides behind this site. Holds: the bank backs it. Partly: true, but weaker or narrower than stated. Rarely tested or Not tested: fine to know, low payoff.",
+ "groups": [
+  {
+   "title": "Words in context",
+   "items": [
+    {
+     "tip": "Cover the choices, put your own simple word in the blank, then match it.",
+     "v": "Holds",
+     "why": "This is the routine’s Say step: an answer of your own before the choices. It can’t be counted, but nothing in the bank argues against it.",
+     "href": "say"
+    },
+    {
+     "tip": "Contrast words, colons and dashes tell you which way the blank leans.",
+     "v": "Partly",
+     "why": "Useful when they are there: 93 of 221 fill-the-blank word questions have a contrast word and 91 have a colon, dash or “that is / such as / for example”. But 75 have neither, so you also need the plain sense of the sentence.",
+     "href": "o-word"
+    },
+    {
+     "tip": "Skip big vocabulary lists and Latin roots; read the context.",
+     "v": "Holds",
+     "why": "The bank tests a word as used in its sentence. 79% of the fill-in choices are a single word, and the clue is in the blank’s own sentence or the one beside it.",
+     "href": "o-word"
+    }
+   ]
+  },
+  {
+   "title": "Grammar: sentence boundaries and punctuation",
+   "items": [
+    {
+     "tip": "Two complete clauses need a period, a semicolon, or a comma plus and/but/so; a comma alone is a comma splice.",
+     "v": "Holds",
+     "why": "The biggest family in the bank: End of sentence (43 questions), Semicolon (33) and the comma rules for joining clauses.",
+     "href": "c1"
+    },
+    {
+     "tip": "Before a colon or a single dash there must be a complete clause.",
+     "v": "Holds",
+     "why": "And colons are hard: 17 of the 19 colon questions are rated Hard.",
+     "href": "c3"
+    },
+    {
+     "tip": "Put “however” between two clauses as “; however,”.",
+     "v": "Holds",
+     "why": "Rule 2.2 (5 questions). Watch the reverse too: “, though;” closing the first clause (rule 2.3) is 10 of 10 Hard, and a transition inside one clause takes a comma on each side (rule 6.7).",
+     "href": "u2-2"
+    },
+    {
+     "tip": "Use matching marks around an aside: two commas or two dashes, never one of each.",
+     "v": "Holds",
+     "why": "Rule 4.1 (a pair of dashes, 12 questions) and rule 6.4 (closing a pair of commas, 6).",
+     "href": "u4-1"
+    },
+    {
+     "tip": "Commas around a name only when it could be lifted out; no commas after a title like “physicist”.",
+     "v": "Holds",
+     "why": "This is the single hardest rule in the bank: rule 7.4 (no comma between a title and the name) is 11 of 12 Hard.",
+     "href": "u7-4"
+    },
+    {
+     "tip": "Never put a comma between a subject and its verb, or before an essential “that”.",
+     "v": "Holds",
+     "why": "Rule 7.1 (9 questions) and the No punctuation lesson (45 questions in all).",
+     "href": "c7"
+    },
+    {
+     "tip": "No comma between two adjectives before a noun.",
+     "v": "Not tested",
+     "why": "Never the blank in this bank; the pattern only shows up in passage text.",
+     "href": "nottested"
+    },
+    {
+     "tip": "“Its’” and “their’s” are never right.",
+     "v": "Holds",
+     "why": "“Its’” is never even offered. The real test is its / it’s and their / they’re (rule 11.7, 6 questions).",
+     "href": "u11-7"
+    }
+   ]
+  },
+  {
+   "title": "Grammar: verbs and modifiers",
+   "items": [
+    {
+     "tip": "Cross out the phrases between the subject and the verb to find the true subject.",
+     "v": "Holds",
+     "why": "Rules 8.2 (a prepositional phrase between them, 7 questions) and 8.3 (an aside between them, 14) are exactly this.",
+     "href": "u8-3"
+    },
+    {
+     "tip": "“Each”, “everyone” and collective nouns like “team” are singular.",
+     "v": "Rarely tested",
+     "why": "“Each one of …” has 2 questions (rule 8.9). Agreement with everyone, neither … nor or either … or is not tested, and no question turns on a collective noun.",
+     "href": "u8-9"
+    },
+    {
+     "tip": "Watch for inverted sentences where the verb comes before the subject.",
+     "v": "Rarely tested",
+     "why": "One question in the bank (rule 8.10).",
+     "href": "u8-10"
+    },
+    {
+     "tip": "An -ing word alone can’t be the main verb.",
+     "v": "Holds",
+     "why": "The whole Verb form lesson (51 questions) turns on tensed verb or not.",
+     "href": "c9"
+    },
+    {
+     "tip": "Match the tense to the other verbs and the time words (“since” → has, “by the time” → had).",
+     "v": "Holds",
+     "why": "Verb tense has 31 questions, including present perfect with “since” (rule 10.5) and past perfect for the earlier event (rule 10.6). None of the 31 is Hard.",
+     "href": "c10"
+    },
+    {
+     "tip": "An opening modifier must touch the noun doing the action (no dangling modifiers).",
+     "v": "Holds",
+     "why": "Modifier placement has 26 questions and 16 of them are Hard.",
+     "href": "c13"
+    },
+    {
+     "tip": "Keep list items parallel.",
+     "v": "Rarely tested",
+     "why": "No rule in the bank tests list parallelism. The closest is a second verb matching the first (rule 9.3, 3 questions).",
+     "href": "u9-3"
+    }
+   ]
+  },
+  {
+   "title": "Transitions",
+   "items": [
+    {
+     "tip": "Read the sentence before and the sentence with the blank on their own, name the relationship, then look at the choices.",
+     "v": "Holds",
+     "why": "This is the 60-second method for Part C, and the Name the link drill trains it.",
+     "href": "c14"
+    },
+    {
+     "tip": "If two choices are in the same family (Moreover / Furthermore), neither can be right.",
+     "v": "Partly",
+     "why": "A strong tiebreaker, not a law. In 110 of the 194 transition questions two or more choices share a family; the answer was one of those in 18 (16%).",
+     "href": "transitions"
+    },
+    {
+     "tip": "“Indeed” and “In fact” are almost always right when offered.",
+     "v": "Partly",
+     "why": "Right about half the time: “indeed” 5 of 10 times offered, “in fact” 6 of 10. That is well above most transitions, but not a rule.",
+     "href": "transitions"
+    },
+    {
+     "tip": "A phrase like “to address this issue” needs a problem named just before it.",
+     "v": "Holds",
+     "why": "It is how the Cause and effect rules read (a response, a step toward a goal); check the sentence before for the problem or goal.",
+     "href": "c15"
+    }
+   ]
+  },
+  {
+   "title": "Reading",
+   "items": [
+    {
+     "tip": "The main point comes after a pivot word like “however”.",
+     "v": "Partly",
+     "why": "The answer used a line at or after the first turn in 132 of 140 annotated passages, but chance gives about 124, and in 42 it also needed a line before the turn. Read through the turn; don’t skip the setup.",
+     "href": "pturn"
+    },
+    {
+     "tip": "Claim markers (“researchers hypothesized that”, “results suggest”) point to the answer.",
+     "v": "Holds",
+     "why": "Support and quotation answers rested on the claim line in 25 of 26 and 21 of 21 annotated questions.",
+     "href": "panswer"
+    },
+    {
+     "tip": "Main-idea traps are too broad, too detailed, half right, or the opposite.",
+     "v": "Partly",
+     "why": "Half right and opposite are common, but “a true detail that’s too narrow” is rare: College Board calls only 15 of 186 wrong main-idea choices a detail or not the focus. Most wrong main-idea choices say something the passage never says (46 of 90 labels).",
+     "href": "myths"
+    },
+    {
+     "tip": "If any part of a choice is unsupported, the whole choice is wrong.",
+     "v": "Holds",
+     "why": "This is the routine’s Check step: every piece of the choice needs a line.",
+     "href": "check"
+    },
+    {
+     "tip": "Support / weaken: turn the claim into “if X, then Y”; the answer must show both parts.",
+     "v": "Holds",
+     "why": "The answer rested on the claim line in 25 of 26 support questions. Worked Example 7 is a case where the answer has to cover both sides of a comparison.",
+     "href": "ex-7"
+    },
+    {
+     "tip": "Graphs: first check the choice is true of the data, then that it fits the claim.",
+     "v": "Holds",
+     "why": "Both checks matter about equally: of the wrong table and graph choices both annotators labelled, 36 miss the claim and 33 are wrong about the data.",
+     "href": "job-data"
+    },
+    {
+     "tip": "An inference needs no outside assumption; the right answer is a careful restatement.",
+     "v": "Partly",
+     "why": "The usual wrong inference choice says something the passage never says (71 of 106 labels). But “careful wording” is not a tell: strong words are in 7% of right inference answers and 9% of wrong ones.",
+     "href": "job-inference"
+    }
+   ]
+  }
+ ],
+ "note": "His Desmos video is about the Math section, which this site does not cover. Grammar counts are from the 615 grammar and transition questions; reading counts are from the bank’s 1,026 reading questions or the 280 annotated passages, as each line says."
+}

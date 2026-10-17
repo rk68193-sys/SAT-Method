@@ -299,7 +299,7 @@
           { key: 'say', token: 'say', num: 3, label: 'Say' }, { key: 'check', token: 'check', num: 4, label: 'Check' }] },
         { group: 'More question types', entries: [{ key: 'reasoning', token: 'reasoning', label: 'Deeper reading structures' }, { key: 'dataPatterns', token: 'data-patterns', label: 'Tables and graphs: deeper patterns' }, { key: 'others', token: 'others', label: 'Words, structure, two texts, notes' }, { key: 'notes', token: 'notesfirst', label: 'Notes questions: goal first' }] },
         { group: 'Worked examples', entries: ex },
-        { group: 'More', entries: [{ key: 'reviewFindings', token: 'source-findings', label: 'Further source findings' }, { key: 'sets', token: 'sets', label: 'Practice sets: 1,230 IDs' }, { key: 'measured', token: 'measured', label: 'How this was measured' }] }
+        { group: 'More', entries: [{ key: 'reviewFindings', token: 'source-findings', label: 'Further source findings' }, { key: 'advice', token: 'advice', label: 'Popular advice, checked' }, { key: 'sets', token: 'sets', label: 'Practice sets: 1,230 IDs' }, { key: 'measured', token: 'measured', label: 'How this was measured' }] }
       ];
     },
     render: function (key, host) {
@@ -307,6 +307,7 @@
       if (m && REX[m[1]]) { host.innerHTML = rExampleHTML(REX[m[1]]); wireExample(REX[m[1]], host); return; }
       if (key === 'para') { host.innerHTML = paraHTML(); wirePara(host); return; }
       if (key === 'notes') { host.innerHTML = notesHTML(); wireNotes(host); return; }
+      if (key === 'advice') { host.innerHTML = adviceHTML(); return; }
       host.innerHTML = (READ_PAGES[key] || rRoutineHTML)();
       if (key === 'long') { wireLong(host); }
       if (key === 'sets') { wireSets(host); }

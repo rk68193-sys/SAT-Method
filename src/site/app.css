@@ -1615,3 +1615,12 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .mpchips small { font-size: .78rem; color: var(--muted); }
 .mpchips input:checked + span small { color: inherit; opacity: .8; }
 .mpset .seg legend { font-size: .8rem; }
+/* popular advice, checked */
+.advice { display: grid; margin-top: .8rem; border-top: 1px solid var(--line-strong); }
+.adv { padding: .75rem 0; border-bottom: 1px solid var(--line); display: grid; gap: .3rem; }
+.advtip { font-weight: 700; display: flex; flex-wrap: wrap; gap: .3rem .6rem; align-items: baseline; }
+.advwhy { color: var(--muted); max-width: 46em; }
+.verdict-chip { font: 600 .68rem/1.6 var(--mono); letter-spacing: .05em; text-transform: uppercase; padding: 0 .45rem; border-radius: 3px; white-space: nowrap; }
+.verdict-chip.v-hold { background: var(--ok-soft); color: var(--ok); box-shadow: inset 0 0 0 1px var(--ok); }
+.verdict-chip.v-part { background: var(--hl); color: var(--hl-ink); }
+.verdict-chip.v-rare { background: var(--sunk); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line-strong); }

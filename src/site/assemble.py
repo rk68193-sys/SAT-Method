@@ -10,6 +10,8 @@ data = json.load(open(os.path.join(S, 'build', 'data.json'), encoding='utf-8'))
 data['reading'] = json.load(open(os.path.join(S, 'build', 'rdata.json'), encoding='utf-8'))
 reviewp = os.path.join(S, 'build', 'review-findings.json')
 if os.path.exists(reviewp): data['reviewFindings'] = json.load(open(reviewp, encoding='utf-8'))
+advp = os.path.join(S, 'build', 'advice.json')
+if os.path.exists(advp): data['advice'] = json.load(open(advp, encoding='utf-8'))
 bankp = os.path.join(S, 'build', 'bank.json')
 data['bank'] = json.load(open(bankp, encoding='utf-8')) if os.path.exists(bankp) else {'notes': [], 'trans': []}
 for filename, key in [('figures.json', 'figures'), ('grammar-sources.json', 'grammarSources')]:

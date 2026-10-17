@@ -50,7 +50,7 @@
   var READ_AT = {
     reading: ['routine'], routine: ['routine'], reasoning: ['reasoning'], 'data-patterns': ['dataPatterns'], 'source-findings': ['reviewFindings'], shape: ['shape'], job: ['job'], leadin: ['job', 'leadin'], chunk: ['chunk'], tags: ['chunk', 'tags'],
     turns: ['chunk', 'turns'], names: ['chunk', 'names'], long: ['long'], apart: ['long', 'apart'], para: ['para'], say: ['say'], check: ['check'],
-    traps: ['check', 'traps'], notesfirst: ['notes'], pturn: ['para', 'pturn'], pmethod: ['para', 'pmethod'], goalfirst: ['notes'], partly: ['check', 'partly'], myths: ['check', 'myths'], others: ['others'], train: ['others', 'train'], sets: ['sets'], measured: ['measured']
+    traps: ['check', 'traps'], notesfirst: ['notes'], advice: ['advice'], panswer: ['para', 'panswer'], ptraps: ['para', 'ptraps'], pturn: ['para', 'pturn'], pmethod: ['para', 'pmethod'], goalfirst: ['notes'], partly: ['check', 'partly'], myths: ['check', 'myths'], others: ['others'], train: ['others', 'train'], sets: ['sets'], measured: ['measured']
   };
   var GRAM_AT = { grammar: ['method'], method: ['method'], try: ['method', 'try'], patterns: ['method', 'patterns'], first: ['method', 'patterns'], steps: ['method', 'steps'],
     shortcuts: ['shortcuts'], gives: ['shortcuts'], hard: ['hard'], lessons: ['home'], glance: ['home'], structure: ['partA'], verbpath: ['partB'] };
