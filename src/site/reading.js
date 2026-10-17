@@ -256,7 +256,7 @@
       '<p class="row" style="margin-top:1rem"><span class="label">Mode</span><button type="button" class="btn sm" id="ex-try" aria-pressed="true">Try it first</button><button type="button" class="btn sm ghost" id="ex-read" aria-pressed="false">Show the walkthrough</button></p>' +
       '<div id="ex-host" style="margin-top:1rem"></div>' +
       '<div class="lfoot"><button type="button" class="btn ghost donebtn" id="exdone" aria-pressed="' + (d ? 'true' : 'false') + '">' + (d ? 'Studied ✓' : 'Mark as studied') + '</button><span class="row">' +
-      (prev ? '<a class="btn ghost" href="#ex-' + prev.n + '">Example ' + prev.n + '</a>' : '') + (next ? '<a class="btn" href="#ex-' + next.n + '">Next: Example ' + next.n + ' · ' + esc(next.title) + '</a>' : '<a class="btn" href="#practice">Practise against the clock</a>') + '</span></div>';
+      (prev ? '<a class="btn ghost" href="#ex-' + prev.n + '">Example ' + prev.n + '</a>' : '') + (next ? '<a class="btn" href="#ex-' + next.n + '">Next: Example ' + next.n + ' · ' + esc(next.title) + '</a>' : '<a class="btn" href="#practice">Practice against the clock</a>') + '</span></div>';
   }
   function wireExample(x, host) {
     var slot = $('#ex-host', host), bt = $('#ex-try', host), br = $('#ex-read', host);

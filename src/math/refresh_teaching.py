@@ -4,10 +4,11 @@ from pathlib import Path
 from mclass import R
 from mcontent import SKILLS,TYPES
 from probability import REVIEWED
+from mpatcontent import TYPE_DESMOS,DESMOS,GOTCHAS
 from strategies import BY_TYPE
 from review_catalog import TYPE_CORRECTIONS,CASES,SOURCE_NOTES,BRIDGES,WORKED
 root=Path(__file__).resolve().parents[2];path=root/'src/build/mdata.json'
-data=json.loads(path.read_text());old=data['order']
+data=json.loads(path.read_text());old=data['order']; old_types=data['types']
 order=[t for rules in R.values() for t,_,_ in rules if t!='rtt-trig2']
 assert set(order)==set(TYPES)
 assert set(BY_TYPE)==set(order)-{t for t in order if t.startswith('prb-')}
@@ -22,6 +23,15 @@ for case in CASES:assert set(case['ids'])<=known,case
 for qid in SOURCE_NOTES:assert qid in known,qid
 data['order']=order
 data['types']={kind:dict(TYPES[kind],skill=skill,**{k:counts[kind][k] for k in ['n','E','M','H']}) for skill,rules in R.items() for kind,_,_ in rules if kind!='rtt-trig2'}
+for kind, value in data['types'].items():
+ move,text=TYPE_DESMOS[kind]
+ value.update(dmove=move,dtext=text)
+data.update(desmos=DESMOS,gotchas=GOTCHAS)
+# Keep upstream pattern memberships; update their teaching-type summaries.
+for i, pattern in enumerate(data.get('patterns', [])):
+ members=[q for q in data['qs'] if len(q)>13 and q[13] >> i & 1]
+ counts_by_type=collections.Counter(order[q[1]] for q in members)
+ pattern['types']=[t for t,n in counts_by_type.most_common() if n>=3][:12]
 for key,value in data['skills'].items():
  value.update(SKILLS[key]);value['types']=[t for t,_,_ in R[key] if t!='rtt-trig2']
 data.update(strategies=BY_TYPE,source_cases=CASES,source_notes=SOURCE_NOTES,bridges=BRIDGES,worked=WORKED)

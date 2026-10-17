@@ -64,7 +64,7 @@
       step3('1', 'Look', '0–5 s', 'sw-look', s[0], 'The choices tell you the rule before you read the passage. <a href="#patterns">See the eight patterns</a>.') +
       step3('2', 'Check', '5–45 s', 'sw-check', s[1], 'Each part has its own check: <a href="#part-a">what stands on each side of the blank</a>, <a href="#part-b">four verb situations</a>, and <a href="#part-c">naming the link</a>.') +
       step3('3', 'Confirm', '45–60 s', 'sw-confirm', s[2], 'Torn between two? Some choices are almost never right. <em>Is / are</em> + <em>-ing</em> was offered 45 times in verb questions and was never the answer. <a href="#shortcuts">See the shortcuts</a>.') +
-      '</div><p class="fine" style="margin-top:.9rem">' + D.first.fine + ' The 5, 40 and 15 second split is a target to practise against.</p></section>' +
+      '</div><p class="fine" style="margin-top:.9rem">' + D.first.fine + ' The 5, 40 and 15 second split is a target to practice against.</p></section>' +
       patternsHTML();
   }
 
@@ -265,7 +265,7 @@
       c.uses.map(useHTML).join('') +
       (c.could ? '<aside class="could"><p class="label">Could still appear · not from the bank</p><p class="fine" style="margin-top:.3rem">Standard forms of the same rules that this bank does not use. The example sentences are written for this guide.</p><ul>' + c.could.items.map(li).join('') + '</ul></aside>' : '') +
       '<div class="lfoot"><span class="row"><button type="button" class="btn ghost donebtn" id="donebtn" aria-pressed="' + (d ? 'true' : 'false') + '">' + (d ? 'Lesson done ✓' : 'Mark this lesson done') + '</button>' +
-      '<a class="btn ghost" href="#practice" data-tpart="' + c.part + '">Practise Part ' + c.part + ' against the clock</a></span>' +
+      '<a class="btn ghost" href="#practice" data-tpart="' + c.part + '">Practice Part ' + c.part + ' against the clock</a></span>' +
       (next ? '<a class="btn" href="#' + next.id + '">Next: ' + next.n + ' ' + esc(next.title) + '</a>' : '<a class="btn" href="#practice">Take a timed set</a>') + '</div>';
   }
   function mountExamples(host) {

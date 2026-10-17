@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mtypes', 'mshort', 'mref', 'mprac'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mshort', 'mref', 'mprac', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -73,6 +73,7 @@
       var sourceItem = itemsAll().filter(function (it) { return it.id === m[1]; })[0];
       if (sourceItem) { showView('practice'); buildPractice(); timedStart([sourceItem], { tier: 'easy', hints: false }); toTop(); return; }
     }
+    if (token === 'suggest' || token === 'suggest-notes') { showView('suggest'); buildSuggest(token === 'suggest-notes'); if (token === 'suggest') { toTop(); } return; }
     if (token === 'start' || token === 'top' || token === 'which') {
       showView('start'); buildStart(); refreshPath();
       if (token === 'which') { scrollToEl(document.getElementById('which')); } else { toTop(); }
@@ -108,6 +109,11 @@
     }
     route('home');
   }
+  function openTo(id) {
+    var el = document.getElementById(id);
+    if (el && el.tagName === 'DETAILS') { el.open = true; }
+    scrollToEl(el);
+  }
   function routeMath(token) {
     var m;
     if (token === 'math') { showView('mstart'); buildMStart(); toTop(); return true; }
@@ -116,6 +122,12 @@
     if ((m = /^m-([a-z0-9]+)$/.exec(token)) && has(MSK, m[1])) { showView('mlearn'); landed(mlearnView.show(m[1])); toTop(); return true; }
     if ((m = /^mt-(.+)$/.exec(token)) && has(MTY, m[1])) { showView('mlearn'); mlearnView.show(MTY[m[1]].skill); scrollToEl($('#' + token, viewEl.mlearn)); return true; }
     if (token === 'm-types') { showView('mtypes'); buildMTypes(); toTop(); return true; }
+    if (token === 'm-patterns') { showView('mpat'); buildMPat(); toTop(); return true; }
+    if ((m = /^mpat-(.+)$/.exec(token)) || token === 'mrare') { showView('mpat'); buildMPat(); openTo(token); return true; }
+    if (token === 'm-desmos') { showView('mdes'); buildMDes(); toTop(); return true; }
+    if (/^md-/.test(token)) { showView('mdes'); buildMDes(); openTo(token); return true; }
+    if ((m = /^mpp-(.+)$/.exec(token)) && has(MPAT, m[1])) { mpPreset = 'p:' + m[1]; clearInterval(mpInterval); showView('mprac'); mpSetup(); toTop(); return true; }
+    if ((m = /^mq-([0-9a-f]{8})$/.exec(token)) && has(MQBY, m[1])) { showView('mprac'); mpOne(m[1]); return true; }
     if (token === 'm-short') { showView('mshort'); buildMShort(); toTop(); return true; }
     if (/^ms-/.test(token)) { showView('mshort'); buildMShort(); scrollToEl(document.getElementById(token)); return true; }
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
@@ -133,6 +145,7 @@
     var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
     if (!a) { return; }
     e.preventDefault();
+    if (a.hasAttribute('data-skip')) { var mn = document.getElementById('main'); if (mn) { mn.scrollIntoView({ block: 'start' }); focusQuiet(mn); } return; }
     var href = a.getAttribute('href').slice(1);
     var dk = a.getAttribute('data-drill');
     if (dk && has(DR, dk)) { try { history.pushState(null, '', '#drills'); } catch (err) {} showView('drills'); buildDrills(); startDrill(dk); return; }

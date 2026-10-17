@@ -30,13 +30,15 @@ const base = process.argv[2] || 'http://127.0.0.1:8000/';
         const img = page.locator('#tcard img[src^="rw/q/"]'); await img.waitFor();
         await img.evaluate(im => im.decode());
         const id = (await img.getAttribute('src')).match(/([0-9a-f]{8})\.webp$/)[1];
-        await page.locator('#tcard .opt[data-k="' + byId[id].ans + '"]').click();
-        assert.match(await page.locator('#tcard .verdict').innerText(), /right|correct/i);
+        const chosen = i === 0 ? (byId[id].ans === 'A' ? 'B' : 'A') : byId[id].ans;
+        await page.locator('#tcard .opt[data-k="' + chosen + '"]').click();
+        assert.match(await page.locator('#tcard .verdict').innerText(), i === 0 ? /not|incorrect/i : /right|correct/i);
         const sol = page.locator('#tcard .qfeed img[src^="rw/r/"]'); await sol.waitFor(); await sol.evaluate(im => im.decode());
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1));
         if (i < 2) await page.click('#tnext');
       }
       await page.click('#tend');
+      assert.match(await page.locator('.dresult').innerText(), /2 of 3 right/);
       await page.click('#tagain');
     }
     console.log('PASS: complete unique English pool, restored figure/grammar practice, source solutions and mobile layout');

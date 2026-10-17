@@ -21477,7 +21477,7 @@
   },
   "nLong": 114,
   "traps": {
-   "intro": "How the wrong choices fail, counting only labels both blind annotators gave. The defence follows from the kind.",
+   "intro": "How the wrong choices fail, counting only labels both blind annotators gave. The defense follows from the kind.",
    "rows": [
     {
      "job": "Inference",
@@ -21650,7 +21650,7 @@
      "href": "job-data"
     }
    ],
-   "defence": [
+   "defense": [
     "Inference, main idea, detail, word: the usual wrong choice says something the passage never says. Point to the line; if you cannot, it is out.",
     "Support, weaken, quotation, table: the usual wrong choice is on topic but does not bear on the claim. Hold each choice up to the Point."
    ]

@@ -18,6 +18,8 @@ All 3,770 questions and full solutions have reading records and observations. Th
 
 Desmos methods include exact algebra, graphs/intersections, tables, lists, regressions where appropriate, and checks on domains, parameters, units, and numerical approximation. Short hand methods are preferred where entering a graph would take longer. The live College Board Desmos testing site returned HTTP 403 in this environment, so these recipes have not been validated in that live interface. Numerical matching and regression fits are not presented as exact proofs.
 
+The integration also preserves the newer upstream layout, appearance controls, Suggest page, Big patterns, and Desmos playbook. Existing saved symbolic/numerical checks are labeled separately from live calculator validation.
+
 ## Validation
 
 The coverage validator requires complete reading statuses and actual observations for all unique source IDs, verifies PDF fingerprints, and checks Math preservation against the recorded original commit. The browser integration check exercises restored practice grading and explanations, all 102 Math types and all 1,925 source comparisons, direct English source routes, and desktop/mobile layout. Build and check commands are in `README.md` in this directory.

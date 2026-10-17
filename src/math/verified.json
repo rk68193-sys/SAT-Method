@@ -1,0 +1,320 @@
+{
+"ff501705": [
+"Slid p until the two lines were parallel: p = 6.",
+"[6]",
+[
+"6"
+]
+],
+"e6cb2402": [
+"Set the x-parts equal (3k = 48/17): k = 16/17.",
+"[16/17]",
+[
+".9411",
+".9412",
+"16/17"
+]
+],
+"f01108a8": [
+"Made-up legal numbers a = 8, b = 2, c = 1: the graph crosses once.",
+"1",
+"B"
+],
+"fc3d783a": [
+"Slid b until the parabola just touched y = 2.25: b = 6.",
+"[6]",
+[
+"6"
+]
+],
+"ba0edc30": [
+"Tested all four choices in one list: only 10 gives 0.",
+"[np.float64(-2.0), np.float64(0.0), np.float64(10.0), np.float64(30.0)]",
+"B"
+],
+"91e7ea5e": [
+"Clicked the x-intercepts: 0 and 8, so t = 8.",
+"[0, 8]",
+"D"
+],
+"b8f13a3a": [
+"Found b from the y-intercept, then a = (320/7) ÷ b = 20.",
+"20",
+[
+"20"
+]
+],
+"371cbf6b": [
+"Regression found a = 4 and b = 6, so ab = 24.",
+"[(4, 6, 24)]",
+"C"
+],
+"38c90632": [
+"Regression found p = 2 and w = 27.",
+"[{p: 2, w: 27}]",
+[
+"27"
+]
+],
+"b4a6ed81": [
+"Regression found r = 6.",
+"[{r: 6}]",
+[
+"6"
+]
+],
+"ea6d05bb": [
+"Regression found b = −419.",
+"[{a: 57, b: -419, c: -138}]",
+[
+"-419"
+]
+],
+"7866a908": [
+"Two lines cross at (30, 20); the silicon is 0.8 × 20 = 16.",
+"({x: 30, y: 20}, 16)",
+"B"
+],
+"d7bf55e1": [
+"Two lines cross at (15, 15); adult tickets brought in 12 × 15 = 180.",
+"({x: 15, y: 15}, 180)",
+[
+"180"
+]
+],
+"71189542": [
+"Two lines cross at (19, 41): 19 two-person tents.",
+"{x: 19, y: 41}",
+"C"
+],
+"76c73dbf": [
+"Vertex trick: r² = 99.5 + 0.25 + 0.25 = 100, so r = 10.",
+"10",
+[
+"10"
+]
+],
+"2266984b": [
+"Vertex trick: the vertices of x² + 20x and y² + 16y give the center (−10, −8).",
+"(-10, -8)",
+"B"
+],
+"1e8ccffd": [
+"Totals: 8 × 14.5 − 7 × 12 = 32.",
+"32.0",
+"C"
+],
+"190be2fc": [
+"Listed every possible 10th value; only 52 gives a whole-number mean above 42.",
+"[52]",
+[
+"52"
+]
+],
+"ae05d37b": [
+"The curve crosses y = 80,000 at x = 790.",
+"[790]",
+"B"
+],
+"e53add44": [
+"Growth of 4% means a multiplier of 1.04.",
+"1.04",
+"C"
+],
+"722de804": [
+"The graphs cross at 46 and 48; the sum is 94.",
+"94",
+[
+"94"
+]
+],
+"2c05d312": [
+"Made-up numbers a = b = 1: the product of the solutions is 1/57.",
+"1/57",
+"A"
+],
+"358f18bc": [
+"Clicked the vertex: (24, 1728).",
+"(24, 1728)",
+[
+"1728"
+]
+],
+"8e1da169": [
+"The vertex is halfway between 44 and 46: 45.",
+"45",
+"B"
+],
+"66bce0c1": [
+"Graphed both sides: only one crossing, at x = 5.",
+"[5]",
+"B"
+],
+"541bef2f": [
+"Shaded both inequalities and dropped the four points: only (14, 0) is inside.",
+"[(14, 0)]",
+"D"
+],
+"e9908930": [
+"Regression on the table gave 5x + 20; subtracting 13 gives 5x + 7.",
+"(np.float64(5.0), np.float64(20.0), 'h = 5x + 7')",
+"B"
+],
+"58c7daed": [
+"Regression through (0, 0) and (11, 10) gave slope 10/11.",
+"(np.float64(0.909091), np.float64(0.0))",
+"A"
+],
+"4e18fc5d": [
+"Made-up numbers (x renamed a = 2, w = 3): only choice A gives back 3.",
+"['A']",
+"A"
+],
+"bd87bc09": [
+"sin B = 5/13 with hypotenuse 26 gives sides 10, 24, 26.",
+"24",
+[
+"24"
+]
+],
+"f67e4efc": [
+"y = 5πx² crosses y = 45π at x = 3.",
+"[3]",
+"A"
+],
+"0231050d": [
+"(40 − 10) ÷ 40 = 75%.",
+"75.0",
+[
+"75"
+]
+],
+"a5b069b4": [
+"median(L) = 5.",
+"5.0",
+"B"
+],
+"db422e7f": [
+"The line’s slope is −2, so the perpendicular slope is 1/2.",
+"1/2",
+[
+".5",
+"1/2"
+]
+],
+"6ce95fc8": [
+"Tested all four choices in one list: only (1 + √11)/2 gives 0.",
+"[np.float64(-1.0), np.float64(10.366750419), np.float64(16.5), np.float64(0.0)]",
+"D"
+],
+"46308566": [
+"Graphed the discriminant with q as x: below zero up to 16.83, so q = 16.",
+"([2 - 2*sqrt(55), 2 + 2*sqrt(55)], 16)",
+[
+"16"
+]
+],
+"1fe32f7d": [
+"Graphed the discriminant with b as x: boundary 52, so b = 51.",
+"boundary b = 52 (one solution); largest integer inside is 51",
+[
+"51"
+]
+],
+"301faf80": [
+"y = x(2x + 5) crosses y = 462 at x = 14.",
+"[14]",
+[
+"14"
+]
+],
+"d8789a4c": [
+"Listed √4, √6, √8, √10: only √4 is a whole number.",
+"[np.float64(2.0), np.float64(2.4495), np.float64(2.8284), np.float64(3.1623)]",
+"A"
+],
+"0b46bad5": [
+"Made-up numbers a = 1, b = 2: slope −1/2, y-intercept 1.",
+"(-0.5, 1)",
+"C"
+],
+"9afe2370": [
+"A fixed-percent decrease means −1 < r < 0.",
+"-1<r<0",
+"B"
+],
+"4aaa9c42": [
+"Chain with c = 100: b = 83, a = 4,101.03, and a is 4,941% of b.",
+"4941%",
+"D"
+],
+"993000da": [
+"Chain with b = 100: c = 383.3, so p ≈ 383.",
+"383.3",
+"D"
+],
+"1fbd3b67": [
+"Chain: b = 0.2 × 24 = 4.8, a = 2.9 × 4.8 = 13.92.",
+"13.92",
+"B"
+],
+"67c0200a": [
+"Chain with b = 1: a = 0.3, c = 0.54.",
+"0.54",
+[
+".54",
+"27/50"
+]
+],
+"58ba7239": [
+"Chain: b = 4.2 × 160 = 672, a = 0.45 × 672 = 302.4.",
+"302.4",
+[
+"1512/5",
+"302.4"
+]
+],
+"a51e6f93": [
+"Chain: b = 0.1152 ÷ 0.0008 = 144, c = 144 ÷ 0.25 = 576.",
+"576",
+[
+"576"
+]
+],
+"25faa756": [
+"Chain with b = 1: a = 1.6, c = 0.88.",
+"0.88",
+[
+".88",
+"22/25"
+]
+],
+"2e92cc21": [
+"Chain: b = 0.1 × 47 = 4.7, a = 2.1 × 4.7 = 9.87.",
+"9.87",
+[
+"9.87",
+"987/100"
+]
+],
+"1adb39f0": [
+"The dot is at 12 and the line at 11: a difference of 1.",
+"1",
+"A"
+],
+"a1fd2304": [
+"Graphed 0.25x + 0.3 and 0.15(x + 3): they cross at x = 1.5.",
+"1.5",
+[
+"1.5",
+"3/2"
+]
+],
+"107d0c62": [
+"With x = 90, the line crosses at y = 210.",
+"210",
+[
+"210"
+]
+]
+}

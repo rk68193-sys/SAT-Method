@@ -51,7 +51,8 @@ def main():
     changed_types = []
     for row in current['qs']:
         before = baseline[row[0]]
-        assert row[:1] + row[2:] == before[:1] + before[2:], ('changed question, key or dimensions', row[0])
+        # Fields 0..12 are original identity/key/dimensions; later fields are upstream pattern masks.
+        assert row[:1] + row[2:13] == before[:1] + before[2:13], ('changed question, key or dimensions', row[0])
         if current['order'][row[1]] != original['order'][before[1]]:
             changed_types.append(row[0])
     data = dict(base_commit=base_commit, scope='Every source question and full solution read using OCR/extracted text, with ambiguous notation and targeted figures inspected visually. This is not a certificate of an independent algebraic proof or complete visual reread of every item.', subjects=subjects, source_notes=load('mdata.json')['source_notes'], teaching_type_changes=changed_types, answer_key_changes=[], live_sat_desmos_verified=False)

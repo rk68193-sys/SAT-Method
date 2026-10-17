@@ -83,7 +83,7 @@
 
   /* ---------- saved progress: this browser only ---------- */
   var KEY = 'sat-grammar-sprint.v1';
-  var store = { t: {}, l: {}, d: {}, s: {}, r: {}, rl: {}, b: {}, m: {} }, canStore = false;
+  var store = { t: {}, l: {}, d: {}, s: {}, r: {}, rl: {}, b: {}, m: {}, g: {} }, canStore = false;
   function isObj(x) { return !!x && typeof x === 'object' && !Array.isArray(x); }
   try {
     var raw = window.localStorage.getItem(KEY);

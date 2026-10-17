@@ -81,7 +81,7 @@
     h += '<section class="sec" id="ptraps"><div class="sech"><h3 class="h2">How the wrong choices fail, by job</h3><p class="lede">' + esc(TR.intro) + '</p></div><div class="ctable">' +
       TR.rows.map(function (r) {
         return '<div class="crow two"><a href="#' + r.href + '">' + esc(r.job) + '</a><span class="cpair">' + r.kinds.map(function (k) { return '<span class="cl">' + esc(k[0]) + '</span>' + countBar(k[1], r.n); }).join('') + '</span></div>';
-      }).join('') + '</div><ul class="plainlist" style="margin-top:.8rem">' + TR.defence.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul></section>';
+      }).join('') + '</div><ul class="plainlist" style="margin-top:.8rem">' + TR.defense.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul></section>';
     h += '<section class="sec" id="pmyths"><div class="sech"><h3 class="h2">Shortcuts the full bank rules out</h3><p class="lede">Checked against College Board’s answer key. More in <a href="#myths">Shortcuts that do not work</a>.</p></div><ul class="plainlist">' +
       P.myths.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></section>';
     h += '<p class="fine" style="margin-top:2rem">' + esc(P.caveat) + '</p>';
@@ -111,7 +111,7 @@
     h += '<section class="sec" id="ntraps"><div class="sech"><h3 class="h2">How the wrong choices are built</h3></div><ul class="plainlist">' +
       P.traps.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></section>';
     h += '<p class="fine" style="margin-top:2rem">' + esc(P.caveat) + '</p>';
-    h += '<div class="nextlinks"><a class="btn" href="#drills" data-drill="notes">Drill: Notes, goal first (' + B.length + ')</a><a class="btn ghost" href="#practice">Practise all ' + B.length + ' against the clock</a></div>';
+    h += '<div class="nextlinks"><a class="btn" href="#drills" data-drill="notes">Drill: Notes, goal first (' + B.length + ')</a><a class="btn ghost" href="#practice">Practice all ' + B.length + ' against the clock</a></div>';
     return h;
   }
   function wireNotes() {}

@@ -208,6 +208,7 @@
       if (r.it.t === 'a') { var ua = U[r.it.b.unit]; return ua ? '<a href="#' + ua.id + '">' + ua.num + ' ' + ua.title + '</a>' : 'Grammar question'; }
       if (r.it.t === 'x') { var ux = U[r.it.b.u]; return ux ? '<a href="#' + ux.id + '">' + ux.num + ' ' + ux.title + '</a>' : 'Transition question'; }
       if (r.it.t === 'n') { return '<a href="#notesfirst">Notes question: goal first</a>'; }
+      if (r.it.t === 'v') { return '<a href="#rq-' + r.it.id + '">Figure question</a>'; }
       if (r.it.t === 'q') { var jq = RD.jobs.filter(function (j) { return j.name === r.it.b.jn; })[0]; return jq ? '<a href="#' + jq.id + '">' + esc(r.it.b.jn) + '</a>' : esc(r.it.b.jn); }
       return '<a href="#ex-' + r.it.x.n + '">Example ' + r.it.x.n + ' · ' + esc(r.it.x.title) + '</a>';
     };
