@@ -1,0 +1,108 @@
+{
+  "scope": "Confirmed by reading src/math/mcontent.py and checking algebra; authored strategy examples are not claimed to come from the bank.",
+  "runtime_desmos_verified": false,
+  "confirmed_teaching_corrections": [
+    {
+      "cards": [
+        "eqx",
+        "eqx-rewrite"
+      ],
+      "issue": "Matching at one chosen input does not establish equivalence. Numerical substitution eliminates mismatches; prove a remaining identity algebraically or use an established polynomial degree bound and enough distinct inputs."
+    },
+    {
+      "cards": [
+        "cir-read"
+      ],
+      "issue": "Circle centers and radii can be fractional or irrational. Exact completing-the-square arithmetic works regardless of integer grid coordinates; visual grid reading can be approximate."
+    },
+    {
+      "cards": [
+        "1vd-change"
+      ],
+      "issue": "Removing an extreme is not guaranteed to move the median only a little or the mean a lot. [0,100,1000] has median 100; removing 1000 leaves median 50. Changes depend on central gaps, the removed value, and count."
+    },
+    {
+      "cards": [
+        "le2",
+        "le2-parallel",
+        "le2-intercept",
+        "cir-tangent"
+      ],
+      "issue": "Slope -A/B needs B nonzero. Negative reciprocal needs a finite nonzero slope; horizontal and vertical perpendicular lines require separate handling or vector equations."
+    },
+    {
+      "cards": [
+        "sys-count"
+      ],
+      "issue": "Coefficient-ratio comparisons can divide by zero. Use determinant and consistency checks; first handle zero-coefficient equations that impose no constraint or are impossible."
+    },
+    {
+      "cards": [
+        "nle-count",
+        "nle-sum",
+        "nlf-vertex"
+      ],
+      "issue": "Quadratic discriminant, Vieta, and vertex formulas require nonzero leading coefficient. Parameter values making that coefficient zero need a linear or constant case."
+    },
+    {
+      "cards": [
+        "nle-count",
+        "nle-sum"
+      ],
+      "issue": "A polynomial obtained by squaring or clearing denominators can have roots excluded by the original equation. Discriminant and Vieta describe the transformed polynomial before domain filtering."
+    },
+    {
+      "cards": [
+        "nlf",
+        "nlf-vertex"
+      ],
+      "issue": "Vertex halfway between real zeros is available only when such real zeros exist. Restricted-domain extrema require feasible vertex and endpoints; open endpoints may not attain a bound."
+    },
+    {
+      "cards": [
+        "lf-interpret",
+        "nlf-exp-int"
+      ],
+      "issue": "A standalone coefficient need not be the time-zero value when the input or exponent is shifted. Interpret the complete expression."
+    },
+    {
+      "cards": [
+        "1vd",
+        "1vd-spread"
+      ],
+      "issue": "Do not claim standard deviation is never calculated. Where calculator computation is used, stdev is sample (n-1), stdevp is population (n); distinguish the requested convention."
+    },
+    {
+      "cards": [
+        "1vd-read"
+      ],
+      "issue": "Boxplot whiskers are not universally minimum and maximum: some conventions mark outliers separately. Follow the plot definition or legend."
+    },
+    {
+      "cards": [
+        "2vd-model"
+      ],
+      "issue": "Curvature alone does not prove an exponential model; quadratics and other models curve too. Use the specified family and difference or ratio structure at equal input increments."
+    },
+    {
+      "cards": [
+        "rtt-complement"
+      ],
+      "issue": "sin A = cos B implies A+B=90 degrees only with suitable angle restrictions, such as both acute in a right triangle."
+    },
+    {
+      "cards": [
+        "av-scale"
+      ],
+      "issue": "Area k^2 and volume k^3 scaling requires uniform similarity. Changing only one dimension does not use those powers."
+    },
+    {
+      "cards": [
+        "inf-moe"
+      ],
+      "issue": "A larger random sample reduces expected margin of error only under comparable confidence level and design; interval statements concern a population parameter, not the spread of individual responses."
+    }
+  ],
+  "source_backed_new_cases": [],
+  "source_review_limit": "No committed question/rationale image pair was independently verified for a new case in this review; do not attribute authored examples to bank sources."
+}

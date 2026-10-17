@@ -1,0 +1,85 @@
+{
+  "source": "October15 bank.pdf / parsed.json; source questions, all choices and full rationales individually reviewed. Findings compared against src/site/reasoning.js and src/build/rdata.json.",
+  "reviewedThroughIndex": 547,
+  "findings": [
+    {
+      "id": "5869a196",
+      "skill": "Central Ideas and Details",
+      "type": "method-gap-and-skill-taxonomy-exception",
+      "pattern": "Assigned retrieval condition does not necessarily equal the original source of knowledge.",
+      "observation": "Participants instructed to look up an answer might already know it. Their subsequent attribution to memory can be accurate, so the useful validity question separates prior knowledge from smartphone-induced source confusion. Correct D addresses this alternative; confidence, correctness and an equal delay do not.",
+      "existingCoverageGap": "rdata job-detail says its answer restates the named passage sentence and neighbors. This source item instead asks which new question would best evaluate a causal research claim; the existing proxy example does not cover dual-source prior knowledge.",
+      "suggestion": "Add an evaluation branch for questions about validity: identify what the operational measure labels as an error, then test whether it can occur without the hypothesized process."
+    },
+    {
+      "id": "5e57efec",
+      "skill": "Words in Context",
+      "type": "new-quantitative-word-pattern",
+      "pattern": "Variable costs can still be independent of donation size.",
+      "observation": "Costs vary across donors but do not rise with donation amount. Fewer large gifts reduce the number of reimbursements for a target total. Independent of fits; supplemental, predictive and subsumed do not explain the preference.",
+      "existingCoverageGap": "Existing reasoning examples cover rates, amounts, proportions and duration, but not variation versus dependence on a particular variable.",
+      "suggestion": "For relational vocabulary, name both variables and preserve which relationship is absent; do not replace independent with fixed."
+    },
+    {
+      "id": "2573d64b",
+      "skill": "Central Ideas and Details",
+      "type": "distinct-main-idea-evaluation-axis",
+      "pattern": "Comprehensiveness of testimony and coherence of authorial viewpoint are separate qualities.",
+      "observation": "The oral history is valuable and broad, yet lacks an authorial voice that unifies accounts. Its limitation does not imply omitted events or low participation.",
+      "existingCoverageGap": "Mixed-evidence example teaches preserving both halves, but not distinguishing the axis of criticism from an unrelated shortcoming.",
+      "suggestion": "When summarizing a qualified evaluation, name the specific limitation before reading choices that substitute a different defect."
+    },
+    {
+      "id": "4ed09415",
+      "skill": "Text Structure and Purpose",
+      "type": "new-function-distinction",
+      "pattern": "An exception to a behavioral trend can confirm the same explanatory framework.",
+      "observation": "Moonlight inhibits most nocturnal mammals but promotes mongoose lemur activity. Both outcomes are explained by risk-reward balance; visually dependent lemurs receive a different foraging benefit. Correct B accounts for both, whereas D wrongly says the exception undermines the explanation.",
+      "existingCoverageGap": "Existing mixed-evidence and mechanism examples do not distinguish exception to outcome from exception to explanatory framework.",
+      "suggestion": "In structure answers, ask whether the exception violates the proposed mechanism or reflects different inputs to that mechanism."
+    },
+    {
+      "id": "f6d1f735",
+      "skill": "Words in Context",
+      "type": "word-clue-search-scope-gap",
+      "pattern": "A defining vocabulary clue can occur in the following sentence, outside the blank’s own sentence.",
+      "observation": "The first sentence supplies no explanation of how the diaphragm contracts; the following sentence calls the contractions uncontrollable, which directly supports involuntarily. Beneficial infant effects are a separate qualified claim.",
+      "existingCoverageGap": "rdata jobs/job-word points to the sentence holding the blank, and others/o-word explicitly says to find the clue in the blank’s own sentence. Its worked example and the reasoning.js logical-operator correction do not teach expanding the search when that sentence lacks a decisive clue.",
+      "suggestion": "Start at the target sentence but read neighboring sentences for repeated referents and definitions before deciding that the clue is missing."
+    },
+    {
+      "id": "9ff88d6b",
+      "skill": "Words in Context",
+      "type": "new-hypothetical-relation-distinction",
+      "pattern": "An unreal alternative within the same event is counterfactual, rather than a replay of the past or an analogy to another context.",
+      "observation": "Viewers look where the ball would have traveled had its actual collider been absent. Counterfactual names that contrary-to-fact scenario; retrospective would revisit what happened, and analogical would compare a different but comparable context.",
+      "existingCoverageGap": "Neither reasoning.js nor rdata explains the difference among counterfactual alternatives, retrospective recall, and analogical comparison. Generic polarity and local substitution guidance does not supply the three-way event relationship.",
+      "suggestion": "For mental-scenario vocabulary, identify whether the imagined event actually happened, alters an element of the same event, or transfers its structure to another setting."
+    },
+    {
+      "id": "df45f0eb",
+      "skill": "Text Structure and Purpose",
+      "type": "new-discrepancy-explanation-distinction",
+      "pattern": "Research–event disagreement can arise from strategic timing within real-world observations, without invalidating the data as unreal or inconsistent.",
+      "observation": "Earlier election data mostly concern governments that postponed austerity until after voting; recent cases did not. The opening discrepancy is explained by this complicating circumstance, not by laboratory data, competing research groups, or researchers ignoring inconsistent records.",
+      "existingCoverageGap": "Existing reasoning distinguishes evidence roles and movable proxies, while the earlier language finding distinguishes exception to outcome from exception to mechanism. None illustrates a function answer that must preserve the mechanism by which selective strategic behavior hides the risk in observational data.",
+      "suggestion": "When a function answer includes the later explanation, paraphrase the exact data-generating circumstance and reject substitutions that change it into researcher error or a laboratory-versus-reality split."
+    }
+  ],
+  "sourceRationaleCautions": [
+    {
+      "id": "06b96bfc",
+      "observation": "Correct B is secure from pronunciation help and classes. Rationale for D says that if she were delighted to speak the language there would be no challenge; enthusiasm can coexist with limited skill. D fails because it does not express the obstacle required by but and this challenge, not because excitement eliminates difficulty."
+    },
+    {
+      "id": "7afb470b",
+      "observation": "The text distinguishes obligately migrating diadromous fish from those merely tolerant of salinity. The rationale generalizes that euryhaline fish do not relocate; salinity tolerance alone does not rule out migration. Key A rests on obligate migration versus tolerance without that requirement."
+    },
+    {
+      "id": "4ce8e2fa",
+      "observation": "Opaque securely means unclear about data practices. The rationale defines this as deliberately avoiding clear information, but the passage establishes lack of clarity and advocates’ response without proving intentional concealment."
+    }
+  ],
+  "reviewedCount": 548,
+  "total": 548
+}

@@ -1,0 +1,498 @@
+{
+  "skill": "prb",
+  "reviewed_count": 49,
+  "method": "Read OCR of every committed question and official solution image; visually inspected ambiguous age headers, penguin table, and gas-station table.",
+  "calculator_status": "Arithmetic suggestions only; live Desmos not verified.",
+  "questions": {
+    "eccbf957": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "One requested face among14:1/14.",
+      "sources": [
+        "m/q/eccbf957.webp",
+        "m/r/eccbf957.webp"
+      ]
+    },
+    "b1b5300b": {
+      "type": "prb-joint",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Hybrid and no more than25000: intersection2 over all14,1/7.",
+      "sources": [
+        "m/q/b1b5300b.webp",
+        "m/r/b1b5300b.webp"
+      ]
+    },
+    "1353b86e": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Blue10 over all40:1/4.",
+      "sources": [
+        "m/q/1353b86e.webp",
+        "m/r/1353b86e.webp"
+      ]
+    },
+    "d89c1513": {
+      "type": "prb-complement",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "No gasoline row50 over135. Visual source has unrelated beverage margin90 although60+35=95; requested fraction unaffected.",
+      "sources": [
+        "m/q/d89c1513.webp",
+        "m/r/d89c1513.webp"
+      ]
+    },
+    "e1ad3d41": {
+      "type": "prb-given",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Among chocolate kittens16, deep blue12:12/16.",
+      "sources": [
+        "m/q/e1ad3d41.webp",
+        "m/r/e1ad3d41.webp"
+      ]
+    },
+    "46545dd6": {
+      "type": "prb-given",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Among2010 internships140, Valley65:65/140.",
+      "sources": [
+        "m/q/46545dd6.webp",
+        "m/r/46545dd6.webp"
+      ]
+    },
+    "16cea46c": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Baritones10/25=0.40.",
+      "sources": [
+        "m/q/16cea46c.webp",
+        "m/r/16cea46c.webp"
+      ]
+    },
+    "b680e76d": {
+      "type": "prb-missing",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Missing disjoint cell1000-312-220-216=252.",
+      "sources": [
+        "m/q/b680e76d.webp",
+        "m/r/b680e76d.webp"
+      ]
+    },
+    "d4413871": {
+      "type": "prb-missing",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Negative rhesus row:2/(10+x)=1/9; x8.",
+      "sources": [
+        "m/q/d4413871.webp",
+        "m/r/d4413871.webp"
+      ]
+    },
+    "0301c5dc": {
+      "type": "prb-joint",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Camping and no bicycle paths5 over37.",
+      "sources": [
+        "m/q/0301c5dc.webp",
+        "m/r/0301c5dc.webp"
+      ]
+    },
+    "0ae37ff3": {
+      "type": "prb-complement",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Neither blue nor yellow means red or white:(7+4)/77=1/7.",
+      "sources": [
+        "m/q/0ae37ff3.webp",
+        "m/r/0ae37ff3.webp"
+      ]
+    },
+    "47624288": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Lion row total20 over80=1/4.",
+      "sources": [
+        "m/q/47624288.webp",
+        "m/r/47624288.webp"
+      ]
+    },
+    "e438ec3f": {
+      "type": "prb-pooled",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Tall maples45 over tall trees48+45=93;15/31.",
+      "sources": [
+        "m/q/e438ec3f.webp",
+        "m/r/e438ec3f.webp"
+      ]
+    },
+    "60caadfd": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Igneous10/70=1/7.",
+      "sources": [
+        "m/q/60caadfd.webp",
+        "m/r/60caadfd.webp"
+      ]
+    },
+    "89ff6a0a": {
+      "type": "prb-pooled",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Exclude group2; eligible65,wanted62:62/65.",
+      "sources": [
+        "m/q/89ff6a0a.webp",
+        "m/r/89ff6a0a.webp"
+      ]
+    },
+    "e5b5fbdd": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Rocky planets4/8=1/2.",
+      "sources": [
+        "m/q/e5b5fbdd.webp",
+        "m/r/e5b5fbdd.webp"
+      ]
+    },
+    "1fc4f47b": {
+      "type": "prb-complement",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Remaining theater probability0.28 times350=98.",
+      "sources": [
+        "m/q/1fc4f47b.webp",
+        "m/r/1fc4f47b.webp"
+      ]
+    },
+    "2905ded0": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Age at least40 row107 over135.",
+      "sources": [
+        "m/q/2905ded0.webp",
+        "m/r/2905ded0.webp"
+      ]
+    },
+    "2df8f293": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "One D vertex over14 vertices:1/14.",
+      "sources": [
+        "m/q/2df8f293.webp",
+        "m/r/2df8f293.webp"
+      ]
+    },
+    "ec7b0eb8": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Daily phone column415 over799.",
+      "sources": [
+        "m/q/ec7b0eb8.webp",
+        "m/r/ec7b0eb8.webp"
+      ]
+    },
+    "79201024": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Saxophone11/45.",
+      "sources": [
+        "m/q/79201024.webp",
+        "m/r/79201024.webp"
+      ]
+    },
+    "585de39a": {
+      "type": "prb-count",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "September total97 million times0.43=41.71;round p42.",
+      "sources": [
+        "m/q/585de39a.webp",
+        "m/r/585de39a.webp"
+      ]
+    },
+    "12dbe3de": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Defective4/1000=0.004.",
+      "sources": [
+        "m/q/12dbe3de.webp",
+        "m/r/12dbe3de.webp"
+      ]
+    },
+    "912cd125": {
+      "type": "prb-given",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Condition no rain64,wanted weekend16:1/4.",
+      "sources": [
+        "m/q/912cd125.webp",
+        "m/r/912cd125.webp"
+      ]
+    },
+    "6a715bed": {
+      "type": "prb-pooled",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Visually confirmed0\u20139,10\u201319,20+ headings;at least10 denominator60, groupA23:23/60.",
+      "sources": [
+        "m/q/6a715bed.webp",
+        "m/r/6a715bed.webp"
+      ]
+    },
+    "589cd7a6": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Brown13/104=1/8.",
+      "sources": [
+        "m/q/589cd7a6.webp",
+        "m/r/589cd7a6.webp"
+      ]
+    },
+    "ed6b7e5f": {
+      "type": "prb-given",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Pepperoni condition50,thin20:2/5.",
+      "sources": [
+        "m/q/ed6b7e5f.webp",
+        "m/r/ed6b7e5f.webp"
+      ]
+    },
+    "9ce8cbbe": {
+      "type": "prb-counting",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Even2 through50 count25 over original160:5/32.",
+      "sources": [
+        "m/q/9ce8cbbe.webp",
+        "m/r/9ce8cbbe.webp"
+      ]
+    },
+    "30db8f77": {
+      "type": "prb-complement",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Remaining groupC0.32 times275=88.",
+      "sources": [
+        "m/q/30db8f77.webp",
+        "m/r/30db8f77.webp"
+      ]
+    },
+    "2a08d878": {
+      "type": "prb-symbolic",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Nonfiction n over total n+12.",
+      "sources": [
+        "m/q/2a08d878.webp",
+        "m/r/2a08d878.webp"
+      ]
+    },
+    "38a9ac45": {
+      "type": "prb-count",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "1200/day times5days=6000; fraction6000/60000=1/10.",
+      "sources": [
+        "m/q/38a9ac45.webp",
+        "m/r/38a9ac45.webp"
+      ]
+    },
+    "a478f9f5": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "ColorY3/157.",
+      "sources": [
+        "m/q/a478f9f5.webp",
+        "m/r/a478f9f5.webp"
+      ]
+    },
+    "dae79de4": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "At least40 row105/135.",
+      "sources": [
+        "m/q/dae79de4.webp",
+        "m/r/dae79de4.webp"
+      ]
+    },
+    "b6569d0e": {
+      "type": "prb-pooled",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "At least50 total34;at least60 count10:10/34.",
+      "sources": [
+        "m/q/b6569d0e.webp",
+        "m/r/b6569d0e.webp"
+      ]
+    },
+    "5dc386fb": {
+      "type": "prb-percent",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Sales tax denominator45;no income tax6;13.3%.",
+      "sources": [
+        "m/q/5dc386fb.webp",
+        "m/r/5dc386fb.webp"
+      ]
+    },
+    "014c47ab": {
+      "type": "prb-given",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Tulip condition50;siteA35:7/10.",
+      "sources": [
+        "m/q/014c47ab.webp",
+        "m/r/014c47ab.webp"
+      ]
+    },
+    "1b8e412e": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "One positive among three values:1/3.",
+      "sources": [
+        "m/q/1b8e412e.webp",
+        "m/r/1b8e412e.webp"
+      ]
+    },
+    "f496d2c0": {
+      "type": "prb-pooled",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "At least18 proportion0.74;over65 proportion0.24:0.24/0.74\u22480.324;closest0.32.",
+      "sources": [
+        "m/q/f496d2c0.webp",
+        "m/r/f496d2c0.webp"
+      ]
+    },
+    "89f20d9e": {
+      "type": "prb-pooled",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "At least10 total60;groupA17+8=25:5/12.",
+      "sources": [
+        "m/q/89f20d9e.webp",
+        "m/r/89f20d9e.webp"
+      ]
+    },
+    "b8150b17": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Defect rate29 per100 gives29/100.",
+      "sources": [
+        "m/q/b8150b17.webp",
+        "m/r/b8150b17.webp"
+      ]
+    },
+    "1dcea480": {
+      "type": "prb-count",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Blue count0.35 times60=21.",
+      "sources": [
+        "m/q/1dcea480.webp",
+        "m/r/1dcea480.webp"
+      ]
+    },
+    "c943acba": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Blue houses2/7.",
+      "sources": [
+        "m/q/c943acba.webp",
+        "m/r/c943acba.webp"
+      ]
+    },
+    "a3384df0": {
+      "type": "prb-closest",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Visually confirmed female180 and counts59,27,54,40;target60,chinstrap closest.",
+      "sources": [
+        "m/q/a3384df0.webp",
+        "m/r/a3384df0.webp"
+      ]
+    },
+    "0a99e5bb": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "One negative among three:1/3.",
+      "sources": [
+        "m/q/0a99e5bb.webp",
+        "m/r/0a99e5bb.webp"
+      ]
+    },
+    "4e527894": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "White buttons8/20=2/5.",
+      "sources": [
+        "m/q/4e527894.webp",
+        "m/r/4e527894.webp"
+      ]
+    },
+    "46b2e169": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Red pens13/(13+37)=13/50.",
+      "sources": [
+        "m/q/46b2e169.webp",
+        "m/r/46b2e169.webp"
+      ]
+    },
+    "ecf8d15f": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Vegetarian9/50.",
+      "sources": [
+        "m/q/ecf8d15f.webp",
+        "m/r/ecf8d15f.webp"
+      ]
+    },
+    "f8696cd8": {
+      "type": "prb-given",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Condition HR total6;master2:1/3.",
+      "sources": [
+        "m/q/f8696cd8.webp",
+        "m/r/f8696cd8.webp"
+      ]
+    },
+    "e9ed719f": {
+      "type": "prb-simple",
+      "question_read": true,
+      "solution_read": true,
+      "evidence": "Red column30 over100=3/10.",
+      "sources": [
+        "m/q/e9ed719f.webp",
+        "m/r/e9ed719f.webp"
+      ]
+    }
+  }
+}

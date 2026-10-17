@@ -1,4 +1,6 @@
 import json,re,collections as C
+from probability import REVIEWED
+from review_catalog import TYPE_CORRECTIONS
 SK={'Linear equations in one':'le1','Linear functions':'lf','Linear equations in two':'le2','Systems of two linear':'sys','Linear inequalities in one':'inq',
 'Equivalent expressions':'eqx','Nonlinear equations in':'nle','Nonlinear functions':'nlf',
 'Ratios, rates,':'rat','Ratios, rates, proportional':'rat','Percentages':'pct','One-variable data:':'1vd','Two-variable data:':'2vd','Probability and':'prb','Inference from sample':'inf','Evaluating statistical':'stc',
@@ -100,8 +102,18 @@ R={
        ('cir-read',r'center|radius|diameter|xy-plane|equation',None),
        ('cir-geo',r'',None)],
 }
+R['prb'] = [(kind, pattern, None) for kind, pattern in [
+    ('prb-closest', r'closest to being'), ('prb-missing', r'what is the value of x|how many of the males'),
+    ('prb-symbolic', r'in terms of'), ('prb-counting', r'positive integers'),
+    ('prb-percent', r'what percent of'), ('prb-pooled', r'given that.*(?:at least|not in)|each row'),
+    ('prb-given', r'given that|of those|what fraction of'),
+    ('prb-complement', r'neither|did not purchase'), ('prb-count', r'how many|nearest integer'),
+    ('prb-joint', r'hybrid.*priced|camping facilities but'), ('prb-simple', r'')]]
+
 def classify(q):
     k=SK[q['skill']]; s=q['stem'].lower(); r=q['rat'].lower()
+    if q['id'] in REVIEWED: return k, REVIEWED[q['id']]
+    if q['id'] in TYPE_CORRECTIONS: return k, TYPE_CORRECTIONS[q['id']]
     for t,sp,rp in R[k]:
         if sp=='' and rp is None: return k,t
         if rp is not None and sp in ('',r'(interpretation|represent).{0,200}|.{0,0}'):

@@ -24,3 +24,28 @@ Copy `mdata.json` into `src/build/` and the four image folders into `m/`.
 
 ## Checks
 `node src/check/smoke.js index.html 390` (Reading and Writing) and `node src/check/msmoke.js index.html 390 light` (Math) load every view, look for script errors, failed requests and sideways scrolling, and run a practice set.
+
+
+## Refreshing the October source review
+
+The complete per-question reading ledgers are in `build/reviews/`. Original PDF exports are not committed. The audit records their hashes and the original repository commit used to check preservation.
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 src/math/refresh_teaching.py
+PYTHONDONTWRITEBYTECODE=1 python3 src/check/export_review_findings.py
+PYTHONDONTWRITEBYTECODE=1 python3 src/check/review_coverage.py /path/to/math.pdf /path/to/reading-writing.pdf
+```
+
+Rebuild with the two assembly commands above. The assembler also writes `site/bundle.js` as an intermediate; it is not a source file. To keep intermediates outside the checkout, copy `site/` and `build/` to a temporary parent directory and run its assembler there, then run `make_index.py` on the resulting page.
+
+The browser integration check requires Playwright, a Chromium executable (default `/usr/bin/chromium`, override with `CHROMIUM_EXECUTABLE`), and an HTTP server serving the repository:
+
+```sh
+python3 -m http.server 8000
+# In another terminal:
+node src/check/source-review.js http://127.0.0.1:8000/
+```
+
+This checks all Math comparison groups, restored English practice images and grading, source question links, and desktop/mobile layouts. See `REVIEW.md` for the exact review scope.
+
+`check/import_reading_sources.py --pdf /path/to/reading-writing.pdf --parsed /path/to/parsed.json` regenerates the restored English source images and catalogs. It requires PyMuPDF and Pillow. The parsed input must contain the source question IDs, full raw text, and zero-based PDF page indices; it is produced during source extraction. The importer preserves complete questions with choices and source rationales.

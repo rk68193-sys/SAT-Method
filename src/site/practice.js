@@ -4,7 +4,7 @@
   function tset() {
     var s = isObj(store.s.timed) ? store.s.timed : {};
     return {
-      src: ['g', 'r', 'q', 'n', 'x', 'both'].indexOf(s.src) !== -1 ? s.src : 'g',
+      src: ['g', 'a', 'r', 'q', 'v', 'n', 'x', 'both'].indexOf(s.src) !== -1 ? s.src : 'g',
       part: ['all', 'A', 'B', 'C'].indexOf(s.part) !== -1 ? s.part : 'all',
       diff: ['all', 'Easy', 'Medium', 'Hard'].indexOf(s.diff) !== -1 ? s.diff : 'all',
       which: ['all', 'new', 'missed', 'slow'].indexOf(s.which) !== -1 ? s.which : 'all',
@@ -16,21 +16,27 @@
   // n: notes questions and x: transition questions, both with College Board's own answers
   var BANK = D.bank || {};
   BANK.notes = BANK.notes || []; BANK.trans = BANK.trans || []; BANK.reading = BANK.reading || [];
+  BANK.figures = BANK.figures || []; BANK.grammarSources = BANK.grammarSources || [];
   var NOTES_PHASES = [[10 / 60, 'Goal', 'Read the goal first'], [0.75, 'Match', 'Find the choice that does it'], [1, 'Confirm', 'Check it against the notes']];
   function itemsAll() {
     return EXLIST.map(function (ex) { return { t: 'g', id: ex.q, d: ex.d, p: ex.p, ex: ex }; })
       .concat(RLIST.map(function (x) { return { t: 'r', id: x.qid, d: x.diff, p: 'R', x: x }; }))
       .concat(BANK.reading.map(function (b) { return { t: 'q', id: b.id, d: b.d, p: 'R', b: b }; }))
+      .concat(BANK.figures.map(function (b) { return { t: 'v', id: b.id, d: b.d, p: 'R', b: b }; }))
+      .concat(BANK.grammarSources.map(function (b) { return { t: 'a', id: b.id, d: b.d, p: b.p, b: b }; }))
       .concat(BANK.notes.map(function (b) { return { t: 'n', id: b.id, d: b.d, p: 'N', b: b }; }))
       .concat(BANK.trans.map(function (b) { return { t: 'x', id: b.id, d: b.d, p: 'C', b: b }; }));
   }
   function bucketOf(it) { return it.t === 'g' ? 't' : it.t === 'r' ? 'r' : 'b'; }
   function result(it) { return rec(bucketOf(it), it.id); }
   function matching(s) {
+    var seen = {};
     return itemsAll().filter(function (it) {
       var r = result(it);
-      if (s.src === 'both' ? it.t === 'x' : it.t !== s.src) { return false; }
-      if (it.t === 'g' && s.part !== 'all' && it.p !== s.part) { return false; }
+      if (s.src !== 'both' && it.t !== s.src) { return false; }
+      if ((it.t === 'g' || it.t === 'a') && s.part !== 'all' && it.p !== s.part) { return false; }
+      if (s.src === 'both' && seen[it.id]) { return false; }
+      seen[it.id] = true;
       if (s.diff !== 'all' && it.d !== s.diff) { return false; }
       if (s.which === 'new' && r) { return false; }
       if (s.which === 'missed' && !(r && r.c === 0)) { return false; }
@@ -59,17 +65,18 @@
     var s = tset();
     var g = timedRecord('t', EXLIST.map(function (e) { return e.q; })), r = timedRecord('r', RLIST.map(function (x) { return x.qid; }));
     var nb = timedRecord('b', BANK.notes.map(function (x) { return x.id; })), xb = timedRecord('b', BANK.trans.map(function (x) { return x.id; })), qb = timedRecord('b', BANK.reading.map(function (x) { return x.id; }));
-    var all = itemsAll();
+    var seen = {};
+    var all = itemsAll().filter(function (it) { if (seen[it.id]) { return false; } seen[it.id] = true; return true; });
     var nNew = all.filter(function (it) { return !result(it); }).length;
     var nMiss = all.filter(function (it) { var x = result(it); return x && x.c === 0; }).length;
     var nSlow = all.filter(function (it) { var x = result(it); return x && typeof x.t === 'number' && x.t > (x.l || 60); }).length;
     var h = (prefix || '') + '<header class="read"><p class="eyebrow">Practice</p><h2 class="vtitle">Real questions against the clock</h2>' +
-      '<p class="lede">' + EXLIST.length + ' grammar and transition questions with at least one for every rule, the ' + RLIST.length + ' reading worked examples, ' + BANK.reading.length + ' more reading questions from the bank, and every notes (' + BANK.notes.length + ') and transition (' + BANK.trans.length + ') question in the bank with College Board’s own answer. The clock counts down and keeps counting past zero, so you can see how far over you went. Each answer is followed by its fast path or walkthrough.</p></header>' +
+      '<p class="lede">All 1,845 Reading and Writing questions are available, including ' + BANK.figures.length + ' restored figure questions and ' + BANK.grammarSources.length + ' additional grammar questions with their full official explanations. Mixed sets include each question once. The clock continues past zero so you can see how far over you went.</p></header>' +
       '<div class="record"><div><b>' + g.tried + '</b><span>of ' + EXLIST.length + ' grammar tried</span></div><div><b>' + g.right + '</b><span>right last time</span></div>' +
       '<div><b>' + r.tried + '</b><span>of ' + RLIST.length + ' reading tried</span></div><div><b>' + r.right + '</b><span>right last time</span></div>' +
       '<div><b>' + qb.tried + '</b><span>of ' + BANK.reading.length + ' bank reading tried</span></div><div><b>' + nb.tried + '</b><span>of ' + BANK.notes.length + ' notes tried</span></div><div><b>' + xb.tried + '</b><span>of ' + BANK.trans.length + ' transitions tried</span></div></div>' +
       '<div class="tsetup">' +
-      seg('tsrc', 'Questions from', [['g', 'Grammar and transition lessons'], ['r', 'Reading worked examples'], ['q', BANK.reading.length + ' reading questions from the bank'], ['n', 'All ' + BANK.notes.length + ' notes questions'], ['x', 'All ' + BANK.trans.length + ' transition questions'], ['both', 'Mixed: everything but the transition set']], s.src) +
+      seg('tsrc', 'Questions from', [['g', 'Grammar and transition lessons'], ['a', 'Additional grammar (' + BANK.grammarSources.length + ')'], ['r', 'Reading worked examples'], ['q', BANK.reading.length + ' text reading questions'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'All ' + BANK.notes.length + ' notes questions'], ['x', 'All ' + BANK.trans.length + ' transition questions'], ['both', 'Mixed: all 1,845 questions']], s.src) +
       '<div id="tpartwrap">' + seg('tpart', 'Grammar part', [['all', 'All parts'], ['A', 'A · Boundaries'], ['B', 'B · Form, Structure, and Sense'], ['C', 'C · Transitions']], s.part) + '</div>' +
       seg('tdiff', 'Difficulty', [['all', 'Any'], ['Easy', 'Easy'], ['Medium', 'Medium'], ['Hard', 'Hard']], s.diff) +
       seg('twhich', 'Which questions', [['all', 'All'], ['new', 'Not tried yet (' + nNew + ')'], ['missed', 'Missed last time (' + nMiss + ')'], ['slow', 'Over the clock last time (' + nSlow + ')']], s.which) +
@@ -81,7 +88,7 @@
       '<button type="button" class="linkbtn" id="tforget"' + (g.tried + r.tried + nb.tried + xb.tried + qb.tried ? '' : ' hidden') + '>Clear my saved results</button></div>' +
       '<div id="tconfirm" hidden><p class="verdict miss">Clear every saved timed result in this browser?</p><div class="row"><button type="button" class="btn" id="tyes">Clear them</button><button type="button" class="btn ghost" id="tno">Keep them</button></div></div>' +
       '<p class="fine">Answer with A, B, C or D, or 1 to 4, and press Enter for the next question. ' + (canStore ? 'Results are saved in this browser only.' : 'Results last until you close this page.') + '</p></div>' +
-      '<h3 class="subh">Tables and graphs</h3><p class="pretty">The 133 table and graph questions are not in these sets, because their figures are drawings the export does not keep as text. Their IDs are on the <a href="#sets">practice sets</a> page, to open in College Board’s free question bank.</p>';
+      '<h3 class="subh">Original questions and explanations</h3><p class="pretty">The restored source images include printed choices and complete official explanations. Open an image to enlarge it. Two further figure questions are already in Reading worked examples. <a href="#data-patterns">Study the deeper data patterns</a>.</p>';
     var host = document.getElementById('thost');
     host.innerHTML = h;
     function readSettings() {
@@ -92,7 +99,7 @@
     }
     function refresh() {
       var st = readSettings(), n = matching(st).length;
-      document.getElementById('tpartwrap').hidden = st.src !== 'g' && st.src !== 'both';
+      document.getElementById('tpartwrap').hidden = st.src !== 'g' && st.src !== 'a' && st.src !== 'both';
       document.getElementById('tcount').textContent = n === 0 ? 'No question matches these settings.' : plural(n, 'question') + ' match.';
       document.getElementById('tstart').disabled = n === 0;
     }
@@ -122,11 +129,11 @@
     toTop();
   }
   function timedDraw() {
-    var it = TS.items[TS.i], lim = it.t === 'r' || it.t === 'q' ? TS.tier.r : TS.tier.g;
-    document.getElementById('tpos').textContent = 'Question ' + (TS.i + 1) + ' of ' + TS.items.length + ' · ' + { g: 'grammar', r: 'reading', q: 'reading', n: 'notes', x: 'transition' }[it.t];
+    var it = TS.items[TS.i], lim = it.t === 'r' || it.t === 'q' || it.t === 'v' ? TS.tier.r : TS.tier.g;
+    document.getElementById('tpos').textContent = 'Question ' + (TS.i + 1) + ' of ' + TS.items.length + ' · ' + { g: 'grammar', a: 'grammar', r: 'reading', q: 'reading', v: 'table or graph', n: 'notes', x: 'transition' }[it.t];
     document.getElementById('tnav').innerHTML = '';
     document.getElementById('tnext2').hidden = true;
-    tclock.reset(lim, it.t === 'r' || it.t === 'q' ? READING_PHASES : it.t === 'n' ? NOTES_PHASES : GRAMMAR_PHASES);
+    tclock.reset(lim, it.t === 'r' || it.t === 'q' || it.t === 'v' ? READING_PHASES : it.t === 'n' ? NOTES_PHASES : GRAMMAR_PHASES);
     TS.paused = false;
     var onAnswer = function (k, ok) {
       var t = tclock.stop(), bucket = bucketOf(it), prev = rec(bucket, it.id);
@@ -147,7 +154,7 @@
     TS.card = it.t === 'g'
       ? QCard(it.ex, { split: true, hints: TS.hints, metaAfter: 'Question ' + it.id + ' · ' + it.d + ' · rule ' + U[it.ex.u].num, onAnswer: onAnswer, after: after })
       : it.t === 'r' ? RCard(it.x, { meta: 'Question ' + it.id, onAnswer: onAnswer, after: after })
-      : it.t === 'q' ? QBCard(it.b, { meta: 'Question ' + it.id + ' · ' + it.b.jn + ' · ' + it.d, onAnswer: onAnswer, after: after })
+      : it.t === 'q' || it.t === 'v' || it.t === 'a' ? QBCard(it.b, { meta: 'Question ' + it.id + ' · ' + it.b.jn + ' · ' + it.d, onAnswer: onAnswer, after: after })
       : BCard(it.b, it.t, { meta: 'Question ' + it.id + ' · ' + it.d, onAnswer: onAnswer, after: after });
     var host = document.getElementById('tcard');
     host.textContent = '';
@@ -198,6 +205,7 @@
     var retry = missed.map(function (r) { return r.it; }), st = tset();
     var lineFor = function (r) {
       if (r.it.t === 'g') { var ex = r.it.ex, u = U[ex.u]; return '<a href="#' + u.id + '">' + u.num + ' ' + u.title + '</a>'; }
+      if (r.it.t === 'a') { var ua = U[r.it.b.unit]; return ua ? '<a href="#' + ua.id + '">' + ua.num + ' ' + ua.title + '</a>' : 'Grammar question'; }
       if (r.it.t === 'x') { var ux = U[r.it.b.u]; return ux ? '<a href="#' + ux.id + '">' + ux.num + ' ' + ux.title + '</a>' : 'Transition question'; }
       if (r.it.t === 'n') { return '<a href="#notesfirst">Notes question: goal first</a>'; }
       if (r.it.t === 'q') { var jq = RD.jobs.filter(function (j) { return j.name === r.it.b.jn; })[0]; return jq ? '<a href="#' + jq.id + '">' + esc(r.it.b.jn) + '</a>' : esc(r.it.b.jn); }
@@ -223,7 +231,7 @@
   function BCard(b, kind, o) {
     o = o || {};
     var el = document.createElement('div');
-    el.className = 'rcard bcard';
+    el.className = 'rcard bcard' + (b.qsrc ? ' sourcecard' : '');
     var pass = kind === 'n'
       ? '<p class="nlead">' + b.lead + '</p><ul class="nnotes">' + b.notes.map(function (n) { return '<li>' + n + '</li>'; }).join('') + '</ul>'
       : '<p class="passage">' + b.text + '</p>';
@@ -271,7 +279,7 @@
         if (b.tx && b.tx[i] && b.tx[i] !== lab) { lab = b.tx[i]; h += '<p class="label" style="margin-top:.6rem">' + esc(lab) + '</p>'; }
         h += walk && b.tg ? '<p class="wline' + (b.rs.indexOf(i) !== -1 ? ' rest' : '') + (i === b.pt ? ' mpoint' : '') + '">' + tagHTML(b.tg[i]) + ' ' + s + '</p>' : '<span class="psent">' + s + '</span> ';
       });
-      return walk && b.tg ? h : '<p class="passage">' + h + '</p>';
+      return walk && b.tg ? h : '<div class="passage">' + h + '</div>';
     }
     el.innerHTML = '<div class="q split"><div class="qpass">' + (o.meta ? '<p class="qmeta">' + o.meta + '</p>' : '') + passage(false) + '</div>' +
       '<div class="qask"><p class="stem">' + b.q + '</p><ol class="opts">' + ['A', 'B', 'C', 'D'].map(function (k) {
@@ -299,7 +307,7 @@
         '<h3 class="fasth">How the wrong choices fail</h3><ul class="plainlist">' + ['A', 'B', 'C', 'D'].filter(function (x) { return x !== b.ans && tr[x]; }).map(function (x) {
           return '<li><b>' + x + ': ' + esc(tr[x]) + '.</b> It ' + KIND_DEF[tr[x]] + '</li>'; }).join('') + '</ul>' : '') +
         (job ? '<p class="fine"><a href="#' + job.id + '">The ' + esc(b.jn) + ' job: what to look at first</a></p>' : '') +
-        '<p class="fine muted">Answer: College Board’s key. Explanations: College Board’s rationale, shortened.' + (b.tg ? ' Tags and wrong-choice labels: Claude’s annotation, done twice blind and settled by a third pass.' : '') + '</p>';
+        '<p class="fine muted">Answer: College Board’s key. Explanations: College Board’s rationale; source-image cards retain the full explanation.' + (b.tg ? ' Tags and wrong-choice labels: Claude’s annotation, done twice blind and settled by a third pass.' : '') + '</p>';
       if (o.after) { o.after(ok); }
       showFeedback($('.verdict', el));
     }

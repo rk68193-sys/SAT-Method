@@ -1,0 +1,405 @@
+{
+  "scope": "Source-backed findings beyond the initial eight data cases and reasoning.js. Evidence/Synthesis review is complete for 481 target records (277 Command of Evidence and 204 Rhetorical Synthesis); this findings list is selective and does not cover other bank skills.",
+  "findings": [
+    {
+      "id": "0d7f4966",
+      "pages": [
+        14
+      ],
+      "type": "teaching addition",
+      "title": "Weakening an identification does not identify its rival",
+      "finding": "B makes both jellyfish and ctenophore identification inconclusive. That weakens the claimed ctenophore identity without proving jellyfish. A comparative preservation advantage alone (D) does not establish inability to identify."
+    },
+    {
+      "id": "068f939b",
+      "pages": [
+        19
+      ],
+      "type": "teaching addition",
+      "title": "Test the exact relationship, not a nearby topic",
+      "finding": "Art–reality relationships differ when one theory permits hypothetical realities not already existing. Shared audience psychology or word history does not answer the translation claim."
+    },
+    {
+      "id": "ebe1eabd",
+      "pages": [
+        30
+      ],
+      "type": "teaching addition",
+      "title": "An adaptation explanation needs a trait-specific resource advantage",
+      "finding": "Different available prey alone does not explain smaller size. Access to shallow foraging areas inaccessible to larger whales supplies the missing size-to-benefit mechanism."
+    },
+    {
+      "id": "69d913d1",
+      "pages": [
+        46,
+        47
+      ],
+      "type": "rationale caution",
+      "title": "Normalized baseline and significance are separate from bar height",
+      "finding": "Graph axis notes differences from baseline were not statistically significant. A visual bar above 100% does not establish significant rebound. Source rationale’s “all seals” and “prolonged period” expectations are stronger than the definition supplied; retain the tentative “may not” conclusion and keyed A."
+    },
+    {
+      "id": "3d91c973",
+      "pages": [
+        52
+      ],
+      "type": "source typo",
+      "title": "Marine reptiles become mammals in one rationale sentence",
+      "finding": "Correct-answer rationale says “nonendothermic marine mammals” where passage and C say marine reptiles. This is a noun slip; key C remains supported."
+    },
+    {
+      "id": "aa7e10d0",
+      "pages": [
+        1169
+      ],
+      "type": "source rationale correction",
+      "title": "B states the result but omits the study",
+      "finding": "Source rejection says B “doesn’t include the study’s findings” despite B giving 74 Orchidaceae species. The supported reason is its failure to present the study. A supplies study attribution and result; key unchanged."
+    },
+    {
+      "id": "6c9df5d1",
+      "pages": [
+        1200
+      ],
+      "type": "teaching addition",
+      "title": "Emphasis depends on sentence structure, not fact presence",
+      "finding": "B mentions different topics but ends on shared influence; A concedes shared effect before foregrounding autobiography versus fiction. For an emphasis goal, merely containing a true difference is insufficient."
+    },
+    {
+      "id": "7d5c32e6",
+      "pages": [
+        1210
+      ],
+      "type": "teaching addition",
+      "title": "Historical context requires the claim plus its intellectual setting",
+      "finding": "A links Einstein’s independent reality claim to the field’s emergence and subsequent acceptance of the rival view. A date or famous debate alone does not give the requested argument in context."
+    },
+    {
+      "id": "b0b40727",
+      "pages": [
+        61,
+        62
+      ],
+      "type": "teaching addition",
+      "title": "Cross-check every requested outcome against the same focal group",
+      "finding": "D compares positive versus both controls for enjoyment and endurance. A’s endurance comparison leaves positive feedback out, so cannot establish absence of its physical effect."
+    },
+    {
+      "id": "a3204ab0",
+      "pages": [
+        1234
+      ],
+      "type": "source rationale omission",
+      "title": "Carrying capacity counts individuals of one species",
+      "finding": "C says maximum number of species, conflicting with notes’ maximum number of a species. Rationale calls C a definition and rejects only lack of wolf count. Correct instruction: C also misdefines carrying capacity. D remains correct."
+    },
+    {
+      "id": "3fa48bf3",
+      "pages": [
+        1223
+      ],
+      "type": "teaching addition",
+      "title": "Challenging priority does not deny accomplishment",
+      "finding": "Earlier Indigenous fossil discovery would challenge Plot’s being first, not his having found dinosaur remains. Also preserve scope: general dinosaur priority is not priority for M. carinatus specifically."
+    },
+    {
+      "id": "b07a7634",
+      "pages": [
+        1215
+      ],
+      "type": "teaching addition",
+      "title": "Track the actor and material through a process",
+      "finding": "A/B/D use process vocabulary but change what passes the dead zone, what is baked, or when curing ends. C preserves UV→resin layers→object oven sequence."
+    },
+    {
+      "id": "af88c47a",
+      "pages": [
+        1290
+      ],
+      "type": "teaching addition",
+      "title": "The goal determines which source details belong in a narrative opening",
+      "finding": "Prompt calls VGHS award-nominated to identify its subject, but the requested opening is best served by protagonist, named series, genre, and launch time. A need not repeat the award; outcome-only B jumps past introduction."
+    },
+    {
+      "id": "d8aa8ba2",
+      "pages": [
+        1318
+      ],
+      "type": "rationale precision",
+      "title": "Stellar mass is not radius",
+      "finding": "D correctly says SiriusA is more massive than Sun. Source rationale glosses this as larger; retain mass terminology because the notes’ solar masses do not establish radius."
+    },
+    {
+      "id": "35507eba",
+      "pages": [
+        1336
+      ],
+      "type": "source rationale omission",
+      "title": "Quoted wording must remain exact",
+      "finding": "D changes notes’ quoted “unsung heroines of the Ghanaian Republic” to “unsung heroes of the Ghanaian Republic.” Source rejection only addresses wrong purpose. It also inaccurately quotes the notes. A remains correct."
+    },
+    {
+      "id": "24014c3f",
+      "pages": [
+        1319
+      ],
+      "type": "teaching addition",
+      "title": "A concessive clause may contain the requested fact without emphasizing it",
+      "finding": "D concedes discovery significance with “Though” then foregrounds erroneous hypothesis. A foregrounds significance and consequences; importance merely appearing is not enough."
+    },
+    {
+      "id": "de01ccef",
+      "pages": [
+        1375
+      ],
+      "type": "teaching addition",
+      "title": "Match the exact comparison axis",
+      "finding": "Goal asks how GREEN backgrounds are used across countries. A contrasts colors on highways; B holds color fixed and contrasts the road classes receiving it. A true contrast can still answer a nearby question."
+    },
+    {
+      "id": "25755def",
+      "pages": [
+        1388
+      ],
+      "type": "teaching addition",
+      "title": "A valid contrast can use a secondary measured characteristic",
+      "finding": "D contrasts sample thicknesses rather than main temperature-change results. Broad “contrast samples” goal allows this supported difference; avoid imposing a more specific goal absent from question."
+    },
+    {
+      "id": "5645f119",
+      "pages": [
+        1418
+      ],
+      "type": "source rationale omission",
+      "title": "Promising potential is not established commercial viability",
+      "finding": "A reuses quoted words “commercially viable” but changes authors’ conclusion from “promising potential as a commercially viable” crop to marigolds WERE commercially viable. Source rationale only rejects incompleteness. A also overstates conclusion strength. C remains correct."
+    },
+    {
+      "id": "19b08ead",
+      "pages": [
+        1451
+      ],
+      "type": "teaching addition",
+      "title": "A shared failure can arise from different failed criteria",
+      "finding": "A groups CTAB2X and Pplant as less effective because each fails at least one of yield/purity. They need not have the same failed metric or matching numerical values. The goal is the significance of their shared inability to meet both criteria."
+    },
+    {
+      "id": "b44141cf",
+      "pages": [
+        1470
+      ],
+      "type": "source rationale omission",
+      "title": "Syllables per second do not measure information per second",
+      "finding": "B claims information is conveyed faster in Spanish based on 7.7 versus5.3 syllables/sec, though notes distinguish roughly constant information rates from varying syllable rates. Rationale rejects only limited overview; B also conflates metrics. D remains correct."
+    },
+    {
+      "id": "a86c0b1b",
+      "pages": [
+        1484
+      ],
+      "type": "teaching addition",
+      "title": "Explain a change with a changing mechanism",
+      "finding": "D gives current closeness and apparent merging; C specifically says stars moved together since older accounts. To explain appearance change, preserve the temporal movement rather than static condition alone."
+    },
+    {
+      "id": "f6d454c1",
+      "pages": [
+        1551
+      ],
+      "type": "teaching addition",
+      "title": "Choose the requested event sequence, not the investigators’ workflow",
+      "finding": "D gives proposal→simulation→hypothesis sequence. C gives the physical history proposed in the study, which is the requested target. Same sequence vocabulary can describe the wrong events."
+    },
+    {
+      "id": "77e3b3b3",
+      "pages": [
+        1548
+      ],
+      "type": "teaching addition",
+      "title": "A statistic stays attached to its measured outcome and causal direction",
+      "finding": "D changes99% less hunting time caused by more tuna into99% tuna increase caused by changed hunting. Both the metric and causal arrow must survive synthesis. B also upgrades pending deterrent testing to proven efficacy."
+    },
+    {
+      "id": "be19faa1",
+      "pages": [
+        79,
+        80
+      ],
+      "type": "source rationale precision",
+      "title": "At most25% includes sites meeting zero needs",
+      "finding": "C’s first clause is consistent with the graph:0% and up-to25% sites together exceed80% currently. Its second clause fails because the maximum-temperature >25% bar is about78%, below80%. Source rationale rejects C by listing0% and up-to25% separately without identifying the false second clause. Key D remains correct."
+    },
+    {
+      "id": "85439572",
+      "pages": [
+        83
+      ],
+      "type": "source rationale insertion",
+      "title": "Peeling benefit is an answer-choice detail, not a premise",
+      "finding": "Source rejection of D says Armijo’s hypothesis mentions easier peeling, but the passage only hypothesizes reduced roasting time from more heliostats. Easier peeling appears only in distractor D. Reject D because it measures the wrong outcome; key B remains correct."
+    },
+    {
+      "id": "64cd7321",
+      "pages": [
+        111
+      ],
+      "type": "teaching addition",
+      "title": "An indirect effect needs both directional links",
+      "finding": "B supplies NFM→lower political knowledge/interest and knowledge/interest→higher voting likelihood. Combining those signs supports reduced voting likelihood indirectly; identifying a mediator alone or mentioning network size without directional first link is insufficient. The passage keeps this as may reduce rather than a direct voting experiment."
+    },
+    {
+      "id": "8e22efd9",
+      "pages": [
+        133,
+        134
+      ],
+      "type": "teaching addition",
+      "title": "Explain a cost gap with a difference in effects",
+      "finding": "C links more frequent replacement to repeated higher new-material costs, explaining a widening new-versus-recycled cost gap. B foregrounds rising cumulative costs, which could affect both groups; its concession about potential recycling savings does not draw the needed comparative conclusion. Track total levels separately from the gap between them."
+    },
+    {
+      "id": "742fd8ba",
+      "pages": [
+        205,
+        206
+      ],
+      "type": "rationale precision",
+      "title": "Bar differences do not establish statistical significance",
+      "finding": "Source describes significantly lower metal levels, but graph supplies heights without uncertainty or a test. D describes lower levels and remains supported; avoid statistical-significance claims."
+    },
+    {
+      "id": "8af0c099",
+      "pages": [
+        236
+      ],
+      "type": "rationale precision",
+      "title": "Recall decay needs a comparison group",
+      "finding": "D says sharers forget details after a week; without low-engagement recall at that delay this does not establish weaker relative recall. C directly compares comments and links and remains correct."
+    },
+    {
+      "id": "9452092c",
+      "pages": [
+        252
+      ],
+      "type": "source rationale correction",
+      "title": "A cross-species comparison does not test fungal benefit",
+      "finding": "B compares corn with broccoli in fungal soil. Its rationale instead discusses corn being more massive with fungi, a within-species comparison B never makes. Reject B because species differ independently of treatment; A remains correct."
+    },
+    {
+      "id": "02848335",
+      "pages": [
+        301,
+        302
+      ],
+      "type": "source rationale correction",
+      "title": "Highest spray efficiency is near17%, not14–16%",
+      "finding": "Graph places highest spray coating near17%, above16%; source rejection of C incorrectly gives14–16% for that highest bar. Lowest spray~15.5% still exceeds best spin~13.5%, so B remains correct."
+    },
+    {
+      "id": "a2b0fc3b",
+      "pages": [
+        276,
+        277
+      ],
+      "type": "rationale precision",
+      "title": "Algeria exceeds70% in2020",
+      "finding": "Graph places Algeria near75% in2020. Source repeatedly says reached70%; choice D correctly says more than70%. Preserve the distinction when teaching threshold readings."
+    },
+    {
+      "id": "d74b9bc6",
+      "pages": [
+        272,
+        273
+      ],
+      "type": "source rationale omission",
+      "title": "A trend distractor can also misstate a value",
+      "finding": "D claims both lakes exceed105days in2005–06; Neusiedl is about100–102, below105. Source rejection only notes the missing before/after comparison and says graph could indicate the claim. C remains correct."
+    },
+    {
+      "id": "a7c52fa4",
+      "pages": [
+        342,
+        343
+      ],
+      "type": "source rationale correction",
+      "title": "All thrum genera change; the direction differs",
+      "finding": "Source says intact/damaged thrum time differs for only some genera. Table shows differences for all four: Habropoda4.1→9.5,Osmia7.1→8.3,Pierid2.4→1.9,Xylocopa2.5→2.2. A correctly distinguishes increases from decreases; do not equate decreasing with no effect."
+    },
+    {
+      "id": "df37c087",
+      "pages": [
+        382,
+        383
+      ],
+      "type": "rationale precision",
+      "title": "A force-to-weight claim needs the denominator ratio",
+      "finding": "The relevant support is that weight ratio is close to1 while force ratio exceeds4. Merely both weighing above450g cannot constrain their ratio. Graph also shows~510and490g rather than source approximation500and480g; keyD unchanged."
+    },
+    {
+      "id": "4d38c2ea",
+      "pages": [
+        488
+      ],
+      "type": "source rationale mismatch",
+      "title": "Reject the choice actually printed",
+      "finding": "A dates the Fairfield Gorget to the earlier Woodland period; its source rejection instead discusses a Mexican artifact appearing only after the gorget. That artifact is absent from A. A supplies no Mexican-art contact evidence, whereas C supplies a nearby contemporaneous Mexican object. Key C remains supported; PDF page visually checked."
+    },
+    {
+      "id": "1db1a9a6",
+      "pages": [
+        472,
+        473
+      ],
+      "type": "source rationale correction",
+      "title": "A cross-year comparison does not contradict a same-year treatment effect",
+      "finding": "C accurately compares 2018 control yield with 2019 nitrogen yield. The rationale calls this a strong conflict with nitrogen improving yield, but weather or other year effects can coexist with nitrogen outperforming same-year controls in every year. Reject C because it does not isolate the treatment comparison; retain B. Graph and source rationale card visually checked."
+    },
+    {
+      "id": "35ec767c",
+      "pages": [
+        601
+      ],
+      "type": "source rationale precision",
+      "title": "Borrowed vocabulary does not establish related language families",
+      "finding": "The rationale says Caddo is described as closely related to the Totozoquean family. The passage actually proposes cultural contact and borrowing of corn vocabulary through unrelated Chitimacha. A is supported by corn cultivation without demonstrably Totozoquean-derived corn words in Cherokee/Muskogean; do not turn lexical borrowing into a genealogical language relationship. PDF page visually checked."
+    },
+    {
+      "id": "4fc9a13a",
+      "pages": [
+        635
+      ],
+      "type": "source rationale precision",
+      "title": "Share of authors differs from share of works",
+      "finding": "A reports the percentage of Random House AUTHORS who were Black. Its correct-answer rationale paraphrases that as a higher percentage of WORKS by Black authors. Authors can publish different numbers of works, so those denominators are not interchangeable. The author-share increase itself supports the likely representation aim; key A remains supported."
+    },
+    {
+      "id": "24c1b7e4",
+      "pages": [
+        604
+      ],
+      "type": "teaching addition",
+      "title": "Test necessity and insufficiency with two different observations",
+      "finding": "In the displayed sample every total-outlay decrease occurs during divided Congress, while the divided 1975–1976 period has an increase of 2.7 percentage points. The first pattern supports necessity in this sample; the exception shows division is insufficient. Component defense/nondefense decreases cannot substitute for total outlays. D remains correct; source table visually checked."
+    },
+    {
+      "id": "cbdd5287",
+      "pages": [
+        618,
+        619
+      ],
+      "type": "teaching addition",
+      "title": "A knockout label names what is absent",
+      "finding": "Type A means DptA is silenced and DptB remains active. Its high survival after A. sicerae infection therefore supports a role for DptB, while low survival of B and AB tracks DptB absence. No both-active group is graphed, and only two pathogens are discussed, so do not infer the both-active optimum or universal pathogen exclusivity. C remains correct; source graph visually checked."
+    },
+    {
+      "id": "01c1d9ee",
+      "pages": [
+        457,
+        458
+      ],
+      "type": "teaching addition",
+      "title": "Use a global upper bound to constrain a local subgroup",
+      "finding": "Tanzania has 61 million Swahili speakers, while at most 15 million worldwide have Swahili as a first language. Even assigning every first-language speaker to Tanzania leaves at least roughly 46 million later-language speakers there. The proof does not require knowing how native speakers are distributed among countries. A remains correct; source table visually checked."
+    }
+  ]
+}

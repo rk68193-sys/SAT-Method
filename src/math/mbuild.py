@@ -1,6 +1,8 @@
 import json,re,collections as C
 from mclass import R,SK,classify
 from mcontent import DOMAINS,SKILLS,TYPES
+from strategies import BY_TYPE
+from review_catalog import CASES,SOURCE_NOTES,BRIDGES,WORKED
 qs=json.load(open('math.json')); geo={g['id']:g for g in json.load(open('mgeo.json'))}
 dims=json.load(open('mimg_dims.json')); nar=json.load(open('mimg_narrow.json'))
 order=[t for k in R for t,_,_ in R[k] if t!='rtt-trig2']
@@ -59,6 +61,7 @@ types={t:dict(TYPES[t],skill=t.split('-')[0] if not t.startswith(('1vd','2vd')) 
 for t in types: types[t]['skill']=[k for k in R if any(x==t for x,_,_ in R[k])][0]
 skills={k:dict(SKILLS[k],**sk[k],types=[t for t,_,_ in R[k] if t!='rtt-trig2']) for k in R}
 data=dict(domains=DOMAINS,skills=skills,types=types,order=order,qs=rows,trig=trig,tot=tot)
+data.update(strategies=BY_TYPE,source_cases=CASES,source_notes=SOURCE_NOTES,bridges=BRIDGES,worked=WORKED)
 json.dump(data,open('mdata.json','w'),ensure_ascii=False,separators=(',',':'))
 import os; print('mdata bytes',os.path.getsize('mdata.json'),tot)
 print(trig)

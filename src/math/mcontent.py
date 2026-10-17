@@ -497,3 +497,27 @@ TYPES = {
   "steps": ["All radii are equal, so triangles from the center are isosceles.", "Use triangle angle sums and any right angles at tangent points."],
   "trap": "Assuming the figure is drawn to scale when it says it is not."},
 }
+
+# Reviewed limits: keep mathematical conditions with the shortcut.
+from probability import TYPES as PROBABILITY_TYPES
+TYPES.update(PROBABILITY_TYPES)
+SKILLS['eqx']['steps'][2] = 'Numerical substitution can eliminate mismatching choices. A unique matching option can identify the answer when one is guaranteed correct; matching alone is not an identity proof. Check the original domain.'
+SKILLS['eqx']['tip'] = 'Distinct expressions can agree at selected inputs. Avoid excluded values; algebra explains an identity for its full domain.'
+TYPES['eqx-rewrite']['tip'] = 'Test values can eliminate alternatives; coinciding at one value does not prove equivalence. Retain the domain when cancelling factors.'
+TYPES['sys-count']['steps'] = ['For genuine lines A₁x+B₁y=C₁ and A₂x+B₂y=C₂, compute A₁B₂−A₂B₁.', 'A nonzero determinant gives exactly one solution.', 'If zero, check consistency by elimination: an impossible constant gives none; equivalent equations give infinitely many.', 'First handle equations with both variable coefficients zero; avoid dividing by zero in coefficient ratios.']
+TYPES['nle-count']['steps'] = ['Identify the actual equation and its domain before transforming it.', 'For ax²+bx+c=0 with a≠0, the discriminant distinguishes two, one or zero distinct real roots.', 'A parameter making a=0 requires a separate linear/constant case.', 'After squaring or clearing denominators, filter transformed roots through the original equation. Higher-degree and absolute-value equations need their own root-count reasoning.']
+TYPES['nle-sign']['steps'] = ['Find the real solutions the original equation permits.', 'Apply the required sign, order and domain restriction.']
+TYPES['nle-sign']['trap'] = 'Do not assume there are exactly two roots or that a rejected root appears among the choices.'
+TYPES['inq-model']['trap'] = 'Keep at least/at most and the units straight. The presence of a particular distractor is not guaranteed.'
+TYPES['cir-read']['desmos'] = 'Normalize to x²+y²+Dx+Ey+F=0. The center is (−D/2,−E/2), and r²=(D²+E²)/4−F. These formulas also work for fractional centers. A graph is a check; r²<0 is no real circle, r²=0 is a point.'
+TYPES['cir-tangent']['steps'] = ['The radius to the point of tangency is perpendicular to the tangent.', 'Use a negative reciprocal only for a finite nonzero radius slope; a horizontal radius gives a vertical tangent and vice versa.']
+TYPES['1vd-change']['steps'] = ['Work with totals: mean×count=total.', 'Recompute the central ordered positions for the median; an extreme deletion has no universal small effect.', 'Adding a value equal to the mean leaves the mean unchanged.']
+TYPES['1vd-read']['steps'] = ['Read axes and frequencies first.', 'A box spans Q1 to Q3, with the median inside. Follow the specified whisker/outlier convention rather than assuming every whisker is an extreme.', 'Answer the requested statistic, not the frequency of that value.']
+SKILLS['1vd']['idea'] = 'The mean uses every numerical value. The median uses central ordered positions; removing or adding values can change those positions.'
+SKILLS['1vd']['plain'] = 'Adding a constant shifts mean and median equally without changing spread. Multiplying all values by k scales standard deviation by |k|. Calculator stdev uses the sample convention; stdevp uses the population convention. Use the convention asked for.'
+TYPES['rtt-complement']['trap'] = 'sin A=cos B implies complementary angles under suitable restrictions, such as acute angles in a right triangle; it is not an unrestricted identity about angle sums.'
+TYPES['av-scale']['trap'] = 'Area k² and volume k³ scaling require uniform similarity. If only one dimension changes, compute from the actual formula.'
+SKILLS['inf']['tip'] = 'Larger random samples generally reduce margin of error under comparable confidence, variability and design; they do not automatically remove bias.'
+
+TYPES['nle-sum']['steps'] = ['For a genuine quadratic ax²+bx+c=0 with a≠0, sum roots=−b/a and product=c/a, counting multiplicity.', 'Check whether the requested roots must be real, distinct or satisfy the original equation’s domain. Squaring and clearing denominators can introduce excluded roots.']
+TYPES['nle-sum']['tip'] = 'Use the target coefficient relation only after confirming it describes the roots the question asks for.'

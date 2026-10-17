@@ -1,0 +1,2093 @@
+{
+  "reviewed_count": 348,
+  "reviews": [
+    {
+      "id": "6d99b141",
+      "type": "lat-triangle",
+      "observation": "AC=CD makes base angles38\u00b0 from vertex104\u00b0; triangle BDE has97\u00b0 atE; supplementary requested83\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2c3aefc9",
+      "type": "rtt-trig",
+      "observation": "Rectangle diagonal sqrt2344,legsx,x+8: x\u00b2+(x+8)\u00b2=2344 givesx30;asked longerQR38. Existing trig classification should be Pythagoras.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9912e19f",
+      "type": "lat-similar",
+      "observation": "Congruent EFG/JKL mapsEtoJ;E45\u00b0 givesJ45\u00b0,F20\u00b0 irrelevant.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "4b7bb316",
+      "type": "av-surface",
+      "observation": "Open square-sided box edge29 hasfivefaces;5\u00d729\u00b2=4205squareinches,not sixfaces.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e10d8313",
+      "type": "lat-lines",
+      "observation": "Angle chain:triangleSQX gives46\u00b0;supplement atW95\u00b0;R39\u00b0;T18\u00b0;requestedU123\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "bcb66188",
+      "type": "rtt-similar",
+      "observation": "Visually confirmed sine ratio308/317; corresponding F,J equal,so sinJ308/317.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "3e4e2ab0",
+      "type": "lat-parallel",
+      "observation": "Parallel AB,DE transfers angle; x63,y2x-47=79;thirdanglez38\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f88f27e5",
+      "type": "lat-lines",
+      "observation": "Exteriorangle equals23+(180-106)=97\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e89f63bf",
+      "type": "lat-triangle",
+      "observation": "Twoangles sum64\u00b0;third180-64=116\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "5207e508",
+      "type": "lat-parallel",
+      "observation": "Parallel lines correspondinganglew equals170\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f67e4efc",
+      "type": "av-volume",
+      "observation": "Cylinder45pi=pi r\u00b2\u00d75 givesr\u00b29;rpositive3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ecc98c87",
+      "type": "lat-parallel",
+      "observation": "To proveparallel use correspondinganglesw=y=147;linear-pair statements true evenwithoutparallel.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e5c57163",
+      "type": "av-scale",
+      "observation": "Square linearfactor166 givesareafactor166\u00b2=27556.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "33e29881",
+      "type": "rtt-complement",
+      "observation": "Visually confirmed sinR=sqrt15/4; complementary S hascosSsame sqrt15/4.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "93f48423",
+      "type": "av-area",
+      "observation": "Rectangle area7\u00d76=42squareinches;13sumand84doublewrong.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "5252e606",
+      "type": "av-area",
+      "observation": "Square side55cm area3025cm\u00b2,notperimeter220.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "bb560789",
+      "type": "av-area",
+      "observation": "Trianglearea80 plus square4\u00b216 gives96cm\u00b2.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9342ca50",
+      "type": "lat-parallel",
+      "observation": "Alternateinteriorangles acrossparallel segments equal;x22givesy22.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "5afbdc8e",
+      "type": "av-area",
+      "observation": "Equalarea square/circler2:s\u00b24pi givespositive side2sqrtpi.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "983412ea",
+      "type": "av-volume",
+      "observation": "Right squareprism2016=14s\u00b2 givespositivebaseedge12.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d12bca0a",
+      "type": "cir-read",
+      "observation": "Centerorigin,r8;point(2,k) givesk\u00b260;aboveaxisselectpositivesqrt60.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a4c0547f",
+      "type": "rtt-trig",
+      "observation": "tanX12/35 andopposite24 givesadjacent70,hypotenuse74;perimeter168.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "659cb706",
+      "type": "rtt-complement",
+      "observation": "Righttriangle acuteX,Y complementary;sinX=cosY.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c8d60e48",
+      "type": "lat-triangle",
+      "observation": "AB=AC andbaseangle67 makesother67;vertexx46\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "947a3cde",
+      "type": "lat-lines",
+      "observation": "Visually confirmed intersecting MQ,NR;angleQPR60\u00b0 makesMPR120\u00b0;MP=PR givesbaseangles30\u00b0,targetQMR30\u00b0. Q70\u00b0 and NP=QP unnecessary.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1f0b582e",
+      "type": "av-scale",
+      "observation": "Square perimeter doubles,so side12doubles24cm.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "deff8a2f",
+      "type": "av-volume",
+      "observation": "Cylinder basecircumference20pi givesradius10;height6 makesvolume600pi;120piislateralarea.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1fe41c6b",
+      "type": "av-scale",
+      "observation": "Similar rectanglesarea2520/630=4,linearroot2;perimeter210to420.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d5f349b7",
+      "type": "lat-similar",
+      "observation": "Corresponding righttriangles:Q18\u00b0,rightR90\u00b0,soP=S72\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "babd7461",
+      "type": "av-scale",
+      "observation": "Similar triangles sidefactor135/15=9;perimeter36\u00d79=324.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "686b5212",
+      "type": "lat-parallel",
+      "observation": "Parallel same-side anglesy+58=180;substitutey2x+8givesx57.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a6dbad6b",
+      "type": "lat-parallel",
+      "observation": "Transfer corresponding20\u00b0,then trianglethird180-20-60=100\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "27d075d8",
+      "type": "rtt-complement",
+      "observation": "Acute cosQ=sinR forcescomplementary;x+52+4x+13=90givesx5.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "81b664bc",
+      "type": "lat-parallel",
+      "observation": "Parallel intercepttheorem9/18.5=8.5/ED givesED17.472...round17.5;source incorrectlyassertstrapezoidsAFEB,BEDCsimilar,not generallytrue.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "59cb654c",
+      "type": "av-area",
+      "observation": "Squarearea64 givespositiveside8.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "902dc959",
+      "type": "rtt-trig",
+      "observation": "RighttriangleoppositeA20,adjacent21,hypotenuse29;tanA20/21.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e86f0651",
+      "type": "av-area",
+      "observation": "Circleradius43m givesarea1849pi m\u00b2,notcircumference86pi.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "96467fea",
+      "type": "av-area",
+      "observation": "CircleNarea49pi plusgivenM64pi totals113pi mm\u00b2.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "858fd1cf",
+      "type": "cir-tangent",
+      "observation": "Center(-1,1) totangentpoint(5,-4) radiusslope-5/6; tangentslope6/5;point(10,2)fits.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9adb86ed",
+      "type": "cir-read",
+      "observation": "Two radii9pluschordQR sumperimeter31;chord13.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1dc7e423",
+      "type": "lat-similar",
+      "observation": "GivenA=P52\u00b0,additionalB32\u00b0,R96\u00b0 establishesbothanglesets52,32,96 andAA similarity.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "096c7ef5",
+      "type": "av-area",
+      "observation": "Threecirclepoints(7,5),(7,11),(4,8) havecenter(7,8),radius3;circumference6pi;existingarea labelinaccurate.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ec5d4823",
+      "type": "av-volume",
+      "observation": "Prismvolume4\u00d79\u00d710=360cm\u00b3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9966235e",
+      "type": "av-volume",
+      "observation": "Cubeedge68 enclosesr34sphere;remainingvolume68\u00b3-(4/3)pi34\u00b3\u2248149796in\u00b3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2b41a4c4",
+      "type": "av-volume",
+      "observation": "Rectangularprism11\u00d78\u00d710=880m\u00b3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a0369739",
+      "type": "lat-triangle",
+      "observation": "RighttriangleAB15,AC38,altitudeBD toAC;similarity givesAB/AC=BD/BC,henceBC/BD=38/15;visuallyconfirmedtargetratio.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a07ed090",
+      "type": "av-volume",
+      "observation": "Cylinderindependentradiusfactor7,heightfactor8 givesvolumefactor7\u00b2\u00d78=392;notuniformcube scaling.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "cbe8ca31",
+      "type": "lat-triangle",
+      "observation": "Triangleangles24\u00b0,98\u00b0 leave58\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "3b931fb0",
+      "type": "av-volume",
+      "observation": "Cylinderheight=volume/basearea377/13=29cm;radiusunneeded.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "94364a79",
+      "type": "lat-triangle",
+      "observation": "Same-time treesandshadowsgiveratioheight/shadow10/5;2-footshadowtreeheight4ft;similartriangles.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "51f26ce8",
+      "type": "lat-similar",
+      "observation": "Similar righttriangles matchhypotenuseQR25withSR,legQP15withST14;SR=25\u00d714/15=350/15;extraPR20unneeded.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "408b39ea",
+      "type": "cir-read",
+      "observation": "Circlecenter(3,-16),radius17 givesinclusive x-range[-14,20];-17impossible. Visuallycheckedofficialinequalityisinclusive,OCRdroppedbars.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "124bc42b",
+      "type": "av-area",
+      "observation": "OCRquestionincomplete;visuallyread rectanglelength7,width2;area14squareunits.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c24e1bda",
+      "type": "lat-parallel",
+      "observation": "Parallel correspondinganglew134\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "055aafe7",
+      "type": "lat-similar",
+      "observation": "SimilarAB170/BC850=XY/YZ60 givesXY12.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2d2cb85e",
+      "type": "lat-triangle",
+      "observation": "Supplement atV139\u00b0,smalltriangleU12\u00b0;RT=TU giveslargebaseangles12\u00b0,apexx156\u00b0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "30aa51b7",
+      "type": "av-area",
+      "observation": "Tiltedrectangleadjacentvectors(8,6),(3,-4) give lengths10,5;area50,notaxisalignedboundingbox.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "345cc36a",
+      "type": "lat-lines",
+      "observation": "Bowtie trianglesAA similarbyverticalandequalmarkedangles;YZ/60=63/70 gives54;XQ120irrelevant.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "8493fd10",
+      "type": "cir-read",
+      "observation": "Visuallyread x\u00b2+x sqrt(t)+y\u00b2-y-65=0;r\u00b265+t/4+1/4=83 gives t71.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c8345903",
+      "type": "cir-arc",
+      "observation": "Centralminorarc100\u00b0 haslength5pi;major260\u00b0 thereforelength13pi,notwhole18pi.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "901c3215",
+      "type": "lat-similar",
+      "observation": "AA gives similarity;onepaircorrespondingsidelengthsBC,EF suffices todecidecongruence;oneindividualsideinsufficient.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2bddbc1b",
+      "type": "rtt-trig",
+      "observation": "CosA adjacentleg41/hypotenuse42=41/42.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "85f1892d",
+      "type": "rtt-trig",
+      "observation": "Righttriangleleg26adjacent33\u00b0;other26tan33\u00b0;area338tan33\u00b0,coefficient338withouttrigevaluation.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "bd87bc09",
+      "type": "rtt-trig",
+      "observation": "Hypotenuse26 andsinB5/13 givesopposite10;otherlegsqrt(676-100)=24.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f7dbde16",
+      "type": "lat-similar",
+      "observation": "GivenL=R60\u00b0;additionalM70\u00b0,T50\u00b0forcesmatching60,70,50. ProportionalnonincludedSSAdoesnotprovesimilarity.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a4ed5285",
+      "type": "av-area",
+      "observation": "Righttrianglelegs5,3 givearea15/2=7.5;OCRtopanswerfractioncorruptbutrationaleconfirms.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "87a9a2d4",
+      "type": "rtt-trig",
+      "observation": "SinA opposite35/hypotenuse171=35/171.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e6f2ace7",
+      "type": "rtt-pythag",
+      "observation": "Righttrianglelegs3,7 givehypotenusesqrt58\u22487.6.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "b0c5ece5",
+      "type": "rtt-pythag",
+      "observation": "Righttrianglelegs4,b andhypotenuse19 require4\u00b2+b\u00b2=19\u00b2;OCRbmisread6.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "76c73dbf",
+      "type": "cir-read",
+      "observation": "VisuallyconfirmedRHS199/2;completesquaresadds1/4+1/4 to100;r10.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "58c26db8",
+      "type": "rtt-special",
+      "observation": "Isoscelesrighttriangleperimeter18+18sqrt2:legs9sqrt2,hypotenuse18;askedhypotenusenotleg.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e336a1d2",
+      "type": "av-volume",
+      "observation": "Cubeedge41 volume41\u00b3=68921in\u00b3;sourcecalls4sperimeterofcubeimprecisely.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e4b4e9ea",
+      "type": "av-volume",
+      "observation": "Right squareprismheight2880/6\u00b2=80units.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c0586eb5",
+      "type": "av-volume",
+      "observation": "Cylinderdiameter8givesr4;height12 volume192pi in\u00b3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2a549721",
+      "type": "av-area",
+      "observation": "Rectanglewidth280/10=28cm.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "52f7b898",
+      "type": "rtt-pythag",
+      "observation": "RighttriangleB30\u00b0,A60\u00b0;tanA=sqrt3regardlesshypotenuse54;existingPythagorastypecanbespecial.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "03c6994f",
+      "type": "av-scale",
+      "observation": "Squarelinear246 scalesarea246\u00b2=60516.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "151eda3c",
+      "type": "av-volume",
+      "observation": "CylinderB radius16\u00d71.25=20,h50;volume20000pi,notradius25.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "35d37640",
+      "type": "cir-radians",
+      "observation": "UnitcircleHwithx-1musty0;oppositeinitialray meansoddmultiplepi;25pi fits.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e50afdd3",
+      "type": "cir-read",
+      "observation": "Circlecenter(-4,19),r11;xinterval[-15,7],so-14possible.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "167aff9e",
+      "type": "av-scale",
+      "observation": "Similarprismssurface1450/58=25 giveslinear5,volume125;smallvolume1250/125=10;sum1260.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2266984b",
+      "type": "cir-read",
+      "observation": "Completesquaresx\u00b220x+y\u00b216y=-20 givescenter(-10,-8),r12.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d0b6d927",
+      "type": "av-area",
+      "observation": "Rectanglewidth63/9=7m.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d621cffb",
+      "type": "av-volume",
+      "observation": "SpherefractionalradiusOCRambiguous;readrationalevolume4/3 pi r\u00b3;visualpendingexactfraction. Follow-up visual of full question and rationale resolves radius17/5 and volume19652pi/375, answerD.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1429dcdf",
+      "type": "rtt-trig",
+      "observation": "Sinx opposite16/hypotenuse23=16/23\u2248.69565.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "69b0d79d",
+      "type": "cir-arc",
+      "observation": "EqualradiiOA,OB andbaseangle30\u00b0givecentral120\u00b0;r18makesminorarc12pi.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "5a7e3b46",
+      "type": "rtt-complement",
+      "observation": "CosA3/5 identifies3:4:5righttriangle;BC136=4k,AB3k102;existingcomplementtypeincorrect.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ebbf23ae",
+      "type": "cir-read",
+      "observation": "Diameterendpoints(2,4),(2,14);midpoint(2,9),radius5.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d7a8aa9c",
+      "type": "lat-similar",
+      "observation": "Enlargingequilateraltriangle requiresscalek>1;fractionchoiceAonlyqualifies.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a2659088",
+      "type": "av-volume",
+      "observation": "Cylinderr12,h8 givesvolume1152pi m\u00b3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "32f99025",
+      "type": "av-area",
+      "observation": "Trianglearea(1/2)\u00d78\u00d712=48in\u00b2.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "502d9690",
+      "type": "av-scale",
+      "observation": "Similarrectanglearearatio648/72=9 giveslinearfactor3;smalllongside36/3=12.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2757549e",
+      "type": "rtt-similar",
+      "observation": "Bigrighttrianglehypotenuse245,leg147 givesother196;paralleltransferangle,tan=196/147=4/3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c4a9c94d",
+      "type": "rtt-trig",
+      "observation": "Altitude-hypotenuse righttrianglesAA similar;tanCAD=tanABD1.3;AD/BD1.3,BD5givesAD6.5.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "6b4707aa",
+      "type": "cir-transform",
+      "observation": "Circleconcentricradius5to10 doubles;RHSr\u00b225to100.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "4c95c7d4",
+      "type": "rtt-special",
+      "observation": "Threeequilateraltrianglesformtrapezoidwith5boundaryedges;perimeter20givesside4,height2sqrt3;twoshadedtrianglesarea8sqrt3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "b8a225ff",
+      "type": "cir-transform",
+      "observation": "Concentricradius2to4 doubles;equationRHS4to16.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "b0a72bdc",
+      "type": "cir-read",
+      "observation": "CircleRHS16meansradius4;askeddiameter8.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "933fee1a",
+      "type": "lat-triangle",
+      "observation": "Righttrianglesangles32,58 match;ratioDF/DEequalsBC/ABviaopposite32overhypotenuse;visualtargetpending. Follow-up full q+r visual confirms targetBC/AB and answerDF/DE; source first paragraph mislabels right angleB instead ofC.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f389569d",
+      "type": "rtt-special",
+      "observation": "Equilateralheight39sqrt3 giveshalfside39,side78,perimeter234.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "64c1f044",
+      "type": "rtt-trig",
+      "observation": "Visual confirms right angle lower-left, x at top-left: opposite26 adjacent7, so tan x=26/7, not reciprocal.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2f7c92ad",
+      "type": "lat-similar",
+      "observation": "CAE~CBD maps A to B, so angle CAE=57 degrees; side factor26 does not scale angle measures.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c447367f",
+      "type": "cir-build",
+      "observation": "Center(19,18), radius9k gives (x-19)^2+(y-18)^2=81k^2; square both numeric and symbolic factors.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "b2528e6b",
+      "type": "av-area",
+      "observation": "Three points(6,2),(6,10),(2,6) determine center(6,6), r4; circumference8pi gives k8. Current area label is broad circumference grouping.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9fec9d49",
+      "type": "av-scale",
+      "observation": "Visual resolves model linear scale1/10; area600*(1/10)^2=6 square meters.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ba8ca563",
+      "type": "av-surface",
+      "observation": "Cube volume474552 gives edge78; surface6*78^2=36504; use cube root before squaring.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "5011b039",
+      "type": "cir-read",
+      "observation": "Circle(x+2)^2+(y+5)^2=169 has radius13; right side is squared radius.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9d078710",
+      "type": "lat-parallel",
+      "observation": "w=40 is sufficient via corresponding-angle converse; y40 and z140 are local vertical/supplementary facts that do not establish parallel lines.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "b1e1c2f5",
+      "type": "lat-parallel",
+      "observation": "CE=2AE makes AC=3AE; DE parallel BC yields scale1/3, hence DE162/3=54.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e3158182",
+      "type": "rtt-trig",
+      "observation": "Acute radians sin p=cos t gives p+t=pi/2; evaluating p*8^0+6t gives5t+pi/2. Complement classification fits more precisely than general trig.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "267f82b5",
+      "type": "cir-read",
+      "observation": "Circle center(19,17), squared radius64k^2; k>0 makes radius8k, not64k.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "0d43db90",
+      "type": "av-perimeter",
+      "observation": "Triangle perimeter17 minus known sides4 and7 gives BC6; triangle inequality also holds.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "62d39eb8",
+      "type": "cir-read",
+      "observation": "Circle(x+3)^2+(y+5)^2=289 has positive radius17, center(-3,-5).",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "94f7c9e2",
+      "type": "rtt-trig",
+      "observation": "RS18 oppositeQ and QS hypotenuse; sinQ=18/QS gives QS=18/sinQ. The side inequality is unnecessary.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e0874bc2",
+      "type": "av-scale",
+      "observation": "Similar triangle perimeters333/37=9 scale every side; TU18 gives XY162.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a4bd60a3",
+      "type": "rtt-trig",
+      "observation": "Equilateral perimeter624 gives side208; altitude104sqrt3, so k104. Uses30-60-90 rather than arbitrary-angle trig.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "899c6042",
+      "type": "av-volume",
+      "observation": "Cone diameter6 means radius3; volume(1/3)*pi*3^2*22=66pi, requested coefficient66.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "498d6795",
+      "type": "rtt-pythag",
+      "observation": "Right-angleB makes AC hypotenuse; legs10sqrt37 and24sqrt37 give26sqrt37 through10-24-26 scaling.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "740bf79f",
+      "type": "lat-triangle",
+      "observation": "Visual confirms requested NQ (not OCR MQ), altitude from right-angleN to hypotenuseMP. 3-4-5 triangle area gives NQ=3*4/5=2.4; classify right-triangle similarity.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "0e40dfb0",
+      "type": "av-area",
+      "observation": "Rectangle3 by39 asks expression for area:3*39, not perimeter2(3+39); OCR hyphen is multiplication dot.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "3b225698",
+      "type": "lat-similar",
+      "observation": "XYZ~RST maps Z to T; angleT20 degrees despite side relation2XY=RS.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "249d3f80",
+      "type": "cir-radians",
+      "observation": "ArcRS100 degrees and O center imply central angleROS100 degrees; no radian conversion is needed.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "fc5ef8d3",
+      "type": "av-scale",
+      "observation": "Similar perimeters150/50=3 multiply TU6 to obtain XY18; use same direction in both ratios.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a4c05a1b",
+      "type": "lat-parallel",
+      "observation": "Parallel-line configuration makes x+y180; y<65 implies x>115 by subtraction, reversing the threshold direction.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "38517165",
+      "type": "av-area",
+      "observation": "Circumference31pi and C=pi*d give diameter31; do not return radius15.5.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ab176ad6",
+      "type": "cir-read",
+      "observation": "Circle(x+6)^2+(y+3)^2=121 has radius11, obtained from positive square root.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ebf3a962",
+      "type": "av-volume",
+      "observation": "Cylinder3136pi with height16 gives r^2=3136/16=196 and radius14; cancel pi before square root.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "98c12e38",
+      "type": "av-area",
+      "observation": "CircleK radius4 has area16pi; add given circleL area100pi to obtain116pi, not summed radii.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "aa2d36fe",
+      "type": "cir-read",
+      "observation": "Circle(x-13)^2+(y-k)^2=64 has center(13,k), radius8; variable stays in y-coordinate.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d3fe472f",
+      "type": "lat-similar",
+      "observation": "Similarity maps AB to XY; specified factor2 applied to16 gives XY32.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f9d40000",
+      "type": "lat-triangle",
+      "observation": "Triangle angles23 and66 leave180-23-66=91 degrees, rather than sum89.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "0d3f51dc",
+      "type": "lat-parallel",
+      "observation": "Parallel-line same-side exterior pair x and33 are supplementary, giving x147.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "fd8745fc",
+      "type": "lat-triangle",
+      "observation": "TriangleJKL has K=L48 degrees; J180-96=84 degrees.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "179edb12",
+      "type": "av-volume",
+      "observation": "Cone diameter18 means r9; (1/3)*pi*81*22=594pi gives coefficient594.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "b434e103",
+      "type": "lat-triangle",
+      "observation": "With angleR63, remaining two angles sum117 and are positive; among choices only116 is possible for S.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "3e577e4a",
+      "type": "cir-tangent",
+      "observation": "Center(-4,-6) to tangency(-7,-7) has radius slope1/3; perpendicular tangent slope-3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "b5d62bba",
+      "type": "lat-parallel",
+      "observation": "Vertical and alternate interior angles prove bow-tie triangles similar; MR8 to RP14 gives area36*(14/8)^2=441/4.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "62ec6574",
+      "type": "av-surface",
+      "observation": "Visual confirms base length8/3, area24t implies width9t; surface2(24t)+2(8/3)(15)+2(9t)(15)=318t+80.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "b0dc920d",
+      "type": "av-volume",
+      "observation": "Cylinder height r+4 yields volume pi*r^2*(r+4)=pi*r^3+4pi*r^2; retain squared radius in both terms.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2085e10e",
+      "type": "lat-similar",
+      "observation": "Two matching angles47 and97 prove AA similarity; no extra information about F or T is needed.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "689abc2a",
+      "type": "av-area",
+      "observation": "Removing area20 from area72 leaves52 square inches; subtraction is appropriate for removed nonoverlapping region.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "fa2771d5",
+      "type": "cir-transform",
+      "observation": "Circle center(7,-3), radius1 translates right4 to(11,-3), so (x-11)^2+(y+3)^2=1.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "bbaac300",
+      "type": "rtt-similar",
+      "observation": "Visual resolves cosB=1/22; B correspondsE, so equal acute angles give cosE1/22 despite differing triangle sizes.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "55bb437a",
+      "type": "rtt-pythag",
+      "observation": "Visual confirms tanB3/4, BC15, DA4. Large3-4-5 triangle gives AB12, DB8; smaller triangle gives DE=(3/4)*8=6. Similarity/trig is more direct than Pythagoras.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c7bed21d",
+      "type": "lat-similar",
+      "observation": "Corresponding P and P-prime angles stay30 degrees under scale3; other angles50 and70 irrelevant.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "fecc446d",
+      "type": "lat-parallel",
+      "observation": "Visual confirms impossible optionA -14x+1540. Let a=7x-250,b=430-7x; four-angle sums are4a,3a+b,2a+2b,a+3b,4b, none identically A.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "8e7689e0",
+      "type": "cir-radians",
+      "observation": "720 degrees is4*(180 degrees), hence4pi radians and coefficienta4.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "69f4bbdc",
+      "type": "lat-triangle",
+      "observation": "Right triangle acute angles13 and a sum90, giving a77;103 is sum of known90+13.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "3563d76d",
+      "type": "lat-triangle",
+      "observation": "Simultaneous shadows give equal sun angle and similar triangles; tree height555*(16/300)=29.6 feet, closest30. Similarity fits better than triangle-angle classification.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c41eb616",
+      "type": "lat-lines",
+      "observation": "At crossing, anglea9x-140 and supplement320-9x give pair sums18x-280,-18x+640,180; optionA -18x+280 is not an identity.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "dfc420b2",
+      "type": "lat-lines",
+      "observation": "TriangleABC100+20 leaves angleC60; vertical angle in CDE60 and known40 leave y80.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c8ab85ad",
+      "type": "av-area",
+      "observation": "Square side35 has area expression35^2;4*35 is perimeter, not area.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "de550be0",
+      "type": "rtt-pythag",
+      "observation": "Unknown lega and other leg6, hypotenuse21 give a=sqrt(21^2-6^2), with positive root.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f2495de4",
+      "type": "cir-geo",
+      "observation": "Visual resolves cos(565pi/6);565pi/6=47*(2pi)+pi/6 gives sqrt3/2 via periodicity, not1/2.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "800e71b8",
+      "type": "cir-arc",
+      "observation": "Minor arc39 and complementary major arc195 cover full circle, so circumference234cm.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "901e3285",
+      "type": "lat-triangle",
+      "observation": "Isosceles triangle with A50 permits B50,65,80; B100 would give C30 and no equal angles.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "bd7f6e30",
+      "type": "lat-triangle",
+      "observation": "Visual shows RT=TU with vertexT114 degrees, so baseU33; exterior angle atV equals31+33=64.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2adbf1b1",
+      "type": "lat-parallel",
+      "observation": "Vertical x=y gives6k+13=8k-29, k21 and y139; supplementary z41. OCR189 in rationale is139.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "6708546e",
+      "type": "av-scale",
+      "observation": "Similar parallelograms side factor2 imply area factor4; given area5 becomes20.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ffe862a3",
+      "type": "rtt-special",
+      "observation": "Isosceles right triangle hypotenuse58 gives legs29sqrt2 each; perimeter58+58sqrt2.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "24cec8d1",
+      "type": "cir-radians",
+      "observation": "RadiiOR=OS make triangle isosceles; center angle88 leaves base angles(180-88)/2=46 degrees; no radians involved.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "8c1aa743",
+      "type": "av-scale",
+      "observation": "Similar rectangles side factor6 imply area factor36;54*36=1944 square units.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "7268586c",
+      "type": "lat-triangle",
+      "observation": "Visual source rationale contains arithmetic typo:132+24=156, not152. x24 and alternate isosceles-angle argument are correct; fix subtraction to180-156.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "44b2b894",
+      "type": "rtt-trig",
+      "observation": "Rectangle diagonal2s inscribed in circle is diameter; other side s*sqrt3, area1089sqrt3 implies s33 and diameter66. Special-triangle classification fits.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "7700d098",
+      "type": "rtt-pythag",
+      "observation": "Other leg sqrt(196.8^2-43.2^2)=sqrt36864=192mm; subtract squared given leg from squared hypotenuse.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "0837c3b9",
+      "type": "av-scale",
+      "observation": "Similar triangle side factor2 also scales perimeter20 to40; no squaring for perimeter.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9e44284b",
+      "type": "cir-read",
+      "observation": "Divide circle equation2x^2-6x+2y^2+2y45 by2, complete squares: (x-1.5)^2+(y+0.5)^2=25, radius5.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "4ddfa209",
+      "type": "av-perimeter",
+      "observation": "Equilateral side28 has three equal sides and perimeter84 inches;112 would be a square perimeter.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "98e02472",
+      "type": "rtt-pythag",
+      "observation": "Altitude to hypotenuse gives a=b by similarity; sina12/13 implies cosb5/13 and tanb12/5=2.4. XY19 is extraneous.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e6c557f9",
+      "type": "av-scale",
+      "observation": "Visual resolves edge scale3/88; surface-area multiplier(3/88)^2=9/7744, not cubic volume multiplier.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "4a141e77",
+      "type": "lat-parallel",
+      "observation": "Marked72 and x are vertical angles at the same intersection, so x72; parallelism is unnecessary to this question.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "58687a66",
+      "type": "lat-parallel",
+      "observation": "Parallel g,h and transversal produce corresponding175 and x, hence x175. OCR line name renders Math output error, irrelevant to inference.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "54df8076",
+      "type": "rtt-special",
+      "observation": "Visual full solution confirms answer284/3 (OCR header lost denominator). Equilateral side284 gives circumradius284/sqrt3=(284/3)*sqrt3, so w284/3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "014edcb7",
+      "type": "lat-lines",
+      "observation": "Exterior anglePRS163 and interiorQ132 yield remainingP163-132=31; equivalent interiorR17.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "568d66a7",
+      "type": "rtt-special",
+      "observation": "Isosceles right perimeter94+94sqrt2 factors into leg*(2+sqrt2); leg47sqrt2, hypotenuse94.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "322a6dfe",
+      "type": "lat-similar",
+      "observation": "Similar quadrilaterals map S to Z; angleZ135 degrees, regardless side ratio45/9.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "0e709a29",
+      "type": "rtt-similar",
+      "observation": "HypotenuseTR584, legsRS440,ST384; W correspondsT, so tanW440/384=55/48.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a6097ec2",
+      "type": "rtt-trig",
+      "observation": "Right triangle angle x opposite63 and hypotenuse73, so sinx63/73, not adjacent ratio.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e570a99c",
+      "type": "lat-triangle",
+      "observation": "Equal triangle anglesJ,K with L118 leave62 shared equally, giving J31 degrees.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "eeb4143c",
+      "type": "lat-triangle",
+      "observation": "Visual base5+7=12 gives area6y; inclusive48<=6y<=60 yields integersy8,9,10. Similarityx/y=5/12 gives10/3,15/4,25/6; any one accepted. Current triangle-angle type misses main similarity.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "5b2b8866",
+      "type": "av-scale",
+      "observation": "Both poster dimensions increase20%, so area360*(1.2)^2=518.4; area increase44%, not20%.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "fc8aa563",
+      "type": "cir-read",
+      "observation": "Circle(x-1)^2+(y+7)^2=1 has center(1,-7); reverse signs inside both squares.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9f934297",
+      "type": "av-surface",
+      "observation": "Rectangular prism28,15,16 gives surface2(420+448+240)=2216cm^2; includes both copies of each face.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2855cb58",
+      "type": "cir-build",
+      "observation": "Circle center(16,17), radius7k yields right side49k^2 in standard equation.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "575f1e12",
+      "type": "av-area",
+      "observation": "Rectangle34 by29 gives area986cm^2. OCR Math output error obscures formula but numerical product and question are clear.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "74d8b897",
+      "type": "cir-radians",
+      "observation": "Visual confirms9pi/20 radians; multiply180/pi gives81 degrees.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "b4767bef",
+      "type": "av-perimeter",
+      "observation": "Triangle perimeter18 minus sides4 and6 gives third side8cm; sum4+6>8 validates nondegenerate triangle.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ee540927",
+      "type": "cir-read",
+      "observation": "Complete x^2+58x+y^2=0 to(x+29)^2+y^2=841; center(-29,0), not positive29.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "dc71597b",
+      "type": "av-volume",
+      "observation": "Cone volume pi/3 and height9 give(pi/3)=(1/3)*pi*r^2*9, so r^2=1/9 and positive r1/3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "410bdbe6",
+      "type": "lat-triangle",
+      "observation": "Visual confirms angles31,2b,a, with a45;31+2b+45=180 gives b52, not2b104.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a0cacec1",
+      "type": "cir-radians",
+      "observation": "Visual confirms16pi/15 radians; multiply180/pi gives192 degrees, beyond a straight angle.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1b2b20b9",
+      "type": "cir-transform",
+      "observation": "Translation96 right leaves squared radius7 unchanged; requested4a=28 even though center changes to(96,6).",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "7ce2e728",
+      "type": "lat-similar",
+      "observation": "Given B=G51 and sidesAB6,FG18: I or II supplies second equal angle for AA; III gives SSA with nonincluded angle and is insufficient.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f811d345",
+      "type": "rtt-pythag",
+      "observation": "Right legs24,21 yield hypotenuse sqrt1017=3sqrt113; requested integerd113, not full length.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c9931030",
+      "type": "rtt-similar",
+      "observation": "TR52 is hypotenuse; W correspondsT, giving tanWRS/ST20/48=5/12.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a456f28c",
+      "type": "lat-lines",
+      "observation": "Explicit vertical angles1,2; angle1=72 degrees implies angle2=72, not supplement108.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9823f279",
+      "type": "rtt-pythag",
+      "observation": "Right triangle equal legs15 implies acute angles45; requested x is angle, so classification should be rtt-special rather than Pythagoras.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "087cdcfd",
+      "type": "lat-lines",
+      "observation": "Three intersecting lines: vertical copy of x65 plus y75 plus z form straight angle; z180-65-75=40.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "6ae1360d",
+      "type": "av-area",
+      "observation": "Radius2.1 gives circle area4.41pi, so requested coefficientb4.41; square decimal radius.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c88183f7",
+      "type": "av-perimeter",
+      "observation": "Rectangle13 by6 perimeter2(13+6)=38;26 and12 count only one pair of sides.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "6933b3d9",
+      "type": "rtt-complement",
+      "observation": "W on hypotenuseRT splits right-angleS into complementary RSW and WST; cos(first)-sin(second)=0 for every W position.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "afa3c48b",
+      "type": "lat-parallel",
+      "observation": "Parallel consecutive interior angles x and26 sum180, so x154; no angle bisector is given.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9ec76b54",
+      "type": "rtt-pythag",
+      "observation": "Legs28 and20 yield hypotenuse sqrt1184=4sqrt74;1184 is squared length,48 sum of legs.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "992f4e93",
+      "type": "lat-parallel",
+      "observation": "Corresponding angle transfer from64 then linear pair yields a180-64=116 degrees.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f1747a6a",
+      "type": "lat-triangle",
+      "observation": "TriangleB52,C17 leave A180-69=111 degrees, not complement21.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "23c5fcce",
+      "type": "cir-arc",
+      "observation": "Perpendicular diameters give central angleAOC90; minor arcAC is quarter circumference36, length9.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f1c1e971",
+      "type": "cir-radians",
+      "observation": "Visual resolves R2pi/3 and increment5pi/12; T13pi/12 converts195 degrees. Increment alone is75.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "6ab30ce3",
+      "type": "rtt-similar",
+      "observation": "Similarity transfers tanA=sqrt3 to D; DF125 adjacent, EF125sqrt3, DE250 hypotenuse. Visual rationale confirms DF, not OCR DE, in special-triangle comparison.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1c3d613c",
+      "type": "lat-triangle",
+      "observation": "All three side ratios equal3 prove SSS similarity; BAC correspondsEDF, so angle20 degrees. Correct classification lat-similar.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2d521ca9",
+      "type": "cir-radians",
+      "observation": "60 degrees timespi/180=pi/3 radians; do not reverse conversion fraction.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9acd101f",
+      "type": "cir-transform",
+      "observation": "Circle x^2+(y-1)^2=49 translates down2 to center(0,-1), radius7; new equation x^2+(y+1)^2=49.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e9c5bfb2",
+      "type": "av-scale",
+      "observation": "Corresponding heights12/5 and target baseAD/QT10 give AD24 inches; keep vertex mapping consistent.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f3f06c3a",
+      "type": "av-area",
+      "observation": "Rectanglex7,y5 area35cm^2; length+width12 is not area.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "48fb6483",
+      "type": "lat-parallel",
+      "observation": "PQ parallelXY gives small right triangle angleZPQ27 fromZ63; asked XPQ is exterior supplement153 degrees.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "244ff6c4",
+      "type": "cir-geo",
+      "observation": "Visual resolves tan(92pi/3); subtract15*(2pi) to2pi/3, quadrantII gives -sqrt3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a5ff1a96",
+      "type": "cir-transform",
+      "observation": "Circle center(4,5), r3 doubles radius to6 at same center; equation right side36, not18.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "010243e6",
+      "type": "lat-triangle",
+      "observation": "Coordinate legs2,2 and k+2,k+2 form two isosceles right triangles; t45 and N45=(90-t) degrees for positivek.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "08b7a3f5",
+      "type": "av-volume",
+      "observation": "Triangular prism volume216=base area*height8 gives base area27cm^2; no extra1/2 because area already whole base.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1318dfea",
+      "type": "lat-lines",
+      "observation": "Marked equal angles plus vertical angles prove bow-tie triangles similar; scaleYQ/WQ21/70 gives YZ60*(21/70)=18. XQ120 is extraneous; type lat-similar.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "5733ce30",
+      "type": "lat-triangle",
+      "observation": "ExteriorC110 gives interiorC70; equalA70 leaves vertexx40 degrees.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "0acfddb5",
+      "type": "cir-tangent",
+      "observation": "Equal tangent lengths fromH yield MH=NH=(3856-2*168)/2=1760; radius perpendicular tangent gives GHsqrt(1760^2+168^2)=1768.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "7a8ad237",
+      "type": "lat-similar",
+      "observation": "Visual confirms B and E right angles (OCR F erroneous). Congruence transfers A69 to D69; F180-90-69=21 degrees.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "186fdbca",
+      "type": "cir-read",
+      "observation": "Circle diameter12.6 halves to radius6.3; accepted63/10 equivalent.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "50774285",
+      "type": "av-volume",
+      "observation": "Prism base19*8=152 square inches; height2736/152=18 inches, not base area152.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "3b4b5b1e",
+      "type": "lat-parallel",
+      "observation": "Markedx and133 form local linear pair; x47. Parallelism provided but unnecessary for this relationship.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "73e1b793",
+      "type": "av-scale",
+      "observation": "Similar prism volumes972/36=27 give linear factor3; edge12 in largerP corresponds4 inQ.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "29e9b28c",
+      "type": "av-perimeter",
+      "observation": "Triangle perimeter22 minus sides9 and7 gives z6 units, not either given side.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "5b4757df",
+      "type": "lat-parallel",
+      "observation": "Right triangle area792 and RT72 give ST22; parallel LK24 gives small/large scale1/3, so SK22/3 and KT44/3. OCR header44 lost denominator; exact result reconciles full solution.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ca2235f6",
+      "type": "cir-arc",
+      "observation": "45-degree arc length3 is1/8 circumference; circumference24 inches.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "cab8f907",
+      "type": "av-area",
+      "observation": "Right triangle base9 and perpendicular height4 gives area(1/2)*9*4=18 square units.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "856372ca",
+      "type": "cir-build",
+      "observation": "Center(-8,6), radius5 produce(x+8)^2+(y-6)^2=25; sign reversal and squared radius both required.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "cf0d3050",
+      "type": "lat-parallel",
+      "observation": "Same-side interior110 plus angle vertical tox sum180; x70.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "0bb39de4",
+      "type": "lat-similar",
+      "observation": "Visual confirms B,E right angles, A18 mapsD18; F72 degrees from triangle sum, not90.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1be8b6b2",
+      "type": "av-volume",
+      "observation": "ConeV71148pi and base5929pi yield height36; radius77; slant sqrt(77^2+36^2)=85, not vertical height36.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9c0a0eca",
+      "type": "av-area",
+      "observation": "Triangle base10 and corresponding height70 have area350cm^2; product700 omits half.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9d159400",
+      "type": "cir-build",
+      "observation": "A circle tangent to y-axis requires |center x|=radius; choiceC center(4,9),r4 meets it. Center on y-axis instead gives two crossings.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9fdc4eaa",
+      "type": "av-surface",
+      "observation": "Pyramid base area70560-38160=32400 gives side180; lateral face9540 yields slant106; vertical height sqrt(106^2-90^2)=56.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "379ffefb",
+      "type": "rtt-pythag",
+      "observation": "Right triangle legs11,9 give hypotenuse sqrt202; sum20 and squared202 are distractors.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "bf8d843e",
+      "type": "rtt-pythag",
+      "observation": "Visual30-degree atB and60 atC, common altitudeBD show two congruent30-60-90 triangles; BC12 implies AB12 and AD6. Use special triangle classification.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "3453aafc",
+      "type": "av-area",
+      "observation": "Rectangle36 by34 area1224;140 is perimeter,1156 squares only width.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f6ca90cc",
+      "type": "av-volume",
+      "observation": "Square-based prism edge10,height58 volume10^2*58=5800 cubic inches.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "aef4fd8a",
+      "type": "av-area",
+      "observation": "Square side94 asks area expression94*94, not4*94 perimeter; OCR hyphens denote multiplication.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "43236565",
+      "type": "lat-parallel",
+      "observation": "x and145 are vertical at same crossing, giving x145; parallel-line fact unnecessary.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "981275d2",
+      "type": "cir-read",
+      "observation": "Circle center(6,-5), diameter endpointP(10,-5); reflect across center to Q(2,-5). Other circle points need not be antipodal.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d71550d0",
+      "type": "lat-lines",
+      "observation": "Vertical anglesr,s equal; givenr53 implies s53, not complement37.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "7a11ceea",
+      "type": "lat-similar",
+      "observation": "I supplies matching right angles plus existing vertical angles, enough only for similarity; II supplies AC=DC13 but not second matching angle. Neither alone proves congruence; together would ASA.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "25cc5327",
+      "type": "av-volume",
+      "observation": "Rectangular pyramid base27*2,height7 gives volume(1/3)*27*2*7=126cm^3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "89661424",
+      "type": "cir-read",
+      "observation": "Center(-5,2),r9 gives constantc25+4-81=-52 after expanding standard circle form.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "858809e7",
+      "type": "lat-parallel",
+      "observation": "Visual confirms lineell label is source-rendered Math output error but diagram unambiguous. EF=.5CD putsF midpointAD; DFG~DAB gives AB2FG, onlyII true; EF/FG2/9 differsAF/FD1.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "196e8e6e",
+      "type": "cir-read",
+      "observation": "Center offsetA(1,sqrt102) gives radius sqrt103; central right angle makes chordABsqrt(103+103)=sqrt206, not103sqrt2.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d03e29f1",
+      "type": "cir-read",
+      "observation": "Circle(x-6)^2+(y-3)^2=81 has radius9;3 and6 are center coordinates,81 squared radius.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "de9148c4",
+      "type": "rtt-pythag",
+      "observation": "Right legs12,3 and hypotenusec obey12^2+3^2=c^2; plain sum15 is not hypotenuse.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "7c25b0dc",
+      "type": "rtt-trig",
+      "observation": "Rectangle diagonal3sqrt17 and short side3 give longer sqrt(153-9)=12; no trig needed, classify Pythagoras.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "36661021",
+      "type": "rtt-pythag",
+      "observation": "Legs9,6 give hypotenuse sqrt117 about10.8167, closest10.8; positive root and rounding match question.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e80d62c6",
+      "type": "cir-transform",
+      "observation": "Circle center(0,2),r6 shifts down4 to(0,-2); equation x^2+(y+2)^2=36.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "4fb972f2",
+      "type": "rtt-pythag",
+      "observation": "Hypotenuse4sqrt82 and leg4 give other leg sqrt(16*82-16)=36.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f243c383",
+      "type": "av-surface",
+      "observation": "Visual confirms joined surface92K/47. Gluing hides two x^2 bases:2K-2x^2=(92/47)K implies K47x^2; K2x^2+360x gives positivex8.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "95ba2d09",
+      "type": "cir-radians",
+      "observation": "Upper semicircle180 minus two30-degree central angles gives QOR120 degrees=2pi/3 radians.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "adae6543",
+      "type": "lat-parallel",
+      "observation": "Visual mapping MR6 to RP11 gives RQ7*(11/6)=77/6; full LQ=LR+RQ7+77/6=119/6, not segment alone.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "6dd463ca",
+      "type": "lat-parallel",
+      "observation": "ParallelAE,BD transfer BDC58 to CEA58; triangleACE withC62 leaves CAE60 degrees.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "0815a5af",
+      "type": "cir-arc",
+      "observation": "Two diameters create equal opposite arcs; small arcx,larger2x give total6x144pi, so QR2x48pi.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f731d88b",
+      "type": "lat-parallel",
+      "observation": "Convex pentagonAB parallelDE; B139,D174 yield C=(180-139)+(180-174)=47. Both extension and perpendicular-line alternate proofs consistent.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "93de3f84",
+      "type": "av-volume",
+      "observation": "Cylinder radius doubles and height halves, so volume multiplier2^2*(1/2)=2; original22 becomes44.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d21270da",
+      "type": "lat-parallel",
+      "observation": "Alternate interior angle equalityx24 is sufficient converse for parallel lines; inequality cannot prove parallelism.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "16d66178",
+      "type": "rtt-complement",
+      "observation": "24 and66 complementary: sin24=cos66, sin66=cos24; expression becomes cos^2(66)+cos^2(24), also equals1.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f1251f35",
+      "type": "rtt-trig",
+      "observation": "CosZ adjacent560/hypotenuse565 equals560/c; same nonzero numerator gives c565; unknown is denominator, not a missing side.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "5b918ebb",
+      "type": "lat-parallel",
+      "observation": "Parallel lines with transversal make marked162 and x corresponding, so x162.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c9f8d1e9",
+      "type": "rtt-pythag",
+      "observation": "Right legs4,5 give hypotenuse expression sqrt(4^2+5^2); sqrt(4+5) omits squares.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f60bb551",
+      "type": "av-area",
+      "observation": "Rectangle area630 and length70 imply width9 inches through division; subtracting dimensions invalid.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d2047497",
+      "type": "av-area",
+      "observation": "Rectangle17 by7 has area119cm^2;24 sum and48 perimeter are distractors.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a71617d3",
+      "type": "rtt-pythag",
+      "observation": "Right triangle equal legs32 gives isosceles right acute angle45; asked angle, so rtt-special fits rather than Pythagoras.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "149021da",
+      "type": "cir-arc",
+      "observation": "45-degree arc4pi is1/8 circumference, so C32pi and radius16.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a5aee181",
+      "type": "rtt-trig",
+      "observation": "Rectangle diagonal5sqrt17, short side5 give longer sqrt425-25=20; classify Pythagoras rather than trig.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "11301fb6",
+      "type": "cir-radians",
+      "observation": "Visual confirms signed difference -5pi/6 radians; expression(-5pi/6)*(180/pi) gives -150 degrees; preserve negative sign.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "4efea6a3",
+      "type": "av-area",
+      "observation": "Rectangle area57 and longer side19 give shorter side3 inches, consistent3<19.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "fb58c0db",
+      "type": "cir-arc",
+      "observation": "Visual arc lengthpi/3 and radius1 imply circumference2pi; fraction(pi/3)/(2pi)=1/6, not anglepi/3 itself.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "697b3954",
+      "type": "lat-similar",
+      "observation": "Congruent triangles map AB54 to BD54 and DE26 to BC26; collinearC betweenB,D gives CD54-26=28.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ae041e52",
+      "type": "rtt-special",
+      "observation": "Visual radius20sqrt2/2 gives diameter20sqrt2, the inscribed square diagonal; side20 by45-45-90 ratio.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c6dff223",
+      "type": "rtt-similar",
+      "observation": "Similarity transfers tanA21/20 to D; representative legs21,20 give hypotenuse29 and sinD21/29. AB/DE2.9 does not alter trig ratio.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "eb70d2d0",
+      "type": "av-area",
+      "observation": "Points(-3,4),(5,3),(4,-3) enclosed by8-by7 rectangle:56 minus corner triangle areas4,3,24.5=24.5. Shoelace determinant confirms49/2.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "4757123b",
+      "type": "av-scale",
+      "observation": "Similar trapezoids linear factor41 imply area factor41^2=1681; similarity explicitly given here.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "64d1f49f",
+      "type": "lat-lines",
+      "observation": "Vertical w,z equal; w136 gives z136, not supplementary44.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f329442c",
+      "type": "av-scale",
+      "observation": "Circle radii3n and129n have ratio43; area ratio43^2=1849 with positive n canceling.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f39f88b7",
+      "type": "av-area",
+      "observation": "Triangle base40,height90 has area(1/2)*40*90=1800 square centimeters; OCR formula loses1/2 but substitution includes it.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "92eb236a",
+      "type": "rtt-trig",
+      "observation": "Visual given tan=sqrt3/3; complementary acute-angle tangent reciprocal3/sqrt3=sqrt3, positive not negative.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ae33e0a1",
+      "type": "av-volume",
+      "observation": "Cylinder diameter22 ->r11,height6; volume pi*11^2*6=726pi. Using22 as radius gives fourfold distractor2904pi.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "13d9a1c3",
+      "type": "rtt-pythag",
+      "observation": "Right triangle30-60-90 hypotenuse8 gives short legPQ4; special-triangle classification is more accurate than Pythagoras.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "76670c80",
+      "type": "av-perimeter",
+      "observation": "Square side45 has perimeter4*45=180, not side squared2025.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "17912810",
+      "type": "lat-parallel",
+      "observation": "Visual confirms q,t parallel and two adjacent w angles. Upper triangle43,58,79; corresponding lower79 supplements2w, so w101/2=50.5; OCR402 header is corrupt.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "4420e500",
+      "type": "av-area",
+      "observation": "Rectangle4 by2 area8cm^2;12 perimeter and6 side sum are distractors.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "099526fc",
+      "type": "av-area",
+      "observation": "Segment(-6,4) to(3,10) has length sqrt117=3sqrt13; area36sqrt13 gives other perpendicular leg2A/base24.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "ffc39dc5",
+      "type": "lat-triangle",
+      "observation": "SharedDF plus CD=EF and FC=DE prove SSS congruence; transfer angle30 toCDF then addEDF65 to getCDE95. Similarity/congruence classification fits.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "8364487a",
+      "type": "lat-similar",
+      "observation": "Dilation preserves corresponding angles; V25 gives V-prime25 despite side scale and labeled76 length.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "17049054",
+      "type": "av-area",
+      "observation": "Square side9 has area81; add rectangle area32 to obtain113 square centimeters.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c4e5e23c",
+      "type": "av-scale",
+      "observation": "SquareM side6 timesN gives area36 times49=1764 square feet;294 applies unsquared factor.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "42155bac",
+      "type": "av-volume",
+      "observation": "Cylinder base area81 and volume2187 yield height2187/81=27; no need to recover radius.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a67b9f88",
+      "type": "rtt-pythag",
+      "observation": "Hypotenuse53, legsqrt105 imply opposite leg sqrt2809-105=52, then sinR52/53; requested ratio, not just missing side.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "165c30c4",
+      "type": "av-area",
+      "observation": "Rectangle64 by32 area2048 square inches, direct product.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "694b7fce",
+      "type": "lat-triangle",
+      "observation": "Visual small right triangleAC3,ABsqrt34 gives BC5; AE3+21=24 makes scale8, DE40; big area(1/2)*24*40=480. Similarity is main bridge.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f7e626b2",
+      "type": "av-surface",
+      "observation": "Prism4,5,6 surface2(20+30+24)=148;120 is volume,74 counts only three faces.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "585a9138",
+      "type": "lat-similar",
+      "observation": "Visual B,E right angles; congruence transfers A27 toD27, leaving F63 degrees; OCR1177 is117.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "2be01bd9",
+      "type": "rtt-similar",
+      "observation": "Visual tanA50/7 transfers toD; E complementaryD gives tanE7/50=.14, reciprocal not same ratio.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "3828f53d",
+      "type": "lat-parallel",
+      "observation": "Parallel-line same-side interior130+a180 gives a50; perpendicular crossing makes right triangle a+b90, so b40.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a38c0183",
+      "type": "cir-transform",
+      "observation": "CircleA center(-2,0),r3 shifts down6 and doubles radius; new center(-2,-6),r6 ->(x+2)^2+(y+6)^2=36.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "739f1bbc",
+      "type": "lat-triangle",
+      "observation": "Two known triangle sides4680 each; third sideAC4680 is sufficient and necessary among choices to make equilateral.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1b687ae3",
+      "type": "av-area",
+      "observation": "Triangle area36,height2 gives base2*36/2=36 units; half cancels given height2.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "dba6a25a",
+      "type": "rtt-similar",
+      "observation": "Visual small right triangle legs6,8 gives hypotenuseCD10; heightAE18 versusBD6 gives scale3, hence CE30.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c984f1a5",
+      "type": "av-volume",
+      "observation": "Hemisphere radius27 volume(2/3)*pi*27^3=13122pi about41223.98, closest41200; half sphere not full sphere.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "0013adbd",
+      "type": "lat-parallel",
+      "observation": "Same-side interior134 andx are supplementary iff lines parallel, so x46 sufficient; w134 is automatic vertical-angle fact.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "acd30391",
+      "type": "cir-read",
+      "observation": "Circle center(-3,1),r5; squared distance of(3,2) is37>25, so outside; other choices squared20,0,10 lie strictly inside.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "4ff7b652",
+      "type": "lat-similar",
+      "observation": "Similar right triangles map M toQ, so angleQ53 degrees unchanged; complement37 is different acute angle.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "053e5e9f",
+      "type": "rtt-trig",
+      "observation": "RS25 is oppositeQ, QS hypotenuse; sinQ25/QS ->QS25/sinQ.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "8027db3f",
+      "type": "rtt-complement",
+      "observation": "CosK8/17 in right triangle gives other leg15/17 of hypotenuse; cosL=sinK15/17, not8/17.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "e0d2e21a",
+      "type": "lat-similar",
+      "observation": "DilationABC toXYZ preserves anglesA60 andX60; scale1/3 and sidevariabled16 do not scale angle.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1dacfb94",
+      "type": "lat-parallel",
+      "observation": "Isosceles symmetry makesBF perpendicularAC; 30-degree AOF givesAO2OF, equalBO=AO makes BF3OF; small/large height ratioBO/BF2/3 givesBE(2/3)*81=54. Visual rationale confirms BDE, not OCR BDF.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "cecbdeba",
+      "type": "av-volume",
+      "observation": "Cylinder volume432,base area24 ->height18cm; use V=Bh directly without solving radius.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "10e059a6",
+      "type": "cir-radians",
+      "observation": "Visual A pi/216 radians, B36A=pi/6, so cosB=sqrt3/2; no degree-mode confusion.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "42b4493b",
+      "type": "lat-triangle",
+      "observation": "Right triangle acute angles sum90; known51 leaves39 degrees.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9f9112ab",
+      "type": "cir-radians",
+      "observation": "60 degrees ispi/3 radians; suppliedpi/n form implies n3, not reciprocal1/3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "d683a9cc",
+      "type": "av-volume",
+      "observation": "Rectangular prism edge lengths6,2,3 volume6*2*3=36 cubic centimeters.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "6c67dd47",
+      "type": "rtt-special",
+      "observation": "Sides26,19 enclose54 degrees; altitude19sin54 gives area(1/2)*26*19*sin54=247sin54.54 is not special angle; classify rtt-trig.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1bf809b5",
+      "type": "rtt-trig",
+      "observation": "Right triangle angle x adjacent leg11,hypotenuse28 gives cosx11/28; no missing-side calculation needed.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "27f1db42",
+      "type": "cir-transform",
+      "observation": "Concentric circleF squared radius25 ->r5; add2 to radius gives7 and circleG squared radiusp49, not27.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "14e7c1f4",
+      "type": "rtt-complement",
+      "observation": "Acute cosQ=sinR implies complements; (x+61)+(4x+4)=90 gives x5; equating angles would19.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a2e76b60",
+      "type": "av-volume",
+      "observation": "Can base75,height10 has capacity750cm^3; syrup110 leaves fruit volume640cm^3.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "468613c0",
+      "type": "av-area",
+      "observation": "Triangle base56,height112 gives area(1/2)*56*112=3136cm^2;6272 is product before halving.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "145337bc",
+      "type": "rtt-pythag",
+      "observation": "Visual two45-degree acute angles mean right triangle legs equal; other leg24 gives x24, not45-degree measure. Special triangle type fits.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "36200a38",
+      "type": "lat-lines",
+      "observation": "Triangle known70 and50 leave third60; exterior adjacentx supplements60, so x120, also70+50.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "a490003a",
+      "type": "av-area",
+      "observation": "Rectangle width7, length40 longer=47; area7*47=329cm^2, not7*40.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "95ca2683",
+      "type": "lat-triangle",
+      "observation": "Triangle54,90,k/2 gives k/2=36 and k72; unknown parameter is twice missing angle.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "306264ab",
+      "type": "av-area",
+      "observation": "Right triangle sides2sqrt2,6sqrt2,sqrt80: largest sqrt80 hypotenuse; area(1/2)*(2sqrt2)*(6sqrt2)=12.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "6a3fbec3",
+      "type": "lat-triangle",
+      "observation": "Visual altitudeBD6 to hypotenuseAC of right-angleB; geometric-mean relationBD^2=AD*DC gives DC36/8=4.5. Similar right triangle classification.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "37dde49f",
+      "type": "av-volume",
+      "observation": "Visual given frustum formulaV7pi*k^3/48; volume473 gives k=cuberoot(473*48/(7pi)) about10.11; do not replace supplied formula with cylinder/cone.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "f67255ea",
+      "type": "lat-parallel",
+      "observation": "Acutea9x-560, supplementary obtuse740-9x; oneacute+threeobtuse=-18x+1660, hence w1660.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "02b02213",
+      "type": "av-perimeter",
+      "observation": "Rectangle4 by9 perimeter2(4+9)=26 inches, not area36.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "82c8325f",
+      "type": "cir-build",
+      "observation": "Center(-4,5), point(-8,8) give squaredradius(-4)^2+3^2=25; circle(x+4)^2+(y-5)^2=25.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "c0b53183",
+      "type": "cir-tangent",
+      "observation": "Two equal tangent-right triangles shareOE510,r78; tangentUEsqrt(510^2-78^2)=504. Quadrilateralarea2*(1/2)*78*504=39312.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "459dd6c5",
+      "type": "av-scale",
+      "observation": "Similar ABC side4 timesDEF ->areaABC16 timesDEF;270/16=135/8=16.875. OCR485 header omittedfraction, full rationale includes accepted16.87/16.88.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "44d67c6c",
+      "type": "cir-transform",
+      "observation": "Complete squares:circleA center(5,4),rA^2=14n+41. CircleB double diameter ->rB^2=4(14n+41); point(11,8) gives52, so n=-2 and rA^2=13>0.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "603c18ad",
+      "type": "rtt-pythag",
+      "observation": "AltitudeWX to hypotenuseYZ makes WYX~XYZ with Xsmall correspondingZbig; tanZ=WY/WX572/429=4/3. Similarity classification fits.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "6585d841",
+      "type": "cir-read",
+      "observation": "Circle x^2+14x+y^2=6y+109 completes to(x+7)^2+(y-3)^2=167; radius sqrt167, positive root.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "3b44439b",
+      "type": "lat-parallel",
+      "observation": "x and142 form linear pair; askedx+142=180 directly, notx38; parallelism unnecessary.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "1efd7ef3",
+      "type": "cir-geo",
+      "observation": "sin42pi corresponds21 complete turns on unit circle to(1,0), hence0; cosine would1.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "9d2e7037",
+      "type": "av-area",
+      "observation": "Rectangle56 by28 gives area1568 square inches;168 perimeter,84 side sum.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "25da87f8",
+      "type": "rtt-special",
+      "observation": "30-60-90 perimeter18+6sqrt3=6(3+sqrt3), so shortleg6 and longesthypotenuse12.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "310c87fe",
+      "type": "av-surface",
+      "observation": "Cube surface54 ->6s^254 ->s3; volume27m^3, not surface-derived9 or81.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "cf53cb56",
+      "type": "av-area",
+      "observation": "Visual square diagonals run from-5 to5 on both axes; diagonal10, area10^2/2=50, equivalently four right triangles12.5.",
+      "read_status": "complete_question_and_solution_ocr"
+    },
+    {
+      "id": "b96ff36e",
+      "type": "cir-read",
+      "observation": "Substitute point(6,c) into(x-3)^2+(y-5)^2=9;9+(c-5)^2=9 makes c5 uniquely.",
+      "read_status": "complete_question_and_solution_ocr"
+    }
+  ]
+}

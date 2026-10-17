@@ -1,0 +1,103 @@
+{
+  "scope": "Findings from actual source reads of all 615 grammar and transition records. Findings distinguish gaps from existing 19 concepts/98 uses; official-source discrepancies are separately labeled.",
+  "reviewedThrough": 615,
+  "findings": [
+    {
+      "id": "GT1",
+      "type": "teaching-scope-correction",
+      "sourceIds": [
+        "00221c00"
+      ],
+      "existingUse": "u18-2",
+      "finding": "Ultimately can mark the underlying or highest-level goal, without a later event or final step. Bol\u00edvar addresses Cullen but ultimately seeks European political support.",
+      "suggestion": "Qualify final-step-only wording with an underlying-goal sense; use00221c00 as the contrast case."
+    },
+    {
+      "id": "GT2",
+      "type": "additional-decision-check",
+      "sourceIds": [
+        "a819d8b6",
+        "28c7a762",
+        "827afb27",
+        "a266d876",
+        "47e238be"
+      ],
+      "finding": "Carry negation, exceptions, and outlier labels into the proposition being linked. Apparent topic contrasts can elaborate a sentence that already says not always, prior assumptions differed, or outliers.",
+      "suggestion": "Before picking another contrast word, paraphrase the whole immediately preceding proposition, including its caveat. Existing relation categories alone do not make this explicit."
+    },
+    {
+      "id": "GT3",
+      "type": "additional-decision-check",
+      "sourceIds": [
+        "332e75bf",
+        "a3bf0a9d",
+        "8622320e"
+      ],
+      "finding": "A causal process described inside a sentence is not automatically a causal relationship between sentences. A mechanism can specify a broad causal claim; an eventual realization need not cause the state realized.",
+      "suggestion": "Separate event causation from evidence-to-inference and general-claim-to-mechanism links. Ask exactly what the earlier proposition would be claimed to cause."
+    },
+    {
+      "id": "GT4",
+      "type": "source-rationale-precision",
+      "sourceIds": [
+        "9dc4e640"
+      ],
+      "finding": "Official rationale calls microscope visibility an exception to earlier crystalline invisibility, but the immediate preceding microcrystalline statement concerns naked-eye invisibility. The full context contrasts cryptocrystalline and microcrystalline microscope behavior.",
+      "suggestion": "Explain that said as a limitation/contrast between visibility conditions and mineral classes; avoid claiming the sentence logically contradicts naked-eye invisibility."
+    },
+    {
+      "id": "GT5",
+      "type": "additional-decision-check",
+      "sourceIds": [
+        "6e071432",
+        "e67f9967"
+      ],
+      "existingUses": [
+        "u4-1",
+        "u6-5",
+        "u6-9"
+      ],
+      "finding": "Nested supplements require identifying punctuation levels: Calle uses outer dashes enclosing two linked supplements separated by a comma; Anderson uses a trailing decision appositive whose relative clause contains its own comma-bounded by allowing phrase. Existing single-aside rules apply but do not explicitly show this combination.",
+      "suggestion": "Add one nested-supplement walkthrough: remove the entire outer supplement first, then pair any punctuation inside it. Do not pair an inner comma with an outer dash or mistake that, by...own, amplified for a clause boundary."
+    },
+    {
+      "id": "GT6",
+      "type": "additional-decision-check",
+      "sourceIds": [
+        "42cc9236",
+        "99dedf36",
+        "c102f9b0"
+      ],
+      "existingUses": [
+        "u11-1",
+        "u11-5"
+      ],
+      "finding": "Singular agreement alone does not choose it versus this/that. The source chooses it to resume a given term and a hypothetical object, rejecting singular this/that for ambiguity or inappropriate specific pointing, while this is correct for an entire appointment event. Existing uses show both outcomes but do not explicitly compare their reference jobs.",
+      "suggestion": "After checking number, identify whether the blank resumes a noun or points to an entire event/proposition. Explain why a matching-number demonstrative can still leave the intended referent unclear; do not teach an absolute prohibition on demonstratives with noun antecedents."
+    },
+    {
+      "id": "GT7",
+      "type": "source-rationale-precision",
+      "sourceIds": [
+        "975eda7c"
+      ],
+      "existingUses": [
+        "u9-1",
+        "u10-5"
+      ],
+      "finding": "Official rationale correctly selects finite have used but labels it past perfect. Have used is present perfect; past perfect would be had used. The item tests finite verb supply, so the answer remains sound.",
+      "suggestion": "When explaining this source, call have used a finite present-perfect verb phrase; do not carry over the source\u2019s incorrect tense label."
+    },
+    {
+      "id": "GT8",
+      "type": "source-punctuation-discrepancy",
+      "sourceIds": [
+        "d222f7d9"
+      ],
+      "existingUse": "u9-9",
+      "finding": "PDF p1966 confirms official D swimming, and rationale explicitly says comma after swimming pairs with dash after ciliates. However, the text has an inner dash before including and closing dash before bestows, leaving the outer widely understood participial supplement without its expected closing comma. This source anomaly conflicts with the same-mark aside rules elsewhere. Finite alternatives remain wrong because bestows is the main predicate.",
+      "suggestion": "Preserve official answer but annotate source punctuation as anomalous. Use clean 1a61e2ae as the printed-participle version\u2019s teaching example, or transparently label any normalized punctuation. Do not teach comma\u2013dash pairing as a general exception inferred from this item."
+    }
+  ],
+  "unreviewedCount": 0
+}

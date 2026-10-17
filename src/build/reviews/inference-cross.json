@@ -1,0 +1,2477 @@
+{
+  "scope": "All201 questions, all choices and complete source rationales read. Parent reviewed first30; continuation reviewer read indices30–200. Source documents treated as data.",
+  "source": "October 15 bank.pdf / parsed.json, filtered Inferences and Cross-Text Connections in export order. PDF pages are one-based.",
+  "continuationReviewed": 171,
+  "records": [
+    {
+      "index": 0,
+      "id": "f1bfbed3",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        1,
+        2
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Stable category counts and only partial invertebrate explanation leave microorganism classification as residual source of increased census count.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 1,
+      "id": "d748c3fd",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        5
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Johnson collection illustrates earlier scholarly dismissal and later recognized utility; no acquisition difficulty is given.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 2,
+      "id": "6b8a7c74",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        6
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Effort obtaining a gift differs from ease using it; giver assumptions about appreciation differ from recipient preferences.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 3,
+      "id": "ca5a3fb4",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        28
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Limited logging may improve observed forest health relative to no logging; no evidence ranks all management strategies.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 4,
+      "id": "ce4448b7",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        37
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Opposite enjoyment effect predicts interrupted unpleasant noise rated worse than uninterrupted noise, not irritation at silence or altered duration.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 5,
+      "id": "a68fd3e7",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        50
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Broad tragedy themes versus required English history knowledge supports many readers finding history plays less engaging; no ranking of all tragedies.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 6,
+      "id": "4b3d6062",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        56
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "If ecosystem view is correct, single-species conservation misses interactions with other species; it does not abandon the focal cactus.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 7,
+      "id": "58e9e497",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        64
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Direct observation uncommon and independent invention explicitly barred, so intermediary transmission explains shared farming techniques.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 8,
+      "id": "3190835d",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        67
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Social benefits may offset interruption costs; this supplies neither optimal interruption frequency nor measured productivity gain.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 9,
+      "id": "58817765",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        68
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Downward particle migration invalidates sediment position as first-deposition date; it does not refute1950 epoch or imply scarcity.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 10,
+      "id": "1755eaf0",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        72
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Bumblebee dietary generalism and sociability limit generalization; caution is justified, not total exclusion of data or universal future resilience.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 11,
+      "id": "ac285054",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        92
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Plant divergence predates Polynesian settlement by millennia, supporting nonhuman introduction under stated chronology; cultivation dates remain unknown.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 12,
+      "id": "01989d77",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        93
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Watermilfoil treatment emits less methane than duckweed/algae; no mixed-treatment optimum or shallow-versus-deep comparison was tested.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 13,
+      "id": "8e6a96f5",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        96
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Equal performance across water/zinc does not exclude adaptation to untested light/temperature; preserve if locally adapted.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 14,
+      "id": "7c1e5880",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        97
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Zelda as inspiration alone omits her own authored works; inference concerns her contribution, not her husband's other influences.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 15,
+      "id": "4603d1f7",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        105
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Opposing pay-as-you-wish outcomes support heterogeneous success; they do not identify popularity, band/solo causation or later price changes.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 16,
+      "id": "086dd8cc",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        108
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Anterior activity and absent trunk markers revise headless morphology toward mostly head; known bilateral ancestry remains accepted.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 17,
+      "id": "e185a21f",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        110
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Tree-bipedal orangutans suggest possible advantage for tree-dwelling ancestor; no simultaneity, climbing necessity or ease follows.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 18,
+      "id": "20000f5f",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        111
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Removing copyright fee and approval lowers adaptation barriers; no refund, genre demand increase or scarce originals follows.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 19,
+      "id": "db876fd5",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        128
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Local song preference plus stated mate-selection role predicts local mating; begging calls measure preference, not food receipts.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 20,
+      "id": "f39507a3",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        132
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Inability to assign electoral winners complicates finding otherwise similar nonholder controls; deliberately different controls would not solve it.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 21,
+      "id": "6bc0e595",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        136
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Touching raises willingness to pay for tested products, supporting perceived in-person value; monthly spending and normative pricing differ.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 22,
+      "id": "09d942c6",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        145
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Absent self-recognition makes reflection seem another chicken, predicting predator warnings in both mirror and real-chicken conditions.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 23,
+      "id": "f9bd4e61",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        148
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Brechtian distance invites dispassionate critique of specified political issues; it does not invite unrelated issues or historical-country parallels.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 24,
+      "id": "4889580c",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        160,
+        161
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Reconstruct scholars' obsolete belief: low ecological diversity means few different resources to trade; attribute the mistaken assumption.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 25,
+      "id": "4ba0695d",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        164
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Nonancestor genetic shares36% versus4.5% show asymmetric mixing impact; domestication7000years ago preceded400–600year mixing.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 26,
+      "id": "d95a0bb8",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        168
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Uniform methane fraction is a simplifying model input causing expected mismatch; neither higher real methane nor reality-driven simulated variation follows.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 27,
+      "id": "3cc2eacc",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        173
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Reward dopamine supports memory-related cell activity, not cell creation or guaranteed sufficiency; association differs from discrimination.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 28,
+      "id": "5bcee487",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        174
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Paintings and poems share unconstrained rule-defying expression; simultaneous perspectives are only established for paintings.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 29,
+      "id": "54057e3f",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        175
+      ],
+      "status": "reviewed-complete-source",
+      "reviewNote": "Shared organizational structures can explain veteran attraction to civilian government jobs, not increased military requirements or nonveteran enlistment.",
+      "parseCaveat": null,
+      "reviewer": "parent; full-record reading retained in conversation"
+    },
+    {
+      "index": 30,
+      "id": "aaddd60f",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        177
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Silica contradicts an exclusively basaltic origin; add geological processes, not cross-planet comparisons.",
+      "parseCaveat": null
+    },
+    {
+      "index": 31,
+      "id": "c4d43991",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        183
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Rare lead disappears in later bronze; infer discontinued source, not disappearance of bronze or added market value.",
+      "parseCaveat": null
+    },
+    {
+      "index": 32,
+      "id": "5f16d809",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        185
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Tradition supports recontextualization generally, not a specifically female-centered ancient tradition.",
+      "parseCaveat": null
+    },
+    {
+      "index": 33,
+      "id": "123bd312",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        190
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Key evolutionary transitions lack coincident CO2 spikes; dependence on increased CO2 is unsupported.",
+      "parseCaveat": null
+    },
+    {
+      "index": 34,
+      "id": "08395130",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        196
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Key A retained; source rationale swaps percentage of bodies for percentage of time, a denominator error verified on PDF page 196.",
+      "parseCaveat": null
+    },
+    {
+      "index": 35,
+      "id": "26f5c4ba",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        197
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Calculation includes convenience as well as price; cheaper plan can lose because burdens outweigh savings.",
+      "parseCaveat": null
+    },
+    {
+      "index": 36,
+      "id": "cef77aa7",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        199
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Expert's aerial search implies unfamiliar ground location, not different country, date, or whale species.",
+      "parseCaveat": null
+    },
+    {
+      "index": 37,
+      "id": "9c591ff7",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        201
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Current genetic similarity coexists with emerging communication differences; possible future population split is not current separate-species status.",
+      "parseCaveat": null
+    },
+    {
+      "index": 38,
+      "id": "fd1095d7",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        203
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Lower creep rate supports potentially longer stress endurance, not absolute deformation claim.",
+      "parseCaveat": null
+    },
+    {
+      "index": 39,
+      "id": "e1504a2a",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        214
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Fuller skeleton revises assumed locomotion, not previously observed head size.",
+      "parseCaveat": null
+    },
+    {
+      "index": 40,
+      "id": "4b8eda0a",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        225,
+        226
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Interpretation must account for both male and female participants; constraints on nonmuralist artists fit both.",
+      "parseCaveat": null
+    },
+    {
+      "index": 41,
+      "id": "55688b3c",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        228
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Painted food frequency is not a reliable diet proxy; discrepancy undermines representation, not dairy's actual dietary importance.",
+      "parseCaveat": null
+    },
+    {
+      "index": 42,
+      "id": "c9708e7d",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        229
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Self-interested myth about difficult access boosts climbers' reputations, not botanical knowledge.",
+      "parseCaveat": null
+    },
+    {
+      "index": 43,
+      "id": "1bf2173e",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        232
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Key B best explanation; source's general less-work/longer-life causal rule ignores infection confounding, PDF page 232.",
+      "parseCaveat": null
+    },
+    {
+      "index": 44,
+      "id": "7bdf094b",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        233
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Literal meaning can be preserved while essential sound pattern is lost; no evidence about audience preferences.",
+      "parseCaveat": null
+    },
+    {
+      "index": 45,
+      "id": "c95995bc",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        240
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Isolation restricts exposure to dialect change; not different-language resistance or mutual intelligibility.",
+      "parseCaveat": null
+    },
+    {
+      "index": 46,
+      "id": "dbbbc5dd",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        241
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Fornes exemplifies stated artistic freedom; costs, fame, complexity unmeasured.",
+      "parseCaveat": null
+    },
+    {
+      "index": 47,
+      "id": "6409016a",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        243
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Identify cost driver: years of collection unnecessary for current-percentage fitness study.",
+      "parseCaveat": null
+    },
+    {
+      "index": 48,
+      "id": "8a3ecac6",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        249
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Fur variant may be linked to immunity; no universal replacement or lifespan prediction.",
+      "parseCaveat": null
+    },
+    {
+      "index": 49,
+      "id": "4025e00c",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        250
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Harvest survival can offset lower ears per plant; preserve production versus harvested yield distinction.",
+      "parseCaveat": null
+    },
+    {
+      "index": 50,
+      "id": "9391b7cc",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        251
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Hold both stipulated dates true: older artifacts can arrive later through migration/trade.",
+      "parseCaveat": null
+    },
+    {
+      "index": 51,
+      "id": "2a075bd1",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        253
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Preserving language preserves medicinal knowledge; not necessarily translating it or granting physical plant access.",
+      "parseCaveat": null
+    },
+    {
+      "index": 52,
+      "id": "8fbed1cb",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        256
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Ink dates invalidate this map's medieval origin, not all possible medieval geographical knowledge.",
+      "parseCaveat": null
+    },
+    {
+      "index": 53,
+      "id": "db57afa3",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        258
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Lack of corroborating lightning evidence challenges wave source, not wave classification or data accuracy.",
+      "parseCaveat": null
+    },
+    {
+      "index": 54,
+      "id": "5432d1de",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        262
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Bundled downbeat/offbeat manipulation supports timing's role; cannot isolate either component regardless of the other.",
+      "parseCaveat": null
+    },
+    {
+      "index": 55,
+      "id": "4e9afd7a",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        263
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Learning without decipherment disproves necessity; it does not prove easier research or recommended priorities.",
+      "parseCaveat": null
+    },
+    {
+      "index": 56,
+      "id": "8209f485",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        264,
+        265
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Transient mother-daughter association supports diminishing learning; shared-habitat residual possible, nonmaternal relatedness provides no genetic effect.",
+      "parseCaveat": null
+    },
+    {
+      "index": 57,
+      "id": "3882ddf6",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        266
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Oldest cited subduction-like rock bounds onset no later than 3.75 bya locally; not global dominance or exact first occurrence.",
+      "parseCaveat": null
+    },
+    {
+      "index": 58,
+      "id": "3f236877",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        286
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Confidentiality prevents independent equity assessment; does not establish unfairness actually occurred.",
+      "parseCaveat": null
+    },
+    {
+      "index": 59,
+      "id": "fc1259dd",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        294
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Treasury role supports governmental importance without resolving pharaoh status.",
+      "parseCaveat": null
+    },
+    {
+      "index": 60,
+      "id": "420b82e2",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        298
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Independent emergence/persistence and lymphoid association support immune-benefit hypothesis; not future spread or tissue-production causality.",
+      "parseCaveat": null
+    },
+    {
+      "index": 61,
+      "id": "95dbdf51",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        304
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Apply Mulvey's stated editing theory to this sequence; infer reduced protagonist identification, not substitute director identification.",
+      "parseCaveat": null
+    },
+    {
+      "index": 62,
+      "id": "7ae8065c",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        305
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Clam size and abundance support maintained and improved food source; not other cultures' adoption or current practice.",
+      "parseCaveat": null
+    },
+    {
+      "index": 63,
+      "id": "28dfc05a",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        308
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Unique production circumstances limit the proposed counterfactual comparison; no efficiency/fame claims supplied.",
+      "parseCaveat": null
+    },
+    {
+      "index": 64,
+      "id": "0dba14e6",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        321
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Largest cost reductions downstream imply smaller effects upstream; no customer pricing expectations established.",
+      "parseCaveat": null
+    },
+    {
+      "index": 65,
+      "id": "a44c7bd4",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        332
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Aztec evaluation requires role AND community contribution; observer need not belong to society to understand context.",
+      "parseCaveat": null
+    },
+    {
+      "index": 66,
+      "id": "a13c1c66",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        344
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Scientists' unexplained net benefit suggests undiscovered sleep advantages; do not generalize to most traits.",
+      "parseCaveat": null
+    },
+    {
+      "index": 67,
+      "id": "350e2336",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        345
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Diplomatic language plus assurances/revolutionary model support multiple intended audiences beyond explicit addressees.",
+      "parseCaveat": null
+    },
+    {
+      "index": 68,
+      "id": "f942646f",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        352
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Address capacity bottleneck by extra trains; long-haul and imposing airline procedures miss stated goal.",
+      "parseCaveat": null
+    },
+    {
+      "index": 69,
+      "id": "4a85fea6",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        355
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Exclusive reproductive inhibition reduces invasive population without collateral harm as hypothesized; not detoxifying individual plants.",
+      "parseCaveat": null
+    },
+    {
+      "index": 70,
+      "id": "1ffd60ce",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        365
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Hold silver mass fixed, reduce total coin mass: silver percentage rises; heavier coins at same ratio do not fix ratio problem.",
+      "parseCaveat": null
+    },
+    {
+      "index": 71,
+      "id": "fcae209f",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        372
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Isolation blocks nearby airborne transmission; date of scientific discovery does not explain historical survival.",
+      "parseCaveat": null
+    },
+    {
+      "index": 72,
+      "id": "72cbdbc6",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        376
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Potential lighting benefit pertains to novice subgroup, not experienced cyclists; source rationale sometimes overstates little effect as none.",
+      "parseCaveat": null
+    },
+    {
+      "index": 73,
+      "id": "6abe5e3c",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        379
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Map decreasing light through explicitly assigned sound states; do not invent changing speed or loudness.",
+      "parseCaveat": null
+    },
+    {
+      "index": 74,
+      "id": "e6e6be2d",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        385
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Nonzero consumption of poor prey refutes always avoiding it and supports potential intervention, not proven field recovery.",
+      "parseCaveat": null
+    },
+    {
+      "index": 75,
+      "id": "0dccbf17",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        387
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Contemporary values may be anachronistic; no comparison between Tanner and his own contemporaries established.",
+      "parseCaveat": null
+    },
+    {
+      "index": 76,
+      "id": "25893fc7",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        390
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Realistic handshake could foster trust; no claims about appearance or programming ease.",
+      "parseCaveat": null
+    },
+    {
+      "index": 77,
+      "id": "5632ffb4",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        391
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Physical task difficulty confounds cognitive comparison; differences may be artifacts, not proven absent.",
+      "parseCaveat": null
+    },
+    {
+      "index": 78,
+      "id": "3d505895",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        399
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "No matching male DNA supports parthenogenesis for these offspring, not mothers' origins, wild exclusion, or access threshold.",
+      "parseCaveat": null
+    },
+    {
+      "index": 79,
+      "id": "1b9b29f1",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        403
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Protein swap effect appears at higher temperature; mechanism contribution does not imply unique species, increased production, or minimum flowering threshold.",
+      "parseCaveat": null
+    },
+    {
+      "index": 80,
+      "id": "61228830",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        404
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Replacement addresses explicitly named environmental constraints; not Morse familiarity or manufacturing cost.",
+      "parseCaveat": null
+    },
+    {
+      "index": 81,
+      "id": "71c2cea9",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        410
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Contrast large art influence with small output; simple work and abstract Bird are consistent rather than disparate.",
+      "parseCaveat": null
+    },
+    {
+      "index": 82,
+      "id": "75208874",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        412
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Online-to-spoken sequence supports facilitating change; one example plus many similar languages does not prove exceptional influence on Indonesian.",
+      "parseCaveat": null
+    },
+    {
+      "index": 83,
+      "id": "787729be",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        413
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Trap location plus scarce surface prey supports access-to-prey hypothesis, not moisture absorption.",
+      "parseCaveat": null
+    },
+    {
+      "index": 84,
+      "id": "45c03837",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        416
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Explain negligible incremental effect of pulses over loud ships, while retaining large ship-versus-natural effect.",
+      "parseCaveat": null
+    },
+    {
+      "index": 85,
+      "id": "575e67df",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        417
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Delayed middle-ring formation changes simulated inner-planet size; infer timing importance, not an unstated order of simulations.",
+      "parseCaveat": null
+    },
+    {
+      "index": 86,
+      "id": "e9521fd1",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        422
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Nonshared maize vocabulary despite shared inherited terms suggests crop acquisition after language-family split; between-branch versus within-branch distinction.",
+      "parseCaveat": null
+    },
+    {
+      "index": 87,
+      "id": "96d1c1fe",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        430
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Near East DNA and artifacts arrive together without locals' long travels; infer inbound transport, not particular barter arrangement.",
+      "parseCaveat": null
+    },
+    {
+      "index": 88,
+      "id": "b5e9f3c2",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        442
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Turkey genetic link supports migration with agricultural practices; does not exclude previous local turkey cultivation.",
+      "parseCaveat": null
+    },
+    {
+      "index": 89,
+      "id": "4f9f8ea6",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        452
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Appearance can be dishonest fitness signal; honesty and persuasiveness/effectiveness are distinct, with no mate-response measurements.",
+      "parseCaveat": null
+    },
+    {
+      "index": 90,
+      "id": "b603f00b",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        460
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Conductivity suggests bypass of inefficient electron transfer; not invented metabolism or catalysis mechanism.",
+      "parseCaveat": null
+    },
+    {
+      "index": 91,
+      "id": "f2250478",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        465
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Solitary nonparental tortoise attraction challenges necessary social/parental adaptation assumption; no adult comparison tested.",
+      "parseCaveat": null
+    },
+    {
+      "index": 92,
+      "id": "6e0e0de1",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        468
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Recovery/flexibility supports resistance to structural failure; not invented air ratios or temperature-change-rate comparison.",
+      "parseCaveat": null
+    },
+    {
+      "index": 93,
+      "id": "493c46bc",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        469
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Costlier effective tools selectively safeguarded suggests value, not ease of holding or sharing.",
+      "parseCaveat": null
+    },
+    {
+      "index": 94,
+      "id": "a0b58ef0",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        481
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Crater of unknown age cannot confirm linkage to dated cooling event; does not disprove linkage or event dates.",
+      "parseCaveat": null
+    },
+    {
+      "index": 95,
+      "id": "3ae2638c",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        486
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Considering/rebutting contrary philosophy can strengthen reasoning; no accessibility or consensus claim.",
+      "parseCaveat": null
+    },
+    {
+      "index": 96,
+      "id": "7a895def",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        489
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Peer discussion supplies feedback despite limited professional staging/publication; not necessarily future subject matter.",
+      "parseCaveat": null
+    },
+    {
+      "index": 97,
+      "id": "f3f444bc",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        492
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Key A targets receptor shared by disease-carrying mosquitoes. Rationale additionally invents uniqueness/comparative superiority of receptor and future EBF resistance; these are not established.",
+      "parseCaveat": null
+    },
+    {
+      "index": 98,
+      "id": "5cd55c77",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        495
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Unchanged spawning/fertilization do not protect reproductive success when hatching blocked; no between-species comparison.",
+      "parseCaveat": null
+    },
+    {
+      "index": 99,
+      "id": "f495b554",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        502
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Complementary spectral ranges explain combined efficiency; perovskite alone not superior and no technology abandonment implied.",
+      "parseCaveat": null
+    },
+    {
+      "index": 100,
+      "id": "25fc2534",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        507
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Surviving old wood implies supplied oxygen-protection condition; no inference about other ships or wood type.",
+      "parseCaveat": null
+    },
+    {
+      "index": 101,
+      "id": "2d2983b3",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        509
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "No iron plus high carbon distinguishes plant pigment from red ocher; not earliest invention or reason for preference.",
+      "parseCaveat": null
+    },
+    {
+      "index": 102,
+      "id": "eca09a92",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        512
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Melanosome shape-color relation enables bird-color hypothesis; not fossils without melanosomes or preservation explanation.",
+      "parseCaveat": null
+    },
+    {
+      "index": 103,
+      "id": "ead0fd9b",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        522
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Orient instrument's sound holes toward audience to address projection problem; eye direction alone irrelevant.",
+      "parseCaveat": null
+    },
+    {
+      "index": 104,
+      "id": "9077be25",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        531
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Natural acting contrasts with period's exaggeration; unusual does not establish influence or superiority today.",
+      "parseCaveat": null
+    },
+    {
+      "index": 105,
+      "id": "f27559d4",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        532
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Known societal benefit exceeds surveyed awareness; no ranking societal versus individual benefit.",
+      "parseCaveat": null
+    },
+    {
+      "index": 106,
+      "id": "d1539546",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        536
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Same burrowing has opposing effects by LOCATION, not panne size or burrowing intensity.",
+      "parseCaveat": null
+    },
+    {
+      "index": 107,
+      "id": "df654a2b",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        543
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Continued festivals support ongoing expressive significance; plausible online reach does not follow from this evidence.",
+      "parseCaveat": null
+    },
+    {
+      "index": 108,
+      "id": "1d0b5bf4",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        545
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Reviewers' praise matches stated tribute goal; not evidence of influence on later poets or favorite rankings.",
+      "parseCaveat": null
+    },
+    {
+      "index": 109,
+      "id": "485962a6",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        548
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Erosion/resurfacing limits current surface as past-event proxy; uncertainty does not establish nonvolcanic origin or smaller eruptions.",
+      "parseCaveat": null
+    },
+    {
+      "index": 110,
+      "id": "bcbcc43f",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        550
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Surplus supports ability to store extra crops; source rationale's actual-storage certainty is stronger than keyed ability claim.",
+      "parseCaveat": null
+    },
+    {
+      "index": 111,
+      "id": "d8b78a2b",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        551
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "No decisive evidence among origin claims means unknown, not all false or earliest claimant probably true.",
+      "parseCaveat": null
+    },
+    {
+      "index": 112,
+      "id": "cf3acc50",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        553
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Mixed old content and later additions preserves both premises; collection need not have single date.",
+      "parseCaveat": null
+    },
+    {
+      "index": 113,
+      "id": "4802f6a5",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        555
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Target-positive and other-strain negatives support binding and specificity in a tested real-world food, not all food/pathogen superiority.",
+      "parseCaveat": null
+    },
+    {
+      "index": 114,
+      "id": "d047abca",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        560
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Attribute crucial-function prevalence expectation to Laidre; no habitat/shyness extrapolation.",
+      "parseCaveat": null
+    },
+    {
+      "index": 115,
+      "id": "9abc3ba5",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        563
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Read FULL RAW because parsed stem/rationale blank from indented headers. Zero versus one gesture debate still shares reduction from many earlier gestures.",
+      "parseCaveat": "Indented headings leave parsed stem and rationale empty; complete raw record read."
+    },
+    {
+      "index": 116,
+      "id": "fc57d569",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        566
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Shared sound feature and ancestry support Scotland-to-Upland-South influence; not reverse direction or future spread.",
+      "parseCaveat": null
+    },
+    {
+      "index": 117,
+      "id": "38facbad",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        570
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Cross-cultural sample is broader, but tested MUSIC remains Western; no extrapolation to non-Western genres or prior expectations.",
+      "parseCaveat": null
+    },
+    {
+      "index": 118,
+      "id": "6ca4f991",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        573
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Loose adaptation across media may preserve rhythm/cadence better than literal translation; single positive critic is not most critics or all ballets.",
+      "parseCaveat": null
+    },
+    {
+      "index": 119,
+      "id": "5b4829d2",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        577
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Changed prior-ad detail affects response to same later ad; duration, audience count, time of day unmanipulated.",
+      "parseCaveat": null
+    },
+    {
+      "index": 120,
+      "id": "5c7e0d62",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        584
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Within text's introduction chronology, earlier legend source lacks later Round Table addition; no accuracy comparison warranted.",
+      "parseCaveat": null
+    },
+    {
+      "index": 121,
+      "id": "299c5303",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        585
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Supported initial fact about dramaturges is not blank's required application to narrative dance; complete local reasoning.",
+      "parseCaveat": null
+    },
+    {
+      "index": 122,
+      "id": "5105ca38",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        592
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Cupid has alternative association with fishing; inconclusive Venus identification does not eliminate Venus possibility.",
+      "parseCaveat": null
+    },
+    {
+      "index": 123,
+      "id": "22b3da87",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        595
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Voter tax threshold and dominant real-estate pathway support holdings inference; foreign-asset owners can also own domestic assets.",
+      "parseCaveat": null
+    },
+    {
+      "index": 124,
+      "id": "bcf2f169",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        600
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Professor rebuts perceived irrelevance, not compared difficulty or benefit of reordered readings.",
+      "parseCaveat": null
+    },
+    {
+      "index": 125,
+      "id": "b4da6aaf",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        603
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Attribute improvement to Green's changed storytelling evaluation; larger production not necessarily deficient scale.",
+      "parseCaveat": null
+    },
+    {
+      "index": 126,
+      "id": "cac82f9b",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        612
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Both proposed pathways share common source; neither need be chosen or averaged, harmful/beneficial not specified.",
+      "parseCaveat": null
+    },
+    {
+      "index": 127,
+      "id": "7afdcca2",
+      "skill": "Inferences",
+      "answer": "D",
+      "pdfPages": [
+        613
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Origin-region language distribution can recur in destination settlement patterns; not language mutation or country-size correlation.",
+      "parseCaveat": null
+    },
+    {
+      "index": 128,
+      "id": "f9884b7a",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        621
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Date, location, burial, and unusual shared diet jointly suggest possible companion animal; not diet proportions or jackal diet.",
+      "parseCaveat": null
+    },
+    {
+      "index": 129,
+      "id": "b9a3941b",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        623,
+        624
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Early Central African workshops undermine delayed Carthage-diffusion route and permit independent contemporaneous origin; not forced earlier Anatolian date.",
+      "parseCaveat": null
+    },
+    {
+      "index": 130,
+      "id": "45f66433",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        627
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Intensified competition reverses supplied brain/body selective trend; track ratio not absolute brain size alone.",
+      "parseCaveat": null
+    },
+    {
+      "index": 131,
+      "id": "e503ae04",
+      "skill": "Inferences",
+      "answer": "A",
+      "pdfPages": [
+        629
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Solutions generating new complications limit feasible delivery speed; no absent incentive or unknown demand inference.",
+      "parseCaveat": null
+    },
+    {
+      "index": 132,
+      "id": "5d20f560",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        636
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Credentialed expertise outweighed by experiential relevance is not ignored or distrusted credentials.",
+      "parseCaveat": null
+    },
+    {
+      "index": 133,
+      "id": "cae97f58",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        637
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Semitransparent protection balances light and moisture; crystal thickness and other moss comparison untested.",
+      "parseCaveat": null
+    },
+    {
+      "index": 134,
+      "id": "65502c46",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        642
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Discerning craft peers plus status through gifts supports professional reputation, not secret technique protection.",
+      "parseCaveat": null
+    },
+    {
+      "index": 135,
+      "id": "9869c261",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        650
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Abundant fine sediment, episodic cracks, and coarse intervals each constrain lake/stream history; explanation must satisfy all three.",
+      "parseCaveat": null
+    },
+    {
+      "index": 136,
+      "id": "93cad661",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        654
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Mentoring programs across arts support value of opportunities, not ranking guidance types or benefits to mentors.",
+      "parseCaveat": null
+    },
+    {
+      "index": 137,
+      "id": "03701ef3",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        655
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Destructive casting prevents repeated same-burrow measurements; precision at one moment is distinct from longitudinal capability.",
+      "parseCaveat": null
+    },
+    {
+      "index": 138,
+      "id": "27ea642e",
+      "skill": "Inferences",
+      "answer": "C",
+      "pdfPages": [
+        658
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Blue female plumage may reduce resource antagonism despite lower mate attraction; no future frequency or juvenile claim.",
+      "parseCaveat": null
+    },
+    {
+      "index": 139,
+      "id": "b1fab3e1",
+      "skill": "Inferences",
+      "answer": "B",
+      "pdfPages": [
+        659
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Same wood types exclude that difference as explanation; chemical treatment supplies alternate partial hypothesis.",
+      "parseCaveat": null
+    },
+    {
+      "index": 140,
+      "id": "eb89dcc8",
+      "skill": "Cross-Text Connections",
+      "answer": "C",
+      "pdfPages": [
+        676
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Apply second text's preference-disclosure finding to joint lunch decision; not avoidance or only asking other's preference.",
+      "parseCaveat": null
+    },
+    {
+      "index": 141,
+      "id": "97e5bf55",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        679
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Both identify Fletcher by style while disagreeing over other author; isolate shared proposition.",
+      "parseCaveat": null
+    },
+    {
+      "index": 142,
+      "id": "1917ba9a",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        682,
+        683
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Use individual relative-size reproductive-advantage model to explain tanks; population sex ratio misses model, even small females overstates.",
+      "parseCaveat": null
+    },
+    {
+      "index": 143,
+      "id": "02fd3da7",
+      "skill": "Cross-Text Connections",
+      "answer": "C",
+      "pdfPages": [
+        696
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Greater turnout need not better represent preferences if forced voters seek less information; no size/ease policy claims.",
+      "parseCaveat": null
+    },
+    {
+      "index": 144,
+      "id": "105ea6de",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        713
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "One reduced-toxicity case rejects inevitable harm while recognizing risk; not benefits exceeding risks or researcher surprise.",
+      "parseCaveat": null
+    },
+    {
+      "index": 145,
+      "id": "c4737d6a",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        724
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Revised chronology challenges human-desertification cause and permits preservation effect; not mandatory concession of both effects.",
+      "parseCaveat": null
+    },
+    {
+      "index": 146,
+      "id": "a87c3925",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        728
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Within pure-umami versus salty-mixture contrast, D is best qualified inference; absence of soy sauce alone does not directly measure broth dipeptides.",
+      "parseCaveat": null
+    },
+    {
+      "index": 147,
+      "id": "8d802289",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        731
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Different emphases on soundtrack versus choreography share strong jazz influence; neither supplies dancers' feelings or audience unfamiliarity.",
+      "parseCaveat": null
+    },
+    {
+      "index": 148,
+      "id": "7bf79a90",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        734,
+        735
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Nondetection need not mean zero microbes; both agree harsh environment limits survival, not size-based detection failure.",
+      "parseCaveat": null
+    },
+    {
+      "index": 149,
+      "id": "835d1ae6",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        737
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Creative portrayal weakens diagnostic literalism without requiring damage or repeated same-person depictions.",
+      "parseCaveat": null
+    },
+    {
+      "index": 150,
+      "id": "81da17d3",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        746
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Earlier dated self-portrait with easel challenges first reference to craft; priority does not establish causal influence on Carracci.",
+      "parseCaveat": null
+    },
+    {
+      "index": 151,
+      "id": "d6c77ae5",
+      "skill": "Cross-Text Connections",
+      "answer": "C",
+      "pdfPages": [
+        758
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Detected elements can belong to multiple minerals/rock types; incomplete alternatives make Earth-like crust inference questionable.",
+      "parseCaveat": null
+    },
+    {
+      "index": 152,
+      "id": "8de51658",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        780
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Quantum irreversibility data challenge completeness of microscopic theory without explaining mechanism; empirical observation versus explanation.",
+      "parseCaveat": null
+    },
+    {
+      "index": 153,
+      "id": "059f7201",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        784,
+        785
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Dispute is importance of language to classification; excluding a form from category is not claiming low craft quality.",
+      "parseCaveat": null
+    },
+    {
+      "index": 154,
+      "id": "d72b325e",
+      "skill": "Cross-text Connections",
+      "answer": "C",
+      "pdfPages": [
+        790
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Experimental convergence contradicts historical-diversity prediction; prior expectations make plausible-but-unsupported appropriate.",
+      "parseCaveat": null
+    },
+    {
+      "index": 155,
+      "id": "4b4ab04e",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        792,
+        793
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Compatible-text bridge: cheaper substrate expands access, facilitating beef substitution and deforestation reduction.",
+      "parseCaveat": null
+    },
+    {
+      "index": 156,
+      "id": "ed52a093",
+      "skill": "Cross-Text Connections",
+      "answer": "C",
+      "pdfPages": [
+        799,
+        800
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Grooming supplies second cause of pinkness; pigment's dietary origin remains true, quantity consumed not sole determinant.",
+      "parseCaveat": null
+    },
+    {
+      "index": 157,
+      "id": "e1befb41",
+      "skill": "Cross-Text Connections",
+      "answer": "C",
+      "pdfPages": [
+        816,
+        817
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Challenge universal productive/unproductive classification; do not replace it with universal opposite classification.",
+      "parseCaveat": null
+    },
+    {
+      "index": 158,
+      "id": "c68ceeff",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        822
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Different explanations share slow adoption fact; do not force agreement on cause.",
+      "parseCaveat": null
+    },
+    {
+      "index": 159,
+      "id": "f3c45b4f",
+      "skill": "Cross-Text Connections",
+      "answer": "C",
+      "pdfPages": [
+        833
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Method avoids mixed layers/relocated bones by surrounding breccia analysis; not direct fossil testing.",
+      "parseCaveat": null
+    },
+    {
+      "index": 160,
+      "id": "f7c02e89",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        845,
+        846
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Standardized credits prevent attribution gap faced in games; researchers cannot simply use absent records.",
+      "parseCaveat": null
+    },
+    {
+      "index": 161,
+      "id": "82c05b34",
+      "skill": "Cross-Text Connections",
+      "answer": "C",
+      "pdfPages": [
+        851
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Different consumer changes both alter music businesses; no claimed causal link from festivals to streaming.",
+      "parseCaveat": null
+    },
+    {
+      "index": 162,
+      "id": "5a4b147c",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        882
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Shared popularity of ride story survives disagreement over authenticity; doubting ride does not deny person's existence.",
+      "parseCaveat": null
+    },
+    {
+      "index": 163,
+      "id": "592f94c2",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        889,
+        890
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Reception depends partly on setting/integration; do not deny all role of artwork attributes or prescribe blandness.",
+      "parseCaveat": null
+    },
+    {
+      "index": 164,
+      "id": "84dbd633",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        906,
+        907
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Climate recovery before extinction weakens volcanic main cause; preserve acknowledged earlier climatic effect.",
+      "parseCaveat": null
+    },
+    {
+      "index": 165,
+      "id": "96f3accc",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        912,
+        913
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Myth's persistence reflects cultural belief in film's transformation; naive/sophisticated refer to before/after audiences, not historians versus modern audiences.",
+      "parseCaveat": null
+    },
+    {
+      "index": 166,
+      "id": "9645f55e",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        924
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Purists' origin premise omits jazz/blues mixture; no claim about their tastes, enforcement, or audience expansion.",
+      "parseCaveat": null
+    },
+    {
+      "index": 167,
+      "id": "f1c9d2c1",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        925
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Apprenticeship directly counters expertise claim; other practitioners' admiration unmentioned.",
+      "parseCaveat": null
+    },
+    {
+      "index": 168,
+      "id": "dc043599",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        927
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Moon formation duration (hours versus millennia) differs, not calendar date of formation.",
+      "parseCaveat": null
+    },
+    {
+      "index": 169,
+      "id": "eae66bf9",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        947
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Shared chondrites do not discriminate impactor; added iridium favors asteroid in attributed argument.",
+      "parseCaveat": null
+    },
+    {
+      "index": 170,
+      "id": "9a94eb77",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        949
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Global common criteria supply solution to inconsistent urban definitions; no diversion or institution-specific assignment.",
+      "parseCaveat": null
+    },
+    {
+      "index": 171,
+      "id": "5e4e082c",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        950,
+        951
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Both accept Mo increase/oxidative weathering; disagree whether weathering dates to same time as host layer. Missing context is not false quantity measurement.",
+      "parseCaveat": null
+    },
+    {
+      "index": 172,
+      "id": "c8a2af72",
+      "skill": "Cross-Text Connections",
+      "answer": "C",
+      "pdfPages": [
+        954,
+        955
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Different inferred motives share intentional frame selection; frame-to-painting color match direction matters.",
+      "parseCaveat": null
+    },
+    {
+      "index": 173,
+      "id": "03080769",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        959
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Attribute to Moore unavoidable external-object belief inconsistent with professed skepticism; do not invent reasons skeptics fail.",
+      "parseCaveat": null
+    },
+    {
+      "index": 174,
+      "id": "e4e2aeb3",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        965
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Broader cultural strategy supplements direct influence; not denial of stylistic similarity.",
+      "parseCaveat": null
+    },
+    {
+      "index": 175,
+      "id": "6a1dc7c5",
+      "skill": "Cross-Text Connections",
+      "answer": "C",
+      "pdfPages": [
+        969
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Difference in tone does not imply minor status; Text2 argues thematic centrality without conceding inferiority or reader neglect.",
+      "parseCaveat": null
+    },
+    {
+      "index": 176,
+      "id": "5e101c70",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        978,
+        979
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Shared gene does not establish shared operation; qualified concern about excessive optimism, not rejection of discovery.",
+      "parseCaveat": null
+    },
+    {
+      "index": 177,
+      "id": "12d81fc1",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        982
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Symbols can encode words or syllables depending on context; binary syllable-only theory incomplete, not historical-change claim.",
+      "parseCaveat": null
+    },
+    {
+      "index": 178,
+      "id": "f0ae0da3",
+      "skill": "Cross-text Connections",
+      "answer": "C",
+      "pdfPages": [
+        993
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Challenge observation window by asking persistence over longer period; no assumption about different industries or locations.",
+      "parseCaveat": null
+    },
+    {
+      "index": 179,
+      "id": "2c50ed1a",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        996
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Cross-phase similarities and within-phase differences limit tidy chronology; rejecting phases does not assert unchanged style.",
+      "parseCaveat": null
+    },
+    {
+      "index": 180,
+      "id": "17bf10de",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        1022
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Both criticize, but omitted research scope differs from reductive central explanation; each clause of comparison needs support.",
+      "parseCaveat": null
+    },
+    {
+      "index": 181,
+      "id": "d0198544",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        1025,
+        1026
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Same Polynesian-origin conclusion can survive weakened initial marker through stronger later discriminating markers; agreement on conclusion not on evidentiary strength.",
+      "parseCaveat": null
+    },
+    {
+      "index": 182,
+      "id": "ab56a107",
+      "skill": "Cross-Text Connections",
+      "answer": "C",
+      "pdfPages": [
+        1029
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Digital art requiring skills does not prove harder than traditional art; reject categorical dismissal without inverse ranking.",
+      "parseCaveat": null
+    },
+    {
+      "index": 183,
+      "id": "f653b273",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        1031
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Later reclassification can leave initial birdlike inference understandable; acknowledge evidence available then.",
+      "parseCaveat": null
+    },
+    {
+      "index": 184,
+      "id": "faee8ec7",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        1036,
+        1037
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Online contagion counterexample rejects physical-contact necessity without rejecting physical contagion or positive emotion.",
+      "parseCaveat": null
+    },
+    {
+      "index": 185,
+      "id": "c19b2f77",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        1038,
+        1039
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Apply author's empirical-evidence criterion and different timeline; no mantle-temperature objection, no universal antisimulation lesson.",
+      "parseCaveat": null
+    },
+    {
+      "index": 186,
+      "id": "22105871",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        1064
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Allow possible play while bounding hypothetical emotions as rudimentary; no evidence for opposite emotion or complex insect feelings.",
+      "parseCaveat": null
+    },
+    {
+      "index": 187,
+      "id": "27d9bb69",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        1067
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Usefulness can also motivate curiosity; not exclusively information-for-itself is weaker than only future usefulness.",
+      "parseCaveat": null
+    },
+    {
+      "index": 188,
+      "id": "c885c38b",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        1068,
+        1069
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Flexible/seasonal structures undermine linear stages; not ranking decentralized systems or denying hunter-gatherer antiquity.",
+      "parseCaveat": null
+    },
+    {
+      "index": 189,
+      "id": "de2c2f57",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        1070
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Text1's second team's explanation is target of Text2 critique; results versus methodology versus interpretation must stay attributed.",
+      "parseCaveat": null
+    },
+    {
+      "index": 190,
+      "id": "159ef46d",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        1078
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Regional cookbook neglect exemplifies stated general pattern; not proof scholars dismiss all popular writing.",
+      "parseCaveat": null
+    },
+    {
+      "index": 191,
+      "id": "3cfbf077",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        1101,
+        1102
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Farther-out inner habitable bound places old inner-edge candidate too CLOSE, not too far; atmosphere affects threshold interpretation.",
+      "parseCaveat": null
+    },
+    {
+      "index": 192,
+      "id": "7b55e895",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        1105
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Different range-limiting causes share restricted habitat fact; no tools, nesting, genetic claims.",
+      "parseCaveat": null
+    },
+    {
+      "index": 193,
+      "id": "c106b9f7",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        1109
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Debate over representative career work still shares diversity of subjects; example title not automatically most famous.",
+      "parseCaveat": null
+    },
+    {
+      "index": 194,
+      "id": "6977d22b",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        1113
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Challenge assumed frequent competition via spatial/viscosity mechanism; do not invent nutrient replenishment or invert density effect.",
+      "parseCaveat": null
+    },
+    {
+      "index": 195,
+      "id": "8889d6e2",
+      "skill": "Cross-Text Connections",
+      "answer": "B",
+      "pdfPages": [
+        1132,
+        1133
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Challenge HUMAN-MADE classification of stones rather than layer date or Clovis arrival date; evidentiary inference depends on identification.",
+      "parseCaveat": null
+    },
+    {
+      "index": 196,
+      "id": "88bb0f6f",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        1136
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Caution adds food-supply constraint to environmental benefit; not denial of modeled magnitude or invented implementation date.",
+      "parseCaveat": null
+    },
+    {
+      "index": 197,
+      "id": "f878693b",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        1137
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Update rather than abandon outdated ballet; no most-companies income increase supported.",
+      "parseCaveat": null
+    },
+    {
+      "index": 198,
+      "id": "35e21b06",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        1140,
+        1141
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Curiosity can explain tracker removal without altruistic intent; beneficial outcome does not establish helpful motive.",
+      "parseCaveat": null
+    },
+    {
+      "index": 199,
+      "id": "f52cc78c",
+      "skill": "Cross-Text Connections",
+      "answer": "A",
+      "pdfPages": [
+        1143
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Affected population's alternative diet demonstrates possible adaptation; not dispute of ice loss or claim about unaffected bears.",
+      "parseCaveat": null
+    },
+    {
+      "index": 200,
+      "id": "9828ab3d",
+      "skill": "Cross-Text Connections",
+      "answer": "D",
+      "pdfPages": [
+        1146,
+        1147
+      ],
+      "status": "reviewed-question-all-choices-full-rationale",
+      "reviewNote": "Use Text2's spatial ideology to interpret King's Cross as gateway to intangible abundance; plain exterior does not imply despair or materialism's victory.",
+      "parseCaveat": null
+    }
+  ],
+  "reviewedCount": 201,
+  "unreviewedCount": 0
+}

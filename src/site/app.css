@@ -1080,3 +1080,17 @@ a:hover { background: var(--hl); color: var(--hl-ink); border-radius: 4px; }
 .mzoom-t { font-size: .95rem; color: var(--muted); }
 .mzoom-body { overflow: auto; height: calc(100% - 3.6rem); padding: 1rem; }
 .mzoom-body .mimg { max-width: none; }
+
+/* Source comparisons and restored full question/solution images. */
+.mstrategy{margin:.8rem 0;padding:.65rem;border:1px solid var(--line,#d8d2e5);border-radius:.5rem;overflow-wrap:anywhere}
+.mstrategy summary{cursor:pointer;font-weight:650}
+.mstrategy p{margin-top:.6rem}
+.mstrategy .mimg{max-width:100%;height:auto}
+.rwsource{display:block;max-width:100%;height:auto;margin:.6rem 0;background:#fff}
+.sourcecard .q.split{display:block}
+.sourcecard .qpass,.sourcecard .qask{width:100%;max-width:100%}
+.sourcecard .psent{display:block}
+.source-note{margin:.7rem 0}
+
+/* Source excerpts can contain long joined labels and numbers. */
+#v-reading .mtype{min-width:0;overflow-wrap:anywhere}

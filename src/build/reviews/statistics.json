@@ -1,0 +1,2356 @@
+{
+  "domain": "Math statistics and inference",
+  "reviewed_count": 195,
+  "coverage": {
+    "inf": 28,
+    "1vd": 84,
+    "2vd": 71,
+    "stc": 12
+  },
+  "reviewed_ids": [
+    "85939da5",
+    "affb2315",
+    "a5b069b4",
+    "1adb39f0",
+    "f890dc20",
+    "d3b9c8d8",
+    "608cf8e2",
+    "1ea09200",
+    "82aaa0a1",
+    "37930b2a",
+    "83272c51",
+    "4c774b00",
+    "29fa7970",
+    "52f9a246",
+    "a456cfd2",
+    "8baf2118",
+    "ac5b6558",
+    "fb866265",
+    "15d87c0f",
+    "90eed2e5",
+    "8736334b",
+    "4a2264b3",
+    "3e1bd4e2",
+    "53d97af5",
+    "15ce8207",
+    "c88e0663",
+    "9bb4107c",
+    "3f2ee20a",
+    "f6c18a66",
+    "fe6a49d6",
+    "632cf8f9",
+    "d0efc1dd",
+    "80f1f3a9",
+    "190be2fc",
+    "2e74e403",
+    "f8f79e11",
+    "db88a933",
+    "2e8027b0",
+    "c178d4da",
+    "2c76bcce",
+    "9a144a01",
+    "457d2f2c",
+    "e24765e6",
+    "03a16790",
+    "c3d65f93",
+    "b4f5a7ca",
+    "d73a67d7",
+    "d6af3572",
+    "35bec412",
+    "74dee52b",
+    "6c9444cd",
+    "9d88a3e3",
+    "e03f3477",
+    "dbd89c59",
+    "f46139df",
+    "07f2829b",
+    "d65b9a87",
+    "7ac5d686",
+    "d230e963",
+    "241f1db7",
+    "578e26ae",
+    "7fd284ac",
+    "a2162ea1",
+    "ecbdbe84",
+    "f8a322d9",
+    "e7d9649f",
+    "e17babed",
+    "12dae628",
+    "1142af44",
+    "1e8ccffd",
+    "a29e89fc",
+    "9bedc4a0",
+    "1e1027a7",
+    "f85bbf7a",
+    "13f67ddc",
+    "ea95087d",
+    "fc46af57",
+    "e7d48c8a",
+    "7b65bb28",
+    "be00d896",
+    "3d985614",
+    "b3547a10",
+    "560fab82",
+    "308084c5",
+    "d94018fd",
+    "1f4c57d7",
+    "4b09f783",
+    "f04d40b2",
+    "3aa0642c",
+    "bfa8a85c",
+    "c9dd92b1",
+    "9bf4c545",
+    "fa7a0164",
+    "708590d7",
+    "bf47ad54",
+    "a6b2fcce",
+    "f52123e0",
+    "7d68096f",
+    "7760c516",
+    "f4b3672a",
+    "40f0ee70",
+    "374b18f9",
+    "4ff597db",
+    "7b52985c",
+    "7ce2830a",
+    "642519d7",
+    "0108ac2d",
+    "ad7dbb22",
+    "16988f9c",
+    "c54b92a2",
+    "3c5b19ef",
+    "ae32cc3c",
+    "82dfb646",
+    "5c3c2e3c",
+    "c5ee6ac0",
+    "43744269",
+    "66f03086",
+    "d0430601",
+    "9110c120",
+    "9296553d",
+    "d1db8def",
+    "4626102e",
+    "d6121490",
+    "55cfaf22",
+    "b58dbf88",
+    "ab7740a8",
+    "820d7a73",
+    "b695711c",
+    "6e3ab4bf",
+    "90ba8f98",
+    "881ef5f5",
+    "2e511919",
+    "38525983",
+    "c141366d",
+    "2bab1399",
+    "4bb25495",
+    "aa43b41f",
+    "e97fd3f8",
+    "57481175",
+    "98958ae8",
+    "391ae4b2",
+    "4096a482",
+    "57f45509",
+    "2a59eb45",
+    "4a422e3e",
+    "8156d446",
+    "9b9da812",
+    "e821a26d",
+    "9eb896c5",
+    "79340403",
+    "d112bc9d",
+    "93779b53",
+    "9d935bd8",
+    "da978ee6",
+    "a067c926",
+    "5c24c861",
+    "5f3ee607",
+    "9e2bf782",
+    "9ba3e283",
+    "4cc05491",
+    "a9647302",
+    "8193e8cd",
+    "661dfddd",
+    "a03b7e02",
+    "97631565",
+    "7b1a3200",
+    "79137c1b",
+    "fdfc90e4",
+    "1e562f24",
+    "89f8d08a",
+    "54d93874",
+    "6a305cd0",
+    "e9129a5c",
+    "869a32f1",
+    "916ffe9b",
+    "8173f32b",
+    "559476f4",
+    "6670e407",
+    "9b5b23fc",
+    "af142f8d",
+    "c78bb2b8",
+    "9ee22c16",
+    "70a2776f",
+    "bc59c2d9",
+    "50b2807e",
+    "6fca0144",
+    "94237701",
+    "24a1e6a7",
+    "9d95e7ad",
+    "cf2be18d",
+    "39aa146d",
+    "58171b5e",
+    "8d63b6f1",
+    "25fc031a",
+    "cf0ae57a"
+  ],
+  "method": "Read complete Tesseract OCR for both committed question and official solution images for every ID; separately inspected ambiguous plots and source wording visually. Observations below record the actual calculation or inference reviewed.",
+  "calculator_status": "Proposed arithmetic workflows; no live Desmos verification.",
+  "reviews": [
+    {
+      "id": "85939da5",
+      "page": 1215,
+      "type": "inf-moe",
+      "read_status": "question_and_solution_ocr_plus_visual_inspection",
+      "observation": "30\u00b13 gives27\u201333%;35 doubtful,not impossible. Official explanation wrongly says interval values equally likely.",
+      "sources": [
+        "m/q/85939da5.webp",
+        "m/r/85939da5.webp"
+      ]
+    },
+    {
+      "id": "affb2315",
+      "page": 1218,
+      "type": "inf-estimate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "20% of55 Spanish club students estimates11.",
+      "sources": [
+        "m/q/affb2315.webp",
+        "m/r/affb2315.webp"
+      ]
+    },
+    {
+      "id": "a5b069b4",
+      "page": 1221,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Sort eight values4,4,4,5,5,6,10,18;middle5,5 gives median5.",
+      "sources": [
+        "m/q/a5b069b4.webp",
+        "m/r/a5b069b4.webp"
+      ]
+    },
+    {
+      "id": "1adb39f0",
+      "page": 1224,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "At x1 observed12,predicted11;residual1.",
+      "sources": [
+        "m/q/1adb39f0.webp",
+        "m/r/1adb39f0.webp"
+      ]
+    },
+    {
+      "id": "f890dc20",
+      "page": 1228,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Seven sorted values;fourth3 is median,not mode2 or mean4.",
+      "sources": [
+        "m/q/f890dc20.webp",
+        "m/r/f890dc20.webp"
+      ]
+    },
+    {
+      "id": "d3b9c8d8",
+      "page": 1229,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Boxplot medians25 and24;mean cannot be inferred.",
+      "sources": [
+        "m/q/d3b9c8d8.webp",
+        "m/r/d3b9c8d8.webp"
+      ]
+    },
+    {
+      "id": "608cf8e2",
+      "page": 1233,
+      "type": "1vd-change",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Adding18 below all original values lowers mean;old25th and26th may tie,so median need not decrease.",
+      "sources": [
+        "m/q/608cf8e2.webp",
+        "m/r/608cf8e2.webp"
+      ]
+    },
+    {
+      "id": "1ea09200",
+      "page": 1236,
+      "type": "stc-general",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Random fourth-graders from one school support that school's fourth-grade population only.",
+      "sources": [
+        "m/q/1ea09200.webp",
+        "m/r/1ea09200.webp"
+      ]
+    },
+    {
+      "id": "82aaa0a1",
+      "page": 1237,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Upward quadratic with intercept20 and vertex near(2.5,5):2x\u00b2-11x+20.",
+      "sources": [
+        "m/q/82aaa0a1.webp",
+        "m/r/82aaa0a1.webp"
+      ]
+    },
+    {
+      "id": "37930b2a",
+      "page": 1238,
+      "type": "stc-design",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Sample87% neither guarantees population87% nor another sample87%.",
+      "sources": [
+        "m/q/37930b2a.webp",
+        "m/r/37930b2a.webp"
+      ]
+    },
+    {
+      "id": "83272c51",
+      "page": 1239,
+      "type": "2vd-rate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Equal10-minute intervals:greatest temperature drop is0\u201310minutes.",
+      "sources": [
+        "m/q/83272c51.webp",
+        "m/r/83272c51.webp"
+      ]
+    },
+    {
+      "id": "4c774b00",
+      "page": 1241,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Frequency-weighted mean20,median19,mode18;mode<median<mean.",
+      "sources": [
+        "m/q/4c774b00.webp",
+        "m/r/4c774b00.webp"
+      ]
+    },
+    {
+      "id": "29fa7970",
+      "page": 1244,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Zero-charge bar frequency6 days;zero is charge not frequency.",
+      "sources": [
+        "m/q/29fa7970.webp",
+        "m/r/29fa7970.webp"
+      ]
+    },
+    {
+      "id": "52f9a246",
+      "page": 1246,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Frequency counts4 occurs4,8 occurs3,13 occurs2;do not multiply values by frequencies in frequency column.",
+      "sources": [
+        "m/q/52f9a246.webp",
+        "m/r/52f9a246.webp"
+      ]
+    },
+    {
+      "id": "a456cfd2",
+      "page": 1248,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Maximum observed value14;frequency0 at13 does not affect maximum.",
+      "sources": [
+        "m/q/a456cfd2.webp",
+        "m/r/a456cfd2.webp"
+      ]
+    },
+    {
+      "id": "8baf2118",
+      "page": 1251,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Best-fit line positive intercept13.5,negative slope-0.8.",
+      "sources": [
+        "m/q/8baf2118.webp",
+        "m/r/8baf2118.webp"
+      ]
+    },
+    {
+      "id": "ac5b6558",
+      "page": 1254,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Line at8500feet predicts39\u00b0F.",
+      "sources": [
+        "m/q/ac5b6558.webp",
+        "m/r/ac5b6558.webp"
+      ]
+    },
+    {
+      "id": "fb866265",
+      "page": 1260,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Decreasing exponential requires0<b<1;only0.83 fits.",
+      "sources": [
+        "m/q/fb866265.webp",
+        "m/r/fb866265.webp"
+      ]
+    },
+    {
+      "id": "15d87c0f",
+      "page": 1262,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Drama40 minus chess30=10more.",
+      "sources": [
+        "m/q/15d87c0f.webp",
+        "m/r/15d87c0f.webp"
+      ]
+    },
+    {
+      "id": "90eed2e5",
+      "page": 1266,
+      "type": "inf-estimate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Sample6/20 support scales to50\u00d70.3=15 council members.",
+      "sources": [
+        "m/q/90eed2e5.webp",
+        "m/r/90eed2e5.webp"
+      ]
+    },
+    {
+      "id": "8736334b",
+      "page": 1269,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Equal5-item means imply equal sums370;knownB284;unknown86.",
+      "sources": [
+        "m/q/8736334b.webp",
+        "m/r/8736334b.webp"
+      ]
+    },
+    {
+      "id": "4a2264b3",
+      "page": 1272,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Smallest line-graph proportion at model year2014.",
+      "sources": [
+        "m/q/4a2264b3.webp",
+        "m/r/4a2264b3.webp"
+      ]
+    },
+    {
+      "id": "3e1bd4e2",
+      "page": 1274,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Margin17.32-16.59=0.73mm;half interval width.",
+      "sources": [
+        "m/q/3e1bd4e2.webp",
+        "m/r/3e1bd4e2.webp"
+      ]
+    },
+    {
+      "id": "53d97af5",
+      "page": 1276,
+      "type": "inf-estimate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "30% above2lb applies to largemouth bass,not all pond species.",
+      "sources": [
+        "m/q/53d97af5.webp",
+        "m/r/53d97af5.webp"
+      ]
+    },
+    {
+      "id": "15ce8207",
+      "page": 1277,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Increasing curved trend;appropriate model balanced above/below,choiceD.",
+      "sources": [
+        "m/q/15ce8207.webp",
+        "m/r/15ce8207.webp"
+      ]
+    },
+    {
+      "id": "c88e0663",
+      "page": 1284,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "90 boxes among10 students determines mean9 only;individual values needed for median/extrema.",
+      "sources": [
+        "m/q/c88e0663.webp",
+        "m/r/c88e0663.webp"
+      ]
+    },
+    {
+      "id": "9bb4107c",
+      "page": 1285,
+      "type": "2vd-rate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Momentum rises6to8 over2to6seconds;rate1/2.",
+      "sources": [
+        "m/q/9bb4107c.webp",
+        "m/r/9bb4107c.webp"
+      ]
+    },
+    {
+      "id": "3f2ee20a",
+      "page": 1286,
+      "type": "1vd-spread",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Same mean186 but SD19.1>12.5 meansB more dispersed;maxima/medians undetermined.",
+      "sources": [
+        "m/q/3f2ee20a.webp",
+        "m/r/3f2ee20a.webp"
+      ]
+    },
+    {
+      "id": "f6c18a66",
+      "page": 1288,
+      "type": "1vd-change",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Remove largest13:old sixth4;new fifth/sixth both4;median unchanged.",
+      "sources": [
+        "m/q/f6c18a66.webp",
+        "m/r/f6c18a66.webp"
+      ]
+    },
+    {
+      "id": "fe6a49d6",
+      "page": 1289,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "78-walnut bar frequency7containers.",
+      "sources": [
+        "m/q/fe6a49d6.webp",
+        "m/r/fe6a49d6.webp"
+      ]
+    },
+    {
+      "id": "632cf8f9",
+      "page": 1290,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Increasing curve with increasing rate identifies exponential among options.",
+      "sources": [
+        "m/q/632cf8f9.webp",
+        "m/r/632cf8f9.webp"
+      ]
+    },
+    {
+      "id": "d0efc1dd",
+      "page": 1292,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "x6 makes mean14 but sorted median15;therefore not allowed.",
+      "sources": [
+        "m/q/d0efc1dd.webp",
+        "m/r/d0efc1dd.webp"
+      ]
+    },
+    {
+      "id": "80f1f3a9",
+      "page": 1293,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Green bar frequency70 among173colors.",
+      "sources": [
+        "m/q/80f1f3a9.webp",
+        "m/r/80f1f3a9.webp"
+      ]
+    },
+    {
+      "id": "190be2fc",
+      "page": 1295,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Known sum378;unknown42<x<60 and378+x divisible10;only52,largest.",
+      "sources": [
+        "m/q/190be2fc.webp",
+        "m/r/190be2fc.webp"
+      ]
+    },
+    {
+      "id": "2e74e403",
+      "page": 1298,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Best-fit points(0,8),(10,1) give slope-0.7.",
+      "sources": [
+        "m/q/2e74e403.webp",
+        "m/r/2e74e403.webp"
+      ]
+    },
+    {
+      "id": "f8f79e11",
+      "page": 1300,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "4.5\u00b10.5 plausibly bounds population mean4\u20135,not individual hikers.",
+      "sources": [
+        "m/q/f8f79e11.webp",
+        "m/r/f8f79e11.webp"
+      ]
+    },
+    {
+      "id": "db88a933",
+      "page": 1302,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Consecutive a,b=a+1,c=a+2;weightedQ mean a+3/14,R a+25/14;difference11/7.",
+      "sources": [
+        "m/q/db88a933.webp",
+        "m/r/db88a933.webp"
+      ]
+    },
+    {
+      "id": "2e8027b0",
+      "page": 1304,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Multiply all y by3.9 scales intercept12to46.8 and slope1.5to5.85\u22485.9.",
+      "sources": [
+        "m/q/2e8027b0.webp",
+        "m/r/2e8027b0.webp"
+      ]
+    },
+    {
+      "id": "c178d4da",
+      "page": 1306,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Weighted sums1094 versus958 each over27;A mean40.52>B35.48.",
+      "sources": [
+        "m/q/c178d4da.webp",
+        "m/r/c178d4da.webp"
+      ]
+    },
+    {
+      "id": "2c76bcce",
+      "page": 1307,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "27.8\u00b10.02 gives plausible population mean27.78\u201327.82oz,not every handbag weight.",
+      "sources": [
+        "m/q/2c76bcce.webp",
+        "m/r/2c76bcce.webp"
+      ]
+    },
+    {
+      "id": "9a144a01",
+      "page": 1309,
+      "type": "2vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "2^x crosses2x+2 at positive x3;below for0<x<3 and above afterward.",
+      "sources": [
+        "m/q/9a144a01.webp",
+        "m/r/9a144a01.webp"
+      ]
+    },
+    {
+      "id": "457d2f2c",
+      "page": 1311,
+      "type": "1vd-change",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "27 distinct values,13 each side of mean=median33;paired\u00b17 leaves sum/mean/median,raises SD.",
+      "sources": [
+        "m/q/457d2f2c.webp",
+        "m/r/457d2f2c.webp"
+      ]
+    },
+    {
+      "id": "e24765e6",
+      "page": 1312,
+      "type": "2vd-rate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Temperature14to24 from5to7minutes;average rate5\u00b0C/min.",
+      "sources": [
+        "m/q/e24765e6.webp",
+        "m/r/e24765e6.webp"
+      ]
+    },
+    {
+      "id": "03a16790",
+      "page": 1318,
+      "type": "2vd-slope",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Line points(1,12),(11,4) give slope-0.8.",
+      "sources": [
+        "m/q/03a16790.webp",
+        "m/r/03a16790.webp"
+      ]
+    },
+    {
+      "id": "c3d65f93",
+      "page": 1321,
+      "type": "1vd-change",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Adding121 below all five nest counts lowers mean.",
+      "sources": [
+        "m/q/c3d65f93.webp",
+        "m/r/c3d65f93.webp"
+      ]
+    },
+    {
+      "id": "b4f5a7ca",
+      "page": 1322,
+      "type": "stc-general",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Sampling history professors in California State Universities generalizes only to that frame.",
+      "sources": [
+        "m/q/b4f5a7ca.webp",
+        "m/r/b4f5a7ca.webp"
+      ]
+    },
+    {
+      "id": "d73a67d7",
+      "page": 1323,
+      "type": "1vd-spread",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "All options symmetric about54;53,54,54,54,55 has smallest squared deviations and SD.",
+      "sources": [
+        "m/q/d73a67d7.webp",
+        "m/r/d73a67d7.webp"
+      ]
+    },
+    {
+      "id": "d6af3572",
+      "page": 1325,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Model slope0.096 means dollar increase per year,not per10-year axis tick.",
+      "sources": [
+        "m/q/d6af3572.webp",
+        "m/r/d6af3572.webp"
+      ]
+    },
+    {
+      "id": "35bec412",
+      "page": 1329,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Nine ordered values;fifth79 median.",
+      "sources": [
+        "m/q/35bec412.webp",
+        "m/r/35bec412.webp"
+      ]
+    },
+    {
+      "id": "74dee52b",
+      "page": 1330,
+      "type": "2vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Lowest enrollment graph point among choices is class2002.",
+      "sources": [
+        "m/q/74dee52b.webp",
+        "m/r/74dee52b.webp"
+      ]
+    },
+    {
+      "id": "6c9444cd",
+      "page": 1336,
+      "type": "1vd-spread",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Boxplot rangesA5-0=5,B10-1=9;positive difference4.",
+      "sources": [
+        "m/q/6c9444cd.webp",
+        "m/r/6c9444cd.webp"
+      ]
+    },
+    {
+      "id": "9d88a3e3",
+      "page": 1337,
+      "type": "2vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Speed increasing10minutes versus decreasing15;statementB false;constant5\u201310 and peak25.",
+      "sources": [
+        "m/q/9d88a3e3.webp",
+        "m/r/9d88a3e3.webp"
+      ]
+    },
+    {
+      "id": "e03f3477",
+      "page": 1338,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "32\u00b13.41% gives plausible28.59\u201335.41% among television-owning adults.",
+      "sources": [
+        "m/q/e03f3477.webp",
+        "m/r/e03f3477.webp"
+      ]
+    },
+    {
+      "id": "dbd89c59",
+      "page": 1339,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Increasing swan exponential starts near43,so43(1.04)^x.",
+      "sources": [
+        "m/q/dbd89c59.webp",
+        "m/r/dbd89c59.webp"
+      ]
+    },
+    {
+      "id": "f46139df",
+      "page": 1342,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Atx25.5,line predicts\u22488.2.",
+      "sources": [
+        "m/q/f46139df.webp",
+        "m/r/f46139df.webp"
+      ]
+    },
+    {
+      "id": "07f2829b",
+      "page": 1343,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Tourism medians2012=46.4,2013=47.7million;difference1.3.",
+      "sources": [
+        "m/q/07f2829b.webp",
+        "m/r/07f2829b.webp"
+      ]
+    },
+    {
+      "id": "d65b9a87",
+      "page": 1345,
+      "type": "1vd-spread",
+      "read_status": "question_and_solution_ocr_plus_visual_inspection",
+      "observation": "Symmetric dotplots share median13;B has more endpoints10,16 and higherSD.",
+      "sources": [
+        "m/q/d65b9a87.webp",
+        "m/r/d65b9a87.webp"
+      ]
+    },
+    {
+      "id": "7ac5d686",
+      "page": 1346,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Constant checking rate makes remaining shirts decreasing linear,not exponential.",
+      "sources": [
+        "m/q/7ac5d686.webp",
+        "m/r/7ac5d686.webp"
+      ]
+    },
+    {
+      "id": "d230e963",
+      "page": 1351,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Positive intercept2.8,positive slope1.7 determines y2.8+1.7x.",
+      "sources": [
+        "m/q/d230e963.webp",
+        "m/r/d230e963.webp"
+      ]
+    },
+    {
+      "id": "241f1db7",
+      "page": 1354,
+      "type": "1vd-change",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Add39 above all71 weights:mean rises;old36th and new36th/37th all17,median unchanged.",
+      "sources": [
+        "m/q/241f1db7.webp",
+        "m/r/241f1db7.webp"
+      ]
+    },
+    {
+      "id": "578e26ae",
+      "page": 1356,
+      "type": "1vd-change",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Add46 to every value:median23to69,range4unchanged.",
+      "sources": [
+        "m/q/578e26ae.webp",
+        "m/r/578e26ae.webp"
+      ]
+    },
+    {
+      "id": "7fd284ac",
+      "page": 1358,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Highest observed charitable-program share\u224892% atincome3400million;line\u224885%;difference\u22487percentage points.",
+      "sources": [
+        "m/q/7fd284ac.webp",
+        "m/r/7fd284ac.webp"
+      ]
+    },
+    {
+      "id": "a2162ea1",
+      "page": 1363,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "23.1\u00b10.19 gives population-average plausible22.91\u201323.29lb.",
+      "sources": [
+        "m/q/a2162ea1.webp",
+        "m/r/a2162ea1.webp"
+      ]
+    },
+    {
+      "id": "ecbdbe84",
+      "page": 1364,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "17 restaurants median ninth;cumfreq8 before20\u201325bin,so21 could be median.",
+      "sources": [
+        "m/q/ecbdbe84.webp",
+        "m/r/ecbdbe84.webp"
+      ]
+    },
+    {
+      "id": "f8a322d9",
+      "page": 1365,
+      "type": "1vd-mean",
+      "read_status": "question_and_solution_ocr_plus_visual_inspection",
+      "observation": "23-integer histograms same counts3,4,7,9 shifted one bin;minA uses20,30,40,50,maxB19,29,39,49;mean gap1.",
+      "sources": [
+        "m/q/f8a322d9.webp",
+        "m/r/f8a322d9.webp"
+      ]
+    },
+    {
+      "id": "e7d9649f",
+      "page": 1367,
+      "type": "inf-estimate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "7/50\u00d714878\u22482083;nearest2100town residents.",
+      "sources": [
+        "m/q/e7d9649f.webp",
+        "m/r/e7d9649f.webp"
+      ]
+    },
+    {
+      "id": "e17babed",
+      "page": 1373,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Six data points above best-fit line have positive residuals.",
+      "sources": [
+        "m/q/e17babed.webp",
+        "m/r/e17babed.webp"
+      ]
+    },
+    {
+      "id": "12dae628",
+      "page": 1374,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Sum80 over5 gives mean16,not median14.",
+      "sources": [
+        "m/q/12dae628.webp",
+        "m/r/12dae628.webp"
+      ]
+    },
+    {
+      "id": "1142af44",
+      "page": 1375,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Frequencies a,2a,3a,2a,a symmetric about3;mean=median,difference0.",
+      "sources": [
+        "m/q/1142af44.webp",
+        "m/r/1142af44.webp"
+      ]
+    },
+    {
+      "id": "1e8ccffd",
+      "page": 1379,
+      "type": "1vd-change",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Removed score equals8\u00d714.5-7\u00d712=32.",
+      "sources": [
+        "m/q/1e8ccffd.webp",
+        "m/r/1e8ccffd.webp"
+      ]
+    },
+    {
+      "id": "a29e89fc",
+      "page": 1380,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Marmot masses sum18150 over5 gives3630g.",
+      "sources": [
+        "m/q/a29e89fc.webp",
+        "m/r/a29e89fc.webp"
+      ]
+    },
+    {
+      "id": "9bedc4a0",
+      "page": 1381,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "12\u00b13.62% gives plausible8.38\u201315.62% defective socks thatweek.",
+      "sources": [
+        "m/q/9bedc4a0.webp",
+        "m/r/9bedc4a0.webp"
+      ]
+    },
+    {
+      "id": "1e1027a7",
+      "page": 1382,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fit rise400 over12 gives slope\u224833;using(12,480) gives intercept84,not visible-axis start300.",
+      "sources": [
+        "m/q/1e1027a7.webp",
+        "m/r/1e1027a7.webp"
+      ]
+    },
+    {
+      "id": "f85bbf7a",
+      "page": 1384,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "24\u201340% interval around32%;margin8percentage points,not width16.",
+      "sources": [
+        "m/q/f85bbf7a.webp",
+        "m/r/f85bbf7a.webp"
+      ]
+    },
+    {
+      "id": "13f67ddc",
+      "page": 1388,
+      "type": "2vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Snow probability30% onThursday;other days60,90,70.",
+      "sources": [
+        "m/q/13f67ddc.webp",
+        "m/r/13f67ddc.webp"
+      ]
+    },
+    {
+      "id": "ea95087d",
+      "page": 1389,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Warehouse mean365 minus supermarket130=235employees.",
+      "sources": [
+        "m/q/ea95087d.webp",
+        "m/r/ea95087d.webp"
+      ]
+    },
+    {
+      "id": "fc46af57",
+      "page": 1390,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "15\u00b12% of10000 beads converts to plausible1300\u20131700red beads.",
+      "sources": [
+        "m/q/fc46af57.webp",
+        "m/r/fc46af57.webp"
+      ]
+    },
+    {
+      "id": "e7d48c8a",
+      "page": 1391,
+      "type": "1vd-change",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Add11 to13burst values:median2 remains since7th/8th2;mean29/13 rises to40/14.",
+      "sources": [
+        "m/q/e7d48c8a.webp",
+        "m/r/e7d48c8a.webp"
+      ]
+    },
+    {
+      "id": "7b65bb28",
+      "page": 1393,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Sorted five gas prices median3.699;mode3.729 differs.",
+      "sources": [
+        "m/q/7b65bb28.webp",
+        "m/r/7b65bb28.webp"
+      ]
+    },
+    {
+      "id": "be00d896",
+      "page": 1400,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Powers-of-two dataset has median32 but mean1022/9>32;right tail pulls mean.",
+      "sources": [
+        "m/q/be00d896.webp",
+        "m/r/be00d896.webp"
+      ]
+    },
+    {
+      "id": "3d985614",
+      "page": 1401,
+      "type": "2vd-slope",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Jump-data fitted slope\u22483 and intercept\u22481 selects3.30x+0.82.",
+      "sources": [
+        "m/q/3d985614.webp",
+        "m/r/3d985614.webp"
+      ]
+    },
+    {
+      "id": "b3547a10",
+      "page": 1402,
+      "type": "2vd-slope",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fit slope\u22480.6:60 more germinating seeds per100additional planted,not time units.",
+      "sources": [
+        "m/q/b3547a10.webp",
+        "m/r/b3547a10.webp"
+      ]
+    },
+    {
+      "id": "560fab82",
+      "page": 1404,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Minimum observed value19,not minimum frequency1.",
+      "sources": [
+        "m/q/560fab82.webp",
+        "m/r/560fab82.webp"
+      ]
+    },
+    {
+      "id": "308084c5",
+      "page": 1405,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "52% and48% estimates symmetric around50%;largerMOE4.2 versus1.6 supports smaller sampleA.",
+      "sources": [
+        "m/q/308084c5.webp",
+        "m/r/308084c5.webp"
+      ]
+    },
+    {
+      "id": "d94018fd",
+      "page": 1406,
+      "type": "1vd-spread",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Identical translated dotplot shape gives equalSD even with different centers.",
+      "sources": [
+        "m/q/d94018fd.webp",
+        "m/r/d94018fd.webp"
+      ]
+    },
+    {
+      "id": "1f4c57d7",
+      "page": 1408,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Piglet mean(8+7+9)/3=8.",
+      "sources": [
+        "m/q/1f4c57d7.webp",
+        "m/r/1f4c57d7.webp"
+      ]
+    },
+    {
+      "id": "4b09f783",
+      "page": 1413,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Ten listed values sum100;mean10.",
+      "sources": [
+        "m/q/4b09f783.webp",
+        "m/r/4b09f783.webp"
+      ]
+    },
+    {
+      "id": "f04d40b2",
+      "page": 1415,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "35\u00b13% times50000 gives16000\u201319000supporters;16750plausible.",
+      "sources": [
+        "m/q/f04d40b2.webp",
+        "m/r/f04d40b2.webp"
+      ]
+    },
+    {
+      "id": "3aa0642c",
+      "page": 1416,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Triangle cards table count14.",
+      "sources": [
+        "m/q/3aa0642c.webp",
+        "m/r/3aa0642c.webp"
+      ]
+    },
+    {
+      "id": "bfa8a85c",
+      "page": 1417,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Original median8;choiceB six-item middle pair8,8 preserves8.",
+      "sources": [
+        "m/q/bfa8a85c.webp",
+        "m/r/bfa8a85c.webp"
+      ]
+    },
+    {
+      "id": "c9dd92b1",
+      "page": 1418,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "60%juice concentration lies between53%,67%;density\u22481300kg/m\u00b3.",
+      "sources": [
+        "m/q/c9dd92b1.webp",
+        "m/r/c9dd92b1.webp"
+      ]
+    },
+    {
+      "id": "9bf4c545",
+      "page": 1419,
+      "type": "stc-design",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Dog-owner-only sample biased for all residents;larger same-frame sample does not repair bias.",
+      "sources": [
+        "m/q/9bf4c545.webp",
+        "m/r/9bf4c545.webp"
+      ]
+    },
+    {
+      "id": "fa7a0164",
+      "page": 1420,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Use low-temperature row49,37,41,54,63;sum244/5=48.8\u00b0F.",
+      "sources": [
+        "m/q/fa7a0164.webp",
+        "m/r/fa7a0164.webp"
+      ]
+    },
+    {
+      "id": "708590d7",
+      "page": 1422,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Same seven counts;A sum28 versusB16 gives largerAmean4 versus16/7.",
+      "sources": [
+        "m/q/708590d7.webp",
+        "m/r/708590d7.webp"
+      ]
+    },
+    {
+      "id": "bf47ad54",
+      "page": 1423,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "B,C,D symmetric about85;A puts extra frequency above85,so greatestmean.",
+      "sources": [
+        "m/q/bf47ad54.webp",
+        "m/r/bf47ad54.webp"
+      ]
+    },
+    {
+      "id": "a6b2fcce",
+      "page": 1425,
+      "type": "2vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Largest year-to-year change2010\u20132011,46-26\u224820movies.",
+      "sources": [
+        "m/q/a6b2fcce.webp",
+        "m/r/a6b2fcce.webp"
+      ]
+    },
+    {
+      "id": "f52123e0",
+      "page": 1427,
+      "type": "1vd-spread",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Range52-23=29.",
+      "sources": [
+        "m/q/f52123e0.webp",
+        "m/r/f52123e0.webp"
+      ]
+    },
+    {
+      "id": "7d68096f",
+      "page": 1429,
+      "type": "stc-general",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Random sample55 from all tournament teams sets generalization frame;displayed40 practiced>=3hours does not narrow full study frame.",
+      "sources": [
+        "m/q/7d68096f.webp",
+        "m/r/7d68096f.webp"
+      ]
+    },
+    {
+      "id": "7760c516",
+      "page": 1430,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Ten plant heights sum90;mean9cm.",
+      "sources": [
+        "m/q/7760c516.webp",
+        "m/r/7760c516.webp"
+      ]
+    },
+    {
+      "id": "f4b3672a",
+      "page": 1432,
+      "type": "inf-estimate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Sampleacre mean56trees;253acres estimate14168,range13500\u201314500.",
+      "sources": [
+        "m/q/f4b3672a.webp",
+        "m/r/f4b3672a.webp"
+      ]
+    },
+    {
+      "id": "40f0ee70",
+      "page": 1433,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Task times5,2,15,9,9 sum40/5=8minutes.",
+      "sources": [
+        "m/q/40f0ee70.webp",
+        "m/r/40f0ee70.webp"
+      ]
+    },
+    {
+      "id": "374b18f9",
+      "page": 1434,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Interior boxplot median slightly above7000;closest7067,not box edges.",
+      "sources": [
+        "m/q/374b18f9.webp",
+        "m/r/374b18f9.webp"
+      ]
+    },
+    {
+      "id": "4ff597db",
+      "page": 1436,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Leaving employee years20\u00d76.7-19\u00d76.25=15.25;update count19.",
+      "sources": [
+        "m/q/4ff597db.webp",
+        "m/r/4ff597db.webp"
+      ]
+    },
+    {
+      "id": "7b52985c",
+      "page": 1439,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "DatesJan13,15 correspondx2,4 sinceJan11;flight6to15hours;rate9/2.",
+      "sources": [
+        "m/q/7b52985c.webp",
+        "m/r/7b52985c.webp"
+      ]
+    },
+    {
+      "id": "7ce2830a",
+      "page": 1440,
+      "type": "stc-general",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Random sample35 at one middle school generalizes to that school's students only.",
+      "sources": [
+        "m/q/7ce2830a.webp",
+        "m/r/7ce2830a.webp"
+      ]
+    },
+    {
+      "id": "642519d7",
+      "page": 1443,
+      "type": "stc-design",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "78% sample satisfaction does not guarantee exact population,repeat sample,or different-city share;none must be true.",
+      "sources": [
+        "m/q/642519d7.webp",
+        "m/r/642519d7.webp"
+      ]
+    },
+    {
+      "id": "0108ac2d",
+      "page": 1444,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "38\u00b15.5% gives plausible32.5\u201343.5%school support,not counts295\u2013305.",
+      "sources": [
+        "m/q/0108ac2d.webp",
+        "m/r/0108ac2d.webp"
+      ]
+    },
+    {
+      "id": "ad7dbb22",
+      "page": 1449,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Six dots below fitted line mean predicted y exceeds actual y.",
+      "sources": [
+        "m/q/ad7dbb22.webp",
+        "m/r/ad7dbb22.webp"
+      ]
+    },
+    {
+      "id": "16988f9c",
+      "page": 1454,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Positive linear trend points(1,3),(9,10) approximate slope.875,intercept2.125;select0.9x+2.2.",
+      "sources": [
+        "m/q/16988f9c.webp",
+        "m/r/16988f9c.webp"
+      ]
+    },
+    {
+      "id": "c54b92a2",
+      "page": 1461,
+      "type": "1vd-spread",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Wheel-production range24-19=5.",
+      "sources": [
+        "m/q/c54b92a2.webp",
+        "m/r/c54b92a2.webp"
+      ]
+    },
+    {
+      "id": "3c5b19ef",
+      "page": 1463,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Museum fit intercept\u224816000,slope\u22484800/year;16090+4680t.",
+      "sources": [
+        "m/q/3c5b19ef.webp",
+        "m/r/3c5b19ef.webp"
+      ]
+    },
+    {
+      "id": "ae32cc3c",
+      "page": 1468,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Atx1200 fitted y between10and12;closest11.",
+      "sources": [
+        "m/q/ae32cc3c.webp",
+        "m/r/ae32cc3c.webp"
+      ]
+    },
+    {
+      "id": "82dfb646",
+      "page": 1469,
+      "type": "stc-design",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Random sample book-likers supports dislike-movie inference for book-likers only.",
+      "sources": [
+        "m/q/82dfb646.webp",
+        "m/r/82dfb646.webp"
+      ]
+    },
+    {
+      "id": "5c3c2e3c",
+      "page": 1470,
+      "type": "1vd-spread",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Correct minimum horse weight downward10;median unchanged,mean falls,range andSD rise.",
+      "sources": [
+        "m/q/5c3c2e3c.webp",
+        "m/r/5c3c2e3c.webp"
+      ]
+    },
+    {
+      "id": "c5ee6ac0",
+      "page": 1472,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Positive slope1 and positive intercept3.4 selects y=x+3.4.",
+      "sources": [
+        "m/q/c5ee6ac0.webp",
+        "m/r/c5ee6ac0.webp"
+      ]
+    },
+    {
+      "id": "43744269",
+      "page": 1478,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Altitude falls constant400ft/min;decreasing linear.",
+      "sources": [
+        "m/q/43744269.webp",
+        "m/r/43744269.webp"
+      ]
+    },
+    {
+      "id": "66f03086",
+      "page": 1480,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Nine ordered values fifth77median.",
+      "sources": [
+        "m/q/66f03086.webp",
+        "m/r/66f03086.webp"
+      ]
+    },
+    {
+      "id": "d0430601",
+      "page": 1482,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fit57visitors per1\u00b0C;5\u00b0C predicts285additional.",
+      "sources": [
+        "m/q/d0430601.webp",
+        "m/r/d0430601.webp"
+      ]
+    },
+    {
+      "id": "9110c120",
+      "page": 1483,
+      "type": "1vd-median",
+      "read_status": "question_and_solution_ocr_plus_visual_inspection",
+      "observation": "Nine5s versus same plus100;medians5,both;means5and14.5differ.",
+      "sources": [
+        "m/q/9110c120.webp",
+        "m/r/9110c120.webp"
+      ]
+    },
+    {
+      "id": "9296553d",
+      "page": 1486,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Negative slope with intercept6 identifies y=-x+6.",
+      "sources": [
+        "m/q/9296553d.webp",
+        "m/r/9296553d.webp"
+      ]
+    },
+    {
+      "id": "d1db8def",
+      "page": 1487,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Never29 plus almostnever53=82.",
+      "sources": [
+        "m/q/d1db8def.webp",
+        "m/r/d1db8def.webp"
+      ]
+    },
+    {
+      "id": "4626102e",
+      "page": 1489,
+      "type": "1vd-change",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Uniform+56 shiftsmedian23to79;range26-22=4unchanged.",
+      "sources": [
+        "m/q/4626102e.webp",
+        "m/r/4626102e.webp"
+      ]
+    },
+    {
+      "id": "d6121490",
+      "page": 1490,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Braking graph50mph225ft minus30mph100ft=125ft;not distance at speed difference20.",
+      "sources": [
+        "m/q/d6121490.webp",
+        "m/r/d6121490.webp"
+      ]
+    },
+    {
+      "id": "55cfaf22",
+      "page": 1491,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Adding27 above originalmax13 raisesmean9to12.6.",
+      "sources": [
+        "m/q/55cfaf22.webp",
+        "m/r/55cfaf22.webp"
+      ]
+    },
+    {
+      "id": "b58dbf88",
+      "page": 1492,
+      "type": "2vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Nectarine scatterpoint fourthseason40lb.",
+      "sources": [
+        "m/q/b58dbf88.webp",
+        "m/r/b58dbf88.webp"
+      ]
+    },
+    {
+      "id": "ab7740a8",
+      "page": 1494,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "D table6,12,24,48 doubles;successive slopes6,12,24nonconstant,nonlinear.",
+      "sources": [
+        "m/q/ab7740a8.webp",
+        "m/r/ab7740a8.webp"
+      ]
+    },
+    {
+      "id": "820d7a73",
+      "page": 1496,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Group6bar40cans.",
+      "sources": [
+        "m/q/820d7a73.webp",
+        "m/r/820d7a73.webp"
+      ]
+    },
+    {
+      "id": "b695711c",
+      "page": 1499,
+      "type": "stc-general",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Random85 second-year piano students in region defines frame despite displayed75who practice>=50minutes.",
+      "sources": [
+        "m/q/b695711c.webp",
+        "m/r/b695711c.webp"
+      ]
+    },
+    {
+      "id": "6e3ab4bf",
+      "page": 1502,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "GiftCbar18volunteers.",
+      "sources": [
+        "m/q/6e3ab4bf.webp",
+        "m/r/6e3ab4bf.webp"
+      ]
+    },
+    {
+      "id": "90ba8f98",
+      "page": 1505,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fitpoints(1,3.3),(7,14.5) slope\u22481.87,closest2.",
+      "sources": [
+        "m/q/90ba8f98.webp",
+        "m/r/90ba8f98.webp"
+      ]
+    },
+    {
+      "id": "881ef5f5",
+      "page": 1506,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Nine consecutive integers symmetric;mean=median=k+4;absolute difference0.",
+      "sources": [
+        "m/q/881ef5f5.webp",
+        "m/r/881ef5f5.webp"
+      ]
+    },
+    {
+      "id": "2e511919",
+      "page": 1508,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Chipmunk graph highest at1994.",
+      "sources": [
+        "m/q/2e511919.webp",
+        "m/r/2e511919.webp"
+      ]
+    },
+    {
+      "id": "38525983",
+      "page": 1510,
+      "type": "2vd-slope",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fitpoints(0,3.2),(2,4.4) slope0.6.",
+      "sources": [
+        "m/q/38525983.webp",
+        "m/r/38525983.webp"
+      ]
+    },
+    {
+      "id": "c141366d",
+      "page": 1511,
+      "type": "2vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Increasing straight graph means increasing linear.",
+      "sources": [
+        "m/q/c141366d.webp",
+        "m/r/c141366d.webp"
+      ]
+    },
+    {
+      "id": "2bab1399",
+      "page": 1514,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Larger random sample230rather115 tends lowerMOE;estimate direction undetermined.",
+      "sources": [
+        "m/q/2bab1399.webp",
+        "m/r/2bab1399.webp"
+      ]
+    },
+    {
+      "id": "4bb25495",
+      "page": 1518,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Country areas sum110.44/5=22.088;nearest km\u00b222.",
+      "sources": [
+        "m/q/4bb25495.webp",
+        "m/r/4bb25495.webp"
+      ]
+    },
+    {
+      "id": "aa43b41f",
+      "page": 1519,
+      "type": "stc-general",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Voluntary television-web poll not random national sample;98%sum is not key bias reason.",
+      "sources": [
+        "m/q/aa43b41f.webp",
+        "m/r/aa43b41f.webp"
+      ]
+    },
+    {
+      "id": "e97fd3f8",
+      "page": 1528,
+      "type": "2vd-read",
+      "read_status": "question_and_solution_ocr_plus_visual_inspection",
+      "observation": "Widths18\u201348 selects five prices10,15,20,30,40;mean23;visually confirmed scatterpoints.",
+      "sources": [
+        "m/q/e97fd3f8.webp",
+        "m/r/e97fd3f8.webp"
+      ]
+    },
+    {
+      "id": "57481175",
+      "page": 1532,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Vervets11 minusmandrills5=6more.",
+      "sources": [
+        "m/q/57481175.webp",
+        "m/r/57481175.webp"
+      ]
+    },
+    {
+      "id": "98958ae8",
+      "page": 1538,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Combined125objects mean(75\u00d725+50\u00d765)/125=41;not average45.",
+      "sources": [
+        "m/q/98958ae8.webp",
+        "m/r/98958ae8.webp"
+      ]
+    },
+    {
+      "id": "391ae4b2",
+      "page": 1539,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Adding10 below55integers170\u2013290 lowersmean;median cannotrise;neither Fmean nor Fmedian less thanG.",
+      "sources": [
+        "m/q/391ae4b2.webp",
+        "m/r/391ae4b2.webp"
+      ]
+    },
+    {
+      "id": "4096a482",
+      "page": 1540,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "20.5\u00b11 gives plausiblemean19.5\u201321.5;outside not impossible,individuals unbounded.",
+      "sources": [
+        "m/q/4096a482.webp",
+        "m/r/4096a482.webp"
+      ]
+    },
+    {
+      "id": "57f45509",
+      "page": 1541,
+      "type": "1vd-median",
+      "read_status": "question_and_solution_ocr_plus_visual_inspection",
+      "observation": "OCRquestion empty;visually read boxplot15values;interior median line5,range2\u20138.",
+      "sources": [
+        "m/q/57f45509.webp",
+        "m/r/57f45509.webp"
+      ]
+    },
+    {
+      "id": "2a59eb45",
+      "page": 1542,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Weighted combinedbuilding mean(75\u00d732+50\u00d762)/125=44m.",
+      "sources": [
+        "m/q/2a59eb45.webp",
+        "m/r/2a59eb45.webp"
+      ]
+    },
+    {
+      "id": "4a422e3e",
+      "page": 1549,
+      "type": "stc-design",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Playground families oversample householdswithchildren;samplingmethod biased,not necessarily sample size20.",
+      "sources": [
+        "m/q/4a422e3e.webp",
+        "m/r/4a422e3e.webp"
+      ]
+    },
+    {
+      "id": "8156d446",
+      "page": 1553,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "At32\u00b0C fitted beachvisitors480roundednearest10.",
+      "sources": [
+        "m/q/8156d446.webp",
+        "m/r/8156d446.webp"
+      ]
+    },
+    {
+      "id": "9b9da812",
+      "page": 1555,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Line nearorigin and(4,2.4) slope0.6;select0.606x.",
+      "sources": [
+        "m/q/9b9da812.webp",
+        "m/r/9b9da812.webp"
+      ]
+    },
+    {
+      "id": "e821a26d",
+      "page": 1557,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Downward quadratic with positive intercept\u2248745.73 selects-1.674x\u00b2+19.76x+745.73.",
+      "sources": [
+        "m/q/e821a26d.webp",
+        "m/r/e821a26d.webp"
+      ]
+    },
+    {
+      "id": "9eb896c5",
+      "page": 1559,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Trendpoints(1,4),(8,26) slope\u22483,intercept\u22481;3x+0.8.",
+      "sources": [
+        "m/q/9eb896c5.webp",
+        "m/r/9eb896c5.webp"
+      ]
+    },
+    {
+      "id": "79340403",
+      "page": 1561,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Bookgroup1bar30books.",
+      "sources": [
+        "m/q/79340403.webp",
+        "m/r/79340403.webp"
+      ]
+    },
+    {
+      "id": "d112bc9d",
+      "page": 1564,
+      "type": "2vd-rate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Largesttemperatureincreasex2to3 exceeds10\u00b0F;6to7less10;otheroptionsdecrease.",
+      "sources": [
+        "m/q/d112bc9d.webp",
+        "m/r/d112bc9d.webp"
+      ]
+    },
+    {
+      "id": "93779b53",
+      "page": 1568,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Activity3bar between35and40;onlychoice39.",
+      "sources": [
+        "m/q/93779b53.webp",
+        "m/r/93779b53.webp"
+      ]
+    },
+    {
+      "id": "9d935bd8",
+      "page": 1569,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Seven-state sortedmedian27.9%;minusnationalmedian26.95%=0.95percentagepoints.",
+      "sources": [
+        "m/q/9d935bd8.webp",
+        "m/r/9d935bd8.webp"
+      ]
+    },
+    {
+      "id": "da978ee6",
+      "page": 1571,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Double random sample generally lowersMOE below2.13%;same calculation method.",
+      "sources": [
+        "m/q/da978ee6.webp",
+        "m/r/da978ee6.webp"
+      ]
+    },
+    {
+      "id": "a067c926",
+      "page": 1572,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "August50 minusJuly40=10students.",
+      "sources": [
+        "m/q/a067c926.webp",
+        "m/r/a067c926.webp"
+      ]
+    },
+    {
+      "id": "5c24c861",
+      "page": 1575,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Quadraticstoppingmodel55mph\u2248200ft;closest210.",
+      "sources": [
+        "m/q/5c24c861.webp",
+        "m/r/5c24c861.webp"
+      ]
+    },
+    {
+      "id": "5f3ee607",
+      "page": 1576,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Negative slope and positiveintercept selects-1.9x+10.1.",
+      "sources": [
+        "m/q/5f3ee607.webp",
+        "m/r/5f3ee607.webp"
+      ]
+    },
+    {
+      "id": "9e2bf782",
+      "page": 1578,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "33fish median17th;positions11\u201321tankB5\u201313oz;8ozcouldmedian.",
+      "sources": [
+        "m/q/9e2bf782.webp",
+        "m/r/9e2bf782.webp"
+      ]
+    },
+    {
+      "id": "9ba3e283",
+      "page": 1579,
+      "type": "inf-estimate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "34.6%of26\u22489with>=2siblings;17fewer;1800classes\u00d717=30600.",
+      "sources": [
+        "m/q/9ba3e283.webp",
+        "m/r/9ba3e283.webp"
+      ]
+    },
+    {
+      "id": "4cc05491",
+      "page": 1580,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fitpoints(0,.2),(5,9.3) slope1.82;closest1.8,notintercept.2.",
+      "sources": [
+        "m/q/4cc05491.webp",
+        "m/r/4cc05491.webp"
+      ]
+    },
+    {
+      "id": "a9647302",
+      "page": 1582,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Defectcounts4,7,1,3,6 sum21/5=4.2pertrial.",
+      "sources": [
+        "m/q/a9647302.webp",
+        "m/r/a9647302.webp"
+      ]
+    },
+    {
+      "id": "8193e8cd",
+      "page": 1587,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Five-value mean is1/5ofsum;no need compute sum.",
+      "sources": [
+        "m/q/8193e8cd.webp",
+        "m/r/8193e8cd.webp"
+      ]
+    },
+    {
+      "id": "661dfddd",
+      "page": 1590,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Downward elevation-temperature fit indicatesnegativeassociation;increasingelevation tendslower temperature.",
+      "sources": [
+        "m/q/661dfddd.webp",
+        "m/r/661dfddd.webp"
+      ]
+    },
+    {
+      "id": "a03b7e02",
+      "page": 1593,
+      "type": "2vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Tablex-1,0,1,2 withy16,17,18,19 increases1/unit;increasinglinear.",
+      "sources": [
+        "m/q/a03b7e02.webp",
+        "m/r/a03b7e02.webp"
+      ]
+    },
+    {
+      "id": "97631565",
+      "page": 1594,
+      "type": "inf-estimate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "16/20\u00d7400=320employees estimate.",
+      "sources": [
+        "m/q/97631565.webp",
+        "m/r/97631565.webp"
+      ]
+    },
+    {
+      "id": "7b1a3200",
+      "page": 1596,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Sixdotsabove16inches means6seastars.",
+      "sources": [
+        "m/q/7b1a3200.webp",
+        "m/r/7b1a3200.webp"
+      ]
+    },
+    {
+      "id": "79137c1b",
+      "page": 1597,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Housefit(1,200),(2.5,350) slope100,intercept100;y100x+100.",
+      "sources": [
+        "m/q/79137c1b.webp",
+        "m/r/79137c1b.webp"
+      ]
+    },
+    {
+      "id": "fdfc90e4",
+      "page": 1601,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Atx32 fittedy2\u20133;closest2.4;0.4isresidualnotprediction.",
+      "sources": [
+        "m/q/fdfc90e4.webp",
+        "m/r/fdfc90e4.webp"
+      ]
+    },
+    {
+      "id": "1e562f24",
+      "page": 1607,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Proportion.49\u00b1.04 givesplausible.45\u2013.53,not exact.49.",
+      "sources": [
+        "m/q/1e562f24.webp",
+        "m/r/1e562f24.webp"
+      ]
+    },
+    {
+      "id": "89f8d08a",
+      "page": 1608,
+      "type": "inf-estimate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fruit20/80\u00d71500=375asestimate;notexactguarantee.",
+      "sources": [
+        "m/q/89f8d08a.webp",
+        "m/r/89f8d08a.webp"
+      ]
+    },
+    {
+      "id": "54d93874",
+      "page": 1609,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Andrewmean2.8;Maria2.9,total17.4;known14.8 givesx2.6.",
+      "sources": [
+        "m/q/54d93874.webp",
+        "m/r/54d93874.webp"
+      ]
+    },
+    {
+      "id": "6a305cd0",
+      "page": 1610,
+      "type": "inf-moe",
+      "read_status": "question_and_solution_ocr_plus_visual_inspection",
+      "observation": "37\u00b13 givesplausible34\u201340;officialwillfallwordingoverstatescertainty,andA/B rationale addresses34/40rather37.",
+      "sources": [
+        "m/q/6a305cd0.webp",
+        "m/r/6a305cd0.webp"
+      ]
+    },
+    {
+      "id": "e9129a5c",
+      "page": 1612,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fit(0,2.5),(10,4.7) slope.22;notintercept2.45.",
+      "sources": [
+        "m/q/e9129a5c.webp",
+        "m/r/e9129a5c.webp"
+      ]
+    },
+    {
+      "id": "869a32f1",
+      "page": 1613,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Temperatures80,81,81,81,82 mean/median/mode81;range2differs.",
+      "sources": [
+        "m/q/869a32f1.webp",
+        "m/r/869a32f1.webp"
+      ]
+    },
+    {
+      "id": "916ffe9b",
+      "page": 1614,
+      "type": "inf-estimate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Polllead483-320=163;turnout6424/803=8 scaleslead1304;3864iswinnervotesnotmargin.",
+      "sources": [
+        "m/q/916ffe9b.webp",
+        "m/r/916ffe9b.webp"
+      ]
+    },
+    {
+      "id": "8173f32b",
+      "page": 1615,
+      "type": "inf-moe",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Meanprice4.23\u00b1.08 givesplausible4.15\u20134.31dollars.",
+      "sources": [
+        "m/q/8173f32b.webp",
+        "m/r/8173f32b.webp"
+      ]
+    },
+    {
+      "id": "559476f4",
+      "page": 1616,
+      "type": "1vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Data value2barfrequency6.",
+      "sources": [
+        "m/q/559476f4.webp",
+        "m/r/559476f4.webp"
+      ]
+    },
+    {
+      "id": "6670e407",
+      "page": 1618,
+      "type": "1vd-median",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Foothillmean77.6>Valley64.2;sortedmedians76>65;bothstatements.",
+      "sources": [
+        "m/q/6670e407.webp",
+        "m/r/6670e407.webp"
+      ]
+    },
+    {
+      "id": "9b5b23fc",
+      "page": 1620,
+      "type": "2vd-read",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "201%ofx=2.01x linearincreasing;201%ofpreviousvaluewouldexponential.",
+      "sources": [
+        "m/q/9b5b23fc.webp",
+        "m/r/9b5b23fc.webp"
+      ]
+    },
+    {
+      "id": "af142f8d",
+      "page": 1623,
+      "type": "2vd-rate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "AccountAfirstinterest500\u00d7.06=30>25andgrowswithcompounding;annualearningsalwaysgreater,despitelowerstartingbalance.",
+      "sources": [
+        "m/q/af142f8d.webp",
+        "m/r/af142f8d.webp"
+      ]
+    },
+    {
+      "id": "c78bb2b8",
+      "page": 1624,
+      "type": "1vd-mean",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Weightedsealmean(240\u00d788+120\u00d794)/360=90inches;simplemean91wrong.",
+      "sources": [
+        "m/q/c78bb2b8.webp",
+        "m/r/c78bb2b8.webp"
+      ]
+    },
+    {
+      "id": "9ee22c16",
+      "page": 1630,
+      "type": "inf-estimate",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "CandidateAtotal202+34=236of400;6000\u00d7236/400=3540.",
+      "sources": [
+        "m/q/9ee22c16.webp",
+        "m/r/9ee22c16.webp"
+      ]
+    },
+    {
+      "id": "70a2776f",
+      "page": 1633,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Lakefit(15,21.8),(70,12.7) slope\u2248-.165\u00b0C/m;closest-.17.",
+      "sources": [
+        "m/q/70a2776f.webp",
+        "m/r/70a2776f.webp"
+      ]
+    },
+    {
+      "id": "bc59c2d9",
+      "page": 1638,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "At4000ft bestfittemperature35\u00b0F.",
+      "sources": [
+        "m/q/bc59c2d9.webp",
+        "m/r/bc59c2d9.webp"
+      ]
+    },
+    {
+      "id": "50b2807e",
+      "page": 1639,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Negative slope-.9 andintercept9.4 identifies9.4-.9x.",
+      "sources": [
+        "m/q/50b2807e.webp",
+        "m/r/50b2807e.webp"
+      ]
+    },
+    {
+      "id": "6fca0144",
+      "page": 1642,
+      "type": "stc-general",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Random17-year-oldbaobabsfromonehabitatgeneralizetothatframe;two-yearfollowupdoesnotchangebaselineageframe.",
+      "sources": [
+        "m/q/6fca0144.webp",
+        "m/r/6fca0144.webp"
+      ]
+    },
+    {
+      "id": "94237701",
+      "page": 1644,
+      "type": "1vd-spread",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "FrequencyexpandedmediansgroupA5,groupB6;difference1,despiteexistingtype-spread.",
+      "sources": [
+        "m/q/94237701.webp",
+        "m/r/94237701.webp"
+      ]
+    },
+    {
+      "id": "24a1e6a7",
+      "page": 1645,
+      "type": "2vd-slope",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fit(0,14),(13,0) slope-14/13\u2248-1.1.",
+      "sources": [
+        "m/q/24a1e6a7.webp",
+        "m/r/24a1e6a7.webp"
+      ]
+    },
+    {
+      "id": "9d95e7ad",
+      "page": 1646,
+      "type": "2vd-predict",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fat/proteinfit(20,34),(30,48) rise14/10=1.4;closest1.5gfat/gprotein.",
+      "sources": [
+        "m/q/9d95e7ad.webp",
+        "m/r/9d95e7ad.webp"
+      ]
+    },
+    {
+      "id": "cf2be18d",
+      "page": 1649,
+      "type": "1vd-spread",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Sevenorderedvaluesb=median29;sumgivesa+c90,rangegivesc-a72;c81.",
+      "sources": [
+        "m/q/cf2be18d.webp",
+        "m/r/cf2be18d.webp"
+      ]
+    },
+    {
+      "id": "39aa146d",
+      "page": 1650,
+      "type": "2vd-slope",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fit(0,.25),(4,2) slope.4375;closest.44.",
+      "sources": [
+        "m/q/39aa146d.webp",
+        "m/r/39aa146d.webp"
+      ]
+    },
+    {
+      "id": "58171b5e",
+      "page": 1652,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Fixed.49%ofpreviousyearvaluegivesincreasingexponentialfactor1.0049.",
+      "sources": [
+        "m/q/58171b5e.webp",
+        "m/r/58171b5e.webp"
+      ]
+    },
+    {
+      "id": "8d63b6f1",
+      "page": 1662,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Scatterpoint50lbwolfproduced6offspring.",
+      "sources": [
+        "m/q/8d63b6f1.webp",
+        "m/r/8d63b6f1.webp"
+      ]
+    },
+    {
+      "id": "25fc031a",
+      "page": 1664,
+      "type": "1vd-spread",
+      "read_status": "question_and_solution_ocr_plus_visual_inspection",
+      "observation": "VisuallyconfirmedAcentralbins25\u201340,Bspread15\u201350;Astandarddeviationsmaller;groupedbinsdonotgiveexactSD.",
+      "sources": [
+        "m/q/25fc031a.webp",
+        "m/r/25fc031a.webp"
+      ]
+    },
+    {
+      "id": "cf0ae57a",
+      "page": 1667,
+      "type": "2vd-model",
+      "read_status": "complete_question_and_solution_ocr",
+      "observation": "Lineat1.2AU predicts4.5\u20134.75g/cm\u00b3;closest4.6.",
+      "sources": [
+        "m/q/cf0ae57a.webp",
+        "m/r/cf0ae57a.webp"
+      ]
+    }
+  ]
+}

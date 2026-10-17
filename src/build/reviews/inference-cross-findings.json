@@ -1,0 +1,293 @@
+{
+  "scope": "New findings from full reading of filtered export indices30–200, supplementing existing reasoning.js. No answer key changed.",
+  "patterns": [
+    {
+      "slug": "bundled-manipulation",
+      "title": "A combined change does not isolate each ingredient",
+      "id": "5432d1de",
+      "pdfPages": [
+        262
+      ],
+      "answer": "D",
+      "premises": "Researchers delayed downbeats AND synchronized offbeats; listeners were over seven times as likely to hear swing in modified pieces.",
+      "choiceCheck": "D links timing to swing. A says offbeat synchronization works regardless of downbeats, an isolation the design does not establish. B invents difficulty of manipulation; C introduces absent piano/nonpiano comparison.",
+      "transfer": "Mark every changed variable. If A and B changed together, improvement can support the package without proving A works alone.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "constant-numerator-changing-denominator",
+      "title": "Hold mass distinct from percentage",
+      "id": "1ffd60ce",
+      "pdfPages": [
+        365
+      ],
+      "answer": "B",
+      "premises": "A coin has 74.2% silver, below an 80% trade threshold, while financial pressure persists.",
+      "choiceCheck": "B keeps silver amount constant while reducing total coin weight, increasing silver proportion by removing other material. A raises the acceptance hurdle; C retains the failing proportion despite heavier weight; D adds copper supply rather than solving composition.",
+      "transfer": "Write proportion = part / whole. A fixed part can occupy a larger share when the whole shrinks.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "relative-threshold-model",
+      "title": "A threshold can depend on competitors",
+      "id": "1917ba9a",
+      "pdfPages": [
+        682,
+        683
+      ],
+      "answer": "B",
+      "premises": "Text1 model gives male reproductive advantage only when comparatively large enough to defend territory. Text2 removes males from one tank; 81% of females begin change there, none in the other.",
+      "choiceCheck": "B applies comparative size to each tank. A overstates that even small females benefit and adds a largest-females tank2 claim. C reverses advantage. D invokes population reproduction needs rather than requested individual size-advantage model.",
+      "transfer": "Name the model’s criterion and apply it in both conditions. A plausible explanation still fails if it is not the requested model.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "competing-causes-controls",
+      "title": "Keep possible causes separate across comparisons",
+      "id": "8209f485",
+      "pdfPages": [
+        264,
+        265
+      ],
+      "answer": "B",
+      "premises": "Daughters match mothers for two years but not five; same-habitat unrelated bears show modest correlation; nonmaternal relatives are no more correlated than unrelated bears independent of habitat.",
+      "choiceCheck": "B retains diminishing social learning and possible environment. A misuses shared habitat to explain mother/daughter divergence; C discards learning; D adds significant genetics contrary to relative-control comparison.",
+      "transfer": "Pair each candidate cause with its informative comparison. Some residual support does not establish that factor as the only driver.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "stage-bottleneck",
+      "title": "Success can fail at the final stage",
+      "id": "5cd55c77",
+      "pdfPages": [
+        495
+      ],
+      "answer": "B",
+      "premises": "Low artificial night light did not significantly alter clownfish spawning or fertilization, but completely inhibited hatching.",
+      "choiceCheck": "B predicts reproductive risk if fish settle in lit regions. A contradicts unchanged fertilization. C compares absent other-species data. D invents ranking of two nonsignificant earlier-stage effects.",
+      "transfer": "Keep the endpoint separate from intermediate measures. Successful early stages cannot rescue a blocked necessary later stage.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "signal-truth-versus-effect",
+      "title": "A false signal can still persuade",
+      "id": "4f9f8ea6",
+      "pdfPages": [
+        452
+      ],
+      "answer": "D",
+      "premises": "Carotenoids ordinarily produce saturated color and confer health benefits; some tanagers simulate saturation via feather microstructures without a carotenoid-rich diet.",
+      "choiceCheck": "D allows dishonest fitness signaling. A calls it honest despite decoupling. B claims lower effectiveness, although no mate response is measured. C changes issue to unexplained preference.",
+      "transfer": "Ask separately whether a signal is true and whether its audience responds. Deception does not imply ineffective communication.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "main-effect-versus-added-effect",
+      "title": "A null extra effect does not erase a large baseline effect",
+      "id": "45c03837",
+      "pdfPages": [
+        416
+      ],
+      "answer": "B",
+      "premises": "Ships alone and ships plus sonic pulses both reduce deep dives compared with natural sound; their effects differ negligibly.",
+      "choiceCheck": "B explains pulses adding little to already dominant ship sound. A predicts a difference rather than similarity. C contradicts negligible behavioral difference. D mistakes no incremental pulse effect for low overall sensitivity.",
+      "transfer": "Use three columns: natural, A, A+B. Compare A to natural separately from A+B to A.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "shared-consequence-alternatives",
+      "title": "Two explanations can imply the same conclusion",
+      "id": "cac82f9b",
+      "pdfPages": [
+        612
+      ],
+      "answer": "B",
+      "premises": "Shared leaf/root bacteria may come from soil splashed upward OR from wind depositing onto leaves and soil.",
+      "choiceCheck": "B common source follows under either account. A/D invent benefit/harm. C is compatible with one account but not established by both.",
+      "transfer": "When a prompt says either explanation, find a consequence invariant across the alternatives; do not choose one explanation.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "broader-sample-same-outcome-domain",
+      "title": "A broader population does not broaden everything measured",
+      "id": "38facbad",
+      "pdfPages": [
+        570
+      ],
+      "answer": "A",
+      "premises": "Participants from 53 countries supplied personality and preference data, but the assessed music genres were Western.",
+      "choiceCheck": "A supports cross-cultural personality/preference association for Western music. B extends to untested non-Western styles. C invents previous expectations; D invents familiarity comparisons.",
+      "transfer": "Track population scope separately from stimulus or outcome scope. Global participants can still answer a question about one class of music.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "chronology-versus-duration",
+      "title": "An event date is different from how long it takes",
+      "id": "dc043599",
+      "pdfPages": [
+        927
+      ],
+      "answer": "D",
+      "premises": "Text1 proposes moon formation over thousands of years; detailed Text2 simulation suggests a few hours after impact.",
+      "choiceCheck": "D identifies formation speed disagreement. A changes the calendar timing of formation, which neither text provides. B/C introduce Theia-evidence and surface-similarity comparisons.",
+      "transfer": "Write when versus how long beside time claims before comparing texts.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "same-observation-different-date",
+      "title": "Agree on the measurement while disputing its clock",
+      "id": "5e4e082c",
+      "pdfPages": [
+        950,
+        951
+      ],
+      "answer": "B",
+      "premises": "Mo increases in a layer dated 2.5 Ga. One team dates oxygen increase to then; another proposes later weathering through microfractures.",
+      "choiceCheck": "B isolates disagreement about contemporaneous oxygen. C weathering mechanism is shared. D wrongly says measured Mo increase is false. A asks earlier oxygen conditions outside the dispute.",
+      "transfer": "Separate measured amount, mechanism, and event time. An observation can be reliable while its interpretation as a date proxy fails.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "evidence-versus-conclusion-agreement",
+      "title": "A conclusion can survive replacement of its evidence",
+      "id": "d0198544",
+      "pdfPages": [
+        1025,
+        1026
+      ],
+      "answer": "D",
+      "premises": "Initial shared chicken mutation proved globally widespread. New markers shared by South America and Polynesia but absent in European breeds support the same Polynesian-origin claim.",
+      "choiceCheck": "D agrees with conclusion while preferring stronger later evidence. A invents chronology conflict; B invents reverse-transfer objection; C invents European uniformity assumption.",
+      "transfer": "Track stance toward the conclusion separately from stance toward the supporting evidence.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "classification-before-dating",
+      "title": "An old object is not automatically evidence of old humans",
+      "id": "8889d6e2",
+      "pdfPages": [
+        1132,
+        1133
+      ],
+      "answer": "B",
+      "premises": "Old-layer stones are called tools in Text1; Text2 says natural fracturing remains plausible and corroborating human traces are absent.",
+      "choiceCheck": "B locates unsupported human-made-tool assumption. A invents connection between groups. C predicts eventual confirmation without support. D challenges Clovis date rather than relevant stone classification.",
+      "transfer": "Identify the bridge from observation to conclusion. Here the disputed bridge is manufacture by humans, not the sediment date.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "method-strength-versus-time-series",
+      "title": "Precise snapshots may preclude repeated measurement",
+      "id": "03701ef3",
+      "pdfPages": [
+        655
+      ],
+      "answer": "B",
+      "premises": "Resin casting gives precise models, but extracting them destroys the burrow; CT records both snapshots and construction over time.",
+      "choiceCheck": "B states no repeated castings of the same burrow. A/C invent size/time limits. D confuses destruction of burrow with distortion of cast.",
+      "transfer": "Judge a method against the specific research goal. Accurate single-time measurement and longitudinal tracking are different capabilities.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "outcome-versus-intent",
+      "title": "A helpful result does not establish a helpful motive",
+      "id": "35e21b06",
+      "pdfPages": [
+        1140,
+        1141
+      ],
+      "answer": "D",
+      "premises": "Magpies peck another bird’s tracker off; Text1 suggests helping, while Text2 offers curiosity about novel equipment.",
+      "choiceCheck": "D permits adequate explanation without assisting intent. A relocates novelty to captivity, B invents acquiring tracker for self, C invents all-birds-participation criterion.",
+      "transfer": "Separate what the action did from why the animal acted. An alternative motive can weaken an intentional reading without disproving the event.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "every-evidence-component",
+      "title": "Explain all observed features, not only the dominant one",
+      "id": "9869c261",
+      "pdfPages": [
+        650
+      ],
+      "answer": "B",
+      "premises": "Most sediment is fine mudstone from low-flow water, with desiccation cracks; some intervals are coarse sandstone from flowing water.",
+      "choiceCheck": "B combines long-lived lake, occasional drying, and stream periods. A denies lake; C reverses duration pattern; D assigns drying only to streams despite cracks in lake-associated grains.",
+      "transfer": "Make one constraint per observation. A candidate must satisfy the complete list.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "added-context-not-total-reversal",
+      "title": "A second factor need not erase the first",
+      "id": "ed52a093",
+      "pdfPages": [
+        799,
+        800
+      ],
+      "answer": "C",
+      "premises": "Diet supplies flamingo pigments, but grooming moves stored pigments onto feathers.",
+      "choiceCheck": "C rejects shrimp quantity as the only determinant. A invents tail-versus-other-feather comparison. B invents imperceptibility; D invents seasonal diet.",
+      "transfer": "“Also depends on” differs from “does not depend on.” Preserve the original mechanism while adding the missing factor.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    },
+    {
+      "slug": "conditional-consistency",
+      "title": "Reconcile stipulated truths instead of rejecting one",
+      "id": "9391b7cc",
+      "pdfPages": [
+        251
+      ],
+      "answer": "B",
+      "premises": "Assume both thirteenth-century artifacts and fourteenth-century settlement founding are dated correctly.",
+      "choiceCheck": "B resolves both through earlier artifacts arriving by trade/migration. A inventories frequency without explaining dates, C invents prior founder-region assumption, D invents damage.",
+      "transfer": "When the question explicitly grants two premises, hold both fixed and supply a compatible explanation.",
+      "reviewStatus": "passage-question-all-choices-and-full-source-rationale-read"
+    }
+  ],
+  "sourceCaveats": [
+    {
+      "id": "f3f444bc",
+      "type": "source-rationale-overreach",
+      "keyRetained": "A",
+      "note": "Source text supports exploring molecules acting on Or31, which occurs in all known disease-carrying species. Rationale adds that Or31 may be uniquely shared, other receptor combinations are not shared by all species, single-receptor strategy is comparatively more effective, and mosquitoes will become resistant to EBF. These additions are not established by the passage. Teach shared-target relevance without those claims.",
+      "pdfPages": [
+        492
+      ]
+    },
+    {
+      "id": "72cbdbc6",
+      "type": "source-rationale-strengthening",
+      "keyRetained": "D",
+      "note": "Passage says lighting has little effect on experienced cyclists; rationale shifts this to no effect and predicts their numbers stay the same. Key D is appropriately potential and novice-specific. Preserve little versus none; removing a deterrent supports potential rather than guaranteed increase.",
+      "pdfPages": [
+        376
+      ]
+    },
+    {
+      "id": "bcbcc43f",
+      "type": "source-rationale-strengthening",
+      "keyRetained": "D",
+      "note": "Choice D says Sumerians were able to store extra crops. Rationale goes beyond ability to actual storage and says surplus must have been stored. Surplus supports the keyed opportunity, but alone does not establish exclusive disposition of extra crops.",
+      "pdfPages": [
+        550
+      ]
+    },
+    {
+      "id": "a87c3925",
+      "type": "qualified-inference-caution",
+      "keyRetained": "D",
+      "note": "Pure-umami versus mixed salty flavor makes D the best qualified inference in the supplied options. The rationale appeals to absence of soy sauce in the broths, but this alone is not a direct measurement of their dipeptide concentrations. Do not turn likely low amount into measured absence.",
+      "pdfPages": [
+        728
+      ]
+    },
+    {
+      "id": "9abc3ba5",
+      "type": "parser-recovery",
+      "keyRetained": "B",
+      "note": "Parsed stem and rationale are empty because source headings are indented. Full raw record contains passage, all four choices, key B, and complete rationale; read directly. Agreement concerns fewer gestures despite one-versus-zero dispute.",
+      "pdfPages": [
+        563
+      ]
+    }
+  ]
+}

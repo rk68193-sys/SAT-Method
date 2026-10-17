@@ -40,7 +40,7 @@
       '<li><i class="sw-look"></i><span><b>0–5 sec · Job</b>Read the question first.</span></li>' +
       '<li><i class="sw-check"></i><span><b>5–40 sec · Chunk</b>One sentence at a time: tag it, say it.</span></li>' +
       '<li><i class="sw-say"></i><span><b>40–50 sec · Say</b>Your own answer before the choices.</span></li>' +
-      '<li><i class="sw-confirm"></i><span><b>50–70 sec · Check</b>Every piece of a choice needs a line.</span></li></ol></figcaption></figure></div>' +
+      '<li><i class="sw-confirm"></i><span><b>50–70 sec · Check</b>Test the choice against the question’s job.</span></li></ol></figcaption></figure></div>' +
       '<ol class="rsteps">' + RD.steps.map(function (s) {
         return '<li><span class="snum">' + s.n + '</span><div><h3 class="sname">' + esc(s.name) + '</h3><p class="sdo">' + s.do + '</p><p class="swhy">' + s.why + '</p></div><span class="stime">' + esc(s.time) + '</span></li>';
       }).join('') + '</ol>' +
@@ -284,7 +284,7 @@
 
   /* ---------- the Reading view ---------- */
   var READ_PAGES = {
-    routine: rRoutineHTML, shape: rShapeHTML, job: rJobHTML, chunk: rChunkHTML, long: rLongHTML, say: rSayHTML,
+    routine: rRoutineHTML, reasoning: rReasoningHTML, dataPatterns: rDataPatternsHTML, reviewFindings: rReviewFindingsHTML, shape: rShapeHTML, job: rJobHTML, chunk: rChunkHTML, long: rLongHTML, say: rSayHTML,
     check: rCheckHTML, others: rOthersHTML, sets: rSetsHTML, measured: rMeasuredHTML
   };
   var readingView = RailView('reading', {
@@ -292,14 +292,14 @@
     items: function () {
       var ex = RLIST.map(function (x) { return { key: 'ex-' + x.n, token: 'ex-' + x.n, num: x.n, label: esc(x.title) + ' <span class="rn">' + x.diff.charAt(0) + '</span>', done: !!store.rl['ex-' + x.n] }; });
       return [
-        { group: 'The routine', entries: [{ key: 'routine', token: 'routine', label: 'Four steps on every question' }, { key: 'shape', token: 'shape', label: 'What the passages are like' }] },
+        { group: 'The routine', entries: [{ key: 'routine', token: 'routine', label: 'Four steps, adapted to the job' }, { key: 'shape', token: 'shape', label: 'What the passages are like' }] },
         { group: 'The steps', entries: [
           { key: 'job', token: 'job', num: 1, label: 'Job' }, { key: 'chunk', token: 'chunk', num: 2, label: 'Chunk' },
           { key: 'long', token: 'long', label: 'Long sentences: core first' }, { key: 'para', token: 'para', label: 'Long passages: make them make sense' },
           { key: 'say', token: 'say', num: 3, label: 'Say' }, { key: 'check', token: 'check', num: 4, label: 'Check' }] },
-        { group: 'More question types', entries: [{ key: 'others', token: 'others', label: 'Words, structure, two texts, notes' }, { key: 'notes', token: 'notesfirst', label: 'Notes questions: goal first' }] },
+        { group: 'More question types', entries: [{ key: 'reasoning', token: 'reasoning', label: 'Deeper reading structures' }, { key: 'dataPatterns', token: 'data-patterns', label: 'Tables and graphs: deeper patterns' }, { key: 'others', token: 'others', label: 'Words, structure, two texts, notes' }, { key: 'notes', token: 'notesfirst', label: 'Notes questions: goal first' }] },
         { group: 'Worked examples', entries: ex },
-        { group: 'More', entries: [{ key: 'sets', token: 'sets', label: 'Practice sets: 1,230 IDs' }, { key: 'measured', token: 'measured', label: 'How this was measured' }] }
+        { group: 'More', entries: [{ key: 'reviewFindings', token: 'source-findings', label: 'Further source findings' }, { key: 'sets', token: 'sets', label: 'Practice sets: 1,230 IDs' }, { key: 'measured', token: 'measured', label: 'How this was measured' }] }
       ];
     },
     render: function (key, host) {

@@ -1,0 +1,539 @@
+{
+  "domain": "Advanced Math",
+  "reviewed_ids": [
+    "02060533",
+    "03ff48d2",
+    "1073d70c",
+    "1fe32f7d",
+    "2c288148",
+    "3cf2698e",
+    "3de7a7d7",
+    "3e9cc0c2",
+    "4236c5a3",
+    "42c71eb5",
+    "46308566",
+    "4eaf0a3a",
+    "52b1700c",
+    "53c07bf9",
+    "565428e1",
+    "58b4c6f3",
+    "5a74f696",
+    "5edc8c98",
+    "6aefc52b",
+    "7355b9d9",
+    "77c0cced",
+    "781c2f6e",
+    "7ba694f3",
+    "7bbfbe70",
+    "911c415b",
+    "974d33dc",
+    "9833d0e3",
+    "99c5e794",
+    "a255ae72",
+    "a267bd29",
+    "a8ae0d22",
+    "ad2ec615",
+    "ba0edc30",
+    "c048055c",
+    "c3a72da5",
+    "c602140f",
+    "c81b6c57",
+    "c8db0e19",
+    "ce579859",
+    "ce940f80",
+    "dd4ab4c4",
+    "dd8ac009",
+    "e11294f9",
+    "e51bf5b1",
+    "eb268057",
+    "efc469c4",
+    "f01108a8",
+    "f237ccfc",
+    "f423771c",
+    "f89e1d6f"
+  ],
+  "reviews": [
+    {
+      "id": "02060533",
+      "page": 19,
+      "read_status": "question_and_rationale_images",
+      "observation": "Recover f(x)=(x+3)g(x), yielding f(-27)=-72, f(-9)=0 and f(21)=120. Linear f has slope 4 and intercept 36; do not fit a line to g.",
+      "corrected_type": null
+    },
+    {
+      "id": "03ff48d2",
+      "page": 174,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "kx²-56x+16=0 has discriminant 3136-64k<0; k>49, least integer 50.",
+      "corrected_type": null
+    },
+    {
+      "id": "1073d70c",
+      "page": 487,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "190% increase means multiplying by 2.9 each hour, starting at 40.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "1fe32f7d",
+      "page": 145,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "b²-2704<0 and b positive integer give b<52; greatest 51.",
+      "corrected_type": null
+    },
+    {
+      "id": "2c288148",
+      "page": 65,
+      "read_status": "question_and_rationale_images",
+      "observation": "For sqrt(k-x)=58-x, the valid sign condition is 58-x>=0. The printed strict >0 excludes the legitimate endpoint x=58, k=58. It does not change the minimum 4k=231.",
+      "corrected_type": null
+    },
+    {
+      "id": "3cf2698e",
+      "page": 74,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "830 initial cells, doubling interval 25 minutes: 830*2^(x/25).",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "3de7a7d7",
+      "page": 139,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "2x²-4=x² gives x=±2; listed solution 2.",
+      "corrected_type": "nle-solve"
+    },
+    {
+      "id": "3e9cc0c2",
+      "page": 441,
+      "read_status": "question_and_rationale_images",
+      "observation": "Telescoping multiplication cancels p through p⁶ and leaves 1-p⁷.",
+      "corrected_type": null
+    },
+    {
+      "id": "4236c5a3",
+      "page": 544,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "(x+5)²=4 gives x=-5±2; listed solution -3.",
+      "corrected_type": "nle-solve"
+    },
+    {
+      "id": "42c71eb5",
+      "page": 43,
+      "read_status": "question_and_rationale_images",
+      "observation": "Expand and collect to 4x²+21x+33; no coefficient parameter to determine.",
+      "corrected_type": "eqx-rewrite"
+    },
+    {
+      "id": "46308566",
+      "page": 55,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "Discriminant (q-2)²-220<0 gives q<2+sqrt(220); greatest integer 16.",
+      "corrected_type": null
+    },
+    {
+      "id": "4eaf0a3a",
+      "page": 526,
+      "read_status": "question_and_rationale_images",
+      "observation": "Positive x,y allow seventh-root power law: (xy)^(9/7).",
+      "corrected_type": "eqx-exp"
+    },
+    {
+      "id": "52b1700c",
+      "page": 44,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "Initial amount 604, annual factor 1.004: 604(1.004)^t.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "53c07bf9",
+      "page": 301,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "Initial 24000 and 20% annual loss give 24000(.8)^y.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "565428e1",
+      "page": 248,
+      "read_status": "question_and_rationale_images",
+      "observation": "p^(2/3)=t^(9/7) and t=p^(3n-1) give n=41/81.",
+      "corrected_type": "eqx-exp"
+    },
+    {
+      "id": "58b4c6f3",
+      "page": 136,
+      "read_status": "question_and_rationale_images",
+      "observation": "h(0)=10 gives b=9 since a>0 and a^0=1. Then a²=4 and a>0 gives a=2, so ab=18. The positive-base assumption excludes -2.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "5a74f696",
+      "page": 415,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "890 initial and ten-year doubling gives 890*2^(t/10).",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "5edc8c98",
+      "page": 424,
+      "read_status": "question_and_rationale_images",
+      "observation": "The source writes 64(x-p)(x-q) as 64x²-64(p+q)+pq. Correct expansion is 64x²-64(p+q)x+64pq. The root sum and key k=1/16 remain correct.",
+      "corrected_type": null
+    },
+    {
+      "id": "6aefc52b",
+      "page": 295,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "Intersection gives x²+8x+k+2.5=0; discriminant 54-4k<0 means k>13.5, least positive integer 14.",
+      "corrected_type": null
+    },
+    {
+      "id": "7355b9d9",
+      "page": 497,
+      "read_status": "question_and_rationale_images",
+      "observation": "Factor k-x forces expression to vanish at x=k; k>0 gives n=29.",
+      "corrected_type": null
+    },
+    {
+      "id": "77c0cced",
+      "page": 360,
+      "read_status": "question_and_rationale_images",
+      "observation": "Subtract line from parabola: 2x²-24x+64-a has repeated root at x=6; original parabola vertex 21/4 is not the tangency x.",
+      "corrected_type": null
+    },
+    {
+      "id": "781c2f6e",
+      "page": 38,
+      "read_status": "question_and_rationale_images",
+      "observation": "Both proposed equations hide f(0)=a+a*(2.2)^b as a sum. Neither coefficient a nor offset k=(2.2)^b or m=a*(2.2)^b alone equals the intercept because a,b are positive integers and b>a.",
+      "corrected_type": null
+    },
+    {
+      "id": "7ba694f3",
+      "page": 352,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "44000 initially and daily doubling gives 44000*2^t.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "7bbfbe70",
+      "page": 142,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "24% loss leaves factor .76; exponent t/22.96 counts decay intervals.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "911c415b",
+      "page": 416,
+      "read_status": "question_and_rationale_images",
+      "observation": "For ay²+b, a+b=f(1)=7632-1000=6632.",
+      "corrected_type": null
+    },
+    {
+      "id": "974d33dc",
+      "page": 561,
+      "read_status": "question_and_rationale_images",
+      "observation": "Sum is r³+6r²+8r+19.",
+      "corrected_type": "eqx-rewrite"
+    },
+    {
+      "id": "9833d0e3",
+      "page": 380,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "13.9% per 100 cm implies b=1.139 in a*b^(x/100).",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "99c5e794",
+      "page": 341,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "15000 initial population, 4% increase gives 15000(1.04)^x.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "a255ae72",
+      "page": 137,
+      "read_status": "question_and_rationale_images",
+      "observation": "Subtract first: x²-y²=b-c; then square to b²-2bc+c².",
+      "corrected_type": null
+    },
+    {
+      "id": "a267bd29",
+      "page": 266,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "(w+6)²=76 gives w=-6±2sqrt(19); listed positive-sign root D.",
+      "corrected_type": "nle-solve"
+    },
+    {
+      "id": "a8ae0d22",
+      "page": 537,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "y(0)=200 and factor 4 per unit x give 200*4^x.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "ad2ec615",
+      "page": 42,
+      "read_status": "question_and_rationale_images",
+      "observation": "Treat x² as one variable: x⁴-x²-6=(x²+2)(x²-3).",
+      "corrected_type": "eqx-rewrite"
+    },
+    {
+      "id": "ba0edc30",
+      "page": 32,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "Complete square: (x-1)²=10, so k=10; no radical equation is given.",
+      "corrected_type": "nle-solve"
+    },
+    {
+      "id": "c048055c",
+      "page": 384,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "15000 initial population, 4% increase gives 15000(1.04)^x.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "c3a72da5",
+      "page": 414,
+      "read_status": "question_and_rationale_images",
+      "observation": "Combine like powers to 7x⁴+9x³.",
+      "corrected_type": "eqx-rewrite"
+    },
+    {
+      "id": "c602140f",
+      "page": 535,
+      "read_status": "question_and_rationale_images",
+      "observation": "Signed products give 2x²-xy-3y²; track the minus sign before -12y(-2x+3y).",
+      "corrected_type": "eqx-rewrite"
+    },
+    {
+      "id": "c81b6c57",
+      "page": 189,
+      "read_status": "question_and_rationale_images",
+      "observation": "The expansion repeats +24. The constant term is 24 only once. Matching x coefficients gives -13p-64=-155, so -13p=-91, not the printed -71, and p=7.",
+      "corrected_type": null
+    },
+    {
+      "id": "c8db0e19",
+      "page": 224,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "Multiply by 12xyz: 3z+12x²y²z²=4x, so positive y=sqrt((4x-3z)/(12x²z²)); radicand must be positive.",
+      "corrected_type": "nle-literal"
+    },
+    {
+      "id": "ce579859",
+      "page": 184,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "150% more means factor 2.5; n(1)=180 gives initial 72.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "ce940f80",
+      "page": 396,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "x²/25=36 gives x=±30; listed solution 30.",
+      "corrected_type": "nle-solve"
+    },
+    {
+      "id": "dd4ab4c4",
+      "page": 9,
+      "read_status": "question_and_rationale_images",
+      "observation": "Perfect-square factorization (2a+5b)²; no unknown coefficient is requested.",
+      "corrected_type": "eqx-rewrite"
+    },
+    {
+      "id": "dd8ac009",
+      "page": 310,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "Initial 670, annual increase .6% gives 670(1.006)^t.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "e11294f9",
+      "page": 172,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "Roots r,s=-3±sqrt(2), t,u=-4±sqrt(8); new roots -7±3sqrt(2), product c=31.",
+      "corrected_type": "nle-sum"
+    },
+    {
+      "id": "e51bf5b1",
+      "page": 204,
+      "read_status": "question_and_rationale_images",
+      "observation": "Factor x+2b implies (3x+7)(x+2b), middle coefficient 7+6b; positive integral b=7 selects 49.",
+      "corrected_type": null
+    },
+    {
+      "id": "eb268057",
+      "page": 454,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "x²=64 gives ±8; listed solution -8.",
+      "corrected_type": "nle-solve"
+    },
+    {
+      "id": "efc469c4",
+      "page": 485,
+      "read_status": "question_and_rationale_images",
+      "observation": "The requested sum equals 6f(1), not f(1); 6[-14*9+6*4]=-612.",
+      "corrected_type": null
+    },
+    {
+      "id": "f01108a8",
+      "page": 11,
+      "read_status": "question_and_rationale_images",
+      "observation": "For base a/7>1, exponential term is strictly increasing with range (0,infinity). Subtract b>0 to obtain range (-b,infinity), hence exactly one crossing. Condition b>c is unnecessary.",
+      "corrected_type": "nlf-zeros"
+    },
+    {
+      "id": "f237ccfc",
+      "page": 334,
+      "read_status": "question_and_rationale_images",
+      "observation": "Coefficient sum f(1)=(-2+1+31)+(3+7-8)=32.",
+      "corrected_type": null
+    },
+    {
+      "id": "f423771c",
+      "page": 51,
+      "read_status": "question_image_and_independent_algebra",
+      "observation": "h(0)=1.23 and two-year ratio about 1.12²; h(x)=1.23(1.12)^x.",
+      "corrected_type": "nlf-exp"
+    },
+    {
+      "id": "f89e1d6f",
+      "page": 431,
+      "read_status": "question_and_rationale_images",
+      "observation": "c²+2cd+d²=(c+d)²=a², giving (x+a)(x-a).",
+      "corrected_type": null
+    }
+  ],
+  "type_corrections": {
+    "dd4ab4c4": "eqx-rewrite",
+    "ad2ec615": "eqx-rewrite",
+    "c3a72da5": "eqx-rewrite",
+    "c602140f": "eqx-rewrite",
+    "42c71eb5": "eqx-rewrite",
+    "974d33dc": "eqx-rewrite",
+    "4eaf0a3a": "eqx-exp",
+    "565428e1": "eqx-exp",
+    "52b1700c": "nlf-exp",
+    "f423771c": "nlf-exp",
+    "3cf2698e": "nlf-exp",
+    "7bbfbe70": "nlf-exp",
+    "ce579859": "nlf-exp",
+    "53c07bf9": "nlf-exp",
+    "dd8ac009": "nlf-exp",
+    "99c5e794": "nlf-exp",
+    "7ba694f3": "nlf-exp",
+    "9833d0e3": "nlf-exp",
+    "c048055c": "nlf-exp",
+    "5a74f696": "nlf-exp",
+    "1073d70c": "nlf-exp",
+    "a8ae0d22": "nlf-exp",
+    "ba0edc30": "nle-solve",
+    "3de7a7d7": "nle-solve",
+    "a267bd29": "nle-solve",
+    "ce940f80": "nle-solve",
+    "eb268057": "nle-solve",
+    "4236c5a3": "nle-solve",
+    "e11294f9": "nle-sum",
+    "c8db0e19": "nle-literal",
+    "f01108a8": "nlf-zeros",
+    "58b4c6f3": "nlf-exp"
+  },
+  "source_notes": {
+    "c81b6c57": {
+      "page": 189,
+      "title": "Two printed arithmetic errors; answer 7 remains correct",
+      "text": "The expansion repeats +24. The constant term is 24 only once. Matching x coefficients gives -13p-64=-155, so -13p=-91, not the printed -71, and p=7.",
+      "entry": "Use 6x²+(-13p-64)x+24, then compare coefficients."
+    },
+    "2c288148": {
+      "page": 65,
+      "title": "Squaring requires a nonnegative right side",
+      "text": "For sqrt(k-x)=58-x, the valid sign condition is 58-x>=0. The printed strict >0 excludes the legitimate endpoint x=58, k=58. It does not change the minimum 4k=231.",
+      "entry": "Set t=58-x>=0. Then k=t²-t+58=(t-1/2)²+231/4, so min 4k=231."
+    },
+    "5edc8c98": {
+      "page": 424,
+      "title": "Printed factor expansion loses factors",
+      "text": "The source writes 64(x-p)(x-q) as 64x²-64(p+q)+pq. Correct expansion is 64x²-64(p+q)x+64pq. The root sum and key k=1/16 remain correct.",
+      "entry": "For 64x²-(16a+4b)x+ab=0, root sum=(16a+4b)/64=(4a+b)/16."
+    }
+  },
+  "cases": [
+    {
+      "type": "eqx-coef",
+      "title": "Evaluate the coefficient sum with its scale",
+      "ids": [
+        "efc469c4",
+        "f237ccfc",
+        "911c415b"
+      ],
+      "spot": "Asked for a sum of coefficients rather than each coefficient.",
+      "hand": "Evaluate at 1; multiply by 6 for efc469c4 because coefficients were divided by 6.",
+      "calculator": "Enter the original expression at 1; preserve outside scale.",
+      "check": "Answers -612, 32, 6632 respectively."
+    },
+    {
+      "type": "eqx-rewrite",
+      "title": "Cancel structure before expanding",
+      "ids": [
+        "a255ae72",
+        "f89e1d6f",
+        "c602140f",
+        "3e9cc0c2"
+      ],
+      "spot": "Shared blocks, a perfect square, signed products, or a geometric sum.",
+      "hand": "Subtract shared a first; recognize (c+d)²; distribute signed factors; telescope powers.",
+      "calculator": "A numeric substitution can reject choices; it does not establish an identity.",
+      "check": "b²-2bc+c²; (x+a)(x-a); 2x²-xy-3y²; 1-p⁷."
+    },
+    {
+      "type": "eqx-coef",
+      "title": "Use a known factor as a zero",
+      "ids": [
+        "7355b9d9",
+        "e51bf5b1"
+      ],
+      "spot": "A linear factor is given and a parameter is requested.",
+      "hand": "Substitute x=k into the first polynomial. For the second, use (3x+7)(x+2b).",
+      "calculator": "Evaluate the polynomial at the stated factor root, retaining k>0 or integral b>0.",
+      "check": "n=29; middle coefficient 49 with b=7."
+    },
+    {
+      "type": "nle-system",
+      "title": "Tangency belongs to the difference",
+      "ids": [
+        "77c0cced"
+      ],
+      "spot": "A parabola and an oblique line intersect exactly once.",
+      "hand": "Subtract equations; repeated zero of 2x²-24x+64-a gives x=6.",
+      "calculator": "Graph both equations only after finding a=-8; inspect the common point.",
+      "check": "At x=6 both y values are 10. This is not the original parabola vertex."
+    },
+    {
+      "type": "nle-count",
+      "title": "Strict discriminant bounds and integers",
+      "ids": [
+        "46308566",
+        "1fe32f7d",
+        "03ff48d2",
+        "6aefc52b"
+      ],
+      "spot": "No real solution plus an integer extremum.",
+      "hand": "Set discriminant strictly below zero and then select an allowed integer.",
+      "calculator": "Use a calculator for the real bound, then check neighboring integers algebraically.",
+      "check": "16, 51, 50, 14; equality would give one real solution. No live calculator execution claimed."
+    },
+    {
+      "type": "nlf-zeros",
+      "title": "Count exponential crossings by range",
+      "ids": [
+        "f01108a8"
+      ],
+      "spot": "An increasing exponential minus a positive constant.",
+      "hand": "Base a/7>1 gives strict increase, and the range after subtracting b is (-b,infinity); zero occurs once.",
+      "calculator": "A graph at sample constants can illustrate the result; monotonicity and range prove it for every allowed constant.",
+      "check": "One crossing. a>7 and b>0 suffice; b>c is not needed."
+    }
+  ],
+  "calculator_validation": "Live Desmos unavailable; no runtime validation claimed."
+}

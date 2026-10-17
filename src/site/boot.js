@@ -48,7 +48,7 @@
   }
   /* token -> [page, anchor] inside the Reading view */
   var READ_AT = {
-    reading: ['routine'], routine: ['routine'], shape: ['shape'], job: ['job'], leadin: ['job', 'leadin'], chunk: ['chunk'], tags: ['chunk', 'tags'],
+    reading: ['routine'], routine: ['routine'], reasoning: ['reasoning'], 'data-patterns': ['dataPatterns'], 'source-findings': ['reviewFindings'], shape: ['shape'], job: ['job'], leadin: ['job', 'leadin'], chunk: ['chunk'], tags: ['chunk', 'tags'],
     turns: ['chunk', 'turns'], names: ['chunk', 'names'], long: ['long'], apart: ['long', 'apart'], para: ['para'], say: ['say'], check: ['check'],
     traps: ['check', 'traps'], notesfirst: ['notes'], pturn: ['para', 'pturn'], pmethod: ['para', 'pmethod'], goalfirst: ['notes'], partly: ['check', 'partly'], myths: ['check', 'myths'], others: ['others'], train: ['others', 'train'], sets: ['sets'], measured: ['measured']
   };
@@ -69,6 +69,10 @@
     lastToken = token || 'home';
     if (!token || token === 'home') { showView('home'); buildHome(); toTop(); return; }
     if (routeMath(token)) { return; }
+    if ((m = /^rq-([0-9a-f]{8})$/.exec(token))) {
+      var sourceItem = itemsAll().filter(function (it) { return it.id === m[1]; })[0];
+      if (sourceItem) { showView('practice'); buildPractice(); timedStart([sourceItem], { tier: 'easy', hints: false }); toTop(); return; }
+    }
     if (token === 'start' || token === 'top' || token === 'which') {
       showView('start'); buildStart(); refreshPath();
       if (token === 'which') { scrollToEl(document.getElementById('which')); } else { toTop(); }

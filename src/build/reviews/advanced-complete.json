@@ -1,0 +1,3788 @@
+{
+  "domain": "Advanced Math",
+  "total": 540,
+  "reviews": [
+    {
+      "id": "beca03de",
+      "page": 1,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "15w is the length, with w width and product area; distractors correctly separate units and quantities."
+    },
+    {
+      "id": "512bd5b4",
+      "page": 2,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Six-unit change doubles exponent increment x/3; 1.2\u00b2=1.44 gives 44%, confirmed both approaches."
+    },
+    {
+      "id": "4e18fc5d",
+      "page": 3,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Source contradiction: v=-w/(150x) cannot hold for three positive numbers. Algebraic rearrangement A remains formally correct."
+    },
+    {
+      "id": "f5c3e3b8",
+      "page": 4,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Multiply same-base powers by adding exponents: m\u2075q\u2079z\u00b2; distractors confuse multiplying exponents."
+    },
+    {
+      "id": "a5663025",
+      "page": 5,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Graph actually shows two intersections of line and parabola; key C correct."
+    },
+    {
+      "id": "3c95093c",
+      "page": 6,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Divide positive 3 without reversing inequality, obtaining 2x-3y>4; counterexample (0,-1.5) rejects other choices."
+    },
+    {
+      "id": "d0a7871e",
+      "page": 7,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Equate y expressions to x\u00b2=1; only -1 listed; all distractor substitutions fail."
+    },
+    {
+      "id": "72ebc024",
+      "page": 8,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Common factor 2xy leaves 8x\u00b2y+7; key B, and expanded distractors differ."
+    },
+    {
+      "id": "dd4ab4c4",
+      "page": 9,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Perfect square (2a+5b)\u00b2; key B is a factor; existing eqx-rewrite correction retained elsewhere."
+    },
+    {
+      "id": "b8caaf84",
+      "page": 10,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Substitute p=3x+4 and v=x+5 into pv-2p+v; collect 3x\u00b2+14x+17."
+    },
+    {
+      "id": "f01108a8",
+      "page": 11,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Increasing positive-base exponential shifted down b>0 crosses zero once; b>c unnecessary; existing nlf-zeros correction retained."
+    },
+    {
+      "id": "7f81d0c3",
+      "page": 12,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Quadratic formula x=(1\u00b1sqrt5)/2; key C signs correct."
+    },
+    {
+      "id": "332cd67b",
+      "page": 13,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Discriminant 225-216=9 positive, two distinct real roots 2 and 3; key B."
+    },
+    {
+      "id": "301faf80",
+      "page": 14,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Positive integer product model y(2y+5)=462 factors (2y+33)(y-14); reject negative root, integers 14 and 33."
+    },
+    {
+      "id": "128c75e2",
+      "page": 15,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Absolute value with a<0 gives |a|/a=-1, hence g(15a)=-29 and g(7a)=-21, product 609."
+    },
+    {
+      "id": "71b74a44",
+      "page": 16,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Initial value is x=0: 7400(.87)^0=7400; 6438 is year one."
+    },
+    {
+      "id": "7f2524bf",
+      "page": 17,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Graph y-intercept (0,225) means purchase value $225; at month 24 graph gives 50, decrease 175."
+    },
+    {
+      "id": "e312081b",
+      "page": 18,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Collect x+2x and 5-3 to get 3x+2; distractors correspond to sign errors."
+    },
+    {
+      "id": "02060533",
+      "page": 19,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Recover f=(x+3)g before fitting line; f(-27)=-72, f(-9)=0 give intercept 36; table is not f itself."
+    },
+    {
+      "id": "52931bfa",
+      "page": 20,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original images checked because OCR omitted formula: cancel nonzero x-7 from [(x-7)(8x-3)]/[2(x-7)] to (8x-3)/2; x>7 guarantees cancellation."
+    },
+    {
+      "id": "1e003284",
+      "page": 21,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Substitute x=49 into y=sqrt(x)+9 to obtain 16; key A."
+    },
+    {
+      "id": "91e7ea5e",
+      "page": 22,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Roots of 2(x-4)\u00b2-32 are 0 and 8; choose nonzero t=8. Source square-root step implicitly chooses second intercept; no answer defect."
+    },
+    {
+      "id": "e9aed539",
+      "page": 23,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph vertex (2,-2) translated up four becomes (2,2), matching A; distractors down/left/right documented correctly."
+    },
+    {
+      "id": "358f18bc",
+      "page": 26,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Complete square x\u00b2-48x+2304=(x-24)\u00b2+1728; minimum 1728."
+    },
+    {
+      "id": "3a9d60b2",
+      "page": 27,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Combine absolute-value terms to 5|4-x|=25; roots -1 and 9, positive root 9."
+    },
+    {
+      "id": "8490cc45",
+      "page": 28,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "At x=0, -8*2^0+22=14, giving intercept (0,14); constant 22 alone is not intercept."
+    },
+    {
+      "id": "4fbffc0a",
+      "page": 29,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Point (1,4.8) reads one second and height 4.8 meters, not initial velocity; units distinguish distractors."
+    },
+    {
+      "id": "ebed7dc6",
+      "page": 31,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Revenue (4+x)(1800-100x)=-100x\u00b2+1400x+7200; concave-down vertex at x=7 within feasible ticket domain."
+    },
+    {
+      "id": "ba0edc30",
+      "page": 32,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Complete square (x-1)\u00b2=10; both given methods yield k=10; existing ordinary-quadratic correction retained."
+    },
+    {
+      "id": "39714777",
+      "page": 33,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Rearrange p(x)=x\u00b2-57, whose minimum is -57 at zero; sign distractors rejected."
+    },
+    {
+      "id": "fc3d783a",
+      "page": 34,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Horizontal line y=2.25 tangent to -4x\u00b2+bx requires discriminant b\u00b2-36=0; positive b selects 6."
+    },
+    {
+      "id": "a9084ca4",
+      "page": 35,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "At x=0 (1997), 9000*.66^0=9000; intercept describes initial advertisements rather than minimum."
+    },
+    {
+      "id": "075b29b0",
+      "page": 36,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Combine like terms to 15x\u00b3+5x\u00b2+5x+2; avoid adding unlike powers."
+    },
+    {
+      "id": "2c6f214f",
+      "page": 37,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Geometric sequence first indexed at n=1 requires 9*4^(n-1), not 9*4^n; distractors checked against first term and ratio."
+    },
+    {
+      "id": "781c2f6e",
+      "page": 38,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full solution confirms neither displayed coefficient nor offset equals intercept a+a*2.2^b; a positive integer is at least one."
+    },
+    {
+      "id": "cb29c54c",
+      "page": 39,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Vertex (5.6,502) with leading coefficient -16 is maximum 502 feet at 5.6 seconds; units consistent."
+    },
+    {
+      "id": "4661e2a9",
+      "page": 40,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Eliminate x=y+1 to y\u00b2=3; listed pair (1+sqrt3,sqrt3) satisfies both equations; negative branch also exists but not listed."
+    },
+    {
+      "id": "6abec9a8",
+      "page": 41,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph/choices checked: y-intercept (0,-5), key B; OCR had dropped minus sign in choice."
+    },
+    {
+      "id": "ad2ec615",
+      "page": 42,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Factor quadratic in x\u00b2: (x\u00b2+2)(x\u00b2-3), key B; full source rationale consistent."
+    },
+    {
+      "id": "42c71eb5",
+      "page": 43,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Signed distribution and square expansion yield 4x\u00b2+21x+33; full distractor explanations correct."
+    },
+    {
+      "id": "52b1700c",
+      "page": 44,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full rationale handles rounded amounts approximately; n=604(1.004)^t is best model, not exact ratio identity."
+    },
+    {
+      "id": "371cbf6b",
+      "page": 45,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Compare x\u00b2 coefficients directly: -ab+15=-9 gives ab=24; remaining coefficients compatible with a=4,b=6."
+    },
+    {
+      "id": "b4acba95",
+      "page": 46,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Discriminant 144-108=36 positive; roots 3,9, exactly two; key A."
+    },
+    {
+      "id": "ff8c5844",
+      "page": 47,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Exponential table has initial 1 and per-step multiplier 1/25; g(x)=(1/25)^x, key D."
+    },
+    {
+      "id": "a05bd3a4",
+      "page": 48,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Difference of squares x\u00b2-5=(x+sqrt5)(x-sqrt5), not either squared binomial."
+    },
+    {
+      "id": "c3b116d7",
+      "page": 49,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "3x\u00b2+20x-63=(3x-7)(x+9); only expression II is a factor, key B."
+    },
+    {
+      "id": "40c09d66",
+      "page": 50,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original formula checked: quotient of fractional powers; subtract exponents 5/2-4/3=7/6, answer a/b=7/6."
+    },
+    {
+      "id": "f423771c",
+      "page": 51,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full rationale recovers initial 1.23 and positive base sqrt(1.54/1.23)\u22481.12, agreeing rounded final table 1.94."
+    },
+    {
+      "id": "b8f13a3a",
+      "page": 52,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original formula checked: f(x)=-a^x+b; shifted intercept -75/7 gives b=16/7, and product ab=320/7 gives a=20."
+    },
+    {
+      "id": "8e1da169",
+      "page": 53,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Midpoint of roots 44 and 46 is 45, upward opening; expanded -90/(2) vertex agrees; minimum value -1 is a distractor."
+    },
+    {
+      "id": "1d3c5c95",
+      "page": 54,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "4000 is initial 2012 beetle population; .75 represents 25% annual decline; seven-year estimate 534 and decline 87% consistent."
+    },
+    {
+      "id": "46308566",
+      "page": 55,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full rationale uses strict (q-2)\u00b2<220 and rounds bound 16.83; largest integer 16; existing case confirmed."
+    },
+    {
+      "id": "ae05d37b",
+      "page": 56,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Exponent t/790 increases by one every 790 minutes; doubling time 790, not initial count 40000."
+    },
+    {
+      "id": "1ee962ec",
+      "page": 57,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Ocean graph/table correspond (0,0),(3,-12),(6,0), key C; swapped-axis distractors distinguish elapsed time and level."
+    },
+    {
+      "id": "c6a26e14",
+      "page": 59,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "|x+45|=48 gives x=3,-93; positive solution 3, not magnitude 93."
+    },
+    {
+      "id": "07bcecac",
+      "page": 60,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "P(8)\u224832.91 means year 1992 population 32.91 million; 24.8 million is 1984 value."
+    },
+    {
+      "id": "ad03127d",
+      "page": 61,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Solve 6r=7s+t by subtracting t then dividing by 7: s=(6r-t)/7."
+    },
+    {
+      "id": "02add2d2",
+      "page": 62,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "1300 initial and monthly 7% increase give 1300(1.07)^m; distractor bases .07,1.7,7 represent other rates."
+    },
+    {
+      "id": "f65288e8",
+      "page": 63,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Reciprocal square equation requires x\u2260-5; (x+5)\u00b2=1/4 so listed x+5=1/2 valid, negative branch also possible."
+    },
+    {
+      "id": "788bfd56",
+      "page": 64,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Principal sqrt144=12, f(144)=4+12=16; distractor inputs 1296 and 5184 checked."
+    },
+    {
+      "id": "2c288148",
+      "page": 65,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full source rationale confirms erroneous strict 58-x>0; valid condition >=0. Minimum still 4k=231; existing source note retained."
+    },
+    {
+      "id": "40491607",
+      "page": 66,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Upward shift gives g(4)=f(4)+6=3*7*2+6=48; do not shift input."
+    },
+    {
+      "id": "369b7bb7",
+      "page": 67,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Evaluate whole radicand: sqrt(8*3+1)=sqrt25=5; key C."
+    },
+    {
+      "id": "3206b905",
+      "page": 68,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Factor common 8x from 8x\u00b9\u2070-8x\u2079+88x to 8x(x\u2079-x\u2078+11); exponent decrement applies to each term."
+    },
+    {
+      "id": "f89af023",
+      "page": 69,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Court area 2w\u00b2=162 gives width 9, positive geometric dimension; 18 is length and 27 arises perimeter error."
+    },
+    {
+      "id": "7902bed0",
+      "page": 70,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Vertex and ground root determine h=-16(t-1.8)\u00b2+51.84; algebra fits supplied meter data although coefficient resembles feet convention; no fixed gravity assumption given."
+    },
+    {
+      "id": "5ba187d4",
+      "page": 71,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Common factor 100 yields 100(x\u00b2+26); product distractors fail on expansion."
+    },
+    {
+      "id": "38c90632",
+      "page": 72,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Combine p/x+w/(x+51) over x(x+51); constants 51p=102 give p=2, then p+w=29 yields w=27; exclude denominator zeros."
+    },
+    {
+      "id": "4a0d0399",
+      "page": 73,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "At zero, a^0=1 gives b=-324 from intercept -323; other intercept gives a\u00b2=324 and excludes zero base."
+    },
+    {
+      "id": "3cf2698e",
+      "page": 74,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full solution confirms 830*2^(x/25); growth interval division and initial count both retained."
+    },
+    {
+      "id": "768b60d2",
+      "page": 75,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "All equivalent exponential forms have f(0)=33; unshifted exponent x displays that value as coefficient."
+    },
+    {
+      "id": "e53add44",
+      "page": 76,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "4% annual salary increase uses factor 1.04, not .04; initial 38000 unaffected."
+    },
+    {
+      "id": "f2f3fa00",
+      "page": 77,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Multiply acceleration equation by five: final velocity=5a+12; requested coefficient x=5 with compatible units seconds."
+    },
+    {
+      "id": "b4a6ed81",
+      "page": 78,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Expand r*y\u2074(15y-9), compare either coefficient: r=6; both coefficients agree."
+    },
+    {
+      "id": "9654add7",
+      "page": 79,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Nonzero x-intercept price a=50 gives zero revenue; maximum instead at price 25, revenue coordinate separate."
+    },
+    {
+      "id": "4618501a",
+      "page": 80,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "3000*.75^0=3000 interprets 2008 initial population, not decline rate 25% or year-eight estimate 300."
+    },
+    {
+      "id": "34847f8a",
+      "page": 81,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Common-denominator numerator 2(x+5)+3(x-2)=5x+4; r=5,t=4, product 20, valid x>2."
+    },
+    {
+      "id": "253985c2",
+      "page": 82,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Combine 6x+5x only: 11x+4y; unlike y terms remain separate."
+    },
+    {
+      "id": "cc776a04",
+      "page": 83,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Square binomial retaining cross term -7.2x and distribute subtraction: -2.95x\u00b2-7.2x+12.16."
+    },
+    {
+      "id": "263f9937",
+      "page": 84,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Daily doubling from day-three 10\u2076 requires factor 512=2\u2079, giving day twelve; sequence index handled correctly."
+    },
+    {
+      "id": "4ac59df6",
+      "page": 85,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Multiply coefficients 8*7 and same-base powers to 56y\u00b2z\u00b2; distractor missing factors checked."
+    },
+    {
+      "id": "fada6b03",
+      "page": 86,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Quadratic formula for 2x\u00b2-8x-7 gives (8\u00b1sqrt120)/4, so requested k=120; no radical equation premise."
+    },
+    {
+      "id": "926c246b",
+      "page": 87,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "5640 is initial 2010 data traffic; 1.9 indicates 90% yearly growth, not constant additive increase."
+    },
+    {
+      "id": "84e5e36c",
+      "page": 88,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "System y=76 and y=x\u00b2-5 gives x\u00b2=81, roots \u00b19; listed -9 valid."
+    },
+    {
+      "id": "ff2c1431",
+      "page": 89,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "7m=5(n+p) gives n=7m/5-p; formal expression correct with original positivity constraining allowable m,p."
+    },
+    {
+      "id": "137cc6fd",
+      "page": 90,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original radical indices checked: fifth root plus twice sixth-root exponent gives 1/5+2/6=8/15; 30x=8/15 so x=4/225."
+    },
+    {
+      "id": "6ce95fc8",
+      "page": 91,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Rearrange 2x\u00b2-2x-5=0 and quadratic formula gives (1\u00b1sqrt11)/2; listed plus branch D."
+    },
+    {
+      "id": "4dd4efcf",
+      "page": 92,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Equal values at -9 and 3 imply axis -3 and a=2/3; vertex k=c-6<0 only forces c<6, neither given statement must hold."
+    },
+    {
+      "id": "cc2601cb",
+      "page": 93,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph touches x-axis at (7,0); requested coordinate 7 rather than y=3 at neighboring marked points."
+    },
+    {
+      "id": "6bdcac03",
+      "page": 94,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "A real square cannot equal -841, so zero real solutions; no complex solutions counted."
+    },
+    {
+      "id": "f5aa5040",
+      "page": 95,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Horizontal tangent level c/2 for -2x\u00b2+9x gives discriminant 81-4c=0, hence c=81/4; level itself 81/8 differs."
+    },
+    {
+      "id": "252a3b3a",
+      "page": 96,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph touches at -5, crosses at 0 and 4, both tails down; -x(x-4)(x+5)\u00b2/10 matches B and multiplicity."
+    },
+    {
+      "id": "2992ac30",
+      "page": 98,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Exponent (3/2)t gains one per 2/3 year, eight months; model rate 4% per interval rather than per year."
+    },
+    {
+      "id": "58443765",
+      "page": 99,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Equate 5x+4 and 5x\u00b2+4 to 5x(x-1)=0; listed (0,4) satisfies both, other root is (1,9)."
+    },
+    {
+      "id": "3d7d7534",
+      "page": 100,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Add seven then zero-product rule gives d=\u00b130; either accepted response is valid."
+    },
+    {
+      "id": "841ef26c",
+      "page": 101,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "f vertex at -8 becomes g(x)=f(x+5) vertex -13; full expansion confirms g=4(x+13)\u00b2+6."
+    },
+    {
+      "id": "cc6ccd71",
+      "page": 102,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original cubic graph crosses at -1,4,7; three distinct zeros, key C, full rationale consistent."
+    },
+    {
+      "id": "70482e20",
+      "page": 103,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Subtract like cubic terms 11x\u00b3-5x\u00b3=6x\u00b3; do not alter exponent."
+    },
+    {
+      "id": "8452c42b",
+      "page": 104,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Add like quadratic terms (50+5)x\u00b2=55x\u00b2; distractors multiplication/subtraction incorrect."
+    },
+    {
+      "id": "b39d74a0",
+      "page": 105,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graphs checked against table: only B passes origin and (1,1); cubic growth matches positive x values, shifted and steeper graphs rejected."
+    },
+    {
+      "id": "ea6d05bb",
+      "page": 107,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Distribute (3x-23)(19x+6): linear coefficient 18-437=-419; other coefficients 57,-138 consistent."
+    },
+    {
+      "id": "09d21d79",
+      "page": 108,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph vertex (-1,-8) and intercept -6 yield y=2(x+1)\u00b2-8=2x\u00b2+4x-6; bc=-24, both rationale methods agree."
+    },
+    {
+      "id": "722de804",
+      "page": 109,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Roots 47\u00b11 are 48 and 46, sum 94; symmetric root sum shortcut valid."
+    },
+    {
+      "id": "e833de9a",
+      "page": 110,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Circle at x=-5 gives y=-sqrt11 because y<0; line y=mx+b/4 then gives b=20m-4sqrt11, consistent negative m,b."
+    },
+    {
+      "id": "95d1c344",
+      "page": 111,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph x=0 gives five active projects, key B; graph maximum nine is not initial value."
+    },
+    {
+      "id": "0536ad4f",
+      "page": 112,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "20w-(4w+3w)=13w; distribute subtraction over entire parenthesis."
+    },
+    {
+      "id": "433184f1",
+      "page": 113,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original fractions 4/(4x-5)-1/(x+1) combine to numerator 4x+4-4x+5=9; exclude x=5/4,-1."
+    },
+    {
+      "id": "d135f4bf",
+      "page": 114,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Cubic up four gives g(0)=(-6)(-2)(6)+4=76; translation acts on output."
+    },
+    {
+      "id": "b0543157",
+      "page": 115,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original rational function g=(x\u00b2-x-a)/(x\u00b3-x-b): g(0)=22 gives a=22b, zero at -22 gives b=23. Denominators nonzero for recovered constants."
+    },
+    {
+      "id": "1d3fee25",
+      "page": 116,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "3(x+5)-6=3x+9; distractors lose distribution or parentheses."
+    },
+    {
+      "id": "4ca30186",
+      "page": 117,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph contains common point (2,4), key C; inspect intersection rather than either intercept."
+    },
+    {
+      "id": "911383f2",
+      "page": 118,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Zero-product roots 4,-2,1 have product -8, not sum 3; key D."
+    },
+    {
+      "id": "d8789a4c",
+      "page": 119,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Identity after canceling x-b requires c=b\u00b2; positive integral b allows c=4; keep excluded x=b."
+    },
+    {
+      "id": "b80d10d7",
+      "page": 120,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "For x\u2260-5, multiply rational equation by x+5 to get 2(x+1)=x+4, hence x=2; recovered value lies in domain."
+    },
+    {
+      "id": "fde6f3bb",
+      "page": 121,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original fractional coefficients checked: (3x/5+7/6)(6x-5)=18x\u00b2/5+4x-35/6; key D."
+    },
+    {
+      "id": "ffdfe1e1",
+      "page": 122,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Per-round eliminations are 120,60,30,15, modeled 240(1/2)^r for rounds 1-4. This is not cumulative eliminated; zero-round extension is algebraic, not physical."
+    },
+    {
+      "id": "d4950429",
+      "page": 123,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Area x(x-15)=76 factors (x-19)(x+4)=0; length and width positive select x=19, width four."
+    },
+    {
+      "id": "752055d1",
+      "page": 124,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Initial 12000 and doubling at t=4 yield 2^(4r)=2, r=1/4; distinguish rate coefficient from doubling time."
+    },
+    {
+      "id": "d0a53ef5",
+      "page": 125,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Both sides are principal square roots: sqrt((x-2)\u00b2)=sqrt(3x+34). Squaring yields roots 10,-3, both satisfy radicand domain and original equation; minimum -3."
+    },
+    {
+      "id": "fcdf87b7",
+      "page": 126,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Equate x\u00b2-4x+4 and 4-x to x(x-3)=0; accepted x=0 or3 satisfy both."
+    },
+    {
+      "id": "3148fe3e",
+      "page": 127,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Substitute y=8x+16 into first relation to (x+4)\u00b2=0; x=-4, y=-16, coordinate distractor distinguished."
+    },
+    {
+      "id": "271ffad7",
+      "page": 128,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Projectile returns to launch height at time six by symmetry about t=3; algebraic coefficient -4.9 and second root six corroborate."
+    },
+    {
+      "id": "ee857afb",
+      "page": 130,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Upward quadratic y=x\u00b2-14x+22 minimizes at x=7; minimum value -27 is not asked."
+    },
+    {
+      "id": "a520ba07",
+      "page": 131,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original cube root x\u00b3y\u2076 simplifies xy\u00b2 for all real x,y; odd root needs no extra positivity condition."
+    },
+    {
+      "id": "5b6af6b1",
+      "page": 132,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Distribute (d-6)(8d\u00b2-3)=8d\u00b3-48d\u00b2-3d+18; source intermediates and key C agree."
+    },
+    {
+      "id": "652054da",
+      "page": 133,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Solve s=3p/2 by multiplying reciprocal 2/3: p=2s/3, key A; no sign or denominator restriction issue."
+    },
+    {
+      "id": "0380bbdc",
+      "page": 134,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "4sqrt(2x)=16 gives 2x=16 and requested 6x=48; squaring reversible after nonnegative side isolation."
+    },
+    {
+      "id": "837e9da7",
+      "page": 135,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original reciprocal function 1/(6x) at x=3 yields 1/18; denominator excludes zero only."
+    },
+    {
+      "id": "58b4c6f3",
+      "page": 136,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full solution confirms a>0 selects a=2, b=9 from two points, ab=18; existing nlf-exp correction retained."
+    },
+    {
+      "id": "a255ae72",
+      "page": 137,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full source expansion agrees b\u00b2-2bc+c\u00b2; cancel shared a before expanding offers shorter valid derivation."
+    },
+    {
+      "id": "dd3b1e1a",
+      "page": 138,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "At x=0 polynomial cubic and linear terms vanish, f(0)=17, hence b=17."
+    },
+    {
+      "id": "3de7a7d7",
+      "page": 139,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original rationale image checked: correctly includes x=2 or x=-2, despite OCR dropping minus; quadratic ordinary solve, key B valid."
+    },
+    {
+      "id": "1e7a1deb",
+      "page": 140,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Distribute subtraction across b=7k-12r+3 to obtain -3k+17r-3; key B."
+    },
+    {
+      "id": "70f98ab4",
+      "page": 141,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Add 29r to q-29r=s: q=s+29r, preserving positivity under given relation."
+    },
+    {
+      "id": "7bbfbe70",
+      "page": 142,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full source rationale confirms each 22.96-minute interval multiplies by .76; t/22.96 counts intervals and initial100 is permitted."
+    },
+    {
+      "id": "35e05e19",
+      "page": 143,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Prism base width x-1 and height11 yield V=11x(x-1); physical x>1 implicit in geometry."
+    },
+    {
+      "id": "2c05d312",
+      "page": 144,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Product of roots ab/57, since factoring gives roots -b and -a/57; positive ab permits k=1/57."
+    },
+    {
+      "id": "1fe32f7d",
+      "page": 145,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "No-real-root condition b\u00b2-2704<0 gives strict b<52; positive integer maximum51, full solution consistent."
+    },
+    {
+      "id": "a45ffacb",
+      "page": 146,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original shifted exponential intercept -99/7 gives b=13/7; product65/7 then a=5, source answer correct."
+    },
+    {
+      "id": "95ed0b69",
+      "page": 147,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "From p=k/(4j+9), positivity permits multiplying denominator and dividing p: 4j+9=k/p."
+    },
+    {
+      "id": "463eec13",
+      "page": 148,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "sqrt(16x\u2074y\u2078)=4x\u00b2y\u2074 even for negative x,y; divide x\u00b3 with x\u22600 to 4x^-1*y\u2074; no missing absolute-value factor."
+    },
+    {
+      "id": "821e724e",
+      "page": 149,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "At x=24 first factor nonzero so t=24; g(0)=14*24=336, upward/downward sign retained."
+    },
+    {
+      "id": "341ba5db",
+      "page": 150,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original g(x)=x\u00b2+55 minimum55 at zero; answer is value, not minimizing input."
+    },
+    {
+      "id": "d8e84431",
+      "page": 151,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Length x implies width x-24, area equation x(x-24)=2661 => x\u00b2-24x-2661=0; key A."
+    },
+    {
+      "id": "18e35375",
+      "page": 152,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Roots14,-19 midpoint -5/2, giving minimum input -2.5; both vertex and midpoint methods agree."
+    },
+    {
+      "id": "c303ad23",
+      "page": 153,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Divide original equation by3 to x\u00b2-6x-5=0; requested block x\u00b2-6x=5 without solving x."
+    },
+    {
+      "id": "6e02cd78",
+      "page": 154,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Equate (x-1)\u00b2=2x-3 to (x-2)\u00b2=0; unique point (2,1), requested y=1."
+    },
+    {
+      "id": "5da5c665",
+      "page": 155,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Quadratic formula gives (5\u00b1sqrt105)/8; greatest root is plus branch, key B."
+    },
+    {
+      "id": "15c364bf",
+      "page": 156,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "87 years means three half-lives, 184/8=23 grams remain; decrease161 is different quantity."
+    },
+    {
+      "id": "2cb17792",
+      "page": 157,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Subtract equations to x\u00b2-6x+2k-26=0; zero discriminant gives k=35/2, repeated x=3; all source steps consistent."
+    },
+    {
+      "id": "ce508fb0",
+      "page": 158,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original composed absolute-value functions checked: f(-4)=3+|-8|=11, g(11)=|-11/10|-11+5=-4.9; denominator w-1 nonzero."
+    },
+    {
+      "id": "a1e65979",
+      "page": 159,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Vertex form a(x-1)\u00b2+9 and point(2,33) give a=24; f(-2)-f(0)=225-33=192, extra point(-1,105) consistent."
+    },
+    {
+      "id": "00165291",
+      "page": 160,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full alternate rationale contains false inference that a equals c because their quadratic equations agree. They are different selected roots: a=5 integer, c=21/2 noninteger, sum15.5. Primary derivation and key correct."
+    },
+    {
+      "id": "74473be4",
+      "page": 161,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Discriminants for choices are392,0,1176,-784, respectively; only D lacks real roots."
+    },
+    {
+      "id": "b5c43226",
+      "page": 162,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original exponential graph crosses y-axis at(0,2); key B and coordinate ordering correct."
+    },
+    {
+      "id": "6bd40794",
+      "page": 163,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Four factors give roots16,10,-7,-17; accepted positive roots10 and16, full solution consistent."
+    },
+    {
+      "id": "13e5a5d5",
+      "page": 164,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "5|x|=45 gives \u00b19; positive solution9; no squaring needed."
+    },
+    {
+      "id": "7bd10ef3",
+      "page": 165,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "2x\u00b2-4x minimum -2, hence t<-2 gives no solution; listed -3, discriminant16+8t<0 agrees."
+    },
+    {
+      "id": "2fec8bf4",
+      "page": 166,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "P(0)=1800 means study-start mammal population1800; factor1.02 is 2% growth, not fixed annual increase."
+    },
+    {
+      "id": "e166aca6",
+      "page": 167,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph touches at(4,0); C is(-4,0) despite OCR dropping minus; key D correct."
+    },
+    {
+      "id": "de91a6fc",
+      "page": 168,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Quadratic bowl-sales symmetry about price10 gives same five sales at prices8 and12; algebra N=-(p-10)\u00b2+9 agrees."
+    },
+    {
+      "id": "f28944ff",
+      "page": 169,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "q(x)=32*2^x yields16,32,64 at -1,0,1; tableD; negative exponent is reciprocal, not negative value."
+    },
+    {
+      "id": "11ccf3e1",
+      "page": 170,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Subtract14j and divide5: k=(m-14j)/5; keyA and units symbolic."
+    },
+    {
+      "id": "50e40f08",
+      "page": 171,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Factored zeros -6 and4 both accepted; zero-product alternatives are not simultaneous requirements."
+    },
+    {
+      "id": "e11294f9",
+      "page": 172,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full derivation confirms ordered roots -3\u00b1sqrt2 and -4\u00b12sqrt2 pair to -7\u00b13sqrt2; product31; ordering matters."
+    },
+    {
+      "id": "772de699",
+      "page": 173,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Factor common x to x(23x\u00b2+2x+9); all three terms retained; keyC."
+    },
+    {
+      "id": "03ff48d2",
+      "page": 174,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full discriminant3136-64k<0 gives integer minimum50. k=0 would instead be linear with a real root, so no missing degenerate solution."
+    },
+    {
+      "id": "7028c74f",
+      "page": 175,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Bring all terms to one side and factor(x+7)(3x-52)=0; roots-7,52/3 sum31/3; do not cancel x+7 and lose root."
+    },
+    {
+      "id": "cfff8f8e",
+      "page": 176,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Initial53 subscribers with daily doubling gives53*2^d over stated five-day period; base53 distractor changes both start and ratio."
+    },
+    {
+      "id": "c4259674",
+      "page": 177,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Negative exponent 4x^-1=4/x, so f(21)=4/21; distinguish (4x)^-1 and coefficient reciprocal."
+    },
+    {
+      "id": "88867d37",
+      "page": 178,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Roots -2,5,-9; sole positive root5, keyC; sign conditions applied after zero-product step."
+    },
+    {
+      "id": "88a0c425",
+      "page": 179,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Repeated root requires400+8c=0, c=-50; equivalent -2(x-5)\u00b2=0 verifies uniqueness."
+    },
+    {
+      "id": "13e57f0a",
+      "page": 180,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "4x\u00b2+7x-36=(4x-9)(x+4) gives positive9/4 and negative-4; completing-square method equivalent and checked."
+    },
+    {
+      "id": "02489d55",
+      "page": 181,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Distribute19(x\u00b2-7) to19x\u00b2-133; keyA."
+    },
+    {
+      "id": "be0c419e",
+      "page": 182,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "f(8)\u224882 reads coin value82 dollars eight years after purchase; initial65 and growth3% do not represent an82-dollar increase."
+    },
+    {
+      "id": "8462b105",
+      "page": 183,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Product x(x+91)=x\u00b2+91x, keyC; sum versus product distractors rejected."
+    },
+    {
+      "id": "ce579859",
+      "page": 184,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full rationale confirms 150% more is factor2.5, and t=1 value180 implies initial72; n=72(2.5)^t."
+    },
+    {
+      "id": "5355c0ef",
+      "page": 185,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Compare common scale .36/4=.63/7=1.17/13=.09, so a=.09; all coefficients consistent."
+    },
+    {
+      "id": "2f51abc2",
+      "page": 186,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Absolute-value equation requires k\u22650; branches give59/5 valid and -59 extraneous, explicitly checked by source."
+    },
+    {
+      "id": "17d0e87d",
+      "page": 187,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Positive variables allow squaring isolated sqrt(w+19); w=(yx/2)\u00b2-19, retaining original relation's constraints."
+    },
+    {
+      "id": "a1bf1c4e",
+      "page": 188,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Complete square x\u00b2+6x+4=(x+3)\u00b2-5; source expands all distractors correctly."
+    },
+    {
+      "id": "c81b6c57",
+      "page": 189,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full source rationale retains two known errors: duplicate+24 in expansion and -155+64 printed -71; correct p=7 from -13p=-91."
+    },
+    {
+      "id": "d139cf4b",
+      "page": 190,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Maximum of g(t)=-2t\u00b2+55t+3 is3+2(55/4)\u00b2; both complete-square and midpoint-of-zeros derivations agree."
+    },
+    {
+      "id": "802549ac",
+      "page": 191,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Quadratic terms cancel across equation, leaving10x=10, x=1; all distractor substitutions false."
+    },
+    {
+      "id": "75a32330",
+      "page": 192,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph choices checked: parabola vertex(0,1.7), line slope-1 same intercept; onlyA; horizontal-shift distractors differ."
+    },
+    {
+      "id": "a4f61d75",
+      "page": 195,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Integer roots product12 and positive sum a yield a=7,8,13 from pairs3&4,2&6,1&12; all accepted valid."
+    },
+    {
+      "id": "e1f9000d",
+      "page": 196,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Initial b=3364; ground at t=sqrt(3364/16)=14.5 seconds, positive time branch; distractor210.25 is squared time."
+    },
+    {
+      "id": "a31417d1",
+      "page": 197,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "15% annual CD decline from600million gives600(.85)^t; growth-base distractors inconsistent."
+    },
+    {
+      "id": "66bce0c1",
+      "page": 198,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Isolate sqrt(2x+6)=x-1, hence x\u22651; squared roots5,-1, only5 survives original check; solution set{5}."
+    },
+    {
+      "id": "97e50fa2",
+      "page": 199,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Equate shifted parabola and line to(a-2)(a-8)=0, possible inputs2,8; source warns graph axes have different scales."
+    },
+    {
+      "id": "6d04c89d",
+      "page": 200,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Equivalent rational expression reduces numerator and denominator by6, giving denominator x+7 and b=7; x>0 avoids poles."
+    },
+    {
+      "id": "c946d5bd",
+      "page": 201,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph has simple zero-2 and double zeros1,3. g(x+28) shifts roots left28; b may be-27 or-25, listed-25 valid; source's broader necessary list includes simple root without claiming sufficiency."
+    },
+    {
+      "id": "ebb717ab",
+      "page": 203,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Discriminant1156-4c<0 precisely when c>289; least threshold n=289, equality has one root."
+    },
+    {
+      "id": "e51bf5b1",
+      "page": 204,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full rationale confirms factor(x+2b) gives middle coefficient7+6b; positive integer b7 selects49 andD."
+    },
+    {
+      "id": "197bed38",
+      "page": 205,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original projectile graph increases on0\u2264t\u22642 then decreases; onlyA entirely increasing; vertex endpoint allowed."
+    },
+    {
+      "id": "9afe2370",
+      "page": 206,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Positive decaying population requires0<1+r<1, so-1<r<0; negative base impossible physical model and positive r gives growth."
+    },
+    {
+      "id": "60fdb4d4",
+      "page": 207,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Subtract whole second polynomial:2x\u00b2-4+3x\u00b2-2x+7=5x\u00b2-2x+3; keyA."
+    },
+    {
+      "id": "ad376f1a",
+      "page": 208,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original rational graph atx=0 hasy=3; requested f(0)=3, not asymptote or x-intercept."
+    },
+    {
+      "id": "bd4d0e0c",
+      "page": 209,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original rationale image checked to resolve OCR: final value is correctly -152; evaluate zero gives constant term-152, keyA."
+    },
+    {
+      "id": "db888cd6",
+      "page": 210,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph intercept(0,9) counts thousands:9000 catalogs at end1992, not sum over ten years or9 individual catalogs."
+    },
+    {
+      "id": "df71424b",
+      "page": 212,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original exponential graph lies below asymptote y=-7, hence no x-axis intersection; zero zeros, keyD."
+    },
+    {
+      "id": "6ecdbcb4",
+      "page": 213,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "All tabulated inputs -6,-5,4 zero one factor of f, so y=f-3 equals-3 in every row, tableB."
+    },
+    {
+      "id": "7cb3a8ee",
+      "page": 214,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "|x-5|=10 gives x=15,-5, both accepted and satisfy original equation."
+    },
+    {
+      "id": "967ef685",
+      "page": 215,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Common denominator k gives42a(1+k\u00b2)/k; k>0 guarantees nonzero denominator, keyD."
+    },
+    {
+      "id": "0bebc08c",
+      "page": 216,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Substitute x3 to y=(15-3)\u00b2=144, then productxy=432; avoid returning y only."
+    },
+    {
+      "id": "c13016f9",
+      "page": 217,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "f(2)=4+2+71=77; full source substitution consistent."
+    },
+    {
+      "id": "203774bc",
+      "page": 218,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Image-confirmed source sign error: splits +11y as +28y-39y, which is -11y. Correct split -28y+39y factors(2y+39)(y-14); answer14 correct."
+    },
+    {
+      "id": "b7c74b73",
+      "page": 219,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Exponent x/12 counts years from monthly input; factor.64 gives36% annual decrease, p36."
+    },
+    {
+      "id": "c1964c11",
+      "page": 220,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Subtract34 from p+34=q+r, yielding p=q+r-34, keyB."
+    },
+    {
+      "id": "3d12b1e0",
+      "page": 221,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Discriminant64+64c=0 gives c=-1, equivalent -16(x+1/4)\u00b2=0; repeated root valid."
+    },
+    {
+      "id": "2c88af4d",
+      "page": 222,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original exponents checked: x^-2*y^(1/2)/(x^(1/3)*y^-1)=y*sqrt(y)/(x\u00b2*cuberoot(x)), keyD; positive domain enables power laws."
+    },
+    {
+      "id": "7d3a84bf",
+      "page": 223,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Coordinates mean molecular weight149.02 g/mol and boiling point186.05 C; no extremum is asserted, keyB."
+    },
+    {
+      "id": "c8db0e19",
+      "page": 224,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Full rationale confirms clearing12xyz (positive nonzero) gives3z+12x\u00b2y\u00b2z\u00b2=4x, then positive y root; original relation implies4x>3z."
+    },
+    {
+      "id": "c4cd5bcc",
+      "page": 225,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "By intercept definition c=f(0), not other listed function evaluations; graph must meet y-axis atx0."
+    },
+    {
+      "id": "dc77e0dc",
+      "page": 226,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Surface corresponds depth0, exponential factor.5^0=1, initial500 particles; no need attenuation interval value."
+    },
+    {
+      "id": "062f86db",
+      "page": 227,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Factor(5x+3)(x-8)=0 gives roots-3/5,8; positive root8, keyC."
+    },
+    {
+      "id": "0a74365c",
+      "page": 228,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "300years contain four75year doublings; initial240000/16=15000, full rationale consistent."
+    },
+    {
+      "id": "5f10c095",
+      "page": 229,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph intersections near(4,7.2),(6,7.2), listed input4; vertex5 and y7.2 distractors distinguished."
+    },
+    {
+      "id": "ffdbcad4",
+      "page": 230,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original factorization parameters h4 and kj=-45 imply45/k=-j integer; k nonzero forced by product, keyD."
+    },
+    {
+      "id": "735a0a00",
+      "page": 231,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Point(1,83) means one day after launch estimated stock price83 dollars; substitution .25-7.5+90.25=83 confirms."
+    },
+    {
+      "id": "68607eca",
+      "page": 232,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "70% increase every two days gives233*1.7^(x/2); interval conversion and initial count consistent, keyC."
+    },
+    {
+      "id": "2d394c28",
+      "page": 233,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Original graph initial2010 population20000 atx0; keyC, 25000 approximately year4."
+    },
+    {
+      "id": "71014fb1",
+      "page": 234,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "A squared real expression cannot equal a negative RHS; zero distinct real solutions, keyD."
+    },
+    {
+      "id": "5639dd1a",
+      "page": 235,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "x\u00b2=22*22 gives\u00b122; requested positive solution22, no extraneous squaring performed."
+    },
+    {
+      "id": "4a5af623",
+      "page": 236,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "OCR of original full q/r WebP; original images checked for ambiguous formulas/graphs",
+      "observation": "Every term2x\u00b2+38x+10 divisible by2; factor2(x\u00b2+19x+5), keyA; individual variable terms not common factors."
+    },
+    {
+      "id": "22fd3e1f",
+      "page": 237,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Cancel x-3 for x>3 from x(x+3)(x-3)/((x+1)(x-3)); D. Source distractor A comparison uses x=0 outside stated domain; e.g. x=4 is valid instead."
+    },
+    {
+      "id": "717a1964",
+      "page": 238,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Factor (z+12)(z-2); both 2 and -12 valid entries."
+    },
+    {
+      "id": "2b6c12eb",
+      "page": 239,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph crosses x-axis at (6,0); rationale consistent."
+    },
+    {
+      "id": "4dc5c6f9",
+      "page": 240,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Horizontal y18 above downward parabola maximum15; zero intersections, algebra square=-1 and vertex approaches agree."
+    },
+    {
+      "id": "78d5f91a",
+      "page": 241,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Evaluate cubic at -1 gives -1+3+6-1=7; sign distractors consistent."
+    },
+    {
+      "id": "d675744f",
+      "page": 242,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original choices checked: increasing 4*2^x intercept4 and points(1,8),(4,64) match D."
+    },
+    {
+      "id": "79e6ec70",
+      "page": 244,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph/choices checked: intercept(5,0), A actually(-5,0); keyB."
+    },
+    {
+      "id": "a0b4103e",
+      "page": 245,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Factor one-third times(x\u00b2-6); positive k=sqrt6, keyD."
+    },
+    {
+      "id": "5acbdc30",
+      "page": 246,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Decay factor .19 means81% less each unit; initial56 does not affect rate."
+    },
+    {
+      "id": "5377d9cf",
+      "page": 247,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original rational formula checked: numerator at-1 is10 denominator-2 gives-5."
+    },
+    {
+      "id": "565428e1",
+      "page": 248,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original radical/exponents checked: p^(2/3)=t^(9/7); 2/3=(9/7)(3n-1) gives n41/81."
+    },
+    {
+      "id": "2cd6b22d",
+      "page": 249,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Discriminant100-320=-220; no real solutions, keyD."
+    },
+    {
+      "id": "f2d60b99",
+      "page": 250,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Upward quadratic vertex(7,3) lies in time domain; minimum height3, A."
+    },
+    {
+      "id": "f880f910",
+      "page": 251,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Triangle model h(h+12)/2=270 factors(h+30)(h-18); physical h18."
+    },
+    {
+      "id": "36b6f8ba",
+      "page": 252,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph y-intercept8 for f+4 gives f(0)=4, so -3^x+5, B."
+    },
+    {
+      "id": "e9349667",
+      "page": 253,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Substitute line y=-x-1 into parabola gives(x+2)(x+1)=0; y values1,0 sum1."
+    },
+    {
+      "id": "67f4b449",
+      "page": 254,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f14=6*196=1176 square feet at width14 feet; quantity/unit interpretation A."
+    },
+    {
+      "id": "49efde89",
+      "page": 255,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Distribute x(2x+7); coefficient a7, D."
+    },
+    {
+      "id": "c95686e9",
+      "page": 256,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Initial19.36 gives b19.36; h0 at t\u00b21.21, positive time1.1."
+    },
+    {
+      "id": "44076c7d",
+      "page": 257,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Table solves c14, a1,b5; all three rows match x\u00b2+5x+14. Source vertex-form derivation also consistent despite noisy OCR."
+    },
+    {
+      "id": "1f353a9e",
+      "page": 258,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "At t0 year1998 intercept8000; minimum occurs later, D."
+    },
+    {
+      "id": "3f8d5876",
+      "page": 259,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original plotted intersection(4,5), C; axes and intercept distractors checked."
+    },
+    {
+      "id": "b03adde3",
+      "page": 260,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Rearrange u-3=6/(t-2) to t=2u/(u-3), u cannot3; D."
+    },
+    {
+      "id": "1ce9ffcd",
+      "page": 261,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Discriminant900+36c=0 gives c-25; other signs yield distinct counts as rationale."
+    },
+    {
+      "id": "104bff62",
+      "page": 262,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original fractions checked: difference sqrt(x\u00b2-c\u00b2)=39 with denominator nonzero; x=\u00b1sqrt(c\u00b2+39\u00b2), listed negative root D."
+    },
+    {
+      "id": "270cf326",
+      "page": 263,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original formulas -6*3^x-3 and -3*6^x both unbounded below; neither has minimum at-3, D. Rationale conclusion valid for these exponentials."
+    },
+    {
+      "id": "fad2f98c",
+      "page": 264,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Zero-product 3x(x-4)(x+5)=0 gives0,4,-5; listed0 B."
+    },
+    {
+      "id": "769b612d",
+      "page": 265,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "10^(5x-8)=10^4 gives x12/5, B."
+    },
+    {
+      "id": "a267bd29",
+      "page": 266,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Complete square(w+6)\u00b2=76; listed root-6+2sqrt19 D."
+    },
+    {
+      "id": "75915e3c",
+      "page": 267,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f2=2*3\u00b2=18; coefficient stays outside exponent, C."
+    },
+    {
+      "id": "f44a29a8",
+      "page": 268,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Kinetic18=.5*4*v\u00b2 implies nonnegative speed3; distractors squared quantity9 and energy18 rejected."
+    },
+    {
+      "id": "d3f7c429",
+      "page": 269,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original absolute-value and linear graphs intersect(1,5), C; vertex(4,2), line intercept(0,4) checked."
+    },
+    {
+      "id": "92f812bb",
+      "page": 270,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Vertex(9,-14) and two intercepts force a>0; f1=a+b+c=64a-14>-14, only-12 possible."
+    },
+    {
+      "id": "f547a8b1",
+      "page": 271,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph intercept(0,8), D; asymptote y6 is distractor."
+    },
+    {
+      "id": "b8c4a1cd",
+      "page": 272,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Divide8j=k+15m by8; j=(k+15m)/8, D."
+    },
+    {
+      "id": "7bf77c19",
+      "page": 273,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "p0=a+b and r0=a*4.1^b neither displayed coefficient/constant under integer a<b<0; keyD."
+    },
+    {
+      "id": "2f4eafcc",
+      "page": 274,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original parabola vertex and y-intercept(0,7); requested7."
+    },
+    {
+      "id": "7dbd46d9",
+      "page": 275,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Eliminate y to x\u00b2+4x-165=(x+15)(x-11); listed-15 A."
+    },
+    {
+      "id": "0121a235",
+      "page": 276,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Table zeros at-1 and2 force(x+1)(x-2), D; absent\u00b13 not forced factors."
+    },
+    {
+      "id": "9da41c80",
+      "page": 277,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "22 initial times .85 per bounce gives22*.85^n; retain85% means15% loss, B."
+    },
+    {
+      "id": "7160cbb3",
+      "page": 278,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph y-intercept(0,-6), A; horizontal asymptote-5 distinct."
+    },
+    {
+      "id": "d71f6dbf",
+      "page": 279,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "h1.4=-16*1.96+28+5=1.64 feet at1.4seconds; A and units consistent."
+    },
+    {
+      "id": "f123e039",
+      "page": 280,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph positive slope5 and quadratic vertex(0,-8); D system y5x,yx\u00b2-8."
+    },
+    {
+      "id": "630897df",
+      "page": 282,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtract331.3 then divide.606 gives T=(v-331.3)/.606; D."
+    },
+    {
+      "id": "20722644",
+      "page": 283,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f2=2\u00b3+9=17; function exponent not base3, C."
+    },
+    {
+      "id": "5805e747",
+      "page": 284,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtract polynomial distributing negative gives x\u00b3+10x; A."
+    },
+    {
+      "id": "158591f0",
+      "page": 285,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Standard form3x\u00b2-29x+56=0; root sum29/3; source quadratic-formula derivation consistent."
+    },
+    {
+      "id": "7fe7cf26",
+      "page": 286,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original launch graphs checked: lower platform shifts intercept7 to5, choiceB; same launch downward shift2."
+    },
+    {
+      "id": "bba18ecb",
+      "page": 290,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original fraction checked: root-17/4 reflected about x-3 gives-7/4; B."
+    },
+    {
+      "id": "668f1863",
+      "page": 291,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Vertex x midpoint of roots-20 and-4 is-12; requested r-12."
+    },
+    {
+      "id": "70753f99",
+      "page": 292,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Roots-3,-1 imply vertex x-2 in intervalB; midpoint rationale correct."
+    },
+    {
+      "id": "c6e85cd7",
+      "page": 293,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original cube root4^7 gives exponent7/3=8c; c7/24. Source decimal0.219 is incorrect accepted-entry example; correct .2916,.2917,.291,.292 precision depends entry."
+    },
+    {
+      "id": "568aaf27",
+      "page": 294,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Substitute yx\u00b2 into x+y12; roots3,-4, listed3 D."
+    },
+    {
+      "id": "6aefc52b",
+      "page": 295,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "No intersections with y-2.5 requires quadratic minimum k-16>-2.5, k>13.5; least positive integer14."
+    },
+    {
+      "id": "04887c7b",
+      "page": 296,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Multiply(2x+3)(7x-2) then subtract5x+6;14x\u00b2+12x-12 coefficient b12."
+    },
+    {
+      "id": "cef0eada",
+      "page": 297,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph f0=3; vertical shift+5 gives intercept(0,8), A."
+    },
+    {
+      "id": "55c5d3c2",
+      "page": 298,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f0=-25 implies b-26; f2=23 gives a\u00b249 and a7>0; a+b-19."
+    },
+    {
+      "id": "5e63b9cf",
+      "page": 299,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph intercept(0,8) means height8 inches at initial time; B, minimum2 differs."
+    },
+    {
+      "id": "6676f055",
+      "page": 300,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Concave-down vertex at angle27 degrees gives maximum airflow880; requested angle27 C."
+    },
+    {
+      "id": "53c07bf9",
+      "page": 301,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Initial24000 times .8^y models20% annual depreciation; C."
+    },
+    {
+      "id": "29ed5d39",
+      "page": 302,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original question p20+16/n gives n16/(p-20), D. Source rationale instead solves p9+14/n throughout; answer label correct but derivation belongs to different constants."
+    },
+    {
+      "id": "90bcaa61",
+      "page": 303,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Base2 exponent t/410 gives doubling interval410 minutes; initial60000 irrelevant."
+    },
+    {
+      "id": "895628b5",
+      "page": 304,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Equating yields(x-2)\u00b2=0; unique intersection(2,0), C. Source only substitutes valid root but correct answer."
+    },
+    {
+      "id": "8f82ad81",
+      "page": 305,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Distribute4 over x\u00b2+6 gives4x\u00b2+24 A; distractor fractional rewrites checked in full rationale."
+    },
+    {
+      "id": "26eb61c1",
+      "page": 306,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original exponents checked:6x^8y\u00b2+12x\u00b2y\u00b2=6x\u00b2y\u00b2(x^6+2), C."
+    },
+    {
+      "id": "c9417793",
+      "page": 307,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Absolute-value equation isolates|x-9|18, roots27,-9 sum18; rationale consistent."
+    },
+    {
+      "id": "8f65cddc",
+      "page": 308,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original rational formula1/(7b)=11x/y gives x=y/(77b), C; positive denominator safe."
+    },
+    {
+      "id": "2926cc6d",
+      "page": 309,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Zero product roots-4/5 and5/2; listed-4/5 C, signs and division correct."
+    },
+    {
+      "id": "dd8ac009",
+      "page": 310,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Table ratio674.02/670=1.006, rounded second year678.06; d670(1+.006)^t B."
+    },
+    {
+      "id": "3cce51ea",
+      "page": 311,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Isolate|p|4 from |p|+61=65; roots\u00b14, listed4 B."
+    },
+    {
+      "id": "58dcc59f",
+      "page": 312,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Garden width8 positive from(w+13)(w-8); requested length13."
+    },
+    {
+      "id": "2d1614a1",
+      "page": 313,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original exponent(2/3)t;18months1.5years increases exponent1 gives4% C. Source distractor B explanation incorrectly says factor1.04 each year instead of each18months."
+    },
+    {
+      "id": "d0e8e8f5",
+      "page": 314,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original quadratic tangent to horizontal line at(4,1); D unique intersection."
+    },
+    {
+      "id": "9ed9f54d",
+      "page": 315,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Combine common(x\u00b2-x) with weights2+3 gives5x\u00b2-5x A."
+    },
+    {
+      "id": "7a8cb72a",
+      "page": 316,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Divide7m=2(n+p) by7; m2(n+p)/7 A, additive7 distractor rejected."
+    },
+    {
+      "id": "dbe9b217",
+      "page": 317,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Substitute2 in8x\u00b3+4 gives68; rationale correct."
+    },
+    {
+      "id": "16aa9758",
+      "page": 318,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Complete square-6(x-5)\u00b2+24 displays maximum24; other equivalent forms expose zeros not maximum."
+    },
+    {
+      "id": "18c7c3e0",
+      "page": 319,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Combine13x\u00b2-7x\u00b2=6x\u00b2; both common-factor and like-term approaches correct."
+    },
+    {
+      "id": "30281058",
+      "page": 320,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Secant through parabola x1,5 has y-8,16 and slope24/4=6; A."
+    },
+    {
+      "id": "42f19012",
+      "page": 321,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original exponent11/12 and radical choices checked:132/144=11/12, hence144th root a^132 B."
+    },
+    {
+      "id": "294db8ec",
+      "page": 322,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Factor GCF2 from2x\u00b3+4 gives2(x\u00b3+2), D."
+    },
+    {
+      "id": "2f8a580c",
+      "page": 323,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "k2=2\u00b3+110=118 A; base2 and exponent3 distinguish distractors."
+    },
+    {
+      "id": "84dd43f8",
+      "page": 324,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "80% decrease retains.2 each step;86*.2\u00b2=3.44, sequential alternate agrees."
+    },
+    {
+      "id": "9ff88bb5",
+      "page": 325,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph intercept about1.6seconds means height0 hitting water; B; vertex near.2 distinguished."
+    },
+    {
+      "id": "94ff3e2d",
+      "page": 327,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original rational h8/(5x+6) at2=8/16=.5; accepted1/2 or.5 correct."
+    },
+    {
+      "id": "59d1f4b5",
+      "page": 328,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original quarter-year exponent q/4; t=q/4 gives1800*1.02^(q/4), A."
+    },
+    {
+      "id": "281a4f3b",
+      "page": 329,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "2% annual decrease from3000 gives3000*.98^x D."
+    },
+    {
+      "id": "4fb8a648",
+      "page": 330,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Equating line and quadratic yields(x+9)(x+6)=0; greatest input-6, A."
+    },
+    {
+      "id": "72ae8a87",
+      "page": 331,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f5\u2248518748 dollars means annual revenue at year5, A; increase excludes initial200000."
+    },
+    {
+      "id": "5ae4803e",
+      "page": 332,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original rational equation excludes-9; cancel x+9 yields x-9=7 and allowed16 C."
+    },
+    {
+      "id": "133f3e41",
+      "page": 333,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original reciprocal relation20/p=20/q-20/r-20/s gives1/q=1/p+1/r+1/s; q=prs/(pr+ps+rs), C."
+    },
+    {
+      "id": "f237ccfc",
+      "page": 334,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Polynomial sum x\u00b2+8x+23; coefficient sum32; alternate substitution at1 agrees."
+    },
+    {
+      "id": "a391ed22",
+      "page": 335,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original fractions(half x+3/2)(3/2 x+half); cross terms1/4+9/4 give b5/2."
+    },
+    {
+      "id": "b3b07f0c",
+      "page": 336,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Shift g=f+8 has roots24,30 and g32=16, multiplier1; f=(x-24)(x-30)-8 B."
+    },
+    {
+      "id": "01668cd6",
+      "page": 337,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original domain x\u22650 includes endpoint; decreasing exponentials max at0, g0=33 displayed, f0=2.112 absent; II onlyB."
+    },
+    {
+      "id": "95eeeb5b",
+      "page": 338,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Roots7,-3 force b=-4a so a+b=-3a; integer a\u22652 permits-6 A, excludes-3,4,5."
+    },
+    {
+      "id": "c77ef2fb",
+      "page": 339,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original volume formula rearranges H=1-Vp/Vb A; nonzero blood volume implicit in context."
+    },
+    {
+      "id": "7399c3b0",
+      "page": 340,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "k\u00b2-53=91 gives k\u00b2144; requested positive12 D; distractor equations evaluated correctly."
+    },
+    {
+      "id": "99c5e794",
+      "page": 341,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Initial15000 with4% annual growth gives15000*1.04^x D; initial/base reversal fails at0."
+    },
+    {
+      "id": "5ae186b4",
+      "page": 342,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original -54/w=6 excludes0, multiply gives w-9; no extraneous solution."
+    },
+    {
+      "id": "b76a2815",
+      "page": 343,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Multiply power relation P=W/t by t gives W=Pt A; units work=power*time."
+    },
+    {
+      "id": "364a2d25",
+      "page": 344,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Substitute y17-x into xy72 gives(x-8)(x-9); either8 or9 valid."
+    },
+    {
+      "id": "1be909aa",
+      "page": 345,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original h^15q^7/(h^5q^21) checked: h^10/q^14 A; positive variables permit denominator."
+    },
+    {
+      "id": "bdb0aa23",
+      "page": 346,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "GCFx\u00b3 from5x^5-6x^4+8x\u00b3 yields x\u00b3(5x\u00b2-6x+8), B."
+    },
+    {
+      "id": "100030d9",
+      "page": 347,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Three half-height bounces20,10,5,2.5; between third/fourth hits max2.5feet."
+    },
+    {
+      "id": "09f58996",
+      "page": 348,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f36=6+sqrt36=12; principal square root appropriate."
+    },
+    {
+      "id": "d84a514a",
+      "page": 349,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Revenue648650 at year5, A; interpretation annual total not increase or growth factor5."
+    },
+    {
+      "id": "beb86a0c",
+      "page": 350,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "GCFx gives x(9x+5), A; expansion of all alternatives differs."
+    },
+    {
+      "id": "5910bfff",
+      "page": 351,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original dew-point coefficient9/25; rearrange H=25/9(D-T)+100 A."
+    },
+    {
+      "id": "7ba694f3",
+      "page": 352,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original half-factor distractor C checked; daily doubling44,000*2^t D."
+    },
+    {
+      "id": "fbb96bb1",
+      "page": 353,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original equation x-29=(x-a)(x-29); factor(x-29)(x-a-1)=0 gives29,a+1; a>30 rules out a, C."
+    },
+    {
+      "id": "63c00e2b",
+      "page": 354,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Multiply r/38=s+t by38 gives r38(s+t), C."
+    },
+    {
+      "id": "6e06a0a7",
+      "page": 355,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Distribute2a\u00b2 over(a+3) gives2a\u00b3+6a\u00b2, D; both coefficient and powers handled."
+    },
+    {
+      "id": "ad038c19",
+      "page": 356,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original(a+b/2)\u00b2 expands a\u00b2+ab+b\u00b2/4, D; cross term crucial."
+    },
+    {
+      "id": "c7a187a7",
+      "page": 357,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Roots of x\u00b2-18x-360 are-12,30; listed(-12,0), A."
+    },
+    {
+      "id": "ebe4bde0",
+      "page": 358,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original diversity graph vertex near elevation1250 at diversity13500; requested elevation1250 C."
+    },
+    {
+      "id": "ef926848",
+      "page": 359,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Q perimeter4x+176, side x44, area(x+44)\u00b2 A;176 increment divided by4."
+    },
+    {
+      "id": "77c0cced",
+      "page": 360,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtract line from quadratic to2x\u00b2-24x+64-a; repeated root x6 (a-8); C."
+    },
+    {
+      "id": "635f54ee",
+      "page": 361,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original surface6(a/4)\u00b2 implies edge a/4, face perimeter a B; positivity resolves square root."
+    },
+    {
+      "id": "c99d154a",
+      "page": 362,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph y-intercept3; requested coordinate3."
+    },
+    {
+      "id": "a26c29f7",
+      "page": 363,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Translate7x\u00b3 down2 to7x\u00b3-2 D; input unchanged."
+    },
+    {
+      "id": "99269e03",
+      "page": 364,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Table missing value at x3 gives4*2\u00b3+3=35 B."
+    },
+    {
+      "id": "a1262cdb",
+      "page": 365,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtract b in12t+b=c gives c-b12t D."
+    },
+    {
+      "id": "893c7519",
+      "page": 366,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original exponential graph crosses y-axis(0,3); requested3."
+    },
+    {
+      "id": "0980fcdd",
+      "page": 367,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Eliminate y gives x\u00b236, pairs(6,0),(-6,72); products0,-432, listed0 A."
+    },
+    {
+      "id": "e1391dd6",
+      "page": 368,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "275000 to1.1million quadruples in two2year doublings;1989 B; alternate sequence agrees."
+    },
+    {
+      "id": "3c600337",
+      "page": 369,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f0=270*.1^0=270 D; exponent0 not factor0."
+    },
+    {
+      "id": "3ea87153",
+      "page": 370,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "x\u00b2+9=25 gives\u00b14, listed4 A."
+    },
+    {
+      "id": "290cdc2c",
+      "page": 371,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original exponent1/14 means14th root x B; radical index verified."
+    },
+    {
+      "id": "abc61109",
+      "page": 372,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original(4x+1)/(x-9) divide numerator4(x-9)+37 to4+37/(x-9), A with x>9."
+    },
+    {
+      "id": "87a3de81",
+      "page": 373,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Factor(x+4)(x-3); positive selected3."
+    },
+    {
+      "id": "499cb491",
+      "page": 374,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "GCF5x from5x\u00b2-50xy\u00b2 gives5x(x-10y\u00b2) A."
+    },
+    {
+      "id": "d46da42c",
+      "page": 375,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph choices checked: upward parabola vertex(0,4), D only."
+    },
+    {
+      "id": "4209aefe",
+      "page": 377,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f5\u2248243 is account value in1957+5=1962 B; increase and multiplier distractors distinct."
+    },
+    {
+      "id": "482a445b",
+      "page": 378,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Square(x\u00b2+11) and add difference of squares(x-5)(x+5) gives x^4+23x\u00b2+96 B."
+    },
+    {
+      "id": "f1fa0821",
+      "page": 379,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph values6thousand at0 and9thousand at1 give ratio1.5 B."
+    },
+    {
+      "id": "9833d0e3",
+      "page": 380,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original model exponent x/100; each100centimeter increment multiplies b, hence b1.139 C."
+    },
+    {
+      "id": "1697ffcf",
+      "page": 381,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Intersect3x\u00b2-14x with yx gives3x(x-5)=0; second point(5,5), a5."
+    },
+    {
+      "id": "5bf0f84a",
+      "page": 382,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Height h0=72 feet initial height A;110 corresponds velocity coefficient."
+    },
+    {
+      "id": "4b6f0a3f",
+      "page": 383,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Quadratic factors(x-8)(x+3), root sum5."
+    },
+    {
+      "id": "c048055c",
+      "page": 384,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Duplicate Bergen scenario read independently; initial15000 growth1.04^x D, all distractors reviewed."
+    },
+    {
+      "id": "70ebd3d0",
+      "page": 385,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Depth unit100meters, factor.90 retains90% hence10% decrease per100meters D."
+    },
+    {
+      "id": "91aa9aa9",
+      "page": 386,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Combine9x\u00b2-8x\u00b2 and constant6 gives x\u00b2+6 D."
+    },
+    {
+      "id": "70fb357b",
+      "page": 387,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original y576^(2x+2) gives intercept576\u00b2=331776; equivalent331776^(x+1) displays base A."
+    },
+    {
+      "id": "20291f47",
+      "page": 388,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original fractions common denominatorxy(x-8); numeratorxy\u00b2+13xy-8y, C; x,y denominator restrictions preserved."
+    },
+    {
+      "id": "42f8e4b4",
+      "page": 389,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Factor2x(x\u00b2+21x+104)=2x(x+8)(x+13); smallest positive b8."
+    },
+    {
+      "id": "0f9f8ea7",
+      "page": 390,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "At initial x0, positive base a^0=1 gives3600 bacteria."
+    },
+    {
+      "id": "a67a439d",
+      "page": 391,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Given x+7=10, squared relation y100 and x3; pair(3,100) A."
+    },
+    {
+      "id": "de39858a",
+      "page": 392,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original second ordinate325/36; b9 then a^-2=1/36 gives positive a6; ab54 C."
+    },
+    {
+      "id": "2683b5db",
+      "page": 393,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Multiply tax formula by100 then add40000 yields P100T+40000 D."
+    },
+    {
+      "id": "d41cf4d3",
+      "page": 394,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original radical a*sqrt(x+b) checked; f24<0 forces a<0, root atx-24 implies b24; a<b D."
+    },
+    {
+      "id": "1178f2df",
+      "page": 395,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Table for f+4 symmetric about23, vertex y8 and a-4; f=-4(x-23)\u00b2+4 gives intercept-2112."
+    },
+    {
+      "id": "ce940f80",
+      "page": 396,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original x\u00b2/25=36 gives\u00b130, listed30 B."
+    },
+    {
+      "id": "45df91ee",
+      "page": 397,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Nonzero exponential base to power0 equals1; intercept(0,11) A."
+    },
+    {
+      "id": "c8a5c221",
+      "page": 398,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtract polynomials, x\u00b2 coefficient-5-3=-8 A; negative signs distributed."
+    },
+    {
+      "id": "f8871ccd",
+      "page": 399,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original fraction9/2 in2(x-9/2)(x+8) expands2x\u00b2+7x-72 B."
+    },
+    {
+      "id": "67e866b5",
+      "page": 400,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Combine9x\u00b2+7x\u00b2 retain9x to16x\u00b2+9x D."
+    },
+    {
+      "id": "40f2e601",
+      "page": 401,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Positive N permits dividing P=N(19-C); C19-P/N D."
+    },
+    {
+      "id": "fd65f47f",
+      "page": 402,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Polynomial sum2x\u00b2+x-9 plus x\u00b2+6x+1 gives3x\u00b2+7x-8 D."
+    },
+    {
+      "id": "7f87deff",
+      "page": 403,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Zero-product cubic roots14,-5,-4; each is permitted entered coordinate."
+    },
+    {
+      "id": "97158b3a",
+      "page": 404,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Area width times length, w(w+29) implies lengthw+29 C;29 difference not length."
+    },
+    {
+      "id": "84e8cc72",
+      "page": 405,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Vertex(8,1034) initial10 gives a-16; height at10 is970 C."
+    },
+    {
+      "id": "0ad5012e",
+      "page": 406,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "At x0 endMay2012, y29 deliveries; intercept interpretation B."
+    },
+    {
+      "id": "5c7d5744",
+      "page": 407,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph line/nonlinear intersection(-2,6), B; distractor intercepts distinct."
+    },
+    {
+      "id": "12e7faf8",
+      "page": 408,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Cancel nonzero x+7 from(x\u00b2+6x-7)/(x+7) to x-1; a1,d-1 sum0 C."
+    },
+    {
+      "id": "24016dee",
+      "page": 409,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtract(x\u00b3-2) distributes plus2; result7x\u00b3+10 B."
+    },
+    {
+      "id": "89fc23af",
+      "page": 410,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Polynomial division(x\u00b2-2x-5)/(x-3)=x+1-2/(x-3), D; x\u22603."
+    },
+    {
+      "id": "9a1f1941",
+      "page": 411,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Absolute value nonnegative cannot equal-9; zero solutions A."
+    },
+    {
+      "id": "041eda89",
+      "page": 412,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Discriminant7\u00b2-4*1*5=29; radical constant k29."
+    },
+    {
+      "id": "d8ace155",
+      "page": 413,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Initial36100 then5% annual growth for13years gives68071.93 rounded; A; all alternatives fail initial or increase."
+    },
+    {
+      "id": "c3a72da5",
+      "page": 414,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Combine coefficients for same powers gives7x^4+9x\u00b2 D; no exponent addition."
+    },
+    {
+      "id": "5a74f696",
+      "page": 415,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original choices checked:890*2^(t/10) doubles each10years C."
+    },
+    {
+      "id": "911c415b",
+      "page": 416,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original7532+100y\u00b2+10(10y\u00b2-110) gives200y\u00b2+6432; coefficient sum6632."
+    },
+    {
+      "id": "1863e3be",
+      "page": 417,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Atx0 in yx\u00b2+31 intercept31."
+    },
+    {
+      "id": "dba7432e",
+      "page": 418,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Table5,5/2,5/4,5/8 halves each step;5*2^-x D; coefficient5 initial."
+    },
+    {
+      "id": "b74f2feb",
+      "page": 419,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original radicals fifth root3^5*x^45 and eighth root2^8*x checked; coefficient36 exponent9+1/8=73/8, sum361/8=45.125."
+    },
+    {
+      "id": "16de54c7",
+      "page": 420,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Expand(2x-3)(x+k); constant-3k=-12 gives k4, linear coefficient agrees5."
+    },
+    {
+      "id": "2f958af9",
+      "page": 421,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Wave speed squared TL/m; multiply m divide L gives Tmv\u00b2/L A."
+    },
+    {
+      "id": "4d425cef",
+      "page": 422,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Polynomial zeros-5,1,4 force factorsx+5,x-1,x-4; listedx-1 C."
+    },
+    {
+      "id": "cbc4c163",
+      "page": 423,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original f=5(1/4-x)\u00b2+11/4; f1/4=11/4=2.75."
+    },
+    {
+      "id": "5edc8c98",
+      "page": 424,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Root sum(16a+4b)/64=(4a+b)/16 gives k1/16; source first expansion drops factor64 on pq, alternate sum derivation correct."
+    },
+    {
+      "id": "c7789423",
+      "page": 425,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Absolute-value roots2\u00b19=11,-7; either accepted."
+    },
+    {
+      "id": "ca4ee54e",
+      "page": 426,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original vehicle curve value near13600 at year3; nearest13632 B; other choices correspond0,1,5years."
+    },
+    {
+      "id": "d9137a84",
+      "page": 428,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original powers checked: product x^-6*y\u00b3*z5 distributes to x^-2*y\u00b3*z10 + x^-6*y11*z^-2 D."
+    },
+    {
+      "id": "876a731c",
+      "page": 429,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Substitute yx\u00b2 and simplify second to yx; x0 or1, positive1 gives xy1 A."
+    },
+    {
+      "id": "cd358b89",
+      "page": 430,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "g=f(x-1) shifts roots-6,-5,-1 right1 to-5,-4,0; sum-9 B."
+    },
+    {
+      "id": "f89e1d6f",
+      "page": 431,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "a=c+d makes c\u00b2+2cd+d\u00b2=a\u00b2; difference squares(x+a)(x-a) C."
+    },
+    {
+      "id": "ff2e5c76",
+      "page": 432,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Complete square roots20\u00b1sqrt410 sum40 D; Vieta agrees."
+    },
+    {
+      "id": "c5d83a99",
+      "page": 433,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original reciprocal1/x+8=1/6+8; subtract8 then multiply6x gives x6 B."
+    },
+    {
+      "id": "c8bf5313",
+      "page": 434,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "x8 then yx\u00b2+8=72 D."
+    },
+    {
+      "id": "c1eead73",
+      "page": 435,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "g4=|4+18|22 D; absolute-value distractors checked."
+    },
+    {
+      "id": "3934dd0a",
+      "page": 436,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Squared expression equal0 has single root-15; negative RHS none, positive RHS two; A."
+    },
+    {
+      "id": "df0ef054",
+      "page": 437,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original product(2x\u00b3+3x)(x\u00b3-2x)=2x^6-x^4-6x\u00b2 C."
+    },
+    {
+      "id": "f1c81b3b",
+      "page": 438,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "19*a\u00b32375 implies a\u00b3125,a5; g4=19*625=11875."
+    },
+    {
+      "id": "bef4b1c6",
+      "page": 439,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Rational55/(x+6)=x excludes-6; roots5,-11, requested positive5."
+    },
+    {
+      "id": "c19d1fb0",
+      "page": 440,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Egg initialt0 gives18meters; rooftop height18."
+    },
+    {
+      "id": "3e9cc0c2",
+      "page": 441,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Geometric telescoping product(1-p)(1+p+...+p^6)=1-p^7 B; cancellation checked."
+    },
+    {
+      "id": "2c5c22d0",
+      "page": 442,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Substitute y5x-8 into quadratic yields(x-1)\u00b20; unique pair(1,-3), C."
+    },
+    {
+      "id": "f678483b",
+      "page": 443,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Surface means depth0; roots-19,35 and positive elapsed time selects35minutes."
+    },
+    {
+      "id": "7348f046",
+      "page": 444,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtract parentheses2x+3-(x-7) gives x+10 C; minus reverses both terms."
+    },
+    {
+      "id": "0aaef7aa",
+      "page": 445,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "7n\u00b3=56 gives n\u00b38,n2 A; original answer options verified."
+    },
+    {
+      "id": "928498f3",
+      "page": 446,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Quadratic formula a6,b5,c-7 gives(-5\u00b1sqrt(25+168))/12, A."
+    },
+    {
+      "id": "26e83bbc",
+      "page": 447,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Product coefficients9b-27=-26 and-27b=-3 both give b1/9 C."
+    },
+    {
+      "id": "b7cd6ca6",
+      "page": 448,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "H0=5 initial restaurant employees A;1.8 factor is80% growth not5%."
+    },
+    {
+      "id": "04b985e6",
+      "page": 449,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "K34=(9/2)*34\u00b2=5202joules at speed34m/s A; listed distractor energy calculations consistent."
+    },
+    {
+      "id": "b47419f4",
+      "page": 450,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original(half x+3)-(two-thirds x-5) yields -x/6+8 A; minus distributed."
+    },
+    {
+      "id": "fc3dfa26",
+      "page": 451,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original rational denominators exclude\u00b13; cleared equation(2x-1)(x+3)=0, reject-3, solution1/2 C."
+    },
+    {
+      "id": "8838a672",
+      "page": 453,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtract cubic polynomials gives-2x\u00b3-7x\u00b2+x+3 B; all signs checked."
+    },
+    {
+      "id": "eb268057",
+      "page": 454,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "x\u00b264 gives\u00b18, listed-8 A."
+    },
+    {
+      "id": "f76c1858",
+      "page": 455,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Factor(7x+8)(x-4); positive root4, negative-8/7 rejected."
+    },
+    {
+      "id": "6d9e01a2",
+      "page": 456,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Minimum input of4x\u00b2-50x+126 is50/8=25/4; vertex rationale agrees."
+    },
+    {
+      "id": "0af701e7",
+      "page": 457,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f5=15, equation implies3|a|30; a\u00b110, listed10 C."
+    },
+    {
+      "id": "9f2ecade",
+      "page": 458,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Monic cubic zeros-5,6,7 gives constant(-root product)=210; full expansion agrees."
+    },
+    {
+      "id": "dd3a910a",
+      "page": 459,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original duplicate graph checked: intersection(1,5) C; line intercept(0,4), Vvertex(4,2)."
+    },
+    {
+      "id": "2cf7f039",
+      "page": 460,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "8sqrtx=48 implies sqrtx6, x36 C; nonnegative RHS makes squaring safe."
+    },
+    {
+      "id": "0b3d25c5",
+      "page": 461,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original fourth root(x\u00b2+8x+16)=(x+4)^(1/2) forx>0 D; positivity permits halfpower."
+    },
+    {
+      "id": "083ef63a",
+      "page": 462,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Root midpoint(2-15)/2=-13/2 minimizes upward quadratic; complete-square alternate agrees."
+    },
+    {
+      "id": "d45572cc",
+      "page": 463,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original plotted y-intercept integer3 gives f0=3; graph checked."
+    },
+    {
+      "id": "6011a3f8",
+      "page": 464,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Discriminant b\u00b2-6400>0 needs |b|>80; listed-91 A, equality-80 repeated root."
+    },
+    {
+      "id": "0e61101e",
+      "page": 465,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "g=f(x+2)=9*4^(x+2)=144*4^x B."
+    },
+    {
+      "id": "e117d3b8",
+      "page": 466,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Product radicals sqrt((a+c)\u00b3)*sqrt(a+c)=(a+c)\u00b2=a\u00b2+2ac+c\u00b2 C; positive variables remove absolute issue."
+    },
+    {
+      "id": "f44b4125",
+      "page": 467,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original domainx\u22650; f increases no maximum, g decreases maximumg0=9 displayed as coefficient; II onlyB."
+    },
+    {
+      "id": "7a6d06bf",
+      "page": 468,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Rectangle w(7w-4)=155 factors(7w+31)(w-5); positive width5."
+    },
+    {
+      "id": "04bbce67",
+      "page": 469,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Vertex(-7,4) of(x+7)\u00b2+4 gives minimum input-7."
+    },
+    {
+      "id": "4880eecb",
+      "page": 470,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Positive product x(x+8)=180 roots10,-18; choose10 B."
+    },
+    {
+      "id": "e8779461",
+      "page": 471,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "x+8=11 impliesx3; substitute in x\u00b2+14x+48 gives y99."
+    },
+    {
+      "id": "50338a48",
+      "page": 472,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "GCFw gives w(15w+8) A; distractor expansions checked."
+    },
+    {
+      "id": "98f735f2",
+      "page": 473,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "RevenueT=PQ, divide nonzero priceP yieldsQ=T/P B."
+    },
+    {
+      "id": "79ba511a",
+      "page": 474,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f2=2\u00b3+15=23 C; constant and cube interpreted correctly."
+    },
+    {
+      "id": "30596346",
+      "page": 475,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Roots k,4,-4 have sumk=59; chosen k59 is positive and distinct from\u00b14."
+    },
+    {
+      "id": "dcf63c94",
+      "page": 476,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "h=f(x-4)=272*2^(x-4)=17*2^x A; shift scales coefficient by1/16."
+    },
+    {
+      "id": "26f5269a",
+      "page": 477,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original graph y-intercept(0,40); requested40."
+    },
+    {
+      "id": "50418728",
+      "page": 478,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original polynomial graph y-intercept(0,-3); requested-3."
+    },
+    {
+      "id": "9cb9beec",
+      "page": 479,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Tangent liney-1.5 requires discriminant64-4(a+1.5)=0; a14.5=29/2."
+    },
+    {
+      "id": "f5e8ccf1",
+      "page": 480,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original NOT-intercept options checked: roots-4,1,3/2, so(-2/3,0) B not root; alternate substitution consistent."
+    },
+    {
+      "id": "fe62f031",
+      "page": 482,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original f3x^5 translated up4 givesg3x^5+4 A; exponent retained."
+    },
+    {
+      "id": "127b2759",
+      "page": 483,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Combine constants8+3=11 givesd\u00b2+11 B."
+    },
+    {
+      "id": "02c67921",
+      "page": 484,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original decay exponential graph crosses(0,3); coordinate3."
+    },
+    {
+      "id": "efc469c4",
+      "page": 485,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original coefficient denominators6 checked: expansion-200x\u00b2+100x-2, so a-1200,b600,c-12 sum-612 A."
+    },
+    {
+      "id": "2b1a27cd",
+      "page": 486,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Seal vertex depth302.4 at6 and depth0 at12 imply a-8.4; g10=168meters."
+    },
+    {
+      "id": "1073d70c",
+      "page": 487,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "190% increase means factor2.9;40initial leads40*2.9^t D; first-hour116 confirms."
+    },
+    {
+      "id": "dc67c130",
+      "page": 488,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original powers64t\u00b2s\u00b3-56t\u00b3s factor4t\u00b2s(16s\u00b2-14t) D."
+    },
+    {
+      "id": "fb96a5b3",
+      "page": 489,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Distribute2(ab-3)+2 to2ab-4 B; minus6 plus2."
+    },
+    {
+      "id": "aa95fb33",
+      "page": 490,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original rational graph and choices checked: translating up5 moves(3,3) to(3,8) and asymptote0 to5; D."
+    },
+    {
+      "id": "09e5e4d3",
+      "page": 493,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Given42/x=7x multiplyx(nonzero) to7x\u00b242 C."
+    },
+    {
+      "id": "1fe10d97",
+      "page": 494,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original exponent conversion mmonths=m/12years gives90000*1.06^(m/12) D."
+    },
+    {
+      "id": "5f07b257",
+      "page": 495,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original polynomial graph y-intercept4; requested4."
+    },
+    {
+      "id": "6acdcece",
+      "page": 496,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Multiply b-72=x/y by positivey gives xby-72y D."
+    },
+    {
+      "id": "7355b9d9",
+      "page": 497,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Factork-x requires rootxk; substitute yields k\u00b2(-1+n/29)=0 andk>0, n29 D; primary and alternate agree."
+    },
+    {
+      "id": "b73ee6cf",
+      "page": 498,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Town growth factor1.03 initial50000 target60000 gives60000=50000*1.03^t D. Source says A decline impossible given factor although A actually has decay factor.03; label correct."
+    },
+    {
+      "id": "08d03fe4",
+      "page": 499,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original q choices all show base2 with coefficients50,80,128,205 and shifted exponents; these are not equivalent functions. Source rationale uses base1.6 and128*(1.6)^(x-1). C displays its own f1=128, but the equivalence premise is defective."
+    },
+    {
+      "id": "df747160",
+      "page": 500,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Difference squaresx\u00b2-(10y)\u00b2 factors(x-10y)(x+10y), retain17; D."
+    },
+    {
+      "id": "befeb95f",
+      "page": 501,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f2=2\u00b3+15=23; duplicate numerical question read independently."
+    },
+    {
+      "id": "3918e8bc",
+      "page": 502,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Initialt0 in-4.9t\u00b2+7t+9 gives platformheight9 D."
+    },
+    {
+      "id": "d964bc26",
+      "page": 503,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Add57 to y-57=px gives ypx+57 B."
+    },
+    {
+      "id": "1dd13816",
+      "page": 504,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtract second cubic including negative4x\u00b3 gives9x\u00b3-11; b9."
+    },
+    {
+      "id": "2289b199",
+      "page": 505,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original cube-root(n^17p^5)/(5n\u00b2*eighth-root(p^8)) gives n^(11/3)p^(2/3)/5. Statement I n^(14/3)p^(5/3)/(5np) andII cube-root(n^11p\u00b2)/5 both agree, C."
+    },
+    {
+      "id": "e597050f",
+      "page": 506,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Combine9x+6x and2y+3y gives15x+5y D."
+    },
+    {
+      "id": "7eed640d",
+      "page": 507,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Positive x-intercept height0 after launch gives ground-hit time D; vertex quantities differ."
+    },
+    {
+      "id": "494d247d",
+      "page": 508,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original intersection in(-4,-3)\u00d7(4,5); C fractional coordinates verified visually."
+    },
+    {
+      "id": "30a07668",
+      "page": 509,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Equate4x=x\u00b2-12 gives(x-6)(x+2)=0, positive root6."
+    },
+    {
+      "id": "2d2ab76b",
+      "page": 510,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Systemy=x\u00b2-1 andy3 givesx\u00b12; pairs(2,3),(-2,3) A."
+    },
+    {
+      "id": "de362c2f",
+      "page": 511,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f8=5*8\u00b2=320 D; linear distractors evaluated."
+    },
+    {
+      "id": "5dd53f73",
+      "page": 512,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Common34 factors34(x+y) B, unlike variables cannot combine."
+    },
+    {
+      "id": "da602115",
+      "page": 513,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "|4x-4|112 equivalent4|x-1|112; positive requested x-1 is28; both approaches agree."
+    },
+    {
+      "id": "43926bd9",
+      "page": 514,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original table exponent increments4 froma^5 ata2; f=a^(4x-3), targeta29 givesk8."
+    },
+    {
+      "id": "1e8d7183",
+      "page": 515,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "256w\u00b2-676=(16w-26)(16w+26) D; difference of squares."
+    },
+    {
+      "id": "044c1cb7",
+      "page": 516,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Table h1=-2,h2=1,h3=6 matchesx\u00b2-3 B."
+    },
+    {
+      "id": "7e5a3640",
+      "page": 517,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "15hours contains five3hour doublings,300000*32=9600000 D."
+    },
+    {
+      "id": "fc2ec559",
+      "page": 518,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "x+5=14 givesx9; y4*81+4=328, pair(9,328) B."
+    },
+    {
+      "id": "faeae876",
+      "page": 519,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Constant52 nonzero; cubicx\u00b3+64 has realroot-4 and quarticx^4-81 realroots\u00b13; three distinct B."
+    },
+    {
+      "id": "0354c7de",
+      "page": 520,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "GCF5 from5x+15 gives5(x+3) A."
+    },
+    {
+      "id": "4d037075",
+      "page": 521,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original rational graph points(-7,-2),(-5,-6) give f6/(x+4); g=f(x+4)=6/(x+8) C."
+    },
+    {
+      "id": "39652e93",
+      "page": 523,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original f=16/x, x17 gives16/17 A; reciprocal/input distractors checked."
+    },
+    {
+      "id": "f25a34aa",
+      "page": 524,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Triangle half(2x+22)(x-10)=x\u00b2 simplifiesx110; lengths positive at110."
+    },
+    {
+      "id": "4d7064a6",
+      "page": 525,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Upward quadratic roots10,-13 midpoint-3/2 minimizes; both vertex formula and alternate agree D."
+    },
+    {
+      "id": "4eaf0a3a",
+      "page": 526,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original seventh rootx^9y^9=(xy)^(9/7), B; positive variables justify exponent rules."
+    },
+    {
+      "id": "c8e9a011",
+      "page": 527,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original12/n-2/t=-2/w gives6/n=1/t-1/w; n6tw/(w-t) D, positivity validates reciprocal."
+    },
+    {
+      "id": "52e589f9",
+      "page": 528,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "m330\u2248362 means predicted362kg330days afterbirth B; week-conversion distractors checked in original."
+    },
+    {
+      "id": "7e6ea718",
+      "page": 529,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Polynomial rootsd,-d,-g and repeatd; distinct positived,g ensurethree distinct intercepts B."
+    },
+    {
+      "id": "a58232b7",
+      "page": 530,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original domainx\u22650; increasing exponentials minima g0=40.9248,h0=69.1488 neither displayed; D."
+    },
+    {
+      "id": "4993b828",
+      "page": 531,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Rectangle area w(w+9) implies lengthw+9 D; width/difference/area distractors checked."
+    },
+    {
+      "id": "508344ac",
+      "page": 532,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Distribute16(x+15)=16x+240 B."
+    },
+    {
+      "id": "1853bb35",
+      "page": 533,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "45% decrease retains55%, initial14 so14*.55^x C."
+    },
+    {
+      "id": "a54753ca",
+      "page": 534,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Horizontal tangent at parabola vertex c=81/4-100=-319/4, C."
+    },
+    {
+      "id": "c602140f",
+      "page": 535,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Recognize -12y(-2x+3y)=+12y(2x-3y); combine factors(x+y)(2x-3y)=2x\u00b2-xy-3y\u00b2 B."
+    },
+    {
+      "id": "fcb78856",
+      "page": 536,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Divideb=42cf by positive42f gives cb/(42f), A."
+    },
+    {
+      "id": "a8ae0d22",
+      "page": 537,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Initial200 and factor4 perunit gives200*4^x D; source intro swaps x/y in generic-description sentence but final model correct."
+    },
+    {
+      "id": "782a8a53",
+      "page": 538,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original vertex(0,2), upward parabola; C."
+    },
+    {
+      "id": "cec36caf",
+      "page": 539,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "8x\u00b2-40=32 impliesx\u00b29; positive3 A."
+    },
+    {
+      "id": "fd4b2aa0",
+      "page": 540,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtract like cubes12x\u00b3-5x\u00b3=7x\u00b3 C."
+    },
+    {
+      "id": "3e28a622",
+      "page": 541,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "g81=sqrt81+300=309 C."
+    },
+    {
+      "id": "981aca65",
+      "page": 542,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original f=(a-19)/x+5; right4 down3 gives(a-19)/(x-4)+2 B."
+    },
+    {
+      "id": "bf704c34",
+      "page": 543,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Add7 to c-7=25p+k gives c25p+k+7 A."
+    },
+    {
+      "id": "4236c5a3",
+      "page": 544,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "(x+5)\u00b24 givesx-3 or-7; listed-3 D."
+    },
+    {
+      "id": "161126cf",
+      "page": 545,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original exponentx/4 means annual factor fourthroot1.84\u22481.16467; p\u224816.467 nearest16 A."
+    },
+    {
+      "id": "a7711fe8",
+      "page": 546,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Upward vertex(2,-4) gives minimum value-4 A, input2 distinct."
+    },
+    {
+      "id": "7a4475df",
+      "page": 547,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Animal initial2000 then3% yearly growth gives2000*1.03^x C."
+    },
+    {
+      "id": "3b4b8831",
+      "page": 548,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Divide38x\u00b2=38*9 by38; negative root-3."
+    },
+    {
+      "id": "f5247e52",
+      "page": 549,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Positivea,c imply upward parabolayax\u00b2-c and horizontaly a+c abovevertex; exactlytwo intersections C."
+    },
+    {
+      "id": "1a722d7d",
+      "page": 550,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original p=((x-c)\u00b2+160)/(2c); pc10 givesc8, p12=(16+160)/16=11 D."
+    },
+    {
+      "id": "be1b8c74",
+      "page": 552,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Positiveb permits divide x=8a(b+9) by8(b+9); ax/[8(b+9)] B."
+    },
+    {
+      "id": "b5ebd31c",
+      "page": 553,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Subtractt then divide9 in2r=9s+t; s(2r-t)/9 B."
+    },
+    {
+      "id": "f11ffa93",
+      "page": 554,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Squareroot(x+4)=11, square nonnegative11 to121 and subtract4 givesx117; checks original."
+    },
+    {
+      "id": "3a01a5ee",
+      "page": 555,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "|-5x+13|73 roots-12,86/5 sum26/5 D."
+    },
+    {
+      "id": "6e7ae9fc",
+      "page": 556,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original g=x(x-2)(x+6)\u00b2; zero arguments0,2,-6 givew7,5,13 sum25; repeatedroot counted once."
+    },
+    {
+      "id": "0de8359f",
+      "page": 557,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "s=-2t\u00b2+63t+1 has maximum1+2(63/4)\u00b2 B by completing square."
+    },
+    {
+      "id": "ee05c84e",
+      "page": 558,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "f20=(20+.25*20)*(50-20)=25*30=750 C."
+    },
+    {
+      "id": "5d93c782",
+      "page": 559,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Factorx\u00b2+3x-40=(x-5)(x+8) B; grouping and sum/product alternate agree."
+    },
+    {
+      "id": "5c00c2c1",
+      "page": 560,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "24initial and16.2% annual growth gives24*1.162^t C;132year endpoint consistent to stated approximate rate."
+    },
+    {
+      "id": "974d33dc",
+      "page": 561,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Original variable powers checked: sum r\u00b3+5r\u00b2+7 plusr\u00b2+8r+12 yieldsr\u00b3+6r\u00b2+8r+19 D."
+    },
+    {
+      "id": "405c5ced",
+      "page": 562,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "C0=6 initial clients at opening A; weeklyfactor1.5 means50% growth distinct."
+    },
+    {
+      "id": "d4d513ff",
+      "page": 563,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "GCF3 from12x+27 gives3(4x+9) C; expansions of distractors checked."
+    },
+    {
+      "id": "48f83c34",
+      "page": 564,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Prism height9, lengthx, widthx-7 gives V9x(x-7) D with physicalx>7."
+    },
+    {
+      "id": "58b109d4",
+      "page": 565,
+      "read_status": "full_question_and_full_rationale_read",
+      "evidence": "Full q/r OCR read; source WebP visually inspected where OCR omitted graphs or notation",
+      "observation": "Substitute y20x+100 into x\u00b2+y+7=7 yields(x+10)\u00b20; uniquex-10."
+    }
+  ],
+  "pending_ids": [],
+  "reviewed_count": 540
+}

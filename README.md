@@ -3,9 +3,13 @@
 A free single-page study site for the digital SAT, in two subjects:
 
 - **Reading and Writing:** a 60-second grammar method with 19 lessons, a four-step reading routine, passage structure, drills, and timed practice on real College Board questions.
-- **Math:** a start-here routine, lessons for all 19 skills, 93 question types (each with how to spot it, the steps, and the usual trap), shortcuts, formulas and Desmos tips, and practice on all 1,925 questions in College Board's SAT Math question bank, checked against College Board's answers with College Board's explanations.
+- **Math:** a start-here routine, lessons for all 19 skills, 102 question types (each with how to spot it, the steps, and the usual trap), shortcuts, formulas and Desmos tips, and practice on all 1,925 questions in College Board's SAT Math question bank, checked against College Board's answers with College Board's explanations.
 
 Open `index.html`, or the GitHub Pages site (Settings → Pages → Deploy from a branch → `main`, `/ (root)`). Math questions are images in `m/` (`q` = question, `r` = explanation, `qn`/`rn` = the same text re-wrapped for phones), so the site needs those folders next to `index.html`.
+
+The October source review adds detailed calculator-versus-hand methods, 11 probability families, source comparisons for every Math type, and new English reasoning and data patterns. Reading and Writing practice now includes all 1,845 unique source questions, including restored figure and grammar cards in `rw/`. Keep `rw/` alongside `index.html`, too.
+
+Review scope, source corrections, and validation limits are documented in [src/REVIEW.md](src/REVIEW.md).
 
 Progress is saved in your browser only.
 

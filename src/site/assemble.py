@@ -3,13 +3,18 @@ b = os.path.dirname(os.path.abspath(__file__))
 S = os.path.dirname(b)
 shell = open(os.path.join(b, 'shell.html'), encoding='utf-8').read()
 css = open(os.path.join(b, 'app.css'), encoding='utf-8').read()
-parts = ['core.js', 'grammar.js', 'reading.js', 'para.js', 'drills.js', 'practice.js', 'start.js', 'lookup.js', 'math.js', 'home.js', 'boot.js']
+parts = ['core.js', 'grammar.js', 'reasoning.js', 'data-patterns.js', 'review-findings.js', 'reading.js', 'para.js', 'drills.js', 'practice.js', 'start.js', 'lookup.js', 'math.js', 'home.js', 'boot.js']
 js = "(function () {\n  'use strict';\n" + ''.join(open(os.path.join(b, p), encoding='utf-8').read() for p in parts) + "}());\n"
 open(os.path.join(b, 'bundle.js'), 'w', encoding='utf-8').write(js)
 data = json.load(open(os.path.join(S, 'build', 'data.json'), encoding='utf-8'))
 data['reading'] = json.load(open(os.path.join(S, 'build', 'rdata.json'), encoding='utf-8'))
+reviewp = os.path.join(S, 'build', 'review-findings.json')
+if os.path.exists(reviewp): data['reviewFindings'] = json.load(open(reviewp, encoding='utf-8'))
 bankp = os.path.join(S, 'build', 'bank.json')
 data['bank'] = json.load(open(bankp, encoding='utf-8')) if os.path.exists(bankp) else {'notes': [], 'trans': []}
+for filename, key in [('figures.json', 'figures'), ('grammar-sources.json', 'grammarSources')]:
+    extra = os.path.join(S, 'build', filename)
+    if os.path.exists(extra): data['bank'][key] = json.load(open(extra, encoding='utf-8'))
 annp = os.path.join(S, 'build', 'ann.json')
 data['ann'] = json.load(open(annp, encoding='utf-8')) if os.path.exists(annp) else {}
 mp = os.path.join(S, 'build', 'mdata.json')

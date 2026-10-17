@@ -1,0 +1,133 @@
+{
+  "source": "October 15 Reading and Writing question-bank PDF",
+  "scope": "Targeted review of eight source questions; no claim of reviewing the full bank.",
+  "reviewedIds": [
+    "75e07a4d",
+    "95388117",
+    "040583a5",
+    "1281dfd5",
+    "a15b3219",
+    "7a1877be",
+    "bc7b1a04",
+    "403fb4e4"
+  ],
+  "cases": [
+    {
+      "id": "75e07a4d",
+      "title": "Keep the whole row together",
+      "evidence": "Day 1 → sugar cookie cubes → meal B.",
+      "lesson": "Match the requested day first, then carry both the food and meal labels from that same row. A food name alone is not enough.",
+      "answer": "C",
+      "pattern": "tuple lookup",
+      "pdfPages": [
+        17
+      ],
+      "review": "Full question, choices, and rationale read; first-page PDF figure visually checked."
+    },
+    {
+      "id": "95388117",
+      "title": "Name the denominator before comparing growth",
+      "evidence": "Colobanthus: 6.9 → 10.7 m², +3.8 m², about 55%. Deschampsia: 1,230 → 1,576 m², +346 m², about 28%.",
+      "lesson": "Choice B uses proportional expansion: Colobanthus gained more than half its starting area. Deschampsia gained more square meters. The table does not measure individual plant size or establish that the covered ground was newly freed from ice.",
+      "answer": "B",
+      "pattern": "relative versus absolute change",
+      "pdfPages": [
+        32
+      ],
+      "review": "Full question, choices, and rationale read; first-page PDF figure visually checked."
+    },
+    {
+      "id": "040583a5",
+      "title": "Compare gaps within each temperature",
+      "evidence": "Untreated minus treated ripening time is approximately 3, 3.5, 3, and 1.5 days at 14, 16, 18, and 20°C.",
+      "lesson": "Choice D compares the absolute treatment gap at each temperature. The vertical axis is days: fewer days means faster ripening. Compare the paired bars at the same temperature before comparing temperatures. Values are approximate readings of the graph.",
+      "answer": "D",
+      "pattern": "paired differences and axis direction",
+      "pdfPages": [
+        42,
+        43
+      ],
+      "review": "Full question, choices, and rationale read; first-page PDF figure visually checked."
+    },
+    {
+      "id": "1281dfd5",
+      "title": "A distribution does not identify individual pairs",
+      "evidence": "Several species fall below 90% of maximal speed while escaping predators.",
+      "lesson": "Choice B supplies the needed escape-context evidence. The two histograms count species in speed bins; they do not identify which pursuing value belongs to which escaping species. The graph cannot establish choice A’s within-species comparison.",
+      "answer": "B",
+      "pattern": "marginal distributions versus paired data",
+      "pdfPages": [
+        24,
+        25
+      ],
+      "review": "Full question, choices, and rationale read; first-page PDF figure visually checked."
+    },
+    {
+      "id": "a15b3219",
+      "title": "Test the predicted difference with both groups",
+      "evidence": "Before-election and after-election response and incentive bars are similar.",
+      "lesson": "Choice B weakens a prediction of a large timing effect. A statement about only one timing group cannot test the proposed difference. Similar bars do not establish exact equality or prove that every timing effect is zero.",
+      "answer": "B",
+      "pattern": "comparison needed to weaken a hypothesis",
+      "pdfPages": [
+        7,
+        8
+      ],
+      "review": "Full question, choices, and rationale read; first-page PDF figure visually checked."
+    },
+    {
+      "id": "7a1877be",
+      "title": "Distinguish evidence from certainty",
+      "evidence": "Isoguanine and purine appear in both meteorite samples and are not detected in the sampled soil.",
+      "lesson": "Choice A supports an origin other than contamination from that soil. “Not detected” describes a measurement in this sample; it does not prove universal absence, and the evidence supports the proposed space origin without proving that all contamination is impossible.",
+      "answer": "A",
+      "pattern": "detection limits and evidential scope",
+      "pdfPages": [
+        44
+      ],
+      "review": "Full question, choices, and rationale read; first-page PDF figure visually checked."
+    },
+    {
+      "id": "bc7b1a04",
+      "title": "Bracket a threshold with the relevant estimates",
+      "evidence": "344 km/s is compatible with orbit in the passage; 378 km/s is too high.",
+      "lesson": "Choice A is the source’s supported range: above 344 and below 378 km/s. The rows are estimates from different studies, not measured acceleration of the galaxy over those years. Do not infer a time trend from changing estimates.",
+      "answer": "A",
+      "pattern": "threshold reasoning versus time trend",
+      "pdfPages": [
+        52
+      ],
+      "review": "Full question, choices, and rationale read; first-page PDF figure visually checked."
+    },
+    {
+      "id": "403fb4e4",
+      "title": "Percent of which group?",
+      "evidence": "The bars show female farmers as a percentage of farmers within each crop and region.",
+      "lesson": "Choice C correctly identifies a female majority among non-root-vegetable farmers in north and south Ondo. The source rationale rejects B partly by calling 36% versus 20% “more women”; that headcount comparison is unsupported without the total number of cereal and root-crop farmers. B also fails to provide the requested majority example.",
+      "answer": "C",
+      "pattern": "conditional percentages and source-rationale correction",
+      "pdfPages": [
+        33,
+        34
+      ],
+      "review": "Full question, choices, and rationale read; first-page PDF figure visually checked."
+    }
+  ],
+  "confirmedSourceIssues": [
+    {
+      "id": "403fb4e4",
+      "pdfPages": [
+        33,
+        34
+      ],
+      "issue": "Rationale for B compares within-crop female percentages as female headcounts, without crop-group totals.",
+      "answerKeyStatus": "C remains supported.",
+      "correction": "Compare female shares within each crop. Do not rank female counts across crops unless totals are supplied."
+    }
+  ],
+  "uncertainty": [
+    "Graph values are approximate visual readings.",
+    "Not detected is not an assertion of universal absence.",
+    "No additional synthesis or grammar IDs were reviewed in this pass."
+  ]
+}

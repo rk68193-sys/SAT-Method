@@ -1,0 +1,2094 @@
+{
+  "scope": "Full question and solution OCR read; ambiguous notation and suspected OCR errors checked against original images.",
+  "reviews": [
+    {
+      "id": "3c8fdc40",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "2520"
+      ],
+      "pages": [
+        1216
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "42posters/min×60min/hour=2520; units cancel, no graph needed."
+    },
+    {
+      "id": "954943a4",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1219
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "p measures percentage points of allowance, so5x, not .05x; irrelevant cereal calories and serving volume do not change target."
+    },
+    {
+      "id": "1baffbcf",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1220
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": ".35x is remaining share after65% decrease; current pct-of grouping should pct-change."
+    },
+    {
+      "id": "d28c29e1",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1223
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "4.76miles/sec×3600sec/hour=17136; ×60 only converts to per-minute."
+    },
+    {
+      "id": "555939d2",
+      "type": "rat-rate",
+      "skill": "rat",
+      "answer": "C",
+      "pages": [
+        1225
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Sample8/300 scaled to30000 gives800 estimate; bridge to inference, not measured census count."
+    },
+    {
+      "id": "3f5398a6",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1226
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "m/k=1/5 andk25 givesm5; ratio order matters."
+    },
+    {
+      "id": "b4912cc5",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1227
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Fixed land area times density change(.8) gives80200; avoid computing two whole populations unnecessarily."
+    },
+    {
+      "id": "65c49824",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "8"
+      ],
+      "pages": [
+        1230
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Remaining15% equals6 people, total40; teacher-admin share difference20% gives8 directly. Visual rationale confirms OCR10% is actually15%."
+    },
+    {
+      "id": "825b7490",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": [
+        "980"
+      ],
+      "pages": [
+        1231
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "140/m=4/28 givesm980, scale35 applied to28."
+    },
+    {
+      "id": "86636d8f",
+      "type": "rat-rate",
+      "skill": "rat",
+      "answer": [
+        "9"
+      ],
+      "pages": [
+        1232
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Cost27 divided by3dollars/pound gives9pounds."
+    },
+    {
+      "id": "fe4c1c9e",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "180"
+      ],
+      "pages": [
+        1235
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "60items/hour times3hours=180; simple rate multiplication, not unit conversion."
+    },
+    {
+      "id": "3310c2ab",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "2432"
+      ],
+      "pages": [
+        1240
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "76quart×4cup/quart×8fl_oz/cup=2432; visual rationale confirms OCR9432 is2432."
+    },
+    {
+      "id": "000259aa",
+      "type": "rat-rate",
+      "skill": "rat",
+      "answer": "C",
+      "pages": [
+        1247
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Average2100/120=17.5miles/day; reciprocal is days/mile, not equivalent units."
+    },
+    {
+      "id": "3726e079",
+      "type": "rat-other",
+      "skill": "rat",
+      "answer": [
+        "24"
+      ],
+      "pages": [
+        1250
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Image confirms x/y=4 and24x/(ny)=4; substitute ratio to96/n=4 givesn24, requiring denominators nonzero."
+    },
+    {
+      "id": "05195d8a",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "110"
+      ],
+      "pages": [
+        1253
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "88 is80% of total, so88/.8=110; inverse percentage uses division."
+    },
+    {
+      "id": "28ff3966",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1255
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Linear enlargement1.65 means old19miles now span1.65inches; newmiles/inch19/1.65≈11.52, not19×1.65."
+    },
+    {
+      "id": "58a71e06",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1257
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "234000/300000×100=78%;22% is complementary group."
+    },
+    {
+      "id": "4aaa9c42",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1258
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "a=22.41(b+c),b=.83c, hencea/b=22.41(1+1/.83)=49.41; requested percent4941 not49.41."
+    },
+    {
+      "id": "bd90f87e",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1261
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Image table confirms1960wage1 and1970wage1.60; percent increase.60/1=60%, denominator old wage."
+    },
+    {
+      "id": "312ba47c",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1264
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Black:red8:1 and40black gives5red; currentrat-convert shouldrat-ratio."
+    },
+    {
+      "id": "0ea56bb2",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1265
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Firstgrowth5%; nextgrowthhalf2.5% appliedto5880gives6027. Halfpercentagegrowthnot140extra subscriptions."
+    },
+    {
+      "id": "8e528129",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": [
+        "4.44"
+      ],
+      "pages": [
+        1267
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Density.555oz/in³×8dollars/oz=4.44dollars/in³; unit cancellation chooses multiplication."
+    },
+    {
+      "id": "15617f62",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": "C",
+      "pages": [
+        1268
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Area92800/290=320mi²; OCR399 inrationale is320 inoriginalimage."
+    },
+    {
+      "id": "0231050d",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "75"
+      ],
+      "pages": [
+        1270
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Snow40to10inches is75%decrease, not25%remaining; graphendpoints visualchecked."
+    },
+    {
+      "id": "be35c117",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1271
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "900revolutions/50minutes=18perminute; currentconvert label shouldrate."
+    },
+    {
+      "id": "e3d49511",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1273
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "2358raccoons/131mi²=18density; multiplyingreturnswrongunits."
+    },
+    {
+      "id": "993000da",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1287
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "a=2.3b=.6c yields c/b=2.3/.6; p≈383.33%, of differsfromgreaterthan."
+    },
+    {
+      "id": "e9fb7774",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "A",
+      "pages": [
+        1294
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "75/300×100=25%; denominator is300."
+    },
+    {
+      "id": "3f236a64",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1296
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Table y/xconstant4; atx40,k160. Sourceimagechecked omittedOCRtable."
+    },
+    {
+      "id": "8705ecba",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1297
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Price20×1.05=21;5%sales taxmeansfractionofprice,not5dollars."
+    },
+    {
+      "id": "da9ffcf6",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1301
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "XY/ZV6 andXY102in givesZV17; currentconvert isratiowithsameunits."
+    },
+    {
+      "id": "9fa781f8",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": [
+        "90"
+      ],
+      "pages": [
+        1308
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "x/y9/5 andx162givesy90 using18scale."
+    },
+    {
+      "id": "022e9894",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "324"
+      ],
+      "pages": [
+        1310
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Nestedgroups:1250×.72×.36=324attendallthree; secondpercentagebaseisfirsttwoattendees."
+    },
+    {
+      "id": "6310adbc",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1314
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "t/u1/2,t10givesu20; inverse5wouldreverseratio."
+    },
+    {
+      "id": "63573fea",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1316
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Same1300000salesand15%returneachmonth over6months yields1170000; percentage isn't compounded stockdecay."
+    },
+    {
+      "id": "191d167b",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1317
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "147%of200=294; not147%increase."
+    },
+    {
+      "id": "93724cc6",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1324
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "21=.21n givesn100; inversepercentproblem."
+    },
+    {
+      "id": "2d16d62c",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "348"
+      ],
+      "pages": [
+        1326
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "58fathom×6feet/fathom=348feet."
+    },
+    {
+      "id": "69f6717f",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1328
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Volume(.9m)³=.729m³ times807kg/m³=588.303kg;roundonlyendto588."
+    },
+    {
+      "id": "c3d78831",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1331
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Coaches:athletes1:26 gives26xathletesforxcoaches; no additive26."
+    },
+    {
+      "id": "8bb94668",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1332
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "a=59c,c=.00008b givesb12500c anda+b12559c; tinypercentage reciprocates tolarge multiplier."
+    },
+    {
+      "id": "b5bc47d5",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "C",
+      "pages": [
+        1333
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Originalimage needed fractional scale; formula followsactualfeet dividedbyfeetpermodelinch, notphysical12in/foot conversion."
+    },
+    {
+      "id": "fea831fc",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "25.4",
+        "127/5"
+      ],
+      "pages": [
+        1334
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "11miles/(26/60hours)=25.3846mph rounds25.4; accepted127/5representsroundedanswer, notexactunroundedrate."
+    },
+    {
+      "id": "aeeaec96",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1335
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "612in/(36in/yard)=17yards; directionofconversion cancelsinches."
+    },
+    {
+      "id": "d693f563",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "56"
+      ],
+      "pages": [
+        1341
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "35×1.6=56plants; visualrationale confirms35notOCR36."
+    },
+    {
+      "id": "e7133228",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1348
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Acceleration7.3m/s²×3600s²/min²÷1609m/mile≈16.3mi/min²; squarethetimefactor."
+    },
+    {
+      "id": "bb7c8186",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "A",
+      "pages": [
+        1350
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "23%of100=23; percenttofractionthenmultiply."
+    },
+    {
+      "id": "181cc4d6",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1353
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Sameaspectratio widths scale20/15, giving4w/3; adding5doesnotpreservesimilarity."
+    },
+    {
+      "id": "e9841407",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1357
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "7red:28blue simplifies1:4; ratioofredtoblue differsfromredtoall1:5."
+    },
+    {
+      "id": "0d125b35",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "C",
+      "pages": [
+        1359
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Proportionalcoefficient5130/6840=.75 times5472=4104; proportional meansconstantquotientnotconstantdifference."
+    },
+    {
+      "id": "1fbd3b67",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1360
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "b=.2×24=4.8,a=2.9b=13.92;190%greater uses2.9,80%lessuses.2."
+    },
+    {
+      "id": "1b403590",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1361
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "168g/24cm³=7g/cm³; massdividedvolume."
+    },
+    {
+      "id": "c81499e1",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "39000"
+      ],
+      "pages": [
+        1362
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "39kg×1000g/kg=39000g."
+    },
+    {
+      "id": "7cab9fe1",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "A",
+      "pages": [
+        1369
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Increase43% gives1.43w; currentpct-ofgroup shouldpct-change duewordincreasing."
+    },
+    {
+      "id": "0700a2d5",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "423.5",
+        "847/2"
+      ],
+      "pages": [
+        1371
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "77rods×5.5yards/rod=423.5yards=847/2."
+    },
+    {
+      "id": "3638f413",
+      "type": "rat-rate",
+      "skill": "rat",
+      "answer": [
+        "30"
+      ],
+      "pages": [
+        1372
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "2001to2005isfourannualdoublings,480/2^4=30; ratio/rateofficialskillbutexponentialstructure."
+    },
+    {
+      "id": "445dd032",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1377
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Triplinghours triplesearnings3(13.50z); simpleproportionalrate, notunitconversion."
+    },
+    {
+      "id": "121dc44f",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1378
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "7%growthmeansnew/oldmultiplier1.07; .07ischangeonly."
+    },
+    {
+      "id": "fe1ec415",
+      "type": "rat-rate",
+      "skill": "rat",
+      "answer": "C",
+      "pages": [
+        1383
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "12lb/3min=4lb/min;96lb/4=24minutes, unitreciprocalchosenfortime."
+    },
+    {
+      "id": "ba62b0b0",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1385
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "28kg×1000=28000grams; notplus1000 orsquaringmass."
+    },
+    {
+      "id": "939c46d1",
+      "type": "rat-square",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1386
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Glasscapacity16fl_oz andgallon128fl_oz gives8fills;473cm³andpicturedformulaunneeded. Groupcubicconversionmisleading;rat-convert."
+    },
+    {
+      "id": "29c177e6",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1387
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "10%of470=47; subtract10doesnotcompute10%."
+    },
+    {
+      "id": "8a714fa1",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "A",
+      "pages": [
+        1394
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Increasingxby9% gives1.09x; currentpct-of shouldpct-change."
+    },
+    {
+      "id": "7cd1c6db",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1395
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Time108cm/(12cm/s)=9s; sameunitsrateinversionnotunitconversion."
+    },
+    {
+      "id": "8784bc84",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1396
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "20%of440=.2×440=88;200%would880."
+    },
+    {
+      "id": "8637294f",
+      "type": "rat-other",
+      "skill": "rat",
+      "answer": [
+        ".0625",
+        "1/16"
+      ],
+      "pages": [
+        1397
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Originalfractionalratioimageschecked;4a/b=6.7 impliesa/b1.675,then1.675/n26.8 givesn1/16. Ratioeliminationbeatsseparatea,b."
+    },
+    {
+      "id": "8e2e424e",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1398
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "k36%above50 meansk=1.36×50; multiplierrequestedr1.36, notrawpercentage36."
+    },
+    {
+      "id": "24ad9dcb",
+      "type": "rat-other",
+      "skill": "rat",
+      "answer": "C",
+      "pages": [
+        1399
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Earth100lb timesVenus.9andJupiter2.3; differencemultiplier1.4 gives140lb; subtractbeforemultiply."
+    },
+    {
+      "id": "e635aede",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1407
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Successive14%,4%growth multiplies1.14×1.04=1.1856; percentratesarenotadditive."
+    },
+    {
+      "id": "e21d10a7",
+      "type": "rat-other",
+      "skill": "rat",
+      "answer": [
+        "1015"
+      ],
+      "pages": [
+        1409
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Differenceinperiod287−252=35days times29orbits=1015; no needtwolargetotals."
+    },
+    {
+      "id": "7d721177",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1410
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Mass/density345/353=volume;edgecuberoot(345/353)≈.99m, notvolume. Density+cubegeometrybridge."
+    },
+    {
+      "id": "d0d9ede4",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "102"
+      ],
+      "pages": [
+        1411
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "34yards×3feet/yard=102feet."
+    },
+    {
+      "id": "1d945139",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1412
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "146timesas manyidenticalobjectsmeans146ttotalmass; sameunitsproportionalratiolabelratherthanconvert."
+    },
+    {
+      "id": "67c0200a",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        ".54",
+        "27/50"
+      ],
+      "pages": [
+        1414
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "a=.3b,c=1.8a givesc=.54b; percentdecreaseandgrowthcomposemultiplicatively."
+    },
+    {
+      "id": "40e7a1a9",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "600"
+      ],
+      "pages": [
+        1421
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "210/30=7times is600%greater, not700%greater; subtractbaseline100%."
+    },
+    {
+      "id": "699af7b3",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "60000"
+      ],
+      "pages": [
+        1426
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "4.68b=.0078c givesc600b, hencep60000%; keepmultiplierandpercentdistinct."
+    },
+    {
+      "id": "06a152cd",
+      "type": "rat-rate",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1428
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "48muffins×2.5oz/muffin÷16oz/lb=7.5lb; two-stepunitcancel."
+    },
+    {
+      "id": "8917ce38",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1431
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "90km/hr×1000m/km÷3600s/hr=25m/s; convertbothnumeratoranddenominator."
+    },
+    {
+      "id": "ec787383",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "40260"
+      ],
+      "pages": [
+        1437
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "61furlong×220yard/furlong×3foot/yard=40260feet."
+    },
+    {
+      "id": "7e6c745f",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1438
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Egg.36/6=.06dollars/proteingram;milk.24/8=.03;ratio2:1. Compareunitpricesbeforetheratio;rawcostratio3:2wrong."
+    },
+    {
+      "id": "709e04de",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1442
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "1.13timesbaseline means13%greater, not113%greater."
+    },
+    {
+      "id": "949cd96b",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1445
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Base89%ofheighth means.89h, despitegeometrycontext noarea needed."
+    },
+    {
+      "id": "28c6bd8c",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1446
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Doctor63%plusInternet13%of1200 gives912; singlemost-sourcecategoriesdisjoint,currentpct-change shouldpct-of."
+    },
+    {
+      "id": "3a6ed720",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1448
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "828000/900000=.92=>92%silver,8%complement."
+    },
+    {
+      "id": "85b33aa8",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1450
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "5104yd/(1760yd/mile)=2.9miles."
+    },
+    {
+      "id": "284303f1",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1451
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": ".06×250=15birchtrees; percentage6isnotcount."
+    },
+    {
+      "id": "ba61d95f",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1452
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "7%populationincreaseyieldsnew/old1.07, same structure121dc44f despitecitynamechange."
+    },
+    {
+      "id": "873d2838",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": [
+        "370"
+      ],
+      "pages": [
+        1453
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "85100people/(230people/mi²)=370mi²; area inversedensity."
+    },
+    {
+      "id": "2cdefcb1",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "C",
+      "pages": [
+        1456
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "51m×100cm/m=5100cm;51000wouldmillimeters."
+    },
+    {
+      "id": "8cbf1415",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1458
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "40%redand30%ofredstripedgives.4×.3=.12total; nestedconditionalpercentdoesn'tassumeindependence."
+    },
+    {
+      "id": "58ba7239",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "1512/5",
+        "302.4"
+      ],
+      "pages": [
+        1459
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "320%greaterthan160means4.2×160;remaining45%gives302.4; applypercenttoitsnamedbase."
+    },
+    {
+      "id": "c7c6445f",
+      "type": "rat-square",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1460
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "4.36mi²×1760²yd²/mi²=13505536yd²; notlinear1760factor."
+    },
+    {
+      "id": "73ddfdac",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "73920"
+      ],
+      "pages": [
+        1464
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "112furlong×220×3=73920feet; same chainasec787383."
+    },
+    {
+      "id": "96a45430",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1465
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Undo6%growth318/1.06=300; multiplying.94useswrongbase."
+    },
+    {
+      "id": "5267c3c7",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "A",
+      "pages": [
+        1467
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Increase400% means5x60=>x12, currentpct-ofshouldpct-change."
+    },
+    {
+      "id": "61b87506",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": [
+        "17"
+      ],
+      "pages": [
+        1475
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Preservingj:kratio requiresmultiplybothby17, independentof11:12numericratio."
+    },
+    {
+      "id": "4c5ea142",
+      "type": "rat-rate",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1477
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "87mmpermmonths times12kmonths=1044k/m; distinguishratemm/monthanddurationkyears."
+    },
+    {
+      "id": "3ac09984",
+      "type": "rat-rate",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1479
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "7500pesos×.075dollars/peso×.98afterfee=551.25; feebaseconvertedamount."
+    },
+    {
+      "id": "61f61789",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": [
+        "0.32",
+        "8/25"
+      ],
+      "pages": [
+        1481
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Cubeedge2cm gives8cm³;density2.56/8=.32g/cm³;25treesirrelevant."
+    },
+    {
+      "id": "c74df824",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "157.8",
+        "789/5"
+      ],
+      "pages": [
+        1484
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Area46nauticalmi²×1.852²=157.775584km²=>157.8; currentconvertshouldrat-square."
+    },
+    {
+      "id": "1b96c116",
+      "type": "rat-square",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1485
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "3168in²/12²=22ft²; squareconversionfactor."
+    },
+    {
+      "id": "b2f6f17d",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1488
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "100(79.86−75.74)/75.74≈5.4%; divideoldbillnotnew."
+    },
+    {
+      "id": "5154615f",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": [
+        "6.21"
+      ],
+      "pages": [
+        1493
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Cube3cmvolume27cm³ times.230g/cm³=6.21g;29samplinglocationsirrelevant."
+    },
+    {
+      "id": "9c44f828",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1498
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "50%of840seats=420; rawpercent50notseatcount."
+    },
+    {
+      "id": "eb672707",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "14/3",
+        "4.666",
+        "4.667"
+      ],
+      "pages": [
+        1500
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "14teaspoons/(3tsp/tbsp)=14/3tablespoons; source acceptsrounded/truncated4.666/4.667."
+    },
+    {
+      "id": "7270d642",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1501
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "16m/s×4s=64m; puretime-rateproduct,sameunitsnotconversion."
+    },
+    {
+      "id": "c256b723",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "10"
+      ],
+      "pages": [
+        1504
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Tip20%of50=10dollars; targettipnotbill60."
+    },
+    {
+      "id": "273b7f37",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1507
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "10%of760=76potatoes; savedcountnotremaining684."
+    },
+    {
+      "id": "7ed0d098",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1509
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "15%×8hours×60min/hour=72min;1.2isintermediatehours."
+    },
+    {
+      "id": "20845d36",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        ".48",
+        "12/25"
+      ],
+      "pages": [
+        1513
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": ".3remainingtimes1.6growth=.48b; similar67c0200adifferentgrowth."
+    },
+    {
+      "id": "8bf3f67a",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1515
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "39fathoms×6=234feet; simplefactor."
+    },
+    {
+      "id": "cb4894f9",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "34672"
+      ],
+      "pages": [
+        1520
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "19.700mph×1760yards/mile=34672yd/hr; timeunitunchanged."
+    },
+    {
+      "id": "50b99b2d",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1523
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Originalqconfirms4xinchesin yseconds. S twiceRspeed,travel6timesdistance=>3ytimes; symbolsx cancel."
+    },
+    {
+      "id": "c47256ca",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1525
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "64yards/second×3feet/yard=192ft/s."
+    },
+    {
+      "id": "86684ce9",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1526
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Increase1800%means19x684=>36; currentpct-ofshouldpct-change."
+    },
+    {
+      "id": "551c52b9",
+      "type": "rat-other",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1527
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "39timeshoursatconstantrate gives39pearnings; ratiocancelsw, requirew>0."
+    },
+    {
+      "id": "1180401d",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1531
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Population621000 dividedland92.1−11.3=80.8mi²≈7686 nearest7690; don'tinclude waterindenominator."
+    },
+    {
+      "id": "f6cbb04a",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1535
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Constant-speedtravel ratio9k/(3k)=3fork>0;55mphcancels,nounitconversion."
+    },
+    {
+      "id": "568bc2a4",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1536
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "354furlong×220×3=233640feet."
+    },
+    {
+      "id": "96c3e32d",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "16606"
+      ],
+      "pages": [
+        1537
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Pressure19lb/in²×area874in²=16606lbforce; squareunitscancelwithoutlengthconversion."
+    },
+    {
+      "id": "623dbebb",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "4.05",
+        "81/20"
+      ],
+      "pages": [
+        1543
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Consumerprice270%of5is13.50;70%offretains.3=>4.05, notmarkup270%greater."
+    },
+    {
+      "id": "2afd3cec",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1544
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Remaining80%=360; removed/original=.2,removed/remaining=.2/.8, so90;20%of360useswrongbase."
+    },
+    {
+      "id": "2e92cc21",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "9.87",
+        "987/100"
+      ],
+      "pages": [
+        1545
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "b=.1×47=4.7,a=2.1b=9.87; chained namedpercentbases."
+    },
+    {
+      "id": "7f84b136",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "184"
+      ],
+      "pages": [
+        1546
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "OriginaltableC690,A375;690/375×100=184%; grandtotal1200notdenominator."
+    },
+    {
+      "id": "77cf4fa6",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "17"
+      ],
+      "pages": [
+        1547
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "10%of170=17greenblocks."
+    },
+    {
+      "id": "2d31caae",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1548
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Conditional16/145×100≈11%, not16/500≈3% nor16/50=32%. Imageconfirms rationaleA repeatscorrectconditionaldescription wrongly;keyBcorrect."
+    },
+    {
+      "id": "94660ba8",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "14.1"
+      ],
+      "pages": [
+        1551
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "24816yards/hr÷1760=14.1mph; timeunitunchanged."
+    },
+    {
+      "id": "ba0e23b0",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1552
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "140/10=14times means1300%greater, not1400%greater."
+    },
+    {
+      "id": "c2e7fa6d",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "4176"
+      ],
+      "pages": [
+        1554
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Squaresideratio3meansarearatio9; uniformfieldfluxshares9/(9+1),4640×.9=4176. Fieldstrength29cancels, no unitconversion."
+    },
+    {
+      "id": "21e539a0",
+      "type": "rat-rate",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1558
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Constantflow88xozin5ymin gives88x×9/5=792x/5ozin9ymin; y cancelsnotx."
+    },
+    {
+      "id": "194ae3b1",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1560
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "113000×1.29=145770 projectedjobs nearest145800;29%not29000count."
+    },
+    {
+      "id": "a8fabad0",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1562
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": ".15×78.20=11.73expectedtip nearest12; notfullbill."
+    },
+    {
+      "id": "4837406c",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "4"
+      ],
+      "pages": [
+        1563
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "24cm/(6cm/s)=4seconds; rate calculationnotconversion."
+    },
+    {
+      "id": "99550621",
+      "type": "rat-square",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1566
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "5400ft²/(8ft²/person)=675capacity; atleastareapersonmeansupperboundpeople, notsquareunitconversion."
+    },
+    {
+      "id": "3318d37b",
+      "type": "rat-rate",
+      "skill": "rat",
+      "answer": [
+        "66"
+      ],
+      "pages": [
+        1567
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "11dollars/lb×6lb=66dollars."
+    },
+    {
+      "id": "8c5dbd3e",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "189/4",
+        "47.25"
+      ],
+      "pages": [
+        1570
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "z=.45×50=22.5,w=2.1z=47.25; correctbaseineachcomparison."
+    },
+    {
+      "id": "94c65646",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "450"
+      ],
+      "pages": [
+        1574
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "432/.96=450whole; inversepercentage."
+    },
+    {
+      "id": "54cb53cf",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "79"
+      ],
+      "pages": [
+        1581
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Earlier/later=1/1.27, times100≈78.74=>79%; reversinggrowthbaseisreciprocalnot73%."
+    },
+    {
+      "id": "7b731fc3",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "161"
+      ],
+      "pages": [
+        1583
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "40%greater115gives1.4×115=161."
+    },
+    {
+      "id": "e9f4521a",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "52"
+      ],
+      "pages": [
+        1584
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "13/25×100=52%; targetpercentagevaluep52not.52."
+    },
+    {
+      "id": "1c2f50a6",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1585
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "20%off50retains.8×50=40;10isdiscountonly."
+    },
+    {
+      "id": "89c39d77",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "35728"
+      ],
+      "pages": [
+        1586
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "20.300mph×1760yd/mile=35728yd/hr."
+    },
+    {
+      "id": "dccdb20c",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "27"
+      ],
+      "pages": [
+        1588
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "6%of450=.06×450=27blacktiles."
+    },
+    {
+      "id": "6feae9c3",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1589
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "3.49ttotalmeansincrease2.49t, hence249%; t mustpositiveforpercentcomparison."
+    },
+    {
+      "id": "73362607",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "75"
+      ],
+      "pages": [
+        1591
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "10%of750=75tomatoesgiven, not675remaining."
+    },
+    {
+      "id": "3d73a58b",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "203/50",
+        "4.06"
+      ],
+      "pages": [
+        1595
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Retail2.9×7 then80%offretains.2 =>4.06; compare623dbebbsamewholesale-to-retailstructure."
+    },
+    {
+      "id": "7d093333",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1599
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Area-rate250ft²/hr÷3.28²ft²/m²÷60min/hr≈.3873m²/min; squareonlylengthfactor, timefirstpower."
+    },
+    {
+      "id": "a51e6f93",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "576"
+      ],
+      "pages": [
+        1602
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": ".1152=.0008b=>b144; b=.25c=>c576; .08%is.0008not.08."
+    },
+    {
+      "id": "674a4084",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1603
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Fractionalspeedsourceimagechecked; feetperseconddivide3toyardspersecond, sametimeunit."
+    },
+    {
+      "id": "a0b165f8",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "A",
+      "pages": [
+        1604
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "99after12.5%increase=>99/1.125=88original; not99×.875."
+    },
+    {
+      "id": "34e18ce4",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1605
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "4%of350=14balls; quantityandpercentagearenotinterchangeable."
+    },
+    {
+      "id": "048811bd",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1611
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "10%of370=37; subtract10wrong."
+    },
+    {
+      "id": "808f7d6c",
+      "type": "rat-other",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1622
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "t=4u implies2t=8u; substituteproportionalexpression."
+    },
+    {
+      "id": "566759ef",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1625
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Depreciate20%ofpreviousvalue twice800×.8²=512; original-baselinefixedlosswould480. Currentpct-ofshouldpct-change."
+    },
+    {
+      "id": "6e4a60dd",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1626
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Tip20%of25includingtax=5; usebaseexplicitlyspecifiedincludingtax."
+    },
+    {
+      "id": "ad1d6adb",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "D",
+      "pages": [
+        1627
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "9to90is10times, increase900%; rawchange81not81%."
+    },
+    {
+      "id": "040f2a84",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "1.8",
+        "9/5"
+      ],
+      "pages": [
+        1628
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Sale=.2×11.70=2.34, sale=1.3costso cost2.34/1.3=1.8; invertmarkedupbase."
+    },
+    {
+      "id": "b73025e2",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1629
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "83quart×4cup/quart=332cups."
+    },
+    {
+      "id": "41b71b4e",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "B",
+      "pages": [
+        1631
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "20%greater60=1.2×60=72; dividing1.2solvesinversequestion."
+    },
+    {
+      "id": "eaab8bc1",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        "240"
+      ],
+      "pages": [
+        1632
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "80%of300=240sprouted."
+    },
+    {
+      "id": "8213b1b3",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": [
+        ".0014"
+      ],
+      "pages": [
+        1635
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": ".001%by mass is.00001×140g=.0014g; don'tmistake.001%for.001fraction. Sourcealsoaccepts.001gridform."
+    },
+    {
+      "id": "34f8cd89",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1641
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Nestedconditionalproportions.37×.37×.42=.057498tripleintersection; complement1−product=.942502=>94.25%, notproductofcomplements."
+    },
+    {
+      "id": "20b69297",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "D",
+      "pages": [
+        1643
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Yellow/blue3/2=1.5; secondbatchyellow7.5oz=1.5timessecondblue5oz, not1.5timesfirstyellow3oz."
+    },
+    {
+      "id": "81d0f1e6",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": [
+        "567"
+      ],
+      "pages": [
+        1647
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "a/b63/17,b153=9×17 givesa567."
+    },
+    {
+      "id": "11b06e35",
+      "type": "rat-density",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1648
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Cubevolume.6³=.216m³ times813kg/m³=175.608kg rounds176; notdensitytimesedge."
+    },
+    {
+      "id": "d7a3179d",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": [
+        "31"
+      ],
+      "pages": [
+        1653
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "1116inches/36inchesperyard=31yards."
+    },
+    {
+      "id": "d6456c7a",
+      "type": "rat-square",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1654
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "11863808yd²/1760²=3.83mi²; reverseareaunitconversion uses squaredfactor."
+    },
+    {
+      "id": "4347a032",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "C",
+      "pages": [
+        1655
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "44tablespoons×3teaspoons/tablespoon=132tsp."
+    },
+    {
+      "id": "de799680",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "C",
+      "pages": [
+        1656
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "76cm/s×10mm/cm=760mm/s; timeunitunchanged."
+    },
+    {
+      "id": "51c9d65f",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1657
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "Length=3.5width; widthdelta7 implieslengthdelta24.5, notsameadditive7."
+    },
+    {
+      "id": "763e6769",
+      "type": "rat-ratio",
+      "skill": "rat",
+      "answer": "A",
+      "pages": [
+        1658
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "x/y12/t,x156=13×12 givesy13t; denominatorconditionsimplicitratio."
+    },
+    {
+      "id": "25faa756",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        ".88",
+        "22/25"
+      ],
+      "pages": [
+        1659
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "a1.6b,c.55a givesc.88b; multipliernot.88percent."
+    },
+    {
+      "id": "ad911622",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": "A",
+      "pages": [
+        1660
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "167%growthand16%fall yield2.67×.84=2.2428; netincrease124.28%, not151%arithmeticdifference."
+    },
+    {
+      "id": "98818acf",
+      "type": "pct-change",
+      "skill": "pct",
+      "answer": [
+        "2.31"
+      ],
+      "pages": [
+        1661
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "131%increase meansnewquantity2.31n, so b2.31;1.31ischangeonly."
+    },
+    {
+      "id": "d72a2b4d",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "C",
+      "pages": [
+        1666
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "17.36/15.50=1.12soApril112%ofMarch; percentincreaseis12%,differenttarget."
+    },
+    {
+      "id": "4e375d1f",
+      "type": "rat-convert",
+      "skill": "rat",
+      "answer": "B",
+      "pages": [
+        1668
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "2300centimeters÷100=23meters."
+    },
+    {
+      "id": "771ee744",
+      "type": "pct-of",
+      "skill": "pct",
+      "answer": "A",
+      "pages": [
+        1669
+      ],
+      "read_status": "full_question_and_full_solution_read",
+      "observation": "10%of320=32redmarbles;288nonredcomplement."
+    }
+  ],
+  "reviewed_count": 177,
+  "total": 177
+}

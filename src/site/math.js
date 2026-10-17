@@ -31,6 +31,28 @@
     return { n: L.length, tried: tried, right: right };
   }
   function mStepList(a) { return '<ol class="msteps">' + a.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol>'; }
+  function mSourceNoteHTML(id) {
+    var n = (MD.source_notes || {})[id];
+    if (!n) { return ''; }
+    return '<aside class="mtrap source-note"><h4 class="h3">' + esc(n.title) + '</h4><p>' + esc(n.text) + '</p>' + (n.entry ? '<p><b>Check:</b> ' + esc(n.entry) + '</p>' : '') + '<p class="fine">Source ' + esc(id) + ' · supplied Math PDF, page ' + n.page + '. Original explanation preserved below.</p></aside>';
+  }
+  function mPracticeMethodHTML(q) {
+    var s = (MD.strategies || {})[q.t], b = (MD.bridges || {})[q.id];
+    return (s ? '<details class="mstrategy"><summary>Tool choice and assumptions</summary><p>' + esc(s.choose) + '</p><p>' + esc(s.entry) + '</p><p class="mtrap">' + esc(s.check) + '</p><p class="fine">Authored example; live SAT Desmos verification is unavailable.</p></details>' : '') +
+      (b ? '<aside class="midea"><h4 class="h3">Another structure in this question</h4><p>' + esc(b.text) + '</p><p>' + esc(b.entry) + '</p><a href="#mt-' + b.type + '">Compare this method</a></aside>' : '');
+  }
+  function mTeachingExtrasHTML(t) {
+    var s = (MD.strategies || {})[t], cases = (MD.source_cases || []).filter(function (c) { return c.type === t; });
+    var qs = MQ.filter(function (q) { return q.t === t; }), worked = (MD.worked || {})[t] || [];
+    if (MTY[t].worked) { worked = [MTY[t].worked]; }
+    if (worked.length && typeof worked[0] === 'string') { worked = [worked]; }
+    var h = s ? '<details class="mstrategy"><summary>Tool choice, example and assumptions</summary><p><b>Choose:</b> ' + esc(s.choose) + '</p><p><b>Try:</b> ' + esc(s.entry) + '</p><p><b>Check:</b> ' + esc(s.check) + '</p><p class="fine">Authored teaching example; not a measured timing claim. Live SAT Desmos validation remains unavailable.</p></details>' : '';
+    h += cases.map(function (c) { return '<details class="mstrategy source-case"><summary>' + esc(c.title) + '</summary><p><b>Recognize:</b> ' + esc(c.spot) + '</p><p><b>By hand:</b> ' + esc(c.hand) + '</p><p><b>Desmos:</b> ' + esc(c.calculator) + '</p><p class="mtrap"><b>Check the assumption:</b> ' + esc(c.check) + '</p><ul class="plainlist">' + c.ids.map(function (id) { return '<li>' + esc(id) + ' · <a href="m/q/' + id + '.webp" target="_blank" rel="noopener">Question</a> · <a href="m/r/' + id + '.webp" target="_blank" rel="noopener">Official solution</a></li>'; }).join('') + '</ul></details>'; }).join('');
+    h += worked.map(function (w) { return MQBY[w[0]] ? '<details class="mstrategy"><summary>Worked bank example · ' + esc(w[0]) + '</summary><p>' + esc(w[1]) + '</p>' + mImg('q', MQBY[w[0]]) + mSourceNoteHTML(w[0]) + '<details><summary>Read the original solution</summary>' + mImg('r', MQBY[w[0]]) + '</details></details>' : ''; }).join('');
+    if (!worked.length && qs.length) { h += '<details class="mstrategy"><summary>A bank example · ' + esc(qs[0].id) + '</summary>' + mImg('q', qs[0]) + mSourceNoteHTML(qs[0].id) + '<details><summary>Read the official solution</summary>' + mImg('r', qs[0]) + '</details></details>'; }
+    h += '<details class="mstrategy msourcegroup"><summary>Compare all ' + qs.length + ' source questions and solutions</summary><ul class="plainlist">' + qs.map(function (q) { return '<li>' + esc(q.id) + ' · <a href="m/q/' + q.id + '.webp" target="_blank" rel="noopener">Question</a> · <a href="m/r/' + q.id + '.webp" target="_blank" rel="noopener">Official solution</a>' + mSourceNoteHTML(q.id) + '</li>'; }).join('') + '</ul></details>';
+    return h;
+  }
   function mTypeCard(t, opts) {
     var T = MTY[t]; opts = opts || {};
     return '<article class="mtype" id="mt-' + t + '">' +
@@ -40,6 +62,7 @@
       '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' +
       (T.tip ? '<p class="mtip"><span class="mtag">Tip</span> ' + esc(T.tip) + '</p>' : '') +
       (T.desmos ? '<p class="mtip"><span class="mtag">Desmos</span> ' + esc(T.desmos) + '</p>' : '') +
+      mTeachingExtrasHTML(t) +
       (opts.noPractice ? '' : '<p class="row" style="margin-top:.8rem"><a class="btn sm" href="#mp-' + t + '">Practise these ' + T.n + '</a>' + (opts.showSkill ? ' <a class="linkbtn" href="#m-' + T.skill + '">' + esc(MSK[T.skill].name) + ' lesson</a>' : '') + '</p>') +
       '</article>';
   }
@@ -60,20 +83,20 @@
       return '<a class="mdom" href="#m-learn-' + d.id + '"><span class="mdom-spec">' + esc(d.spec) + '</span><b>' + esc(d.name) + '</b><span>' + esc(d.blurb) + '</span><span class="label">' + d.skills.length + ' skills · ' + mfmt(n) + ' bank questions</span></a>';
     }).join('');
     var h = '<div class="wrap">' +
-      mHead('Math · Start here', 'How to approach every math question', 'The digital SAT Math section has two parts of 22 questions, 35 minutes each: about a minute and a half per question, with a calculator (Desmos) built in. Everything on this page comes from College Board’s full question bank of ' + mfmt(T.n) + ' math questions.') +
+      mHead('Math · Start here', 'How to approach every math question', 'The digital SAT Math section has two parts of 22 questions, 35 minutes each: about a minute and a half per question, with a calculator (Desmos) built in. This guide uses an export of ' + mfmt(T.n) + ' math questions.') +
       '<section class="sec first"><h3 class="h2">The routine: ten seconds before you solve</h3>' +
       '<ol class="mroutine">' +
         '<li><b>Read the last sentence first.</b><span>It is the real question. Everything above it is information.</span></li>' +
         '<li><b>Name the question type.</b><span>Certain words give it away: “margin of error”, “line of best fit”, “in terms of”, “vertex”. The <a href="#m-types">Question finder</a> lists them.</span></li>' +
         '<li><b>Look for the three warning signs.</b><span>“no solution / infinitely many”, the word “constant”, and “positive” or “negative” as a condition. Each one means the question has a twist (below).</span></li>' +
-        '<li><b>Choose your tool.</b><span>Easy-looking questions: by hand, it is faster. Long algebra, a parabola, a circle, or two lines crossing: Desmos.</span></li>' +
+        '<li><b>Choose your tool.</b><span>Use the fewest reliable operations. A visible factor or coefficient comparison can beat graphing; awkward numeric equations often favor Desmos. The type cards explain the assumptions.</span></li>' +
         '<li><b>Solve, then read the last sentence again.</b><span>Is your number the thing it asked for? x, or x + y? The radius, or the diameter? This one habit catches the most common wrong answer.</span></li>' +
       '</ol></section>' +
       '<section class="sec"><h3 class="h2">What the test covers</h3><p class="lede">Four content areas. College Board’s own test plan says Algebra and Advanced Math are about 35% each and the other two about 15% each, so start with the first two.</p><div class="mdoms">' + doms + '</div></section>' +
       '<section class="sec"><h3 class="h2">Three warning signs that make a question hard</h3><div class="mcards3">' +
         '<div class="mcard"><p class="mtag">“No solution” / “infinitely many”</p><p>Do not solve. Compare the two sides or the two lines. In the bank, ' + F.sol + ' questions ask how many solutions there are, and ' + mpc(F.solHard, F.sol) + '% of them are Hard. They come in three kinds: two lines (' + F.solSys + ' questions: compare slopes), one equation in x (' + F.solOne + ': compare both sides) and quadratics (' + F.solNon + ': use b² − 4ac).</p><a class="linkbtn" href="#mt-sys-count">How to do it</a></div>' +
         '<div class="mcard"><p class="mtag">The word “constant”</p><p>There is a second unknown that is not the one asked for. Pin it down first: match the parts on both sides, or put in a point you know.</p><a class="linkbtn" href="#mt-eqx-coef">How to do it</a></div>' +
-        '<div class="mcard"><p class="mtag">“Positive” or “negative”</p><p>There are two answers and only one is allowed. Find both, keep the right one. The other one is always among the choices.</p><a class="linkbtn" href="#mt-nle-sign">How to do it</a></div>' +
+        '<div class="mcard"><p class="mtag">“Positive” or “negative”</p><p>Apply the requested sign or order restriction to the original equation’s valid roots. Do not assume there are exactly two or that a rejected root appears among the choices.</p><a class="linkbtn" href="#mt-nle-sign">How to do it</a></div>' +
       '</div></section>' +
       '<section class="sec"><h3 class="h2">What the data says, in plain words</h3><ul class="mfacts">' +
         '<li><b>Most wrong answers are right answers to a different question.</b> College Board’s explanations say it again and again: “this is the value of x, not x + 4”. Re-reading the last sentence beats re-checking your arithmetic.</li>' +
@@ -169,7 +192,7 @@
         var T = MTY[t];
         if (d && MDOM[T.skill].id !== d) { return false; }
         if (!words.length) { return true; }
-        var hay = (T.name + ' ' + T.spot + ' ' + T.steps.join(' ') + ' ' + MSK[T.skill].name).toLowerCase();
+        var hay = (T.name + ' ' + T.spot + ' ' + T.steps.join(' ') + ' ' + MSK[T.skill].name + ' ' + JSON.stringify((MD.strategies || {})[t] || {}) + ' ' + JSON.stringify((MD.source_cases || []).filter(function (c) { return c.type === t; }))).toLowerCase();
         return words.every(function (w) { return hay.indexOf(w) !== -1; });
       });
       if (!words.length) { list.sort(function (a, b) { return MTY[b].n - MTY[a].n; }); }
@@ -188,13 +211,13 @@
       ex: ['If 3a + 2b = 12, which gives a in terms of b?  A (12 − 2b)/3  B (12 + 2b)/3', 'Let b = 3: then 3a + 6 = 12, so a = 2.', 'A gives (12 − 6)/3 = 2. B gives 6. Answer: A.'] },
     { id: 'composite', t: 'Find x + y without finding x and y', when: 'A system that asks for x + y or x − y.', how: ['Add the two equations (or subtract them).', 'See if the result is a multiple of what is asked.'],
       ex: ['2x + 3y = 10 and 3x + 2y = 15. What is x + y?', 'Add: 5x + 5y = 25.', 'Divide by 5: x + y = 5.'] },
-    { id: 'ratios', t: 'Count solutions without solving', when: '“no solution”, “infinitely many”, “exactly one solution”.', how: ['Two lines Ax + By = C: compare A₁/A₂, B₁/B₂, C₁/C₂.', 'First two different: one solution. First two equal, third different: none. All equal: infinitely many.', 'Quadratic: b² − 4ac positive, zero or negative gives 2, 1 or 0 solutions.'],
+    { id: 'ratios', t: 'Count solutions without solving', when: '“no solution”, “infinitely many”, “exactly one solution”.', how: ['For genuine lines, use determinant A₁B₂−A₂B₁ and consistency; coefficient ratios require nonzero denominators.', 'First two different: one solution. First two equal, third different: none. All equal: infinitely many.', 'For a genuine quadratic with a≠0, the discriminant counts polynomial real roots. Check the original domain after transformations.'],
       ex: ['2x + 3y = 7 and 4x + 6y = 9', '2/4 = 3/6 = 1/2, but 7/9 is different.', 'Parallel lines: no solution.'] },
-    { id: 'sumroots', t: 'Sum of the solutions in one line', when: '“What is the sum of the solutions…?” (nearly always Hard).', how: ['Write as ax² + bx + c = 0.', 'Sum = −b ÷ a. Product = c ÷ a.'],
+    { id: 'sumroots', t: 'Sum of the solutions in one line', when: '“What is the sum of the solutions…?” (nearly always Hard).', how: ['Write as ax² + bx + c = 0, with a≠0.', 'Sum = −b/a; product = c/a, counting multiplicity. Check real-root and original-domain requirements.'],
       ex: ['2x² − 10x + 8 = 0', 'Sum = 10 ÷ 2 = 5.', 'Check: the roots are 1 and 4.'] },
-    { id: 'vertex', t: 'The vertex is halfway between the zeros', when: 'Maximum, minimum or vertex of a parabola.', how: ['Find where the parabola crosses the x-axis.', 'The vertex x is the average of the two crossings.', 'Put that x back in to get the maximum or minimum value.'],
+    { id: 'vertex', t: 'Find the vertex exactly, with or without real zeros', when: 'Maximum, minimum or vertex of a parabola.', how: ['For ax²+bx+c with a≠0, the vertex input is −b/(2a). If real zeros exist, their average gives the same input.', 'Evaluate the function at that input.', 'For a restricted domain, check feasible vertex and endpoints; an open endpoint need not attain its bound.'],
       ex: ['f(x) = x² − 6x + 5 = (x − 1)(x − 5)', 'Halfway between 1 and 5 is 3.', 'f(3) = −4. The minimum value is −4.'] },
-    { id: 'multipliers', t: 'Percent changes: multiply, never add', when: 'Increases and decreases, one after another, or working back to an original.', how: ['Up p%: × (1 + p/100). Down p%: × (1 − p/100).', 'Several changes: multiply the multipliers.', 'Original value: divide by the multiplier.'],
+    { id: 'multipliers', t: 'Successive percent changes: multiply the factors', when: 'Increases and decreases, one after another, or working back to an original.', how: ['Up p%: × (1 + p/100). Down p%: × (1 − p/100).', 'Several changes: multiply the multipliers.', 'Original value: divide by the multiplier.'],
       ex: ['Up 20%, then down 20%: 1.20 × 0.80 = 0.96, a 4% drop.', 'After 15% off, a coat costs $68: 68 ÷ 0.85 = $80.'] },
     { id: 'swap', t: 'a% of b = b% of a', when: 'An awkward percent of a friendly number.', how: ['Swap the two numbers if it makes the arithmetic easier.'],
       ex: ['4% of 75 = 75% of 4 = 3.', '18% of 50 = 50% of 18 = 9.'] },
@@ -204,7 +227,7 @@
       ex: ['Legs 9 and 12: divide by 3 to get 3 and 4.', 'So the hypotenuse is 3 × 5 = 15.'] },
     { id: 'sincos', t: 'sin of one angle = cos of the other', when: 'Two angles that add to 90°.', how: ['sin(x°) = cos(90° − x°).', 'If sin A = 0.6 in a right triangle, cos B = 0.6.'],
       ex: ['sin(30°) = cos(60°) = 0.5.'] },
-    { id: 'scale', t: 'Scale lengths, areas and volumes', when: 'A shape made bigger or smaller.', how: ['Lengths × k means areas × k² and volumes × k³.', 'Going back from volumes: take the cube root.'],
+    { id: 'scale', t: 'Scale lengths, areas and volumes', when: 'A shape made bigger or smaller.', how: ['For uniformly similar shapes: lengths ×k, areas ×k², volumes ×k³. A one-dimension change needs the actual formula.', 'Going back from volumes: take the cube root.'],
       ex: ['Triple every length: area × 9, volume × 27.', 'Volumes in ratio 8 : 27 means lengths in ratio 2 : 3.'] },
     { id: 'units', t: 'Let the units check the setup', when: 'Conversions and rates.', how: ['Write units on every number.', 'Arrange fractions so unwanted units cancel.', 'If the units left are not the ones asked for, the setup is upside down.'],
       ex: ['4.76 miles per second × 3,600 seconds per hour', 'Seconds cancel: 17,136 miles per hour.'] }
@@ -232,14 +255,14 @@
     if (built.mref) { return; }
     built.mref = true;
     var on = [['Circle', 'A = πr²,  C = 2πr'], ['Rectangle', 'A = lw'], ['Triangle', 'A = ½bh'], ['Right triangle', 'c² = a² + b²'], ['Special right triangles', '45-45-90: x, x, x√2 · 30-60-90: x, x√3, 2x'], ['Box (rectangular prism)', 'V = lwh'], ['Cylinder', 'V = πr²h'], ['Sphere', 'V = (4/3)πr³'], ['Cone', 'V = (1/3)πr²h'], ['Pyramid', 'V = (1/3)lwh'], ['Angles', 'A circle has 360° = 2π radians. A triangle’s angles add to 180°.']];
-    var off = [['Slope from two points', 'm = (y₂ − y₁) ÷ (x₂ − x₁)'], ['Line', 'y = mx + b; slope of Ax + By = C is −A/B'], ['Perpendicular slopes', 'm₁ × m₂ = −1'], ['Vertex form', 'y = a(x − h)² + k, vertex (h, k)'], ['Vertex x', 'x = −b ÷ 2a'], ['Quadratic formula', 'x = (−b ± √(b² − 4ac)) ÷ 2a'], ['Discriminant', 'b² − 4ac: positive 2, zero 1, negative 0 real solutions'], ['Sum and product of roots', '−b/a and c/a'], ['Circle equation', '(x − h)² + (y − k)² = r²'], ['Exponential model', 'y = a·bˣ; b = 1 + rate or 1 − rate'], ['Percent change', '(new − old) ÷ old'], ['SOH CAH TOA', 'sin = opp/hyp, cos = adj/hyp, tan = opp/adj'], ['Complementary angles', 'sin x° = cos(90° − x°)'], ['Polygon angles', 'Sum = 180(n − 2)'], ['Arc and sector', '(angle ÷ 360) × circumference or area'], ['Radians', 'π radians = 180°'], ['Exponent rules', 'xᵃxᵇ = xᵃ⁺ᵇ, (xᵃ)ᵇ = xᵃᵇ, x^(1/n) = n-th root']];
+    var off = [['Slope from two points', 'm = (y₂ − y₁) ÷ (x₂ − x₁)'], ['Line', 'y = mx + b; slope of Ax + By = C is −A/B if B≠0; B=0 can be vertical'], ['Perpendicular slopes', 'm₁m₂=−1 for finite nonzero slopes; horizontal and vertical lines are perpendicular'], ['Vertex form', 'y = a(x − h)² + k, vertex (h, k)'], ['Vertex x', 'x = −b ÷ 2a'], ['Quadratic formula', 'x = (−b ± √(b² − 4ac)) ÷ 2a'], ['Discriminant', 'b² − 4ac: positive 2, zero 1, negative 0 real solutions'], ['Sum and product of roots', '−b/a and c/a'], ['Circle equation', '(x − h)² + (y − k)² = r²'], ['Exponential model', 'y = a·bˣ; b = 1 + rate or 1 − rate'], ['Percent change', '(new − old) ÷ old'], ['SOH CAH TOA', 'sin = opp/hyp, cos = adj/hyp, tan = opp/adj'], ['Complementary angles', 'sin x° = cos(90° − x°)'], ['Polygon angles', 'Sum = 180(n − 2)'], ['Arc and sector', '(angle ÷ 360) × circumference or area'], ['Radians', 'π radians = 180°'], ['Exponent rules', 'xᵃxᵇ = xᵃ⁺ᵇ, (xᵃ)ᵇ = xᵃᵇ, x^(1/n) = n-th root']];
     function tbl(rows) { return '<div class="tablewrap"><table class="mtable"><tbody>' + rows.map(function (r) { return '<tr><th scope="row">' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</tbody></table></div>'; }
     viewEl.mref.innerHTML = '<div class="wrap">' +
       mHead('Math · Formulas and Desmos', 'Formulas, Desmos and typing in answers', 'You get a formula sheet on test day. Know what is on it, learn what is not, and know when the built-in Desmos calculator saves time.') +
       '<div class="mref2"><section><h3 class="h2">On the formula sheet</h3><p class="lede">No need to memorise these. Practise finding them quickly.</p>' + tbl(on) + '</section>' +
       '<section><h3 class="h2">Not on the sheet: learn these</h3><p class="lede">These come up again and again and are not printed for you.</p>' + tbl(off) + '</section></div>' +
       '<section class="sec"><h3 class="h2">When Desmos helps</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>Question</th><th>What to do in Desmos</th></tr></thead><tbody>' +
-        [['Two lines crossing (systems)', 'Type both equations; click the crossing point.'], ['Maximum, minimum, vertex', 'Type the function; click the grey turning point.'], ['Zeros, x-intercepts', 'Type the function; click where it crosses the x-axis.'], ['Nonlinear equation', 'Type each side as y = …; the crossings are the solutions.'], ['Mean, median, spread', 'Type L = [3, 5, 8]; then mean(L), median(L), stdev(L).'], ['A constant to find', 'Use a slider for the constant and adjust it until the condition holds, or use ~ regression.'], ['Circle equations', 'It draws the circle, but does not mark the center. Read the center and radius from the grid; this works when they are whole numbers.']].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>'; }).join('') +
+        [['Two lines crossing (systems)', 'Type both equations; click the crossing point.'], ['Maximum, minimum, vertex', 'Type the function; click the grey turning point.'], ['Zeros, x-intercepts', 'Type the function; click where it crosses the x-axis.'], ['Nonlinear equation', 'Type each side as y = …; the crossings are the solutions.'], ['Mean, median, spread', 'Type L = [3, 5, 8]; then mean(L), median(L), stdev(L) for sample spread or stdevp(L) for population spread.'], ['A constant to find', 'Use arithmetic or coefficient equations for exact values. Sliders explore; ~ regression requires the specified model and enough independent data. Rounded fits are not exact proofs.'], ['Circle equations', 'For normalized x²+y²+Dx+Ey+F=0, center=(−D/2,−E/2), r²=(D²+E²)/4−F. This also handles fractional centers; check r²≥0.']].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>'; }).join('') +
       '</tbody></table></div><ul class="mfacts">' +
         '<li><b>Clicked points show rounded decimals.</b> If the choices are fractions or roots, compare decimals.</li>' +
         '<li><b>Degrees or radians?</b> Check the setting (wrench icon) before any trigonometry.</li>' +
@@ -421,6 +444,8 @@
     fb.hidden = false; fb.className = 'mpfb ' + (ok ? 'ok' : 'no');
     fb.innerHTML = '<p class="mpverdict">' + (ok ? 'Correct.' : 'Not this time.') + ' <span>College Board’s answer: <b>' + esc(right) + '</b>' + (q.mc ? '' : (q.a.length > 1 ? ' (any of these is accepted)' : '')) + '</span>' + (MP.timer ? ' <span class="muted">· ' + secs + ' s</span>' : '') + '</p>' +
       '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + (T.desmos ? '<p class="mtip"><span class="mtag">Desmos</span> ' + esc(T.desmos) + '</p>' : '') + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
+      mSourceNoteHTML(q.id) +
+      mPracticeMethodHTML(q) +
       '<details class="mprat"' + (ok ? '' : ' open') + '><summary>College Board’s explanation</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>' +
       '<p class="row mpnext"><button class="btn big" type="button" id="mp-next">' + (last ? 'See my results' : 'Next question') + '</button><span class="fine">or press Enter</span></p>';
     $('#mp-next').addEventListener('click', mpNextQ);
