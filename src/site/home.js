@@ -6,7 +6,8 @@
       ['grammar', 'method', 'Grammar', 'The 60-second method for grammar and transition questions, and 19 short lessons covering every rule.'],
       ['drills', 'drills', 'Drills', 'Quick drills on real questions for the slow steps: naming the job, finding the core, spotting the pattern.'],
       ['practice', 'practice', 'Practice', 'Timed sets of real College Board questions, each followed by its fast path or walkthrough.'],
-      ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.']] },
+      ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.'],
+      ['rpat', 'rpat', 'Patterns', 'What reading all 1,845 bank questions showed: how passages are built, where answers sit, and how wrong choices are made, skill by skill.']] },
     math: { name: 'Math', icon: 'calc', items: [
       ['mstart', 'math', 'Start here', 'How to approach every math question, what the test covers, and what the data says.'],
       ['mlearn', 'm-learn', 'Lessons', 'All 19 skills explained from scratch, each with a method, a worked example and its question types.'],

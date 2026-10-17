@@ -1269,9 +1269,9 @@ textarea { font: inherit; color: inherit; }
   .secin { flex-direction: column; align-items: stretch; gap: .45rem; padding-block: .7rem .8rem; }
   .secnav-t { padding-block: .1rem; }
   .secnav-l { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; overflow: visible; }
-  .secin[data-n="8"] .secnav-l { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .secin[data-n="8"] .secnav-l, .secin[data-n="7"] .secnav-l { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .secnav-l a { display: grid; place-items: center; min-height: 2.9rem; padding: .45rem .3rem; border-radius: 12px; background: var(--sunk); text-align: center; white-space: normal; font-size: .93rem; line-height: 1.15; }
-  .secin[data-n="8"] .secnav-l a { font-size: .86rem; }
+  .secin[data-n="8"] .secnav-l a, .secin[data-n="7"] .secnav-l a { font-size: .86rem; }
   .secnav-l a::after { display: none; }
   .secnav-l a:hover { background: var(--line); border-radius: 12px; }
   .secnav-l a[aria-current="page"] { background: var(--act); color: var(--act-ink); }
@@ -1615,3 +1615,42 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .mpchips small { font-size: .78rem; color: var(--muted); }
 .mpchips input:checked + span small { color: inherit; opacity: .8; }
 .mpset .seg legend { font-size: .8rem; }
+
+/* =================================================================
+   Math templates: the reused question patterns inside each type, and this question's own route
+   ================================================================= */
+.mtml { border-top: 1px solid var(--line); padding-top: .7rem; }
+.mtml > summary { cursor: pointer; font-weight: 600; color: var(--ink); list-style: none; display: flex; align-items: center; gap: .5rem; }
+.mtml > summary::-webkit-details-marker { display: none; }
+.mtml > summary::before { content: "+"; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 99px; background: var(--sunk); font-weight: 700; }
+.mtml[open] > summary::before { content: "−"; }
+.mtml-in { display: grid; gap: .8rem; margin-top: .8rem; }
+.mtm { display: grid; gap: .55rem; padding: 1rem 1.05rem; border-radius: 16px; background: var(--sunk); border: 1px solid var(--line); }
+.mtm-h { display: grid; gap: .15rem; }
+.mtm-name { font: 600 1.05rem/1.3 var(--display); letter-spacing: -.01em; }
+.mtm-meta { font-size: .88rem; color: var(--muted); }
+.mbadge { display: inline-block; padding: .05rem .5rem; border-radius: 999px; background: var(--card); border: 1px solid var(--line-strong); font-size: .78rem; font-weight: 600; color: var(--ink-2); }
+.mbadge.new { background: var(--math-soft); border-color: var(--math-line); color: var(--math); }
+.mtm-spot, .mtm-ask, .mtm-rule { font-size: .97rem; }
+.mtm-how { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: .6rem 1.2rem; }
+.mtm-how > .mtag, .mtm-how > .mtm-rule { grid-column: 1 / -1; justify-self: start; }
+.mtm-col .label { margin-bottom: .35rem; }
+.mtm-col .msteps { font-size: .95rem; }
+.mtm-col .msteps li::before { width: 1.5rem; height: 1.5rem; font-size: .78rem; }
+.mtm-col .msteps li { grid-template-columns: 1.5rem 1fr; gap: .55rem; }
+.mtm-ex { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem .7rem; font-size: .95rem; }
+.mtm-ex a.mq { font: 600 .85rem/1.4 var(--mono); }
+.mroute { display: grid; gap: .5rem; padding: .85rem 1rem; border-radius: 14px; background: var(--card); border: 1px solid var(--line); }
+.mroute code { display: block; padding: .5rem .7rem; border-radius: 10px; background: var(--sunk); font-size: .98rem; white-space: pre-wrap; word-break: break-word; }
+.mroute .mtag { justify-self: start; }
+.mfix { display: grid; gap: .7rem; }
+.mfix li { padding: .85rem 1rem; border-radius: 14px; background: var(--card); border: 1px solid var(--line); }
+.mfix .mfix-was { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+.mfix .mfix-is { margin-top: .35rem; }
+.mfix .mfix-ev { margin-top: .35rem; font-size: .9rem; color: var(--ink-2); }
+.mq { font: 600 .85rem/1.4 var(--mono); }
+span.mq { color: var(--muted); }
+.mchip small { color: var(--muted); font-weight: 400; margin-left: .2rem; }
+.rpsk { margin-top: .9rem; padding: .9rem 1rem; border-radius: 16px; background: var(--card); border: 1px solid var(--line); }
+.rpsk > summary { font: 600 1.1rem/1.3 var(--display); }
+.rp-one .rcard { margin-top: .8rem; }
