@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mshort', 'mref', 'mprac', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'methods', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mshort', 'mref', 'mprac', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -95,6 +95,11 @@
     }
     if ((m = /^q-([0-9a-f]{8})$/.exec(token)) && EX[m[1]]) { showView('grammar'); grammarView.show(U[EX[m[1]].u].c); scrollToEl(document.getElementById(token)); return; }
     if (/^g-/.test(token)) { showView('grammar'); grammarView.show('shortcuts'); scrollToEl(document.getElementById(token)); return; }
+    if (token === 'methods' || /^meth-[a-z]+$/.test(token)) {
+      showView('methods'); buildMethods();
+      if (token === 'methods') { toTop(); } else { scrollToEl(document.getElementById(token)); }
+      return;
+    }
     if (token === 'drills' || /^drill-/.test(token)) {
       showView('drills'); buildDrills();
       var dk = token.replace(/^drill-/, '');

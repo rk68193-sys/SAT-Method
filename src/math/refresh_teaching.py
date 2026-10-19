@@ -4,7 +4,7 @@ from pathlib import Path
 from mclass import R
 from mcontent import SKILLS,TYPES
 from probability import REVIEWED
-from mpatcontent import TYPE_DESMOS,DESMOS,GOTCHAS
+from mpatcontent import TYPE_DESMOS,DESMOS,GOTCHAS,DGROUPS,HABITS,PATTERNS,RARE
 from strategies import BY_TYPE
 from review_catalog import TYPE_CORRECTIONS,CASES,SOURCE_NOTES,BRIDGES,WORKED
 root=Path(__file__).resolve().parents[2];path=root/'src/build/mdata.json'
@@ -26,9 +26,16 @@ data['types']={kind:dict(TYPES[kind],skill=skill,**{k:counts[kind][k] for k in [
 for kind, value in data['types'].items():
  move,text=TYPE_DESMOS[kind]
  value.update(dmove=move,dtext=text)
-data.update(desmos=DESMOS,gotchas=GOTCHAS)
+data.update(desmos=DESMOS,gotchas=GOTCHAS,dgroups=DGROUPS,habits=HABITS)
+ver=json.loads((root/'src/math/verified.json').read_text())
+proof={x for m in DESMOS for x in m['proof']}|{x for p in PATTERNS for x in p['proof']}|{x for r in RARE for x in r['proof']}
+assert proof<=set(ver),proof-set(ver)
+data.update(verified={k:dict(how=v[0],got=v[1]) for k,v in ver.items()},nver=len(ver))
 # Keep upstream pattern memberships; update their teaching-type summaries.
+teach={p['id']:p for p in PATTERNS}; rare={r['key']:r for r in RARE}
+for r in data.get('rare', []): r.update(rare[r['key']])
 for i, pattern in enumerate(data.get('patterns', [])):
+ pattern.update(teach[pattern['id']])
  members=[q for q in data['qs'] if len(q)>13 and q[13] >> i & 1]
  counts_by_type=collections.Counter(order[q[1]] for q in members)
  pattern['types']=[t for t,n in counts_by_type.most_common() if n>=3][:12]

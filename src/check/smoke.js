@@ -12,7 +12,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   await p.goto(file); await p.waitForTimeout(800);
   const tokens = ['start','which','reading','shape','job','leadin','chunk','tags','turns','long','apart-3','para','say','check','traps','others','train','sets','measured',
     ...Array.from({length:17},(_, i)=>'ex-'+(i+1)), 'grammar','try','patterns','shortcuts','hard','lessons','part-a','part-b','part-c','c1','c8','c14','c19','u3-3','i-7b950fc2','q-7b950fc2','g-verbs',
-    'drills','practice','lookup','find','transitions','glossary','about','job-notes','o-cross','notesfirst'];
+    'drills','practice','lookup','methods','meth-trans','meth-punct','find','transitions','glossary','about','job-notes','o-cross','notesfirst'];
   for (const t of tokens) {
     await p.evaluate(x => { location.hash = x; }, t);
     await p.waitForTimeout(120);

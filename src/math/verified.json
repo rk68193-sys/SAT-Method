@@ -316,5 +316,80 @@
 [
 "210"
 ]
+],
+"42c71eb5": [
+"Graphed the expression and all four choices: only A lies exactly on top of it.",
+"A",
+"A"
+],
+"a05bd3a4": [
+"Graphed y = x² − 5 and the choices: (x + √5)(x − √5) is drawn on top of it.",
+"C",
+"C"
+],
+"5a7ab8e8": [
+"Graphed y = 66x twice: one line on top of the other, so infinitely many solutions.",
+"C",
+"C"
+],
+"69f609b2": [
+"Graphed y = 12(x − 3) and y = −3(x + 12): one crossing, at x = 0.",
+"[0]",
+"A"
+],
+"c3b116d7": [
+"Clicked the x-intercepts of y = 3x² + 20x − 63: −9 and 7/3, so the factors are x + 9 and 3x − 7.",
+"[-9, 7/3]",
+"B"
+],
+"50f4cb9c": [
+"Table in x_1, y_1, then y_1 ~ a x_1 + b: a = 64, b = −128, so a − b = 192.",
+"192",
+"D"
+],
+"d4572f55": [
+"Made t = 0, fit y_1 ~ m x_1 + b: m = 1.3529 = 23/17, b = 46. With t = 5, b = 51 = t + 46.",
+"23/17, t + 46",
+"D"
+],
+"263f9937": [
+"Fit y_1 ~ a·b^(x_1): a = 125,000, b = 2. Crossed with y = 5.12×10⁸ at x = 12.",
+"12",
+"D"
+],
+"2c6f214f": [
+"Fit y_1 ~ a·b^(x_1) to 9, 36, 144: a = 2.25, b = 4; only 9(4^(n−1)) gives the same list.",
+"D",
+"D"
+],
+"a4c0547f": [
+"Degree mode: X = arctan(12/35) = 18.92°, then 24/tan(X) = 70 and 24/sin(X) = 74: perimeter 168.",
+"168",
+"B"
+],
+"94f7c9e2": [
+"Made up Q = 60° (QR < RS needs Q > 45°), then Q = 70°: 18/sin(Q) matched QS both times.",
+"D",
+"D"
+],
+"858fd1cf": [
+"Named A = (−1, 1) and P = (5, −4); tangent slope −(P.x − A.x)/(P.y − A.y) = 6/5; only (10, 2) is on the line.",
+"C",
+"C"
+],
+"82c8325f": [
+"distance((−4, 5), (−8, 8)) = 5, so r² = 25 with center (−4, 5).",
+"5",
+"D"
+],
+"9d159400": [
+"Graphed all four circles: only (x − 4)² + (y − 9)² = 16 touches the y-axis once.",
+"C",
+"C"
+],
+"c447367f": [
+"Made k = 2 (k = 1 makes two choices look the same): only 81k² draws a radius of 18.",
+"B",
+"B"
 ]
 }

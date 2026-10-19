@@ -1,0 +1,187 @@
+{
+ "title": "Seven methods, checked against the bank",
+ "intro": "James Lu’s SAT videos teach seven Reading and Writing methods: vocabulary in context, clause patterns, transitions, active reading, hard reading questions, verbs and punctuation. Here each one is written out as steps and tested against College Board’s question bank. Where the bank agrees, you get the numbers. Where it does not, you get the safer version.",
+ "credit": "Methods adapted from James Lu’s SAT videos; each section names the video. The wording, examples and bank checks are this site’s. Counts come from the same 1,845-question export as the rest of the site; pattern counts are approximate. Shares of wrong choices come from the site’s sample of 98 reading questions read one by one.",
+ "fit": [
+  ["Reading methods (1, 4, 5)", "The <a href=\"#reading\">four-step routine</a> seen from another angle. They sharpen the Say and Check steps."],
+  ["Grammar methods (2, 3, 6, 7)", "The Check step of the <a href=\"#method\">60-second method</a>: once you see what changes in the choices, these say which check to run."]
+ ],
+ "sections": [
+  {"id": "vocab", "name": "Vocabulary in context", "video": "The SAT vocab strategy nobody teaches you", "for": "Word questions", "forHref": "#job-word", "count": "260 in the bank",
+   "idea": "Word questions test what a word means in this sentence, not what it means in a dictionary. So skip the 1,000-word lists and let the sentence tell you the word.",
+   "steps": [
+    ["Cover the choices", "Looking first pulls you toward words that sound clever or familiar, even when they do not fit."],
+    ["Find the clue and say a simple word", "Use the plainest word that fits the logic: good, bad, stop, show, depends on, not good at."],
+    ["Match your word", "Now uncover the choices. Cut those with the wrong charge (positive or negative) first, then keep the one closest to your word."]],
+   "tableTitle": "Three clues that set the direction",
+   "table": [
+    ["Continue", "and, also, furthermore · because, so, therefore", "The blank agrees with the rest of the sentence."],
+    ["Contrast", "but, although, however, while, despite", "The blank flips what the other half says."],
+    ["Restate", "a colon, a dash, brackets, that is", "The words after the mark define the blank."]],
+   "bank": [
+    "In 167 of the 260 Word questions (64%), the sentence with the blank holds one of these clues: a contrast word in 95 (37%), a colon, dash or bracket in 91 (35%), a cause word in 41 (16%). Counted by word pattern, so approximate.",
+    "The one word-part rule worth keeping: <em>un-</em>, <em>in-</em>, <em>dis-</em> and <em>non-</em> usually flip a word’s charge. Roots beyond that mislead, because wrong choices often share a root with words in the passage."],
+   "examples": [
+    ["06b96bfc", "Easy", "She wanted to promote the language in her music, <b>but</b> … speaking it.", "contrast → “not good at”", "inexperienced with"],
+    ["16f2d678", "Easy", "<b>Although</b> the government tried to … the novel, copies circulated in secret.", "contrast → “stop”", "suppress"],
+    ["3f37eb3b", "Medium", "After the <b>colon</b>: the source has no bearing on whether a claim is true.", "restate → “doesn’t matter”", "irrelevant"],
+    ["428cd2c1", "Easy", "After the <b>colon</b>: the new dates show the skeptics were right.", "restate → “support”", "justify"],
+    ["4830ab87", "Medium", "The passage concludes (<b>therefore</b>) that a photo’s message is largely … its balance.", "continue → “depends on”", "contingent on"]],
+   "links": [["#job-word", "The Word job"], ["#say", "Say your answer first"], ["#drill-pattern", "Drill: Spot the pattern"]]},
+
+  {"id": "clauses", "name": "Clause patterns", "video": "Must know SAT grammar patterns", "for": "Punctuation and sentence structure", "forHref": "#part-a", "count": "213 boundary questions",
+   "idea": "Never choose by how it sounds. Every punctuation question asks where full sentences start and stop, so find the clauses first.",
+   "steps": [
+    ["Mark the main clauses", "A main clause (an independent clause) has a subject and a tensed verb and could stand alone."],
+    ["Mark the dependent parts", "A clause that opens with although, because, when, which or that, or a phrase with no tensed verb, cannot stand alone."],
+    ["Join them by the pattern", "Pick the punctuation the pattern allows, then reread the sentence with it in place."]],
+   "tableTitle": "The clause map",
+   "table": [
+    ["Main. Main.", "a period", "Two full sentences."],
+    ["Main; main.", "a semicolon", "The same job as a period."],
+    ["Main, and main.", "a comma + for, and, nor, but, or, yet, so", "The comma and the joining word go together."],
+    ["Main, main.", "never", "A comma alone is a comma splice."],
+    ["Dependent, main.", "a comma", "After an opening dependent clause or phrase."],
+    ["Main dependent.", "usually nothing", "No comma before an essential clause at the end."]],
+   "rules": [
+    ["Extra or essential?", "If the sentence still says who or what you mean without the phrase, set the phrase off with two commas, two dashes or brackets. If the phrase is what tells you who, use no commas: “Novelist Toni Morrison wrote …” but “Toni Morrison, a novelist, wrote …”."],
+    ["Opening phrases", "The noun right after the comma is the one the opening phrase describes. “Studying the samples, the bacteria grew” says the bacteria did the studying."],
+    ["Lists", "Keep every item in the same form: all -ing, all past tense, all nouns. None of the bank’s grammar rules is about this on its own, so use it as a tiebreaker."],
+    ["Transitions between two main clauses", "Main clause; however, main clause. The semicolon goes before the transition word and a comma after it."]],
+   "bank": [
+    "A title before a name (“physicist Albert Einstein”, no commas) is one of the hardest rules in the bank: <a href=\"#u7-4\">7.4</a> is Hard in 11 of 12 questions.",
+    "Opening-phrase questions: exactly one choice begins with the thing the phrase describes, in 26 of 26 questions (<a href=\"#g-nouns\">shortcuts</a>).",
+    "A choice that adds <em>and</em> or <em>but</em> with no comma in front: offered 46 times, never right. College Board’s explanations call 91 wrong choices comma splices, 82 run-ons and 34 fragments."],
+   "links": [["#c1", "1 End of sentence"], ["#c6", "6 Comma"], ["#c13", "13 Modifier placement"], ["#drill-boundary", "Drill: Which boundary?"]]},
+
+  {"id": "trans", "name": "Transitions", "video": "Never miss another SAT transition question", "for": "Transition questions", "forHref": "#part-c", "count": "194 in the bank",
+   "idea": "Decide how the two sentences relate before you read a single choice. If you read the choices first, almost any word sounds fine.",
+   "steps": [
+    ["Shrink sentence 1", "Strip the details and say its core claim in a few words."],
+    ["Shrink sentence 2", "Read it as if the blank were not there and say its core claim."],
+    ["Name the link, then look", "Pick the category below, then find the choice that does that job."]],
+   "tableTitle": "Eight categories, and how often each is the answer",
+   "table": [
+    ["Contrast", "however, nevertheless, by contrast, instead", "Sentence 2 goes against, or is an exception to, sentence 1. <a href=\"#c14\">Lesson 14</a> · answer in 55"],
+    ["Cause and effect", "therefore, as a result, thus, for this reason", "Sentence 2 follows from sentence 1. <a href=\"#c15\">Lesson 15</a> · 41"],
+    ["Time and order", "then, later, previously, finally", "Sentence 2 happens before, after or alongside sentence 1. <a href=\"#c18\">Lesson 18</a> · 30"],
+    ["Example or detail", "for example, specifically", "Sentence 2 is a case or detail of sentence 1’s general claim. <a href=\"#u16-1\">16.1</a> · 23"],
+    ["Addition", "in addition, moreover, similarly", "Sentence 2 adds a point going the same way. <a href=\"#c17\">Lesson 17</a> · 17"],
+    ["Emphasis", "in fact, indeed", "Sentence 2 pushes sentence 1 further with stronger evidence. <a href=\"#u16-3\">16.3</a> · 11"],
+    ["How often", "increasingly, sometimes", "Sentence 2 says how often or how much. <a href=\"#u19-1\">19.1</a> · 6"],
+    ["Restatement", "in other words, that is", "Sentence 2 says sentence 1 again, more plainly. <a href=\"#u16-4\">16.4</a> · 3"]],
+   "rules": [
+    ["Twins cancel out", "If two choices do exactly the same job (furthermore and moreover, therefore and thus), neither can be the answer."],
+    ["…but split contrast and time words first", "Contrast words do different jobs: going against (however), admitting (granted, of course), replacing (instead), dismissing (regardless). Time words point different ways: earlier, next, finally. Two of these are not twins."],
+    ["Phrases written for one passage", "“To address this issue” or “Undermining this explanation” must point at something sentence 1 actually said. No problem named, no “this issue”."]],
+   "bank": [
+    "<b>Twins:</b> example, addition, restatement and result pairs held in all 31 questions that have one (<a href=\"#g-trans\">shortcuts</a>).",
+    "<b>Contrast pairs:</b> held in 47 of 51 questions. The 4 failures paired a going-against word with an admitting or replacing word, as in <a class=\"qref\" href=\"#i-974b5a8c\"><code>974b5a8c</code></a> (<em>however</em> against <em>of course</em>; <em>of course</em> is right).",
+    "<b>Time pairs:</b> failed in all 5 questions; one of the two time words was the answer each time, as in <a class=\"qref\" href=\"#i-3831f2d7\"><code>3831f2d7</code></a> (<em>next</em> against <em>earlier</em>; <em>earlier</em> is right).",
+    "<b>Emphasis:</b> <em>in fact</em> (right 6 of the 10 times it is offered) and <em>indeed</em> (5 of 10) have the best record of any transition offered 10 or more times. Look for them when sentence 2 strengthens sentence 1, but they still miss half the time.",
+    "<b>Never right:</b> words that sum up (<em>in conclusion</em>, <em>in sum</em> …, 0 of 18), <em>regardless</em> (0 of 16) and <em>furthermore</em> (0 of 8). Of the 12 phrases written for one passage, 3 are right."],
+   "links": [["#c14", "14 Contrast"], ["#c18", "18 Time and order"], ["#alltrans", "Is this transition ever right?"], ["#drill-link", "Drill: Name the link"]]},
+
+  {"id": "read", "name": "Active reading", "video": "Improve your SAT Reading overnight", "for": "Main idea, detail and inference", "forHref": "#job-main", "count": "about 280 in the bank",
+   "idea": "Reading every word with the same weight is why you reach the end and have to start again. Read for three things: what the passage is about, what it claims, and how it backs that up.",
+   "steps": [
+    ["First pass: find the claim", "Do not try to hold numbers or names. Find where the passage stops setting the scene and starts making its point."],
+    ["Mark the pivots", "however, in contrast, surprisingly, recently. The background comes before the pivot; the point usually comes after it."],
+    ["Mark the claim markers", "“researchers hypothesized that”, “the results suggest”, “this shows that”. The words after them are your answer key for main idea and inference."]],
+   "tableTitle": "His three parts, in this site’s tags",
+   "table": [
+    ["Topic", "Scene", "Who or what the passage is about, and any background."],
+    ["Main claim", "Point (or Found for a study)", "What the author argues or the researchers found."],
+    ["Evidence", "Did · Found", "The study, data or quotation that backs the claim."],
+    ["Before the pivot", "Old idea", "What people used to think: often the setup the point argues against."]],
+   "rules": [
+    ["Too broad", "Right topic, but claims more than the passage does. This site files it as “not in the passage” or “twisted or too strong”: 50% and 25% of wrong main-idea choices."],
+    ["Too specific", "A true detail, not the main point. Rarer than its reputation: College Board calls only 15 of 186 wrong main-idea choices (8%) a detail or off the main focus."],
+    ["Half right, half wrong", "Starts true, then adds one unsupported word. 44% of wrong main-idea choices have something right in them."],
+    ["Opposite charge", "The passage’s own words with the relationship flipped. 32% of wrong inference choices."]],
+   "bank": [
+    "<b>The 100% rule.</b> If one piece of a choice is false or unsupported, the whole choice is out. It is the same as this site’s Check step: one false piece and the choice is gone.",
+    "Turn words appear in 61% of inference passages, 55% of support and weaken, 53% of main idea and detail, 37% of table or graph and 13% of quotation passages."],
+   "links": [["#tags", "The five tags"], ["#turns", "Mark the turn words"], ["#traps", "How wrong choices are built"], ["#drill-point", "Drill: Find the Point"]]},
+
+  {"id": "hard", "name": "Hard reading questions", "video": "How to solve hard SAT reading questions easily", "for": "Evidence, graphs and inference", "forHref": "#job-support", "count": "about 420 in the bank",
+   "idea": "Hard questions wrap a simple piece of logic in long sentences and jargon. Strip the wrapping and the logic is predictable.",
+   "steps": [
+    ["Find the exact claim", "Skip the background. The claim is underlined or follows “hypothesized that”, “argues that”, “claims that”."],
+    ["Turn it into if … then", "If temperature rises, beetle activity falls. Now you know what the evidence must show."],
+    ["Demand both halves", "The answer shows the if part and the then part, in the right direction. A choice with the right result under the wrong condition is the trap."]],
+   "tableTitle": "Three question kinds, three rules",
+   "table": [
+    ["Support or weaken", "if … then", "The finding must match both the condition and the outcome. Weaken: the condition holds but the outcome does not."],
+    ["Table or graph", "true first, relevant second", "Read the title, legend, axes and units. Cross out choices that are false about the data, then keep the one that finishes the passage’s claim."],
+    ["Inference", "zero assumptions", "An inference is the conclusion the passage forces, not a guess. If a choice needs one fact the passage did not give, it is out."]],
+   "bank": [
+    "77% of wrong support and weaken choices do not bear on the claim at all; the other 23% would do the reverse.",
+    "Table or graph: 60% of wrong choices misread the data and 31% are true of the data but not the comparison the claim needs. On Hard questions all four choices can pass the first check.",
+    "Inference: 62% of wrong choices say something the passage never says, and 32% say the reverse."],
+   "examples": [
+    ["0021d326", "Easy", "Claim: olms regularly come to the surface to find food.", "if they feed at the surface → surface food should show up in their diet", "C: earthworms from surface soil are a major part of their diet"]],
+   "links": [["#job-support", "Support and weaken"], ["#job-data", "Table or graph"], ["#job-inference", "Inference"], ["#drill-why", "Drill: Why is it wrong?"]]},
+
+  {"id": "verbs", "name": "Verbs", "video": "Why SAT verb questions are easy", "for": "Agreement, verb form and tense", "forHref": "#part-b", "count": "136 verb questions",
+   "idea": "The test hides the subject behind a long phrase so that you match the verb to the nearest noun. Strip the phrase and the question answers itself.",
+   "steps": [
+    ["Find the verb in the blank", "Then look left for the noun doing it."],
+    ["Cross out what is in between", "Phrases starting of, in, on, at, for, with, by, to; anything between two commas or two dashes; clauses starting which, that, who."],
+    ["Match what is left", "“The list of names on the old shipping records … lost” → “The list … was lost”."]],
+   "tableTitle": "Subjects that fool people",
+   "table": [
+    ["each, every, one of", "singular", "“Each of the reports is …”"],
+    ["noun and noun", "plural", "“The biologist and the geologist are …”"],
+    ["team, committee, group", "singular", "One group, one verb: “The committee has …”"],
+    ["verb before subject", "find it after the verb", "“Beyond the hills lie the ruins.”"]],
+   "rules": [
+    ["Stay in the tense around it", "Match the other verbs in the passage unless a time marker shifts it."],
+    ["Time markers", "In 1920 → simple past (discovered). Since 2010, over the last decade → has or have + -ed. By the time … → had + -ed."],
+    ["No main verb without a tense", "An -ing word alone (running) or to + verb cannot be the main verb of a sentence."]],
+   "bank": [
+    "One choice differs in number from the other three: in 54 of 54 agreement questions, that odd one is the answer (<a href=\"#g-verbs\">shortcuts</a>).",
+    "One tensed verb among -ing, to and having forms: it is the answer in 22 of 23 questions.",
+    "Tense: in 25 of 31 questions the answer is the only choice in its time frame, and no tense question in the bank is Hard.",
+    "The bank never decides a question on <em>neither … nor</em>, <em>either … or</em> or <em>everyone</em> (<a href=\"#nottested\">not tested</a>). Learn the rule, but do not spend long on it."],
+   "links": [["#c8", "8 Subject–verb agreement"], ["#c9", "9 Verb form"], ["#c10", "10 Verb tense"], ["#drill-verb", "Drill: Which verb situation?"]]},
+
+  {"id": "punct", "name": "Punctuation", "video": "The last SAT punctuation guide you’ll need", "for": "Colons, dashes, semicolons, commas, apostrophes", "forHref": "#part-a", "count": "213 boundary + 20 apostrophe questions",
+   "idea": "Do not punctuate where you would pause; people pause in different places. Each mark has one job and a rule you can check.",
+   "steps": [
+    ["Name the mark that changes", "Read down the four choices: which mark moves or appears?"],
+    ["Check what is on each side", "Most marks care whether a full main clause sits before them."],
+    ["Run the rule, then reread", "Apply the rule below and read the sentence with your choice in place."]],
+   "tableTitle": "Each mark and its rule",
+   "table": [
+    ["Colon", "full clause before it", "After it: a list, a word, a phrase or a clause that explains what came before. “There are three primary colors: red, yellow and blue.”"],
+    ["One dash", "full clause before it", "The same job as a colon, at the end of a sentence."],
+    ["Two dashes", "a matching pair", "Like two commas or brackets around an extra phrase. Never open with a comma and close with a dash."],
+    ["Semicolon", "full clause on each side", "Works like a period."],
+    ["Comma", "only four jobs", "A list; after an opening phrase or dependent clause; a pair around extra information; before and, but or so joining two main clauses."],
+    ["Apostrophe", "who owns it?", "One owner: student’s. Owners ending in s: students’. Plurals without s: children’s. Its = belonging to it; it’s = it is. Its’ and their’s are not words."]],
+   "rules": [
+    ["Never between subject and verb", "“The student with the highest score, received an award” is wrong."],
+    ["Never between the last describing word and its noun", "“a brilliant, dedicated, scientist” is wrong at the last comma."],
+    ["Never before an essential that", "“The book, that I read …” is wrong."]],
+   "bank": [
+    "Semicolons and colons are right mostly on Hard questions: a semicolon is right in 0 of 18 Easy and 25 of 49 Hard questions that offer one; a colon in 0 of 23 Easy and 17 of 36 Hard.",
+    "A comma directly before <em>that</em>: offered 5 times, never right.",
+    "<em>It’s</em> and <em>they’re</em>: offered in 15 questions, never right. <em>Its’</em> is never even offered.",
+    "A comma between two describing words is never the blank in the bank, so the last-comma rule above is the one that matters."],
+   "links": [["#c2", "2 Semicolon"], ["#c3", "3 Colon"], ["#c4", "4 Dash"], ["#c12", "12 Plural and possessive nouns"]]}
+ ],
+ "disagree": [
+  ["Same-category transitions", "Safe for example, addition, restatement and result words; usually safe for contrast; wrong for time words."],
+  ["“Too specific” wrong choices", "Rare on main-idea questions (8% of wrong choices). The usual wrong choice says something the passage never says."],
+  ["Indeed and in fact", "The best record of any common transition, but right only about half the times they are offered."],
+  ["Neither, either, everyone", "Real rules, but no question in the bank turns on them."]],
+ "summary": [
+  ["Vocabulary", "Cover the choices, say a simple word from the clue, match it."],
+  ["Clauses", "Find the main clauses first; a comma alone never joins two."],
+  ["Transitions", "Name the link before the choices; twins cancel, but split contrast and time words."],
+  ["Reading", "Topic, claim, evidence; the point comes after the pivot."],
+  ["Hard reading", "If … then for evidence, true then relevant for graphs, zero assumptions for inference."],
+  ["Verbs", "Cross out the middle, match what is left, keep the tense unless a marker moves it."],
+  ["Punctuation", "Full clause before a colon or single dash; four comma jobs; its’ and their’s do not exist."]]
+}

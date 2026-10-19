@@ -80,7 +80,7 @@ json.dump(data,open('mdata.json','w'),ensure_ascii=False,separators=(',',':'))
 print(facts)
 # ---- patterns, rare patterns, Desmos playbook
 from mpatterns import P as PRULES, rare as RRULES
-from mpatcontent import PATTERNS, RARE, DESMOS, GOTCHAS, TYPE_DESMOS
+from mpatcontent import PATTERNS, RARE, DESMOS, GOTCHAS, TYPE_DESMOS, DGROUPS, HABITS
 ver=json.load(open('verified.json'))
 pids=[p['id'] for p in PATTERNS]
 assert set(pids)<=set(PRULES), set(pids)-set(PRULES)
@@ -112,7 +112,7 @@ for t in order:
     types[t]['dmove']=mv; types[t]['dtext']=txt
 allproof={x for m in DESMOS for x in m['proof']}|{x for p in PATTERNS for x in p['proof']}|{x for r in RARE for x in r['proof']}
 missing=[x for x in allproof if x not in ver]; assert not missing, missing
-data.update(patterns=pats,rare=rares,desmos=DESMOS,gotchas=GOTCHAS,verified={k:dict(how=v[0],got=v[1]) for k,v in ver.items()},nver=len(ver))
+data.update(patterns=pats,rare=rares,desmos=DESMOS,gotchas=GOTCHAS,dgroups=DGROUPS,habits=HABITS,verified={k:dict(how=v[0],got=v[1]) for k,v in ver.items()},nver=len(ver))
 data['bankHard']=round(100*tot['H']/tot['n'])
 json.dump(data,open('mdata.json','w'),ensure_ascii=False,separators=(',',':'))
 print('patterns',[(p['id'],p['n'],round(100*p['H']/p['n'])) for p in pats]); print('mdata bytes',os.path.getsize('mdata.json'))

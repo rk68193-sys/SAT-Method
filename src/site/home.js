@@ -4,6 +4,7 @@
       ['start', 'start', 'Start here', 'The plan for the whole section, and which routine each kind of question needs.'],
       ['reading', 'reading', 'Reading', 'The four-step routine for reading questions, with long sentences taken apart and 17 worked examples.'],
       ['grammar', 'method', 'Grammar', 'The 60-second method for grammar and transition questions, and 19 short lessons covering every rule.'],
+      ['methods', 'methods', 'Methods', 'Seven methods from James Lu’s videos, checked against the bank: vocabulary, clauses, transitions, reading, hard questions, verbs, punctuation.'],
       ['drills', 'drills', 'Drills', 'Quick drills on real questions for the slow steps: naming the job, finding the core, spotting the pattern.'],
       ['practice', 'practice', 'Practice', 'Timed sets of real College Board questions, each followed by its fast path or walkthrough.'],
       ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.']] },

@@ -271,9 +271,9 @@
       '<div class="mref2"><section><h3 class="h2">On the formula sheet</h3><p class="lede">No need to memorize these. Practice finding them quickly.</p>' + tbl(on) + '</section>' +
       '<section><h3 class="h2">Not on the sheet: learn these</h3><p class="lede">These come up again and again and are not printed for you.</p>' + tbl(off) + '</section></div>' +
       '<section class="sec"><h3 class="h2">When Desmos helps</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>Question</th><th>What to do in Desmos</th></tr></thead><tbody>' +
-        [['Two lines crossing (systems)', 'Type both equations; click the crossing point.'], ['Maximum, minimum, vertex', 'Type the function; click the grey turning point.'], ['Zeros, x-intercepts', 'Type the function; click where it crosses the x-axis.'], ['Nonlinear equation', 'Type each side as y = …; the crossings are the solutions.'], ['Mean, median, spread', 'Type L = [3, 5, 8]; then mean(L), median(L), stdev(L) for sample spread or stdevp(L) for population spread.'], ['A constant to find', 'Use arithmetic or coefficient equations for exact values. Sliders explore; ~ regression requires the specified model and enough independent data. Rounded fits are not exact proofs.'], ['Circle equations', 'For normalized x²+y²+Dx+Ey+F=0, center=(−D/2,−E/2), r²=(D²+E²)/4−F. This also handles fractional centers; check r²≥0.']].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>'; }).join('') +
+        [['Two lines crossing (systems)', 'Type both equations; click the crossing point.'], ['Maximum, minimum, vertex', 'Type the function; click the gray turning point.'], ['Zeros, x-intercepts', 'Type the function; click where it crosses the x-axis.'], ['Nonlinear equation', 'Type each side as y = …; the crossings are the solutions.'], ['Mean, median, spread', 'Type L = [3, 5, 8]; then mean(L), median(L), stdev(L) for sample spread or stdevp(L) for population spread.'], ['A constant to find', 'Use arithmetic or coefficient equations for exact values. Sliders explore; ~ regression requires the specified model and enough independent data. Rounded fits are not exact proofs.'], ['Circle equations', 'For normalized x²+y²+Dx+Ey+F=0, center=(−D/2,−E/2), r²=(D²+E²)/4−F. This also handles fractional centers; check r²≥0.'], ['A table of values', 'Add a table (x_1, y_1), then y_1 ~ m x_1 + b, y_1 ~ a x_1^2 + b x_1 + c or y_1 ~ a·b^(x_1).'], ['Which expression is equivalent', 'Graph the original and each choice; the equivalent one lies exactly on top.'], ['Right-triangle trigonometry', 'Degree mode first. arctan, arcsin or arccos of the given ratio gives the angle.']].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>'; }).join('') +
       '</tbody></table></div><ul class="mfacts">' +
-        '<li><b>Clicked points show rounded decimals.</b> If the choices are fractions or roots, compare decimals.</li>' +
+        '<li><b>Clicked points show rounded decimals.</b> If the choices are fractions or roots, compare decimals. A computed result may offer a fraction button beside it.</li>' +
         '<li><b>Degrees or radians?</b> Check the setting (wrench icon) before any trigonometry.</li>' +
         '<li><b>Use x as the letter.</b> Desmos graphs y against x. To solve an equation in t, rewrite it with x.</li>' +
         '<li><b>Short questions: skip it.</b> Typing a two-step question takes longer than solving it.</li>' +
@@ -612,14 +612,21 @@
   function buildMDes() {
     if (built.mdes) { return; }
     built.mdes = true;
-    var chooser = [
-      ['an equation with one unknown', 'both'], ['“how many solutions”, “sum of the solutions”', 'zero'], ['two kinds of tickets, coins, tents, mixtures', 'twolines'],
-      ['four number choices', 'list'], ['percents of percents, a chain of facts', 'chain'], ['a constant: “no solution”, “touches”, “passes through”', 'slide'],
-      ['“greatest integer value of the constant”', 'swapx'], ['“equivalent … where a, b, c are constants”, a table', 'fit'], ['maximum, minimum, vertex, zeros', 'dots'],
-      ['constants known only as “a > 7”, “0 < a < b”', 'legal'], ['x² + y² + Dx + Ey = F', 'circle'], ['mean, median, missing value', 'stats'],
-      ['inequalities, “which point is a solution”', 'shade'], ['f(3), f(x) = 10, “which table”', 'machine']
-    ].map(function (r) { var m = MMOVE[r[1]]; return '<tr><td>' + esc(r[0]) + '</td><td><a class="mmove" href="#md-' + m.id + '">Move ' + m.n + ': ' + esc(m.name) + '</a></td></tr>'; }).join('');
-    var moves = MD.desmos.map(function (m) {
+    var CHOOSE = {
+      solve: [['an equation with one unknown', 'both'], ['“how many solutions”, “sum of the solutions”', 'zero'], ['two kinds of tickets, coins, tents, mixtures', 'twolines'],
+        ['“which expression is equivalent”, “infinitely many solutions”', 'overlay'], ['a constant: “no solution”, “touches”, “passes through”', 'slide'],
+        ['“greatest integer value of the constant”', 'swapx'], ['constants known only as “a > 7”, “0 < a < b”', 'legal'], ['inequalities, “which point is a solution”', 'shade']],
+      fit: [['a table of values, two points, data from a story', 'table'], ['“equivalent … where a, b, c are constants”', 'fit'], ['f(3), f(g(2)), f(x) = 10, “which table”', 'machine']],
+      read: [['maximum, minimum, vertex, zeros', 'dots'], ['“which is a factor of …”', 'factors'], ['“which equation or circle …” plus a condition', 'choices'],
+        ['x² + y² + Dx + Ey = F', 'circle'], ['two points: radius, midpoint, slope, tangent line', 'points'], ['sin, cos, tan: a missing side or angle', 'trig']],
+      compute: [['four number choices', 'list'], ['mean, median, missing value', 'stats'], ['percents of percents, a chain of facts', 'chain']]
+    };
+    var chooser = MD.dgroups.map(function (g) {
+      return '<tr class="mtbl-sk"><th colspan="2">' + esc(g.name) + ' · ' + esc(g.sub) + '</th></tr>' + (CHOOSE[g.id] || []).map(function (r) {
+        var m = MMOVE[r[1]]; return '<tr><td>' + esc(r[0]) + '</td><td><a class="mmove" href="#md-' + m.id + '">Move ' + m.n + ': ' + esc(m.name) + '</a></td></tr>';
+      }).join('');
+    }).join('');
+    function moveCard(m) {
       var used = MORDER.filter(function (t) { return MTY[t].dmove === m.id; });
       var nq = used.reduce(function (a, t) { return a + MTY[t].n; }, 0);
       return '<details class="mmovecard" id="md-' + m.id + '"><summary class="mpat-sum"><header class="mpat-h"><span class="mpat-n des">' + m.n + '</span><div><h3 class="h2">' + esc(m.name) + '</h3><p class="mreach">' + esc(m.short) + (used.length ? ' · first choice for ' + plural(used.length, 'question type') + ', ' + mfmt(nq) + ' bank questions' : '') + '</p></div></header>' +
@@ -629,7 +636,16 @@
         '<p><span class="mtag">Why it works</span> ' + esc(m.why) + '</p>' +
         '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(m.watch) + '</p>' +
         mProof(m.proof) + '</div></details>';
+    }
+    var fams = MD.dgroups.map(function (g) {
+      var ms = MD.desmos.filter(function (m) { return m.group === g.id; });
+      return '<div class="mfam" id="md-g-' + g.id + '"><h4 class="mfam-h"><span class="mtag des">' + esc(g.name) + '</span> ' + esc(g.sub) + ' <span class="muted">· ' + plural(ms.length, 'move') + '</span></h4><p class="mfam-idea">' + esc(g.idea) + '</p>' +
+        '<div class="mmoves">' + ms.map(moveCard).join('') + '</div></div>';
     }).join('');
+    var famIdx = MD.dgroups.map(function (g, i) {
+      return '<a class="mpidx" href="#md-g-' + g.id + '"><span class="mpidx-n">' + (i + 1) + '</span><b>' + esc(g.name) + '</b><span>' + esc(g.sub) + '</span></a>';
+    }).join('');
+    var habits = '<ol class="mroutine">' + MD.habits.map(function (h) { return '<li><b>' + esc(h[0]) + '</b><span>' + esc(h[1]) + '</span></li>'; }).join('') + '</ol>';
     var bySkill = MD.domains.map(function (d) {
       return '<details class="mtbld"><summary>' + esc(d.name) + ' <span class="muted">· ' + d.skills.reduce(function (a, k) { return a + MSK[k].types.length; }, 0) + ' question types</span></summary><div class="tablewrap"><table class="mtable mtbl"><tbody>' + d.skills.map(function (k) {
         return '<tr class="mtbl-sk"><th colspan="2">' + esc(MSK[k].name) + '</th></tr>' + MSK[k].types.map(function (t) {
@@ -639,10 +655,11 @@
       }).join('') + '</tbody></table></div></details>';
     }).join('');
     viewEl.mdes.innerHTML = '<div class="wrap">' +
-      mHead('Math · Desmos playbook', MD.desmos.length + ' Desmos moves, and exactly what to type', 'The digital SAT has the Desmos graphing calculator built in, for every math question. These moves turn the hardest algebra into reading a graph. Each one was checked on real questions from College Board’s bank: ' + MD.nver + ' saved mathematical checks against College Board’s answers. Live SAT Desmos validation remains unavailable.') +
-      '<section class="sec first"><h3 class="h2">Before you start: eight things Desmos does not tell you</h3><div class="mgotchas">' + MD.gotchas.map(function (g) { return '<div class="mgotcha"><b>' + esc(g[0]) + '</b><span>' + esc(g[1]) + '</span></div>'; }).join('') + '</div></section>' +
-      '<section class="sec"><h3 class="h2">Which move?</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>If the question has…</th><th>Use</th></tr></thead><tbody>' + chooser + '</tbody></table></div></section>' +
-      '<section class="sec"><h3 class="h2">The ' + MD.desmos.length + ' moves</h3><p class="lede">Tap a move to see what to type, what you will see, and the real questions it was checked on.</p>' + mOpenAll('mmoves') + '<div class="mmoves" id="mmoves">' + moves + '</div></section>' +
+      mHead('Math · Desmos playbook', MD.desmos.length + ' Desmos moves, and exactly what to type', 'The digital SAT has the Desmos graphing calculator built in, for every math question. These moves turn the hardest algebra into reading a graph. They are sorted into the four families James Lu’s Desmos guide teaches: solve, fit, read and compute. Each one was checked on real questions from College Board’s bank: ' + MD.nver + ' saved mathematical checks against College Board’s answers. Live SAT Desmos validation remains unavailable.') +
+      '<section class="sec first"><h3 class="h2">Four habits on every Desmos question</h3><p class="lede">Run these before and after any move. They prevent most calculator mistakes.</p>' + habits + '</section>' +
+      '<section class="sec"><h3 class="h2">Before you start: ' + MD.gotchas.length + ' things Desmos does not tell you</h3><div class="mgotchas">' + MD.gotchas.map(function (g) { return '<div class="mgotcha"><b>' + esc(g[0]) + '</b><span>' + esc(g[1]) + '</span></div>'; }).join('') + '</div></section>' +
+      '<section class="sec"><h3 class="h2">Which move?</h3><div class="tablewrap"><table class="mtable mtbl"><thead><tr><th>If the question has…</th><th>Use</th></tr></thead><tbody>' + chooser + '</tbody></table></div></section>' +
+      '<section class="sec"><h3 class="h2">The ' + MD.desmos.length + ' moves, in ' + MD.dgroups.length + ' families</h3><p class="lede">Tap a move to see what to type, what you will see, and the real questions it was checked on.</p><nav class="mpidxs" aria-label="Move families">' + famIdx + '</nav>' + mOpenAll('mmoves') + '<div id="mmoves">' + fams + '</div></section>' +
       '<section class="sec" id="md-types"><h3 class="h2">Every question type, the Desmos way</h3><p class="lede">For each of the ' + MORDER.length + ' question types: the move to use, or why to do it by hand.</p><div class="mtblds">' + bySkill + '</div></section>' +
       mNext([['m-patterns', 'The ideas behind the moves', 'Big patterns'], ['m-practice', 'Try the moves', 'Practice real questions']]) + '</div>';
   }

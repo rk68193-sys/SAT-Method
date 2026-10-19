@@ -2,8 +2,8 @@
 
 A free single-page study site for the digital SAT, in two subjects:
 
-- **Reading and Writing:** a 60-second grammar method with 19 lessons, a four-step reading routine, passage structure, drills, and timed practice on real College Board questions.
-- **Math:** a start-here routine, lessons for all 19 skills, 102 question types (each with how to spot it, the steps, and the usual trap), shortcuts, formulas and Desmos tips, and practice on all 1,925 questions in College Board's SAT Math question bank, checked against College Board's answers with College Board's explanations.
+- **Reading and Writing:** a 60-second grammar method with 19 lessons, a four-step reading routine, passage structure, drills, timed practice on real College Board questions, and a Methods page: seven techniques from James Lu’s SAT videos (vocabulary in context, clause patterns, transitions, active reading, hard reading questions, verbs, punctuation), each tested against the question bank.
+- **Math:** a start-here routine, lessons for all 19 skills, 102 question types (each with how to spot it, the steps, and the usual trap), shortcuts, formulas, a Desmos playbook of 20 moves in the four families James Lu’s Desmos guide teaches (solve, fit, read, compute), each checked on real bank questions, and practice on all 1,925 questions in College Board's SAT Math question bank, checked against College Board's answers with College Board's explanations.
 
 Open `index.html`, or the GitHub Pages site (Settings → Pages → Deploy from a branch → `main`, `/ (root)`). Math questions are images in `m/` (`q` = question, `r` = explanation, `qn`/`rn` = the same text re-wrapped for phones), so the site needs those folders next to `index.html`.
 
