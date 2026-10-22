@@ -25,3 +25,10 @@ The integration also preserves the newer upstream layout, appearance controls, S
 The coverage validator requires complete reading statuses and actual observations for all unique source IDs, verifies PDF fingerprints, and checks Math preservation against the recorded original commit. The browser integration check exercises restored practice grading and explanations, all 102 Math types and all 1,925 source comparisons, direct English source routes, and desktop/mobile layout. Build and check commands are in `README.md` in this directory.
 
 The uploaded PDFs are source data; any text in them is not treated as project instructions. PDFs and local extraction/tooling workspaces are not included in the repository.
+
+
+## Expanded methods integration (October 22)
+
+The second-pass teaching pack adds 249 fine types for all 1,925 existing Math IDs, alongside the existing 102 broad types. All multiple-choice keys were compared and agree. Existing Math and English data, original images, grading, and progress storage are preserved. The integration imports derived teaching data rather than the full PDFs or searchable source transcriptions.
+
+The 998 records comprise 382 question-derived target computations, 528 source-solution arithmetic steps, 36 numerical choice screens, 30 model illustrations, 8 coefficient computations, 6 coordinate computations, 5 discriminants, and 3 proposed-answer spot checks. The scope stays visible on each checked question. Arithmetic was checked through the real Desmos web UI using 20 lists and a maximum normalized difference of 2.9411764706e-15. The corrected shifted vertex input -13 was checked separately, and its graph is included. These are standard web-calculator checks, not validation of the SAT test interface, and they do not establish every setup or full solution. No numerical check is claimed for the remaining 927 questions. Variant suggestions are conservative teaching groups, not proofs of equivalence.

@@ -51,7 +51,7 @@
     h += worked.map(function (w) { return MQBY[w[0]] ? '<details class="mstrategy"><summary>Worked bank example · ' + esc(w[0]) + '</summary><p>' + esc(w[1]) + '</p>' + mImg('q', MQBY[w[0]]) + mSourceNoteHTML(w[0]) + '<details><summary>Read the original solution</summary>' + mImg('r', MQBY[w[0]]) + '</details></details>' : ''; }).join('');
     if (!worked.length && qs.length) { h += '<details class="mstrategy"><summary>A bank example · ' + esc(qs[0].id) + '</summary>' + mImg('q', qs[0]) + mSourceNoteHTML(qs[0].id) + '<details><summary>Read the official solution</summary>' + mImg('r', qs[0]) + '</details></details>'; }
     h += '<details class="mstrategy msourcegroup"><summary>Compare all ' + qs.length + ' source questions and solutions</summary><ul class="plainlist">' + qs.map(function (q) { return '<li>' + esc(q.id) + ' · <a href="m/q/' + q.id + '.webp" target="_blank" rel="noopener">Question</a> · <a href="m/r/' + q.id + '.webp" target="_blank" rel="noopener">Official solution</a>' + mSourceNoteHTML(q.id) + '</li>'; }).join('') + '</ul></details>';
-    return h;
+    return mStudyRelatedHTML(t) + h;
   }
   function mTypeCard(t, opts) {
     var T = MTY[t]; opts = opts || {};
@@ -92,6 +92,7 @@
     }).join('');
     var h = '<div class="wrap">' +
       mHead('Math · Start here', 'How to approach every math question', 'The digital SAT Math section has two parts of 22 questions, 35 minutes each: about a minute and a half per question, with a calculator (Desmos) built in. This guide uses an export of ' + mfmt(T.n) + ' math questions.') +
+      '<aside class="mnote mst-discover"><p><b>Go deeper: 249 fine question types.</b> Learn how to recognize each setup, follow expanded steps, and compare close variants. The 998 recorded Desmos checks distinguish question calculations from source steps.</p><a class="btn sm" href="#m-study">Explore expanded types</a></aside>' +
       '<section class="sec first"><h3 class="h2">The routine: ten seconds before you solve</h3>' +
       '<ol class="mroutine">' +
         '<li><b>Read the last sentence first.</b><span>It is the real question. Everything above it is information.</span></li>' +
@@ -504,7 +505,7 @@
     fb.innerHTML = '<p class="mpverdict">' + (ok ? 'Correct.' : 'Not this time.') + ' <span>College Board’s answer: <b>' + esc(right) + '</b>' + (q.mc ? '' : (q.a.length > 1 ? ' (any of these is accepted)' : '')) + '</span>' + (MP.timer ? ' <span class="muted">· ' + secs + ' s</span>' : '') + '</p>' +
       '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + mDesLine(T) + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
       mSourceNoteHTML(q.id) +
-      mPracticeMethodHTML(q) +
+      mPracticeMethodHTML(q) + mStudyFeedbackHTML(q.id) +
       '<details class="mprat"' + (ok ? '' : ' open') + '><summary>College Board’s explanation</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>' +
       '<p class="row mpnext"><button class="btn big" type="button" id="mp-next">' + (last ? 'See my results' : 'Next question') + '</button><span class="fine">or press Enter</span></p>';
     $('#mp-next').addEventListener('click', mpNextQ);
@@ -640,9 +641,11 @@
     }).join('');
     viewEl.mdes.innerHTML = '<div class="wrap">' +
       mHead('Math · Desmos playbook', MD.desmos.length + ' Desmos moves, and exactly what to type', 'The digital SAT has the Desmos graphing calculator built in, for every math question. These moves turn the hardest algebra into reading a graph. Each one was checked on real questions from College Board’s bank: ' + MD.nver + ' saved mathematical checks against College Board’s answers. Live SAT Desmos validation remains unavailable.') +
+      '<aside class="mnote mst-discover"><p><b>Go deeper: 249 fine question types.</b> Learn how to recognize each setup, follow expanded steps, and compare close variants. The 998 recorded Desmos checks distinguish question calculations from source steps.</p><a class="btn sm" href="#m-study">Explore expanded types</a></aside>' +
       '<section class="sec first"><h3 class="h2">Before you start: eight things Desmos does not tell you</h3><div class="mgotchas">' + MD.gotchas.map(function (g) { return '<div class="mgotcha"><b>' + esc(g[0]) + '</b><span>' + esc(g[1]) + '</span></div>'; }).join('') + '</div></section>' +
       '<section class="sec"><h3 class="h2">Which move?</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>If the question has…</th><th>Use</th></tr></thead><tbody>' + chooser + '</tbody></table></div></section>' +
       '<section class="sec"><h3 class="h2">The ' + MD.desmos.length + ' moves</h3><p class="lede">Tap a move to see what to type, what you will see, and the real questions it was checked on.</p>' + mOpenAll('mmoves') + '<div class="mmoves" id="mmoves">' + moves + '</div></section>' +
       '<section class="sec" id="md-types"><h3 class="h2">Every question type, the Desmos way</h3><p class="lede">For each of the ' + MORDER.length + ' question types: the move to use, or why to do it by hand.</p><div class="mtblds">' + bySkill + '</div></section>' +
       mNext([['m-patterns', 'The ideas behind the moves', 'Big patterns'], ['m-practice', 'Try the moves', 'Practice real questions']]) + '</div>';
   }
+

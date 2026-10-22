@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mshort', 'mref', 'mprac', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -121,6 +121,11 @@
     if ((m = /^m-learn-([a-z]+)$/.exec(token))) { showView('mlearn'); mlearnView.show('home'); scrollToEl(document.getElementById(token)); return true; }
     if ((m = /^m-([a-z0-9]+)$/.exec(token)) && has(MSK, m[1])) { showView('mlearn'); landed(mlearnView.show(m[1])); toTop(); return true; }
     if ((m = /^mt-(.+)$/.exec(token)) && has(MTY, m[1])) { showView('mlearn'); mlearnView.show(MTY[m[1]].skill); scrollToEl($('#' + token, viewEl.mlearn)); return true; }
+    if (token === 'm-study') { showView('mstudy'); buildMStudy(); toTop(); return true; }
+    if ((m = /^m-study-from-(.+)$/.exec(token)) && has(MST.by_legacy_type,m[1])) { showView('mstudy'); buildMStudy(null,m[1]); toTop(); return true; }
+    if ((m = /^m-study-practice-(.+)$/.exec(token)) && has(MSTBY,m[1])) { showView('mprac'); mStudyPractice(m[1]); return true; }
+    if ((m = /^m-study-(.+)$/.exec(token)) && has(MSTBY,m[1])) { showView('mstudy'); buildMStudy(m[1]); scrollToEl(document.getElementById('mst-'+m[1])); return true; }
+    if ((m = /^m-check-([0-9a-f]{8})$/.exec(token)) && has(MST.questions,m[1])) { showView('mstudy'); mStudyQuestion(m[1]); scrollToEl(document.getElementById('mst-question')); return true; }
     if (token === 'm-types') { showView('mtypes'); buildMTypes(); toTop(); return true; }
     if (token === 'm-patterns') { showView('mpat'); buildMPat(); toTop(); return true; }
     if ((m = /^mpat-(.+)$/.exec(token)) || token === 'mrare') { showView('mpat'); buildMPat(); openTo(token); return true; }
@@ -205,3 +210,4 @@
       } else if (hot.data && hot.data.route && hot.data.route !== lastToken) { go(hot.data.route); }
     } catch (e) {}
   }
+

@@ -13,6 +13,7 @@
       ['mpat', 'm-patterns', 'Big patterns', 'A dozen ideas that connect the question types, so one idea solves many kinds of question.'],
       ['mdes', 'm-desmos', 'Desmos', MD.desmos.length + ' calculator moves with exactly what to type, checked on real questions.'],
       ['mshort', 'm-short', 'Shortcuts', 'Faster ways to the right answer by hand, and the shortcuts that do not work.'],
+      ['mstudy', 'm-study', 'Expanded types', '249 fine question types, fuller explanations, close variants, and 998 calculator checks with clear scope.'],
       ['mtypes', 'm-types', 'Question finder', 'Type words from a question to see which of the ' + MORDER.length + ' question types it is and how to solve it.'],
       ['mref', 'm-ref', 'Formulas', 'What is on the formula sheet, what is not, and how to type in your own answers.'],
       ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations.']] }
@@ -140,7 +141,7 @@
       '<p class="row hh-cta"><a class="btn big" href="#math">Start Math</a><a class="btn big ghost" href="#start">Start Reading &amp; Writing</a></p>' + cont + '</div>' +
       '<div class="hh-stats" aria-label="At a glance">' +
         '<div class="hstat"><b>' + mfmt(nAll) + '</b><span>real questions, with official answers</span></div>' +
-        '<div class="hstat"><b>' + MORDER.length + '</b><span>math question types, each with a method</span></div>' +
+        '<div class="hstat"><b>' + MST.methods.length + '</b><span>fine math question types, each with a method</span></div>' +
         '<div class="hstat"><b>' + MD.desmos.length + '</b><span>Desmos moves, checked on ' + MD.nver + ' real questions</span></div>' +
         '<div class="hstat"><b>19</b><span>grammar lessons covering every rule tested</span></div>' +
       '</div></section>' +
@@ -152,6 +153,7 @@
         feat('math', 'target', 'Math practice', 'Real questions by skill, pattern or difficulty, with the method after each one.', 'm-practice') +
         feat('math', 'graph', 'Desmos playbook', MD.desmos.length + ' calculator moves with exactly what to type.', 'm-desmos') +
         feat('math', 'grid', 'Big patterns', 'The ideas that connect math question types.', 'm-patterns') +
+        feat('math', 'grid', 'Expanded types', '249 fine methods, close variants, and scoped Desmos checks.', 'm-study') +
         feat('math', 'search', 'Question finder', 'Type words from a question to see how to solve it.', 'm-types') +
         feat('rw', 'bolt', 'Grammar in 60 seconds', 'Look, check, confirm: one check per question.', 'method') +
         feat('rw', 'book', 'Reading routine', 'Job, Chunk, Say, Check, with worked examples.', 'reading') +
@@ -263,3 +265,4 @@
     $('#sg-notes-clear').addEventListener('click', function () { if (!notes.value || window.confirm('Clear all your notes?')) { notes.value = ''; store.s.notes = ''; save(); st.textContent = 'Cleared.'; } });
     if (focusNotes) { scrollToEl(document.getElementById('suggest-notes')); }
   }
+

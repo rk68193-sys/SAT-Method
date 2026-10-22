@@ -53,3 +53,10 @@ node src/check/source-review.js http://127.0.0.1:8000/
 This checks all Math comparison groups, restored English practice images and grading, source question links, and desktop/mobile layouts. See `REVIEW.md` for the exact review scope.
 
 `check/import_reading_sources.py --pdf /path/to/reading-writing.pdf --parsed /path/to/parsed.json` regenerates the restored English source images and catalogs. It requires PyMuPDF and Pillow. The parsed input must contain the source question IDs, full raw text, and zero-based PDF page indices; it is produced during source extraction. The importer preserves complete questions with choices and source rationales.
+
+
+## Importing the expanded Math study pack
+
+`math/import_study_pack.py /path/to/questionbank-study-data-v2.json` produces `build/mstudy.json`. It imports authored methods, memberships, variant suggestions, and scoped calculator records. It excludes full source transcriptions and preserves `mdata.json` and its grading keys. `site/math-study.js` adds the catalogue, type practice, lesson links, and post-answer calculator feedback. The assembler embeds the derived data as `D.mathStudy`.
+
+Run `python src/check/study_coverage.py` and `node --check src/site/bundle.js` after rebuilding. An optional argument to `study_coverage.py` is a previous assembled page; it checks every original data section remains exactly equal. Browser QA uses the existing site through its UI.
