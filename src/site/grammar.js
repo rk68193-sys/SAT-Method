@@ -61,10 +61,10 @@
       '<section class="sec" id="try"><div class="sech"><p class="eyebrow">Try one</p><h2 class="h2">A real question and a real minute</h2>' +
       '<p class="lede">Start the clock and answer. Then read the fast path: the pattern in the choices, the check that settles it, and why each wrong choice fails.</p></div><div class="demo" id="demo"></div></section>' +
       '<section class="sec" id="steps"><div class="sech"><p class="eyebrow">The method</p><h2 class="h2">One question, three steps</h2></div><div class="steps3">' +
-      step3('1', 'Look', '0–5 s', 'sw-look', s[0], 'The choices tell you the rule before you read the passage. <a href="#patterns">See the eight patterns</a>.') +
+      step3('1', 'Look', '0–5 s', 'sw-look', s[0], 'The differences suggest what to check. Confirm the sentence structure and meaning before choosing. <a href="#patterns">See the eight patterns</a>.') +
       step3('2', 'Check', '5–45 s', 'sw-check', s[1], 'Each part has its own check: <a href="#part-a">what stands on each side of the blank</a>, <a href="#part-b">four verb situations</a>, and <a href="#part-c">naming the link</a>.') +
-      step3('3', 'Confirm', '45–60 s', 'sw-confirm', s[2], 'Torn between two? Some choices are almost never right. <em>Is / are</em> + <em>-ing</em> was offered 45 times in verb questions and was never the answer. <a href="#shortcuts">See the shortcuts</a>.') +
-      '</div><p class="fine" style="margin-top:.9rem">' + D.first.fine + ' The 5, 40 and 15 second split is a target to practice against.</p></section>' +
+      step3('3', 'Confirm', '45–60 s', 'sw-confirm', s[2], 'Torn between two? Name the structural or meaning difference. Progressive verbs such as <em>is growing</em> can be correct; a pattern’s frequency in this bank cannot settle a new question.') +
+      '</div><p class="fine" style="margin-top:.9rem">' + D.first.fine + ' Learn untimed first. The 5, 40 and 15 second split is an adjustable practice target; some questions need more time and others less.</p></section>' +
       patternsHTML();
   }
 
@@ -308,12 +308,14 @@
       '<p class="fine" style="margin-top:1.2rem">' + H.fine + '</p>';
   }
   var STANCE = ["lean", "lean", "lean", "lean", "lean", "lean", "out", "none", "none", "out", "out", "lean", "out", "none", "lean", "none", "none", "none", "lean", "out", "out", "lean", "none", "none", "none", "none", "out", "lean", "out", "none", "none", "none", "lean"];
-  var STANCE_LABEL = { out: 'Rule it out', lean: 'Points to the answer', none: 'No shortcut: run the check' };
+  var STANCE_LABEL = { out: 'Often wrong in this bank', lean: 'Pattern in this bank', none: 'Use grammar and meaning' };
   function shortcutsHTML() {
     var G = D.gives;
     var show = [['all', 'All']].concat(G.groups.map(function (g) { return [g.id, g.title]; }));
     var fi = 0;
-    return '<header><p class="eyebrow">Grammar shortcuts</p><h2 class="vtitle">What the choices give away</h2><p class="lede">' + G.intro + '</p><p class="stancekey"><span class="stance s-out">Rule it out</span> a kind of choice the bank almost never makes right · <span class="stance s-lean">Points to the answer</span> a sign that usually holds, after the check · <span class="stance s-none">No shortcut</span> background only</p></header>' +
+    return '<header><p class="eyebrow">Grammar · observations from this bank</p><h2 class="vtitle">What this question bank shows</h2><p class="lede">' + G.intro + '</p>' +
+      '<p class="pretty"><b>Use the rule to decide.</b> These frequencies describe one exported bank. They do not establish a choice’s chance of being right on a new test. Do not eliminate a progressive verb, passive construction, contraction or transition merely because it was rarely correct here. Check the complete sentence and intended meaning.</p>' +
+      '<p class="stancekey"><span class="stance s-out">Often wrong in this bank</span> a descriptive count · <span class="stance s-lean">Pattern in this bank</span> a relationship to investigate · <span class="stance s-none">Use grammar and meaning</span> decide each question from its structure and context</p></header>' +
       '<div class="gfilter">' + seg('gshow', 'Show', show, 'all') +
       '<label class="checkline" for="gquiz"><input type="checkbox" id="gquiz">Quiz me: hide what each pattern tells you until I ask</label></div>' +
       G.groups.map(function (g) {
@@ -345,7 +347,7 @@
     items: function () {
       var g = [{ group: 'Method', entries: [
         { key: 'method', token: 'method', label: 'The 60-second method' },
-        { key: 'shortcuts', token: 'shortcuts', label: 'What the choices give away' },
+        { key: 'shortcuts', token: 'shortcuts', label: 'What this bank shows' },
         { key: 'hard', token: 'hard', label: 'Where the hard questions are' }
       ] }, { group: 'Lessons', entries: [{ key: 'home', token: 'lessons', label: 'All grammar lessons', tail: '<span class="rn">' + countDone() + '/' + NC + '</span>' }] }];
       D.parts.forEach(function (p) {

@@ -31,13 +31,13 @@
   }
   function pathHTML() {
     var dj = store.d.job, gl = countDone(), rl = countReadDone();
-    var g = timedRecord('t', EXLIST.map(function (e) { return e.q; })), r = timedRecord('r', RLIST.map(function (x) { return x.qid; }));
+    var g = practiceRecord('t', EXLIST.map(function (e) { return e.q; })), r = practiceRecord('r', RLIST.map(function (x) { return x.qid; }));
     var items = [
       ['Name the job', 'A four-second drill on the question line alone: which job, which routine.', lastLine(dj) || drillCount('job') + ' cards · not tried yet', '<a class="btn sm" href="#drills" data-drill="job">Start the drill</a>'],
       ['Learn the 60-second method', 'Grammar and transition questions: see what changes in the choices, run one check. Nineteen lessons cover every rule.', gl + ' of ' + NC + ' grammar lessons done', '<a class="btn sm ghost" href="#method">Open the method</a>'],
       ['Learn the reading routine', 'Job, Chunk, Say, Check, with long sentences taken apart and seventeen worked examples.', rl + ' of ' + RLIST.length + ' worked examples studied', '<a class="btn sm ghost" href="#reading">Open the routine</a>'],
       ['Drill the slow steps', Object.keys(DR).length + ' drills on real questions: name the job, tag the sentence, find the core, find the Point, notes goal first, spot the pattern, name the link and more.', Object.keys(DR).filter(function (k) { return isObj(store.d[k]); }).length + ' of ' + Object.keys(DR).length + ' drills tried', '<a class="btn sm ghost" href="#drills">See the drills</a>'],
-      ['Practice against the clock', 'Real questions with the clock running, then the fast path or the walkthrough.', (g.tried + r.tried) ? (g.tried + r.tried) + ' tried · ' + (g.right + r.right) + ' right last time' : (EXLIST.length + RLIST.length) + ' questions · not tried yet', '<a class="btn sm ghost" href="#practice">Start a set</a>']
+      ['Learn untimed, then check your pace', 'Explain the evidence or rule without a clock. Then try unfamiliar mixed questions with a practice target. Review misses and uncertain answers before repeating them.', (g.tried + r.tried) ? (g.tried + r.tried) + ' tried · ' + (g.right + r.right) + ' right last time' : (EXLIST.length + RLIST.length) + ' lesson questions · not tried yet', '<a class="btn sm ghost" href="#practice">Start a set</a>']
     ];
     return items.map(function (it, i) {
       return '<li><span class="pn">' + (i + 1) + '</span><div class="pd"><b>' + it[0] + '</b><p>' + it[1] + '</p><p class="ps">' + it[2] + '</p></div>' + it[3] + '</li>';
@@ -51,13 +51,13 @@
     viewEl.start.innerHTML = '<div class="wrap">' +
       '<section class="hero"><div><p class="eyebrow">SAT Reading and Writing · the whole section</p>' +
       '<h1>Every Reading and Writing question, <span class="u">one routine at a time</span>.</h1>' +
-      '<p class="lede">The question line tells you which of two routines to run: the 60-second method for grammar and transitions, or four steps for a reading passage. Learn both, drill the slow steps, then practice against the clock.</p>' +
+      '<p class="lede">Use the question’s task to choose your approach: sentence structure and meaning for grammar, the relationship for transitions, or a flexible reading routine. Learn untimed, use drills where they help, then check your pace on unfamiliar questions.</p>' +
       '<div class="row"><a class="btn" href="#which">Which routine?</a><a class="btn ghost" href="#try">Try a question</a></div>' +
       '<p class="facts">Built from ' + total.toLocaleString('en-US') + ' questions in College Board’s SAT Suite Question Bank: ' + TOTAL.q + ' grammar and transition questions sorted into ' + TOTAL.u + ' rules, and ' + RTOTAL.toLocaleString('en-US') + ' reading questions sorted by job.</p></div>' +
       '<div class="dials"><figure class="dial duo">' + dialSVG(GRAMMAR_DIAL) + '<figcaption><p class="label">Grammar · 60 seconds</p><ol class="dlegend">' +
       '<li><i class="sw-look"></i><span><b>5 sec · Look</b>What changes?</span></li><li><i class="sw-check"></i><span><b>40 sec · Check</b>Run one check</span></li><li><i class="sw-confirm"></i><span><b>15 sec · Confirm</b>Reread it</span></li></ol></figcaption></figure>' +
       '<figure class="dial duo">' + dialSVG(READING_DIAL) + '<figcaption><p class="label">Reading · 70 seconds</p><ol class="dlegend">' +
-      '<li><i class="sw-look"></i><span><b>5 sec · Job</b>The question first</span></li><li><i class="sw-check"></i><span><b>35 sec · Chunk</b>Tag each sentence</span></li><li><i class="sw-say"></i><span><b>10 sec · Say</b>Your answer first</span></li><li><i class="sw-confirm"></i><span><b>20 sec · Check</b>Every piece needs a line</span></li></ol></figcaption></figure></div></section>' +
+      '<li><i class="sw-look"></i><span><b>5 sec · Job</b>Identify the task</span></li><li><i class="sw-check"></i><span><b>35 sec · Chunk</b>Understand the text</span></li><li><i class="sw-say"></i><span><b>10 sec · Say</b>An expectation, if useful</span></li><li><i class="sw-confirm"></i><span><b>20 sec · Check</b>Verify the answer</span></li></ol></figcaption></figure></div></section>' +
       '<div class="budget"><span class="big">71 s</span><p>Each Reading and Writing module gives you 32 minutes for 27 questions, about 71 seconds each. Grammar and transition questions can take under a minute, which leaves the extra seconds for the passages that need them. Both splits are targets to practice against, not measurements. <a href="#reading">How the reading routine spends them</a></p></div>' +
       '<section class="sec" id="which"><div class="sech"><p class="eyebrow">The first five seconds</p><h2 class="h2">Read the question line first. It names the routine.</h2>' +
       '<p class="lede">The wording of each kind of question barely changes from test to test. Match the line, and you know the job, the routine and where to look before you read the passage. The number is how many questions of that kind are in the bank.</p></div>' +

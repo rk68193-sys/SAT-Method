@@ -27,6 +27,8 @@ Made from College Board's SAT Math question bank export (`questionbank-export-20
 Copy `mdata.json` into `src/build/` and the four image folders into `m/`.
 
 ## Checks
+`node src/check/rw-practice.js` runs without browser dependencies. It checks unique R&W membership, shared history across lesson/bank views, untimed versus paced results, legacy saved records, review of uncertain correct answers, retained review notes, and availability of the notes before a drill answer.
+
 `node src/check/smoke.js index.html 390` (Reading and Writing) and `node src/check/msmoke.js index.html 390 light` (Math) load every view, look for script errors, failed requests and sideways scrolling, and run a practice set. `node src/check/suggest.js index.html` tries the Appearance menu, the Suggest form, My notes and the footer; `node src/check/skip.js index.html` the skip link. `node src/check/tshots.js index.html 390 dark shots home suggest` saves screenshots in any theme (`light`, `dark`, `purple`, `blue`, `pink`, `green`, `auto-light`, `auto-dark`). `node src/check/text.js index.html out.txt` dumps every page's visible text (with all collapsible parts open) for a spelling check; the site uses American spelling, and quoted College Board passages are left exactly as printed.
 
 

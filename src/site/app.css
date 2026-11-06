@@ -785,6 +785,12 @@ a.qref:hover code { background: var(--hl); color: var(--hl-ink); }
 
 /* ---------- timed sets ---------- */
 .tsetup { display: grid; gap: 1.1rem; margin-top: 1.4rem; max-width: 46rem; }
+#tconfidence { margin: .8rem 0 1.2rem; }
+#treview .after { display: grid; gap: .6rem; max-width: 46rem; margin: 1.4rem 0; }
+#treview select, #treview textarea { width: 100%; min-width: 0; padding: .7rem .8rem; border: 1.5px solid var(--line-strong); border-radius: 10px; background: var(--card); font: inherit; color: var(--ink); }
+#treview textarea { resize: vertical; line-height: 1.5; }
+#treview textarea::placeholder { color: var(--muted); opacity: 1; }
+#treview select:focus-visible, #treview textarea:focus-visible { outline: 3px solid var(--hl); outline-offset: 2px; }
 .record { display: flex; flex-wrap: wrap; gap: .4rem 2rem; padding-block: .9rem; border-block: 1px solid var(--line); margin-top: 1.4rem; max-width: 46rem; }
 .record div { display: grid; }
 .record b { font: 800 2rem/1 var(--display); font-variant-numeric: tabular-nums; }

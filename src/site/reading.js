@@ -34,12 +34,13 @@
 
   /* ---------- pages ---------- */
   function rRoutineHTML() {
-    return '<header><p class="eyebrow">Reading · the plan</p><h2 class="vtitle">Four steps, in this order, on every question</h2>' +
-      '<p class="lede">The passages are short and the sentences are long. So the routine works one sentence at a time, and it is the same four steps on every reading question.</p></header>' +
+    return '<header><p class="eyebrow">Reading · the plan</p><h2 class="vtitle">Four steps, adapted to the job</h2>' +
+      '<p class="lede">Identify the task, understand the relevant text, form an expectation when useful, and verify the answer. Use the steps that help this question. You do not need to label every sentence or predict exact wording.</p></header>' +
+      '<p class="fine"><b>One possible pacing split, after untimed learning.</b> Adjust it to the question; these are practice targets, not deadlines for individual steps.</p>' +
       '<div class="gintro"><figure class="dial sm">' + dialSVG(READING_DIAL) + '<figcaption><ol class="dlegend">' +
       '<li><i class="sw-look"></i><span><b>0–5 sec · Job</b>Read the question first.</span></li>' +
-      '<li><i class="sw-check"></i><span><b>5–40 sec · Chunk</b>One sentence at a time: tag it, say it.</span></li>' +
-      '<li><i class="sw-say"></i><span><b>40–50 sec · Say</b>Your own answer before the choices.</span></li>' +
+      '<li><i class="sw-check"></i><span><b>5–40 sec · Chunk</b>Understand the relevant text.</span></li>' +
+      '<li><i class="sw-say"></i><span><b>40–50 sec · Say</b>Form a useful expectation.</span></li>' +
       '<li><i class="sw-confirm"></i><span><b>50–70 sec · Check</b>Test the choice against the question’s job.</span></li></ol></figcaption></figure></div>' +
       '<ol class="rsteps">' + RD.steps.map(function (s) {
         return '<li><span class="snum">' + s.n + '</span><div><h3 class="sname">' + esc(s.name) + '</h3><p class="sdo">' + s.do + '</p><p class="swhy">' + s.why + '</p></div><span class="stime">' + esc(s.time) + '</span></li>';
@@ -124,7 +125,7 @@
   }
   function rSayHTML() {
     var t = RD.say.table;
-    return '<header><p class="eyebrow">Reading · step 3</p><h2 class="vtitle">Say: your own answer first</h2>' + RD.say.intro.map(function (p) { return '<p class="lede">' + p + '</p>'; }).join('') + '</header>' +
+    return '<header><p class="eyebrow">Reading · step 3</p><h2 class="vtitle">Say: form an expectation when useful</h2>' + RD.say.intro.map(function (p) { return '<p class="lede">' + p + '</p>'; }).join('') + '</header>' +
       '<dl class="saylist">' + t.rows.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('') + '</dl>' +
       '<div class="nextlinks"><a class="btn" href="#check">Step 4: Check</a></div>';
   }
@@ -215,7 +216,7 @@
     }).join('');
     return '<div class="walk">' +
       fstep(1, 'Job', '<p class="qstem">' + x.question + '</p><p>' + (x.jobtag ? tagHTML(x.jobtag) + ' ' : '') + x.jobans + '</p>') +
-      fstep(2, 'Chunk', '<p class="fine">Tag each sentence and say it in plain words. Turn words are highlighted; the dimmed words can wait for a second pass.</p><ol class="chunks">' + chunks + '</ol>') +
+      fstep(2, 'Chunk', '<p class="fine">This guided example shows sentence tags and plain-language paraphrases. Use them to learn the structure; you need not write every tag during practice. Turn words are highlighted. Revisit dimmed details when the question or a choice needs them.</p><ol class="chunks">' + chunks + '</ol>') +
       fstep(3, 'Say', '<p class="sayline">' + x.say + '</p>') +
       fstep(4, 'Check', '<ol class="rchoices">' + choices + '</ol>') +
       (x.lesson ? '<p class="note">' + x.lesson + '</p>' : '') + '</div>';

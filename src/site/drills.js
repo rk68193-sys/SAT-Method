@@ -11,8 +11,8 @@
       blurb: 'A real passage, sentence by sentence. Pick the claim or conclusion that everything else is there to support.' },
     pointer: { part: 'reading', title: 'Follow the pointer', goal: 15, ask: 'What does the highlighted pointer refer back to?',
       blurb: 'Words like “this pattern” or “these findings” point back. Pick the sentence they point to.' },
-    notes: { part: 'reading', title: 'Notes: goal first', goal: 20, ask: 'Which choice does exactly what the goal asks?',
-      blurb: 'A real notes question with the notes hidden: only the student’s goal and the four choices. College Board’s own answers.' },
+    notes: { part: 'reading', title: 'Notes: goal first', goal: 60, ask: 'Which choice meets the goal and accurately uses the notes?',
+      blurb: 'Read the goal first, select relevant facts, and verify the choice against the visible notes. College Board’s own answers.' },
     why: { part: 'reading', title: 'Why is it wrong?', goal: 25, ask: 'Why is this choice wrong?',
       blurb: 'A wrong choice from a worked example. Name the way it fails, using the five kinds from Step 4.' },
     pattern: { part: 'grammar', title: 'Spot the pattern', goal: 5, ask: 'What does this question test?',
@@ -84,9 +84,9 @@
     } else if (kind === 'notes') {
       ((D.bank && D.bank.notes) || []).forEach(function (b) {
         items.push({ id: b.id, ref: 'notesfirst', opts: ['A', 'B', 'C', 'D'].map(function (k) { return { k: k, b: '<span class="sentopt"><span class="olt">' + k + '.</span> ' + b.ch[k] + '</span>' }; }), ans: b.ans, wide: true,
-          prompt: '<p class="ngoal"><span class="label">The goal · question ' + b.id + ' · ' + b.d + '</span>' + b.goal + '</p>',
-          explain: '<p><b>' + b.ans + '.</b> ' + (b.why[b.ans] || '') + '</p>' +
-            '<details class="ctx"><summary>The notes</summary><div class="ctxbody"><ul class="nnotes">' + b.notes.map(function (n) { return '<li>' + n + '</li>'; }).join('') + '</ul></div></details>' });
+          prompt: '<p class="ngoal"><span class="label">The goal · question ' + b.id + ' · ' + b.d + '</span>' + b.goal + '</p>' +
+            '<p class="fine">Select the relevant facts, then verify the whole choice against these notes.</p><ul class="nnotes">' + b.notes.map(function (n) { return '<li>' + n + '</li>'; }).join('') + '</ul>',
+          explain: '<p><b>' + b.ans + '.</b> ' + (b.why[b.ans] || '') + '</p><p class="fine">The choice must satisfy the goal and accurately represent the notes. Goal wording alone does not verify the facts.</p>' });
       });
     } else if (kind === 'tag') {
       (ANN.tag || []).forEach(function (it) {
@@ -193,7 +193,7 @@
     'Scene': 'Background: who, what, where, when, or what a term means. In a story: who and where.',
     'Old idea': 'What people thought, assumed or claimed before.',
     'Did': 'What someone did to find out.',
-    'Found': 'What turned out to be true: a result, a fact, an example.',
+    'Found': 'A reported result, fact or example; retain who reports or interprets it.',
     'Point': 'The claim or conclusion, the author’s or the researchers’.',
     'Happens': 'What someone in the story does or says.',
     'Feeling': 'What someone feels, wants, thinks or is like.',

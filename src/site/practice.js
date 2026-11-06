@@ -1,15 +1,20 @@
-  /* =================== Practice: timed sets =================== */
-  var TIERS = { std: { g: 60, r: 70, label: 'Standard · 1:00 grammar, 1:10 reading' }, fast: { g: 45, r: 55, label: 'Fast · 0:45 and 0:55' }, easy: { g: 80, r: 90, label: 'Relaxed · 1:20 and 1:30' } };
+  /* =================== Practice: learning and paced sets =================== */
+  var TIERS = { learn: { g: null, r: null, label: 'Learn · untimed' }, std: { g: 60, r: 70, label: 'Standard · 1:00 grammar, 1:10 reading' }, fast: { g: 45, r: 55, label: 'Fast · 0:45 and 0:55' }, easy: { g: 80, r: 90, label: 'Relaxed · 1:20 and 1:30' } };
   var TS = null, tclock = null;
+  var REVIEW_CAUSES = [['', 'Choose a cause'], ['meaning', 'Misread meaning, reference or viewpoint'], ['scope', 'Missed a qualification or comparison'], ['evidence', 'Used unsupported evidence or prior knowledge'], ['data', 'Misread data, units or direction'], ['goal', 'Missed the question’s goal or relationship'], ['grammar', 'Misidentified sentence structure or a grammar rule'], ['pace', 'Rushed or ran out of time'], ['slip', 'Selection slip'], ['other', 'Other / still investigating']];
+  function causeLabel(key) {
+    var cause = REVIEW_CAUSES.filter(function (c) { return c[0] === key; })[0];
+    return cause && key ? cause[1] : '';
+  }
   function tset() {
     var s = isObj(store.s.timed) ? store.s.timed : {};
     return {
       src: ['g', 'a', 'r', 'q', 'v', 'n', 'x', 'both'].indexOf(s.src) !== -1 ? s.src : 'g',
       part: ['all', 'A', 'B', 'C'].indexOf(s.part) !== -1 ? s.part : 'all',
       diff: ['all', 'Easy', 'Medium', 'Hard'].indexOf(s.diff) !== -1 ? s.diff : 'all',
-      which: ['all', 'new', 'missed', 'slow'].indexOf(s.which) !== -1 ? s.which : 'all',
+      which: ['all', 'new', 'missed', 'uncertain', 'slow'].indexOf(s.which) !== -1 ? s.which : 'all',
       len: [10, 20, 0].indexOf(s.len) !== -1 ? s.len : 10,
-      tier: TIERS[s.tier] ? s.tier : 'std',
+      tier: TIERS[s.tier] ? s.tier : 'learn',
       hints: s.hints === true
     };
   }
@@ -28,7 +33,28 @@
       .concat(BANK.trans.map(function (b) { return { t: 'x', id: b.id, d: b.d, p: 'C', b: b }; }));
   }
   function bucketOf(it) { return it.t === 'g' ? 't' : it.t === 'r' ? 'r' : 'b'; }
-  function result(it) { return rec(bucketOf(it), it.id); }
+  // One question can appear in a lesson and the bank. Treat both as the same attempt history.
+  function result(it) {
+    var best = rec(bucketOf(it), it.id);
+    ['t', 'r', 'b'].forEach(function (bucket) {
+      var r = rec(bucket, it.id);
+      if (r && (!best || (r.at || 0) > (best.at || 0))) { best = r; }
+    });
+    return best;
+  }
+  function overPace(r) { return !!r && typeof r.t === 'number' && r.t > (r.l || 60); }
+  function practiceAttempt(prev, ok, time, limit, confidence) {
+    return { c: ok ? 1 : 0, t: typeof time === 'number' ? Math.round(time * 10) / 10 : null,
+      l: limit, mode: limit == null ? 'learn' : 'paced', confidence: confidence,
+      cause: prev && typeof prev.cause === 'string' ? prev.cause : '', evidence: prev && typeof prev.evidence === 'string' ? prev.evidence : '',
+      n: (prev && typeof prev.n === 'number' ? prev.n : prev ? 1 : 0) + 1, at: Date.now() };
+  }
+  function practiceSummary(rows) {
+    var first = rows.filter(function (r) { return r.fresh; }), repeat = rows.filter(function (r) { return !r.fresh; });
+    var correct = function (list) { return list.filter(function (r) { return r.ok; }).length; };
+    return { first: first.length, firstRight: correct(first), repeat: repeat.length, repeatRight: correct(repeat),
+      review: rows.filter(function (r) { return !r.ok || r.confidence === 'unsure' || r.confidence === 'guess'; }) };
+  }
   function matching(s) {
     var seen = {};
     return itemsAll().filter(function (it) {
@@ -40,18 +66,20 @@
       if (s.diff !== 'all' && it.d !== s.diff) { return false; }
       if (s.which === 'new' && r) { return false; }
       if (s.which === 'missed' && !(r && r.c === 0)) { return false; }
-      if (s.which === 'slow' && !(r && typeof r.t === 'number' && r.t > (r.l || 60))) { return false; }
+      if (s.which === 'uncertain' && !(r && (r.confidence === 'unsure' || r.confidence === 'guess'))) { return false; }
+      if (s.which === 'slow' && !overPace(r)) { return false; }
       return true;
     });
   }
-  function timedRecord(bucket, list) {
+  function practiceRecord(bucket, list) {
     var tried = 0, right = 0, under = 0, times = [];
     list.forEach(function (id) {
-      var r = rec(bucket, id);
-      if (!r || typeof r.t !== 'number') { return; }
-      tried += 1; if (r.c === 1) { right += 1; } if (r.t <= (r.l || 60)) { under += 1; } times.push(r.t);
+      var r = result({ t: bucket === 't' ? 'g' : bucket === 'r' ? 'r' : 'q', id: id });
+      if (!r) { return; }
+      tried += 1; if (r.c === 1) { right += 1; }
+      if (typeof r.t === 'number') { if (r.t <= (r.l || 60)) { under += 1; } times.push(r.t); }
     });
-    return { tried: tried, right: right, under: under, med: median(times) };
+    return { tried: tried, right: right, under: under, timed: times.length, med: median(times) };
   }
   function buildPractice() {
     if (built.practice) { return; }
@@ -63,15 +91,17 @@
     if (tclock) { tclock.halt(); }
     TS = null; tclock = null;
     var s = tset();
-    var g = timedRecord('t', EXLIST.map(function (e) { return e.q; })), r = timedRecord('r', RLIST.map(function (x) { return x.qid; }));
-    var nb = timedRecord('b', BANK.notes.map(function (x) { return x.id; })), xb = timedRecord('b', BANK.trans.map(function (x) { return x.id; })), qb = timedRecord('b', BANK.reading.map(function (x) { return x.id; }));
+    var g = practiceRecord('t', EXLIST.map(function (e) { return e.q; })), r = practiceRecord('r', RLIST.map(function (x) { return x.qid; }));
+    var nb = practiceRecord('b', BANK.notes.map(function (x) { return x.id; })), xb = practiceRecord('b', BANK.trans.map(function (x) { return x.id; })), qb = practiceRecord('b', BANK.reading.map(function (x) { return x.id; }));
     var seen = {};
     var all = itemsAll().filter(function (it) { if (seen[it.id]) { return false; } seen[it.id] = true; return true; });
     var nNew = all.filter(function (it) { return !result(it); }).length;
     var nMiss = all.filter(function (it) { var x = result(it); return x && x.c === 0; }).length;
-    var nSlow = all.filter(function (it) { var x = result(it); return x && typeof x.t === 'number' && x.t > (x.l || 60); }).length;
-    var h = (prefix || '') + '<header class="read"><p class="eyebrow">Practice</p><h2 class="vtitle">Real questions against the clock</h2>' +
-      '<p class="lede">All 1,845 Reading and Writing questions are available, including ' + BANK.figures.length + ' restored figure questions and ' + BANK.grammarSources.length + ' additional grammar questions with their full official explanations. Mixed sets include each question once. The clock continues past zero so you can see how far over you went.</p></header>' +
+    var nUncertain = all.filter(function (it) { var x = result(it); return x && (x.confidence === 'unsure' || x.confidence === 'guess'); }).length;
+    var nSlow = all.filter(function (it) { return overPace(result(it)); }).length;
+    var reviews = all.map(function (it) { return { it: it, r: result(it) }; }).filter(function (x) { return x.r && (x.r.evidence || x.r.cause); }).sort(function (a, b) { return (b.r.at || 0) - (a.r.at || 0); });
+    var h = (prefix || '') + '<header class="read"><p class="eyebrow">Practice</p><h2 class="vtitle">Learn first. Then build your pace.</h2>' +
+      '<p class="lede">All 1,845 Reading and Writing questions are available, including ' + BANK.figures.length + ' restored figure questions and ' + BANK.grammarSources.length + ' additional grammar questions with their full official explanations. Mixed sets include each question once. Start untimed while learning a skill; use unfamiliar mixed questions to check your pace.</p></header>' +
       '<div class="record"><div><b>' + g.tried + '</b><span>of ' + EXLIST.length + ' grammar tried</span></div><div><b>' + g.right + '</b><span>right last time</span></div>' +
       '<div><b>' + r.tried + '</b><span>of ' + RLIST.length + ' reading tried</span></div><div><b>' + r.right + '</b><span>right last time</span></div>' +
       '<div><b>' + qb.tried + '</b><span>of ' + BANK.reading.length + ' bank reading tried</span></div><div><b>' + nb.tried + '</b><span>of ' + BANK.notes.length + ' notes tried</span></div><div><b>' + xb.tried + '</b><span>of ' + BANK.trans.length + ' transitions tried</span></div></div>' +
@@ -79,15 +109,19 @@
       seg('tsrc', 'Questions from', [['g', 'Grammar and transition lessons'], ['a', 'Additional grammar (' + BANK.grammarSources.length + ')'], ['r', 'Reading worked examples'], ['q', BANK.reading.length + ' text reading questions'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'All ' + BANK.notes.length + ' notes questions'], ['x', 'All ' + BANK.trans.length + ' transition questions'], ['both', 'Mixed: all 1,845 questions']], s.src) +
       '<div id="tpartwrap">' + seg('tpart', 'Grammar part', [['all', 'All parts'], ['A', 'A · Boundaries'], ['B', 'B · Form, Structure, and Sense'], ['C', 'C · Transitions']], s.part) + '</div>' +
       seg('tdiff', 'Difficulty', [['all', 'Any'], ['Easy', 'Easy'], ['Medium', 'Medium'], ['Hard', 'Hard']], s.diff) +
-      seg('twhich', 'Which questions', [['all', 'All'], ['new', 'Not tried yet (' + nNew + ')'], ['missed', 'Missed last time (' + nMiss + ')'], ['slow', 'Over the clock last time (' + nSlow + ')']], s.which) +
+      seg('twhich', 'Which questions', [['all', 'All'], ['new', 'Not tried yet (' + nNew + ')'], ['missed', 'Missed last time (' + nMiss + ')'], ['uncertain', 'Unsure or guessed (' + nUncertain + ')'], ['slow', 'Over the clock last time (' + nSlow + ')']], s.which) +
       seg('tlen', 'Questions per set', [[10, '10'], [20, '20'], [0, 'All that match']], s.len) +
       seg('ttier', 'Clock', Object.keys(TIERS).map(function (k) { return [k, TIERS[k].label]; }), s.tier) +
+      '<p class="fine">Untimed mode has no clock or speed rating. The other modes use adjustable practice targets, and continue past zero. On the SAT, time belongs to the whole module: 32 minutes for 27 questions, with review within that module. A set here gives feedback after each answer; use <a href="https://satsuite.collegeboard.org/practice/practice-tests/bluebook" target="_blank" rel="noopener">official Bluebook practice</a> to rehearse a full test.</p>' +
       '<label class="checkline" for="thints"><input type="checkbox" id="thints"' + (s.hints ? ' checked' : '') + '>Highlight what changes in grammar choices</label>' +
       '<p class="h3" id="tcount" role="status"></p>' +
       '<div class="row"><button type="button" class="btn" id="tstart">Start the set</button>' +
-      '<button type="button" class="linkbtn" id="tforget"' + (g.tried + r.tried + nb.tried + xb.tried + qb.tried ? '' : ' hidden') + '>Clear my saved results</button></div>' +
-      '<div id="tconfirm" hidden><p class="verdict miss">Clear every saved timed result in this browser?</p><div class="row"><button type="button" class="btn" id="tyes">Clear them</button><button type="button" class="btn ghost" id="tno">Keep them</button></div></div>' +
+      '<button type="button" class="linkbtn" id="tforget"' + (nNew < all.length ? '' : ' hidden') + '>Clear my saved results</button></div>' +
+      '<div id="tconfirm" hidden><p class="verdict miss">Clear every saved Reading and Writing practice result in this browser?</p><div class="row"><button type="button" class="btn" id="tyes">Clear them</button><button type="button" class="btn ghost" id="tno">Keep them</button></div></div>' +
       '<p class="fine">Answer with A, B, C or D, or 1 to 4, and press Enter for the next question. ' + (canStore ? 'Results are saved in this browser only.' : 'Results last until you close this page.') + '</p></div>' +
+      (reviews.length ? '<details class="ctx"><summary>My saved reviews (' + reviews.length + ')</summary><div class="ctxbody"><p class="fine">Latest review for each question. Showing the most recent ' + Math.min(20, reviews.length) + '.</p><ul class="plainlist">' + reviews.slice(0, 20).map(function (x) {
+        return '<li><a href="#rq-' + x.it.id + '">Question ' + x.it.id + '</a>' + (x.r.cause ? '<p class="fine">' + esc(causeLabel(x.r.cause)) + '</p>' : '') + (x.r.evidence ? '<p class="fine">' + esc(x.r.evidence) + '</p>' : '') + '</li>';
+      }).join('') + '</ul></div></details>' : '') +
       '<h3 class="subh">Original questions and explanations</h3><p class="pretty">The restored source images include printed choices and complete official explanations. Open an image to enlarge it. Two further figure questions are already in Reading worked examples. <a href="#data-patterns">Study the deeper data patterns</a>.</p>';
     var host = document.getElementById('thost');
     host.innerHTML = h;
@@ -118,11 +152,12 @@
     refresh();
   }
   function timedStart(list, st) {
-    TS = { items: list, i: 0, res: [], tier: TIERS[st.tier], hints: st.hints, card: null, paused: false };
+    TS = { items: list, i: 0, res: [], tier: TIERS[st.tier] || TIERS.learn, settings: st, hints: st.hints, card: null, paused: false };
     document.getElementById('thost').innerHTML = '<div class="tplay"><div class="tbar"><span class="tpos" id="tpos"></span><div class="clockbox" id="tclock"></div>' +
       '<div class="row"><button type="button" class="btn sm" id="tnext2" hidden>Next</button><button type="button" class="linkbtn" id="tend">End set</button></div></div>' +
-      '<div id="tcard"></div><div class="tnav" id="tnav"></div></div>';
-    tclock = Clock(document.getElementById('tclock'), TS.tier.g, GRAMMAR_PHASES);
+      '<div id="tconfidence"></div><div id="tcard"></div><div id="treview"></div><div class="tnav" id="tnav"></div></div>';
+    tclock = TS.tier.g == null ? null : Clock(document.getElementById('tclock'), TS.tier.g, GRAMMAR_PHASES);
+    if (!tclock) { document.getElementById('tclock').innerHTML = '<p class="fine"><b>Untimed learning</b><br>Find the evidence or rule. Take the time you need.</p>'; }
     document.getElementById('tend').addEventListener('click', timedFinish);
     document.getElementById('tnext2').addEventListener('click', timedNext);
     timedDraw();
@@ -133,16 +168,22 @@
     document.getElementById('tpos').textContent = 'Question ' + (TS.i + 1) + ' of ' + TS.items.length + ' · ' + { g: 'grammar', a: 'grammar', r: 'reading', q: 'reading', v: 'table or graph', n: 'notes', x: 'transition' }[it.t];
     document.getElementById('tnav').innerHTML = '';
     document.getElementById('tnext2').hidden = true;
-    tclock.reset(lim, it.t === 'r' || it.t === 'q' || it.t === 'v' ? READING_PHASES : it.t === 'n' ? NOTES_PHASES : GRAMMAR_PHASES);
+    if (tclock) { tclock.reset(lim, it.t === 'r' || it.t === 'q' || it.t === 'v' ? READING_PHASES : it.t === 'n' ? NOTES_PHASES : GRAMMAR_PHASES); }
+    document.getElementById('tconfidence').innerHTML = seg('tconfidence', 'Before answering: how sure are you? (optional)', [['skip', 'Not recorded'], ['sure', 'Confident'], ['unsure', 'Unsure'], ['guess', 'Guessing']], 'skip');
+    document.getElementById('treview').innerHTML = '';
     TS.paused = false;
     var onAnswer = function (k, ok) {
-      var t = tclock.stop(), bucket = bucketOf(it), prev = rec(bucket, it.id);
-      TS.res.push({ it: it, k: k, ok: ok, t: t, l: lim });
-      store[bucket][it.id] = { c: ok ? 1 : 0, t: Math.round(t * 10) / 10, l: lim, n: (prev && typeof prev.n === 'number' ? prev.n : 0) + 1 };
+      var t = tclock ? tclock.stop() : null, bucket = bucketOf(it), prev = result(it);
+      var confidence = $('input[name="tconfidence"]:checked', document.getElementById('tconfidence')).value;
+      $$('input', document.getElementById('tconfidence')).forEach(function (input) { input.disabled = true; });
+      var attempt = practiceAttempt(prev, ok, t, lim, confidence);
+      TS.res.push({ it: it, k: k, ok: ok, t: t, l: lim, fresh: !prev, confidence: confidence, cause: attempt.cause, evidence: attempt.evidence });
+      store[bucket][it.id] = attempt;
       save();
-      return { time: t, limit: lim };
+      return t == null ? null : { time: t, limit: lim };
     };
     var after = function () {
+      practiceReflection(it);
       var last = TS.i + 1 >= TS.items.length;
       document.getElementById('tnav').innerHTML = '<button type="button" class="btn" id="tnext">' + (last ? 'See the results' : 'Next question') + '</button><span class="kbd">Enter</span>';
       document.getElementById('tnext').addEventListener('click', timedNext);
@@ -159,7 +200,27 @@
     var host = document.getElementById('tcard');
     host.textContent = '';
     host.appendChild(TS.card.el);
-    if (cur.view === 'practice' && !document.hidden) { tclock.start(); } else { TS.paused = true; }
+    if (tclock) {
+      if (cur.view === 'practice' && !document.hidden) { tclock.start(); } else { TS.paused = true; }
+    }
+  }
+  function practiceReflection(it) {
+    var host = document.getElementById('treview'), row = TS.res[TS.res.length - 1];
+    host.innerHTML = '<div class="after"><h3 class="h3">Review the reasoning <span class="muted">(optional)</span></h3>' +
+      '<p class="fine">Name the decisive evidence or grammar rule. Review uncertain correct answers too. For an error, identify what caused it before trying again. Your previous review stays until you edit it.</p>' +
+      '<label class="label" for="tcause">What caused the difficulty?</label><select id="tcause">' + REVIEW_CAUSES.map(function (c) { return '<option value="' + c[0] + '">' + esc(c[1]) + '</option>'; }).join('') + '</select>' +
+      '<label class="label" for="tevidence">Evidence or rule to remember</label><textarea id="tevidence" rows="3" maxlength="800" placeholder="The decisive words, comparison, or sentence structure…">' + esc(row.evidence || '') + '</textarea><p class="fine" id="treviewstatus" role="status"></p></div>';
+    document.getElementById('tcause').value = row.cause || '';
+    function keep() {
+      var saved = rec(bucketOf(it), it.id);
+      row.cause = document.getElementById('tcause').value;
+      row.evidence = document.getElementById('tevidence').value;
+      saved.cause = row.cause; saved.evidence = row.evidence;
+      save();
+      document.getElementById('treviewstatus').textContent = canStore ? 'Review saved in this browser.' : 'Review kept for this session.';
+    }
+    document.getElementById('tcause').addEventListener('change', keep);
+    document.getElementById('tevidence').addEventListener('input', keep);
   }
   function timedNext() {
     if (!TS || !TS.card || !TS.card.done()) { return; }
@@ -198,11 +259,12 @@
     var R = TS.res, n = R.length, total = TS.items.length;
     if (!n) { timedSetup(); return; }
     var right = R.filter(function (r) { return r.ok; }).length;
-    var under = R.filter(function (r) { return r.t <= r.l; }).length;
-    var avg = R.reduce(function (a, r) { return a + r.t; }, 0) / n;
-    var missed = R.filter(function (r) { return !r.ok; });
-    var slowRight = R.filter(function (r) { return r.ok && r.t > r.l; });
-    var retry = missed.map(function (r) { return r.it; }), st = tset();
+    var paced = R.filter(function (r) { return typeof r.t === 'number'; });
+    var under = paced.filter(function (r) { return r.t <= r.l; }).length;
+    var avg = paced.length ? paced.reduce(function (a, r) { return a + r.t; }, 0) / paced.length : 0;
+    var slowRight = paced.filter(function (r) { return r.ok && r.t > r.l; });
+    var summary = practiceSummary(R), review = summary.review;
+    var retry = review.map(function (r) { return r.it; }), st = TS.settings;
     var lineFor = function (r) {
       if (r.it.t === 'g') { var ex = r.it.ex, u = U[ex.u]; return '<a href="#' + u.id + '">' + u.num + ' ' + u.title + '</a>'; }
       if (r.it.t === 'a') { var ua = U[r.it.b.unit]; return ua ? '<a href="#' + ua.id + '">' + ua.num + ' ' + ua.title + '</a>' : 'Grammar question'; }
@@ -212,15 +274,18 @@
       if (r.it.t === 'q') { var jq = RD.jobs.filter(function (j) { return j.name === r.it.b.jn; })[0]; return jq ? '<a href="#' + jq.id + '">' + esc(r.it.b.jn) + '</a>' : esc(r.it.b.jn); }
       return '<a href="#ex-' + r.it.x.n + '">Example ' + r.it.x.n + ' · ' + esc(r.it.x.title) + '</a>';
     };
-    document.getElementById('thost').innerHTML = '<p class="eyebrow">Set finished</p><p class="dresult">' + right + ' of ' + n + ' right · ' + under + ' inside the clock</p>' +
-      '<p class="lede">Average ' + clock(avg) + ' a question.' + (n < total ? ' You answered ' + n + ' of ' + total + '.' : '') + '</p>' + chartHTML(R) +
-      (missed.length ? '<h3 class="subh">What to review</h3><ul class="missed">' + missed.map(function (r) {
-        return '<li>' + lineFor(r) + ' <span class="muted">· question ' + r.it.id + ' · you chose ' + r.k + ', the answer is ' + (r.it.t === 'g' ? r.it.ex.a : r.it.t === 'r' ? r.it.x.ans : r.it.b.ans) + '</span></li>';
+    document.getElementById('thost').innerHTML = '<p class="eyebrow">Set finished · ' + (paced.length ? 'paced practice' : 'untimed learning') + '</p><p class="dresult">' + right + ' of ' + n + ' right' + (paced.length ? ' · ' + under + ' inside the practice target' : '') + '</p>' +
+      '<p class="lede">' + (paced.length ? 'Average ' + clock(avg) + ' a question.' : 'No speed rating in untimed learning.') + (n < total ? ' You answered ' + n + ' of ' + total + '.' : '') + '</p>' +
+      '<p class="pretty"><b>First recorded answers:</b> ' + summary.firstRight + ' of ' + summary.first + ' right. <b>Repeat answers:</b> ' + summary.repeatRight + ' of ' + summary.repeat + ' right.</p>' +
+      '<p class="fine">A first recorded answer may still be familiar from a lesson. Repeats help learning; check transfer on unfamiliar questions. This set does not predict an SAT score.</p>' + (paced.length ? chartHTML(paced) : '') +
+      (review.length ? '<h3 class="subh">Review misses and uncertain answers</h3><ul class="missed">' + review.map(function (r) {
+        return '<li>' + lineFor(r) + ' <span class="muted">· question ' + r.it.id + ' · you chose ' + r.k + ', the answer is ' + (r.it.t === 'g' ? r.it.ex.a : r.it.t === 'r' ? r.it.x.ans : r.it.b.ans) + (r.confidence === 'guess' ? ' · guessed' : r.confidence === 'unsure' ? ' · unsure' : '') + '</span>' +
+          (r.cause ? '<p class="fine">' + esc(causeLabel(r.cause)) + '</p>' : '') + (r.evidence ? '<p class="fine">Your review: ' + esc(r.evidence) + '</p>' : '') + '</li>';
       }).join('') + '</ul>' : '<p class="subh">Every answer right.</p>') +
       (slowRight.length ? '<h3 class="subh">Right, but over the clock</h3><ul class="missed">' + slowRight.map(function (r) {
         return '<li>' + lineFor(r) + ' <span class="muted">· ' + clock(r.t) + ' of ' + clock(r.l) + '</span></li>';
       }).join('') + '</ul>' : '') +
-      '<div class="row" style="margin-top:1.4rem">' + (retry.length ? '<button type="button" class="btn" id="tretry">Retry the ' + plural(retry.length, 'miss', 'misses') + '</button>' : '') +
+      '<div class="row" style="margin-top:1.4rem">' + (retry.length ? '<button type="button" class="btn" id="tretry">Revisit ' + plural(retry.length, 'question') + '</button>' : '') +
       '<button type="button" class="btn' + (retry.length ? ' ghost' : '') + '" id="tagain">Set up another</button></div>';
     TS = null; tclock = null;
     var rb = document.getElementById('tretry');

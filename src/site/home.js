@@ -5,7 +5,7 @@
       ['reading', 'reading', 'Reading', 'The four-step routine for reading questions, with long sentences taken apart and 17 worked examples.'],
       ['grammar', 'method', 'Grammar', 'The 60-second method for grammar and transition questions, and 19 short lessons covering every rule.'],
       ['drills', 'drills', 'Drills', 'Quick drills on real questions for the slow steps: naming the job, finding the core, spotting the pattern.'],
-      ['practice', 'practice', 'Practice', 'Timed sets of real College Board questions, each followed by its fast path or walkthrough.'],
+      ['practice', 'practice', 'Practice', 'Untimed learning or paced sets, with explanations and review of misses and uncertain answers.'],
       ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.']] },
     math: { name: 'Math', icon: 'calc', items: [
       ['mstart', 'math', 'Start here', 'How to approach every math question, what the test covers, and what the data says.'],
@@ -70,7 +70,7 @@
     var host = document.getElementById('footcols');
     if (!host) { return; }
     function col(title, items) { return '<nav aria-label="' + esc(title) + '"><p class="foot-h">' + esc(title) + '</p><ul>' + items.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></nav>'; }
-    host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from College Board’s full question bank.</p></div>' +
+    host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from an export of College Board’s question bank.</p></div>' +
       col('Reading & Writing', SUBJ.rw.items.map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
       col('Math', SUBJ.math.items.map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
       col('This site', ['<a href="#home">Home</a>', '<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']);
@@ -158,7 +158,7 @@
         feat('rw', 'bolt', 'Grammar in 60 seconds', 'Look, check, confirm: one check per question.', 'method') +
         feat('rw', 'book', 'Reading routine', 'Job, Chunk, Say, Check, with worked examples.', 'reading') +
         feat('rw', 'pen', 'Drills', 'Short drills on real questions for the slow steps.', 'drills') +
-        feat('rw', 'target', 'Timed practice', 'Real reading and grammar questions against the clock.', 'practice') +
+        feat('rw', 'target', 'Learn, then pace', 'Untimed learning, paced sets, and review of uncertain answers.', 'practice') +
       '</div></section>' +
       '<section class="hsec hhow"><div class="hsec-h"><h2 class="h2">How to use this site</h2></div><ol class="hsteps">' +
         '<li><b>Pick a subject.</b><span>Use Home, Reading &amp; Writing and Math at the top of every page.</span></li>' +

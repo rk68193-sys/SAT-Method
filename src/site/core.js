@@ -168,7 +168,7 @@
 
   /* ---------- the clock ---------- */
   var GRAMMAR_PHASES = [[1 / 12, 'Look', 'Name what changes'], [0.75, 'Check', 'Run the one check'], [1, 'Confirm', 'Read it with your answer']];
-  var READING_PHASES = [[5 / 70, 'Job', 'Read the question first'], [40 / 70, 'Chunk', 'Tag each sentence'], [50 / 70, 'Say', 'Your own answer first'], [1, 'Check', 'Every piece needs a line']];
+  var READING_PHASES = [[5 / 70, 'Job', 'Identify the task'], [40 / 70, 'Chunk', 'Understand the relevant text'], [50 / 70, 'Say', 'Form an expectation if useful'], [1, 'Check', 'Verify the evidence or relationship']];
   function Clock(host, limit, phases) {
     var R = 42, CIRC = 2 * Math.PI * R;
     phases = phases || GRAMMAR_PHASES;

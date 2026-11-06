@@ -71,7 +71,7 @@
     if (routeMath(token)) { return; }
     if ((m = /^rq-([0-9a-f]{8})$/.exec(token))) {
       var sourceItem = itemsAll().filter(function (it) { return it.id === m[1]; })[0];
-      if (sourceItem) { showView('practice'); buildPractice(); timedStart([sourceItem], { tier: 'easy', hints: false }); toTop(); return; }
+      if (sourceItem) { showView('practice'); buildPractice(); timedStart([sourceItem], { tier: tset().tier, hints: false }); toTop(); return; }
     }
     if (token === 'suggest' || token === 'suggest-notes') { showView('suggest'); buildSuggest(token === 'suggest-notes'); if (token === 'suggest') { toTop(); } return; }
     if (token === 'start' || token === 'top' || token === 'which') {
@@ -172,7 +172,8 @@
   document.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) { return; }
     var t = e.target, tag = t && t.tagName ? t.tagName : '';
-    if (/^(INPUT|TEXTAREA|SELECT|SUMMARY)$/.test(tag)) { return; }
+    var confidenceChoice = tag === 'INPUT' && t.type === 'radio' && t.name === 'tconfidence';
+    if (/^(INPUT|TEXTAREA|SELECT|SUMMARY)$/.test(tag) && !confidenceChoice) { return; }
     var key = e.key || '';
     if (cur.view === 'practice' && TS && TS.card) {
       if (!TS.card.done()) {
