@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -13,7 +13,7 @@
   function showView(v) {
     if (cur.view === v) { return; }
     if (cur.view) { viewY[cur.view] = window.scrollY; }
-    if (cur.view === 'practice') { timedPause(); }
+    if (cur.view === 'practice') { timedPause(); rmPause(); }
     if (cur.view === 'grammar') { demoPause(); }
     if (cur.view === 'drills') { drillAway(); }
     if (cur.view === 'mprac') { mpPause(); mCalcShow(false); }
@@ -21,7 +21,7 @@
     markNav(v);
     cur.view = v;
     document.body.setAttribute('data-subj', VIEW_SUBJ[v] || 'home');
-    if (v === 'practice') { timedResume(); }
+    if (v === 'practice') { timedResume(); rmResume(); }
     if (v === 'grammar') { demoResume(); }
     if (v === 'drills' && !document.hidden) { drillBack(); }
     if (v === 'mprac' && !document.hidden) { mpResume(); }
@@ -102,6 +102,13 @@
       toTop(); return;
     }
     if (token === 'practice' || token === 'timed' || token === 'test') { showView('practice'); buildPractice(); toTop(); return; }
+    if (token === 'rw-module') {
+      showView('practice');
+      if (!(RM && !RM.over)) { rmModePreset = 'module'; if (built.practice) { timedSetup(); } else { buildPractice(); } }
+      toTop(); return;
+    }
+    if (token === 'rw-map' || token === 'rw-traps') { showView('rwmap'); buildRwMap(); if (token === 'rw-traps') { scrollToEl(document.getElementById('rw-traps')); } else { toTop(); } return; }
+    if ((m = /^rw-map-(.+)$/.exec(token)) && has(RWTBY, m[1])) { showView('rwmap'); buildRwMap(m[1]); scrollToEl(document.getElementById('rwm-detail')); return; }
     if (has(LOOKUP_AT, token)) {
       showView('lookup'); buildLookup();
       if (LOOKUP_AT[token]) { scrollToEl(document.getElementById(LOOKUP_AT[token])); } else { toTop(); }
@@ -158,7 +165,7 @@
     var dk = a.getAttribute('data-drill');
     if (dk && has(DR, dk)) { try { history.pushState(null, '', '#drills'); } catch (err) {} showView('drills'); buildDrills(); startDrill(dk); return; }
     var tp = a.getAttribute('data-tpart');
-    if (tp) { var s0 = isObj(store.s.timed) ? store.s.timed : {}; s0.src = 'g'; s0.part = tp; s0.which = 'all'; store.s.timed = s0; save(); if (built.practice && !TS) { timedSetup(); } }
+    if (tp) { var s0 = isObj(store.s.timed) ? store.s.timed : {}; s0.src = 'g'; s0.part = tp; s0.which = 'all'; s0.mode = 'set'; store.s.timed = s0; save(); if (built.practice && !TS && !(RM && !RM.over)) { timedSetup(); } }
     /* a tab for a view you have already visited takes you back to where you were */
     var tv = a.closest('#tabs') ? a.getAttribute('data-view') : '';
     if (tv && tv !== cur.view && viewTok[tv] && (tv === 'reading' || tv === 'grammar' || tv === 'lookup')) {
@@ -175,11 +182,12 @@
   document.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) { return; }
     var t = e.target, tag = t && t.tagName ? t.tagName : '';
-    var confidenceChoice = tag === 'INPUT' && t.type === 'radio' && t.name === 'tconfidence';
-    var flagBox = tag === 'INPUT' && t.id === 'mm-flag';   /* "Mark for review" keeps the answer keys working */
+    var confidenceChoice = tag === 'INPUT' && t.type === 'radio' && (t.name === 'tconfidence' || t.name === 'tcause');
+    var flagBox = tag === 'INPUT' && (t.id === 'mm-flag' || t.id === 'rm-flag');   /* "Mark for review" keeps the answer keys working */
     if (/^(INPUT|TEXTAREA|SELECT|SUMMARY)$/.test(tag) && !confidenceChoice && !flagBox) { return; }
     var key = e.key || '';
-    if (cur.view === 'practice' && TS && TS.card) {
+    if (cur.view === 'practice' && RM) { rmKey(e, key, tag);
+    } else if (cur.view === 'practice' && TS && TS.card) {
       if (!TS.card.done()) {
         var k = key.toUpperCase(), n = ['1', '2', '3', '4'].indexOf(key);
         if (n !== -1) { k = 'ABCD'[n]; }
@@ -197,9 +205,9 @@
     }
   });
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) { timedPause(); demoPause(); drillAway(); mpPause(); }
+    if (document.hidden) { timedPause(); rmPause(); demoPause(); drillAway(); mpPause(); }
     else if (cur.view === 'mprac') { mpResume(); }
-    else if (cur.view === 'practice') { timedResume(); }
+    else if (cur.view === 'practice') { timedResume(); rmResume(); }
     else if (cur.view === 'grammar') { demoResume(); }
     else if (cur.view === 'drills') { drillBack(); }
   });

@@ -57,9 +57,7 @@
       if (r[0]) { right += 1; } else { missed.push(id); }
       if (r[2] > last) { last = r[2]; }
     });
-    var lvl = 'new';
-    if (tried) { lvl = right / tried < 0.6 ? 'weak' : (right / tried >= 0.85 && tried >= Math.min(3, m.question_count) ? 'strong' : 'mid'); }
-    return { n: m.question_count, tried: tried, right: right, last: last, missed: missed, lvl: lvl, pct: mpc(right, tried) };
+    return { n: m.question_count, tried: tried, right: right, last: last, missed: missed, lvl: levelOf(right, tried, m.question_count), pct: mpc(right, tried) };
   }
   function mAgo(t) {
     var d = Math.floor((Date.now() - t) / 86400000);
@@ -82,7 +80,7 @@
       '<p><b>Why the method works:</b> ' + esc(m.why_it_works) + '</p>' +
       '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(m.common_trap) + '</p>' +
       '<p class="row"><a class="btn sm" href="#m-study-practice-' + id + '">Practice this type (' + s.n + ')</a>' +
-      (s.missed.length ? '<button class="btn ghost sm" type="button" data-mm-retry="' + esc(m.id) + '">Retry the ' + s.missed.length + ' I missed</button>' : '') +
+      (s.missed.length ? '<button class="btn ghost sm" type="button" data-mm-retry="' + esc(m.id) + '">' + retryLabel('type', s.missed.length, 22) + '</button>' : '') +
       '<a class="linkbtn" href="#m-study-' + id + '">Full method</a></p></div>';
   }
 
@@ -93,7 +91,7 @@
     var t = mWhyTally(tagged), total = tagged.length;
     var untagged = missed.filter(function (id) { return !mWhyOf(id); }).length;
     var head = '<h3 class="h2">Why you miss</h3><p class="lede">After a miss in practice, tap what went wrong. This report adds those taps up, so you fix the habit and not just the question.</p>';
-    var retryAll = missed.length ? '<p class="row" style="margin-top:1rem"><button class="btn sm" type="button" data-mw-retry="all">Retry ' + plural(missed.length, 'missed question') + '</button>' + (untagged && total ? '<span class="fine">' + untagged + ' of them ' + (untagged === 1 ? 'has' : 'have') + ' no reason yet.</span>' : '') + '</p>' : '';
+    var retryAll = missed.length ? '<p class="row" style="margin-top:1rem"><button class="btn sm" type="button" data-mw-retry="all">' + retryLabel('all', missed.length, 22) + '</button>' + (untagged && total ? '<span class="fine">' + untagged + ' of them ' + (untagged === 1 ? 'has' : 'have') + ' no reason yet.</span>' : '') + '</p>' : '';
     if (!total) {
       return head + '<aside class="mnote"><p><b>No reasons recorded yet.</b> ' + (missed.length ? 'You have ' + plural(missed.length, 'missed question') + '. Retry them, and when one goes wrong again, tap the reason under the answer.' : 'Practice a set; when you miss a question, the reasons to choose from appear under the answer.') + '</p></aside>' + retryAll;
     }
@@ -107,7 +105,7 @@
         '<span class="mbar" aria-hidden="true"><i style="width:' + mpc(x.ids.length, total) + '%"></i></span>' +
         '<p class="muted">' + esc(x.w[2]) + '</p><p><b>The fix:</b> ' + esc(x.w[3]) + '</p>' + traps +
         '<p class="mtr-types"><span class="mtag">Where it happened</span> ' + chips + (tk.length > 5 ? '<span class="muted">and ' + (tk.length - 5) + ' more</span>' : '') + '</p>' +
-        (still ? '<p class="row"><button class="btn ghost sm" type="button" data-mw-retry="' + x.w[0] + '">Retry ' + (still === 1 ? 'this question' : 'these ' + still + ' questions') + '</button></p>' : '<p class="fine">You have since answered ' + (x.ids.length === 1 ? 'this question' : 'all of these') + ' correctly.</p>') + '</article>';
+        (still ? '<p class="row"><button class="btn ghost sm" type="button" data-mw-retry="' + x.w[0] + '">' + retryLabel('some', still, 22) + '</button></p>' : '<p class="fine">You have since answered ' + (x.ids.length === 1 ? 'this question' : 'all of these') + ' correctly.</p>') + '</article>';
     }).join('');
     return head + '<p class="mtr-total"><b>' + plural(total, 'miss', 'misses') + ' with a reason.</b> Your most common one: ' + esc(t.list[0].w[1].toLowerCase()) + '.</p><div class="mtrs">' + cards + '</div>' + retryAll;
   }

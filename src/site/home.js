@@ -5,8 +5,9 @@
       ['reading', 'reading', 'Reading', 'The four-step routine for reading questions, with long sentences taken apart and 17 worked examples.'],
       ['grammar', 'method', 'Grammar', 'The 60-second method for grammar and transition questions, and 19 short lessons covering every rule.'],
       ['drills', 'drills', 'Drills', 'Quick drills on real questions for the slow steps: naming the job, finding the core, spotting the pattern.'],
-      ['practice', 'practice', 'Practice', 'Untimed learning or paced sets, with explanations and review of misses and uncertain answers.'],
-      ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.']] },
+      ['practice', 'practice', 'Practice', 'Untimed learning, paced sets or a timed 27-question module, with explanations and review of misses and uncertain answers.'],
+      ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.'],
+      ['rwmap', 'rw-map', 'My map', 'Every kind of reading question and every grammar rule colored by how you are doing, the causes of your misses, and what to practice next.']] },
     math: { name: 'Math', icon: 'calc', items: [
       ['mstart', 'math', 'Start here', 'How to approach every math question, what the test covers, and what the data says.'],
       ['mlearn', 'm-learn', 'Lessons', 'All 19 skills explained from scratch, each with a method, a worked example and its question types.'],
@@ -162,6 +163,8 @@
         feat('rw', 'book', 'Reading routine', 'Job, Chunk, Say, Check, with worked examples.', 'reading') +
         feat('rw', 'pen', 'Drills', 'Short drills on real questions for the slow steps.', 'drills') +
         feat('rw', 'target', 'Learn, then pace', 'Untimed learning, paced sets, and review of uncertain answers.', 'practice') +
+        feat('rw', 'bolt', 'Timed module', '27 questions on one 32-minute clock, in the test’s order, with mark for review and cross-out.', 'rw-module') +
+        feat('rw', 'grid', 'Mastery map', 'Every reading type and grammar rule colored by how you are doing, and why you miss.', 'rw-map') +
       '</div></section>' +
       '<section class="hsec hhow"><div class="hsec-h"><h2 class="h2">How to use this site</h2></div><ol class="hsteps">' +
         '<li><b>Pick a subject.</b><span>Use Home, Reading &amp; Writing and Math at the top of every page.</span></li>' +

@@ -1758,6 +1758,31 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
   .mm-t { width: 2.65rem; height: 2.65rem; }
 }
 
+/* ---------- Reading and Writing: seven tabs, the timed module, the map ---------- */
+@media (max-width: 820px) { .secin[data-n="7"] .secnav-l a:last-child { grid-column: 1 / -1; } }
+.tsetup[data-mode="module"] .t-setonly { display: none; }
+.tsetup .mpmode-note { margin-top: -.5rem; }
+/* the question card brings its own frame, so the module's card is only spacing */
+.rmwrap .mpcard { padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+.rmwrap .mpcard-h { margin-bottom: .8rem; padding-inline: .2rem; }
+.rmwrap .mm-step { margin-top: 1.1rem; }
+.rmwrap .mm-yours { margin: 0 0 .8rem; }
+.rmli { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .2rem .6rem; align-items: center; }
+.rmli .mmx { min-width: 5.2rem; text-align: right; white-space: nowrap; }
+.opt.sel, .opt.sel:hover:not(:disabled) { border-color: var(--act); background: var(--hl); color: var(--hl-ink); box-shadow: inset 0 0 0 1.5px var(--act); }
+.opt.sel .let { background: var(--act); border-color: var(--act); color: var(--act-ink); }
+.opt.crossed { border-style: dashed; }
+.opt.crossed .otext, .opt.crossed .let { text-decoration: line-through; color: var(--muted); }
+.opt.crossed .otext img { opacity: .45; }
+.mst-stats.rw > div { border-color: var(--rw-line); background: var(--rw-soft); }
+.mm-t.mm-tw { width: auto; height: auto; min-height: 2.5rem; padding: .35rem .75rem; gap: .5rem; grid-auto-flow: column; font: 600 .92rem/1.25 var(--body); text-align: left; }
+.mm-t.mm-tw b { font: 700 .85rem/1 var(--mono); }
+.mm-t.mm-tw.lvl-new { color: var(--ink-2); }
+.mm-skill-h b { font-weight: 600; }
+.after .seg { margin-top: .2rem; }
+.after .seg label > span { padding: .36rem .8rem; font-size: .95rem; }
+@media (max-width: 560px) { .rmli { grid-template-columns: minmax(0, 1fr); } .rmli .mmx { text-align: left; padding-left: .8rem; } }
+
 </style>
 
 <script>try { var t0 = localStorage.getItem('sat-sprint-theme'); if (t0 && t0 !== 'auto') { document.documentElement.setAttribute('data-theme', t0); } } catch (e) {}</script>
@@ -1799,6 +1824,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
   <section id="v-mref" class="view" aria-label="Math formulas and Desmos" hidden></section>
   <section id="v-mprac" class="view" aria-label="Math practice" hidden></section>
   <section id="v-mmap" class="view" aria-label="My math mastery map" hidden></section>
+  <section id="v-rwmap" class="view" aria-label="My Reading and Writing mastery map" hidden></section>
   <section id="v-suggest" class="view" aria-label="Suggest a change" hidden></section>
 </main>
 
@@ -3434,7 +3460,8 @@ function rReasoningHTML() {
       which: ['all', 'new', 'missed', 'uncertain', 'slow'].indexOf(s.which) !== -1 ? s.which : 'all',
       len: [10, 20, 0].indexOf(s.len) !== -1 ? s.len : 10,
       tier: TIERS[s.tier] ? s.tier : 'learn',
-      hints: s.hints === true
+      hints: s.hints === true,
+      mode: s.mode === 'module' ? 'module' : 'set'
     };
   }
   // n: notes questions and x: transition questions, both with College Board's own answers
@@ -3509,7 +3536,9 @@ function rReasoningHTML() {
   function timedSetup(prefix) {
     if (tclock) { tclock.halt(); }
     TS = null; tclock = null;
+    rmDrop();
     var s = tset();
+    if (rmModePreset) { s.mode = rmModePreset; rmModePreset = null; }
     var g = practiceRecord('t', EXLIST.map(function (e) { return e.q; })), r = practiceRecord('r', RLIST.map(function (x) { return x.qid; }));
     var nb = practiceRecord('b', BANK.notes.map(function (x) { return x.id; })), xb = practiceRecord('b', BANK.trans.map(function (x) { return x.id; })), qb = practiceRecord('b', BANK.reading.map(function (x) { return x.id; }));
     var seen = {};
@@ -3524,15 +3553,17 @@ function rReasoningHTML() {
       '<div class="record"><div><b>' + g.tried + '</b><span>of ' + EXLIST.length + ' grammar tried</span></div><div><b>' + g.right + '</b><span>right last time</span></div>' +
       '<div><b>' + r.tried + '</b><span>of ' + RLIST.length + ' reading tried</span></div><div><b>' + r.right + '</b><span>right last time</span></div>' +
       '<div><b>' + qb.tried + '</b><span>of ' + BANK.reading.length + ' bank reading tried</span></div><div><b>' + nb.tried + '</b><span>of ' + BANK.notes.length + ' notes tried</span></div><div><b>' + xb.tried + '</b><span>of ' + BANK.trans.length + ' transitions tried</span></div></div>' +
-      '<div class="tsetup">' +
-      seg('tsrc', 'Questions from', [['g', 'Grammar and transition lessons'], ['a', 'Additional grammar (' + BANK.grammarSources.length + ')'], ['r', 'Reading worked examples'], ['q', BANK.reading.length + ' text reading questions'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'All ' + BANK.notes.length + ' notes questions'], ['x', 'All ' + BANK.trans.length + ' transition questions'], ['both', 'Mixed: all 1,845 questions']], s.src) +
-      '<div id="tpartwrap">' + seg('tpart', 'Grammar part', [['all', 'All parts'], ['A', 'A · Boundaries'], ['B', 'B · Form, Structure, and Sense'], ['C', 'C · Transitions']], s.part) + '</div>' +
+      '<div class="tsetup" id="tsetup" data-mode="' + s.mode + '">' +
+      seg('tmode', 'How to practice', [['set', 'Learn or pace'], ['module', 'Timed module']], s.mode) +
+      '<p class="mpmode-note" id="tmodenote"></p>' +
+      '<div class="t-setonly">' + seg('tsrc', 'Questions from', [['g', 'Grammar and transition lessons'], ['a', 'Additional grammar (' + BANK.grammarSources.length + ')'], ['r', 'Reading worked examples'], ['q', BANK.reading.length + ' text reading questions'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'All ' + BANK.notes.length + ' notes questions'], ['x', 'All ' + BANK.trans.length + ' transition questions'], ['both', 'Mixed: all 1,845 questions']], s.src) + '</div>' +
+      '<div id="tpartwrap" class="t-setonly">' + seg('tpart', 'Grammar part', [['all', 'All parts'], ['A', 'A · Boundaries'], ['B', 'B · Form, Structure, and Sense'], ['C', 'C · Transitions']], s.part) + '</div>' +
       seg('tdiff', 'Difficulty', [['all', 'Any'], ['Easy', 'Easy'], ['Medium', 'Medium'], ['Hard', 'Hard']], s.diff) +
       seg('twhich', 'Which questions', [['all', 'All'], ['new', 'Not tried yet (' + nNew + ')'], ['missed', 'Missed last time (' + nMiss + ')'], ['uncertain', 'Unsure or guessed (' + nUncertain + ')'], ['slow', 'Over the clock last time (' + nSlow + ')']], s.which) +
-      seg('tlen', 'Questions per set', [[10, '10'], [20, '20'], [0, 'All that match']], s.len) +
-      seg('ttier', 'Clock', Object.keys(TIERS).map(function (k) { return [k, TIERS[k].label]; }), s.tier) +
-      '<p class="fine">Untimed mode has no clock or speed rating. The other modes use adjustable practice targets, and continue past zero. On the SAT, time belongs to the whole module: 32 minutes for 27 questions, with review within that module. A set here gives feedback after each answer; use <a href="https://satsuite.collegeboard.org/practice/practice-tests/bluebook" target="_blank" rel="noopener">official Bluebook practice</a> to rehearse a full test.</p>' +
-      '<label class="checkline" for="thints"><input type="checkbox" id="thints"' + (s.hints ? ' checked' : '') + '>Highlight what changes in grammar choices</label>' +
+      '<div class="t-setonly">' + seg('tlen', 'Questions per set', [[10, '10'], [20, '20'], [0, 'All that match']], s.len) + '</div>' +
+      '<div class="t-setonly">' + seg('ttier', 'Clock', Object.keys(TIERS).map(function (k) { return [k, TIERS[k].label]; }), s.tier) + '</div>' +
+      '<p class="fine t-setonly">Untimed mode has no clock or speed rating. The other modes use adjustable practice targets, and continue past zero. On the SAT, time belongs to the whole module: 32 minutes for 27 questions, with review within that module. A set here gives feedback after each answer; choose <b>Timed module</b> above to practice one whole module, and use <a href="https://satsuite.collegeboard.org/practice/practice-tests/bluebook" target="_blank" rel="noopener">official Bluebook practice</a> to rehearse a full test.</p>' +
+      '<label class="checkline t-setonly" for="thints"><input type="checkbox" id="thints"' + (s.hints ? ' checked' : '') + '>Highlight what changes in grammar choices</label>' +
       '<p class="h3" id="tcount" role="status"></p>' +
       '<div class="row"><button type="button" class="btn" id="tstart">Start the set</button>' +
       '<button type="button" class="linkbtn" id="tforget"' + (nNew < all.length ? '' : ' hidden') + '>Clear my saved results</button></div>' +
@@ -3546,19 +3577,28 @@ function rReasoningHTML() {
     host.innerHTML = h;
     function readSettings() {
       var gv = function (n) { var x = $('input[name="' + n + '"]:checked', host); return x ? x.value : ''; };
-      store.s.timed = { src: gv('tsrc'), part: gv('tpart'), diff: gv('tdiff'), which: gv('twhich'), len: Number(gv('tlen')), tier: gv('ttier'), hints: document.getElementById('thints').checked };
+      store.s.timed = { src: gv('tsrc'), part: gv('tpart'), diff: gv('tdiff'), which: gv('twhich'), len: Number(gv('tlen')), tier: gv('ttier'), hints: document.getElementById('thints').checked, mode: gv('tmode') };
       save();
       return tset();
     }
     function refresh() {
-      var st = readSettings(), n = matching(st).length;
+      var st = readSettings(), mod = st.mode === 'module', n = mod ? rmPool(st).length : matching(st).length, get = Math.min(n, RM_N);
+      document.getElementById('tsetup').setAttribute('data-mode', st.mode);
+      document.getElementById('tmodenote').innerHTML = mod
+        ? '<b>One part of the real section:</b> ' + RM_N + ' questions on a single ' + clock(rmLimit(RM_N)) + ' clock, in the order the test asks them: words and structure, then evidence and inference, then grammar, then transitions and notes. Move back and forth, mark questions for review and cross out choices. Answers and explanations come at the end.'
+        : '<b>One question at a time:</b> the answer and the explanation appear straight after each question, with no clock or with a clock for each question.';
       document.getElementById('tpartwrap').hidden = st.src !== 'g' && st.src !== 'a' && st.src !== 'both';
-      document.getElementById('tcount').textContent = n === 0 ? 'No question matches these settings.' : plural(n, 'question') + ' match.';
+      document.getElementById('tcount').textContent = n === 0 ? 'No question matches these settings.'
+        : mod ? plural(n, 'question') + ' match. Your module: ' + plural(get, 'question') + ', ' + clock(rmLimit(get)) + ' on the clock.'
+        : plural(n, 'question') + ' match.';
+      document.getElementById('tstart').textContent = mod ? 'Start the module' : 'Start the set';
       document.getElementById('tstart').disabled = n === 0;
     }
     $$('input', host).forEach(function (i) { i.addEventListener('change', refresh); });
     document.getElementById('tstart').addEventListener('click', function () {
-      var st = readSettings(), list = shuffle(matching(st).slice());
+      var st = readSettings(), list;
+      if (st.mode === 'module') { rmStart(st); return; }
+      list = shuffle(matching(st).slice());
       if (st.len) { list = list.slice(0, st.len); }
       if (list.length) { timedStart(list, st); }
     });
@@ -3571,6 +3611,7 @@ function rReasoningHTML() {
     refresh();
   }
   function timedStart(list, st) {
+    rmDrop();
     TS = { items: list, i: 0, res: [], tier: TIERS[st.tier] || TIERS.learn, settings: st, hints: st.hints, card: null, paused: false };
     document.getElementById('thost').innerHTML = '<div class="tplay"><div class="tbar"><span class="tpos" id="tpos"></span><div class="clockbox" id="tclock"></div>' +
       '<div class="row"><button type="button" class="btn sm" id="tnext2" hidden>Next</button><button type="button" class="linkbtn" id="tend">End set</button></div></div>' +
@@ -3623,24 +3664,28 @@ function rReasoningHTML() {
       if (cur.view === 'practice' && !document.hidden) { tclock.start(); } else { TS.paused = true; }
     }
   }
-  function practiceReflection(it) {
-    var host = document.getElementById('treview'), row = TS.res[TS.res.length - 1];
-    host.innerHTML = '<div class="after"><h3 class="h3">Review the reasoning <span class="muted">(optional)</span></h3>' +
-      '<p class="fine">Name the decisive evidence or grammar rule. Review uncertain correct answers too. For an error, identify what caused it before trying again. Your previous review stays until you edit it.</p>' +
-      '<label class="label" for="tcause">What caused the difficulty?</label><select id="tcause">' + REVIEW_CAUSES.map(function (c) { return '<option value="' + c[0] + '">' + esc(c[1]) + '</option>'; }).join('') + '</select>' +
-      '<label class="label" for="tevidence">Evidence or rule to remember</label><textarea id="tevidence" rows="3" maxlength="800" placeholder="The decisive words, comparison, or sentence structure…">' + esc(row.evidence || '') + '</textarea><p class="fine" id="treviewstatus" role="status"></p></div>';
-    document.getElementById('tcause').value = row.cause || '';
+  /* "Review the reasoning": what caused the difficulty (one tap; the trap report adds these up) and the evidence or rule to
+     remember. row is this question's entry in the running set's results, when there is one. */
+  function reflectionBlock(host, it, row) {
+    var saved = rec(bucketOf(it), it.id);
+    if (!host || !saved) { if (host) { host.innerHTML = ''; } return; }
+    var missed = saved.c === 0;
+    host.innerHTML = '<div class="after"><h3 class="h3">' + (missed ? 'What went wrong?' : 'Review the reasoning') + ' <span class="muted">(optional)</span></h3>' +
+      '<p class="fine">' + (missed ? 'Tap what caused the miss, so you can fix the habit and not just this question.' : 'Review uncertain correct answers too: if this one was hard, tap what caused the difficulty.') + ' Then name the decisive evidence or grammar rule. Your previous review stays until you edit it.</p>' +
+      seg('tcause', 'What caused the difficulty?', REVIEW_CAUSES.map(function (c) { return [c[0], c[0] ? c[1] : 'Not recorded']; }), saved.cause || '') +
+      '<label class="label" for="tevidence">Evidence or rule to remember</label><textarea id="tevidence" rows="3" maxlength="800" placeholder="The decisive words, comparison, or sentence structure…">' + esc(saved.evidence || '') + '</textarea><p class="fine" id="treviewstatus" role="status"></p></div>';
     function keep() {
-      var saved = rec(bucketOf(it), it.id);
-      row.cause = document.getElementById('tcause').value;
-      row.evidence = document.getElementById('tevidence').value;
-      saved.cause = row.cause; saved.evidence = row.evidence;
+      var c = $('input[name="tcause"]:checked', host);
+      saved.cause = c ? c.value : '';
+      saved.evidence = document.getElementById('tevidence').value;
+      if (row) { row.cause = saved.cause; row.evidence = saved.evidence; }
       save();
-      document.getElementById('treviewstatus').textContent = canStore ? 'Review saved in this browser.' : 'Review kept for this session.';
+      document.getElementById('treviewstatus').innerHTML = (canStore ? 'Review saved in this browser.' : 'Review kept for this session.') + (saved.cause ? ' <a href="#rw-traps">See your trap report</a>' : '');
     }
-    document.getElementById('tcause').addEventListener('change', keep);
+    $$('input[name="tcause"]', host).forEach(function (i) { i.addEventListener('change', keep); });
     document.getElementById('tevidence').addEventListener('input', keep);
   }
+  function practiceReflection(it) { reflectionBlock(document.getElementById('treview'), it, TS.res[TS.res.length - 1]); }
   function timedNext() {
     if (!TS || !TS.card || !TS.card.done()) { return; }
     if (TS.i + 1 < TS.items.length) { TS.i += 1; timedDraw(); toTop(); } else { timedFinish(); }
@@ -4814,9 +4859,7 @@ function rReasoningHTML() {
       if (r[0]) { right += 1; } else { missed.push(id); }
       if (r[2] > last) { last = r[2]; }
     });
-    var lvl = 'new';
-    if (tried) { lvl = right / tried < 0.6 ? 'weak' : (right / tried >= 0.85 && tried >= Math.min(3, m.question_count) ? 'strong' : 'mid'); }
-    return { n: m.question_count, tried: tried, right: right, last: last, missed: missed, lvl: lvl, pct: mpc(right, tried) };
+    return { n: m.question_count, tried: tried, right: right, last: last, missed: missed, lvl: levelOf(right, tried, m.question_count), pct: mpc(right, tried) };
   }
   function mAgo(t) {
     var d = Math.floor((Date.now() - t) / 86400000);
@@ -4839,7 +4882,7 @@ function rReasoningHTML() {
       '<p><b>Why the method works:</b> ' + esc(m.why_it_works) + '</p>' +
       '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(m.common_trap) + '</p>' +
       '<p class="row"><a class="btn sm" href="#m-study-practice-' + id + '">Practice this type (' + s.n + ')</a>' +
-      (s.missed.length ? '<button class="btn ghost sm" type="button" data-mm-retry="' + esc(m.id) + '">Retry the ' + s.missed.length + ' I missed</button>' : '') +
+      (s.missed.length ? '<button class="btn ghost sm" type="button" data-mm-retry="' + esc(m.id) + '">' + retryLabel('type', s.missed.length, 22) + '</button>' : '') +
       '<a class="linkbtn" href="#m-study-' + id + '">Full method</a></p></div>';
   }
 
@@ -4850,7 +4893,7 @@ function rReasoningHTML() {
     var t = mWhyTally(tagged), total = tagged.length;
     var untagged = missed.filter(function (id) { return !mWhyOf(id); }).length;
     var head = '<h3 class="h2">Why you miss</h3><p class="lede">After a miss in practice, tap what went wrong. This report adds those taps up, so you fix the habit and not just the question.</p>';
-    var retryAll = missed.length ? '<p class="row" style="margin-top:1rem"><button class="btn sm" type="button" data-mw-retry="all">Retry ' + plural(missed.length, 'missed question') + '</button>' + (untagged && total ? '<span class="fine">' + untagged + ' of them ' + (untagged === 1 ? 'has' : 'have') + ' no reason yet.</span>' : '') + '</p>' : '';
+    var retryAll = missed.length ? '<p class="row" style="margin-top:1rem"><button class="btn sm" type="button" data-mw-retry="all">' + retryLabel('all', missed.length, 22) + '</button>' + (untagged && total ? '<span class="fine">' + untagged + ' of them ' + (untagged === 1 ? 'has' : 'have') + ' no reason yet.</span>' : '') + '</p>' : '';
     if (!total) {
       return head + '<aside class="mnote"><p><b>No reasons recorded yet.</b> ' + (missed.length ? 'You have ' + plural(missed.length, 'missed question') + '. Retry them, and when one goes wrong again, tap the reason under the answer.' : 'Practice a set; when you miss a question, the reasons to choose from appear under the answer.') + '</p></aside>' + retryAll;
     }
@@ -4864,7 +4907,7 @@ function rReasoningHTML() {
         '<span class="mbar" aria-hidden="true"><i style="width:' + mpc(x.ids.length, total) + '%"></i></span>' +
         '<p class="muted">' + esc(x.w[2]) + '</p><p><b>The fix:</b> ' + esc(x.w[3]) + '</p>' + traps +
         '<p class="mtr-types"><span class="mtag">Where it happened</span> ' + chips + (tk.length > 5 ? '<span class="muted">and ' + (tk.length - 5) + ' more</span>' : '') + '</p>' +
-        (still ? '<p class="row"><button class="btn ghost sm" type="button" data-mw-retry="' + x.w[0] + '">Retry ' + (still === 1 ? 'this question' : 'these ' + still + ' questions') + '</button></p>' : '<p class="fine">You have since answered ' + (x.ids.length === 1 ? 'this question' : 'all of these') + ' correctly.</p>') + '</article>';
+        (still ? '<p class="row"><button class="btn ghost sm" type="button" data-mw-retry="' + x.w[0] + '">' + retryLabel('some', still, 22) + '</button></p>' : '<p class="fine">You have since answered ' + (x.ids.length === 1 ? 'this question' : 'all of these') + ' correctly.</p>') + '</article>';
     }).join('');
     return head + '<p class="mtr-total"><b>' + plural(total, 'miss', 'misses') + ' with a reason.</b> Your most common one: ' + esc(t.list[0].w[1].toLowerCase()) + '.</p><div class="mtrs">' + cards + '</div>' + retryAll;
   }
@@ -4947,6 +4990,131 @@ function rReasoningHTML() {
     if (host) { host.setAttribute('data-show', mmFilter); }
   });
 
+  /* =================== Timed modules: the parts Math and Reading & Writing share =================== */
+  /* A run R holds one module: one clock for the whole set, movement back and forth, marks for review, a list of every
+     question, and a last check before finishing. The subject supplies the rest:
+       p         prefix for element ids ('mm' Math, 'rm' Reading & Writing), so both can be on the page at once
+       host      element the module is drawn in;  wrap  class for the outer div
+       n, limit  number of questions, seconds on the clock
+       tools     extra buttons for the bar (html)
+       kind(i)   short label for question i, such as "Multiple choice"
+       answered(i), draw(i, body), finish(timeUp), alive() */
+  function modNew(o) {
+    var R = { i: 0, acc: 0, t0: 0, over: false, hide: false, warned: false, tick: null, tools: '', wrap: 'mmwrap', flag: [], spent: [] }, k;
+    for (k in o) { if (Object.prototype.hasOwnProperty.call(o, k)) { R[k] = o[k]; } }
+    for (k = 0; k < R.n; k += 1) { R.flag.push(false); R.spent.push(0); }
+    return R;
+  }
+  function modEl(R, name) { return document.getElementById(R.p + '-' + name); }
+  function modUsed(R) { return (R.acc + (R.t0 ? now() - R.t0 : 0)) / 1000; }
+  /* stop both clocks: the module's, and the time spent on the question in view */
+  function modBank(R) { if (R.t0) { var d = now() - R.t0; R.acc += d; R.spent[R.i] += d; R.t0 = 0; } }
+  function modPause(R) { if (R && !R.over) { modBank(R); } }
+  function modResume(R) { if (R && !R.over && !R.t0) { R.t0 = now(); } }
+  function modTick(R) {
+    if (R.over || !R.alive()) { clearInterval(R.tick); return; }
+    var left = R.limit - modUsed(R), el = modEl(R, 'clock');
+    if (left <= 0) { R.finish(true); return; }
+    var late = left <= 300 && R.limit > 600;
+    if (el) {
+      el.textContent = R.hide && !late ? '–:––' : clock(Math.ceil(left));
+      el.classList.toggle('late', late);
+    }
+    if (late && !R.warned) {
+      R.warned = true;
+      var live = modEl(R, 'live'), hb = modEl(R, 'hide');
+      if (live) { live.textContent = '5 minutes left in this module.'; }
+      if (hb) { hb.hidden = true; }
+    }
+  }
+  function modStart(R) {
+    modShell(R); modShow(R, 0);
+    R.t0 = now();
+    R.tick = setInterval(function () { modTick(R); }, 500);
+    modTick(R);
+  }
+  /* stop for good; returns the seconds used */
+  function modStop(R) { modBank(R); clearInterval(R.tick); R.over = true; return Math.min(R.limit, Math.round(R.acc / 1000)); }
+  function modShell(R) {
+    var p = R.p;
+    R.host.innerHTML = '<div class="' + R.wrap + '">' +
+      '<div class="mpbar mmbar"><span class="mpbar-pos" id="' + p + '-pos"></span>' +
+        '<span class="mm-clockbox"><span class="mpclock" id="' + p + '-clock" role="timer" aria-label="Time left in this module">' + clock(R.limit) + '</span><button class="linkbtn" type="button" id="' + p + '-hide" aria-pressed="false">Hide clock</button></span>' +
+        '<span class="mmbar-tools">' + R.tools + '<button class="btn ghost sm" type="button" id="' + p + '-open-nav" aria-expanded="false" aria-controls="' + p + '-nav">All questions</button><button class="linkbtn" type="button" id="' + p + '-finish">Finish</button></span>' +
+        '<span class="sr" id="' + p + '-live" aria-live="polite"></span></div>' +
+      '<section class="mm-nav" id="' + p + '-nav" aria-label="All questions in this module" tabindex="-1" hidden></section>' +
+      '<article class="mpcard" id="' + p + '-card"></article></div>';
+    modEl(R, 'hide').addEventListener('click', function () {
+      R.hide = !R.hide;
+      this.setAttribute('aria-pressed', R.hide ? 'true' : 'false'); this.textContent = R.hide ? 'Show clock' : 'Hide clock';
+      modTick(R);
+    });
+    modEl(R, 'open-nav').addEventListener('click', function () { modNav(R, modEl(R, 'nav').hidden, false); });
+    modEl(R, 'finish').addEventListener('click', function () { modNav(R, true, true); });
+    modEl(R, 'nav').addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('[data-go],[data-mm-do]') : null;
+      if (!b) { return; }
+      if (b.hasAttribute('data-go')) { modNav(R, false, false); modGo(R, Number(b.getAttribute('data-go'))); return; }
+      if (b.getAttribute('data-mm-do') === 'finish') { R.finish(false); } else { modNav(R, false, false); }
+    });
+  }
+  function modNavOpen(R) { var el = modEl(R, 'nav'); return !!el && !el.hidden; }
+  /* the list of every question; with confirm, it is also the last check before finishing */
+  function modNav(R, open, confirm) {
+    var host = modEl(R, 'nav'), btn = modEl(R, 'open-nav'), i;
+    if (!host) { return; }
+    host.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (!open) { return; }
+    var blank = 0, flags = 0, cells = '';
+    for (i = 0; i < R.n; i += 1) {
+      var a = R.answered(i);
+      if (!a) { blank += 1; }
+      if (R.flag[i]) { flags += 1; }
+      cells += '<button type="button" class="mm-n' + (a ? ' ans' : '') + (R.flag[i] ? ' flag' : '') + (i === R.i ? ' cur' : '') + '" data-go="' + i + '" aria-label="Question ' + (i + 1) + ', ' + (a ? 'answered' : 'no answer') + (R.flag[i] ? ', marked for review' : '') + (i === R.i ? ', the one you are on' : '') + '">' + (i + 1) + '</button>';
+    }
+    host.innerHTML = (confirm
+      ? '<div class="mm-confirm"><p><b>Finish the module now?</b> ' + (blank ? plural(blank, 'question') + ' ' + (blank === 1 ? 'has' : 'have') + ' no answer' : 'Every question has an answer') + (flags ? ', and ' + flags + ' ' + (flags === 1 ? 'is' : 'are') + ' marked for review' : '') + '. You cannot change answers after this.</p>' +
+        '<p class="row"><button class="btn" type="button" data-mm-do="finish">Finish and see my results</button><button class="btn ghost" type="button" data-mm-do="stay">Keep working</button></p></div>'
+      : '') +
+      '<p class="mm-nav-h"><b>All questions</b> <span class="muted">Tap a number to go to it.</span></p><div class="mm-nav-grid">' + cells + '</div>' +
+      '<p class="mm-key"><span><i class="mm-n ans" aria-hidden="true"></i>Answered</span><span><i class="mm-n" aria-hidden="true"></i>No answer</span><span><i class="mm-n flag" aria-hidden="true"></i>Marked for review</span></p>';
+    if (narrow() || confirm) { try { host.scrollIntoView({ block: 'start' }); } catch (e) {} }
+    focusQuiet(confirm ? $('[data-mm-do="finish"]', host) : host);
+  }
+  function modGo(R, i) {
+    if (!R || R.over || i < 0 || i >= R.n) { return; }
+    var run = !!R.t0;
+    modBank(R); modShow(R, i);
+    if (run) { R.t0 = now(); }
+  }
+  function modNext(R) { if (R.i < R.n - 1) { modGo(R, R.i + 1); } else { modNav(R, true, true); } }
+  function modShow(R, i) {
+    R.i = i;
+    var p = R.p, last = i === R.n - 1;
+    modEl(R, 'pos').innerHTML = '<b>Question ' + (i + 1) + '</b> of ' + R.n;
+    modEl(R, 'card').innerHTML = '<header class="mpcard-h"><b class="mm-qn">Question ' + (i + 1) + '</b><span class="muted">' + R.kind(i) + '</span>' +
+        '<label class="checkline mm-flag"><input type="checkbox" id="' + p + '-flag"' + (R.flag[i] ? ' checked' : '') + '> Mark for review</label></header>' +
+      '<div class="mm-body" id="' + p + '-body"></div>' +
+      '<p class="row mm-step"><button class="btn ghost" type="button" id="' + p + '-back"' + (i ? '' : ' disabled') + '>Back</button><button class="btn" type="button" id="' + p + '-next">' + (last ? 'Review and finish' : 'Next') + '</button></p>';
+    modEl(R, 'flag').addEventListener('change', function () { R.flag[R.i] = this.checked; });
+    modEl(R, 'back').addEventListener('click', function () { modGo(R, R.i - 1); });
+    modEl(R, 'next').addEventListener('click', function () { modNext(R); });
+    R.draw(i, modEl(R, 'body'));
+    window.scrollTo(0, 0);
+  }
+  /* the words on a retry button, when a set holds at most cap questions */
+  function retryLabel(kind, n, cap) {
+    var some = n > cap ? cap + ' of ' : '';
+    if (kind === 'type') { return 'Retry ' + some + 'the ' + n + ' I missed'; }
+    if (kind === 'all') { return 'Retry ' + (n > cap ? cap + ' of ' + n + ' missed questions' : plural(n, 'missed question')); }
+    return 'Retry ' + (n === 1 ? 'this question' : some + 'these ' + n + ' questions');
+  }
+  /* how well a group of questions is going, from the last attempt at each */
+  function levelOf(right, tried, n) {
+    if (!tried) { return 'new'; }
+    return right / tried < 0.6 ? 'weak' : (right / tried >= 0.85 && tried >= Math.min(3, n) ? 'strong' : 'mid');
+  }
+
   /* =================== Math: the calculator panel, and module mode =================== */
   /* ---------- calculator: College Board's version of Desmos, in a panel beside the question ---------- */
   var MCALC_URL = 'https://www.desmos.com/testing/collegeboard/graphing';
@@ -5000,113 +5168,41 @@ function rReasoningHTML() {
     if (!qs.length) { return; }
     clearInterval(mpInterval);
     mCalcReset();
-    MP = { module: true, qs: qs, i: 0, ans: qs.map(function () { return ''; }), flag: qs.map(function () { return false; }), cross: qs.map(function () { return {}; }),
-      spent: qs.map(function () { return 0; }), limit: mmLimit(qs.length), acc: 0, t0: 0, over: false, hide: false, warned: false, res: [], timer: true, settings: st };
-    mmShell(); mmShow(0);
-    MP.t0 = now();
-    mpInterval = setInterval(mmTick, 500); mmTick();
+    var R = modNew({ p: 'mm', host: viewEl.mprac, wrap: 'wrap mpwrap mmwrap', n: qs.length, limit: mmLimit(qs.length), tools: mCalcBtn(),
+      kind: function (i) { return qs[i].mc ? 'Multiple choice' : 'Type in your answer'; },
+      answered: function (i) { return String(R.ans[i]).trim() !== ''; },
+      draw: mmDraw, finish: mmFinish, alive: function () { return MP === R; } });
+    R.module = true; R.qs = qs; R.res = []; R.settings = st; R.timer = true;
+    R.ans = qs.map(function () { return ''; }); R.cross = qs.map(function () { return {}; });
+    MP = R;
+    modStart(R);
   }
-  function mmUsed() { return (MP.acc + (MP.t0 ? now() - MP.t0 : 0)) / 1000; }
-  /* stop both clocks: the module's, and the time spent on the question in view */
-  function mmBank() { if (MP.t0) { var d = now() - MP.t0; MP.acc += d; MP.spent[MP.i] += d; MP.t0 = 0; } }
-  function mmPause() { if (MP && MP.module && !MP.over) { mmBank(); } }
-  function mmResume() { if (MP && MP.module && !MP.over && !MP.t0) { MP.t0 = now(); } }
-  function mmTick() {
-    if (!MP || !MP.module || MP.over) { clearInterval(mpInterval); return; }
-    var left = MP.limit - mmUsed(), el = document.getElementById('mm-clock');
-    if (left <= 0) { mmFinish(true); return; }
-    var late = left <= 300 && MP.limit > 600;
-    if (el) {
-      el.textContent = MP.hide && !late ? '–:––' : clock(Math.ceil(left));
-      el.classList.toggle('late', late);
-    }
-    if (late && !MP.warned) { MP.warned = true; var live = document.getElementById('mm-live'); if (live) { live.textContent = '5 minutes left in this module.'; } var hb = document.getElementById('mm-hide'); if (hb) { hb.hidden = true; } }
-  }
-  function mmAnswered(i) { return String(MP.ans[i]).trim() !== ''; }
-  function mmShell() {
-    viewEl.mprac.innerHTML = '<div class="wrap mpwrap mmwrap">' +
-      '<div class="mpbar mmbar"><span class="mpbar-pos" id="mm-pos"></span>' +
-        '<span class="mm-clockbox"><span class="mpclock" id="mm-clock" role="timer" aria-label="Time left in this module">' + clock(MP.limit) + '</span><button class="linkbtn" type="button" id="mm-hide" aria-pressed="false">Hide clock</button></span>' +
-        '<span class="mmbar-tools">' + mCalcBtn() + '<button class="btn ghost sm" type="button" id="mm-open-nav" aria-expanded="false" aria-controls="mm-nav">All questions</button><button class="linkbtn" type="button" id="mm-finish">Finish</button></span>' +
-        '<span class="sr" id="mm-live" aria-live="polite"></span></div>' +
-      '<section class="mm-nav" id="mm-nav" aria-label="All questions in this module" tabindex="-1" hidden></section>' +
-      '<article class="mpcard" id="mm-card"></article></div>';
-    $('#mm-hide').addEventListener('click', function () {
-      MP.hide = !MP.hide;
-      this.setAttribute('aria-pressed', MP.hide ? 'true' : 'false'); this.textContent = MP.hide ? 'Show clock' : 'Hide clock';
-      mmTick();
-    });
-    $('#mm-open-nav').addEventListener('click', function () { mmNav($('#mm-nav').hidden, false); });
-    $('#mm-finish').addEventListener('click', function () { mmNav(true, true); });
-    $('#mm-nav').addEventListener('click', function (e) {
-      var b = e.target.closest ? e.target.closest('[data-go],[data-mm-do]') : null;
-      if (!b) { return; }
-      if (b.hasAttribute('data-go')) { mmNav(false, false); mmGo(Number(b.getAttribute('data-go'))); return; }
-      if (b.getAttribute('data-mm-do') === 'finish') { mmFinish(false); } else { mmNav(false, false); }
-    });
-  }
-  /* the list of every question; with confirm, it is also the last check before finishing */
-  function mmNav(open, confirm) {
-    var host = $('#mm-nav'), btn = $('#mm-open-nav');
-    if (!host) { return; }
-    host.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (!open) { return; }
-    var blank = 0, flags = 0;
-    MP.qs.forEach(function (q, i) { if (!mmAnswered(i)) { blank += 1; } if (MP.flag[i]) { flags += 1; } });
-    host.innerHTML = (confirm
-      ? '<div class="mm-confirm"><p><b>Finish the module now?</b> ' + (blank ? plural(blank, 'question') + ' ' + (blank === 1 ? 'has' : 'have') + ' no answer' : 'Every question has an answer') + (flags ? ', and ' + flags + ' ' + (flags === 1 ? 'is' : 'are') + ' marked for review' : '') + '. You cannot change answers after this.</p>' +
-        '<p class="row"><button class="btn" type="button" data-mm-do="finish">Finish and see my results</button><button class="btn ghost" type="button" data-mm-do="stay">Keep working</button></p></div>'
-      : '') +
-      '<p class="mm-nav-h"><b>All questions</b> <span class="muted">Tap a number to go to it.</span></p><div class="mm-nav-grid">' +
-      MP.qs.map(function (q, i) {
-        var a = mmAnswered(i);
-        return '<button type="button" class="mm-n' + (a ? ' ans' : '') + (MP.flag[i] ? ' flag' : '') + (i === MP.i ? ' cur' : '') + '" data-go="' + i + '" aria-label="Question ' + (i + 1) + ', ' + (a ? 'answered' : 'no answer') + (MP.flag[i] ? ', marked for review' : '') + (i === MP.i ? ', the one you are on' : '') + '">' + (i + 1) + '</button>';
-      }).join('') + '</div>' +
-      '<p class="mm-key"><span><i class="mm-n ans" aria-hidden="true"></i>Answered</span><span><i class="mm-n" aria-hidden="true"></i>No answer</span><span><i class="mm-n flag" aria-hidden="true"></i>Marked for review</span></p>';
-    if (narrow() || confirm) { try { host.scrollIntoView({ block: 'start' }); } catch (e) {} }
-    focusQuiet(confirm ? $('[data-mm-do="finish"]', host) : host);
-  }
-  function mmGo(i) {
-    if (!MP || !MP.module || MP.over || i < 0 || i >= MP.qs.length) { return; }
-    var run = !!MP.t0;
-    mmBank(); mmShow(i);
-    if (run) { MP.t0 = now(); }
-  }
-  function mmShow(i) {
-    MP.i = i;
-    var q = MP.qs[i], last = i === MP.qs.length - 1, given = MP.ans[i], X = MP.cross[i];
+  function mmPause() { if (MP && MP.module) { modPause(MP); } }
+  function mmResume() { if (MP && MP.module) { modResume(MP); } }
+  function mmDraw(i, body) {
+    var q = MP.qs[i], given = MP.ans[i], X = MP.cross[i];
     MP.cur = { q: q, t0: 0, acc: 0, done: false };          /* for the full-size viewer */
-    $('#mm-pos').innerHTML = '<b>Question ' + (i + 1) + '</b> of ' + MP.qs.length;
     var ans = q.mc
       ? '<div class="mpchoices mmchoices" role="group" aria-label="Your answer">' + ['A', 'B', 'C', 'D'].map(function (L, n) {
           return '<div class="mmch"><button class="mpch' + (given === L ? ' sel' : '') + (X[L] ? ' crossed' : '') + '" type="button" data-k="' + L + '" aria-pressed="' + (given === L ? 'true' : 'false') + '"><span class="mpch-l">' + L + '</span><span class="kbd">' + (n + 1) + '</span></button>' +
             '<button class="mmx" type="button" data-x="' + L + '" aria-pressed="' + (X[L] ? 'true' : 'false') + '" aria-label="Cross out choice ' + L + '">' + (X[L] ? 'Undo' : 'Cross out') + '</button></div>';
         }).join('') + '</div><p class="fine">Choose the letter of your answer. You can change it until you finish. “Cross out” marks a choice you have ruled out.</p>'
       : '<div class="mpgrid"><label class="field"><span class="label">Type your answer</span><input type="text" id="mm-gin" inputmode="decimal" autocomplete="off" placeholder="e.g. 12, −3, 7/6 or 2.5" value="' + esc(given) + '"></label></div><p class="fine" id="mm-ghint">Numbers only. Fractions like 7/6 are fine; leave out units. Saved as you type.</p>';
-    var card = $('#mm-card');
-    card.innerHTML = '<header class="mpcard-h"><b class="mm-qn">Question ' + (i + 1) + '</b><span class="muted">' + (q.mc ? 'Multiple choice' : 'Type in your answer') + '</span>' +
-        '<label class="checkline mm-flag"><input type="checkbox" id="mm-flag"' + (MP.flag[i] ? ' checked' : '') + '> Mark for review</label></header>' +
-      '<div class="mpq">' + mImg('q', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans +
-      '<p class="row mm-step"><button class="btn ghost" type="button" id="mm-back"' + (i ? '' : ' disabled') + '>Back</button><button class="btn" type="button" id="mm-next">' + (last ? 'Review and finish' : 'Next') + '</button></p>';
-    $('#mm-flag').addEventListener('change', function () { MP.flag[MP.i] = this.checked; });
-    $('#mm-back').addEventListener('click', function () { mmGo(MP.i - 1); });
-    $('#mm-next').addEventListener('click', mmNext);
+    body.innerHTML = '<div class="mpq">' + mImg('q', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans;
     if (q.mc) {
-      $$('.mpch', card).forEach(function (b) { b.addEventListener('click', function () { mmChoose(b.getAttribute('data-k')); }); });
-      $$('.mmx', card).forEach(function (b) { b.addEventListener('click', function () { mmCross(b.getAttribute('data-x')); }); });
+      $$('.mpch', body).forEach(function (b) { b.addEventListener('click', function () { mmChoose(b.getAttribute('data-k')); }); });
+      $$('.mmx', body).forEach(function (b) { b.addEventListener('click', function () { mmCross(b.getAttribute('data-x')); }); });
     } else {
       $('#mm-gin').addEventListener('input', function () {
         MP.ans[MP.i] = this.value;
         var bad = this.value.trim() && isNaN(mpNum(this.value));
         $('#mm-ghint').textContent = bad ? 'That is not a number yet. Use digits, a minus sign, a decimal point or a fraction such as 7/6.' : 'Numbers only. Fractions like 7/6 are fine; leave out units. Saved as you type.';
       });
-      $('#mm-gin').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); mmNext(); } });
+      $('#mm-gin').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); modNext(MP); } });
     }
-    window.scrollTo(0, 0);
-    var first = q.mc ? $('.mpch.sel', card) || $('.mpch', card) : $('#mm-gin');
+    var first = q.mc ? $('.mpch.sel', body) || $('.mpch', body) : $('#mm-gin');
     if (first && !narrow()) { focusQuiet(first); }
   }
-  function mmNext() { if (MP.i < MP.qs.length - 1) { mmGo(MP.i + 1); } else { mmNav(true, true); } }
   function mmPaintChoices() {
     var given = MP.ans[MP.i], X = MP.cross[MP.i];
     $$('#mm-card .mmch').forEach(function (row) {
@@ -5133,18 +5229,18 @@ function rReasoningHTML() {
       if (MP.rev != null && key === 'Enter' && tag !== 'BUTTON' && tag !== 'A' && tag !== 'SUMMARY') { e.preventDefault(); mmReview(Math.min(MP.rev + 1, MP.qs.length - 1)); }
       return;
     }
-    if (!$('#mm-nav').hidden) { return; }
+    if (modNavOpen(MP)) { return; }
     var k = key.toUpperCase(), n = ['1', '2', '3', '4'].indexOf(key);
     if (n !== -1) { k = 'ABCD'[n]; }
     if (MP.qs[MP.i].mc && k.length === 1 && 'ABCD'.indexOf(k) !== -1) { e.preventDefault(); if (MP.ans[MP.i] !== k) { mmChoose(k); } }
-    else if (key === 'Enter' && tag !== 'BUTTON' && tag !== 'A') { e.preventDefault(); mmNext(); }
+    else if (key === 'Enter' && tag !== 'BUTTON' && tag !== 'A') { e.preventDefault(); modNext(MP); }
   }
 
   /* ---------- finishing: grade, save, results ---------- */
   function mmFinish(timeUp) {
     if (!MP || !MP.module || MP.over) { return; }
-    mmBank(); clearInterval(mpInterval); mCalcShow(false);
-    MP.over = true; MP.timeUp = !!timeUp; MP.used = Math.min(MP.limit, Math.round(MP.acc / 1000)); MP.rev = null;
+    mCalcShow(false);
+    MP.used = modStop(MP); MP.timeUp = !!timeUp; MP.rev = null;
     var ts = Date.now(), right = 0;
     MP.res = MP.qs.map(function (q, i) {
       var given = String(MP.ans[i]).trim(), ok = null;
@@ -5214,6 +5310,419 @@ function rReasoningHTML() {
     window.scrollTo(0, 0);
   }
 
+  /* =================== Reading and Writing: question types, the mastery map, why you miss =================== */
+  /* Every question belongs to one type: one of the 106 grammar and transition rules, or one of the 20 kinds of reading question.
+     Results come from the practice records (store.t, store.r, store.b): the last attempt at each question, with the cause the
+     student chose in "Review the reasoning". */
+  var RWT = [], RWTBY = {}, RWSETOF = {}, RWQT = {}, RWITEMS = null;
+  function rwSetJob(name) {
+    var J = [[/^Main idea/, 'job-main'], [/^Detail/, 'job-detail'], [/^Inference/, 'job-inference'], [/^Support/, 'job-support'], [/^Weaken/, 'job-weaken'], [/^Quotation/, 'job-quote'],
+      [/^(Table|Graph)/, 'job-data'], [/^(Word|Meaning)/, 'job-word'], [/^(Main purpose|Overall structure|Function)/, 'job-structure'], [/^(How would|Both would|A difference)/, 'job-cross'], [/^Use the notes/, 'job-notes']];
+    for (var i = 0; i < J.length; i += 1) { if (J[i][0].test(name)) { return J[i][1]; } }
+    return '';
+  }
+  (function () {
+    function add(t) { t.items = []; RWT.push(t); RWTBY[t.id] = t; }
+    RD.sets.forEach(function (g, gi) {
+      g.sets.forEach(function (s, si) {
+        var id = 'rs' + gi + '-' + si;
+        add({ id: id, kind: 'r', group: g.group, gi: gi, si: si, name: s.name, job: rwSetJob(s.name) });
+        Object.keys(s.byDiff).forEach(function (d) { s.byDiff[d].forEach(function (q) { RWSETOF[q] = id; }); });
+      });
+    });
+    CONCEPTS.forEach(function (c) {
+      c.uses.forEach(function (uid) { var u = U[uid]; add({ id: uid, kind: 'g', part: c.part, c: c.id, name: u.num + ' ' + plain(u.title) }); });
+    });
+  }());
+  function rwTypeOf(it) { return it.t === 'g' ? it.ex.u : it.t === 'a' ? it.b.unit : it.t === 'x' ? it.b.u : RWSETOF[it.id]; }
+  /* each question once, with its type; a question that is in a lesson and in the bank keeps its lesson card */
+  function rwItems() {
+    if (RWITEMS) { return RWITEMS; }
+    var seen = {};
+    RWITEMS = itemsAll().filter(function (it) { if (seen[it.id]) { return false; } seen[it.id] = true; return true; });
+    RWITEMS.forEach(function (it) { var t = RWTBY[rwTypeOf(it)]; if (t) { t.items.push(it); RWQT[it.id] = t.id; } });
+    return RWITEMS;
+  }
+  function rwAns(it) { return it.t === 'g' ? it.ex.a : it.t === 'r' ? it.x.ans : it.b.ans; }
+  var RW_DOMS = [['cs', 'Craft and Structure'], ['ii', 'Information and Ideas'], ['sec', 'Standard English Conventions'], ['eoi', 'Expression of Ideas']];
+  /* College Board's four content areas, in the order the test asks them */
+  function rwDomain(it) {
+    var t = RWTBY[rwTypeOf(it)];
+    if (!t) { return 'cs'; }
+    if (t.kind === 'g') { return t.part === 'C' ? 'eoi' : 'sec'; }
+    return t.group === 'Information and Ideas' ? 'ii' : t.group === 'Rhetorical Synthesis' ? 'eoi' : 'cs';
+  }
+  function rwStat(t) {
+    rwItems();
+    var tried = 0, right = 0, last = 0, missed = [], by = { Easy: [0, 0], Medium: [0, 0], Hard: [0, 0] };
+    t.items.forEach(function (it) {
+      var r = result(it);
+      if (!r) { return; }
+      tried += 1;
+      if (by[it.d]) { by[it.d][1] += 1; }
+      if (r.c === 1) { right += 1; if (by[it.d]) { by[it.d][0] += 1; } } else { missed.push(it); }
+      if ((r.at || 0) > last) { last = r.at; }
+    });
+    return { n: t.items.length, tried: tried, right: right, last: last, missed: missed, by: by, lvl: levelOf(right, tried, t.items.length), pct: pct(right, tried) };
+  }
+  function rwRecord(s) {
+    if (!s.tried) { return 'Not tried yet · ' + plural(s.n, 'question') + ' in the bank'; }
+    return s.right + ' of ' + s.tried + ' right · ' + s.tried + ' of ' + s.n + ' tried' + (s.last ? ' · last practiced ' + mAgo(s.last) : '');
+  }
+  function rwWhere(t) {
+    if (t.kind === 'r') { return esc(t.group); }
+    var c = CBY[t.c];
+    return 'Lesson ' + c.n + ' · ' + esc(c.title);
+  }
+  function rwStudy(t) { return t.kind === 'g' ? t.id : (t.job === 'job-notes' ? 'notesfirst' : t.job); }
+  function rwNote(t) {
+    if (t.kind === 'g') { return '<p class="rule"><span class="rl">Rule ' + U[t.id].num + '</span>' + U[t.id].rule + '</p>'; }
+    var job = RD.jobs.filter(function (j) { return j.id === t.job; })[0];
+    return job && job.look ? '<p><b>What to look at first:</b> ' + job.look + '</p>' : '';
+  }
+  function rwCardHTML(t, s) {
+    return '<article class="mm-next-c"><p class="mm-next-top"><span class="mm-lvl lvl-' + s.lvl + '">' + MLVL[s.lvl] + (s.tried ? ' · ' + s.right + ' of ' + s.tried + ' right' : '') + '</span><span class="muted">' + rwWhere(t) + '</span></p>' +
+      '<h4 class="h3">' + esc(t.name) + '</h4>' +
+      '<p class="row"><button class="btn sm" type="button" data-rw-go="' + t.id + '">Practice this ' + (t.kind === 'g' ? 'rule' : 'type') + '</button>' + (rwStudy(t) ? '<a class="linkbtn" href="#' + rwStudy(t) + '">' + (t.kind === 'g' ? 'Study the rule' : 'How to do it') + '</a>' : '') + '</p></article>';
+  }
+  function rwDetailHTML(t) {
+    var s = rwStat(t), n = Math.min(10, s.n);
+    var diffs = ['Easy', 'Medium', 'Hard'].filter(function (d) { return s.by[d][1]; }).map(function (d) { return d + ' ' + s.by[d][0] + ' of ' + s.by[d][1]; }).join(' · ');
+    return '<div class="mm-detail" id="rwm-detail" tabindex="-1"><p class="mm-next-top"><span class="mtag">' + rwWhere(t) + '</span><span class="mm-lvl lvl-' + s.lvl + '">' + MLVL[s.lvl] + '</span><button class="linkbtn mm-close" type="button" data-rwm-close>Close</button></p>' +
+      '<h4 class="h3">' + esc(t.name) + '</h4><p class="mm-rec">' + rwRecord(s) + (diffs && t.kind === 'r' ? '<br>Right by difficulty: ' + diffs : '') + '</p>' + rwNote(t) +
+      '<p class="row"><button class="btn sm" type="button" data-rw-go="' + t.id + '">Practice this ' + (t.kind === 'g' ? 'rule' : 'type') + ' (' + (n < s.n ? n + ' of ' + s.n : s.n) + ')</button>' +
+      (s.missed.length ? '<button class="btn ghost sm" type="button" data-rw-miss="' + t.id + '">' + retryLabel('type', s.missed.length, 20) + '</button>' : '') +
+      (rwStudy(t) ? '<a class="linkbtn" href="#' + rwStudy(t) + '">' + (t.kind === 'g' ? 'Study the rule' : 'How to do it') + '</a>' : '') + '</p></div>';
+  }
+
+  /* ---------- the causes you chose, added up ---------- */
+  var RW_FIX = {
+    meaning: 'Say the sentence in your own words, and check who or what each pronoun points to, before you read the choices.',
+    scope: 'Mark the limiting words in the text (some, most, only, more than). The right choice keeps every one of them.',
+    evidence: 'Put your finger on the words that prove the choice. If you cannot point to them, it is not the answer.',
+    data: 'Read the title, the labels and the units first. Then find the exact row, bar or point the claim names.',
+    goal: 'Read the question line first and name the job before you read the passage.',
+    grammar: 'Find the subject and the verb of each clause, then run the one check for that pattern.',
+    pace: 'Practice this type without the clock first, then with it.',
+    slip: 'Read the sentence with your answer in place before you move on.',
+    other: 'Open these questions again and write down the evidence or rule that decides each one.'
+  };
+  function rwCaused() { return rwItems().map(function (it) { return { it: it, r: result(it) }; }).filter(function (x) { return x.r && x.r.cause && has(RW_FIX, x.r.cause); }); }
+  function rwCauseTally(rows) {
+    var by = {};
+    rows.forEach(function (x) { (by[x.r.cause] = by[x.r.cause] || []).push(x); });
+    return REVIEW_CAUSES.filter(function (c) { return c[0] && by[c[0]]; }).map(function (c) { return { key: c[0], label: c[1], rows: by[c[0]] }; }).sort(function (a, b) { return b.rows.length - a.rows.length; });
+  }
+  function rwStillMissed() { return rwItems().filter(function (it) { var r = result(it); return r && r.c === 0; }); }
+  function rwTrapHTML() {
+    var rows = rwCaused(), list = rwCauseTally(rows), total = rows.length, missed = rwStillMissed();
+    var untagged = missed.filter(function (it) { return !result(it).cause; }).length;
+    var head = '<h3 class="h2">Why you miss</h3><p class="lede">After an answer in practice, tap what caused the difficulty. This report adds those taps up, so you fix the habit and not just the question.</p>';
+    var retryAll = missed.length ? '<p class="row" style="margin-top:1rem"><button class="btn sm" type="button" data-rw-cause="all">' + retryLabel('all', missed.length, 20) + '</button>' + (untagged && total ? '<span class="fine">' + untagged + ' of them ' + (untagged === 1 ? 'has' : 'have') + ' no cause yet.</span>' : '') + '</p>' : '';
+    if (!total) {
+      return head + '<aside class="mnote"><p><b>No causes recorded yet.</b> ' + (missed.length ? 'You have ' + plural(missed.length, 'missed question') + '. Retry them, and when one goes wrong again, tap the cause under the explanation.' : 'Practice a set; after each answer, the causes to choose from appear under the explanation.') + '</p></aside>' + retryAll;
+    }
+    var cards = list.map(function (x, i) {
+      var types = {}, still = 0;
+      x.rows.forEach(function (row) { var tid = RWQT[row.it.id]; if (tid) { types[tid] = (types[tid] || 0) + 1; } if (row.r.c === 0) { still += 1; } });
+      var tk = Object.keys(types).sort(function (a, b) { return types[b] - types[a]; });
+      var chips = tk.slice(0, 5).map(function (k) { return '<a class="mchip" href="#rw-map-' + k + '">' + esc(RWTBY[k].name) + (types[k] > 1 ? ' × ' + types[k] : '') + '</a>'; }).join('');
+      return '<article class="mtr"><header class="mtr-h"><h4 class="h3">' + (i + 1) + ' · ' + esc(x.label) + '</h4><span class="mtr-n">' + plural(x.rows.length, 'question') + ' · ' + pct(x.rows.length, total) + '%</span></header>' +
+        '<span class="mbar" aria-hidden="true"><i style="width:' + pct(x.rows.length, total) + '%"></i></span>' +
+        '<p><b>The fix:</b> ' + esc(RW_FIX[x.key]) + '</p>' +
+        '<p class="mtr-types"><span class="mtag">Where it happened</span> ' + chips + (tk.length > 5 ? '<span class="muted">and ' + (tk.length - 5) + ' more</span>' : '') + '</p>' +
+        (still ? '<p class="row"><button class="btn ghost sm" type="button" data-rw-cause="' + x.key + '">' + retryLabel('some', still, 20) + '</button></p>' : '<p class="fine">You have since answered ' + (x.rows.length === 1 ? 'this question' : 'all of these') + ' correctly.</p>') + '</article>';
+    }).join('');
+    return head + '<p class="mtr-total"><b>' + plural(total, 'question') + ' with a cause.</b> Your most common one: ' + esc(list[0].label.charAt(0).toLowerCase() + list[0].label.slice(1)) + '.</p><div class="mtrs">' + cards + '</div>' + retryAll;
+  }
+  /* shown under the results of a module */
+  function rwCauseSetHTML(items) {
+    if (!items.length) { return ''; }
+    var rows = items.map(function (it) { return { it: it, r: result(it) }; }).filter(function (x) { return x.r && x.r.cause && has(RW_FIX, x.r.cause); });
+    var list = rwCauseTally(rows);
+    if (!list.length) { return '<h3 class="subh">Why you missed</h3><p class="muted">Open a missed question and tap what caused the difficulty. Your <a href="#rw-traps">trap report</a> then shows the causes that cost you the most.</p>'; }
+    return '<h3 class="subh">Why you missed</h3><ul class="mwhy-sum">' + list.map(function (x) { return '<li><b>' + x.rows.length + ' × ' + esc(x.label) + '.</b> ' + esc(RW_FIX[x.key]) + '</li>'; }).join('') + '</ul><p class="fine"><a href="#rw-traps">See your full trap report</a></p>';
+  }
+
+  /* ---------- the page ---------- */
+  var rwmSel = '', rwmFilter = 'all';
+  function rwmSelect(id, focus) {
+    var old = document.getElementById('rwm-detail');
+    if (old) { old.parentNode.removeChild(old); }
+    rwmSel = has(RWTBY, id) ? id : '';
+    $$('.mm-t', viewEl.rwmap).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-rwm') === rwmSel ? 'true' : 'false'); });
+    if (!rwmSel) { return; }
+    var tile = $('.mm-t[data-rwm="' + rwmSel + '"]', viewEl.rwmap), host = tile ? $('.mm-detail-host', tile.closest('.mm-skill')) : null;
+    if (!host) { return; }
+    host.innerHTML = rwDetailHTML(RWTBY[rwmSel]);
+    if (focus) { focusQuiet(document.getElementById('rwm-detail')); }
+  }
+  function buildRwMap(openId) {
+    rwItems();
+    if (openId && has(RWTBY, openId)) { rwmSel = openId; rwmFilter = 'all'; }
+    var stat = {}, cnt = { 'new': 0, weak: 0, mid: 0, strong: 0 }, tried = 0;
+    RWT.forEach(function (t) { var s = stat[t.id] = rwStat(t); cnt[s.lvl] += 1; tried += s.tried; });
+    var N = RWT.length, started = N - cnt['new'];
+    var next = RWT.filter(function (t) { return stat[t.id].lvl === 'weak' || stat[t.id].lvl === 'mid'; }).sort(function (a, b) {
+      var x = stat[a.id], y = stat[b.id];
+      return x.pct - y.pct || y.tried - x.tried;
+    }).slice(0, 6);
+    function tile(t, wide) {
+      var s = stat[t.id], label = esc(t.name) + ': ' + (s.tried ? s.right + ' of ' + s.tried + ' right. ' : '') + MLVL[s.lvl] + '.';
+      return '<button type="button" class="mm-t' + (wide ? ' mm-tw' : '') + ' lvl-' + s.lvl + '" data-rwm="' + t.id + '" aria-pressed="false" title="' + esc(t.name) + '" aria-label="' + label + '">' +
+        (wide ? '<span>' + esc(t.name) + '</span>' + (s.tried ? '<b>' + s.pct + '</b>' : '') : (s.tried ? s.pct : '')) + '</button>';
+    }
+    function row(head, sub, types, wide) {
+      var st = types.filter(function (t) { return stat[t.id].tried; }).length;
+      return '<div class="mm-skill"><p class="mm-skill-h">' + head + '<span>' + st + ' of ' + plural(types.length, sub) + ' tried</span></p><div class="mm-tiles">' + types.map(function (t) { return tile(t, wide); }).join('') + '</div><div class="mm-detail-host"></div></div>';
+    }
+    var reading = '<div class="mm-dom"><h4 class="h3">Reading</h4>' + RD.sets.map(function (g, gi) {
+      return row('<b>' + esc(g.group) + '</b>', 'type', RWT.filter(function (t) { return t.kind === 'r' && t.gi === gi; }), true);
+    }).join('') + '</div>';
+    var grammar = D.parts.map(function (p) {
+      return '<div class="mm-dom"><h4 class="h3">' + (p.key === 'C' ? 'Transitions' : 'Grammar · ' + esc(p.title)) + '</h4>' + p.concepts.map(function (cid) {
+        var c = CBY[cid];
+        return row('<a href="#' + c.id + '">' + c.n + ' · ' + esc(c.title) + '</a>', 'rule', RWT.filter(function (t) { return t.c === cid; }), false);
+      }).join('') + '</div>';
+    }).join('');
+    var mods = Array.isArray(store.s.rwmodules) ? store.s.rwmodules.filter(isObj) : [];
+    viewEl.rwmap.innerHTML = '<div class="wrap">' +
+      '<header class="read"><p class="eyebrow">Reading and Writing · My map</p><h2 class="vtitle">Your mastery map</h2><p class="lede">Each square is a kind of reading question or one grammar rule, colored by how you did the last time you tried its questions. Tap one to see what to look at and practice just that.</p></header>' +
+      '<div class="mst-stats mm-stats rw"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
+      (tried ? '' : '<aside class="mnote"><p><b>Nothing practiced yet.</b> Answer a few questions and this map fills in. Results are saved in this browser only.</p><a class="btn sm" href="#practice">Practice real questions</a></aside>') +
+      (tried ? '<section class="sec first" id="rwm-next"><h3 class="h2">Work on these next</h3>' + (next.length
+        ? '<p class="lede">Your lowest-scoring types so far. Study the rule or the routine, then practice just that type.</p><div class="mm-nexts">' + next.map(function (t) { return rwCardHTML(t, stat[t.id]); }).join('') + '</div>'
+        : '<p class="lede">Nothing needs work right now. Pick a grey square below to try a type you have not seen.</p>') + '</section>' : '') +
+      '<section class="sec' + (tried ? '' : ' first') + '" id="rwm-all"><h3 class="h2">All ' + N + ' types</h3><p class="lede">The number is your percent right on the questions you have tried. Grey means not tried yet.</p>' +
+        seg('rwm-show', 'Show', [['all', 'All'], ['weak', 'Needs work · ' + cnt.weak], ['mid', 'Getting there · ' + cnt.mid], ['strong', 'Strong · ' + cnt.strong], ['new', 'Not tried · ' + cnt['new']]], rwmFilter) +
+        '<p class="mm-key"><span><i class="mm-t lvl-weak" aria-hidden="true"></i>Needs work: under 60% right</span><span><i class="mm-t lvl-mid" aria-hidden="true"></i>Getting there</span><span><i class="mm-t lvl-strong" aria-hidden="true"></i>Strong: 85% or more, on at least 3 questions</span><span><i class="mm-t lvl-new" aria-hidden="true"></i>Not tried</span></p>' +
+        '<div class="mm-map" id="rwm-map" data-show="' + rwmFilter + '">' + reading + grammar + '</div></section>' +
+      '<section class="sec" id="rw-traps">' + rwTrapHTML() + '</section>' +
+      '<section class="sec" id="rwm-mods"><h3 class="h2">Timed modules</h3>' + (mods.length
+        ? '<p class="lede">Your last ' + (mods.length > 5 ? '5 modules' : plural(mods.length, 'module')) + ': 27 questions on one clock, like one part of the real section.</p><ul class="mm-mods">' + mods.slice(-5).reverse().map(function (r) {
+            return '<li><b>' + r.r + ' of ' + r.n + '</b><span>' + clock(r.s) + ' of ' + clock(r.l) + ' used</span><span class="muted">' + new Date(r.t).toLocaleDateString() + '</span></li>';
+          }).join('') + '</ul>'
+        : '<p class="lede">Not taken yet. A module is 27 questions on one 32-minute clock, in the order the test asks them, with answers at the end.</p>') +
+        '<p class="row" style="margin-top:1rem"><a class="btn sm" href="#rw-module">Take a timed module</a></p></section>' +
+      '</div>';
+    if (rwmSel) { rwmSelect(rwmSel, false); }
+  }
+  /* start an ordinary practice set from a list of questions */
+  function rwStartSet(list) {
+    if (!list.length) { return; }
+    try { history.pushState(null, '', '#practice'); } catch (e) {}
+    lastToken = 'practice';
+    showView('practice'); buildPractice();
+    timedStart(list, tset());
+  }
+  /* ten questions of one type: the ones not tried yet first, then the ones missed, then the rest */
+  function rwTypeSet(t) {
+    rwItems();
+    var fresh = [], miss = [], rest = [];
+    t.items.forEach(function (it) { var r = result(it); if (!r) { fresh.push(it); } else if (r.c === 0) { miss.push(it); } else { rest.push(it); } });
+    return shuffle(fresh).concat(shuffle(miss), shuffle(rest)).slice(0, 10);
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target.closest('[data-rwm],[data-rwm-close],[data-rw-go],[data-rw-miss],[data-rw-cause]') : null;
+    if (!t) { return; }
+    if (t.hasAttribute('data-rwm')) { var id = t.getAttribute('data-rwm'); rwmSelect(id === rwmSel ? '' : id, true); return; }
+    if (t.hasAttribute('data-rwm-close')) { var back = $('.mm-t[aria-pressed="true"]', viewEl.rwmap); rwmSelect('', false); focusQuiet(back); return; }
+    if (t.hasAttribute('data-rw-go')) { var ty = RWTBY[t.getAttribute('data-rw-go')]; if (ty) { rwStartSet(rwTypeSet(ty)); } return; }
+    if (t.hasAttribute('data-rw-miss')) { var tm = RWTBY[t.getAttribute('data-rw-miss')]; if (tm) { rwStartSet(shuffle(rwStat(tm).missed).slice(0, 20)); } return; }
+    var code = t.getAttribute('data-rw-cause'), missed = rwStillMissed();
+    rwStartSet(shuffle(code === 'all' ? missed : missed.filter(function (it) { return result(it).cause === code; })).slice(0, 20));
+  });
+  document.addEventListener('change', function (e) {
+    if (!e.target || e.target.name !== 'rwm-show') { return; }
+    rwmFilter = e.target.value;
+    var host = document.getElementById('rwm-map');
+    if (host) { host.setAttribute('data-show', rwmFilter); }
+  });
+
+  /* =================== Reading and Writing: the timed module =================== */
+  /* One part of the real section: 27 questions on a single 32-minute clock, in the order the test asks them
+     (Craft and Structure, Information and Ideas, Standard English Conventions, Expression of Ideas), easier first inside each. */
+  var RM = null;                         /* the module in progress, or the one just finished */
+  var rmModePreset = null;               /* 'module' from a link such as #rw-module */
+  var RM_N = 27, RM_SECS = 32 * 60, RM_PACE = 71;
+  var RM_MIX = { cs: 8, ii: 7, sec: 7, eoi: 5 };
+  var RM_ORD = { Easy: 0, Medium: 1, Hard: 2 };
+  var RM_KIND = { g: 'Grammar', a: 'Grammar', r: 'Reading', q: 'Reading', v: 'Table or graph', n: 'Notes', x: 'Transition' };
+  /* the short label beside the question number; it comes from the question's type, so a notes question that is also a
+     worked example still says Notes */
+  function rmKind(it) {
+    var t = RWTBY[rwTypeOf(it)];
+    if (!t) { return RM_KIND[it.t]; }
+    if (t.kind === 'g') { return t.part === 'C' ? 'Transition' : 'Grammar'; }
+    return t.group === 'Rhetorical Synthesis' ? 'Notes' : /^(Table|Graph)/.test(t.name) ? 'Table or graph' : 'Reading';
+  }
+  function rmLimit(n) { return Math.round(n * RM_SECS / RM_N); }
+  function rmPool(st) { rwItems(); return matching({ src: 'both', part: 'all', diff: st.diff, which: st.which }); }
+  function rmPick(st) {
+    var pool = shuffle(rmPool(st).slice()), need = {}, out = [], rest = [], D4 = RW_DOMS.map(function (d) { return d[0]; });
+    D4.forEach(function (k) { need[k] = RM_MIX[k]; });
+    pool.forEach(function (it) { var d = rwDomain(it); if (need[d] > 0) { need[d] -= 1; out.push(it); } else { rest.push(it); } });
+    out = out.concat(rest.slice(0, RM_N - out.length));
+    /* the test's order: the four areas; inside an area the kinds of question stay together (words, then structure, then
+       paired texts; ideas, then evidence, then inference; transitions, then notes); easier first inside each kind */
+    function grp(it) {
+      var t = RWTBY[rwTypeOf(it)], d = rwDomain(it);
+      if (!t) { return 0; }
+      if (d === 'cs') { return t.gi; }
+      if (d === 'ii') { return t.si <= 2 ? 0 : t.si === 3 ? 2 : 1; }
+      if (d === 'eoi') { return t.kind === 'r' ? 1 : 0; }
+      return 0;
+    }
+    return out.map(function (it, i) { return [it, i]; }).sort(function (a, b) {
+      return D4.indexOf(rwDomain(a[0])) - D4.indexOf(rwDomain(b[0])) || grp(a[0]) - grp(b[0]) || RM_ORD[a[0].d] - RM_ORD[b[0].d] || a[1] - b[1];
+    }).map(function (x) { return x[0]; });
+  }
+  function rmCard(it, o) {
+    return it.t === 'g' ? QCard(it.ex, { split: true, meta: o.meta, onAnswer: o.onAnswer, after: o.after })
+      : it.t === 'r' ? RCard(it.x, o) : it.t === 'n' || it.t === 'x' ? BCard(it.b, it.t, o) : QBCard(it.b, o);
+  }
+  function rmDrop() { if (RM) { if (!RM.over) { modStop(RM); } RM = null; } }
+  function rmStart(st) {
+    var items = rmPick(st);
+    if (!items.length) { return; }
+    if (tclock) { tclock.halt(); }
+    TS = null; tclock = null;
+    rmDrop();
+    var R = modNew({ p: 'rm', host: document.getElementById('thost'), wrap: 'mmwrap rmwrap', n: items.length, limit: rmLimit(items.length),
+      kind: function (i) { return rmKind(items[i]); },
+      answered: function (i) { return !!R.ans[i]; },
+      draw: rmDraw, finish: rmFinish, alive: function () { return RM === R; } });
+    R.items = items; R.ans = items.map(function () { return ''; }); R.cross = items.map(function () { return {}; }); R.settings = st; R.res = []; R.rev = null;
+    RM = R;
+    modStart(R);
+  }
+  function rmPause() { if (RM) { modPause(RM); } }
+  function rmResume() { if (RM && !document.hidden) { modResume(RM); } }
+  function rmDraw(i, body) {
+    var card = rmCard(RM.items[i], {});
+    body.appendChild(card.el);
+    $$('.opts li', body).forEach(function (li) {
+      var k = $('.opt', li).getAttribute('data-k'), x = document.createElement('button');
+      x.type = 'button'; x.className = 'mmx rmx'; x.setAttribute('data-x', k); x.setAttribute('aria-label', 'Cross out choice ' + k);
+      li.classList.add('rmli'); li.appendChild(x);
+    });
+    /* the card would show the answer on a click; in a module a click only selects */
+    body.addEventListener('click', function (e) {
+      var x = e.target.closest ? e.target.closest('.rmx') : null, opt = e.target.closest ? e.target.closest('.opt') : null;
+      if (!x && !opt) { return; }
+      e.stopPropagation(); e.preventDefault();
+      if (x) { rmCross(x.getAttribute('data-x')); } else { rmChoose(opt.getAttribute('data-k')); }
+    }, true);
+    rmPaint();
+    var first = $('.opt.sel', body) || $('.opt', body);
+    if (first && !narrow()) { focusQuiet(first); }
+  }
+  function rmPaint() {
+    var given = RM.ans[RM.i], X = RM.cross[RM.i];
+    $$('#rm-body .rmli').forEach(function (li) {
+      var b = $('.opt', li), x = $('.rmx', li), k = b.getAttribute('data-k');
+      b.classList.toggle('sel', given === k); b.setAttribute('aria-pressed', given === k ? 'true' : 'false');
+      b.classList.toggle('crossed', !!X[k]);
+      x.setAttribute('aria-pressed', X[k] ? 'true' : 'false'); x.textContent = X[k] ? 'Undo' : 'Cross out';
+    });
+  }
+  function rmChoose(k) {
+    if ('ABCD'.indexOf(k) === -1) { return; }
+    RM.ans[RM.i] = RM.ans[RM.i] === k ? '' : k;
+    if (RM.ans[RM.i]) { delete RM.cross[RM.i][k]; }
+    rmPaint();
+  }
+  function rmCross(k) {
+    var X = RM.cross[RM.i];
+    if (X[k]) { delete X[k]; } else { X[k] = 1; if (RM.ans[RM.i] === k) { RM.ans[RM.i] = ''; } }
+    rmPaint();
+  }
+  function rmKey(e, key, tag) {
+    if (!RM) { return; }
+    if (RM.over) {
+      if (RM.rev != null && key === 'Enter' && tag !== 'BUTTON' && tag !== 'A' && tag !== 'SUMMARY' && tag !== 'TEXTAREA') { e.preventDefault(); rmReview(Math.min(RM.rev + 1, RM.n - 1)); }
+      return;
+    }
+    if (modNavOpen(RM)) { return; }
+    var k = key.toUpperCase(), n = ['1', '2', '3', '4'].indexOf(key);
+    if (n !== -1) { k = 'ABCD'[n]; }
+    if (k.length === 1 && 'ABCD'.indexOf(k) !== -1) { e.preventDefault(); if (RM.ans[RM.i] !== k) { rmChoose(k); } }
+    else if (key === 'Enter' && tag !== 'BUTTON' && tag !== 'A') { e.preventDefault(); modNext(RM); }
+  }
+
+  /* ---------- finishing: grade, save, results ---------- */
+  function rmFinish(timeUp) {
+    if (!RM || RM.over) { return; }
+    RM.used = modStop(RM); RM.timeUp = !!timeUp; RM.rev = null;
+    var right = 0;
+    RM.res = RM.items.map(function (it, i) {
+      var given = RM.ans[i], ok = given ? given === rwAns(it) : null, secs = Math.round(RM.spent[i] / 1000);
+      /* a question left blank counts against the module, but is not saved as a miss; one marked for review is saved as unsure */
+      if (ok !== null) {
+        var a = practiceAttempt(result(it), ok, secs, RM_PACE, RM.flag[i] ? 'unsure' : 'skip');
+        a.mode = 'module';
+        store[bucketOf(it)][it.id] = a;
+      }
+      if (ok) { right += 1; }
+      return { it: it, ok: ok, secs: secs, given: given, flag: !!RM.flag[i] };
+    });
+    var hist = Array.isArray(store.s.rwmodules) ? store.s.rwmodules.filter(isObj) : [];
+    hist.push({ t: Date.now(), n: RM.n, r: right, s: RM.used, l: RM.limit });
+    store.s.rwmodules = hist.slice(-20);
+    save();
+    rmResults();
+  }
+  function rmResults() {
+    RM.rev = null;
+    var res = RM.res, n = res.length;
+    var right = res.filter(function (r) { return r.ok === true; }).length, wrong = res.filter(function (r) { return r.ok === false; }).length, blank = n - right - wrong;
+    var answered = right + wrong, avg = answered ? Math.round(res.reduce(function (a, r) { return a + (r.ok === null ? 0 : r.secs); }, 0) / answered) : 0;
+    var areas = RW_DOMS.map(function (d) {
+      var L = res.filter(function (r) { return rwDomain(r.it) === d[0]; }), ok = L.filter(function (r) { return r.ok === true; }).length;
+      return L.length ? '<div class="mprog-row"><span>' + d[1] + '</span><span class="mbar"><i style="width:' + pct(ok, L.length) + '%"></i></span><span class="num">' + ok + ' of ' + L.length + ' right</span></div>' : '';
+    }).join('');
+    var seen = {}, review = [];
+    res.forEach(function (r) { if (r.ok === true) { return; } var t = RWTBY[RWQT[r.it.id]]; if (t && !seen[t.id]) { seen[t.id] = 1; review.push(t); } });
+    var notRight = res.filter(function (r) { return r.ok !== true; });
+    document.getElementById('thost').innerHTML =
+      '<header class="read"><p class="eyebrow">Timed module finished</p><h2 class="vtitle">You got ' + right + ' of ' + n + ' right</h2><p class="lede">' + (RM.timeUp ? 'Time ran out. ' : '') + 'You used ' + clock(RM.used) + ' of ' + clock(RM.limit) + (answered ? ', about ' + avg + ' seconds for each question you answered. The real test allows about 71.' : '.') + '</p></header>' +
+      '<div class="mst-stats mm-stats rw"><div><b>' + right + '</b><span>right</span></div><div><b>' + wrong + '</b><span>wrong</span></div><div><b>' + blank + '</b><span>no answer</span></div><div><b>' + clock(RM.used) + '</b><span>of ' + clock(RM.limit) + ' used</span></div></div>' +
+      '<h3 class="subh">By area</h3><div class="mprog">' + areas + '</div>' +
+      (review.length ? '<h3 class="subh">Types to review</h3><div class="mm-nexts">' + review.slice(0, 6).map(function (t) { return rwCardHTML(t, rwStat(t)); }).join('') + '</div>' + (review.length > 6 ? '<p class="fine" style="margin-top:.8rem">And ' + (review.length - 6) + ' more. They are all on <a href="#rw-map">your map</a>.</p>' : '') : '<p class="subh">Every answer right.</p>') +
+      '<h3 class="subh">Your answers</h3><p class="muted">Open any question to see the explanation. On a miss, tap what caused the difficulty.</p><ol class="mpsum mmsum">' + res.map(function (r, i) {
+        var t = RWTBY[RWQT[r.it.id]];
+        return '<li class="' + (r.ok ? 'ok' : (r.ok === null ? 'mm-blank' : 'no')) + '"><span class="mpsum-v">' + (r.ok ? '✓' : (r.ok === null ? '–' : '✗')) + '</span><span><b>' + (i + 1) + '.</b> ' + esc(t ? t.name : rmKind(r.it)) + ' <span class="muted">· ' + esc(r.it.d) + ' · ' + (r.ok === null ? 'no answer' : r.secs + ' s') + (r.flag ? ' · marked for review' : '') + '</span></span><button class="linkbtn" type="button" data-rm-rev="' + i + '">Review</button></li>';
+      }).join('') + '</ol>' +
+      rwCauseSetHTML(res.filter(function (r) { return r.ok === false; }).map(function (r) { return r.it; })) +
+      '<p class="row" style="margin-top:1.5rem">' + (notRight.length ? '<button class="btn" type="button" id="rm-rev-miss">Review what I missed</button>' : '') + '<button class="btn' + (notRight.length ? ' ghost' : '') + '" type="button" id="rm-new">New module</button>' + (notRight.length ? '<button class="btn ghost" type="button" id="rm-retry">Retry them, one at a time</button>' : '') + '<a class="btn ghost" href="#rw-map">See my map</a></p>';
+    var host = document.getElementById('thost');
+    $$('[data-rm-rev]', host).forEach(function (b) { b.addEventListener('click', function () { rmReview(Number(b.getAttribute('data-rm-rev'))); }); });
+    $('#rm-new').addEventListener('click', function () { rmModePreset = 'module'; timedSetup(); toTop(); });
+    var rm = $('#rm-rev-miss'), rt = $('#rm-retry');
+    if (rm) { rm.addEventListener('click', function () { rmReview(res.indexOf(notRight[0])); }); }
+    if (rt) { rt.addEventListener('click', function () { timedStart(notRight.map(function (r) { return r.it; }), tset()); }); }
+    toTop();
+  }
+  /* one question of a finished module: the answer you gave, the explanation, and the cause */
+  function rmReview(i) {
+    if (!RM || !RM.over || !RM.res[i]) { return; }
+    RM.rev = i;
+    var r = RM.res[i], n = RM.res.length, host = document.getElementById('thost'), t = RWTBY[RWQT[r.it.id]];
+    host.innerHTML = '<div class="mmwrap rmwrap">' +
+      '<div class="mpbar"><span class="mpbar-pos"><b>Review · question ' + (i + 1) + '</b> of ' + n + '</span><span class="mpbar-dots" aria-hidden="true">' + RM.res.map(function (x, j) { return '<i class="' + (x.ok ? 'ok' : (x.ok === null ? '' : 'no')) + (j === i ? ' at' : '') + '"></i>'; }).join('') + '</span><button class="linkbtn" type="button" id="rm-rev-back">Back to results</button></div>' +
+      '<article class="mpcard">' + (r.ok === null ? '<p class="mm-yours"><b>You left this one blank.</b> Try it now; this answer is not saved.</p>' : (r.flag ? '<p class="mm-yours muted">You marked this one for review.</p>' : '')) +
+      '<div id="rm-revcard"></div><div id="rm-revcause"></div>' +
+      '<p class="row mm-step"><button class="btn ghost" type="button" id="rm-rev-prev"' + (i ? '' : ' disabled') + '>Previous</button><button class="btn" type="button" id="rm-rev-next">' + (i < n - 1 ? 'Next question' : 'Back to results') + '</button></p></article></div>';
+    var card = rmCard(r.it, { meta: 'Question ' + r.it.id + (t ? ' · ' + esc(t.name) : '') + ' · ' + esc(r.it.d), onAnswer: function () { return null; } });
+    $('#rm-revcard').appendChild(card.el);
+    toTop();
+    if (r.given) { card.pick(r.given); }
+    if (r.ok !== null) { reflectionBlock($('#rm-revcause'), r.it, null); }
+    $('#rm-rev-back').addEventListener('click', rmResults);
+    $('#rm-rev-prev').addEventListener('click', function () { rmReview(i - 1); });
+    $('#rm-rev-next').addEventListener('click', function () { if (i < n - 1) { rmReview(i + 1); } else { rmResults(); } });
+  }
+
   /* =================== Home, navigation, appearance and suggestions =================== */
   var SUBJ = {
     rw: { name: 'Reading & Writing', icon: 'book', items: [
@@ -5221,8 +5730,9 @@ function rReasoningHTML() {
       ['reading', 'reading', 'Reading', 'The four-step routine for reading questions, with long sentences taken apart and 17 worked examples.'],
       ['grammar', 'method', 'Grammar', 'The 60-second method for grammar and transition questions, and 19 short lessons covering every rule.'],
       ['drills', 'drills', 'Drills', 'Quick drills on real questions for the slow steps: naming the job, finding the core, spotting the pattern.'],
-      ['practice', 'practice', 'Practice', 'Untimed learning or paced sets, with explanations and review of misses and uncertain answers.'],
-      ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.']] },
+      ['practice', 'practice', 'Practice', 'Untimed learning, paced sets or a timed 27-question module, with explanations and review of misses and uncertain answers.'],
+      ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.'],
+      ['rwmap', 'rw-map', 'My map', 'Every kind of reading question and every grammar rule colored by how you are doing, the causes of your misses, and what to practice next.']] },
     math: { name: 'Math', icon: 'calc', items: [
       ['mstart', 'math', 'Start here', 'How to approach every math question, what the test covers, and what the data says.'],
       ['mlearn', 'm-learn', 'Lessons', 'All 19 skills explained from scratch, each with a method, a worked example and its question types.'],
@@ -5378,6 +5888,8 @@ function rReasoningHTML() {
         feat('rw', 'book', 'Reading routine', 'Job, Chunk, Say, Check, with worked examples.', 'reading') +
         feat('rw', 'pen', 'Drills', 'Short drills on real questions for the slow steps.', 'drills') +
         feat('rw', 'target', 'Learn, then pace', 'Untimed learning, paced sets, and review of uncertain answers.', 'practice') +
+        feat('rw', 'bolt', 'Timed module', '27 questions on one 32-minute clock, in the test’s order, with mark for review and cross-out.', 'rw-module') +
+        feat('rw', 'grid', 'Mastery map', 'Every reading type and grammar rule colored by how you are doing, and why you miss.', 'rw-map') +
       '</div></section>' +
       '<section class="hsec hhow"><div class="hsec-h"><h2 class="h2">How to use this site</h2></div><ol class="hsteps">' +
         '<li><b>Pick a subject.</b><span>Use Home, Reading &amp; Writing and Math at the top of every page.</span></li>' +
@@ -5486,7 +5998,7 @@ function rReasoningHTML() {
   }
 
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -5500,7 +6012,7 @@ function rReasoningHTML() {
   function showView(v) {
     if (cur.view === v) { return; }
     if (cur.view) { viewY[cur.view] = window.scrollY; }
-    if (cur.view === 'practice') { timedPause(); }
+    if (cur.view === 'practice') { timedPause(); rmPause(); }
     if (cur.view === 'grammar') { demoPause(); }
     if (cur.view === 'drills') { drillAway(); }
     if (cur.view === 'mprac') { mpPause(); mCalcShow(false); }
@@ -5508,7 +6020,7 @@ function rReasoningHTML() {
     markNav(v);
     cur.view = v;
     document.body.setAttribute('data-subj', VIEW_SUBJ[v] || 'home');
-    if (v === 'practice') { timedResume(); }
+    if (v === 'practice') { timedResume(); rmResume(); }
     if (v === 'grammar') { demoResume(); }
     if (v === 'drills' && !document.hidden) { drillBack(); }
     if (v === 'mprac' && !document.hidden) { mpResume(); }
@@ -5589,6 +6101,13 @@ function rReasoningHTML() {
       toTop(); return;
     }
     if (token === 'practice' || token === 'timed' || token === 'test') { showView('practice'); buildPractice(); toTop(); return; }
+    if (token === 'rw-module') {
+      showView('practice');
+      if (!(RM && !RM.over)) { rmModePreset = 'module'; if (built.practice) { timedSetup(); } else { buildPractice(); } }
+      toTop(); return;
+    }
+    if (token === 'rw-map' || token === 'rw-traps') { showView('rwmap'); buildRwMap(); if (token === 'rw-traps') { scrollToEl(document.getElementById('rw-traps')); } else { toTop(); } return; }
+    if ((m = /^rw-map-(.+)$/.exec(token)) && has(RWTBY, m[1])) { showView('rwmap'); buildRwMap(m[1]); scrollToEl(document.getElementById('rwm-detail')); return; }
     if (has(LOOKUP_AT, token)) {
       showView('lookup'); buildLookup();
       if (LOOKUP_AT[token]) { scrollToEl(document.getElementById(LOOKUP_AT[token])); } else { toTop(); }
@@ -5645,7 +6164,7 @@ function rReasoningHTML() {
     var dk = a.getAttribute('data-drill');
     if (dk && has(DR, dk)) { try { history.pushState(null, '', '#drills'); } catch (err) {} showView('drills'); buildDrills(); startDrill(dk); return; }
     var tp = a.getAttribute('data-tpart');
-    if (tp) { var s0 = isObj(store.s.timed) ? store.s.timed : {}; s0.src = 'g'; s0.part = tp; s0.which = 'all'; store.s.timed = s0; save(); if (built.practice && !TS) { timedSetup(); } }
+    if (tp) { var s0 = isObj(store.s.timed) ? store.s.timed : {}; s0.src = 'g'; s0.part = tp; s0.which = 'all'; s0.mode = 'set'; store.s.timed = s0; save(); if (built.practice && !TS && !(RM && !RM.over)) { timedSetup(); } }
     /* a tab for a view you have already visited takes you back to where you were */
     var tv = a.closest('#tabs') ? a.getAttribute('data-view') : '';
     if (tv && tv !== cur.view && viewTok[tv] && (tv === 'reading' || tv === 'grammar' || tv === 'lookup')) {
@@ -5662,11 +6181,12 @@ function rReasoningHTML() {
   document.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) { return; }
     var t = e.target, tag = t && t.tagName ? t.tagName : '';
-    var confidenceChoice = tag === 'INPUT' && t.type === 'radio' && t.name === 'tconfidence';
-    var flagBox = tag === 'INPUT' && t.id === 'mm-flag';   /* "Mark for review" keeps the answer keys working */
+    var confidenceChoice = tag === 'INPUT' && t.type === 'radio' && (t.name === 'tconfidence' || t.name === 'tcause');
+    var flagBox = tag === 'INPUT' && (t.id === 'mm-flag' || t.id === 'rm-flag');   /* "Mark for review" keeps the answer keys working */
     if (/^(INPUT|TEXTAREA|SELECT|SUMMARY)$/.test(tag) && !confidenceChoice && !flagBox) { return; }
     var key = e.key || '';
-    if (cur.view === 'practice' && TS && TS.card) {
+    if (cur.view === 'practice' && RM) { rmKey(e, key, tag);
+    } else if (cur.view === 'practice' && TS && TS.card) {
       if (!TS.card.done()) {
         var k = key.toUpperCase(), n = ['1', '2', '3', '4'].indexOf(key);
         if (n !== -1) { k = 'ABCD'[n]; }
@@ -5684,9 +6204,9 @@ function rReasoningHTML() {
     }
   });
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) { timedPause(); demoPause(); drillAway(); mpPause(); }
+    if (document.hidden) { timedPause(); rmPause(); demoPause(); drillAway(); mpPause(); }
     else if (cur.view === 'mprac') { mpResume(); }
-    else if (cur.view === 'practice') { timedResume(); }
+    else if (cur.view === 'practice') { timedResume(); rmResume(); }
     else if (cur.view === 'grammar') { demoResume(); }
     else if (cur.view === 'drills') { drillBack(); }
   });

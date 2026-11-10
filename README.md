@@ -17,6 +17,14 @@ Progress, notes and the chosen appearance are saved in your browser only.
 
 ## Timed modules, the mastery map and the trap report
 
+Both subjects have these. Reading and Writing:
+
+- **Reading & Writing → Practice** has two ways to practice. **Learn or pace** is the set with an answer after each question. **Timed module** (`#rw-module`) is one part of the real section: 27 questions on a single 32-minute clock, in the order the test asks them (8 Craft and Structure, 7 Information and Ideas, 7 Standard English Conventions, 5 Expression of Ideas; each kind of question kept together, easier first). You can move back and forth, mark questions for review, cross out choices and see every question in one list. Answers and explanations come at the end, where each question opens with the answer you gave. A blank counts against the module score but is not saved as a miss; a question you marked for review is saved as "unsure", so it shows up under **Unsure or guessed**.
+- After each answer, **What caused the difficulty?** is now one tap instead of a menu.
+- **Reading & Writing → My map** (`#rw-map`) shows 126 types as squares: the 20 kinds of reading question, by name, and the 106 grammar and transition rules by lesson. A square opens what to look at first or the rule, your record, and a practice set for just that type. **Why you miss** (`#rw-traps`) adds up the causes you tapped, with a fix for each, the types where it happened and a retry set.
+
+Math:
+
 - **Math → Practice** has two ways to practice. **Learn** shows College Board's answer and the method after each question. **Timed module** (`#m-module`) is one part of the real Math section: 22 questions on a single 35-minute clock, mixed like the test plan (8 Algebra, 8 Advanced Math, 3 Problem-Solving and Data Analysis, 3 Geometry and Trigonometry, easier questions first). You can move back and forth, mark questions for review, cross out choices and see every question in one list; answers, methods and explanations come at the end. A question left blank counts against the module score but is not saved as a miss.
 - **Calculator** opens College Board's version of the Desmos graphing calculator in a panel beside the question (a sheet at the bottom of a phone screen). It loads from desmos.com, so it needs a connection.
 - After any miss, **What went wrong?** takes one tap: answered a different question, fell for the type's trap, did not know the method, arithmetic slip, misread, or rushed.

@@ -12,7 +12,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   await p.goto(file); await p.waitForTimeout(800);
   const tokens = ['start','which','reading','shape','job','leadin','chunk','tags','turns','long','apart-3','para','say','check','traps','others','train','sets','measured',
     ...Array.from({length:17},(_, i)=>'ex-'+(i+1)), 'grammar','try','patterns','shortcuts','hard','lessons','part-a','part-b','part-c','c1','c8','c14','c19','u3-3','i-7b950fc2','q-7b950fc2','g-verbs',
-    'drills','practice','lookup','find','transitions','glossary','about','job-notes','o-cross','notesfirst'];
+    'drills','practice','rw-module','rw-map','rw-traps','rw-map-rs0-3','rw-map-u1-1','lookup','find','transitions','glossary','about','job-notes','o-cross','notesfirst'];
   for (const t of tokens) {
     await p.evaluate(x => { location.hash = x; }, t);
     await p.waitForTimeout(120);
@@ -39,6 +39,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
     await p.click('#dend'); await p.waitForTimeout(80); await p.click('#dhome');
   }
   await p.evaluate(() => { location.hash = 'practice'; }); await p.waitForTimeout(100);
+  await p.check('#tmode-set', { force: true }); await p.waitForTimeout(50);   // the token loop above opened #rw-module, which selects the timed module
   await p.check('#tsrc-both', { force: true }); await p.waitForTimeout(50);
   await p.click('#tstart'); await p.waitForTimeout(400);
   for (let i = 0; i < 4; i++) { await p.keyboard.press('b'); await p.waitForTimeout(80); await p.keyboard.press('Enter'); await p.waitForTimeout(120); }

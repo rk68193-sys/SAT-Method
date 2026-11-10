@@ -15,7 +15,8 @@
       which: ['all', 'new', 'missed', 'uncertain', 'slow'].indexOf(s.which) !== -1 ? s.which : 'all',
       len: [10, 20, 0].indexOf(s.len) !== -1 ? s.len : 10,
       tier: TIERS[s.tier] ? s.tier : 'learn',
-      hints: s.hints === true
+      hints: s.hints === true,
+      mode: s.mode === 'module' ? 'module' : 'set'
     };
   }
   // n: notes questions and x: transition questions, both with College Board's own answers
@@ -90,7 +91,9 @@
   function timedSetup(prefix) {
     if (tclock) { tclock.halt(); }
     TS = null; tclock = null;
+    rmDrop();
     var s = tset();
+    if (rmModePreset) { s.mode = rmModePreset; rmModePreset = null; }
     var g = practiceRecord('t', EXLIST.map(function (e) { return e.q; })), r = practiceRecord('r', RLIST.map(function (x) { return x.qid; }));
     var nb = practiceRecord('b', BANK.notes.map(function (x) { return x.id; })), xb = practiceRecord('b', BANK.trans.map(function (x) { return x.id; })), qb = practiceRecord('b', BANK.reading.map(function (x) { return x.id; }));
     var seen = {};
@@ -105,15 +108,17 @@
       '<div class="record"><div><b>' + g.tried + '</b><span>of ' + EXLIST.length + ' grammar tried</span></div><div><b>' + g.right + '</b><span>right last time</span></div>' +
       '<div><b>' + r.tried + '</b><span>of ' + RLIST.length + ' reading tried</span></div><div><b>' + r.right + '</b><span>right last time</span></div>' +
       '<div><b>' + qb.tried + '</b><span>of ' + BANK.reading.length + ' bank reading tried</span></div><div><b>' + nb.tried + '</b><span>of ' + BANK.notes.length + ' notes tried</span></div><div><b>' + xb.tried + '</b><span>of ' + BANK.trans.length + ' transitions tried</span></div></div>' +
-      '<div class="tsetup">' +
-      seg('tsrc', 'Questions from', [['g', 'Grammar and transition lessons'], ['a', 'Additional grammar (' + BANK.grammarSources.length + ')'], ['r', 'Reading worked examples'], ['q', BANK.reading.length + ' text reading questions'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'All ' + BANK.notes.length + ' notes questions'], ['x', 'All ' + BANK.trans.length + ' transition questions'], ['both', 'Mixed: all 1,845 questions']], s.src) +
-      '<div id="tpartwrap">' + seg('tpart', 'Grammar part', [['all', 'All parts'], ['A', 'A · Boundaries'], ['B', 'B · Form, Structure, and Sense'], ['C', 'C · Transitions']], s.part) + '</div>' +
+      '<div class="tsetup" id="tsetup" data-mode="' + s.mode + '">' +
+      seg('tmode', 'How to practice', [['set', 'Learn or pace'], ['module', 'Timed module']], s.mode) +
+      '<p class="mpmode-note" id="tmodenote"></p>' +
+      '<div class="t-setonly">' + seg('tsrc', 'Questions from', [['g', 'Grammar and transition lessons'], ['a', 'Additional grammar (' + BANK.grammarSources.length + ')'], ['r', 'Reading worked examples'], ['q', BANK.reading.length + ' text reading questions'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'All ' + BANK.notes.length + ' notes questions'], ['x', 'All ' + BANK.trans.length + ' transition questions'], ['both', 'Mixed: all 1,845 questions']], s.src) + '</div>' +
+      '<div id="tpartwrap" class="t-setonly">' + seg('tpart', 'Grammar part', [['all', 'All parts'], ['A', 'A · Boundaries'], ['B', 'B · Form, Structure, and Sense'], ['C', 'C · Transitions']], s.part) + '</div>' +
       seg('tdiff', 'Difficulty', [['all', 'Any'], ['Easy', 'Easy'], ['Medium', 'Medium'], ['Hard', 'Hard']], s.diff) +
       seg('twhich', 'Which questions', [['all', 'All'], ['new', 'Not tried yet (' + nNew + ')'], ['missed', 'Missed last time (' + nMiss + ')'], ['uncertain', 'Unsure or guessed (' + nUncertain + ')'], ['slow', 'Over the clock last time (' + nSlow + ')']], s.which) +
-      seg('tlen', 'Questions per set', [[10, '10'], [20, '20'], [0, 'All that match']], s.len) +
-      seg('ttier', 'Clock', Object.keys(TIERS).map(function (k) { return [k, TIERS[k].label]; }), s.tier) +
-      '<p class="fine">Untimed mode has no clock or speed rating. The other modes use adjustable practice targets, and continue past zero. On the SAT, time belongs to the whole module: 32 minutes for 27 questions, with review within that module. A set here gives feedback after each answer; use <a href="https://satsuite.collegeboard.org/practice/practice-tests/bluebook" target="_blank" rel="noopener">official Bluebook practice</a> to rehearse a full test.</p>' +
-      '<label class="checkline" for="thints"><input type="checkbox" id="thints"' + (s.hints ? ' checked' : '') + '>Highlight what changes in grammar choices</label>' +
+      '<div class="t-setonly">' + seg('tlen', 'Questions per set', [[10, '10'], [20, '20'], [0, 'All that match']], s.len) + '</div>' +
+      '<div class="t-setonly">' + seg('ttier', 'Clock', Object.keys(TIERS).map(function (k) { return [k, TIERS[k].label]; }), s.tier) + '</div>' +
+      '<p class="fine t-setonly">Untimed mode has no clock or speed rating. The other modes use adjustable practice targets, and continue past zero. On the SAT, time belongs to the whole module: 32 minutes for 27 questions, with review within that module. A set here gives feedback after each answer; choose <b>Timed module</b> above to practice one whole module, and use <a href="https://satsuite.collegeboard.org/practice/practice-tests/bluebook" target="_blank" rel="noopener">official Bluebook practice</a> to rehearse a full test.</p>' +
+      '<label class="checkline t-setonly" for="thints"><input type="checkbox" id="thints"' + (s.hints ? ' checked' : '') + '>Highlight what changes in grammar choices</label>' +
       '<p class="h3" id="tcount" role="status"></p>' +
       '<div class="row"><button type="button" class="btn" id="tstart">Start the set</button>' +
       '<button type="button" class="linkbtn" id="tforget"' + (nNew < all.length ? '' : ' hidden') + '>Clear my saved results</button></div>' +
@@ -127,19 +132,28 @@
     host.innerHTML = h;
     function readSettings() {
       var gv = function (n) { var x = $('input[name="' + n + '"]:checked', host); return x ? x.value : ''; };
-      store.s.timed = { src: gv('tsrc'), part: gv('tpart'), diff: gv('tdiff'), which: gv('twhich'), len: Number(gv('tlen')), tier: gv('ttier'), hints: document.getElementById('thints').checked };
+      store.s.timed = { src: gv('tsrc'), part: gv('tpart'), diff: gv('tdiff'), which: gv('twhich'), len: Number(gv('tlen')), tier: gv('ttier'), hints: document.getElementById('thints').checked, mode: gv('tmode') };
       save();
       return tset();
     }
     function refresh() {
-      var st = readSettings(), n = matching(st).length;
+      var st = readSettings(), mod = st.mode === 'module', n = mod ? rmPool(st).length : matching(st).length, get = Math.min(n, RM_N);
+      document.getElementById('tsetup').setAttribute('data-mode', st.mode);
+      document.getElementById('tmodenote').innerHTML = mod
+        ? '<b>One part of the real section:</b> ' + RM_N + ' questions on a single ' + clock(rmLimit(RM_N)) + ' clock, in the order the test asks them: words and structure, then evidence and inference, then grammar, then transitions and notes. Move back and forth, mark questions for review and cross out choices. Answers and explanations come at the end.'
+        : '<b>One question at a time:</b> the answer and the explanation appear straight after each question, with no clock or with a clock for each question.';
       document.getElementById('tpartwrap').hidden = st.src !== 'g' && st.src !== 'a' && st.src !== 'both';
-      document.getElementById('tcount').textContent = n === 0 ? 'No question matches these settings.' : plural(n, 'question') + ' match.';
+      document.getElementById('tcount').textContent = n === 0 ? 'No question matches these settings.'
+        : mod ? plural(n, 'question') + ' match. Your module: ' + plural(get, 'question') + ', ' + clock(rmLimit(get)) + ' on the clock.'
+        : plural(n, 'question') + ' match.';
+      document.getElementById('tstart').textContent = mod ? 'Start the module' : 'Start the set';
       document.getElementById('tstart').disabled = n === 0;
     }
     $$('input', host).forEach(function (i) { i.addEventListener('change', refresh); });
     document.getElementById('tstart').addEventListener('click', function () {
-      var st = readSettings(), list = shuffle(matching(st).slice());
+      var st = readSettings(), list;
+      if (st.mode === 'module') { rmStart(st); return; }
+      list = shuffle(matching(st).slice());
       if (st.len) { list = list.slice(0, st.len); }
       if (list.length) { timedStart(list, st); }
     });
@@ -152,6 +166,7 @@
     refresh();
   }
   function timedStart(list, st) {
+    rmDrop();
     TS = { items: list, i: 0, res: [], tier: TIERS[st.tier] || TIERS.learn, settings: st, hints: st.hints, card: null, paused: false };
     document.getElementById('thost').innerHTML = '<div class="tplay"><div class="tbar"><span class="tpos" id="tpos"></span><div class="clockbox" id="tclock"></div>' +
       '<div class="row"><button type="button" class="btn sm" id="tnext2" hidden>Next</button><button type="button" class="linkbtn" id="tend">End set</button></div></div>' +
@@ -204,24 +219,28 @@
       if (cur.view === 'practice' && !document.hidden) { tclock.start(); } else { TS.paused = true; }
     }
   }
-  function practiceReflection(it) {
-    var host = document.getElementById('treview'), row = TS.res[TS.res.length - 1];
-    host.innerHTML = '<div class="after"><h3 class="h3">Review the reasoning <span class="muted">(optional)</span></h3>' +
-      '<p class="fine">Name the decisive evidence or grammar rule. Review uncertain correct answers too. For an error, identify what caused it before trying again. Your previous review stays until you edit it.</p>' +
-      '<label class="label" for="tcause">What caused the difficulty?</label><select id="tcause">' + REVIEW_CAUSES.map(function (c) { return '<option value="' + c[0] + '">' + esc(c[1]) + '</option>'; }).join('') + '</select>' +
-      '<label class="label" for="tevidence">Evidence or rule to remember</label><textarea id="tevidence" rows="3" maxlength="800" placeholder="The decisive words, comparison, or sentence structure…">' + esc(row.evidence || '') + '</textarea><p class="fine" id="treviewstatus" role="status"></p></div>';
-    document.getElementById('tcause').value = row.cause || '';
+  /* "Review the reasoning": what caused the difficulty (one tap; the trap report adds these up) and the evidence or rule to
+     remember. row is this question's entry in the running set's results, when there is one. */
+  function reflectionBlock(host, it, row) {
+    var saved = rec(bucketOf(it), it.id);
+    if (!host || !saved) { if (host) { host.innerHTML = ''; } return; }
+    var missed = saved.c === 0;
+    host.innerHTML = '<div class="after"><h3 class="h3">' + (missed ? 'What went wrong?' : 'Review the reasoning') + ' <span class="muted">(optional)</span></h3>' +
+      '<p class="fine">' + (missed ? 'Tap what caused the miss, so you can fix the habit and not just this question.' : 'Review uncertain correct answers too: if this one was hard, tap what caused the difficulty.') + ' Then name the decisive evidence or grammar rule. Your previous review stays until you edit it.</p>' +
+      seg('tcause', 'What caused the difficulty?', REVIEW_CAUSES.map(function (c) { return [c[0], c[0] ? c[1] : 'Not recorded']; }), saved.cause || '') +
+      '<label class="label" for="tevidence">Evidence or rule to remember</label><textarea id="tevidence" rows="3" maxlength="800" placeholder="The decisive words, comparison, or sentence structure…">' + esc(saved.evidence || '') + '</textarea><p class="fine" id="treviewstatus" role="status"></p></div>';
     function keep() {
-      var saved = rec(bucketOf(it), it.id);
-      row.cause = document.getElementById('tcause').value;
-      row.evidence = document.getElementById('tevidence').value;
-      saved.cause = row.cause; saved.evidence = row.evidence;
+      var c = $('input[name="tcause"]:checked', host);
+      saved.cause = c ? c.value : '';
+      saved.evidence = document.getElementById('tevidence').value;
+      if (row) { row.cause = saved.cause; row.evidence = saved.evidence; }
       save();
-      document.getElementById('treviewstatus').textContent = canStore ? 'Review saved in this browser.' : 'Review kept for this session.';
+      document.getElementById('treviewstatus').innerHTML = (canStore ? 'Review saved in this browser.' : 'Review kept for this session.') + (saved.cause ? ' <a href="#rw-traps">See your trap report</a>' : '');
     }
-    document.getElementById('tcause').addEventListener('change', keep);
+    $$('input[name="tcause"]', host).forEach(function (i) { i.addEventListener('change', keep); });
     document.getElementById('tevidence').addEventListener('input', keep);
   }
+  function practiceReflection(it) { reflectionBlock(document.getElementById('treview'), it, TS.res[TS.res.length - 1]); }
   function timedNext() {
     if (!TS || !TS.card || !TS.card.done()) { return; }
     if (TS.i + 1 < TS.items.length) { TS.i += 1; timedDraw(); toTop(); } else { timedFinish(); }
