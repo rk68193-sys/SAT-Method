@@ -293,7 +293,8 @@
   /* ---------- Math: practice ---------- */
   var MP = null;                         /* the running set */
   var mpPreset = null;                   /* {kind:'skill'|'type'|'domain', id} from a link */
-  function mpSettings() { var s = isObj(store.s.math) ? store.s.math : {}; return { topic: s.topic || 'all', diff: s.diff || 'all', n: s.n || 10, pick: s.pick || 'any', timer: s.timer !== false }; }
+  var mpModePreset = null;               /* 'module' from a link such as #m-module */
+  function mpSettings() { var s = isObj(store.s.math) ? store.s.math : {}; return { mode: s.mode === 'module' ? 'module' : 'learn', topic: s.topic || 'all', diff: s.diff || 'all', n: s.n || 10, pick: s.pick || 'any', timer: s.timer !== false }; }
   /* step 1: what kind of set; step 2: a short group of big buttons for that kind */
   function mpKindHTML(topic) {
     var kind = topic === 'all' ? 'all' : topic.split(':')[0];
@@ -366,26 +367,36 @@
   function mpSetup() {
     MP = null;
     var s = mpSettings();
-    if (mpPreset) { s.topic = mpPreset; mpPreset = null; }
+    if (mpPreset) { s.topic = mpPreset; mpPreset = null; s.mode = 'learn'; }
+    if (mpModePreset) { s.mode = mpModePreset; mpModePreset = null; }
     viewEl.mprac.innerHTML = '<div class="wrap">' +
       mHead('Math · Practice', 'Practice real SAT questions', 'Every question is from College Board’s question bank, with College Board’s answer and explanation. After each one you also see how to solve that type of question.') +
-      '<form class="mpset" id="mp-form"><div class="mpset-grid">' +
+      '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
+        seg('mp-mode', 'How to practice', [['learn', 'Learn'], ['module', 'Timed module']], s.mode) +
+        '<p class="mpmode-note" id="mp-mode-note"></p>' +
         mpKindHTML(s.topic) + '<div id="mp-sub" class="mpsub"></div>' +
         seg('mp-diff', '2 · How hard', [['all', 'Any'], ['E', 'Easy'], ['M', 'Medium'], ['H', 'Hard']], s.diff) +
-        seg('mp-n', '3 · How many', [[5, '5'], [10, '10'], [22, '22 (one module)']], s.n) +
+        '<div class="mp-learnonly">' + seg('mp-n', '3 · How many', [[5, '5'], [10, '10'], [22, '22 (one module)']], s.n) + '</div>' +
         seg('mp-pick', '4 · Which ones', [['any', 'Any'], ['new', 'Not tried yet'], ['missed', 'Ones I missed']], s.pick) +
-        '<label class="checkline"><input type="checkbox" id="mp-timer"' + (s.timer ? ' checked' : '') + '> Show a timer (about 95 seconds a question on the real test)</label>' +
+        '<label class="checkline mp-learnonly"><input type="checkbox" id="mp-timer"' + (s.timer ? ' checked' : '') + '> Show a timer (about 95 seconds a question on the real test)</label>' +
       '</div><p class="mpset-n" id="mp-count" aria-live="polite"></p><p class="row"><button class="btn big" type="submit" id="mp-go">Start practicing</button></p></form>' +
       '</div>';
     var form = $('#mp-form');
     function read() {
       var r = function (n) { var el = $('input[name="' + n + '"]:checked', form); return el ? el.value : ''; };
       var kind = r('mp-kind') || 'all', sub = r('mp-sub');
-      return { topic: kind === 'all' ? 'all' : (sub ? kind + ':' + sub : 'all'), diff: r('mp-diff') || 'all', n: Number(r('mp-n')) || 10, pick: r('mp-pick') || 'any', timer: $('#mp-timer').checked };
+      return { mode: r('mp-mode') === 'module' ? 'module' : 'learn', topic: kind === 'all' ? 'all' : (sub ? kind + ':' + sub : 'all'), diff: r('mp-diff') || 'all', n: Number(r('mp-n')) || 10, pick: r('mp-pick') || 'any', timer: $('#mp-timer').checked };
     }
     function count() {
-      var st = read(), n = mpPool(st).length;
-      $('#mp-count').textContent = n ? mfmt(n) + ' questions match. You will get ' + Math.min(n, st.n) + '.' : 'No questions match these choices. Try “Any” for difficulty or for which ones.';
+      var st = read(), n = mpPool(st).length, mod = st.mode === 'module', get = Math.min(n, mod ? MM_N : st.n);
+      form.setAttribute('data-mode', st.mode);
+      $('#mp-mode-note').innerHTML = mod
+        ? '<b>One part of the real Math section:</b> ' + MM_N + ' questions on a single ' + clock(mmLimit(MM_N)) + ' clock. Move back and forth, mark questions for review, cross out choices and open the calculator. Answers and methods come at the end.'
+        : '<b>One question at a time:</b> College Board’s answer and the method for that question type appear straight after each question.';
+      $('#mp-count').textContent = !n ? 'No questions match these choices. Try “Any” for difficulty or for which ones.'
+        : mod ? mfmt(n) + ' questions match. Your module: ' + plural(get, 'question') + ', ' + clock(mmLimit(get)) + ' on the clock.' + (st.topic === 'all' && st.diff === 'all' && n >= MM_N ? ' Mixed like the real test: mostly Algebra and Advanced Math, easier questions first.' : '')
+        : mfmt(n) + ' questions match. You will get ' + get + '.';
+      $('#mp-go').textContent = mod ? 'Start the module' : 'Start practicing';
       $('#mp-go').disabled = !n;
     }
     function drawSub(keep) {
@@ -400,6 +411,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var st = read(); store.s.math = st; save();
+      if (st.mode === 'module') { mmStart(st); return; }
       var pool = shuffle(mpPool(st).slice()).slice(0, st.n);
       if (!pool.length) { return; }
       MP = { qs: pool, i: 0, res: [], timer: st.timer, over: false, settings: st };
@@ -408,8 +420,8 @@
     count();
   }
   function mpElapsed() { if (!MP || !MP.cur) { return 0; } var c = MP.cur; return (c.acc + (c.t0 ? now() - c.t0 : 0)) / 1000; }
-  function mpPause() { if (MP && MP.cur && MP.cur.t0 && !MP.cur.done) { MP.cur.acc += now() - MP.cur.t0; MP.cur.t0 = 0; } }
-  function mpResume() { if (MP && MP.cur && !MP.cur.t0 && !MP.cur.done && !MP.over) { MP.cur.t0 = now(); } }
+  function mpPause() { if (MP && MP.module) { mmPause(); return; } if (MP && MP.cur && MP.cur.t0 && !MP.cur.done) { MP.cur.acc += now() - MP.cur.t0; MP.cur.t0 = 0; } }
+  function mpResume() { if (MP && MP.module) { mmResume(); return; } if (MP && MP.cur && !MP.cur.t0 && !MP.cur.done && !MP.over) { MP.cur.t0 = now(); } }
   function mpTick() {
     var el = $('#mp-clock');
     if (!el || !MP || !MP.cur) { return; }
@@ -425,7 +437,7 @@
       ? '<div class="mpchoices" role="group" aria-label="Your answer">' + ['A', 'B', 'C', 'D'].map(function (L, i) { return '<button class="mpch" type="button" data-k="' + L + '"><span class="mpch-l">' + L + '</span><span class="kbd">' + (i + 1) + '</span></button>'; }).join('') + '</div><p class="fine">Choose the letter of your answer. The choices are in the question above.</p>'
       : '<form class="mpgrid" id="mp-gform"><label class="field"><span class="label">Type your answer</span><input type="text" id="mp-gin" inputmode="decimal" autocomplete="off" placeholder="e.g. 12, −3, 7/6 or 2.5"></label><button class="btn" type="submit">Check</button></form><p class="fine">Numbers only. Fractions like 7/6 are fine; leave out units.</p>';
     viewEl.mprac.innerHTML = '<div class="wrap mpwrap">' +
-      '<div class="mpbar"><span class="mpbar-pos"><b>Question ' + (MP.i + 1) + '</b> of ' + MP.qs.length + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.qs.map(function (x, i) { var r = MP.res[i]; return '<i class="' + (r ? (r.ok ? 'ok' : 'no') : (i === MP.i ? 'cur' : '')) + '"></i>'; }).join('') + '</span>' + (MP.timer ? '<span class="mpclock" id="mp-clock" aria-label="Time on this question">0:00</span>' : '') + '<button class="linkbtn" type="button" id="mp-end">End set</button></div>' +
+      '<div class="mpbar"><span class="mpbar-pos"><b>Question ' + (MP.i + 1) + '</b> of ' + MP.qs.length + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.qs.map(function (x, i) { var r = MP.res[i]; return '<i class="' + (r ? (r.ok ? 'ok' : 'no') : (i === MP.i ? 'cur' : '')) + '"></i>'; }).join('') + '</span>' + (MP.timer ? '<span class="mpclock" id="mp-clock" aria-label="Time on this question">0:00</span>' : '') + mCalcBtn() + '<button class="linkbtn" type="button" id="mp-end">End set</button></div>' +
       '<article class="mpcard"><header class="mpcard-h"><span class="mtag">' + esc(S.name) + '</span><span class="mdiff d' + q.d + '">' + MDIFF[q.d] + '</span><span class="muted">' + (q.mc ? 'Multiple choice' : 'Type in your answer') + '</span></header>' +
         '<div class="mpq">' + mImg('q', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans +
         '<div id="mp-fb" class="mpfb" tabindex="-1" hidden></div></article></div>';
@@ -498,18 +510,24 @@
         if (k === q.a) { b.classList.add('right'); } else if (k === given) { b.classList.add('wrong'); }
       });
     } else { $('#mp-gin').disabled = true; $('#mp-gform button').disabled = true; }
-    var T = MTY[q.t], last = MP.i === MP.qs.length - 1;
-    var right = q.mc ? q.a : q.a.join(' or ');
+    var last = MP.i === MP.qs.length - 1;
     var fb = $('#mp-fb');
     fb.hidden = false; fb.className = 'mpfb ' + (ok ? 'ok' : 'no');
-    fb.innerHTML = '<p class="mpverdict">' + (ok ? 'Correct.' : 'Not this time.') + ' <span>College Board’s answer: <b>' + esc(right) + '</b>' + (q.mc ? '' : (q.a.length > 1 ? ' (any of these is accepted)' : '')) + '</span>' + (MP.timer ? ' <span class="muted">· ' + secs + ' s</span>' : '') + '</p>' +
-      '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + mDesLine(T) + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
-      mSourceNoteHTML(q.id) +
-      mPracticeMethodHTML(q) + mStudyFeedbackHTML(q.id) +
-      '<details class="mprat"' + (ok ? '' : ' open') + '><summary>College Board’s explanation</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>' +
+    fb.innerHTML = mFeedbackHTML(q, ok, MP.timer ? secs : null) +
       '<p class="row mpnext"><button class="btn big" type="button" id="mp-next">' + (last ? 'See my results' : 'Next question') + '</button><span class="fine">or press Enter</span></p>';
     $('#mp-next').addEventListener('click', mpNextQ);
     showFeedback(fb);
+  }
+  /* verdict, the method for this type, and College Board's explanation: used after a practice answer and when reviewing a module.
+     ok is true, false, or null when no answer was given. */
+  function mFeedbackHTML(q, ok, secs) {
+    var T = MTY[q.t], right = q.mc ? q.a : q.a.join(' or ');
+    return '<p class="mpverdict">' + (ok ? 'Correct.' : (ok === null ? 'No answer.' : 'Not this time.')) + ' <span>College Board’s answer: <b>' + esc(right) + '</b>' + (q.mc ? '' : (q.a.length > 1 ? ' (any of these is accepted)' : '')) + '</span>' + (secs != null ? ' <span class="muted">· ' + secs + ' s</span>' : '') + '</p>' +
+      (ok === false ? mWhyHTML(q.id) : '') +
+      '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + mDesLine(T) + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
+      mSourceNoteHTML(q.id) +
+      mPracticeMethodHTML(q) + mStudyFeedbackHTML(q.id) +
+      '<details class="mprat"' + (ok ? '' : ' open') + '><summary>College Board’s explanation</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>';
   }
   function mpNextQ() {
     if (!MP) { return; }
@@ -530,13 +548,15 @@
         var q = MQBY[r.id];
         return '<li class="' + (r.ok ? 'ok' : 'no') + '"><span class="mpsum-v">' + (r.ok ? '✓' : '✗') + '</span><span>' + esc(MTY[q.t].name) + ' <span class="muted">· ' + MDIFF[q.d] + ' · ' + r.secs + ' s</span></span><a class="linkbtn" href="#mt-' + q.t + '">How to solve</a></li>';
       }).join('') + '</ol></section>' +
-      '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '</p></div>';
+      mWhySetHTML(done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; })) +
+      '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '<a class="btn ghost" href="#m-map">See my map</a></p></div>';
     $('#mp-again').addEventListener('click', mpSetup);
     var mm = $('#mp-miss');
     if (mm) { mm.addEventListener('click', function () { var pool = done.filter(function (r) { return !r.ok; }).map(function (r) { return MQBY[r.id]; }); MP = { qs: pool, i: 0, res: [], timer: MP.timer, over: false }; mpShow(); }); }
     window.scrollTo(0, 0);
   }
   function mpKey(e, key, tag) {
+    if (MP && MP.module) { mmKey(e, key, tag); return; }
     if (!MP || MP.over || !MP.cur) { return; }
     if (!MP.cur.done) {
       if (!MP.cur.q.mc) { return; }

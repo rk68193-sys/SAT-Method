@@ -15,6 +15,13 @@ Review scope, source corrections, and validation limits are documented in [src/R
 
 Progress, notes and the chosen appearance are saved in your browser only.
 
+## Timed modules, the mastery map and the trap report
+
+- **Math → Practice** has two ways to practice. **Learn** shows College Board's answer and the method after each question. **Timed module** (`#m-module`) is one part of the real Math section: 22 questions on a single 35-minute clock, mixed like the test plan (8 Algebra, 8 Advanced Math, 3 Problem-Solving and Data Analysis, 3 Geometry and Trigonometry, easier questions first). You can move back and forth, mark questions for review, cross out choices and see every question in one list; answers, methods and explanations come at the end. A question left blank counts against the module score but is not saved as a miss.
+- **Calculator** opens College Board's version of the Desmos graphing calculator in a panel beside the question (a sheet at the bottom of a phone screen). It loads from desmos.com, so it needs a connection.
+- After any miss, **What went wrong?** takes one tap: answered a different question, fell for the type's trap, did not know the method, arithmetic slip, misread, or rushed.
+- **Math → My map** (`#m-map`) shows all 249 fine question types as squares colored by your last results: needs work (under 60% right), getting there, strong (85% or more on at least three questions), or not tried. A square opens the type's trap, your record, and practice for just that type. The same page has **Why you miss** (`#m-traps`), which adds up the reasons you tapped, names the types where each happened and offers a retry set, plus your recent module scores.
+
 ## Rebuilding
 
 See `src/README.md`.

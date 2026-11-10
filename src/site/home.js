@@ -16,7 +16,8 @@
       ['mstudy', 'm-study', 'Expanded types', '249 fine question types, fuller explanations, close variants, and 998 calculator checks with clear scope.'],
       ['mtypes', 'm-types', 'Question finder', 'Type words from a question to see which of the ' + MORDER.length + ' question types it is and how to solve it.'],
       ['mref', 'm-ref', 'Formulas', 'What is on the formula sheet, what is not, and how to type in your own answers.'],
-      ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations.']] }
+      ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations. Learn one question at a time, or sit a timed 22-question module.'],
+      ['mmap', 'm-map', 'My map', 'All ' + MST.methods.length + ' question types colored by how you are doing, the reasons you miss, and what to practice next.']] }
   };
   var VIEW_SUBJ = { home: 'home', suggest: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
@@ -151,6 +152,8 @@
       '</div></section>' +
       '<section class="hsec"><div class="hsec-h"><h2 class="h2">Everything in one place</h2><p class="muted">Jump straight to the part you need.</p></div><div class="hfeats">' +
         feat('math', 'target', 'Math practice', 'Real questions by skill, pattern or difficulty, with the method after each one.', 'm-practice') +
+        feat('math', 'bolt', 'Timed module', '22 questions on one 35-minute clock, with mark for review, cross-out and the calculator.', 'm-module') +
+        feat('math', 'grid', 'Mastery map', 'Every question type colored by how you are doing, and the reasons you miss.', 'm-map') +
         feat('math', 'graph', 'Desmos playbook', MD.desmos.length + ' calculator moves with exactly what to type.', 'm-desmos') +
         feat('math', 'grid', 'Big patterns', 'The ideas that connect math question types.', 'm-patterns') +
         feat('math', 'grid', 'Expanded types', '249 fine methods, close variants, and scoped Desmos checks.', 'm-study') +

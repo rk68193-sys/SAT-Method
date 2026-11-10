@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -16,7 +16,7 @@
     if (cur.view === 'practice') { timedPause(); }
     if (cur.view === 'grammar') { demoPause(); }
     if (cur.view === 'drills') { drillAway(); }
-    if (cur.view === 'mprac') { mpPause(); }
+    if (cur.view === 'mprac') { mpPause(); mCalcShow(false); }
     VIEWS.forEach(function (k) { viewEl[k].hidden = k !== v; });
     markNav(v);
     cur.view = v;
@@ -137,6 +137,9 @@
     if (/^ms-/.test(token)) { showView('mshort'); buildMShort(); scrollToEl(document.getElementById(token)); return true; }
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
+    if (token === 'm-module') { showView('mprac'); if (!(MP && MP.module && !MP.over)) { clearInterval(mpInterval); mpModePreset = 'module'; mpSetup(); } toTop(); return true; }
+    if (token === 'm-map' || token === 'm-traps') { showView('mmap'); buildMMap(); if (token === 'm-traps') { scrollToEl(document.getElementById('m-traps')); } else { toTop(); } return true; }
+    if ((m = /^m-map-(.+)$/.exec(token)) && has(MSTBY, decodeURIComponent(m[1]))) { showView('mmap'); buildMMap(decodeURIComponent(m[1])); scrollToEl(document.getElementById('mm-detail')); return true; }
     if ((m = /^mp-(.+)$/.exec(token))) {
       var x = m[1];
       if (has(MTY, x)) { mpPreset = 't:' + x; } else if (has(MSK, x)) { mpPreset = 'k:' + x; } else { mpPreset = 'd:' + x; }
@@ -173,7 +176,8 @@
     if (e.metaKey || e.ctrlKey || e.altKey) { return; }
     var t = e.target, tag = t && t.tagName ? t.tagName : '';
     var confidenceChoice = tag === 'INPUT' && t.type === 'radio' && t.name === 'tconfidence';
-    if (/^(INPUT|TEXTAREA|SELECT|SUMMARY)$/.test(tag) && !confidenceChoice) { return; }
+    var flagBox = tag === 'INPUT' && t.id === 'mm-flag';   /* "Mark for review" keeps the answer keys working */
+    if (/^(INPUT|TEXTAREA|SELECT|SUMMARY)$/.test(tag) && !confidenceChoice && !flagBox) { return; }
     var key = e.key || '';
     if (cur.view === 'practice' && TS && TS.card) {
       if (!TS.card.done()) {

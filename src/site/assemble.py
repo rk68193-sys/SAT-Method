@@ -3,7 +3,7 @@ b = os.path.dirname(os.path.abspath(__file__))
 S = os.path.dirname(b)
 shell = open(os.path.join(b, 'shell.html'), encoding='utf-8').read()
 css = open(os.path.join(b, 'app.css'), encoding='utf-8').read()
-parts = ['core.js', 'grammar.js', 'reasoning.js', 'data-patterns.js', 'review-findings.js', 'reading.js', 'para.js', 'drills.js', 'practice.js', 'start.js', 'lookup.js', 'math.js', 'math-study.js', 'home.js', 'boot.js']
+parts = ['core.js', 'grammar.js', 'reasoning.js', 'data-patterns.js', 'review-findings.js', 'reading.js', 'para.js', 'drills.js', 'practice.js', 'start.js', 'lookup.js', 'math.js', 'math-study.js', 'math-track.js', 'math-module.js', 'home.js', 'boot.js']
 js = "(function () {\n  'use strict';\n" + ''.join(open(os.path.join(b, p), encoding='utf-8').read() for p in parts) + "}());\n"
 open(os.path.join(b, 'bundle.js'), 'w', encoding='utf-8').write(js)
 data = json.load(open(os.path.join(S, 'build', 'data.json'), encoding='utf-8'))

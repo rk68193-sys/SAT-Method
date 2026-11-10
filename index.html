@@ -1638,6 +1638,126 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 /* Expanded Math methods: uses the existing appearance tokens in every theme. */
 .mst-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1.5rem 0}.mst-stats>div{padding:1.2rem;border:1px solid var(--math-line);background:var(--math-soft);border-radius:1rem}.mst-stats b{display:block;font:700 2rem/1.2 var(--display)}.mst-stats span{display:block;font-size:.85rem;margin-top:.35rem;color:var(--muted)}.mst-filters{display:grid;grid-template-columns:2fr 1.2fr 1.2fr;gap:1rem;align-items:end;margin:1.5rem 0 .5rem}.mst-filters input,.mst-filters select{width:100%;min-width:0;box-sizing:border-box}.mst-card{border:1px solid var(--line);border-radius:1rem;background:var(--card);padding:1.2rem 1.4rem;margin:1rem 0}.mst-card>summary{cursor:pointer;padding-left:.2rem}.mst-card>summary h3{margin:.45rem 0}.mst-card>summary .fine{display:block}.mst-body{padding-top:1rem;border-top:1px solid var(--line);margin-top:1rem}.mst-route,.mst-check{padding:1.1rem 1.25rem;background:var(--math-soft);border:1px solid var(--math-line);border-radius:.8rem;margin:1rem 0}.mst-route h4,.mst-check h4{margin-top:0}.mst-math,.mst-input{font-family:var(--mono);overflow-wrap:anywhere;word-break:break-word}.mst-input{display:block;width:100%;min-height:5rem;padding:.8rem;margin:.6rem 0;box-sizing:border-box;white-space:pre-wrap;color:var(--ink);background:var(--card);border:1px solid var(--line-strong);border-radius:.5rem}.mst-scope{padding-top:.6rem;border-top:1px solid var(--math-line);font-size:.9rem}.mst-qids{list-style:none;margin:1rem 0;padding:0}.mst-qids li{display:flex;align-items:baseline;flex-wrap:wrap;gap:.5rem 1rem;padding:.6rem 0;border-bottom:1px solid var(--line)}.mst-qids li>a:first-child{font-family:var(--mono)}.mst-qids .fine{flex:1;min-width:12rem}.mst-pager{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:1rem;margin:1.5rem 0}.mst-question{padding:1.3rem 0}.mst-question>details{margin:1rem 0}.mst-graph{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:.6rem}.mst-feedback .mst-check{margin-top:.8rem}.mst-related summary{color:var(--math)}.mst-copy-status:empty{display:none}.mst-discover{margin:1.4rem 0}.mst-evidence{margin:1.25rem 0}.mst-evidence>summary{cursor:pointer;font-weight:600}@media(max-width:720px){.mst-filters{grid-template-columns:1fr}.mst-stats{gap:.5rem}.mst-stats>div{padding:.9rem .6rem}.mst-stats b{font-size:1.65rem}.mst-stats span{font-size:.75rem}.mst-card{padding:1rem}.mst-route,.mst-check{padding:.9rem}.mst-qids .fine{min-width:8rem}}
 
+/* ---------- Math: ten tabs ---------- */
+/* the subject name is already lit in the top bar; without it ten tabs fit on one line, and on a narrow window they wrap instead of hiding */
+@media (min-width: 821px) { .secin[data-n="10"] .secnav-t { display: none; } .secin[data-n="10"] .secnav-l { flex-wrap: wrap; overflow: visible; } }
+@media (min-width: 821px) and (max-width: 1199px) { .secin[data-n="10"] .secnav-l a { padding-inline: .42rem; font-size: .93rem; } .secin[data-n="10"] .secnav-l a::after { left: .42rem; right: .42rem; } }
+@media (max-width: 820px) { .secin[data-n="10"] .secnav-l a:last-child { grid-column: 1 / -1; } }
+
+/* ---------- Math practice: how to practice, the calculator panel ---------- */
+.mpmode-note { margin-top: -.7rem; font-size: .98rem; line-height: 1.5; color: var(--ink-2); max-width: 44em; }
+.mpset[data-mode="module"] .mp-learnonly { display: none; }
+.mcalc-btn svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.mcalc-btn[aria-pressed="true"] { background: var(--hl); border-color: var(--pencil); color: var(--hl-ink); }
+.mcalc { position: fixed; z-index: 25; right: 1rem; bottom: 1rem; top: calc(var(--top-h) + 1rem); width: min(30rem, calc(100vw - 2rem)); display: grid; grid-template-rows: auto minmax(0, 1fr); border-radius: 20px; overflow: hidden; background: var(--card); border: 1px solid var(--line-strong); box-shadow: var(--shadow-lg); }
+.mcalc[hidden] { display: none; }
+.mcalc-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .8rem; padding: .55rem .6rem .55rem 1rem; border-bottom: 1px solid var(--line); }
+.mcalc-bar b { font: 600 1.02rem/1.2 var(--display); }
+.mcalc-bar .muted { flex: 1; font-size: .85rem; }
+.mcalc-bar .linkbtn { font-size: .9rem; }
+.mcalc iframe { display: block; width: 100%; height: 100%; border: 0; background: var(--card); }
+@media (min-width: 1100px) { body.calc-open #v-mprac, body.calc-open #tabs { padding-right: 31.5rem; } }
+@media (max-width: 820px) {
+  .mcalc { top: auto; left: 0; right: 0; bottom: 0; width: auto; height: 62vh; border-radius: 20px 20px 0 0; }
+  body.calc-open #v-mprac { padding-bottom: 62vh; }
+  .mcalc-bar .muted { display: none; }
+  .mcalc-bar b { flex: 1; }
+}
+
+/* ---------- Math: module mode ---------- */
+.mm-clockbox { display: inline-flex; align-items: center; gap: .6rem; }
+.mm-clockbox .linkbtn { font-size: .9rem; font-weight: 600; }
+.mpclock.late { background: var(--bad-soft); color: var(--bad); }
+.mmbar-tools { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .9rem; margin-left: auto; }
+.mm-nav { margin-top: .8rem; padding: 1.1rem 1.2rem; border-radius: 20px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.mm-nav[hidden] { display: none; }
+.mm-nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(2.9rem, 1fr)); gap: .5rem; margin-top: .7rem; }
+.mm-n { position: relative; display: inline-grid; place-items: center; min-height: 2.9rem; border-radius: 12px; border: 1.5px dashed var(--line-strong); background: var(--card); font: 700 1rem/1 var(--display); color: var(--ink); cursor: pointer; }
+.mm-n.ans { border-style: solid; border-color: var(--act); background: var(--act); color: var(--act-ink); }
+.mm-n.cur { outline: 2px solid var(--focus); outline-offset: 2px; }
+.mm-n.flag::after { content: ""; position: absolute; top: -.3rem; right: -.3rem; width: .85rem; height: .85rem; border-radius: 99px; background: var(--bad); border: 2px solid var(--card); }
+.mm-key { display: flex; flex-wrap: wrap; gap: .45rem 1.3rem; margin-top: .9rem; font-size: .9rem; color: var(--muted); }
+.mm-key span { display: inline-flex; align-items: center; gap: .45rem; }
+.mm-key i.mm-n, .mm-key i.mm-t { width: 1.25rem; height: 1.25rem; min-height: 0; border-radius: 6px; cursor: default; }
+.mm-confirm { display: grid; gap: .8rem; margin-bottom: 1.1rem; padding: 1rem 1.1rem; border-radius: 16px; background: var(--hl); color: var(--hl-ink); }
+.mm-qn { font: 600 1.1rem/1.2 var(--display); }
+.mm-flag { margin-left: auto; font-weight: 600; }
+.mmch { display: grid; gap: .3rem; justify-items: stretch; }
+.mmx { border: 0; background: none; padding: .25rem; font-size: .88rem; color: var(--muted); text-decoration: underline; text-underline-offset: .18em; cursor: pointer; }
+.mmx:hover { color: var(--ink); }
+.mmx[aria-pressed="true"] { color: var(--bad); font-weight: 700; }
+.mpch.sel, .mpch.sel:hover:not(:disabled) { background: var(--act); border-color: var(--act); color: var(--act-ink); }
+.mpch.sel .kbd { color: var(--act-ink); border-color: currentColor; }
+.mpch.crossed { border-style: dashed; color: var(--muted); }
+.mpch.crossed .mpch-l { text-decoration: line-through; text-decoration-thickness: 3px; }
+.mm-step { justify-content: space-between; margin-top: 1.5rem; }
+.mm-yours { margin-top: 1rem; }
+.mpbar-dots i.at { box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--pencil); }
+.mmsum li.mm-blank .mpsum-v { color: var(--muted); }
+.mm-nav, #v-mprac .mpcard { scroll-margin-top: calc(var(--top-h) + 5.5rem); }
+@media (max-width: 820px) { .mm-nav, #v-mprac .mpcard { scroll-margin-top: 7.5rem; } }
+@media (max-width: 560px) {
+  .mmbar { padding: .6rem .8rem; gap: .45rem .8rem; }
+  .mmbar-tools { margin-left: 0; width: 100%; gap: .4rem; justify-content: space-between; }
+  .mmbar-tools .btn.sm { padding: .4rem .7rem; font-size: .9rem; }
+  .mm-flag { margin-left: 0; width: 100%; }
+}
+
+/* ---------- Math: what went wrong, the trap report ---------- */
+.mwhy { display: grid; gap: .55rem; padding: .95rem 1.1rem; border-radius: 16px; background: var(--card); }
+.mwhy-row { display: flex; flex-wrap: wrap; gap: .4rem; }
+.mwhy-b { padding: .42rem .85rem; border-radius: 999px; border: 1.5px solid var(--line-strong); background: var(--card); color: var(--ink); font-weight: 600; font-size: .95rem; cursor: pointer; }
+.mwhy-b:hover { border-color: var(--pencil); background: var(--hl); color: var(--hl-ink); }
+.mwhy-b[aria-pressed="true"] { background: var(--act); border-color: var(--act); color: var(--act-ink); }
+.mwhy-st:empty { display: none; }
+.mwhy-sum { display: grid; gap: .45rem; margin: .4rem 0 .6rem; max-width: 46em; }
+.mtr-total { margin-top: 1rem; }
+.mtrs { display: grid; gap: 1rem; margin-top: 1.1rem; max-width: 52rem; }
+.mtr { display: grid; gap: .6rem; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.mtr-h { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .3rem 1rem; }
+.mtr-n { font: 600 .92rem/1.2 var(--mono); color: var(--muted); }
+.mtr .mbar i { background: var(--bad); }
+.mtr-traps { display: grid; gap: .35rem; font-size: .96rem; }
+.mtr-types { line-height: 1.9; }
+
+/* ---------- Math: mastery map ---------- */
+.mm-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 52rem; }
+.mm-nexts { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+.mm-next-c { display: grid; gap: .55rem; align-content: start; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.mm-next-c .h3 { font-size: 1.12rem; }
+.mm-next-top { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .7rem; font-size: .9rem; }
+.mm-lvl { display: inline-block; font: 700 .8rem/1.2 var(--display); padding: .22rem .6rem; border-radius: 999px; background: var(--sunk); color: var(--ink-2); }
+.mm-lvl.lvl-weak { background: var(--bad-soft); color: var(--bad); }
+.mm-lvl.lvl-mid { background: var(--hl); color: var(--hl-ink); }
+.mm-lvl.lvl-strong { background: var(--ok-soft); color: var(--ok); }
+#mm-all .seg { margin-top: 1.3rem; }
+.mm-map { margin-top: .4rem; }
+.mm-dom { margin-top: 2rem; }
+.mm-dom > .h3 { font-size: 1.25rem; margin-bottom: .5rem; }
+.mm-skill { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: .5rem 1.2rem; padding: .85rem 0; border-top: 1px solid var(--line); }
+.mm-skill-h a { font-weight: 600; }
+.mm-skill-h span { display: block; font-size: .86rem; color: var(--muted); margin-top: .1rem; }
+.mm-tiles { display: flex; flex-wrap: wrap; gap: .35rem; align-content: start; }
+.mm-t { display: inline-grid; place-items: center; width: 2.5rem; height: 2.5rem; padding: 0; border-radius: 10px; border: 1.5px solid var(--line); background: var(--sunk); color: var(--muted); font: 700 .82rem/1 var(--mono); cursor: pointer; transition: opacity .12s ease, transform .1s ease; }
+.mm-t:hover { transform: translateY(-1px); border-color: var(--ink); }
+.mm-t.lvl-weak { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+.mm-t.lvl-mid { background: var(--hl); border-color: var(--pencil); color: var(--hl-ink); }
+.mm-t.lvl-strong { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.mm-t[aria-pressed="true"] { outline: 3px solid var(--focus); outline-offset: 2px; }
+.mm-map[data-show="weak"] .mm-t:not(.lvl-weak), .mm-map[data-show="mid"] .mm-t:not(.lvl-mid), .mm-map[data-show="strong"] .mm-t:not(.lvl-strong), .mm-map[data-show="new"] .mm-t:not(.lvl-new) { opacity: .2; }
+.mm-detail-host { grid-column: 1 / -1; }
+.mm-detail-host:empty { display: none; }
+.mm-detail { display: grid; gap: .7rem; margin: .2rem 0 .4rem; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1.5px solid var(--line-strong); box-shadow: var(--shadow); max-width: 52rem; }
+.mm-close { margin-left: auto; }
+.mm-rec { font-size: .95rem; color: var(--ink-2); }
+.mm-mods { display: grid; gap: .4rem; margin-top: .9rem; max-width: 34rem; }
+.mm-mods li { display: grid; grid-template-columns: 5.5rem 1fr auto; gap: .8rem; align-items: baseline; padding: .6rem .9rem; border-radius: 14px; background: var(--card); border: 1px solid var(--line); }
+@media (max-width: 720px) {
+  .mm-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mm-skill { grid-template-columns: minmax(0, 1fr); }
+  .mm-t { width: 2.65rem; height: 2.65rem; }
+}
+
 </style>
 
 <script>try { var t0 = localStorage.getItem('sat-sprint-theme'); if (t0 && t0 !== 'auto') { document.documentElement.setAttribute('data-theme', t0); } } catch (e) {}</script>
@@ -1678,6 +1798,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
   <section id="v-mshort" class="view" aria-label="Math shortcuts" hidden></section>
   <section id="v-mref" class="view" aria-label="Math formulas and Desmos" hidden></section>
   <section id="v-mprac" class="view" aria-label="Math practice" hidden></section>
+  <section id="v-mmap" class="view" aria-label="My math mastery map" hidden></section>
   <section id="v-suggest" class="view" aria-label="Suggest a change" hidden></section>
 </main>
 
@@ -1778,7 +1899,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 
   /* ---------- saved progress: this browser only ---------- */
   var KEY = 'sat-grammar-sprint.v1';
-  var store = { t: {}, l: {}, d: {}, s: {}, r: {}, rl: {}, b: {}, m: {}, g: {} }, canStore = false;
+  var store = { t: {}, l: {}, d: {}, s: {}, r: {}, rl: {}, b: {}, m: {}, g: {}, x: {} }, canStore = false;
   function isObj(x) { return !!x && typeof x === 'object' && !Array.isArray(x); }
   try {
     var raw = window.localStorage.getItem(KEY);
@@ -4147,7 +4268,8 @@ function rReasoningHTML() {
   /* ---------- Math: practice ---------- */
   var MP = null;                         /* the running set */
   var mpPreset = null;                   /* {kind:'skill'|'type'|'domain', id} from a link */
-  function mpSettings() { var s = isObj(store.s.math) ? store.s.math : {}; return { topic: s.topic || 'all', diff: s.diff || 'all', n: s.n || 10, pick: s.pick || 'any', timer: s.timer !== false }; }
+  var mpModePreset = null;               /* 'module' from a link such as #m-module */
+  function mpSettings() { var s = isObj(store.s.math) ? store.s.math : {}; return { mode: s.mode === 'module' ? 'module' : 'learn', topic: s.topic || 'all', diff: s.diff || 'all', n: s.n || 10, pick: s.pick || 'any', timer: s.timer !== false }; }
   /* step 1: what kind of set; step 2: a short group of big buttons for that kind */
   function mpKindHTML(topic) {
     var kind = topic === 'all' ? 'all' : topic.split(':')[0];
@@ -4220,26 +4342,36 @@ function rReasoningHTML() {
   function mpSetup() {
     MP = null;
     var s = mpSettings();
-    if (mpPreset) { s.topic = mpPreset; mpPreset = null; }
+    if (mpPreset) { s.topic = mpPreset; mpPreset = null; s.mode = 'learn'; }
+    if (mpModePreset) { s.mode = mpModePreset; mpModePreset = null; }
     viewEl.mprac.innerHTML = '<div class="wrap">' +
       mHead('Math · Practice', 'Practice real SAT questions', 'Every question is from College Board’s question bank, with College Board’s answer and explanation. After each one you also see how to solve that type of question.') +
-      '<form class="mpset" id="mp-form"><div class="mpset-grid">' +
+      '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
+        seg('mp-mode', 'How to practice', [['learn', 'Learn'], ['module', 'Timed module']], s.mode) +
+        '<p class="mpmode-note" id="mp-mode-note"></p>' +
         mpKindHTML(s.topic) + '<div id="mp-sub" class="mpsub"></div>' +
         seg('mp-diff', '2 · How hard', [['all', 'Any'], ['E', 'Easy'], ['M', 'Medium'], ['H', 'Hard']], s.diff) +
-        seg('mp-n', '3 · How many', [[5, '5'], [10, '10'], [22, '22 (one module)']], s.n) +
+        '<div class="mp-learnonly">' + seg('mp-n', '3 · How many', [[5, '5'], [10, '10'], [22, '22 (one module)']], s.n) + '</div>' +
         seg('mp-pick', '4 · Which ones', [['any', 'Any'], ['new', 'Not tried yet'], ['missed', 'Ones I missed']], s.pick) +
-        '<label class="checkline"><input type="checkbox" id="mp-timer"' + (s.timer ? ' checked' : '') + '> Show a timer (about 95 seconds a question on the real test)</label>' +
+        '<label class="checkline mp-learnonly"><input type="checkbox" id="mp-timer"' + (s.timer ? ' checked' : '') + '> Show a timer (about 95 seconds a question on the real test)</label>' +
       '</div><p class="mpset-n" id="mp-count" aria-live="polite"></p><p class="row"><button class="btn big" type="submit" id="mp-go">Start practicing</button></p></form>' +
       '</div>';
     var form = $('#mp-form');
     function read() {
       var r = function (n) { var el = $('input[name="' + n + '"]:checked', form); return el ? el.value : ''; };
       var kind = r('mp-kind') || 'all', sub = r('mp-sub');
-      return { topic: kind === 'all' ? 'all' : (sub ? kind + ':' + sub : 'all'), diff: r('mp-diff') || 'all', n: Number(r('mp-n')) || 10, pick: r('mp-pick') || 'any', timer: $('#mp-timer').checked };
+      return { mode: r('mp-mode') === 'module' ? 'module' : 'learn', topic: kind === 'all' ? 'all' : (sub ? kind + ':' + sub : 'all'), diff: r('mp-diff') || 'all', n: Number(r('mp-n')) || 10, pick: r('mp-pick') || 'any', timer: $('#mp-timer').checked };
     }
     function count() {
-      var st = read(), n = mpPool(st).length;
-      $('#mp-count').textContent = n ? mfmt(n) + ' questions match. You will get ' + Math.min(n, st.n) + '.' : 'No questions match these choices. Try “Any” for difficulty or for which ones.';
+      var st = read(), n = mpPool(st).length, mod = st.mode === 'module', get = Math.min(n, mod ? MM_N : st.n);
+      form.setAttribute('data-mode', st.mode);
+      $('#mp-mode-note').innerHTML = mod
+        ? '<b>One part of the real Math section:</b> ' + MM_N + ' questions on a single ' + clock(mmLimit(MM_N)) + ' clock. Move back and forth, mark questions for review, cross out choices and open the calculator. Answers and methods come at the end.'
+        : '<b>One question at a time:</b> College Board’s answer and the method for that question type appear straight after each question.';
+      $('#mp-count').textContent = !n ? 'No questions match these choices. Try “Any” for difficulty or for which ones.'
+        : mod ? mfmt(n) + ' questions match. Your module: ' + plural(get, 'question') + ', ' + clock(mmLimit(get)) + ' on the clock.' + (st.topic === 'all' && st.diff === 'all' && n >= MM_N ? ' Mixed like the real test: mostly Algebra and Advanced Math, easier questions first.' : '')
+        : mfmt(n) + ' questions match. You will get ' + get + '.';
+      $('#mp-go').textContent = mod ? 'Start the module' : 'Start practicing';
       $('#mp-go').disabled = !n;
     }
     function drawSub(keep) {
@@ -4254,6 +4386,7 @@ function rReasoningHTML() {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var st = read(); store.s.math = st; save();
+      if (st.mode === 'module') { mmStart(st); return; }
       var pool = shuffle(mpPool(st).slice()).slice(0, st.n);
       if (!pool.length) { return; }
       MP = { qs: pool, i: 0, res: [], timer: st.timer, over: false, settings: st };
@@ -4262,8 +4395,8 @@ function rReasoningHTML() {
     count();
   }
   function mpElapsed() { if (!MP || !MP.cur) { return 0; } var c = MP.cur; return (c.acc + (c.t0 ? now() - c.t0 : 0)) / 1000; }
-  function mpPause() { if (MP && MP.cur && MP.cur.t0 && !MP.cur.done) { MP.cur.acc += now() - MP.cur.t0; MP.cur.t0 = 0; } }
-  function mpResume() { if (MP && MP.cur && !MP.cur.t0 && !MP.cur.done && !MP.over) { MP.cur.t0 = now(); } }
+  function mpPause() { if (MP && MP.module) { mmPause(); return; } if (MP && MP.cur && MP.cur.t0 && !MP.cur.done) { MP.cur.acc += now() - MP.cur.t0; MP.cur.t0 = 0; } }
+  function mpResume() { if (MP && MP.module) { mmResume(); return; } if (MP && MP.cur && !MP.cur.t0 && !MP.cur.done && !MP.over) { MP.cur.t0 = now(); } }
   function mpTick() {
     var el = $('#mp-clock');
     if (!el || !MP || !MP.cur) { return; }
@@ -4279,7 +4412,7 @@ function rReasoningHTML() {
       ? '<div class="mpchoices" role="group" aria-label="Your answer">' + ['A', 'B', 'C', 'D'].map(function (L, i) { return '<button class="mpch" type="button" data-k="' + L + '"><span class="mpch-l">' + L + '</span><span class="kbd">' + (i + 1) + '</span></button>'; }).join('') + '</div><p class="fine">Choose the letter of your answer. The choices are in the question above.</p>'
       : '<form class="mpgrid" id="mp-gform"><label class="field"><span class="label">Type your answer</span><input type="text" id="mp-gin" inputmode="decimal" autocomplete="off" placeholder="e.g. 12, −3, 7/6 or 2.5"></label><button class="btn" type="submit">Check</button></form><p class="fine">Numbers only. Fractions like 7/6 are fine; leave out units.</p>';
     viewEl.mprac.innerHTML = '<div class="wrap mpwrap">' +
-      '<div class="mpbar"><span class="mpbar-pos"><b>Question ' + (MP.i + 1) + '</b> of ' + MP.qs.length + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.qs.map(function (x, i) { var r = MP.res[i]; return '<i class="' + (r ? (r.ok ? 'ok' : 'no') : (i === MP.i ? 'cur' : '')) + '"></i>'; }).join('') + '</span>' + (MP.timer ? '<span class="mpclock" id="mp-clock" aria-label="Time on this question">0:00</span>' : '') + '<button class="linkbtn" type="button" id="mp-end">End set</button></div>' +
+      '<div class="mpbar"><span class="mpbar-pos"><b>Question ' + (MP.i + 1) + '</b> of ' + MP.qs.length + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.qs.map(function (x, i) { var r = MP.res[i]; return '<i class="' + (r ? (r.ok ? 'ok' : 'no') : (i === MP.i ? 'cur' : '')) + '"></i>'; }).join('') + '</span>' + (MP.timer ? '<span class="mpclock" id="mp-clock" aria-label="Time on this question">0:00</span>' : '') + mCalcBtn() + '<button class="linkbtn" type="button" id="mp-end">End set</button></div>' +
       '<article class="mpcard"><header class="mpcard-h"><span class="mtag">' + esc(S.name) + '</span><span class="mdiff d' + q.d + '">' + MDIFF[q.d] + '</span><span class="muted">' + (q.mc ? 'Multiple choice' : 'Type in your answer') + '</span></header>' +
         '<div class="mpq">' + mImg('q', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans +
         '<div id="mp-fb" class="mpfb" tabindex="-1" hidden></div></article></div>';
@@ -4352,18 +4485,24 @@ function rReasoningHTML() {
         if (k === q.a) { b.classList.add('right'); } else if (k === given) { b.classList.add('wrong'); }
       });
     } else { $('#mp-gin').disabled = true; $('#mp-gform button').disabled = true; }
-    var T = MTY[q.t], last = MP.i === MP.qs.length - 1;
-    var right = q.mc ? q.a : q.a.join(' or ');
+    var last = MP.i === MP.qs.length - 1;
     var fb = $('#mp-fb');
     fb.hidden = false; fb.className = 'mpfb ' + (ok ? 'ok' : 'no');
-    fb.innerHTML = '<p class="mpverdict">' + (ok ? 'Correct.' : 'Not this time.') + ' <span>College Board’s answer: <b>' + esc(right) + '</b>' + (q.mc ? '' : (q.a.length > 1 ? ' (any of these is accepted)' : '')) + '</span>' + (MP.timer ? ' <span class="muted">· ' + secs + ' s</span>' : '') + '</p>' +
-      '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + mDesLine(T) + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
-      mSourceNoteHTML(q.id) +
-      mPracticeMethodHTML(q) + mStudyFeedbackHTML(q.id) +
-      '<details class="mprat"' + (ok ? '' : ' open') + '><summary>College Board’s explanation</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>' +
+    fb.innerHTML = mFeedbackHTML(q, ok, MP.timer ? secs : null) +
       '<p class="row mpnext"><button class="btn big" type="button" id="mp-next">' + (last ? 'See my results' : 'Next question') + '</button><span class="fine">or press Enter</span></p>';
     $('#mp-next').addEventListener('click', mpNextQ);
     showFeedback(fb);
+  }
+  /* verdict, the method for this type, and College Board's explanation: used after a practice answer and when reviewing a module.
+     ok is true, false, or null when no answer was given. */
+  function mFeedbackHTML(q, ok, secs) {
+    var T = MTY[q.t], right = q.mc ? q.a : q.a.join(' or ');
+    return '<p class="mpverdict">' + (ok ? 'Correct.' : (ok === null ? 'No answer.' : 'Not this time.')) + ' <span>College Board’s answer: <b>' + esc(right) + '</b>' + (q.mc ? '' : (q.a.length > 1 ? ' (any of these is accepted)' : '')) + '</span>' + (secs != null ? ' <span class="muted">· ' + secs + ' s</span>' : '') + '</p>' +
+      (ok === false ? mWhyHTML(q.id) : '') +
+      '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + mDesLine(T) + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
+      mSourceNoteHTML(q.id) +
+      mPracticeMethodHTML(q) + mStudyFeedbackHTML(q.id) +
+      '<details class="mprat"' + (ok ? '' : ' open') + '><summary>College Board’s explanation</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>';
   }
   function mpNextQ() {
     if (!MP) { return; }
@@ -4384,13 +4523,15 @@ function rReasoningHTML() {
         var q = MQBY[r.id];
         return '<li class="' + (r.ok ? 'ok' : 'no') + '"><span class="mpsum-v">' + (r.ok ? '✓' : '✗') + '</span><span>' + esc(MTY[q.t].name) + ' <span class="muted">· ' + MDIFF[q.d] + ' · ' + r.secs + ' s</span></span><a class="linkbtn" href="#mt-' + q.t + '">How to solve</a></li>';
       }).join('') + '</ol></section>' +
-      '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '</p></div>';
+      mWhySetHTML(done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; })) +
+      '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '<a class="btn ghost" href="#m-map">See my map</a></p></div>';
     $('#mp-again').addEventListener('click', mpSetup);
     var mm = $('#mp-miss');
     if (mm) { mm.addEventListener('click', function () { var pool = done.filter(function (r) { return !r.ok; }).map(function (r) { return MQBY[r.id]; }); MP = { qs: pool, i: 0, res: [], timer: MP.timer, over: false }; mpShow(); }); }
     window.scrollTo(0, 0);
   }
   function mpKey(e, key, tag) {
+    if (MP && MP.module) { mmKey(e, key, tag); return; }
     if (!MP || MP.over || !MP.cur) { return; }
     if (!MP.cur.done) {
       if (!MP.cur.q.mc) { return; }
@@ -4614,6 +4755,465 @@ function rReasoningHTML() {
     try {await navigator.clipboard.writeText(value);status.textContent='Copied. Paste into an empty Desmos expression.';}
     catch(error) {var field=target.closest('.mst-check').querySelector('textarea');field.closest('details').open=true;field.focus();field.select();status.textContent='Input selected. Press Ctrl+C (or Command+C) to copy.';}
   });
+  /* =================== Math: mastery map, and why you miss =================== */
+  /* store.m[id] = [right 0/1, seconds, time] is the last attempt at a question (math.js).
+     store.x[id] = [reason, time] is what the student said went wrong the last time they missed it. */
+  if (!isObj(store.x)) { store.x = {}; }
+  var MWHY = [
+    ['target', 'Answered a different question', 'A correct value, but not the one the last sentence asked for.', 'After you solve, read the last sentence again and say your answer as a sentence before you choose.'],
+    ['trap', 'Fell for this type’s trap', 'The mistake named in the “Watch out” note for this question type.', 'Read the Watch out note for each type below, then retry those questions.'],
+    ['method', 'Did not know the method', 'Could not name the question type or see how to start.', 'Open the method for each type below and follow one worked example before you retry.'],
+    ['slip', 'Arithmetic or sign slip', 'The right method, but a wrong number along the way.', 'Write one more line of working, and check awkward arithmetic in Desmos.'],
+    ['read', 'Misread the question', 'Missed a word, a unit, or a condition such as “positive”.', 'Mark the units and conditions before you start solving.'],
+    ['time', 'Rushed or guessed', 'Short of time, or picked without working it out.', 'Practice this type without the clock first, then with it.']
+  ];
+  var MWHYBY = {};
+  MWHY.forEach(function (w) { MWHYBY[w[0]] = w; });
+  function mWhyOf(id) { var r = store.x[id]; return Array.isArray(r) && has(MWHYBY, r[0]) ? r[0] : ''; }
+  function mWhySaid(code) { return '<b>Saved.</b> ' + esc(MWHYBY[code][3]) + ' <a href="#m-traps">See your trap report</a>'; }
+  function mWhyHTML(id) {
+    var cur = mWhyOf(id);
+    return '<div class="mwhy" data-why-q="' + id + '"><p class="mwhy-h"><b>What went wrong?</b> <span class="muted">One tap builds your trap report.</span></p><div class="mwhy-row">' +
+      MWHY.map(function (w) { return '<button type="button" class="mwhy-b" data-why="' + w[0] + '" aria-pressed="' + (cur === w[0] ? 'true' : 'false') + '" title="' + esc(w[2]) + '">' + esc(w[1]) + '</button>'; }).join('') +
+      '</div><p class="fine mwhy-st" role="status">' + (cur ? mWhySaid(cur) : '') + '</p></div>';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('[data-why]') : null;
+    if (!b) { return; }
+    var host = b.closest('[data-why-q]'), id = host.getAttribute('data-why-q'), code = b.getAttribute('data-why');
+    if (!has(MWHYBY, code) || !MQBY[id]) { return; }
+    if (mWhyOf(id) === code) { delete store.x[id]; code = ''; } else { store.x[id] = [code, Date.now()]; }
+    save();
+    $$('[data-why]', host).forEach(function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-why') === code ? 'true' : 'false'); });
+    $('.mwhy-st', host).innerHTML = code ? mWhySaid(code) : 'Removed.';
+  });
+  /* the reasons given for a list of missed questions, most common first */
+  function mWhyTally(ids) {
+    var by = {}, none = 0;
+    ids.forEach(function (id) { var c = mWhyOf(id); if (c) { (by[c] = by[c] || []).push(id); } else { none += 1; } });
+    return { list: MWHY.filter(function (w) { return by[w[0]]; }).map(function (w) { return { w: w, ids: by[w[0]] }; }).sort(function (a, b) { return b.ids.length - a.ids.length; }), none: none };
+  }
+  /* shown under the results of a set or a module */
+  function mWhySetHTML(ids) {
+    if (!ids.length) { return ''; }
+    var t = mWhyTally(ids);
+    if (!t.list.length) { return '<section class="msec"><h3 class="h3">Why you missed</h3><p class="muted">After a miss, tap what went wrong. Your <a href="#m-traps">trap report</a> then shows the reasons that cost you the most.</p></section>'; }
+    return '<section class="msec"><h3 class="h3">Why you missed</h3><ul class="mwhy-sum">' + t.list.map(function (x) {
+      return '<li><b>' + x.ids.length + ' × ' + esc(x.w[1]) + '.</b> ' + esc(x.w[3]) + '</li>';
+    }).join('') + '</ul><p class="fine">' + (t.none ? plural(t.none, 'miss', 'misses') + ' in this set ' + (t.none === 1 ? 'has' : 'have') + ' no reason yet. ' : '') + '<a href="#m-traps">See your full trap report</a></p></section>';
+  }
+
+  /* ---------- how you are doing on one fine type ---------- */
+  var MLVL = { 'new': 'Not tried', weak: 'Needs work', mid: 'Getting there', strong: 'Strong' };
+  function mTypeStat(m) {
+    var tried = 0, right = 0, last = 0, missed = [];
+    m.question_ids.forEach(function (id) {
+      var r = mDone(id);
+      if (!r || !MQBY[id]) { return; }
+      tried += 1;
+      if (r[0]) { right += 1; } else { missed.push(id); }
+      if (r[2] > last) { last = r[2]; }
+    });
+    var lvl = 'new';
+    if (tried) { lvl = right / tried < 0.6 ? 'weak' : (right / tried >= 0.85 && tried >= Math.min(3, m.question_count) ? 'strong' : 'mid'); }
+    return { n: m.question_count, tried: tried, right: right, last: last, missed: missed, lvl: lvl, pct: mpc(right, tried) };
+  }
+  function mAgo(t) {
+    var d = Math.floor((Date.now() - t) / 86400000);
+    return d <= 0 ? 'today' : d === 1 ? 'yesterday' : d < 14 ? d + ' days ago' : Math.round(d / 7) + ' weeks ago';
+  }
+  function mRecord(s) {
+    if (!s.tried) { return 'Not tried yet · ' + plural(s.n, 'question') + ' in the bank'; }
+    return s.right + ' of ' + s.tried + ' right · ' + s.tried + ' of ' + s.n + ' tried · last practiced ' + mAgo(s.last);
+  }
+  function mmCardHTML(m, s) {
+    var id = encodeURIComponent(m.id);
+    return '<article class="mm-next-c"><p class="mm-next-top"><span class="mm-lvl lvl-' + s.lvl + '">' + MLVL[s.lvl] + (s.tried ? ' · ' + s.right + ' of ' + s.tried + ' right' : '') + '</span><span class="muted">' + esc(MSK[m.skill].short) + '</span></p>' +
+      '<h4 class="h3">' + esc(m.title) + '</h4><p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(m.common_trap) + '</p>' +
+      '<p class="row"><a class="btn sm" href="#m-study-practice-' + id + '">Practice this type</a><a class="linkbtn" href="#m-study-' + id + '">Method</a></p></article>';
+  }
+  function mmDetailHTML(m) {
+    var s = mTypeStat(m), id = encodeURIComponent(m.id);
+    return '<div class="mm-detail" id="mm-detail" tabindex="-1"><p class="mm-next-top"><span class="mtag">' + esc(MSK[m.skill].name) + '</span><span class="mm-lvl lvl-' + s.lvl + '">' + MLVL[s.lvl] + '</span><button class="linkbtn mm-close" type="button" data-mm-close>Close</button></p>' +
+      '<h4 class="h3">' + esc(m.title) + '</h4><p class="mm-rec">' + mRecord(s) + '</p>' +
+      '<p><b>Why the method works:</b> ' + esc(m.why_it_works) + '</p>' +
+      '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(m.common_trap) + '</p>' +
+      '<p class="row"><a class="btn sm" href="#m-study-practice-' + id + '">Practice this type (' + s.n + ')</a>' +
+      (s.missed.length ? '<button class="btn ghost sm" type="button" data-mm-retry="' + esc(m.id) + '">Retry the ' + s.missed.length + ' I missed</button>' : '') +
+      '<a class="linkbtn" href="#m-study-' + id + '">Full method</a></p></div>';
+  }
+
+  /* ---------- the reasons you miss ---------- */
+  function mStillMissed() { return Object.keys(store.m).filter(function (id) { var r = mDone(id); return r && MQBY[id] && !r[0]; }); }
+  function mTrapHTML() {
+    var missed = mStillMissed(), tagged = Object.keys(store.x).filter(function (id) { return MQBY[id] && mWhyOf(id); });
+    var t = mWhyTally(tagged), total = tagged.length;
+    var untagged = missed.filter(function (id) { return !mWhyOf(id); }).length;
+    var head = '<h3 class="h2">Why you miss</h3><p class="lede">After a miss in practice, tap what went wrong. This report adds those taps up, so you fix the habit and not just the question.</p>';
+    var retryAll = missed.length ? '<p class="row" style="margin-top:1rem"><button class="btn sm" type="button" data-mw-retry="all">Retry ' + plural(missed.length, 'missed question') + '</button>' + (untagged && total ? '<span class="fine">' + untagged + ' of them ' + (untagged === 1 ? 'has' : 'have') + ' no reason yet.</span>' : '') + '</p>' : '';
+    if (!total) {
+      return head + '<aside class="mnote"><p><b>No reasons recorded yet.</b> ' + (missed.length ? 'You have ' + plural(missed.length, 'missed question') + '. Retry them, and when one goes wrong again, tap the reason under the answer.' : 'Practice a set; when you miss a question, the reasons to choose from appear under the answer.') + '</p></aside>' + retryAll;
+    }
+    var cards = t.list.map(function (x, i) {
+      var types = {}, still = 0;
+      x.ids.forEach(function (id) { var m = MSTBY[MST.questions[id].method]; types[m.id] = (types[m.id] || 0) + 1; var r = mDone(id); if (r && !r[0]) { still += 1; } });
+      var tk = Object.keys(types).sort(function (a, b) { return types[b] - types[a]; });
+      var chips = tk.slice(0, 5).map(function (k) { return '<a class="mchip" href="#m-map-' + encodeURIComponent(k) + '">' + esc(MSTBY[k].title) + (types[k] > 1 ? ' × ' + types[k] : '') + '</a>'; }).join('');
+      var traps = x.w[0] === 'trap' ? '<ul class="mtr-traps">' + tk.slice(0, 3).map(function (k) { return '<li><b>' + esc(MSTBY[k].title) + ':</b> ' + esc(MSTBY[k].common_trap) + '</li>'; }).join('') + '</ul>' : '';
+      return '<article class="mtr"><header class="mtr-h"><h4 class="h3">' + (i + 1) + ' · ' + esc(x.w[1]) + '</h4><span class="mtr-n">' + plural(x.ids.length, 'miss', 'misses') + ' · ' + mpc(x.ids.length, total) + '%</span></header>' +
+        '<span class="mbar" aria-hidden="true"><i style="width:' + mpc(x.ids.length, total) + '%"></i></span>' +
+        '<p class="muted">' + esc(x.w[2]) + '</p><p><b>The fix:</b> ' + esc(x.w[3]) + '</p>' + traps +
+        '<p class="mtr-types"><span class="mtag">Where it happened</span> ' + chips + (tk.length > 5 ? '<span class="muted">and ' + (tk.length - 5) + ' more</span>' : '') + '</p>' +
+        (still ? '<p class="row"><button class="btn ghost sm" type="button" data-mw-retry="' + x.w[0] + '">Retry ' + (still === 1 ? 'this question' : 'these ' + still + ' questions') + '</button></p>' : '<p class="fine">You have since answered ' + (x.ids.length === 1 ? 'this question' : 'all of these') + ' correctly.</p>') + '</article>';
+    }).join('');
+    return head + '<p class="mtr-total"><b>' + plural(total, 'miss', 'misses') + ' with a reason.</b> Your most common one: ' + esc(t.list[0].w[1].toLowerCase()) + '.</p><div class="mtrs">' + cards + '</div>' + retryAll;
+  }
+
+  /* ---------- the page ---------- */
+  var mmSel = '', mmFilter = 'all';
+  function mmSkillHost(m) { return $('.mm-skill[data-skill="' + m.skill + '"] .mm-detail-host', viewEl.mmap); }
+  function mmSelect(id, focus) {
+    var old = document.getElementById('mm-detail');
+    if (old) { old.parentNode.removeChild(old); }
+    mmSel = has(MSTBY, id) ? id : '';
+    $$('.mm-t', viewEl.mmap).forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-mm') === mmSel ? 'true' : 'false'); });
+    if (!mmSel) { return; }
+    mmSkillHost(MSTBY[mmSel]).innerHTML = mmDetailHTML(MSTBY[mmSel]);
+    if (focus) { focusQuiet(document.getElementById('mm-detail')); }
+  }
+  function buildMMap(openId) {
+    if (openId && has(MSTBY, openId)) { mmSel = openId; mmFilter = 'all'; }
+    var stat = {}, cnt = { 'new': 0, weak: 0, mid: 0, strong: 0 }, tried = 0;
+    MST.methods.forEach(function (m) { var s = stat[m.id] = mTypeStat(m); cnt[s.lvl] += 1; tried += s.tried; });
+    var N = MST.methods.length, started = N - cnt['new'];
+    var next = MST.methods.filter(function (m) { return stat[m.id].lvl === 'weak' || stat[m.id].lvl === 'mid'; }).sort(function (a, b) {
+      var x = stat[a.id], y = stat[b.id];
+      return x.pct - y.pct || y.tried - x.tried;
+    }).slice(0, 6);
+    var mods = Array.isArray(store.s.modules) ? store.s.modules.filter(isObj) : [];
+    var doms = MD.domains.map(function (d) {
+      return '<div class="mm-dom"><h4 class="h3">' + esc(d.name) + '</h4>' + d.skills.map(function (k) {
+        var L = MST.methods.filter(function (m) { return m.skill === k; }), st = L.filter(function (m) { return stat[m.id].tried; }).length;
+        return '<div class="mm-skill" data-skill="' + k + '"><p class="mm-skill-h"><a href="#m-' + k + '">' + esc(MSK[k].short) + '</a><span>' + st + ' of ' + plural(L.length, 'type') + ' tried</span></p><div class="mm-tiles">' +
+          L.map(function (m) {
+            var s = stat[m.id];
+            return '<button type="button" class="mm-t lvl-' + s.lvl + '" data-mm="' + esc(m.id) + '" aria-pressed="false" title="' + esc(m.title) + '" aria-label="' + esc(m.title) + ': ' + (s.tried ? s.right + ' of ' + s.tried + ' right. ' : '') + MLVL[s.lvl] + '.">' + (s.tried ? s.pct : '') + '</button>';
+          }).join('') + '</div><div class="mm-detail-host"></div></div>';
+      }).join('') + '</div>';
+    }).join('');
+    viewEl.mmap.innerHTML = '<div class="wrap">' +
+      mHead('Math · My map', 'Your mastery map', 'Each square is one of the ' + N + ' question types, colored by how you did the last time you tried its questions. Tap a square to see its trap and practice just that type.') +
+      '<div class="mst-stats mm-stats"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
+      (tried ? '' : '<aside class="mnote"><p><b>Nothing practiced yet.</b> Answer a few questions and this map fills in. Results are saved in this browser only.</p><a class="btn sm" href="#m-practice">Practice real questions</a></aside>') +
+      (tried ? '<section class="sec first" id="mm-next"><h3 class="h2">Work on these next</h3>' + (next.length
+        ? '<p class="lede">Your lowest-scoring types so far. Read the trap, then practice just that type.</p><div class="mm-nexts">' + next.map(function (m) { return mmCardHTML(m, stat[m.id]); }).join('') + '</div>'
+        : '<p class="lede">Nothing needs work right now. Pick a grey square below to try a type you have not seen.</p>') + '</section>' : '') +
+      '<section class="sec' + (tried ? '' : ' first') + '" id="mm-all"><h3 class="h2">All ' + N + ' types</h3><p class="lede">The number in a square is your percent right on the questions you have tried. Grey squares are types you have not tried.</p>' +
+        seg('mm-show', 'Show', [['all', 'All'], ['weak', 'Needs work · ' + cnt.weak], ['mid', 'Getting there · ' + cnt.mid], ['strong', 'Strong · ' + cnt.strong], ['new', 'Not tried · ' + cnt['new']]], mmFilter) +
+        '<p class="mm-key"><span><i class="mm-t lvl-weak" aria-hidden="true"></i>Needs work: under 60% right</span><span><i class="mm-t lvl-mid" aria-hidden="true"></i>Getting there</span><span><i class="mm-t lvl-strong" aria-hidden="true"></i>Strong: 85% or more, on at least 3 questions</span><span><i class="mm-t lvl-new" aria-hidden="true"></i>Not tried</span></p>' +
+        '<div class="mm-map" id="mm-map" data-show="' + mmFilter + '">' + doms + '</div></section>' +
+      '<section class="sec" id="m-traps">' + mTrapHTML() + '</section>' +
+      '<section class="sec" id="mm-mods"><h3 class="h2">Timed modules</h3>' + (mods.length
+        ? '<p class="lede">Your last ' + (mods.length > 5 ? '5 modules' : plural(mods.length, 'module')) + ': 22 questions on one clock, like one part of the real Math section.</p><ul class="mm-mods">' + mods.slice(-5).reverse().map(function (r) {
+            return '<li><b>' + r.r + ' of ' + r.n + '</b><span>' + clock(r.s) + ' of ' + clock(r.l) + ' used</span><span class="muted">' + new Date(r.t).toLocaleDateString() + '</span></li>';
+          }).join('') + '</ul>'
+        : '<p class="lede">Not taken yet. A module is 22 questions on one 35-minute clock, with answers at the end.</p>') +
+        '<p class="row" style="margin-top:1rem"><a class="btn sm" href="#m-module">Take a timed module</a></p></section>' +
+      mNext([['m-practice', 'Keep going', 'Practice real questions'], ['m-study', 'Look up a type', 'Expanded types']]) + '</div>';
+    if (mmSel) { mmSelect(mmSel, false); }
+  }
+  function mRetrySet(ids) {
+    var pool = shuffle(ids.map(function (id) { return MQBY[id]; }).filter(Boolean)).slice(0, 22);
+    if (!pool.length) { return; }
+    clearInterval(mpInterval);
+    MP = { qs: pool, i: 0, res: [], timer: false, over: false };
+    try { history.pushState(null, '', '#m-practice'); } catch (e) {}
+    lastToken = 'm-practice';
+    showView('mprac'); mpShow();
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target.closest('[data-mm],[data-mm-close],[data-mm-retry],[data-mw-retry]') : null;
+    if (!t) { return; }
+    if (t.hasAttribute('data-mm')) { var id = t.getAttribute('data-mm'); mmSelect(id === mmSel ? '' : id, true); return; }
+    if (t.hasAttribute('data-mm-close')) { var back = $('.mm-t[aria-pressed="true"]', viewEl.mmap); mmSelect('', false); focusQuiet(back); return; }
+    if (t.hasAttribute('data-mm-retry')) { var m = MSTBY[t.getAttribute('data-mm-retry')]; if (m) { mRetrySet(mTypeStat(m).missed); } return; }
+    var code = t.getAttribute('data-mw-retry'), missed = mStillMissed();
+    mRetrySet(code === 'all' ? missed : missed.filter(function (q) { return mWhyOf(q) === code; }));
+  });
+  document.addEventListener('change', function (e) {
+    if (!e.target || e.target.name !== 'mm-show') { return; }
+    mmFilter = e.target.value;
+    var host = document.getElementById('mm-map');
+    if (host) { host.setAttribute('data-show', mmFilter); }
+  });
+
+  /* =================== Math: the calculator panel, and module mode =================== */
+  /* ---------- calculator: College Board's version of Desmos, in a panel beside the question ---------- */
+  var MCALC_URL = 'https://www.desmos.com/testing/collegeboard/graphing';
+  function mCalcOpen() { var el = document.getElementById('mcalc'); return !!el && !el.hidden; }
+  function mCalcBtn() {
+    return '<button class="btn ghost sm mcalc-btn" type="button" data-calc aria-pressed="' + (mCalcOpen() ? 'true' : 'false') + '">' + ICON.calc + '<span>Calculator</span></button>';
+  }
+  function mCalcShow(open) {
+    var el = document.getElementById('mcalc');
+    if (!el) {
+      if (!open) { return; }
+      el = document.createElement('aside'); el.id = 'mcalc'; el.className = 'mcalc'; el.setAttribute('aria-label', 'Graphing calculator');
+      el.innerHTML = '<div class="mcalc-bar"><b>Calculator</b><span class="muted">Desmos, as on the test</span><a class="linkbtn" href="' + MCALC_URL + '" target="_blank" rel="noopener">Open in a new tab</a><button class="btn sm" type="button" data-calc-close>Close</button></div>' +
+        '<iframe title="Desmos graphing calculator, College Board version" src="' + MCALC_URL + '"></iframe>';
+      document.body.appendChild(el);
+    }
+    el.hidden = !open;
+    document.body.classList.toggle('calc-open', !!open);
+    $$('[data-calc]').forEach(function (b) { b.setAttribute('aria-pressed', open ? 'true' : 'false'); });
+    /* on a phone the panel covers the lower part of the screen, so bring the question to the top */
+    var card = open && narrow() ? $('#v-mprac .mpcard') : null;
+    if (card) { try { card.scrollIntoView({ block: 'start' }); } catch (e) {} }
+  }
+  function mCalcReset() { var el = document.getElementById('mcalc'); if (el) { mCalcShow(false); el.parentNode.removeChild(el); } }
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('[data-calc],[data-calc-close]') : null;
+    if (!b) { return; }
+    if (b.hasAttribute('data-calc-close')) { mCalcShow(false); focusQuiet($('[data-calc]')); return; }
+    mCalcShow(!mCalcOpen());
+  });
+
+  /* ---------- module mode: one clock for the whole set, answers at the end ---------- */
+  var MM_N = 22, MM_SECS = 35 * 60;
+  var MM_MIX = { alg: 8, adv: 8, psda: 3, geo: 3 };   /* the test plan's shares of a 22-question module */
+  var MM_ORD = { E: 0, M: 1, H: 2 };
+  function mmLimit(n) { return Math.round(n * MM_SECS / MM_N); }
+  function mmPick(st) {
+    var pool = shuffle(mpPool(st).slice()), out;
+    if (st.topic === 'all' && st.diff === 'all' && pool.length >= MM_N) {
+      var need = {}, rest = [];
+      Object.keys(MM_MIX).forEach(function (k) { need[k] = MM_MIX[k]; });
+      out = [];
+      pool.forEach(function (q) { var d = MDOM[q.k].id; if (need[d] > 0) { need[d] -= 1; out.push(q); } else { rest.push(q); } });
+      out = out.concat(rest.slice(0, MM_N - out.length));
+    } else { out = pool.slice(0, MM_N); }
+    /* easier questions first, as on the test; the shuffle decides the order inside each difficulty */
+    return out.map(function (q, i) { return [q, i]; }).sort(function (a, b) { return MM_ORD[a[0].d] - MM_ORD[b[0].d] || a[1] - b[1]; }).map(function (x) { return x[0]; });
+  }
+  function mmStart(st) {
+    var qs = mmPick(st);
+    if (!qs.length) { return; }
+    clearInterval(mpInterval);
+    mCalcReset();
+    MP = { module: true, qs: qs, i: 0, ans: qs.map(function () { return ''; }), flag: qs.map(function () { return false; }), cross: qs.map(function () { return {}; }),
+      spent: qs.map(function () { return 0; }), limit: mmLimit(qs.length), acc: 0, t0: 0, over: false, hide: false, warned: false, res: [], timer: true, settings: st };
+    mmShell(); mmShow(0);
+    MP.t0 = now();
+    mpInterval = setInterval(mmTick, 500); mmTick();
+  }
+  function mmUsed() { return (MP.acc + (MP.t0 ? now() - MP.t0 : 0)) / 1000; }
+  /* stop both clocks: the module's, and the time spent on the question in view */
+  function mmBank() { if (MP.t0) { var d = now() - MP.t0; MP.acc += d; MP.spent[MP.i] += d; MP.t0 = 0; } }
+  function mmPause() { if (MP && MP.module && !MP.over) { mmBank(); } }
+  function mmResume() { if (MP && MP.module && !MP.over && !MP.t0) { MP.t0 = now(); } }
+  function mmTick() {
+    if (!MP || !MP.module || MP.over) { clearInterval(mpInterval); return; }
+    var left = MP.limit - mmUsed(), el = document.getElementById('mm-clock');
+    if (left <= 0) { mmFinish(true); return; }
+    var late = left <= 300 && MP.limit > 600;
+    if (el) {
+      el.textContent = MP.hide && !late ? '–:––' : clock(Math.ceil(left));
+      el.classList.toggle('late', late);
+    }
+    if (late && !MP.warned) { MP.warned = true; var live = document.getElementById('mm-live'); if (live) { live.textContent = '5 minutes left in this module.'; } var hb = document.getElementById('mm-hide'); if (hb) { hb.hidden = true; } }
+  }
+  function mmAnswered(i) { return String(MP.ans[i]).trim() !== ''; }
+  function mmShell() {
+    viewEl.mprac.innerHTML = '<div class="wrap mpwrap mmwrap">' +
+      '<div class="mpbar mmbar"><span class="mpbar-pos" id="mm-pos"></span>' +
+        '<span class="mm-clockbox"><span class="mpclock" id="mm-clock" role="timer" aria-label="Time left in this module">' + clock(MP.limit) + '</span><button class="linkbtn" type="button" id="mm-hide" aria-pressed="false">Hide clock</button></span>' +
+        '<span class="mmbar-tools">' + mCalcBtn() + '<button class="btn ghost sm" type="button" id="mm-open-nav" aria-expanded="false" aria-controls="mm-nav">All questions</button><button class="linkbtn" type="button" id="mm-finish">Finish</button></span>' +
+        '<span class="sr" id="mm-live" aria-live="polite"></span></div>' +
+      '<section class="mm-nav" id="mm-nav" aria-label="All questions in this module" tabindex="-1" hidden></section>' +
+      '<article class="mpcard" id="mm-card"></article></div>';
+    $('#mm-hide').addEventListener('click', function () {
+      MP.hide = !MP.hide;
+      this.setAttribute('aria-pressed', MP.hide ? 'true' : 'false'); this.textContent = MP.hide ? 'Show clock' : 'Hide clock';
+      mmTick();
+    });
+    $('#mm-open-nav').addEventListener('click', function () { mmNav($('#mm-nav').hidden, false); });
+    $('#mm-finish').addEventListener('click', function () { mmNav(true, true); });
+    $('#mm-nav').addEventListener('click', function (e) {
+      var b = e.target.closest ? e.target.closest('[data-go],[data-mm-do]') : null;
+      if (!b) { return; }
+      if (b.hasAttribute('data-go')) { mmNav(false, false); mmGo(Number(b.getAttribute('data-go'))); return; }
+      if (b.getAttribute('data-mm-do') === 'finish') { mmFinish(false); } else { mmNav(false, false); }
+    });
+  }
+  /* the list of every question; with confirm, it is also the last check before finishing */
+  function mmNav(open, confirm) {
+    var host = $('#mm-nav'), btn = $('#mm-open-nav');
+    if (!host) { return; }
+    host.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (!open) { return; }
+    var blank = 0, flags = 0;
+    MP.qs.forEach(function (q, i) { if (!mmAnswered(i)) { blank += 1; } if (MP.flag[i]) { flags += 1; } });
+    host.innerHTML = (confirm
+      ? '<div class="mm-confirm"><p><b>Finish the module now?</b> ' + (blank ? plural(blank, 'question') + ' ' + (blank === 1 ? 'has' : 'have') + ' no answer' : 'Every question has an answer') + (flags ? ', and ' + flags + ' ' + (flags === 1 ? 'is' : 'are') + ' marked for review' : '') + '. You cannot change answers after this.</p>' +
+        '<p class="row"><button class="btn" type="button" data-mm-do="finish">Finish and see my results</button><button class="btn ghost" type="button" data-mm-do="stay">Keep working</button></p></div>'
+      : '') +
+      '<p class="mm-nav-h"><b>All questions</b> <span class="muted">Tap a number to go to it.</span></p><div class="mm-nav-grid">' +
+      MP.qs.map(function (q, i) {
+        var a = mmAnswered(i);
+        return '<button type="button" class="mm-n' + (a ? ' ans' : '') + (MP.flag[i] ? ' flag' : '') + (i === MP.i ? ' cur' : '') + '" data-go="' + i + '" aria-label="Question ' + (i + 1) + ', ' + (a ? 'answered' : 'no answer') + (MP.flag[i] ? ', marked for review' : '') + (i === MP.i ? ', the one you are on' : '') + '">' + (i + 1) + '</button>';
+      }).join('') + '</div>' +
+      '<p class="mm-key"><span><i class="mm-n ans" aria-hidden="true"></i>Answered</span><span><i class="mm-n" aria-hidden="true"></i>No answer</span><span><i class="mm-n flag" aria-hidden="true"></i>Marked for review</span></p>';
+    if (narrow() || confirm) { try { host.scrollIntoView({ block: 'start' }); } catch (e) {} }
+    focusQuiet(confirm ? $('[data-mm-do="finish"]', host) : host);
+  }
+  function mmGo(i) {
+    if (!MP || !MP.module || MP.over || i < 0 || i >= MP.qs.length) { return; }
+    var run = !!MP.t0;
+    mmBank(); mmShow(i);
+    if (run) { MP.t0 = now(); }
+  }
+  function mmShow(i) {
+    MP.i = i;
+    var q = MP.qs[i], last = i === MP.qs.length - 1, given = MP.ans[i], X = MP.cross[i];
+    MP.cur = { q: q, t0: 0, acc: 0, done: false };          /* for the full-size viewer */
+    $('#mm-pos').innerHTML = '<b>Question ' + (i + 1) + '</b> of ' + MP.qs.length;
+    var ans = q.mc
+      ? '<div class="mpchoices mmchoices" role="group" aria-label="Your answer">' + ['A', 'B', 'C', 'D'].map(function (L, n) {
+          return '<div class="mmch"><button class="mpch' + (given === L ? ' sel' : '') + (X[L] ? ' crossed' : '') + '" type="button" data-k="' + L + '" aria-pressed="' + (given === L ? 'true' : 'false') + '"><span class="mpch-l">' + L + '</span><span class="kbd">' + (n + 1) + '</span></button>' +
+            '<button class="mmx" type="button" data-x="' + L + '" aria-pressed="' + (X[L] ? 'true' : 'false') + '" aria-label="Cross out choice ' + L + '">' + (X[L] ? 'Undo' : 'Cross out') + '</button></div>';
+        }).join('') + '</div><p class="fine">Choose the letter of your answer. You can change it until you finish. “Cross out” marks a choice you have ruled out.</p>'
+      : '<div class="mpgrid"><label class="field"><span class="label">Type your answer</span><input type="text" id="mm-gin" inputmode="decimal" autocomplete="off" placeholder="e.g. 12, −3, 7/6 or 2.5" value="' + esc(given) + '"></label></div><p class="fine" id="mm-ghint">Numbers only. Fractions like 7/6 are fine; leave out units. Saved as you type.</p>';
+    var card = $('#mm-card');
+    card.innerHTML = '<header class="mpcard-h"><b class="mm-qn">Question ' + (i + 1) + '</b><span class="muted">' + (q.mc ? 'Multiple choice' : 'Type in your answer') + '</span>' +
+        '<label class="checkline mm-flag"><input type="checkbox" id="mm-flag"' + (MP.flag[i] ? ' checked' : '') + '> Mark for review</label></header>' +
+      '<div class="mpq">' + mImg('q', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans +
+      '<p class="row mm-step"><button class="btn ghost" type="button" id="mm-back"' + (i ? '' : ' disabled') + '>Back</button><button class="btn" type="button" id="mm-next">' + (last ? 'Review and finish' : 'Next') + '</button></p>';
+    $('#mm-flag').addEventListener('change', function () { MP.flag[MP.i] = this.checked; });
+    $('#mm-back').addEventListener('click', function () { mmGo(MP.i - 1); });
+    $('#mm-next').addEventListener('click', mmNext);
+    if (q.mc) {
+      $$('.mpch', card).forEach(function (b) { b.addEventListener('click', function () { mmChoose(b.getAttribute('data-k')); }); });
+      $$('.mmx', card).forEach(function (b) { b.addEventListener('click', function () { mmCross(b.getAttribute('data-x')); }); });
+    } else {
+      $('#mm-gin').addEventListener('input', function () {
+        MP.ans[MP.i] = this.value;
+        var bad = this.value.trim() && isNaN(mpNum(this.value));
+        $('#mm-ghint').textContent = bad ? 'That is not a number yet. Use digits, a minus sign, a decimal point or a fraction such as 7/6.' : 'Numbers only. Fractions like 7/6 are fine; leave out units. Saved as you type.';
+      });
+      $('#mm-gin').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); mmNext(); } });
+    }
+    window.scrollTo(0, 0);
+    var first = q.mc ? $('.mpch.sel', card) || $('.mpch', card) : $('#mm-gin');
+    if (first && !narrow()) { focusQuiet(first); }
+  }
+  function mmNext() { if (MP.i < MP.qs.length - 1) { mmGo(MP.i + 1); } else { mmNav(true, true); } }
+  function mmPaintChoices() {
+    var given = MP.ans[MP.i], X = MP.cross[MP.i];
+    $$('#mm-card .mmch').forEach(function (row) {
+      var b = $('.mpch', row), x = $('.mmx', row), L = b.getAttribute('data-k');
+      b.classList.toggle('sel', given === L); b.setAttribute('aria-pressed', given === L ? 'true' : 'false');
+      b.classList.toggle('crossed', !!X[L]);
+      x.setAttribute('aria-pressed', X[L] ? 'true' : 'false'); x.textContent = X[L] ? 'Undo' : 'Cross out';
+    });
+  }
+  function mmChoose(L) {
+    if (!MP.qs[MP.i].mc || 'ABCD'.indexOf(L) === -1) { return; }
+    MP.ans[MP.i] = MP.ans[MP.i] === L ? '' : L;
+    if (MP.ans[MP.i]) { delete MP.cross[MP.i][L]; }
+    mmPaintChoices();
+  }
+  function mmCross(L) {
+    var X = MP.cross[MP.i];
+    if (X[L]) { delete X[L]; } else { X[L] = 1; if (MP.ans[MP.i] === L) { MP.ans[MP.i] = ''; } }
+    mmPaintChoices();
+  }
+  function mmKey(e, key, tag) {
+    if (!MP || !MP.module) { return; }
+    if (MP.over) {
+      if (MP.rev != null && key === 'Enter' && tag !== 'BUTTON' && tag !== 'A' && tag !== 'SUMMARY') { e.preventDefault(); mmReview(Math.min(MP.rev + 1, MP.qs.length - 1)); }
+      return;
+    }
+    if (!$('#mm-nav').hidden) { return; }
+    var k = key.toUpperCase(), n = ['1', '2', '3', '4'].indexOf(key);
+    if (n !== -1) { k = 'ABCD'[n]; }
+    if (MP.qs[MP.i].mc && k.length === 1 && 'ABCD'.indexOf(k) !== -1) { e.preventDefault(); if (MP.ans[MP.i] !== k) { mmChoose(k); } }
+    else if (key === 'Enter' && tag !== 'BUTTON' && tag !== 'A') { e.preventDefault(); mmNext(); }
+  }
+
+  /* ---------- finishing: grade, save, results ---------- */
+  function mmFinish(timeUp) {
+    if (!MP || !MP.module || MP.over) { return; }
+    mmBank(); clearInterval(mpInterval); mCalcShow(false);
+    MP.over = true; MP.timeUp = !!timeUp; MP.used = Math.min(MP.limit, Math.round(MP.acc / 1000)); MP.rev = null;
+    var ts = Date.now(), right = 0;
+    MP.res = MP.qs.map(function (q, i) {
+      var given = String(MP.ans[i]).trim(), ok = null;
+      if (given) { ok = q.mc ? given === q.a : mpGridOK(given, q.a) === true; }
+      var secs = Math.round(MP.spent[i] / 1000);
+      /* a question left blank counts against the module, but is not saved as a miss */
+      if (ok !== null) { store.m[q.id] = [ok ? 1 : 0, secs, ts]; }
+      if (ok) { right += 1; }
+      return { id: q.id, ok: ok, secs: secs, given: given, flag: !!MP.flag[i] };
+    });
+    var hist = Array.isArray(store.s.modules) ? store.s.modules.filter(isObj) : [];
+    hist.push({ t: ts, n: MP.qs.length, r: right, s: MP.used, l: MP.limit });
+    store.s.modules = hist.slice(-20);
+    save();
+    mmResults();
+  }
+  function mmResults() {
+    MP.rev = null;
+    var res = MP.res, n = res.length;
+    var right = res.filter(function (r) { return r.ok === true; }).length, wrong = res.filter(function (r) { return r.ok === false; }).length, blank = n - right - wrong;
+    var answered = right + wrong, avg = answered ? Math.round(res.reduce(function (a, r) { return a + (r.ok === null ? 0 : r.secs); }, 0) / answered) : 0;
+    var areas = MD.domains.map(function (d) {
+      var L = res.filter(function (r) { return MDOM[MQBY[r.id].k].id === d.id; }), ok = L.filter(function (r) { return r.ok === true; }).length;
+      return L.length ? '<div class="mprog-row"><span>' + esc(d.name) + '</span><span class="mbar"><i style="width:' + mpc(ok, L.length) + '%"></i></span><span class="num">' + ok + ' of ' + L.length + ' right</span></div>' : '';
+    }).join('');
+    var seen = {}, review = [];
+    res.forEach(function (r) { if (r.ok === true) { return; } var m = MSTBY[MST.questions[r.id].method]; if (!seen[m.id]) { seen[m.id] = 1; review.push(m); } });
+    var missedIds = res.filter(function (r) { return r.ok === false; }).map(function (r) { return r.id; });
+    var notRight = res.filter(function (r) { return r.ok !== true; });
+    viewEl.mprac.innerHTML = '<div class="wrap">' +
+      mHead('Math · Timed module', 'You got ' + right + ' of ' + n + ' right', (MP.timeUp ? 'Time ran out. ' : '') + 'You used ' + clock(MP.used) + ' of ' + clock(MP.limit) + (answered ? ', about ' + avg + ' seconds for each question you answered. The real test allows about 95.' : '.')) +
+      '<div class="mst-stats mm-stats"><div><b>' + right + '</b><span>right</span></div><div><b>' + wrong + '</b><span>wrong</span></div><div><b>' + blank + '</b><span>no answer</span></div><div><b>' + clock(MP.used) + '</b><span>of ' + clock(MP.limit) + ' used</span></div></div>' +
+      '<section class="msec"><h3 class="h3">By area</h3><div class="mprog">' + areas + '</div></section>' +
+      (review.length ? '<section class="msec"><h3 class="h3">Question types to review</h3><div class="mm-nexts">' + review.slice(0, 6).map(function (m) { return mmCardHTML(m, mTypeStat(m)); }).join('') + '</div>' + (review.length > 6 ? '<p class="fine" style="margin-top:.8rem">And ' + (review.length - 6) + ' more. They are all on <a href="#m-map">your map</a>.</p>' : '') + '</section>' : '<p class="mpraise">Every one right. Try a module of Hard questions.</p>') +
+      '<section class="msec"><h3 class="h3">Your answers</h3><p class="muted">Open any question to see College Board’s explanation and the method. On a miss, tap what went wrong.</p><ol class="mpsum mmsum">' + res.map(function (r, i) {
+        var q = MQBY[r.id];
+        return '<li class="' + (r.ok ? 'ok' : (r.ok === null ? 'mm-blank' : 'no')) + '"><span class="mpsum-v">' + (r.ok ? '✓' : (r.ok === null ? '–' : '✗')) + '</span><span><b>' + (i + 1) + '.</b> ' + esc(MTY[q.t].name) + ' <span class="muted">· ' + MDIFF[q.d] + ' · ' + (r.ok === null ? 'no answer' : r.secs + ' s') + (r.flag ? ' · marked for review' : '') + '</span></span><button class="linkbtn" type="button" data-rev="' + i + '">Review</button></li>';
+      }).join('') + '</ol></section>' +
+      mWhySetHTML(missedIds) +
+      '<p class="row" style="margin-top:1.5rem">' + (notRight.length ? '<button class="btn big" type="button" id="mm-rev-miss">Review what I missed</button>' : '') + '<button class="btn' + (notRight.length ? ' ghost' : ' big') + '" type="button" id="mm-new">New module</button>' + (notRight.length ? '<button class="btn ghost" type="button" id="mm-retry">Retry them, one at a time</button>' : '') + '<a class="btn ghost" href="#m-map">See my map</a></p></div>';
+    $$('[data-rev]', viewEl.mprac).forEach(function (b) { b.addEventListener('click', function () { mmReview(Number(b.getAttribute('data-rev'))); }); });
+    $('#mm-new').addEventListener('click', function () { mpModePreset = 'module'; mpSetup(); window.scrollTo(0, 0); });
+    var rm = $('#mm-rev-miss'), rt = $('#mm-retry');
+    if (rm) { rm.addEventListener('click', function () { mmReview(res.indexOf(notRight[0])); }); }
+    if (rt) { rt.addEventListener('click', function () { MP = { qs: notRight.map(function (r) { return MQBY[r.id]; }), i: 0, res: [], timer: false, over: false }; mpShow(); }); }
+    window.scrollTo(0, 0);
+  }
+  /* one question of a finished module, with the answer you gave, the method and the explanation */
+  function mmReview(i) {
+    if (!MP || !MP.module || !MP.over || !MP.res[i]) { return; }
+    MP.rev = i;
+    var r = MP.res[i], q = MQBY[r.id], n = MP.res.length;
+    MP.cur = { q: q, t0: 0, acc: 0, done: true };
+    var yours = q.mc
+      ? '<div class="mpchoices" role="group" aria-label="Your answer and the right answer">' + ['A', 'B', 'C', 'D'].map(function (L) { return '<button class="mpch' + (L === q.a ? ' right' : (L === r.given ? ' wrong' : '')) + '" type="button" disabled><span class="mpch-l">' + L + '</span></button>'; }).join('') + '</div>'
+      : '';
+    viewEl.mprac.innerHTML = '<div class="wrap mpwrap">' +
+      '<div class="mpbar"><span class="mpbar-pos"><b>Review · question ' + (i + 1) + '</b> of ' + n + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.res.map(function (x, j) { return '<i class="' + (x.ok ? 'ok' : (x.ok === null ? '' : 'no')) + (j === i ? ' at' : '') + '"></i>'; }).join('') + '</span><button class="linkbtn" type="button" id="mm-rev-back">Back to results</button></div>' +
+      '<article class="mpcard"><header class="mpcard-h"><span class="mtag">' + esc(MSK[q.k].name) + '</span><span class="mdiff d' + q.d + '">' + MDIFF[q.d] + '</span><span class="muted">' + (q.mc ? 'Multiple choice' : 'Type in your answer') + (r.flag ? ' · you marked this for review' : '') + '</span></header>' +
+        '<div class="mpq">' + mImg('q', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + yours +
+        '<p class="mm-yours">' + (r.ok === null ? 'You left this one blank.' : 'Your answer: <b>' + esc(r.given) + '</b>') + '</p>' +
+        '<div class="mpfb ' + (r.ok ? 'ok' : 'no') + '" id="mp-fb" tabindex="-1">' + mFeedbackHTML(q, r.ok, r.ok === null ? null : r.secs) + '</div>' +
+        '<p class="row mm-step"><button class="btn ghost" type="button" id="mm-rev-prev"' + (i ? '' : ' disabled') + '>Previous</button><button class="btn" type="button" id="mm-rev-next">' + (i < n - 1 ? 'Next question' : 'Back to results') + '</button></p></article></div>';
+    $('#mm-rev-back').addEventListener('click', mmResults);
+    $('#mm-rev-prev').addEventListener('click', function () { mmReview(i - 1); });
+    $('#mm-rev-next').addEventListener('click', function () { if (i < n - 1) { mmReview(i + 1); } else { mmResults(); } });
+    window.scrollTo(0, 0);
+  }
+
   /* =================== Home, navigation, appearance and suggestions =================== */
   var SUBJ = {
     rw: { name: 'Reading & Writing', icon: 'book', items: [
@@ -4632,7 +5232,8 @@ function rReasoningHTML() {
       ['mstudy', 'm-study', 'Expanded types', '249 fine question types, fuller explanations, close variants, and 998 calculator checks with clear scope.'],
       ['mtypes', 'm-types', 'Question finder', 'Type words from a question to see which of the ' + MORDER.length + ' question types it is and how to solve it.'],
       ['mref', 'm-ref', 'Formulas', 'What is on the formula sheet, what is not, and how to type in your own answers.'],
-      ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations.']] }
+      ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations. Learn one question at a time, or sit a timed 22-question module.'],
+      ['mmap', 'm-map', 'My map', 'All ' + MST.methods.length + ' question types colored by how you are doing, the reasons you miss, and what to practice next.']] }
   };
   var VIEW_SUBJ = { home: 'home', suggest: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
@@ -4767,6 +5368,8 @@ function rReasoningHTML() {
       '</div></section>' +
       '<section class="hsec"><div class="hsec-h"><h2 class="h2">Everything in one place</h2><p class="muted">Jump straight to the part you need.</p></div><div class="hfeats">' +
         feat('math', 'target', 'Math practice', 'Real questions by skill, pattern or difficulty, with the method after each one.', 'm-practice') +
+        feat('math', 'bolt', 'Timed module', '22 questions on one 35-minute clock, with mark for review, cross-out and the calculator.', 'm-module') +
+        feat('math', 'grid', 'Mastery map', 'Every question type colored by how you are doing, and the reasons you miss.', 'm-map') +
         feat('math', 'graph', 'Desmos playbook', MD.desmos.length + ' calculator moves with exactly what to type.', 'm-desmos') +
         feat('math', 'grid', 'Big patterns', 'The ideas that connect math question types.', 'm-patterns') +
         feat('math', 'grid', 'Expanded types', '249 fine methods, close variants, and scoped Desmos checks.', 'm-study') +
@@ -4883,7 +5486,7 @@ function rReasoningHTML() {
   }
 
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -4900,7 +5503,7 @@ function rReasoningHTML() {
     if (cur.view === 'practice') { timedPause(); }
     if (cur.view === 'grammar') { demoPause(); }
     if (cur.view === 'drills') { drillAway(); }
-    if (cur.view === 'mprac') { mpPause(); }
+    if (cur.view === 'mprac') { mpPause(); mCalcShow(false); }
     VIEWS.forEach(function (k) { viewEl[k].hidden = k !== v; });
     markNav(v);
     cur.view = v;
@@ -5021,6 +5624,9 @@ function rReasoningHTML() {
     if (/^ms-/.test(token)) { showView('mshort'); buildMShort(); scrollToEl(document.getElementById(token)); return true; }
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
+    if (token === 'm-module') { showView('mprac'); if (!(MP && MP.module && !MP.over)) { clearInterval(mpInterval); mpModePreset = 'module'; mpSetup(); } toTop(); return true; }
+    if (token === 'm-map' || token === 'm-traps') { showView('mmap'); buildMMap(); if (token === 'm-traps') { scrollToEl(document.getElementById('m-traps')); } else { toTop(); } return true; }
+    if ((m = /^m-map-(.+)$/.exec(token)) && has(MSTBY, decodeURIComponent(m[1]))) { showView('mmap'); buildMMap(decodeURIComponent(m[1])); scrollToEl(document.getElementById('mm-detail')); return true; }
     if ((m = /^mp-(.+)$/.exec(token))) {
       var x = m[1];
       if (has(MTY, x)) { mpPreset = 't:' + x; } else if (has(MSK, x)) { mpPreset = 'k:' + x; } else { mpPreset = 'd:' + x; }
@@ -5057,7 +5663,8 @@ function rReasoningHTML() {
     if (e.metaKey || e.ctrlKey || e.altKey) { return; }
     var t = e.target, tag = t && t.tagName ? t.tagName : '';
     var confidenceChoice = tag === 'INPUT' && t.type === 'radio' && t.name === 'tconfidence';
-    if (/^(INPUT|TEXTAREA|SELECT|SUMMARY)$/.test(tag) && !confidenceChoice) { return; }
+    var flagBox = tag === 'INPUT' && t.id === 'mm-flag';   /* "Mark for review" keeps the answer keys working */
+    if (/^(INPUT|TEXTAREA|SELECT|SUMMARY)$/.test(tag) && !confidenceChoice && !flagBox) { return; }
     var key = e.key || '';
     if (cur.view === 'practice' && TS && TS.card) {
       if (!TS.card.done()) {
