@@ -46,8 +46,28 @@
     /* easier questions first, as on the test; the shuffle decides the order inside each difficulty */
     return out.map(function (q, i) { return [q, i]; }).sort(function (a, b) { return MM_ORD[a[0].d] - MM_ORD[b[0].d] || a[1] - b[1]; }).map(function (x) { return x[0]; });
   }
-  function mmStart(st) {
-    var qs = mmPick(st);
+  function mmStart(st) { mmRun(mmPick(st), { settings: st }); }
+  /* the starting check: ten questions, one at each difficulty from every area (Easy, Medium and Hard from Algebra and from
+     Advanced Math; two each from the smaller areas), ones you have not tried when there are any */
+  var MD_PLAN = [['alg', 'EMH'], ['adv', 'EMH'], ['psda', 'EM'], ['geo', 'MH']];
+  function mdPick() {
+    var used = {}, out = [];
+    MD_PLAN.forEach(function (row) {
+      row[1].split('').forEach(function (d) {
+        var pool = MQ.filter(function (q) { return MDOM[q.k].id === row[0] && q.d === d && !used[q.id]; });
+        var fresh = pool.filter(function (q) { return !mDone(q.id); }), q = shuffle(fresh.length ? fresh : pool)[0];
+        if (q) { used[q.id] = 1; out.push(q); }
+      });
+    });
+    return out.map(function (q, i) { return [q, i]; }).sort(function (a, b) { return MM_ORD[a[0].d] - MM_ORD[b[0].d] || a[1] - b[1]; }).map(function (x) { return x[0]; });
+  }
+  function mdIntro() {
+    clearInterval(mpInterval);
+    MP = null;
+    viewEl.mprac.innerHTML = '<div class="wrap">' + diagIntroHTML('m') + '</div>';
+    $('#diag-go-m', viewEl.mprac).addEventListener('click', function () { mmRun(mdPick(), { diag: true }); });
+  }
+  function mmRun(qs, o) {
     if (!qs.length) { return; }
     clearInterval(mpInterval);
     mCalcReset();
@@ -55,7 +75,7 @@
       kind: function (i) { return qs[i].mc ? 'Multiple choice' : 'Type in your answer'; },
       answered: function (i) { return String(R.ans[i]).trim() !== ''; },
       draw: mmDraw, finish: mmFinish, alive: function () { return MP === R; } });
-    R.module = true; R.qs = qs; R.res = []; R.settings = st; R.timer = true;
+    R.module = true; R.qs = qs; R.res = []; R.settings = o.settings; R.diag = !!o.diag; R.timer = true;
     R.ans = qs.map(function () { return ''; }); R.cross = qs.map(function () { return {}; });
     MP = R;
     modStart(R);
@@ -130,13 +150,16 @@
       if (given) { ok = q.mc ? given === q.a : mpGridOK(given, q.a) === true; }
       var secs = Math.round(MP.spent[i] / 1000);
       /* a question left blank counts against the module, but is not saved as a miss */
-      if (ok !== null) { store.m[q.id] = [ok ? 1 : 0, secs, ts]; }
+      if (ok !== null) { store.m[q.id] = [ok ? 1 : 0, secs, ts]; srNote('m', q.id, ok); }
       if (ok) { right += 1; }
       return { id: q.id, ok: ok, secs: secs, given: given, flag: !!MP.flag[i] };
     });
-    var hist = Array.isArray(store.s.modules) ? store.s.modules.filter(isObj) : [];
-    hist.push({ t: ts, n: MP.qs.length, r: right, s: MP.used, l: MP.limit });
-    store.s.modules = hist.slice(-20);
+    if (MP.diag) { diagSave('m', MP.res.map(function (r) { return { d: MQBY[r.id].d, ok: r.ok === true }; })); }
+    else {
+      var hist = Array.isArray(store.s.modules) ? store.s.modules.filter(isObj) : [];
+      hist.push({ t: ts, n: MP.qs.length, r: right, s: MP.used, l: MP.limit });
+      store.s.modules = hist.slice(-20);
+    }
     save();
     mmResults();
   }
@@ -154,7 +177,8 @@
     var missedIds = res.filter(function (r) { return r.ok === false; }).map(function (r) { return r.id; });
     var notRight = res.filter(function (r) { return r.ok !== true; });
     viewEl.mprac.innerHTML = '<div class="wrap">' +
-      mHead('Math · Timed module', 'You got ' + right + ' of ' + n + ' right', (MP.timeUp ? 'Time ran out. ' : '') + 'You used ' + clock(MP.used) + ' of ' + clock(MP.limit) + (answered ? ', about ' + avg + ' seconds for each question you answered. The real test allows about 95.' : '.')) +
+      mHead(MP.diag ? 'Math · Starting check' : 'Math · Timed module', 'You got ' + right + ' of ' + n + ' right', (MP.timeUp ? 'Time ran out. ' : '') + 'You used ' + clock(MP.used) + ' of ' + clock(MP.limit) + (answered ? ', about ' + avg + ' seconds for each question you answered. The real test allows about 95.' : '.')) +
+      (MP.diag ? diagPanelHTML('m') : '') +
       '<div class="mst-stats mm-stats"><div><b>' + right + '</b><span>right</span></div><div><b>' + wrong + '</b><span>wrong</span></div><div><b>' + blank + '</b><span>no answer</span></div><div><b>' + clock(MP.used) + '</b><span>of ' + clock(MP.limit) + ' used</span></div></div>' +
       '<section class="msec"><h3 class="h3">By area</h3><div class="mprog">' + areas + '</div></section>' +
       (review.length ? '<section class="msec"><h3 class="h3">Question types to review</h3><div class="mm-nexts">' + review.slice(0, 6).map(function (m) { return mmCardHTML(m, mTypeStat(m)); }).join('') + '</div>' + (review.length > 6 ? '<p class="fine" style="margin-top:.8rem">And ' + (review.length - 6) + ' more. They are all on <a href="#m-map">your map</a>.</p>' : '') + '</section>' : '<p class="mpraise">Every one right. Try a module of Hard questions.</p>') +
@@ -163,10 +187,10 @@
         return '<li class="' + (r.ok ? 'ok' : (r.ok === null ? 'mm-blank' : 'no')) + '"><span class="mpsum-v">' + (r.ok ? '✓' : (r.ok === null ? '–' : '✗')) + '</span><span><b>' + (i + 1) + '.</b> ' + esc(MTY[q.t].name) + ' <span class="muted">· ' + MDIFF[q.d] + ' · ' + (r.ok === null ? 'no answer' : r.secs + ' s') + (r.flag ? ' · marked for review' : '') + '</span></span><button class="linkbtn" type="button" data-rev="' + i + '">Review</button></li>';
       }).join('') + '</ol></section>' +
       mWhySetHTML(missedIds) +
-      '<p class="row" style="margin-top:1.5rem">' + (notRight.length ? '<button class="btn big" type="button" id="mm-rev-miss">Review what I missed</button>' : '') + '<button class="btn' + (notRight.length ? ' ghost' : ' big') + '" type="button" id="mm-new">New module</button>' + (notRight.length ? '<button class="btn ghost" type="button" id="mm-retry">Retry them, one at a time</button>' : '') + '<a class="btn ghost" href="#m-map">See my map</a></p></div>';
+      '<p class="row" style="margin-top:1.5rem">' + (notRight.length ? '<button class="btn big" type="button" id="mm-rev-miss">Review what I missed</button>' : '') + (MP.diag ? '<a class="btn' + (notRight.length ? ' ghost' : ' big') + '" href="#plan">Make my study plan</a>' : '<button class="btn' + (notRight.length ? ' ghost' : ' big') + '" type="button" id="mm-new">New module</button>') + (notRight.length ? '<button class="btn ghost" type="button" id="mm-retry">Retry them, one at a time</button>' : '') + '<a class="btn ghost" href="#m-map">See my map</a></p></div>';
     $$('[data-rev]', viewEl.mprac).forEach(function (b) { b.addEventListener('click', function () { mmReview(Number(b.getAttribute('data-rev'))); }); });
-    $('#mm-new').addEventListener('click', function () { mpModePreset = 'module'; mpSetup(); window.scrollTo(0, 0); });
-    var rm = $('#mm-rev-miss'), rt = $('#mm-retry');
+    var nw = $('#mm-new'), rm = $('#mm-rev-miss'), rt = $('#mm-retry');
+    if (nw) { nw.addEventListener('click', function () { mpModePreset = 'module'; mpSetup(); window.scrollTo(0, 0); }); }
     if (rm) { rm.addEventListener('click', function () { mmReview(res.indexOf(notRight[0])); }); }
     if (rt) { rt.addEventListener('click', function () { MP = { qs: notRight.map(function (r) { return MQBY[r.id]; }), i: 0, res: [], timer: false, over: false }; mpShow(); }); }
     window.scrollTo(0, 0);

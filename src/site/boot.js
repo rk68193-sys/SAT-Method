@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'plan', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -101,7 +101,14 @@
       if (has(DR, dk) && !drillRun) { startDrill(dk); }
       toTop(); return;
     }
-    if (token === 'practice' || token === 'timed' || token === 'test') { showView('practice'); buildPractice(); toTop(); return; }
+    if (token === 'plan') { showView('plan'); buildPlan(); toTop(); return; }
+    if (token === 'rw-check') {
+      showView('practice');
+      if (!built.practice) { buildPractice(); }
+      if (!(RM && !RM.over)) { rdIntro(); }
+      toTop(); return;
+    }
+    if (token === 'practice' || token === 'timed' || token === 'test') { showView('practice'); buildPractice(); if (rdIntroOn && !RM && !TS) { timedSetup(); } toTop(); return; }
     if (token === 'rw-module') {
       showView('practice');
       if (!(RM && !RM.over)) { rmModePreset = 'module'; if (built.practice) { timedSetup(); } else { buildPractice(); } }
@@ -144,6 +151,7 @@
     if (/^ms-/.test(token)) { showView('mshort'); buildMShort(); scrollToEl(document.getElementById(token)); return true; }
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
+    if (token === 'm-check') { showView('mprac'); if (!(MP && MP.module && !MP.over)) { mdIntro(); } toTop(); return true; }
     if (token === 'm-module') { showView('mprac'); if (!(MP && MP.module && !MP.over)) { clearInterval(mpInterval); mpModePreset = 'module'; mpSetup(); } toTop(); return true; }
     if (token === 'm-map' || token === 'm-traps') { showView('mmap'); buildMMap(); if (token === 'm-traps') { scrollToEl(document.getElementById('m-traps')); } else { toTop(); } return true; }
     if ((m = /^m-map-(.+)$/.exec(token)) && has(MSTBY, decodeURIComponent(m[1]))) { showView('mmap'); buildMMap(decodeURIComponent(m[1])); scrollToEl(document.getElementById('mm-detail')); return true; }

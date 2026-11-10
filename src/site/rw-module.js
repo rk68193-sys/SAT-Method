@@ -21,9 +21,12 @@
     var pool = shuffle(rmPool(st).slice()), need = {}, out = [], rest = [], D4 = RW_DOMS.map(function (d) { return d[0]; });
     D4.forEach(function (k) { need[k] = RM_MIX[k]; });
     pool.forEach(function (it) { var d = rwDomain(it); if (need[d] > 0) { need[d] -= 1; out.push(it); } else { rest.push(it); } });
-    out = out.concat(rest.slice(0, RM_N - out.length));
-    /* the test's order: the four areas; inside an area the kinds of question stay together (words, then structure, then
-       paired texts; ideas, then evidence, then inference; transitions, then notes); easier first inside each kind */
+    return rmOrder(out.concat(rest.slice(0, RM_N - out.length)));
+  }
+  /* the test's order: the four areas; inside an area the kinds of question stay together (words, then structure, then
+     paired texts; ideas, then evidence, then inference; transitions, then notes); easier first inside each kind */
+  function rmOrder(out) {
+    var D4 = RW_DOMS.map(function (d) { return d[0]; });
     function grp(it) {
       var t = RWTBY[rwTypeOf(it)], d = rwDomain(it);
       if (!t) { return 0; }
@@ -41,9 +44,34 @@
       : it.t === 'r' ? RCard(it.x, o) : it.t === 'n' || it.t === 'x' ? BCard(it.b, it.t, o) : QBCard(it.b, o);
   }
   function rmDrop() { if (RM) { if (!RM.over) { modStop(RM); } RM = null; } }
-  function rmStart(st) {
-    var items = rmPick(st);
+  function rmStart(st) { rmRun(rmPick(st), { settings: st }); }
+  /* the starting check: ten questions, one at each difficulty from every area (Easy, Medium and Hard from the two reading
+     areas; two each from grammar and from transitions and notes), ones you have not tried when there are any */
+  var RD_PLAN = [['cs', ['Easy', 'Medium', 'Hard']], ['ii', ['Easy', 'Medium', 'Hard']], ['sec', ['Easy', 'Medium']], ['eoi', ['Medium', 'Hard']]];
+  function rdPick() {
+    var all = rwItems(), used = {}, out = [];
+    RD_PLAN.forEach(function (row) {
+      row[1].forEach(function (d) {
+        var pool = all.filter(function (it) { return it.d === d && !used[it.id] && rwDomain(it) === row[0]; });
+        var fresh = pool.filter(function (it) { return !result(it); }), it = shuffle(fresh.length ? fresh : pool)[0];
+        if (it) { used[it.id] = 1; out.push(it); }
+      });
+    });
+    return rmOrder(out);
+  }
+  var rdIntroOn = false;                 /* the check's first screen is showing where the practice setup usually is */
+  function rdIntro() {
+    if (tclock) { tclock.halt(); }
+    TS = null; tclock = null;
+    rmDrop();
+    rdIntroOn = true;
+    var host = document.getElementById('thost');
+    host.innerHTML = diagIntroHTML('rw');
+    $('#diag-go-rw', host).addEventListener('click', function () { rmRun(rdPick(), { diag: true }); });
+  }
+  function rmRun(items, o) {
     if (!items.length) { return; }
+    rdIntroOn = false;
     if (tclock) { tclock.halt(); }
     TS = null; tclock = null;
     rmDrop();
@@ -51,7 +79,7 @@
       kind: function (i) { return rmKind(items[i]); },
       answered: function (i) { return !!R.ans[i]; },
       draw: rmDraw, finish: rmFinish, alive: function () { return RM === R; } });
-    R.items = items; R.ans = items.map(function () { return ''; }); R.cross = items.map(function () { return {}; }); R.settings = st; R.res = []; R.rev = null;
+    R.items = items; R.ans = items.map(function () { return ''; }); R.cross = items.map(function () { return {}; }); R.settings = o.settings; R.diag = !!o.diag; R.res = []; R.rev = null;
     RM = R;
     modStart(R);
   }
@@ -121,13 +149,17 @@
         var a = practiceAttempt(result(it), ok, secs, RM_PACE, RM.flag[i] ? 'unsure' : 'skip');
         a.mode = 'module';
         store[bucketOf(it)][it.id] = a;
+        srNote('rw', it.id, ok);
       }
       if (ok) { right += 1; }
       return { it: it, ok: ok, secs: secs, given: given, flag: !!RM.flag[i] };
     });
-    var hist = Array.isArray(store.s.rwmodules) ? store.s.rwmodules.filter(isObj) : [];
-    hist.push({ t: Date.now(), n: RM.n, r: right, s: RM.used, l: RM.limit });
-    store.s.rwmodules = hist.slice(-20);
+    if (RM.diag) { diagSave('rw', RM.res.map(function (r) { return { d: r.it.d.charAt(0), ok: r.ok === true }; })); }
+    else {
+      var hist = Array.isArray(store.s.rwmodules) ? store.s.rwmodules.filter(isObj) : [];
+      hist.push({ t: Date.now(), n: RM.n, r: right, s: RM.used, l: RM.limit });
+      store.s.rwmodules = hist.slice(-20);
+    }
     save();
     rmResults();
   }
@@ -144,7 +176,8 @@
     res.forEach(function (r) { if (r.ok === true) { return; } var t = RWTBY[RWQT[r.it.id]]; if (t && !seen[t.id]) { seen[t.id] = 1; review.push(t); } });
     var notRight = res.filter(function (r) { return r.ok !== true; });
     document.getElementById('thost').innerHTML =
-      '<header class="read"><p class="eyebrow">Timed module finished</p><h2 class="vtitle">You got ' + right + ' of ' + n + ' right</h2><p class="lede">' + (RM.timeUp ? 'Time ran out. ' : '') + 'You used ' + clock(RM.used) + ' of ' + clock(RM.limit) + (answered ? ', about ' + avg + ' seconds for each question you answered. The real test allows about 71.' : '.') + '</p></header>' +
+      '<header class="read"><p class="eyebrow">' + (RM.diag ? 'Starting check finished' : 'Timed module finished') + '</p><h2 class="vtitle">You got ' + right + ' of ' + n + ' right</h2><p class="lede">' + (RM.timeUp ? 'Time ran out. ' : '') + 'You used ' + clock(RM.used) + ' of ' + clock(RM.limit) + (answered ? ', about ' + avg + ' seconds for each question you answered. The real test allows about 71.' : '.') + '</p></header>' +
+      (RM.diag ? diagPanelHTML('rw') : '') +
       '<div class="mst-stats mm-stats rw"><div><b>' + right + '</b><span>right</span></div><div><b>' + wrong + '</b><span>wrong</span></div><div><b>' + blank + '</b><span>no answer</span></div><div><b>' + clock(RM.used) + '</b><span>of ' + clock(RM.limit) + ' used</span></div></div>' +
       '<h3 class="subh">By area</h3><div class="mprog">' + areas + '</div>' +
       (review.length ? '<h3 class="subh">Types to review</h3><div class="mm-nexts">' + review.slice(0, 6).map(function (t) { return rwCardHTML(t, rwStat(t)); }).join('') + '</div>' + (review.length > 6 ? '<p class="fine" style="margin-top:.8rem">And ' + (review.length - 6) + ' more. They are all on <a href="#rw-map">your map</a>.</p>' : '') : '<p class="subh">Every answer right.</p>') +
@@ -153,11 +186,11 @@
         return '<li class="' + (r.ok ? 'ok' : (r.ok === null ? 'mm-blank' : 'no')) + '"><span class="mpsum-v">' + (r.ok ? '✓' : (r.ok === null ? '–' : '✗')) + '</span><span><b>' + (i + 1) + '.</b> ' + esc(t ? t.name : rmKind(r.it)) + ' <span class="muted">· ' + esc(r.it.d) + ' · ' + (r.ok === null ? 'no answer' : r.secs + ' s') + (r.flag ? ' · marked for review' : '') + '</span></span><button class="linkbtn" type="button" data-rm-rev="' + i + '">Review</button></li>';
       }).join('') + '</ol>' +
       rwCauseSetHTML(res.filter(function (r) { return r.ok === false; }).map(function (r) { return r.it; })) +
-      '<p class="row" style="margin-top:1.5rem">' + (notRight.length ? '<button class="btn" type="button" id="rm-rev-miss">Review what I missed</button>' : '') + '<button class="btn' + (notRight.length ? ' ghost' : '') + '" type="button" id="rm-new">New module</button>' + (notRight.length ? '<button class="btn ghost" type="button" id="rm-retry">Retry them, one at a time</button>' : '') + '<a class="btn ghost" href="#rw-map">See my map</a></p>';
+      '<p class="row" style="margin-top:1.5rem">' + (notRight.length ? '<button class="btn" type="button" id="rm-rev-miss">Review what I missed</button>' : '') + (RM.diag ? '<a class="btn' + (notRight.length ? ' ghost' : '') + '" href="#plan">Make my study plan</a>' : '<button class="btn' + (notRight.length ? ' ghost' : '') + '" type="button" id="rm-new">New module</button>') + (notRight.length ? '<button class="btn ghost" type="button" id="rm-retry">Retry them, one at a time</button>' : '') + '<a class="btn ghost" href="#rw-map">See my map</a></p>';
     var host = document.getElementById('thost');
     $$('[data-rm-rev]', host).forEach(function (b) { b.addEventListener('click', function () { rmReview(Number(b.getAttribute('data-rm-rev'))); }); });
-    $('#rm-new').addEventListener('click', function () { rmModePreset = 'module'; timedSetup(); toTop(); });
-    var rm = $('#rm-rev-miss'), rt = $('#rm-retry');
+    var nw = $('#rm-new'), rm = $('#rm-rev-miss'), rt = $('#rm-retry');
+    if (nw) { nw.addEventListener('click', function () { rmModePreset = 'module'; timedSetup(); toTop(); }); }
     if (rm) { rm.addEventListener('click', function () { rmReview(res.indexOf(notRight[0])); }); }
     if (rt) { rt.addEventListener('click', function () { timedStart(notRight.map(function (r) { return r.it; }), tset()); }); }
     toTop();

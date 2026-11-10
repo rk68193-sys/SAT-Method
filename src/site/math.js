@@ -502,7 +502,7 @@
     mpPause(); c.done = true;
     var secs = Math.round(mpElapsed());
     MP.res[MP.i] = { id: q.id, ok: ok, secs: secs, given: given };
-    store.m[q.id] = [ok ? 1 : 0, secs, Date.now()]; save();
+    store.m[q.id] = [ok ? 1 : 0, secs, Date.now()]; srNote('m', q.id, ok); save();
     clearInterval(mpInterval); mpTick();
     if (q.mc) {
       $$('.mpch', viewEl.mprac).forEach(function (b) {
@@ -549,7 +549,7 @@
         return '<li class="' + (r.ok ? 'ok' : 'no') + '"><span class="mpsum-v">' + (r.ok ? '✓' : '✗') + '</span><span>' + esc(MTY[q.t].name) + ' <span class="muted">· ' + MDIFF[q.d] + ' · ' + r.secs + ' s</span></span><a class="linkbtn" href="#mt-' + q.t + '">How to solve</a></li>';
       }).join('') + '</ol></section>' +
       mWhySetHTML(done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; })) +
-      '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '<a class="btn ghost" href="#m-map">See my map</a></p></div>';
+      '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '<a class="btn ghost" href="#m-map">See my map</a>' + (planGet() ? '<a class="btn ghost" href="#plan">Back to my plan</a>' : '') + '</p></div>';
     $('#mp-again').addEventListener('click', mpSetup);
     var mm = $('#mp-miss');
     if (mm) { mm.addEventListener('click', function () { var pool = done.filter(function (r) { return !r.ok; }).map(function (r) { return MQBY[r.id]; }); MP = { qs: pool, i: 0, res: [], timer: MP.timer, over: false }; mpShow(); }); }

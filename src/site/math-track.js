@@ -145,6 +145,7 @@
     viewEl.mmap.innerHTML = '<div class="wrap">' +
       mHead('Math · My map', 'Your mastery map', 'Each square is one of the ' + N + ' question types, colored by how you did the last time you tried its questions. Tap a square to see its trap and practice just that type.') +
       '<div class="mst-stats mm-stats"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
+      diagLineHTML('m') +
       (tried ? '' : '<aside class="mnote"><p><b>Nothing practiced yet.</b> Answer a few questions and this map fills in. Results are saved in this browser only.</p><a class="btn sm" href="#m-practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="mm-next"><h3 class="h2">Work on these next</h3>' + (next.length
         ? '<p class="lede">Your lowest-scoring types so far. Read the trap, then practice just that type.</p><div class="mm-nexts">' + next.map(function (m) { return mmCardHTML(m, stat[m.id]); }).join('') + '</div>'

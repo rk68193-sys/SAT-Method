@@ -92,6 +92,7 @@
     if (tclock) { tclock.halt(); }
     TS = null; tclock = null;
     rmDrop();
+    rdIntroOn = false;
     var s = tset();
     if (rmModePreset) { s.mode = rmModePreset; rmModePreset = null; }
     var g = practiceRecord('t', EXLIST.map(function (e) { return e.q; })), r = practiceRecord('r', RLIST.map(function (x) { return x.qid; }));
@@ -167,6 +168,7 @@
   }
   function timedStart(list, st) {
     rmDrop();
+    rdIntroOn = false;
     TS = { items: list, i: 0, res: [], tier: TIERS[st.tier] || TIERS.learn, settings: st, hints: st.hints, card: null, paused: false };
     document.getElementById('thost').innerHTML = '<div class="tplay"><div class="tbar"><span class="tpos" id="tpos"></span><div class="clockbox" id="tclock"></div>' +
       '<div class="row"><button type="button" class="btn sm" id="tnext2" hidden>Next</button><button type="button" class="linkbtn" id="tend">End set</button></div></div>' +
@@ -194,6 +196,7 @@
       var attempt = practiceAttempt(prev, ok, t, lim, confidence);
       TS.res.push({ it: it, k: k, ok: ok, t: t, l: lim, fresh: !prev, confidence: confidence, cause: attempt.cause, evidence: attempt.evidence });
       store[bucket][it.id] = attempt;
+      srNote('rw', it.id, ok);
       save();
       return t == null ? null : { time: t, limit: lim };
     };
@@ -305,7 +308,7 @@
         return '<li>' + lineFor(r) + ' <span class="muted">· ' + clock(r.t) + ' of ' + clock(r.l) + '</span></li>';
       }).join('') + '</ul>' : '') +
       '<div class="row" style="margin-top:1.4rem">' + (retry.length ? '<button type="button" class="btn" id="tretry">Revisit ' + plural(retry.length, 'question') + '</button>' : '') +
-      '<button type="button" class="btn' + (retry.length ? ' ghost' : '') + '" id="tagain">Set up another</button></div>';
+      '<button type="button" class="btn' + (retry.length ? ' ghost' : '') + '" id="tagain">Set up another</button>' + (planGet() ? '<a class="btn ghost" href="#plan">Back to my plan</a>' : '') + '</div>';
     TS = null; tclock = null;
     var rb = document.getElementById('tretry');
     if (rb) { rb.addEventListener('click', function () { timedStart(shuffle(retry.slice()), st); }); }

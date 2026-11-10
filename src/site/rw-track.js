@@ -2,7 +2,7 @@
   /* Every question belongs to one type: one of the 106 grammar and transition rules, or one of the 20 kinds of reading question.
      Results come from the practice records (store.t, store.r, store.b): the last attempt at each question, with the cause the
      student chose in "Review the reasoning". */
-  var RWT = [], RWTBY = {}, RWSETOF = {}, RWQT = {}, RWITEMS = null;
+  var RWT = [], RWTBY = {}, RWSETOF = {}, RWQT = {}, RWIT = {}, RWITEMS = null;
   function rwSetJob(name) {
     var J = [[/^Main idea/, 'job-main'], [/^Detail/, 'job-detail'], [/^Inference/, 'job-inference'], [/^Support/, 'job-support'], [/^Weaken/, 'job-weaken'], [/^Quotation/, 'job-quote'],
       [/^(Table|Graph)/, 'job-data'], [/^(Word|Meaning)/, 'job-word'], [/^(Main purpose|Overall structure|Function)/, 'job-structure'], [/^(How would|Both would|A difference)/, 'job-cross'], [/^Use the notes/, 'job-notes']];
@@ -28,7 +28,7 @@
     if (RWITEMS) { return RWITEMS; }
     var seen = {};
     RWITEMS = itemsAll().filter(function (it) { if (seen[it.id]) { return false; } seen[it.id] = true; return true; });
-    RWITEMS.forEach(function (it) { var t = RWTBY[rwTypeOf(it)]; if (t) { t.items.push(it); RWQT[it.id] = t.id; } });
+    RWITEMS.forEach(function (it) { var t = RWTBY[rwTypeOf(it)]; RWIT[it.id] = it; if (t) { t.items.push(it); RWQT[it.id] = t.id; } });
     return RWITEMS;
   }
   function rwAns(it) { return it.t === 'g' ? it.ex.a : it.t === 'r' ? it.x.ans : it.b.ans; }
@@ -177,6 +177,7 @@
     viewEl.rwmap.innerHTML = '<div class="wrap">' +
       '<header class="read"><p class="eyebrow">Reading and Writing · My map</p><h2 class="vtitle">Your mastery map</h2><p class="lede">Each square is a kind of reading question or one grammar rule, colored by how you did the last time you tried its questions. Tap one to see what to look at and practice just that.</p></header>' +
       '<div class="mst-stats mm-stats rw"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
+      diagLineHTML('rw') +
       (tried ? '' : '<aside class="mnote"><p><b>Nothing practiced yet.</b> Answer a few questions and this map fills in. Results are saved in this browser only.</p><a class="btn sm" href="#practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="rwm-next"><h3 class="h2">Work on these next</h3>' + (next.length
         ? '<p class="lede">Your lowest-scoring types so far. Study the rule or the routine, then practice just that type.</p><div class="mm-nexts">' + next.map(function (t) { return rwCardHTML(t, stat[t.id]); }).join('') + '</div>'

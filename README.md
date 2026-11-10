@@ -15,6 +15,18 @@ Review scope, source corrections, and validation limits are documented in [src/R
 
 Progress, notes and the chosen appearance are saved in your browser only.
 
+## The starting check and the study plan
+
+Both subjects have a **starting check** (`#m-check`, `#rw-check`): ten questions on one clock (about 16 minutes for Math, 12 for Reading and Writing), one at each difficulty from every content area, with answers at the end. It gives a **rough starting range** for that section, the question types to begin with, and it fills in the map. The range is deliberately wide: the share right at each difficulty, counted equally, is placed on the 200 to 800 scale, plus or minus one standard error and never less than 60 points. The page says how it is worked out, that it is not a prediction, and that the real test adapts and is much longer. Home offers the checks to someone with no results yet.
+
+**My study plan** (`#plan`, linked from Home and the footer) asks for a test date, 15, 30 or 45 minutes a day, and which sections. Each day it builds a few short sets from your results:
+
+- **Repeats.** A question you miss comes back after 1 day; each time you then get it right it moves to 3 days, then 7, then it is done. Questions missed before the plan existed count as due straight away.
+- **Practice by type.** The weakest types on your map first, then the ones getting there, then new ones (the most common first).
+- **The check** first, for a section with no check and almost no history, and **a timed module** on Saturdays and every other day in the last week.
+
+With both sections chosen they take turns day by day; from 30 minutes a day each section gets a set every day. A task is ticked when its questions have been answered since the day was built, and "Add one more set" adds another. The page also shows the week ahead and where you stand in each section. Everything is saved in this browser only; deleting the plan keeps your results.
+
 ## Timed modules, the mastery map and the trap report
 
 Both subjects have these. Reading and Writing:

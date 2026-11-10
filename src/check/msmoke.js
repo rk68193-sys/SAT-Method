@@ -13,7 +13,7 @@ const { chromium } = require('playwright');
   await p.goto(file); await p.waitForTimeout(700);
   const shot = async (n, full) => p.screenshot({ path: `shots/${tag}-${n}.png`, fullPage: !!full });
   await shot('home', true);
-  const tokens = ['m-patterns','mpat-constant','mrare','m-desmos','md-fit','md-types','mpp-multiplier','mq-4aaa9c42','home','math','m-learn','m-learn-geo','m-nlf','m-cir','m-stc','mt-cir-read','mt-sys-count','m-types','m-short','ms-vertex','m-ref','m-practice','mp-nlf-vertex','mp-psda','m-module','m-map','m-traps','start','grammar','math'];
+  const tokens = ['m-patterns','mpat-constant','mrare','m-desmos','md-fit','md-types','mpp-multiplier','mq-4aaa9c42','home','math','m-learn','m-learn-geo','m-nlf','m-cir','m-stc','mt-cir-read','mt-sys-count','m-types','m-short','ms-vertex','m-ref','m-practice','mp-nlf-vertex','mp-psda','m-module','m-map','m-traps','m-check','plan','start','grammar','math'];
   for (const t of tokens) {
     await p.evaluate(x => { location.hash = x; }, t); await p.waitForTimeout(150);
     const r = await p.evaluate(() => ({ sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth, view: [...document.querySelectorAll('main > section')].filter(s => !s.hidden).map(s => s.id).join(','), cur: [...document.querySelectorAll('#tabs a[aria-current]')].map(a=>a.textContent).join('|') }));

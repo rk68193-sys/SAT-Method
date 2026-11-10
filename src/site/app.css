@@ -1771,3 +1771,43 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .after .seg { margin-top: .2rem; }
 .after .seg label > span { padding: .36rem .8rem; font-size: .95rem; }
 @media (max-width: 560px) { .rmli { grid-template-columns: minmax(0, 1fr); } .rmli .mmx { text-align: left; padding-left: .8rem; } }
+
+/* ---------- the starting check ---------- */
+.diag-facts { margin-top: 1.4rem; }
+.diag-range { display: grid; gap: .45rem; margin-top: 1.4rem; padding: 1.2rem 1.4rem; border-radius: 20px; background: var(--hl); color: var(--hl-ink); max-width: 52rem; }
+.diag-l { font: 600 .76rem/1.35 var(--body); letter-spacing: .07em; text-transform: uppercase; }
+.diag-n { font: 700 clamp(2.3rem, 1.6rem + 3vw, 3.5rem)/1 var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.diag-range summary { cursor: pointer; font-weight: 600; }
+.diag-range details p { margin-top: .5rem; max-width: 44em; }
+.diag-line { margin-top: 1.1rem; max-width: 52rem; }
+
+/* ---------- the study plan ---------- */
+.plan-form { max-width: 40rem; }
+.plan-form input[type="date"] { width: 100%; max-width: 16rem; padding: .7rem .9rem; border: 1.5px solid var(--line-strong); border-radius: 12px; background: var(--card); color: var(--ink); font: inherit; font-size: 1.05rem; }
+.plan-form input[type="date"]:focus { border-color: var(--pencil); outline: 3px solid var(--hl); outline-offset: 0; }
+.plan-tasks { display: grid; gap: .7rem; margin-top: 1.1rem; max-width: 52rem; }
+.plan-task { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .4rem 1rem; align-items: center; padding: 1rem 1.1rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.plan-task.done { background: var(--ok-soft); border-color: var(--ok); box-shadow: none; }
+.plan-check { display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 2px solid var(--line-strong); font: 700 1rem/1 var(--display); color: transparent; }
+.plan-task.done .plan-check { background: var(--ok); border-color: var(--ok); color: var(--card); }
+.plan-task-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .8rem; }
+.plan-task-h b { font: 600 1.08rem/1.3 var(--display); }
+.plan-sub { display: inline-flex; align-items: center; gap: .4rem; font-size: .88rem; color: var(--ink-2); }
+.plan-task .fine { margin-top: .2rem; }
+.plan-task.done .fine, .plan-task.done .plan-sub { color: var(--ink-2); }
+.plan-state { font: 700 .9rem/1 var(--display); color: var(--ok); }
+.plan-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .5rem; margin-top: 1.1rem; max-width: 52rem; }
+.plan-day { display: grid; gap: .25rem; align-content: start; min-height: 5.6rem; padding: .7rem .6rem; border-radius: 14px; background: var(--card); border: 1px solid var(--line); font-size: .84rem; }
+.plan-day.today { border-color: var(--act); box-shadow: inset 0 0 0 1px var(--act); }
+.plan-day.test { background: var(--hl); color: var(--hl-ink); border-color: var(--pencil); }
+.plan-day b { font: 600 .9rem/1.25 var(--display); overflow-wrap: anywhere; }
+.plan-day .muted { font-size: .78rem; }
+.plan-day.test .muted { color: inherit; }
+.hplan { margin-top: 1.4rem; }
+.hplan + .hcont { margin-top: .7rem; }
+.hcheck { display: grid; gap: .6rem; margin-top: .7rem; padding: .9rem 1.2rem; border-radius: 16px; background: var(--sunk); max-width: 36rem; }
+@media (max-width: 720px) {
+  .plan-week { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .plan-task { grid-template-columns: auto minmax(0, 1fr); }
+  .plan-task > .btn, .plan-task > .plan-state { grid-column: 2; justify-self: start; }
+}
