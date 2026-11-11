@@ -27,13 +27,28 @@ const base = process.argv[2] || 'http://127.0.0.1:8000/';
       assert.match(await page.locator('#tcount').innerText(), new RegExp(count + ' questions'));
       await page.click('#tstart');
       for (let i = 0; i < 3; i++) {
-        const img = page.locator('#tcard img[src^="rw/q/"]'); await img.waitFor();
-        await img.evaluate(im => im.decode());
-        const id = (await img.getAttribute('src')).match(/([0-9a-f]{8})\.webp$/)[1];
-        const chosen = i === 0 ? (byId[id].ans === 'A' ? 'B' : 'A') : byId[id].ans;
+        await page.locator('#tcard .qmeta').waitFor();
+        const id = (await page.locator('#tcard .qmeta').innerText()).match(/Question ([0-9a-f]{8})/)[1];
+        const q = byId[id];
+        if (q.txt) {
+          // rebuilt as text from the export: a passage, four choices with words, any table or graph as a picture
+          assert.ok((await page.locator('#tcard .passage').innerText()).length > 20, id);
+          assert.equal(await page.locator('#tcard .opt .otext').count(), 4);
+          for (const t of await page.locator('#tcard .opt .otext').allInnerTexts()) assert.ok(t.trim().length > 0, id);
+          for (const fig of await page.locator('#tcard img.rwfig').all()) await fig.evaluate(im => im.decode());
+        } else {
+          const img = page.locator('#tcard img[src^="rw/q/"]'); await img.waitFor();
+          await img.evaluate(im => im.decode());
+        }
+        const chosen = i === 0 ? (q.ans === 'A' ? 'B' : 'A') : q.ans;
         await page.locator('#tcard .opt[data-k="' + chosen + '"]').click();
         assert.match(await page.locator('#tcard .verdict').innerText(), i === 0 ? /not|incorrect/i : /right|correct/i);
-        const sol = page.locator('#tcard .qfeed img[src^="rw/r/"]'); await sol.waitFor(); await sol.evaluate(im => im.decode());
+        if (q.txt) {
+          assert.match(await page.locator('#tcard .qfeed').innerText(), /Choice [A-D] is/);
+          assert.equal(await page.locator('#tcard .asprinted a').count(), 2);
+        } else {
+          const sol = page.locator('#tcard .qfeed img[src^="rw/r/"]'); await sol.waitFor(); await sol.evaluate(im => im.decode());
+        }
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1));
         if (i < 2) await page.click('#tnext');
       }

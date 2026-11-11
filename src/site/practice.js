@@ -105,7 +105,7 @@
     var nSlow = all.filter(function (it) { return overPace(result(it)); }).length;
     var reviews = all.map(function (it) { return { it: it, r: result(it) }; }).filter(function (x) { return x.r && (x.r.evidence || x.r.cause); }).sort(function (a, b) { return (b.r.at || 0) - (a.r.at || 0); });
     var h = (prefix || '') + '<header class="read"><p class="eyebrow">Practice</p><h2 class="vtitle">Learn first. Then build your pace.</h2>' +
-      '<p class="lede">All 1,845 Reading and Writing questions are available, including ' + BANK.figures.length + ' restored figure questions and ' + BANK.grammarSources.length + ' additional grammar questions with their full official explanations. Mixed sets include each question once. Start untimed while learning a skill; use unfamiliar mixed questions to check your pace.</p></header>' +
+      '<p class="lede">All 1,845 Reading and Writing questions are available, including ' + BANK.figures.length + ' table and graph questions and ' + BANK.grammarSources.length + ' additional grammar questions with their full official explanations. Mixed sets include each question once. Start untimed while learning a skill; use unfamiliar mixed questions to check your pace.</p></header>' +
       '<div class="record"><div><b>' + g.tried + '</b><span>of ' + EXLIST.length + ' grammar tried</span></div><div><b>' + g.right + '</b><span>right last time</span></div>' +
       '<div><b>' + r.tried + '</b><span>of ' + RLIST.length + ' reading tried</span></div><div><b>' + r.right + '</b><span>right last time</span></div>' +
       '<div><b>' + qb.tried + '</b><span>of ' + BANK.reading.length + ' bank reading tried</span></div><div><b>' + nb.tried + '</b><span>of ' + BANK.notes.length + ' notes tried</span></div><div><b>' + xb.tried + '</b><span>of ' + BANK.trans.length + ' transitions tried</span></div></div>' +
@@ -128,7 +128,7 @@
       (reviews.length ? '<details class="ctx"><summary>My saved reviews (' + reviews.length + ')</summary><div class="ctxbody"><p class="fine">Latest review for each question. Showing the most recent ' + Math.min(20, reviews.length) + '.</p><ul class="plainlist">' + reviews.slice(0, 20).map(function (x) {
         return '<li><a href="#rq-' + x.it.id + '">Question ' + x.it.id + '</a>' + (x.r.cause ? '<p class="fine">' + esc(causeLabel(x.r.cause)) + '</p>' : '') + (x.r.evidence ? '<p class="fine">' + esc(x.r.evidence) + '</p>' : '') + '</li>';
       }).join('') + '</ul></div></details>' : '') +
-      '<h3 class="subh">Original questions and explanations</h3><p class="pretty">The restored source images include printed choices and complete official explanations. Open an image to enlarge it. Two further figure questions are already in Reading worked examples. <a href="#data-patterns">Study the deeper data patterns</a>.</p>';
+      '<h3 class="subh">Original questions and explanations</h3><p class="pretty">The table, graph and additional grammar questions are text taken from College Board’s own export, with each table or graph as a picture and the official explanation for every choice. After you answer, each one links to the question and the explanation exactly as printed. Two further figure questions are already in Reading worked examples. <a href="#data-patterns">Study the deeper data patterns</a>.</p>';
     var host = document.getElementById('thost');
     host.innerHTML = h;
     function readSettings() {
@@ -395,7 +395,8 @@
         '<h3 class="fasth">How the wrong choices fail</h3><ul class="plainlist">' + ['A', 'B', 'C', 'D'].filter(function (x) { return x !== b.ans && tr[x]; }).map(function (x) {
           return '<li><b>' + x + ': ' + esc(tr[x]) + '.</b> It ' + KIND_DEF[tr[x]] + '</li>'; }).join('') + '</ul>' : '') +
         (job ? '<p class="fine"><a href="#' + job.id + '">The ' + esc(b.jn) + ' job: what to look at first</a></p>' : '') +
-        '<p class="fine muted">Answer: College Board’s key. Explanations: College Board’s rationale; source-image cards retain the full explanation.' + (b.tg ? ' Tags and wrong-choice labels: Claude’s annotation, done twice blind and settled by a third pass.' : '') + '</p>';
+        (b.qsrc ? '<p class="fine asprinted">As printed: <a href="' + esc(b.qsrc) + '" target="_blank" rel="noopener">the question</a> · <a href="' + esc(b.rsrc) + '" target="_blank" rel="noopener">the explanation</a></p>' : '') +
+        '<p class="fine muted">Answer: College Board’s key. Explanations: College Board’s rationale' + (b.txt ? ', in full.' : '; source-image cards retain the full explanation.') + (b.tg ? ' Tags and wrong-choice labels: Claude’s annotation, done twice blind and settled by a third pass.' : '') + '</p>';
       if (o.after) { o.after(ok); }
       showFeedback($('.verdict', el));
     }

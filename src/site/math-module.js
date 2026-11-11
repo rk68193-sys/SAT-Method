@@ -89,9 +89,9 @@
       ? '<div class="mpchoices mmchoices" role="group" aria-label="Your answer">' + ['A', 'B', 'C', 'D'].map(function (L, n) {
           return '<div class="mmch"><button class="mpch' + (given === L ? ' sel' : '') + (X[L] ? ' crossed' : '') + '" type="button" data-k="' + L + '" aria-pressed="' + (given === L ? 'true' : 'false') + '"><span class="mpch-l">' + L + '</span><span class="kbd">' + (n + 1) + '</span></button>' +
             '<button class="mmx" type="button" data-x="' + L + '" aria-pressed="' + (X[L] ? 'true' : 'false') + '" aria-label="Cross out choice ' + L + '">' + (X[L] ? 'Undo' : 'Cross out') + '</button></div>';
-        }).join('') + '</div><p class="fine">Choose the letter of your answer. You can change it until you finish. “Cross out” marks a choice you have ruled out.</p>'
+        }).join('') + '</div><p class="fine mpch-note" data-txt="Choose your answer. You can change it until you finish. “Cross out” marks a choice you have ruled out.">Choose the letter of your answer. You can change it until you finish. “Cross out” marks a choice you have ruled out.</p>'
       : '<div class="mpgrid"><label class="field"><span class="label">Type your answer</span><input type="text" id="mm-gin" inputmode="decimal" autocomplete="off" placeholder="e.g. 12, −3, 7/6 or 2.5" value="' + esc(given) + '"></label></div><p class="fine" id="mm-ghint">Numbers only. Fractions like 7/6 are fine; leave out units. Saved as you type.</p>';
-    body.innerHTML = '<div class="mpq">' + mImg('q', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans;
+    body.innerHTML = '<div class="mpq">' + mImg('q', q, true) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans;
     if (q.mc) {
       $$('.mpch', body).forEach(function (b) { b.addEventListener('click', function () { mmChoose(b.getAttribute('data-k')); }); });
       $$('.mmx', body).forEach(function (b) { b.addEventListener('click', function () { mmCross(b.getAttribute('data-x')); }); });
@@ -202,12 +202,12 @@
     var r = MP.res[i], q = MQBY[r.id], n = MP.res.length;
     MP.cur = { q: q, t0: 0, acc: 0, done: true };
     var yours = q.mc
-      ? '<div class="mpchoices" role="group" aria-label="Your answer and the right answer">' + ['A', 'B', 'C', 'D'].map(function (L) { return '<button class="mpch' + (L === q.a ? ' right' : (L === r.given ? ' wrong' : '')) + '" type="button" disabled><span class="mpch-l">' + L + '</span></button>'; }).join('') + '</div>'
+      ? '<div class="mpchoices" role="group" aria-label="Your answer and the right answer">' + ['A', 'B', 'C', 'D'].map(function (L) { return '<button class="mpch' + (L === q.a ? ' right' : (L === r.given ? ' wrong' : '')) + '" type="button" data-k="' + L + '" disabled><span class="mpch-l">' + L + '</span></button>'; }).join('') + '</div>'
       : '';
     viewEl.mprac.innerHTML = '<div class="wrap mpwrap">' +
       '<div class="mpbar"><span class="mpbar-pos"><b>Review · question ' + (i + 1) + '</b> of ' + n + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.res.map(function (x, j) { return '<i class="' + (x.ok ? 'ok' : (x.ok === null ? '' : 'no')) + (j === i ? ' at' : '') + '"></i>'; }).join('') + '</span><button class="linkbtn" type="button" id="mm-rev-back">Back to results</button></div>' +
       '<article class="mpcard"><header class="mpcard-h"><span class="mtag">' + esc(MSK[q.k].name) + '</span><span class="mdiff d' + q.d + '">' + MDIFF[q.d] + '</span><span class="muted">' + (q.mc ? 'Multiple choice' : 'Type in your answer') + (r.flag ? ' · you marked this for review' : '') + '</span></header>' +
-        '<div class="mpq">' + mImg('q', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + yours +
+        '<div class="mpq">' + mImg('q', q, !!q.mc) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + yours +
         '<p class="mm-yours">' + (r.ok === null ? 'You left this one blank.' : 'Your answer: <b>' + esc(r.given) + '</b>') + '</p>' +
         '<div class="mpfb ' + (r.ok ? 'ok' : 'no') + '" id="mp-fb" tabindex="-1">' + mFeedbackHTML(q, r.ok, r.ok === null ? null : r.secs) + '</div>' +
         '<p class="row mm-step"><button class="btn ghost" type="button" id="mm-rev-prev"' + (i ? '' : ' disabled') + '>Previous</button><button class="btn" type="button" id="mm-rev-next">' + (i < n - 1 ? 'Next question' : 'Back to results') + '</button></p></article></div>';

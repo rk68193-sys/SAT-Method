@@ -13,7 +13,13 @@
   function mfmt(n) { return Number(n).toLocaleString('en-US'); }
   function mpc(a, b) { return b ? Math.round(100 * a / b) : 0; }
   function mmix(o) { return mixHTML({ Easy: o.E, Medium: o.M, Hard: o.H }); }
-  function mImg(kind, q) {
+  function mImg(kind, q, buttons) {
+    /* The question as text when its rebuild passed the checks (math-text.js fills it in); otherwise the picture.
+       buttons: the card has answer buttons, so the choices go into them. */
+    if (!mtxHas(q.id)) { return mPic(kind, q); }
+    return '<div class="mtx" data-mtx="' + kind + ':' + q.id + '"' + (buttons ? ' data-mtx-b="1"' : '') + '><p class="mtx-wait muted">Loading the ' + (kind === 'q' ? 'question' : 'explanation') + '…</p></div>';
+  }
+  function mPic(kind, q) {
     /* A wide image for big screens and, for phones, the same text re-wrapped into a narrow column.
        The wide one is drawn at 1.15 image pixels per CSS pixel and the narrow one at 1.12, so the text reads at about 14 px. */
     var w = kind === 'q' ? q.qw : q.rw, h = kind === 'q' ? q.qh : q.rh;
@@ -434,12 +440,12 @@
     var q = MP.qs[MP.i], T = MTY[q.t], S = MSK[q.k];
     MP.cur = { q: q, t0: now(), acc: 0, done: false };
     var ans = q.mc
-      ? '<div class="mpchoices" role="group" aria-label="Your answer">' + ['A', 'B', 'C', 'D'].map(function (L, i) { return '<button class="mpch" type="button" data-k="' + L + '"><span class="mpch-l">' + L + '</span><span class="kbd">' + (i + 1) + '</span></button>'; }).join('') + '</div><p class="fine">Choose the letter of your answer. The choices are in the question above.</p>'
+      ? '<div class="mpchoices" role="group" aria-label="Your answer">' + ['A', 'B', 'C', 'D'].map(function (L, i) { return '<button class="mpch" type="button" data-k="' + L + '"><span class="mpch-l">' + L + '</span><span class="kbd">' + (i + 1) + '</span></button>'; }).join('') + '</div><p class="fine mpch-note">Choose the letter of your answer. The choices are in the question above.</p>'
       : '<form class="mpgrid" id="mp-gform"><label class="field"><span class="label">Type your answer</span><input type="text" id="mp-gin" inputmode="decimal" autocomplete="off" placeholder="e.g. 12, −3, 7/6 or 2.5"></label><button class="btn" type="submit">Check</button></form><p class="fine">Numbers only. Fractions like 7/6 are fine; leave out units.</p>';
     viewEl.mprac.innerHTML = '<div class="wrap mpwrap">' +
       '<div class="mpbar"><span class="mpbar-pos"><b>Question ' + (MP.i + 1) + '</b> of ' + MP.qs.length + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.qs.map(function (x, i) { var r = MP.res[i]; return '<i class="' + (r ? (r.ok ? 'ok' : 'no') : (i === MP.i ? 'cur' : '')) + '"></i>'; }).join('') + '</span>' + (MP.timer ? '<span class="mpclock" id="mp-clock" aria-label="Time on this question">0:00</span>' : '') + mCalcBtn() + '<button class="linkbtn" type="button" id="mp-end">End set</button></div>' +
       '<article class="mpcard"><header class="mpcard-h"><span class="mtag">' + esc(S.name) + '</span><span class="mdiff d' + q.d + '">' + MDIFF[q.d] + '</span><span class="muted">' + (q.mc ? 'Multiple choice' : 'Type in your answer') + '</span></header>' +
-        '<div class="mpq">' + mImg('q', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans +
+        '<div class="mpq">' + mImg('q', q, true) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans +
         '<div id="mp-fb" class="mpfb" tabindex="-1" hidden></div></article></div>';
     if (q.mc) {
       $$('.mpch', viewEl.mprac).forEach(function (b) { b.addEventListener('click', function () { mpAnswer(b.getAttribute('data-k')); }); });

@@ -5,7 +5,7 @@ A free single-page study site for the digital SAT, in two subjects:
 - **Reading and Writing:** a 60-second grammar method with 19 lessons, a four-step reading routine, passage structure, drills, and timed practice on real College Board questions.
 - **Math:** a start-here routine, lessons for all 19 skills, 102 broad question types (each with how to spot it, the steps, and the usual trap), shortcuts, formulas and Desmos tips, and practice on all 1,925 questions in College Board's SAT Math question bank, checked against College Board's answers with College Board's explanations. The **Expanded types** tab adds **249 finer teaching types**, detailed reasoning and steps, close-variant comparisons, and **998 Desmos arithmetic checks labeled by scope**.
 
-Open `index.html`, or the GitHub Pages site (Settings → Pages → Deploy from a branch → `main`, `/ (root)`). Math questions are images in `m/` (`q` = question, `r` = explanation, `qn`/`rn` = the same text re-wrapped for phones), so the site needs those folders next to `index.html`.
+Open `index.html`, or the GitHub Pages site (Settings → Pages → Deploy from a branch → `main`, `/ (root)`). Math questions are in `m/`: `t/` holds each question as text with its expressions drawn, and `q`, `r`, `qn`, `rn` hold the pictures (`q` = question, `r` = explanation, `qn`/`rn` = the same text re-wrapped for phones). The site needs those folders next to `index.html`.
 
 Every page has the same layout: the subjects at the top (Home, Reading & Writing, Math), the pages of the current subject as tabs underneath, a short "On this page" line, and a footer listing every page. **Appearance** (top right) switches between Match my device, Light, Dark, Purple, Blue, Pink and Green. **Suggest** opens a form for ideas, corrections and tips; sending it opens a ready-filled GitHub issue on this repository (posting needs a GitHub account), or the text can be copied instead. The same page has **My notes**, a private scratchpad.
 
@@ -14,6 +14,17 @@ The October source review adds detailed calculator-versus-hand methods, 11 proba
 Review scope, source corrections, and validation limits are documented in [src/REVIEW.md](src/REVIEW.md).
 
 Progress, notes and the chosen appearance are saved in your browser only.
+
+## Questions as text
+
+Questions used to be pictures of the printed page. They are now rebuilt from College Board's own PDF export (`src/text/`):
+
+- **Math** (1,905 of 1,925 questions): the words are real text that wraps to any screen and follows the theme. The export stores every expression as drawn shapes, not characters, so each expression is kept exactly as drawn, as a small vector drawing that sits in the sentence where it was printed; nothing is retyped or recognised. Graphs, diagrams and tables are cropped as pictures. In practice the four choices appear inside the answer buttons. Each question is a small file in `m/t/`, loaded when it is shown, and all of them share one library of symbol outlines (`m/t/_glyphs.js`).
+- **Reading and Writing** (465 of the 466 questions that were pictures: 131 with a table or graph, 334 of the 335 extra grammar questions): text cards like the rest, with real choices and College Board's explanation for each choice. A table or graph is a picture in `rw/f/`.
+- **The printed page is always one tap away**: "See the question as printed" in Math, "As printed" links in Reading and Writing.
+- **A question is rebuilt only when it passes every check**: every piece of text and every drawing on its pages was placed exactly once, the choices and headings were found, the printed answer agrees with the site's key, and nothing looks out of place (a symbol off its line, a stray label, a character the export does not name). The 20 Math questions and 1 grammar question that do not pass keep their pictures, as does any question whose file fails to load. `src/build/mtext.json` lists them with the reason.
+
+The pictures in `m/` and `rw/` are still needed: for the questions that kept them, for "as printed", and as the fallback.
 
 ## The starting check and the study plan
 

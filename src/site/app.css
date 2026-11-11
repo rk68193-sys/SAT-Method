@@ -1811,3 +1811,43 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
   .plan-task { grid-template-columns: auto minmax(0, 1fr); }
   .plan-task > .btn, .plan-task > .plan-state { grid-column: 2; justify-self: start; }
 }
+
+/* ---------- Reading and Writing: table, graph and grammar questions as text ---------- */
+.ppara { display: block; }
+.psent + .psent .ppara, .ppara + .ppara { margin-top: .7em; }
+.rwcap { display: block; text-align: center; font: 600 .98rem/1.35 var(--body); margin-bottom: .2rem; text-wrap: balance; }
+.rwfig { display: block; max-width: 100%; height: auto; margin: .5rem auto .9rem; mix-blend-mode: var(--img-blend); filter: var(--img-filter); }
+.asprinted a { font-weight: 600; }
+
+/* ---------- Math questions as text ---------- */
+.mxdefs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.mtx { font-size: 1.06rem; line-height: 1.75; color: var(--ink); max-width: 46rem; overflow-wrap: break-word; }
+.mtx p { margin: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
+.mtx p + p, .mtx p + .mtx-ch, .mtx-p + .mtx-p { margin-top: .7em; }
+.mtx-wait { min-height: 3rem; }
+.mx { display: inline-block; fill: currentColor; overflow: visible; flex: none; }
+.mxi { mix-blend-mode: var(--img-blend); filter: var(--img-filter); }
+.nw { white-space: nowrap; }
+.mtx .meq { margin: .9em 0; padding: .1em 0; }
+.mtx .meq.c { text-align: center; }
+.mtx .cap { text-align: center; font-weight: 600; }
+.mfig { display: block; max-width: 100%; height: auto; mix-blend-mode: var(--img-blend); filter: var(--img-filter); }
+.mtx .mfigp { margin: .8em 0; }
+.mtx-ch { display: grid; gap: .5em; list-style: none; padding: 0; }
+.mtx-ch li { display: grid; grid-template-columns: 1.7em minmax(0, 1fr); align-items: baseline; }
+.mtx-ch li > div > p + p { margin-top: .3em; }
+.mprat .mtx { padding-bottom: .4rem; }
+/* the choices inside the answer buttons */
+.mpchoices.txt { grid-template-columns: minmax(0, 1fr); gap: .55rem; }
+.mpchoices.txt .mpch { justify-content: flex-start; align-items: center; gap: .9rem; min-height: 3.2rem; padding: .6rem 1rem; text-align: left; font: 400 1.06rem/1.6 var(--body); }
+.mpchoices.txt .mpch .mpch-l { display: grid; place-items: center; flex: none; width: 2rem; height: 2rem; border-radius: 50%; border: 1.5px solid currentColor; font: 700 .95rem/1 var(--display); }
+.mpchoices.txt .mpch .kbd { margin-left: auto; }
+.mpch-c { min-width: 0; overflow-x: auto; overflow-y: hidden; }
+.mtx-p { display: block; }
+.mpch-c .mfig { max-height: 15rem; width: auto !important; }
+.mpchoices.txt .mmch { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .2rem .7rem; }
+.mpchoices.txt .mpch.crossed .mpch-c { text-decoration: line-through; opacity: .55; }
+.mpchoices.txt .mpch.sel .mpch-l { background: var(--act-ink); color: var(--act); border-color: var(--act-ink); }
+.mpchoices.txt .mpch.right .mpch-l { background: var(--ok); border-color: var(--ok); color: var(--card); }
+.mpchoices.txt .mpch.wrong .mpch-l { background: var(--bad); border-color: var(--bad); color: var(--card); }
+@media (max-width: 520px) { .mpchoices.txt { grid-template-columns: minmax(0, 1fr); } .mpchoices.txt .mmch { grid-template-columns: minmax(0, 1fr); } .mtx { font-size: 1.02rem; } }
