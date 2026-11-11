@@ -41,7 +41,7 @@ const { chromium } = require('playwright');
   await p.click('label:has(#mp-n-5)');
   await p.click('#mp-go'); await p.waitForTimeout(400);
   for (let i = 0; i < 5; i++) {
-    const img = await p.evaluate(() => { const im = document.querySelector('.mpq img'); return im ? [im.complete, im.naturalWidth, im.getAttribute('src')] : null; });
+    const img = await p.evaluate(() => { const im = document.querySelector('.mpq img'); return im ? [im.complete, im.naturalWidth, im.getAttribute('src').slice(0, 40)] : null; });
     const mc = await p.$('.mpch');
     if (i === 0) await shot('pq');
     if (mc) { await p.keyboard.press(String(1 + (i % 4))); }

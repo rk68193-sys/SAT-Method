@@ -1,25 +1,32 @@
   /* =================== Home, navigation, appearance and suggestions =================== */
+  /* each page: [view, address, name, what is on it, group]. The section bar shows the four groups; inside Learn and
+     Practice a second row lists the group's pages. */
+  var GROUPS = [['start', 'Start here'], ['learn', 'Learn'], ['practice', 'Practice'], ['map', 'My map']];
   var SUBJ = {
     rw: { name: 'Reading & Writing', icon: 'book', items: [
-      ['start', 'start', 'Start here', 'The plan for the whole section, and which routine each kind of question needs.'],
-      ['reading', 'reading', 'Reading', 'The four-step routine for reading questions, with long sentences taken apart and 17 worked examples.'],
-      ['grammar', 'method', 'Grammar', 'The 60-second method for grammar and transition questions, and 19 short lessons covering every rule.'],
-      ['drills', 'drills', 'Drills', 'Quick drills on real questions for the slow steps: naming the job, finding the core, spotting the pattern.'],
-      ['practice', 'practice', 'Practice', 'Untimed learning, paced sets or a timed 27-question module, with explanations and review of misses and uncertain answers.'],
-      ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.'],
-      ['rwmap', 'rw-map', 'My map', 'Every kind of reading question and every grammar rule colored by how you are doing, the causes of your misses, and what to practice next.']] },
+      ['start', 'start', 'Start here', 'The plan for the whole section, and which routine each kind of question needs.', 'start'],
+      ['rwhub', 'rw-hub', 'Overview', 'Everything there is to learn for Reading and Writing, with one search across the reading steps, grammar lessons, rules, worked examples and terms.', 'learn'],
+      ['reading', 'reading', 'Reading', 'The four-step routine for reading questions, with long sentences taken apart and 17 worked examples.', 'learn'],
+      ['grammar', 'method', 'Grammar', 'The 60-second method for grammar and transition questions, and 19 short lessons covering every rule.', 'learn'],
+      ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.', 'learn'],
+      ['practice', 'practice', 'Practice', 'Untimed learning, paced sets or a timed 27-question module, with explanations and review of misses and uncertain answers.', 'practice'],
+      ['drills', 'drills', 'Drills', 'Quick drills on real questions for the slow steps: naming the job, finding the core, spotting the pattern.', 'practice'],
+      ['rwmap', 'rw-map', 'My map', 'Every kind of reading question and every grammar rule colored by how you are doing, the causes of your misses, and what to practice next.', 'map']] },
     math: { name: 'Math', icon: 'calc', items: [
-      ['mstart', 'math', 'Start here', 'How to approach every math question, what the test covers, and what the data says.'],
-      ['mlearn', 'm-learn', 'Lessons', 'All 19 skills explained from scratch, each with a method, a worked example and its question types.'],
-      ['mpat', 'm-patterns', 'Big patterns', 'A dozen ideas that connect the question types, so one idea solves many kinds of question.'],
-      ['mdes', 'm-desmos', 'Desmos', MD.desmos.length + ' calculator moves with exactly what to type, checked on real questions.'],
-      ['mshort', 'm-short', 'Shortcuts', 'Faster ways to the right answer by hand, and the shortcuts that do not work.'],
-      ['mstudy', 'm-study', 'Expanded types', '249 fine question types, fuller explanations, close variants, and 998 calculator checks with clear scope.'],
-      ['mtypes', 'm-types', 'Question finder', 'Type words from a question to see which of the ' + MORDER.length + ' question types it is and how to solve it.'],
-      ['mref', 'm-ref', 'Formulas', 'What is on the formula sheet, what is not, and how to type in your own answers.'],
-      ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations. Learn one question at a time, or sit a timed 22-question module.'],
-      ['mmap', 'm-map', 'My map', 'All ' + MST.methods.length + ' question types colored by how you are doing, the reasons you miss, and what to practice next.']] }
+      ['mstart', 'math', 'Start here', 'How to approach every math question, what the test covers, and what the data says.', 'start'],
+      ['mhub', 'm-hub', 'Overview', 'Everything there is to learn for Math, with one search across lessons, question types, patterns, shortcuts and calculator moves.', 'learn'],
+      ['mlearn', 'm-learn', 'Lessons', 'All 19 skills explained from scratch, each with a method, a worked example and its question types.', 'learn'],
+      ['mpat', 'm-patterns', 'Big patterns', 'A dozen ideas that connect the question types, so one idea solves many kinds of question.', 'learn'],
+      ['mstudy', 'm-study', 'Expanded types', '249 fine question types, fuller explanations, close variants, and 998 calculator checks with clear scope.', 'learn'],
+      ['mtypes', 'm-types', 'Question finder', 'Type words from a question to see which of the ' + MORDER.length + ' question types it is and how to solve it.', 'learn'],
+      ['mshort', 'm-short', 'Shortcuts', 'Faster ways to the right answer by hand, and the shortcuts that do not work.', 'learn'],
+      ['mdes', 'm-desmos', 'Desmos', MD.desmos.length + ' calculator moves with exactly what to type, checked on real questions.', 'learn'],
+      ['mref', 'm-ref', 'Formulas', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'learn'],
+      ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations. Learn one question at a time, or sit a timed 22-question module.', 'practice'],
+      ['mmap', 'm-map', 'My map', 'All ' + MST.methods.length + ' question types colored by how you are doing, the reasons you miss, and what to practice next.', 'map']] }
   };
+  /* the pages to list on Home and in the footer: the Learn overview is named for what it is */
+  function navList(subj) { return SUBJ[subj].items.map(function (x) { return x[2] === 'Overview' ? [x[0], x[1], 'Learn: overview', x[3], x[4]] : x; }); }
   var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
@@ -37,29 +44,46 @@
   };
 
   /* ---------- section bar: tabs for the current subject, and an "On this page" line ---------- */
-  var curSubj = '';
+  var curSubj = '', curGroup = '';
   function renderSecnav(subj) {
     var host = document.getElementById('secin');
     if (!host) { return; }
     if (subj === curSubj) { return; }
-    curSubj = subj;
+    curSubj = subj; curGroup = '';
     var bar = document.getElementById('tabs');
     if (subj === 'home') { host.innerHTML = ''; bar.hidden = true; return; }
     bar.hidden = false;
     var S = SUBJ[subj];
-    host.setAttribute('data-n', S.items.length);
+    host.setAttribute('data-n', GROUPS.length);
     host.innerHTML = '<p class="secnav-t"><span class="sec-ico">' + ICON[S.icon] + '</span>' + S.name + '</p><div class="secnav-l">' +
-      S.items.map(function (it) { return '<a href="#' + it[1] + '" data-view="' + it[0] + '">' + it[2] + '</a>'; }).join('') + '</div>';
+      GROUPS.map(function (g) {
+        var first = S.items.filter(function (it) { return it[4] === g[0]; })[0];
+        return '<a href="#' + first[1] + '" data-group="' + g[0] + '">' + g[1] + '</a>';
+      }).join('') + '</div>';
+  }
+  /* the second row: the pages of the group you are in, when it has more than one */
+  function renderSubnav(subj, group) {
+    var host = document.getElementById('subnav');
+    if (!host) { return; }
+    if (subj === 'home') { host.hidden = true; host.innerHTML = ''; curGroup = ''; return; }
+    if (subj + ':' + group === curGroup) { return; }
+    curGroup = subj + ':' + group;
+    var pages = SUBJ[subj].items.filter(function (it) { return it[4] === group; });
+    host.hidden = pages.length < 2;
+    host.setAttribute('aria-label', GROUPS.filter(function (g) { return g[0] === group; })[0][1] + ': pages');
+    host.innerHTML = pages.length < 2 ? '' : pages.map(function (it) { return '<a href="#' + it[1] + '" data-view="' + it[0] + '">' + it[2] + '</a>'; }).join('');
   }
   function markNav(v) {
     var subj = VIEW_SUBJ[v] || 'home';
+    var it = subj !== 'home' ? SUBJ[subj].items.filter(function (x) { return x[0] === v; })[0] : null;
     renderSecnav(subj);
+    renderSubnav(subj, it ? it[4] : '');
     $$('#subj a').forEach(function (a) { if (a.getAttribute('data-subj') === subj && v !== 'suggest') { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
     $$('[data-tool="suggest"]').forEach(function (a) { if (v === 'suggest') { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
-    $$('#tabs a').forEach(function (a) { if (a.getAttribute('data-view') === v) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
+    $$('#secin a').forEach(function (a) { if (it && a.getAttribute('data-group') === it[4]) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
+    $$('#subnav a').forEach(function (a) { if (a.getAttribute('data-view') === v) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
     var what = document.getElementById('secwhat');
     if (what && subj !== 'home') {
-      var it = SUBJ[subj].items.filter(function (x) { return x[0] === v; })[0];
       what.innerHTML = it ? '<span class="sec-i">' + ICON.info + '</span><span><b>On this page:</b> ' + esc(it[3]) + '</span>' : '';
     }
     if (subj !== 'home') { var s0 = isObj(store.s.last) ? store.s.last : {}; s0[subj] = v; s0.subj = subj; store.s.last = s0; save(); }
@@ -73,8 +97,8 @@
     if (!host) { return; }
     function col(title, items) { return '<nav aria-label="' + esc(title) + '"><p class="foot-h">' + esc(title) + '</p><ul>' + items.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></nav>'; }
     host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from an export of College Board’s question bank.</p></div>' +
-      col('Reading & Writing', SUBJ.rw.items.map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
-      col('Math', SUBJ.math.items.map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
+      col('Reading & Writing', navList('rw').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
+      col('Math', navList('math').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
       col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>','<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']);
   }());
 
@@ -130,7 +154,7 @@
       var S = SUBJ[key];
       return '<section class="hsubj hsubj-' + key + '" aria-labelledby="hs-' + key + '"><div class="hsubj-top"><span class="hsubj-ico">' + ICON[S.icon] + '</span><div><h3 class="hsubj-h" id="hs-' + key + '">' + S.name + '</h3><p>' + blurb + '</p></div></div>' +
         '<ul class="hsubj-facts">' + facts.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>' +
-        '<ul class="hsubj-list">' + S.items.map(function (x) { return '<li><a href="#' + x[1] + '"><b>' + x[2] + '</b><span class="hsubj-arrow" aria-hidden="true">→</span></a></li>'; }).join('') + '</ul>' +
+        '<ul class="hsubj-list">' + navList(key).filter(function (x) { return x[2] !== 'Learn: overview'; }).map(function (x) { return '<li><a href="#' + x[1] + '"><b>' + x[2] + '</b><span class="hsubj-arrow" aria-hidden="true">→</span></a></li>'; }).join('') + '</ul>' +
         '<a class="btn big hsubj-go" href="#' + S.items[0][1] + '">Start ' + S.name + '</a></section>';
     }
     function feat(subj, icon, title, text, href) {
@@ -138,15 +162,16 @@
     }
     var mt = 0; Object.keys(store.m).forEach(function (k) { if (MQBY[k]) { mt++; } });
     viewEl.home.innerHTML = '<div class="wrap">' +
-      '<section class="hh"><div class="hh-text"><p class="hpill">Free · built from the official question bank</p><h1>Study for the SAT, one clear step at a time</h1>' +
-      '<p class="lede">Short guides, lessons and ' + mfmt(nAll) + ' real practice questions with College Board’s own answers. Pick a subject to start.</p>' +
+      '<section class="hh"><div class="hh-text"><p class="hpill">Free · no account · no paywall</p><h1>Study for the SAT, one clear step at a time</h1>' +
+      '<p class="lede">Short guides, lessons and ' + mfmt(nAll) + ' real practice questions with College Board’s own answers. Nothing to sign up for and nothing to unlock: every page is open, and your progress stays in this browser.</p>' +
       '<p class="row hh-cta"><a class="btn big" href="#math">Start Math</a><a class="btn big ghost" href="#start">Start Reading &amp; Writing</a></p>' + planHomeHTML() + cont + '</div>' +
-      '<div class="hh-stats" aria-label="At a glance">' +
-        '<div class="hstat"><b>' + mfmt(nAll) + '</b><span>real questions, with official answers</span></div>' +
-        '<div class="hstat"><b>' + MST.methods.length + '</b><span>fine math question types, each with a method</span></div>' +
-        '<div class="hstat"><b>' + MD.desmos.length + '</b><span>Desmos moves, checked on ' + MD.nver + ' real questions</span></div>' +
-        '<div class="hstat"><b>19</b><span>grammar lessons covering every rule tested</span></div>' +
-      '</div></section>' +
+      htryHTML() + '</section>' +
+      '<ul class="hfacts" aria-label="At a glance">' +
+        '<li><b>' + mfmt(nAll) + '</b> real questions, with official answers</li>' +
+        '<li><b>' + MST.methods.length + '</b> math question types, each with a method</li>' +
+        '<li><b>' + MD.desmos.length + '</b> Desmos moves, checked on ' + MD.nver + ' real questions</li>' +
+        '<li><b>19</b> grammar lessons covering every rule tested</li>' +
+      '</ul>' +
       '<section class="hsec"><div class="hsec-h"><h2 class="h2">Choose a subject</h2><p class="muted">Each subject starts with a short guide, then lessons, then practice.</p></div><div class="hsubjs">' +
         card('rw', 'Reading passages, grammar and transitions. 54 questions on the test, in two parts of 32 minutes.', [mfmt(nRW) + ' bank questions studied', 'A routine for every question type']) +
         card('math', 'Algebra, advanced math, data and geometry. 44 questions on the test, in two parts of 35 minutes.', [mfmt(MQ.length) + ' real questions to practice', MD.patterns.length + ' big patterns', 'Desmos playbook']) +
@@ -174,6 +199,7 @@
       '</ol></section>' +
       '<section class="hband"><div><h2 class="h2">Something missing, or a tip to share?</h2><p>Tell us what to add or change, or leave a tip for other students.</p></div><a class="btn big" href="#suggest">Suggest a change</a></section>' +
       '</div>';
+    htryShow(store.s.htry === 'rw' ? 'rw' : 'math');
   }
 
   /* ---------- Suggest a change, and private notes ---------- */

@@ -1863,6 +1863,58 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .mpchoices.txt .mpch.wrong .mpch-l { background: var(--bad); border-color: var(--bad); color: var(--card); }
 @media (max-width: 520px) { .mpchoices.txt { grid-template-columns: minmax(0, 1fr); } .mpchoices.txt .mmch { grid-template-columns: minmax(0, 1fr); } .mtx { font-size: 1.02rem; } }
 
+/* ---------- section bar: four groups, and a second row for the pages of the group you are in ---------- */
+.subnav { display: flex; flex-wrap: wrap; gap: .4rem; padding-top: .8rem; }
+.subnav[hidden] { display: none; }
+.subnav a { padding: .4rem .9rem; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--card); font: 500 .93rem/1.2 var(--body); color: var(--ink-2); text-decoration: none; white-space: nowrap; }
+.subnav a:hover { border-color: var(--ink); color: var(--ink); background: var(--card); }
+.subnav a[aria-current="page"] { background: var(--subj-soft); border-color: var(--subj); color: var(--ink); font-weight: 600; }
+@media (max-width: 820px) {
+  .secin[data-n="4"] .secnav-l { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .secin[data-n="4"] .secnav-l a { min-height: 2.7rem; font-size: .9rem; }
+  .subnav { padding-top: .1rem; }
+  .subnav a { padding: .38rem .75rem; font-size: .9rem; }
+}
+
+/* ---------- Learn: the overview and its search ---------- */
+.hub-find { margin-top: 1.4rem; max-width: 40rem; }
+.hub-n { margin-top: .6rem; }
+.hub-n:empty, .hub-res:empty { display: none; }
+.hub-res { display: grid; gap: .45rem; margin-top: .6rem; max-width: 52rem; }
+.hub-res a { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .15rem .7rem; align-items: baseline; padding: .7rem .9rem; border-radius: 14px; background: var(--card); border: 1px solid var(--line); text-decoration: none; }
+.hub-res a:hover { border-color: var(--pencil); background: var(--card); color: var(--ink); }
+.hub-res b { font: 600 1.02rem/1.3 var(--display); }
+.hub-res .mtag { justify-self: start; margin-right: 0; }
+.hub-s { grid-column: 2; font-size: .9rem; color: var(--muted); }
+.hub-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+.hub-card { display: grid; gap: .4rem; align-content: start; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); text-decoration: none; transition: transform .12s ease, border-color .12s ease; }
+.hub-card:hover { border-color: var(--line-strong); background: var(--card); color: var(--ink); transform: translateY(-2px); }
+.hub-card b { font: 600 1.1rem/1.25 var(--display); }
+.hub-card span { font-size: .95rem; line-height: 1.45; color: var(--ink-2); }
+.hsteps.hub-order { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+@media (max-width: 560px) { .hub-res a { grid-template-columns: minmax(0, 1fr); } .hub-s { grid-column: 1; } }
+
+/* ---------- Home: a real question in the hero, and the numbers in one strip ---------- */
+.hh { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+.hh-try { display: grid; gap: .7rem; align-content: start; min-width: 0; }
+.htry-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem 1rem; }
+.htry-tabs { display: inline-flex; padding: .2rem; border-radius: 999px; background: var(--sunk); border: 1px solid var(--line); }
+.htry-tabs button { border: 0; background: none; padding: .38rem .9rem; border-radius: 999px; font: 600 .9rem/1.2 var(--body); color: var(--ink-2); cursor: pointer; }
+.htry-tabs button[aria-pressed="true"] { background: var(--act); color: var(--act-ink); }
+.hh-try .mpcard { margin-top: 0; padding: 1.1rem 1.2rem; }
+.hh-try .mpchoices { margin-top: .9rem; }
+.htry-fb { display: grid; gap: .6rem; margin-top: 1rem; padding: 1rem 1.1rem; border-radius: 16px; }
+.htry-fb.ok { background: var(--ok-soft); }
+.htry-fb.no { background: var(--bad-soft); }
+.htry-fb .mpverdict { font-size: 1.15rem; }
+.htry-fb.ok .mpverdict { color: var(--ok); }
+.htry-fb.no .mpverdict { color: var(--bad); }
+.htry-fb > .mtag { justify-self: start; text-transform: none; letter-spacing: 0; font: 700 .88rem/1.3 var(--display); }
+.htry-more { margin-top: .5rem; }
+.hfacts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem 1.5rem; margin-top: clamp(1.6rem, 4vw, 2.6rem); padding: 1.1rem 1.3rem; border-radius: 18px; background: var(--sunk); font-size: .93rem; line-height: 1.4; color: var(--ink-2); }
+.hfacts b { display: block; font: 600 1.5rem/1.1 var(--display); letter-spacing: -.02em; color: var(--ink); }
+@media (max-width: 960px) { .hh { grid-template-columns: minmax(0, 1fr); } .hfacts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 </style>
 
 <script>try { var t0 = localStorage.getItem('sat-sprint-theme'); if (t0 && t0 !== 'auto') { document.documentElement.setAttribute('data-theme', t0); } } catch (e) {}</script>
@@ -1884,7 +1936,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
     </div>
   </div>
 </header>
-<nav class="secnav" id="tabs" aria-label="Sections" hidden><div class="wrap secin" id="secin"></div><div class="wrap"><p class="secwhat" id="secwhat"></p></div></nav>
+<nav class="secnav" id="tabs" aria-label="Sections" hidden><div class="wrap secin" id="secin"></div><div class="wrap"><div class="subnav" id="subnav" hidden></div><p class="secwhat" id="secwhat"></p></div></nav>
 
 <main id="main" tabindex="-1">
   <section id="v-home" class="view" aria-label="Home"></section>
@@ -1903,6 +1955,8 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
   <section id="v-mshort" class="view" aria-label="Math shortcuts" hidden></section>
   <section id="v-mref" class="view" aria-label="Math formulas and Desmos" hidden></section>
   <section id="v-mprac" class="view" aria-label="Math practice" hidden></section>
+  <section id="v-mhub" class="view" aria-label="Math: everything to learn" hidden></section>
+  <section id="v-rwhub" class="view" aria-label="Reading and Writing: everything to learn" hidden></section>
   <section id="v-mmap" class="view" aria-label="My math mastery map" hidden></section>
   <section id="v-rwmap" class="view" aria-label="My Reading and Writing mastery map" hidden></section>
   <section id="v-plan" class="view" aria-label="My study plan" hidden></section>
@@ -6309,28 +6363,176 @@ function rReasoningHTML() {
     return h;
   }
 
+  /* =================== Learn: one overview per subject, with one search across everything there is to learn =================== */
+  var HUB = { math: { view: 'mhub', p: 'mhub', name: 'Math', eg: 'for example: vertex, percent, no solution' },
+              rw: { view: 'rwhub', p: 'rwhub', name: 'Reading and Writing', eg: 'for example: semicolon, main idea, however' } };
+  var hubIx = {};
+  function hubNorm(t) { return String(t || '').toLowerCase().replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim(); }
+  /* [{ k: kind, t: title, s: a line about it, h: where it is, x: the words to search }] */
+  function hubIndex(subj) {
+    if (hubIx[subj]) { return hubIx[subj]; }
+    var out = [];
+    function add(k, t, s, h, more) { out.push({ k: k, t: t, s: s || '', h: h, tx: hubNorm(t), x: hubNorm(t + ' ' + (s || '') + ' ' + (more || '')) }); }
+    if (subj === 'math') {
+      MD.domains.forEach(function (d) { d.skills.forEach(function (k) { add('Lesson', MSK[k].name, MSK[k].idea, 'm-' + k, d.name + ' ' + MSK[k].plain); }); });
+      MD.patterns.forEach(function (p) { add('Big pattern', p.name, p.idea, 'mpat-' + p.id, p.spot); });
+      MD.rare.forEach(function (r) { add('Rare pattern', r.name, r.trick, 'mrare'); });
+      MORDER.forEach(function (t) { add('Question type', MTY[t].name, MTY[t].spot, 'mt-' + t, MSK[MTY[t].skill].name + ' ' + MTY[t].trap); });
+      MST.methods.forEach(function (m) { add('Expanded type', m.title, m.why_it_works, 'm-study-' + encodeURIComponent(m.id), MSK[m.skill].name + ' ' + m.common_trap); });
+      MSHORT.forEach(function (s) { add('Shortcut', s.t, s.when, 'ms-' + s.id, s.how.join(' ')); });
+      MD.desmos.forEach(function (m) { add('Desmos move', m.name, m.when, 'md-' + m.id, m.short + ' ' + m.see); });
+      add('Formulas', 'Formulas and typing in answers', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'm-ref', 'circle area volume quadratic formula discriminant slope vertex radians sohcahtoa exponent rules');
+    } else {
+      [['routine', 'The reading routine: Job, Chunk, Say, Check'], ['shape', 'What the passages are like'], ['job', 'Step 1 · Job: read the question line first'], ['chunk', 'Step 2 · Chunk: tag each sentence'],
+        ['long', 'Long sentences: core first'], ['para', 'Long passages: make them make sense'], ['say', 'Step 3 · Say: your own answer first'], ['check', 'Step 4 · Check: five ways a choice is wrong'],
+        ['reasoning', 'Deeper reading structures'], ['data-patterns', 'Tables and graphs: deeper patterns'], ['others', 'More question types'], ['notesfirst', 'Notes questions: goal first'],
+        ['method', 'Grammar in 60 seconds: look, check, confirm'], ['shortcuts', 'Grammar shortcuts'], ['hard', 'What makes a grammar question hard'], ['transitions', 'Every transition offered'], ['glossary', 'Glossary'], ['nottested', 'What is not tested']
+      ].forEach(function (r) { add('Guide', r[1], '', r[0]); });
+      RD.jobs.forEach(function (j) { add('Reading question', j.name, plain(j.look), j.id, (j.says || []).join(' ')); });
+      RLIST.forEach(function (x) { add('Worked example', 'Example ' + x.n + ': ' + plain(x.title), JOBNAME[x.job] || '', 'ex-' + x.n, x.diff); });
+      CONCEPTS.forEach(function (c) { add('Grammar lesson', 'Lesson ' + c.n + ': ' + plain(c.title), PART[c.part].title, c.id); });
+      Object.keys(U).forEach(function (uid) { var u = U[uid]; add('Grammar rule', u.num + ' ' + plain(u.title), plain(u.rule), uid, CBY[u.c].title + ' ' + plain(u.words || '')); });
+      READ_GLOSS.map(function (g) { return [g[0], g[1]]; }).concat(D.glossary.map(function (g) { return [plain(g.term), plain(g.def)]; })).forEach(function (g) { add('Term', g[0], g[1], 'glossary'); });
+      TRANS.forEach(function (t) { add('Transition word', t.w, 'Right ' + t.right + ' of the ' + t.offered + ' times it is offered.', 'transitions'); });
+    }
+    hubIx[subj] = out;
+    return out;
+  }
+  function hubSearch(subj, q) {
+    var words = hubNorm(q).split(' ').filter(Boolean);
+    if (!words.length || hubNorm(q).length < 2) { return null; }
+    var hits = [];
+    hubIndex(subj).forEach(function (e, i) {
+      if (!words.every(function (w) { return e.x.indexOf(w) !== -1; })) { return; }
+      var inTitle = words.every(function (w) { return e.tx.indexOf(w) !== -1; });
+      hits.push({ e: e, s: (e.tx === words.join(' ') ? 4 : inTitle ? (e.tx.indexOf(words[0]) === 0 ? 3 : 2) : 1), i: i });
+    });
+    hits.sort(function (a, b) { return b.s - a.s || a.i - b.i; });
+    return hits.map(function (h) { return h.e; });
+  }
+  function buildHub(subj) {
+    var H = HUB[subj], host = viewEl[H.view], p = H.p;
+    if (built[H.view]) { return; }
+    built[H.view] = true;
+    var pages = SUBJ[subj].items.filter(function (it) { return it[4] === 'learn' && it[0] !== H.view; });
+    var start = SUBJ[subj].items[0], prac = SUBJ[subj].items.filter(function (it) { return it[4] === 'practice'; })[0];
+    host.innerHTML = '<div class="wrap">' +
+      '<header class="mhead"><p class="eyebrow">' + SUBJ[subj].name + ' · Learn</p><h2 class="vtitle">Everything to learn, in one place</h2>' +
+      '<p class="lede">Search across every ' + (subj === 'math' ? 'lesson, question type, pattern, shortcut and calculator move' : 'reading step, grammar lesson, rule, worked example and term') + ', or open a section below.</p></header>' +
+      '<div class="hub-find"><label class="field"><span class="label">Search everything in Learn</span><input type="text" id="' + p + '-q" autocomplete="off" placeholder="' + H.eg + '"></label></div>' +
+      '<p class="muted hub-n" id="' + p + '-n" aria-live="polite"></p><ul class="hub-res" id="' + p + '-res"></ul>' +
+      '<section class="sec first"><h3 class="h2">Sections</h3><div class="hub-cards">' + pages.map(function (it) {
+        return '<a class="hub-card" href="#' + it[1] + '"><b>' + esc(it[2]) + '</b><span>' + esc(it[3]) + '</span></a>';
+      }).join('') + '</div></section>' +
+      '<section class="sec"><h3 class="h2">A good order</h3><ol class="hsteps hub-order">' +
+        '<li><b><a href="#' + start[1] + '">Start here</a>.</b><span>Five minutes on what the section asks and the routine to use.</span></li>' +
+        (subj === 'math'
+          ? '<li><b><a href="#m-learn">Lessons</a>, one skill at a time.</b><span>Each ends with a button for real questions on just that skill.</span></li><li><b><a href="#m-patterns">Big patterns</a> and <a href="#m-desmos">Desmos</a>.</b><span>The ideas that connect the question types, and the calculator moves that save time.</span></li>'
+          : '<li><b><a href="#reading">Reading</a>: the four-step routine.</b><span>Then the worked examples, trying each before you read it.</span></li><li><b><a href="#method">Grammar</a> in 60 seconds.</b><span>Look at the choices, run one check, confirm. Then the lessons you need.</span></li>') +
+        '<li><b><a href="#' + prac[1] + '">Practice</a>, then <a href="#' + (subj === 'math' ? 'm-map' : 'rw-map') + '">My map</a>.</b><span>The map shows which types to come back to.</span></li>' +
+      '</ol></section></div>';
+    var inp = document.getElementById(p + '-q'), res = document.getElementById(p + '-res'), cnt = document.getElementById(p + '-n');
+    inp.addEventListener('input', function () {
+      var hits = hubSearch(subj, inp.value);
+      if (hits === null) { res.innerHTML = ''; cnt.textContent = ''; return; }
+      cnt.textContent = hits.length ? plural(hits.length, 'result') + (hits.length > 40 ? ', showing the first 40. Add a word to narrow it down.' : '.') : 'Nothing matches. Try fewer or simpler words.';
+      res.innerHTML = hits.slice(0, 40).map(function (e) {
+        return '<li><a href="#' + e.h + '"><span class="mtag">' + esc(e.k) + '</span><b>' + esc(e.t) + '</b>' + (e.s ? '<span class="hub-s">' + esc(e.s.length > 150 ? e.s.slice(0, 147) + '…' : e.s) + '</span>' : '') + '</a></li>';
+      }).join('');
+    });
+  }
+
+  /* =================== Home: a real question to try, before anything else =================== */
+  var HTRY_M = ['3d04de9c', 'c943acba', '4ddfa209', 'e7b6f0d1', 'be35c117', '42b4493b', 'd964bc26'];
+  var htryN = { math: 0, rw: 0 }, htryPool = {};
+  function htryList(subj) {
+    if (htryPool[subj]) { return htryPool[subj]; }
+    var L = subj === 'math'
+      ? HTRY_M.map(function (id) { return MQBY[id]; }).filter(function (q) { return q && q.mc && mtxHas(q.id); })
+      : EXLIST.filter(function (ex) { return ex.d === 'Easy' && (ex.p === 'A' || ex.p === 'B') && ex.text.length < 230 && ex.text.charAt(0) !== '…'; });
+    htryPool[subj] = shuffle(L.slice());
+    return htryPool[subj];
+  }
+  function htryShow(subj) {
+    var host = document.getElementById('htry');
+    if (!host) { return; }
+    var L = htryList(subj);
+    if (!L.length) { host.innerHTML = '<p class="muted">Open <a href="#' + (subj === 'math' ? 'm-practice' : 'practice') + '">Practice</a> to try real questions.</p>'; return; }
+    var it = L[htryN[subj] % L.length];
+    store.s.htry = subj; save();
+    $$('#htry-tabs button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-htry') === subj ? 'true' : 'false'); });
+    if (subj === 'rw') {
+      host.innerHTML = '';
+      var card = QCard(it, { hints: true, after: function () {
+        var more = document.createElement('p');
+        more.className = 'row htry-more';
+        more.innerHTML = '<a class="btn sm" href="#method">The 60-second method</a><button class="linkbtn" type="button" data-htry-next="rw">Try another</button>';
+        card.el.appendChild(more);
+      } });
+      host.appendChild(card.el);
+      return;
+    }
+    var T = MTY[it.t];
+    host.innerHTML = '<div class="mpcard htry-m"><header class="mpcard-h"><span class="mtag">' + esc(MSK[it.k].name) + '</span><span class="mdiff d' + it.d + '">' + MDIFF[it.d] + '</span></header>' +
+      '<div class="mpq">' + mImg('q', it, true) + '</div>' +
+      '<div class="mpchoices" role="group" aria-label="Your answer">' + ['A', 'B', 'C', 'D'].map(function (L2) { return '<button class="mpch" type="button" data-k="' + L2 + '"><span class="mpch-l">' + L2 + '</span></button>'; }).join('') + '</div>' +
+      '<div class="htry-fb" id="htry-fb" tabindex="-1" hidden></div></div>';
+    $$('.mpch', host).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var k = b.getAttribute('data-k'), ok = k === it.a, fb = document.getElementById('htry-fb');
+        $$('.mpch', host).forEach(function (x) { x.disabled = true; var xk = x.getAttribute('data-k'); if (xk === it.a) { x.classList.add('right'); } else if (xk === k) { x.classList.add('wrong'); } });
+        fb.hidden = false;
+        fb.className = 'htry-fb ' + (ok ? 'ok' : 'no');
+        fb.innerHTML = '<p class="mpverdict">' + (ok ? 'Correct.' : 'Not this time. The answer is ' + it.a + '.') + '</p>' +
+          '<p class="mtag">This is a “' + esc(T.name) + '” question</p>' +
+          '<p class="mspot"><b>How to spot it:</b> ' + esc(T.spot) + '</p>' + mStepList(T.steps) +
+          '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' +
+          '<p class="row htry-more"><a class="btn sm" href="#mp-' + it.t + '">Practice more like this</a><button class="linkbtn" type="button" data-htry-next="math">Try another</button></p>';
+        showFeedback(fb);
+      });
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('[data-htry],[data-htry-next]') : null;
+    if (!b) { return; }
+    if (b.hasAttribute('data-htry-next')) { var s = b.getAttribute('data-htry-next'); htryN[s] += 1; htryShow(s); focusQuiet($('#htry .mpch, #htry .opt')); return; }
+    htryShow(b.getAttribute('data-htry'));
+  });
+  function htryHTML() {
+    return '<div class="hh-try" aria-label="Try a real question"><div class="htry-top"><p class="label">Try a real question</p>' +
+      '<div class="htry-tabs" id="htry-tabs" role="group" aria-label="Section"><button type="button" data-htry="math" aria-pressed="false">Math</button><button type="button" data-htry="rw" aria-pressed="false">Reading &amp; Writing</button></div></div>' +
+      '<div id="htry"></div><p class="fine htry-note">Answer it to see how to spot this kind of question. Nothing is saved from here.</p></div>';
+  }
+
   /* =================== Home, navigation, appearance and suggestions =================== */
+  /* each page: [view, address, name, what is on it, group]. The section bar shows the four groups; inside Learn and
+     Practice a second row lists the group's pages. */
+  var GROUPS = [['start', 'Start here'], ['learn', 'Learn'], ['practice', 'Practice'], ['map', 'My map']];
   var SUBJ = {
     rw: { name: 'Reading & Writing', icon: 'book', items: [
-      ['start', 'start', 'Start here', 'The plan for the whole section, and which routine each kind of question needs.'],
-      ['reading', 'reading', 'Reading', 'The four-step routine for reading questions, with long sentences taken apart and 17 worked examples.'],
-      ['grammar', 'method', 'Grammar', 'The 60-second method for grammar and transition questions, and 19 short lessons covering every rule.'],
-      ['drills', 'drills', 'Drills', 'Quick drills on real questions for the slow steps: naming the job, finding the core, spotting the pattern.'],
-      ['practice', 'practice', 'Practice', 'Untimed learning, paced sets or a timed 27-question module, with explanations and review of misses and uncertain answers.'],
-      ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.'],
-      ['rwmap', 'rw-map', 'My map', 'Every kind of reading question and every grammar rule colored by how you are doing, the causes of your misses, and what to practice next.']] },
+      ['start', 'start', 'Start here', 'The plan for the whole section, and which routine each kind of question needs.', 'start'],
+      ['rwhub', 'rw-hub', 'Overview', 'Everything there is to learn for Reading and Writing, with one search across the reading steps, grammar lessons, rules, worked examples and terms.', 'learn'],
+      ['reading', 'reading', 'Reading', 'The four-step routine for reading questions, with long sentences taken apart and 17 worked examples.', 'learn'],
+      ['grammar', 'method', 'Grammar', 'The 60-second method for grammar and transition questions, and 19 short lessons covering every rule.', 'learn'],
+      ['lookup', 'lookup', 'Look up', 'Search any rule, transition word or term, or paste a question ID to see where it is taught.', 'learn'],
+      ['practice', 'practice', 'Practice', 'Untimed learning, paced sets or a timed 27-question module, with explanations and review of misses and uncertain answers.', 'practice'],
+      ['drills', 'drills', 'Drills', 'Quick drills on real questions for the slow steps: naming the job, finding the core, spotting the pattern.', 'practice'],
+      ['rwmap', 'rw-map', 'My map', 'Every kind of reading question and every grammar rule colored by how you are doing, the causes of your misses, and what to practice next.', 'map']] },
     math: { name: 'Math', icon: 'calc', items: [
-      ['mstart', 'math', 'Start here', 'How to approach every math question, what the test covers, and what the data says.'],
-      ['mlearn', 'm-learn', 'Lessons', 'All 19 skills explained from scratch, each with a method, a worked example and its question types.'],
-      ['mpat', 'm-patterns', 'Big patterns', 'A dozen ideas that connect the question types, so one idea solves many kinds of question.'],
-      ['mdes', 'm-desmos', 'Desmos', MD.desmos.length + ' calculator moves with exactly what to type, checked on real questions.'],
-      ['mshort', 'm-short', 'Shortcuts', 'Faster ways to the right answer by hand, and the shortcuts that do not work.'],
-      ['mstudy', 'm-study', 'Expanded types', '249 fine question types, fuller explanations, close variants, and 998 calculator checks with clear scope.'],
-      ['mtypes', 'm-types', 'Question finder', 'Type words from a question to see which of the ' + MORDER.length + ' question types it is and how to solve it.'],
-      ['mref', 'm-ref', 'Formulas', 'What is on the formula sheet, what is not, and how to type in your own answers.'],
-      ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations. Learn one question at a time, or sit a timed 22-question module.'],
-      ['mmap', 'm-map', 'My map', 'All ' + MST.methods.length + ' question types colored by how you are doing, the reasons you miss, and what to practice next.']] }
+      ['mstart', 'math', 'Start here', 'How to approach every math question, what the test covers, and what the data says.', 'start'],
+      ['mhub', 'm-hub', 'Overview', 'Everything there is to learn for Math, with one search across lessons, question types, patterns, shortcuts and calculator moves.', 'learn'],
+      ['mlearn', 'm-learn', 'Lessons', 'All 19 skills explained from scratch, each with a method, a worked example and its question types.', 'learn'],
+      ['mpat', 'm-patterns', 'Big patterns', 'A dozen ideas that connect the question types, so one idea solves many kinds of question.', 'learn'],
+      ['mstudy', 'm-study', 'Expanded types', '249 fine question types, fuller explanations, close variants, and 998 calculator checks with clear scope.', 'learn'],
+      ['mtypes', 'm-types', 'Question finder', 'Type words from a question to see which of the ' + MORDER.length + ' question types it is and how to solve it.', 'learn'],
+      ['mshort', 'm-short', 'Shortcuts', 'Faster ways to the right answer by hand, and the shortcuts that do not work.', 'learn'],
+      ['mdes', 'm-desmos', 'Desmos', MD.desmos.length + ' calculator moves with exactly what to type, checked on real questions.', 'learn'],
+      ['mref', 'm-ref', 'Formulas', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'learn'],
+      ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations. Learn one question at a time, or sit a timed 22-question module.', 'practice'],
+      ['mmap', 'm-map', 'My map', 'All ' + MST.methods.length + ' question types colored by how you are doing, the reasons you miss, and what to practice next.', 'map']] }
   };
+  /* the pages to list on Home and in the footer: the Learn overview is named for what it is */
+  function navList(subj) { return SUBJ[subj].items.map(function (x) { return x[2] === 'Overview' ? [x[0], x[1], 'Learn: overview', x[3], x[4]] : x; }); }
   var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
@@ -6348,29 +6550,46 @@ function rReasoningHTML() {
   };
 
   /* ---------- section bar: tabs for the current subject, and an "On this page" line ---------- */
-  var curSubj = '';
+  var curSubj = '', curGroup = '';
   function renderSecnav(subj) {
     var host = document.getElementById('secin');
     if (!host) { return; }
     if (subj === curSubj) { return; }
-    curSubj = subj;
+    curSubj = subj; curGroup = '';
     var bar = document.getElementById('tabs');
     if (subj === 'home') { host.innerHTML = ''; bar.hidden = true; return; }
     bar.hidden = false;
     var S = SUBJ[subj];
-    host.setAttribute('data-n', S.items.length);
+    host.setAttribute('data-n', GROUPS.length);
     host.innerHTML = '<p class="secnav-t"><span class="sec-ico">' + ICON[S.icon] + '</span>' + S.name + '</p><div class="secnav-l">' +
-      S.items.map(function (it) { return '<a href="#' + it[1] + '" data-view="' + it[0] + '">' + it[2] + '</a>'; }).join('') + '</div>';
+      GROUPS.map(function (g) {
+        var first = S.items.filter(function (it) { return it[4] === g[0]; })[0];
+        return '<a href="#' + first[1] + '" data-group="' + g[0] + '">' + g[1] + '</a>';
+      }).join('') + '</div>';
+  }
+  /* the second row: the pages of the group you are in, when it has more than one */
+  function renderSubnav(subj, group) {
+    var host = document.getElementById('subnav');
+    if (!host) { return; }
+    if (subj === 'home') { host.hidden = true; host.innerHTML = ''; curGroup = ''; return; }
+    if (subj + ':' + group === curGroup) { return; }
+    curGroup = subj + ':' + group;
+    var pages = SUBJ[subj].items.filter(function (it) { return it[4] === group; });
+    host.hidden = pages.length < 2;
+    host.setAttribute('aria-label', GROUPS.filter(function (g) { return g[0] === group; })[0][1] + ': pages');
+    host.innerHTML = pages.length < 2 ? '' : pages.map(function (it) { return '<a href="#' + it[1] + '" data-view="' + it[0] + '">' + it[2] + '</a>'; }).join('');
   }
   function markNav(v) {
     var subj = VIEW_SUBJ[v] || 'home';
+    var it = subj !== 'home' ? SUBJ[subj].items.filter(function (x) { return x[0] === v; })[0] : null;
     renderSecnav(subj);
+    renderSubnav(subj, it ? it[4] : '');
     $$('#subj a').forEach(function (a) { if (a.getAttribute('data-subj') === subj && v !== 'suggest') { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
     $$('[data-tool="suggest"]').forEach(function (a) { if (v === 'suggest') { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
-    $$('#tabs a').forEach(function (a) { if (a.getAttribute('data-view') === v) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
+    $$('#secin a').forEach(function (a) { if (it && a.getAttribute('data-group') === it[4]) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
+    $$('#subnav a').forEach(function (a) { if (a.getAttribute('data-view') === v) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
     var what = document.getElementById('secwhat');
     if (what && subj !== 'home') {
-      var it = SUBJ[subj].items.filter(function (x) { return x[0] === v; })[0];
       what.innerHTML = it ? '<span class="sec-i">' + ICON.info + '</span><span><b>On this page:</b> ' + esc(it[3]) + '</span>' : '';
     }
     if (subj !== 'home') { var s0 = isObj(store.s.last) ? store.s.last : {}; s0[subj] = v; s0.subj = subj; store.s.last = s0; save(); }
@@ -6384,8 +6603,8 @@ function rReasoningHTML() {
     if (!host) { return; }
     function col(title, items) { return '<nav aria-label="' + esc(title) + '"><p class="foot-h">' + esc(title) + '</p><ul>' + items.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></nav>'; }
     host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from an export of College Board’s question bank.</p></div>' +
-      col('Reading & Writing', SUBJ.rw.items.map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
-      col('Math', SUBJ.math.items.map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
+      col('Reading & Writing', navList('rw').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
+      col('Math', navList('math').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
       col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>','<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']);
   }());
 
@@ -6441,7 +6660,7 @@ function rReasoningHTML() {
       var S = SUBJ[key];
       return '<section class="hsubj hsubj-' + key + '" aria-labelledby="hs-' + key + '"><div class="hsubj-top"><span class="hsubj-ico">' + ICON[S.icon] + '</span><div><h3 class="hsubj-h" id="hs-' + key + '">' + S.name + '</h3><p>' + blurb + '</p></div></div>' +
         '<ul class="hsubj-facts">' + facts.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>' +
-        '<ul class="hsubj-list">' + S.items.map(function (x) { return '<li><a href="#' + x[1] + '"><b>' + x[2] + '</b><span class="hsubj-arrow" aria-hidden="true">→</span></a></li>'; }).join('') + '</ul>' +
+        '<ul class="hsubj-list">' + navList(key).filter(function (x) { return x[2] !== 'Learn: overview'; }).map(function (x) { return '<li><a href="#' + x[1] + '"><b>' + x[2] + '</b><span class="hsubj-arrow" aria-hidden="true">→</span></a></li>'; }).join('') + '</ul>' +
         '<a class="btn big hsubj-go" href="#' + S.items[0][1] + '">Start ' + S.name + '</a></section>';
     }
     function feat(subj, icon, title, text, href) {
@@ -6449,15 +6668,16 @@ function rReasoningHTML() {
     }
     var mt = 0; Object.keys(store.m).forEach(function (k) { if (MQBY[k]) { mt++; } });
     viewEl.home.innerHTML = '<div class="wrap">' +
-      '<section class="hh"><div class="hh-text"><p class="hpill">Free · built from the official question bank</p><h1>Study for the SAT, one clear step at a time</h1>' +
-      '<p class="lede">Short guides, lessons and ' + mfmt(nAll) + ' real practice questions with College Board’s own answers. Pick a subject to start.</p>' +
+      '<section class="hh"><div class="hh-text"><p class="hpill">Free · no account · no paywall</p><h1>Study for the SAT, one clear step at a time</h1>' +
+      '<p class="lede">Short guides, lessons and ' + mfmt(nAll) + ' real practice questions with College Board’s own answers. Nothing to sign up for and nothing to unlock: every page is open, and your progress stays in this browser.</p>' +
       '<p class="row hh-cta"><a class="btn big" href="#math">Start Math</a><a class="btn big ghost" href="#start">Start Reading &amp; Writing</a></p>' + planHomeHTML() + cont + '</div>' +
-      '<div class="hh-stats" aria-label="At a glance">' +
-        '<div class="hstat"><b>' + mfmt(nAll) + '</b><span>real questions, with official answers</span></div>' +
-        '<div class="hstat"><b>' + MST.methods.length + '</b><span>fine math question types, each with a method</span></div>' +
-        '<div class="hstat"><b>' + MD.desmos.length + '</b><span>Desmos moves, checked on ' + MD.nver + ' real questions</span></div>' +
-        '<div class="hstat"><b>19</b><span>grammar lessons covering every rule tested</span></div>' +
-      '</div></section>' +
+      htryHTML() + '</section>' +
+      '<ul class="hfacts" aria-label="At a glance">' +
+        '<li><b>' + mfmt(nAll) + '</b> real questions, with official answers</li>' +
+        '<li><b>' + MST.methods.length + '</b> math question types, each with a method</li>' +
+        '<li><b>' + MD.desmos.length + '</b> Desmos moves, checked on ' + MD.nver + ' real questions</li>' +
+        '<li><b>19</b> grammar lessons covering every rule tested</li>' +
+      '</ul>' +
       '<section class="hsec"><div class="hsec-h"><h2 class="h2">Choose a subject</h2><p class="muted">Each subject starts with a short guide, then lessons, then practice.</p></div><div class="hsubjs">' +
         card('rw', 'Reading passages, grammar and transitions. 54 questions on the test, in two parts of 32 minutes.', [mfmt(nRW) + ' bank questions studied', 'A routine for every question type']) +
         card('math', 'Algebra, advanced math, data and geometry. 44 questions on the test, in two parts of 35 minutes.', [mfmt(MQ.length) + ' real questions to practice', MD.patterns.length + ' big patterns', 'Desmos playbook']) +
@@ -6485,6 +6705,7 @@ function rReasoningHTML() {
       '</ol></section>' +
       '<section class="hband"><div><h2 class="h2">Something missing, or a tip to share?</h2><p>Tell us what to add or change, or leave a tip for other students.</p></div><a class="btn big" href="#suggest">Suggest a change</a></section>' +
       '</div>';
+    htryShow(store.s.htry === 'rw' ? 'rw' : 'math');
   }
 
   /* ---------- Suggest a change, and private notes ---------- */
@@ -6584,7 +6805,7 @@ function rReasoningHTML() {
   }
 
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'plan', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -6687,6 +6908,7 @@ function rReasoningHTML() {
       toTop(); return;
     }
     if (token === 'plan') { showView('plan'); buildPlan(); toTop(); return; }
+    if (token === 'rw-hub') { showView('rwhub'); buildHub('rw'); toTop(); return; }
     if (token === 'rw-check') {
       showView('practice');
       if (!built.practice) { buildPractice(); }
@@ -6736,6 +6958,7 @@ function rReasoningHTML() {
     if (/^ms-/.test(token)) { showView('mshort'); buildMShort(); scrollToEl(document.getElementById(token)); return true; }
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
+    if (token === 'm-hub') { showView('mhub'); buildHub('math'); toTop(); return true; }
     if (token === 'm-check') { showView('mprac'); if (!(MP && MP.module && !MP.over)) { mdIntro(); } toTop(); return true; }
     if (token === 'm-module') { showView('mprac'); if (!(MP && MP.module && !MP.over)) { clearInterval(mpInterval); mpModePreset = 'module'; mpSetup(); } toTop(); return true; }
     if (token === 'm-map' || token === 'm-traps') { showView('mmap'); buildMMap(); if (token === 'm-traps') { scrollToEl(document.getElementById('m-traps')); } else { toTop(); } return true; }
