@@ -529,11 +529,12 @@
   function mFeedbackHTML(q, ok, secs) {
     var T = MTY[q.t], right = q.mc ? q.a : q.a.join(' or ');
     return '<p class="mpverdict">' + (ok ? 'Correct.' : (ok === null ? 'No answer.' : 'Not this time.')) + ' <span>College Board’s answer: <b>' + esc(right) + '</b>' + (q.mc ? '' : (q.a.length > 1 ? ' (any of these is accepted)' : '')) + '</span>' + (secs != null ? ' <span class="muted">· ' + secs + ' s</span>' : '') + '</p>' +
+      simplifiedExplanationHTML(q.id) +
       (ok === false ? mWhyHTML(q.id) : '') +
       '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + mDesLine(T) + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
       mSourceNoteHTML(q.id) +
       mPracticeMethodHTML(q) + mStudyFeedbackHTML(q.id) +
-      '<details class="mprat"' + (ok ? '' : ' open') + '><summary>College Board’s explanation</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>';
+      '<details class="mprat"' + (ok || EXPLANATION_PILOT[q.id] ? '' : ' open') + '><summary>College Board’s explanation</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>';
   }
   function mpNextQ() {
     if (!MP) { return; }

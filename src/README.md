@@ -88,3 +88,9 @@ This checks all Math comparison groups, restored English practice images and gra
 `math/import_study_pack.py /path/to/questionbank-study-data-v2.json` produces `build/mstudy.json`. It imports authored methods, memberships, variant suggestions, and scoped calculator records. It excludes full source transcriptions and preserves `mdata.json` and its grading keys. `site/math-study.js` adds the catalogue, type practice, lesson links, and post-answer calculator feedback. The assembler embeds the derived data as `D.mathStudy`.
 
 Run `python src/check/study_coverage.py` and `node --check src/site/bundle.js` after rebuilding. An optional argument to `study_coverage.py` is a previous assembled page; it checks every original data section remains exactly equal. Browser QA uses the existing site through its UI.
+
+## Simplified explanation pilot
+
+`build/explanation-pilot.json` contains 20 independently authored explanations: ten Reading and Writing and ten Math, with 3 Easy, 4 Medium and 3 Hard per subject. `site/explanations.js` renders the key clue, short solution, trap and optional wrong-choice reasons. Selected practice cards use this explanation first; original source rationales and all grading data remain intact.
+
+Run `python3 -I src/site/build_explanation_preview.py` after editing the pilot data to refresh `explanation-preview.html`, then run the ordinary assembly commands. The home page links to this review page, where all twenty questions, explanations, practice links and original explanations can be compared.
