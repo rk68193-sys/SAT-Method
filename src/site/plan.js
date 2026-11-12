@@ -263,7 +263,7 @@
         '<ul class="mfacts diag-facts"><li><b>Built from your results.</b> Your weakest question types come first, then new ones, the most common first.</li>' +
         '<li><b>Misses come back.</b> A question you miss returns after 1 day, then 3, then 7, until it sticks.</li>' +
         '<li><b>No account.</b> The plan and your results are saved in this browser only.</li></ul>' +
-        planFormHTML(null) +
+        planFormHTML(null) + dataLineHTML() +
         '<section class="sec"><h3 class="h2">Not sure where you stand?</h3><p class="lede">A 10-question check for each section gives a rough score range and the question types to begin with.</p>' +
         '<div class="mm-nexts">' + planStandHTML('m') + planStandHTML('rw') + '</div></section></div>';
       planWire();
@@ -294,7 +294,8 @@
         '<p class="row" style="margin-top:1rem"><button class="linkbtn" type="button" id="plan-more">Add one more set</button></p></section>' : '') +
       (week ? '<section class="sec" id="plan-week"><h3 class="h2">The week ahead</h3><p class="lede">' + (subs.length === 2 ? 'The two sections take turns, so each gets a full session every other day.' : 'One session a day.') + ' Each day’s sets are chosen that morning from your latest results.</p><ol class="plan-week">' + week + '</ol></section>' : '') +
       '<section class="sec" id="plan-stand"><h3 class="h2">Where you stand</h3><div class="mm-nexts">' + subs.map(planStandHTML).join('') + '</div></section>' +
-      '<section class="sec" id="plan-setup"><h3 class="h2">Change my plan</h3>' + planFormHTML(P) + '<p class="fine" style="margin-top:.8rem">Your plan and results are saved in this browser only.</p></section>' +
+      '<section class="sec" id="plan-days"><h3 class="h2">Days you practiced</h3><p class="lede">' + habitLine() + '</p>' + habitCalHTML(13) + '</section>' +
+      '<section class="sec" id="plan-setup"><h3 class="h2">Change my plan</h3>' + planFormHTML(P) + dataLineHTML() + '</section>' +
       '</div>';
     planWire();
     var more = document.getElementById('plan-more');

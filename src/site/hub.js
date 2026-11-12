@@ -130,9 +130,17 @@
   document.addEventListener('click', function (e) {
     var b = e.target && e.target.closest ? e.target.closest('[data-htry],[data-htry-next]') : null;
     if (!b) { return; }
-    if (b.hasAttribute('data-htry-next')) { var s = b.getAttribute('data-htry-next'); htryN[s] += 1; htryShow(s); focusQuiet($('#htry .mpch, #htry .opt')); return; }
+    if (b.hasAttribute('data-htry-next')) { var s = b.getAttribute('data-htry-next'); htryN[s] += 1; htryShow(s); focusQuiet($('#htry .mpch, #htry .opt')); htrySee(); return; }
     htryShow(b.getAttribute('data-htry'));
+    htrySee();
   });
+  /* the answer and its notes are long on a phone: when the next question would be left off the screen, bring it back */
+  function htrySee() {
+    var box = $('.hh-try');
+    if (!box) { return; }
+    var r = box.getBoundingClientRect();
+    if (r.top < 0 || r.top > window.innerHeight - 160) { box.scrollIntoView({ block: 'start' }); }
+  }
   function htryHTML() {
     return '<div class="hh-try" aria-label="Try a real question"><div class="htry-top"><p class="label">Try a real question</p>' +
       '<div class="htry-tabs" id="htry-tabs" role="group" aria-label="Section"><button type="button" data-htry="math" aria-pressed="false">Math</button><button type="button" data-htry="rw" aria-pressed="false">Reading &amp; Writing</button></div></div>' +

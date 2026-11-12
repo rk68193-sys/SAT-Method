@@ -177,7 +177,7 @@
     viewEl.rwmap.innerHTML = '<div class="wrap">' +
       '<header class="read"><p class="eyebrow">Reading and Writing · My map</p><h2 class="vtitle">Your mastery map</h2><p class="lede">Each square is a kind of reading question or one grammar rule, colored by how you did the last time you tried its questions. Tap one to see what to look at and practice just that.</p></header>' +
       '<div class="mst-stats mm-stats rw"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
-      diagLineHTML('rw') +
+      diagLineHTML('rw') + dataLineHTML() +
       (tried ? '' : '<aside class="mnote"><p><b>Nothing practiced yet.</b> Answer a few questions and this map fills in. Results are saved in this browser only.</p><a class="btn sm" href="#practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="rwm-next"><h3 class="h2">Work on these next</h3>' + (next.length
         ? '<p class="lede">Your lowest-scoring types so far. Study the rule or the routine, then practice just that type.</p><div class="mm-nexts">' + next.map(function (t) { return rwCardHTML(t, stat[t.id]); }).join('') + '</div>'

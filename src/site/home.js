@@ -27,7 +27,7 @@
   };
   /* the pages to list on Home and in the footer: the Learn overview is named for what it is */
   function navList(subj) { return SUBJ[subj].items.map(function (x) { return x[2] === 'Overview' ? [x[0], x[1], 'Learn: overview', x[3], x[4]] : x; }); }
-  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home' };
+  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/></svg>',
@@ -99,7 +99,7 @@
     host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from an export of College Board’s question bank.</p></div>' +
       col('Reading & Writing', navList('rw').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
       col('Math', navList('math').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
-      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>','<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']);
+      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline</a>', '<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']);
   }());
 
   /* ---------- appearance: saved in this browser under its own key ---------- */
@@ -117,7 +117,15 @@
   function setTheme(t) {
     if (t === 'auto') { document.documentElement.removeAttribute('data-theme'); } else { document.documentElement.setAttribute('data-theme', t); }
     try { window.localStorage.setItem(THEME_KEY, t); } catch (e) {}
+    themeBar();
   }
+  /* the browser's own bar, and the installed app's title bar, take the page color */
+  function themeBar() {
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) { try { var c = getComputedStyle(document.documentElement).getPropertyValue('--paper').trim(); if (c) { m.setAttribute('content', c); } } catch (e) {} }
+  }
+  themeBar();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', themeBar); } catch (e) {}
   function themePopHTML() {
     var cur = getTheme();
     return '<fieldset class="theme-list"><legend>Appearance</legend>' + THEMES.map(function (t) {
@@ -171,7 +179,7 @@
         '<li><b>' + MST.methods.length + '</b> math question types, each with a method</li>' +
         '<li><b>' + MD.desmos.length + '</b> Desmos moves, checked on ' + MD.nver + ' real questions</li>' +
         '<li><b>19</b> grammar lessons covering every rule tested</li>' +
-      '</ul>' +
+      '</ul>' + habitHomeHTML() +
       '<section class="hsec"><div class="hsec-h"><h2 class="h2">Choose a subject</h2><p class="muted">Each subject starts with a short guide, then lessons, then practice.</p></div><div class="hsubjs">' +
         card('rw', 'Reading passages, grammar and transitions. 54 questions on the test, in two parts of 32 minutes.', [mfmt(nRW) + ' bank questions studied', 'A routine for every question type']) +
         card('math', 'Algebra, advanced math, data and geometry. 44 questions on the test, in two parts of 35 minutes.', [mfmt(MQ.length) + ' real questions to practice', MD.patterns.length + ' big patterns', 'Desmos playbook']) +
@@ -195,7 +203,7 @@
         '<li><b>Pick a subject.</b><span>Use Home, Reading &amp; Writing and Math at the top of every page.</span></li>' +
         '<li><b>Read “Start here”.</b><span>Five minutes. It tells you what the test asks and the routine to use.</span></li>' +
         '<li><b>Learn one lesson, then practice it.</b><span>Every lesson ends with a button for real questions on just that topic.</span></li>' +
-        '<li><b>Come back any time.</b><span>Progress is saved on this device' + (mt ? ': ' + plural(mt, 'math question') + ' practiced so far' : '') + '.</span></li>' +
+        '<li><b>Come back any time.</b><span>Progress is saved on this device' + (mt ? ': ' + plural(mt, 'math question') + ' practiced so far' : '') + '. <a href="#my-data">Back it up or use the site offline</a>.</span></li>' +
       '</ol></section>' +
       '<section class="hband"><div><h2 class="h2">Something missing, or a tip to share?</h2><p>Tell us what to add or change, or leave a tip for other students.</p></div><a class="btn big" href="#suggest">Suggest a change</a></section>' +
       '</div>';

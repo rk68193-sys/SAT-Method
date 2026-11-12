@@ -34,6 +34,14 @@ The second-pass teaching pack adds 249 fine types for all 1,925 existing Math ID
 The 998 records comprise 382 question-derived target computations, 528 source-solution arithmetic steps, 36 numerical choice screens, 30 model illustrations, 8 coefficient computations, 6 coordinate computations, 5 discriminants, and 3 proposed-answer spot checks. The scope stays visible on each checked question. Arithmetic was checked through the real Desmos web UI using 20 lists and a maximum normalized difference of 2.9411764706e-15. The corrected shifted vertex input -13 was checked separately, and its graph is included. These are standard web-calculator checks, not validation of the SAT test interface, and they do not establish every setup or full solution. No numerical check is claimed for the remaining 927 questions. Variant suggestions are conservative teaching groups, not proofs of equivalence.
 
 
+## Daily practice, backup and offline use
+
+The question of the day is picked from the date alone, so it is the same for everyone and needs no server; Math draws only from the questions rebuilt as text. The streak and the calendar count answers saved on this device. For progress saved before the day log existed, only the last attempt at each question is known, so earlier days can be undercounted. When a backup is added to what is here, each day takes the larger of the two counts rather than their sum, so adding a file twice changes nothing; two devices used on the same day are therefore undercounted for that day.
+
+A backup file is treated as untrusted: names and values are filtered before anything is stored, and free text is accepted only where the site escapes it. The check adds a file carrying markup in names, settings and notes and confirms nothing from it runs.
+
+Limits: the check runs in Chromium only. Installing to a home screen, the share sheet and offline start-up were not tried on an iPhone or in Safari or Firefox; the page gives the manual steps for those. Offline use needs https (GitHub Pages) or localhost. A browser may still clear saved files and site data when the device is short of space, so the backup file, not the offline copy, is what protects progress.
+
 ## Questions rebuilt as text (November 10 exports)
 
 The November 10 exports hold the same questions as the site: 1,925 Math and 1,845 Reading and Writing, with the same IDs. Text comes from the exports' text layer. Mathematics is not text in the export (newer questions draw each symbol as an outline; older ones place small pictures), so it is carried over as drawn and never recognised or retyped. Figures and tables are cropped from the page.

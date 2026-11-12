@@ -55,7 +55,7 @@
       if (!el.parentNode) { return; }
       if (!body || !q) {
         var pic = document.createElement('div');
-        pic.innerHTML = q ? mPic(kind, q) : '';
+        pic.innerHTML = !q ? '' : navigator.onLine === false ? '<p class="note offq">You are offline, and this question is not saved on this device yet. When you are online again, open <a href="#my-data-offline">Use it offline</a> and save every question.</p>' : mPic(kind, q);
         el.parentNode.replaceChild(pic.firstChild || document.createTextNode(''), el);
         return;
       }

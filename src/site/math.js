@@ -508,7 +508,7 @@
     mpPause(); c.done = true;
     var secs = Math.round(mpElapsed());
     MP.res[MP.i] = { id: q.id, ok: ok, secs: secs, given: given };
-    store.m[q.id] = [ok ? 1 : 0, secs, Date.now()]; srNote('m', q.id, ok); save();
+    store.m[q.id] = [ok ? 1 : 0, secs, Date.now()]; noteAnswer('m', q.id, ok); save();
     clearInterval(mpInterval); mpTick();
     if (q.mc) {
       $$('.mpch', viewEl.mprac).forEach(function (b) {

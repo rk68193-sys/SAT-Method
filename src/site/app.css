@@ -1885,7 +1885,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 
 /* ---------- Home: a real question in the hero, and the numbers in one strip ---------- */
 .hh { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
-.hh-try { display: grid; gap: .7rem; align-content: start; min-width: 0; }
+.hh-try { display: grid; gap: .7rem; align-content: start; min-width: 0; scroll-margin-top: calc(var(--top-h) + 1rem); }
 .htry-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem 1rem; }
 .htry-tabs { display: inline-flex; padding: .2rem; border-radius: 999px; background: var(--sunk); border: 1px solid var(--line); }
 .htry-tabs button { border: 0; background: none; padding: .38rem .9rem; border-radius: 999px; font: 600 .9rem/1.2 var(--body); color: var(--ink-2); cursor: pointer; }
@@ -1903,3 +1903,79 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .hfacts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem 1.5rem; margin-top: clamp(1.6rem, 4vw, 2.6rem); padding: 1.1rem 1.3rem; border-radius: 18px; background: var(--sunk); font-size: .93rem; line-height: 1.4; color: var(--ink-2); }
 .hfacts b { display: block; font: 600 1.5rem/1.1 var(--display); letter-spacing: -.02em; color: var(--ink); }
 @media (max-width: 960px) { .hh { grid-template-columns: minmax(0, 1fr); } .hfacts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- Today on Home: the two questions of the day, the streak, and the weeks of practice ---------- */
+.htoday-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; margin-top: 1.2rem; }
+.hqotd { display: grid; gap: .45rem; align-content: start; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--line-strong); box-shadow: var(--shadow); text-decoration: none; transition: transform .12s ease, border-color .12s ease; }
+.hqotd-math { border-left-color: var(--math); }
+.hqotd-rw { border-left-color: var(--rw); }
+.hqotd:hover { background: var(--card); color: var(--ink); transform: translateY(-2px); }
+.hqotd b { font: 600 1.12rem/1.3 var(--display); letter-spacing: -.01em; }
+.hqotd-s { font-size: .95rem; font-weight: 600; color: var(--ink-2); }
+.hqotd.done .hqotd-s { color: var(--ok); }
+/* one band under the two questions: the streak at the left, the weeks beside it */
+.hstreak { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .8rem 2.5rem; align-items: center; min-width: 0; padding: 1.1rem 1.4rem; border-radius: 18px; background: var(--sunk); font-size: .93rem; color: var(--ink-2); }
+.hstreak-n { display: grid; gap: .15rem; }
+.hstreak-n b { font: 600 2.8rem/1 var(--display); letter-spacing: -.03em; color: var(--ink); }
+.hstreak-n .muted { font-size: .82rem; }
+.hstreak-cal { min-width: 0; }
+.hstreak .hcal { margin-top: 0; }
+.hstreak .hcal-c.l0 { background: var(--card); }
+.htoday-foot { margin-top: .9rem; font-size: .93rem; }
+/* a column a week; the squares shrink so that every week fits the width there is */
+.hcal { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 14px); gap: 3px; margin-top: 1.2rem; max-width: 100%; padding: 0 3px 3px 0; }
+.hcal-w { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 1.05rem; grid-auto-rows: auto; gap: 3px; min-width: 0; }
+.hcal-m { font-size: .72rem; line-height: 1.05rem; color: var(--muted); white-space: nowrap; }
+.hcal-c { display: block; width: 100%; aspect-ratio: 1; border-radius: 3px; background: var(--pencil); }
+.hcal-c.l0 { background: var(--sunk); box-shadow: inset 0 0 0 1px var(--line); }
+.hcal-c.l1 { opacity: .3; }
+.hcal-c.l2 { opacity: .55; }
+.hcal-c.l3 { opacity: .78; }
+.hcal-c.none { background: none; }
+.hcal-c.now { outline: 2px solid var(--ink); outline-offset: 1px; }
+.hcal-key { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: .7rem; font-size: .82rem; color: var(--muted); }
+.hcal-key .hcal-c { width: 12px; flex: none; }
+.hcal-key span:first-child { margin-right: .2rem; }
+.hcal-key .hcal-c + span { margin-left: .2rem; }
+.hcal-key .muted { margin-left: .6rem; }
+@media (max-width: 640px) {
+  .htoday-grid { grid-template-columns: minmax(0, 1fr); }
+  .hstreak { grid-template-columns: minmax(0, 1fr); padding: 1rem 1.1rem; }
+  .hstreak-n { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .5rem; }
+  .hstreak-n b { font-size: 2.2rem; }
+}
+
+/* ---------- My progress: what is saved, backup, restore, offline ---------- */
+.data-line { margin-top: .9rem; font-size: .93rem; max-width: 52rem; }
+#v-data .sec > .row { margin-top: 1.1rem; }
+#v-data .sec > .row + .fine { margin-top: .7rem; }
+#v-data #off-box > .note { margin-top: 1rem; max-width: 44rem; }
+.data-rows { display: grid; gap: 0; margin-top: 1.1rem; max-width: 44rem; border: 1px solid var(--line); border-radius: 16px; background: var(--card); overflow: hidden; }
+.data-rows li { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr) auto; gap: .2rem 1rem; align-items: baseline; padding: .75rem 1.1rem; border-top: 1px solid var(--line); }
+.data-rows li:first-child { border-top: 0; }
+.data-rows b { font: 600 1.25rem/1.2 var(--display); letter-spacing: -.01em; }
+.data-rows a { font-size: .93rem; white-space: nowrap; }
+.data-msg { margin-top: 1.2rem; max-width: 44rem; background: var(--ok-soft); border-left: 4px solid var(--ok); border-radius: 0 12px 12px 0; padding: .8rem 1rem; }
+.note.warn { margin-top: 1.2rem; max-width: 44rem; border-left: 4px solid var(--warn); border-radius: 0 12px 12px 0; padding: .8rem 1rem; }
+.btn.danger { color: var(--bad); border-color: var(--bad); }
+.btn.danger:hover { background: var(--bad-soft); color: var(--bad); border-color: var(--bad); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.bk-pick { cursor: pointer; }
+.row:has(#bk-file:focus-visible) .bk-pick { outline: 2px solid var(--focus); outline-offset: 2px; }
+.bk-found { display: grid; gap: .7rem; margin-top: 1.1rem; max-width: 44rem; padding: 1.1rem 1.2rem; border-radius: 16px; background: var(--card); border: 1px solid var(--line-strong); box-shadow: var(--shadow); }
+.bk-found .plainlist { margin-top: 0; }
+.off-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; margin-top: 1.2rem; max-width: 60rem; }
+.off-card { display: grid; gap: .7rem; align-content: start; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.off-card h4 { font: 600 1.08rem/1.3 var(--display); }
+.off-card progress { width: 100%; height: .7rem; accent-color: var(--pencil); }
+.off-ok b { color: var(--ok); }
+.off-how summary { cursor: pointer; font-weight: 600; }
+.off-grid + .fine { margin-top: 1rem; }
+.offnote { background: var(--hl); color: var(--hl-ink); font-size: .93rem; padding: .5rem 0; }
+.offnote .wrap { display: block; }
+.offnote a { color: inherit; }
+.offq { margin: .4rem 0; }
+@media (max-width: 560px) {
+  .data-rows li { grid-template-columns: 3.4rem minmax(0, 1fr); }
+  .data-rows a { grid-column: 2; }
+}

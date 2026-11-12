@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="A free SAT study site: Reading and Writing routines and grammar lessons, and Math lessons, question types, shortcuts and 1,925 real practice questions with College Board's answers.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SAT Sprint">
 <title>SAT Sprint</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1896,7 +1903,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 
 /* ---------- Home: a real question in the hero, and the numbers in one strip ---------- */
 .hh { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
-.hh-try { display: grid; gap: .7rem; align-content: start; min-width: 0; }
+.hh-try { display: grid; gap: .7rem; align-content: start; min-width: 0; scroll-margin-top: calc(var(--top-h) + 1rem); }
 .htry-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem 1rem; }
 .htry-tabs { display: inline-flex; padding: .2rem; border-radius: 999px; background: var(--sunk); border: 1px solid var(--line); }
 .htry-tabs button { border: 0; background: none; padding: .38rem .9rem; border-radius: 999px; font: 600 .9rem/1.2 var(--body); color: var(--ink-2); cursor: pointer; }
@@ -1914,6 +1921,82 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .hfacts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .7rem 1.5rem; margin-top: clamp(1.6rem, 4vw, 2.6rem); padding: 1.1rem 1.3rem; border-radius: 18px; background: var(--sunk); font-size: .93rem; line-height: 1.4; color: var(--ink-2); }
 .hfacts b { display: block; font: 600 1.5rem/1.1 var(--display); letter-spacing: -.02em; color: var(--ink); }
 @media (max-width: 960px) { .hh { grid-template-columns: minmax(0, 1fr); } .hfacts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- Today on Home: the two questions of the day, the streak, and the weeks of practice ---------- */
+.htoday-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; margin-top: 1.2rem; }
+.hqotd { display: grid; gap: .45rem; align-content: start; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--line-strong); box-shadow: var(--shadow); text-decoration: none; transition: transform .12s ease, border-color .12s ease; }
+.hqotd-math { border-left-color: var(--math); }
+.hqotd-rw { border-left-color: var(--rw); }
+.hqotd:hover { background: var(--card); color: var(--ink); transform: translateY(-2px); }
+.hqotd b { font: 600 1.12rem/1.3 var(--display); letter-spacing: -.01em; }
+.hqotd-s { font-size: .95rem; font-weight: 600; color: var(--ink-2); }
+.hqotd.done .hqotd-s { color: var(--ok); }
+/* one band under the two questions: the streak at the left, the weeks beside it */
+.hstreak { grid-column: 1 / -1; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .8rem 2.5rem; align-items: center; min-width: 0; padding: 1.1rem 1.4rem; border-radius: 18px; background: var(--sunk); font-size: .93rem; color: var(--ink-2); }
+.hstreak-n { display: grid; gap: .15rem; }
+.hstreak-n b { font: 600 2.8rem/1 var(--display); letter-spacing: -.03em; color: var(--ink); }
+.hstreak-n .muted { font-size: .82rem; }
+.hstreak-cal { min-width: 0; }
+.hstreak .hcal { margin-top: 0; }
+.hstreak .hcal-c.l0 { background: var(--card); }
+.htoday-foot { margin-top: .9rem; font-size: .93rem; }
+/* a column a week; the squares shrink so that every week fits the width there is */
+.hcal { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 14px); gap: 3px; margin-top: 1.2rem; max-width: 100%; padding: 0 3px 3px 0; }
+.hcal-w { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 1.05rem; grid-auto-rows: auto; gap: 3px; min-width: 0; }
+.hcal-m { font-size: .72rem; line-height: 1.05rem; color: var(--muted); white-space: nowrap; }
+.hcal-c { display: block; width: 100%; aspect-ratio: 1; border-radius: 3px; background: var(--pencil); }
+.hcal-c.l0 { background: var(--sunk); box-shadow: inset 0 0 0 1px var(--line); }
+.hcal-c.l1 { opacity: .3; }
+.hcal-c.l2 { opacity: .55; }
+.hcal-c.l3 { opacity: .78; }
+.hcal-c.none { background: none; }
+.hcal-c.now { outline: 2px solid var(--ink); outline-offset: 1px; }
+.hcal-key { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: .7rem; font-size: .82rem; color: var(--muted); }
+.hcal-key .hcal-c { width: 12px; flex: none; }
+.hcal-key span:first-child { margin-right: .2rem; }
+.hcal-key .hcal-c + span { margin-left: .2rem; }
+.hcal-key .muted { margin-left: .6rem; }
+@media (max-width: 640px) {
+  .htoday-grid { grid-template-columns: minmax(0, 1fr); }
+  .hstreak { grid-template-columns: minmax(0, 1fr); padding: 1rem 1.1rem; }
+  .hstreak-n { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .5rem; }
+  .hstreak-n b { font-size: 2.2rem; }
+}
+
+/* ---------- My progress: what is saved, backup, restore, offline ---------- */
+.data-line { margin-top: .9rem; font-size: .93rem; max-width: 52rem; }
+#v-data .sec > .row { margin-top: 1.1rem; }
+#v-data .sec > .row + .fine { margin-top: .7rem; }
+#v-data #off-box > .note { margin-top: 1rem; max-width: 44rem; }
+.data-rows { display: grid; gap: 0; margin-top: 1.1rem; max-width: 44rem; border: 1px solid var(--line); border-radius: 16px; background: var(--card); overflow: hidden; }
+.data-rows li { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr) auto; gap: .2rem 1rem; align-items: baseline; padding: .75rem 1.1rem; border-top: 1px solid var(--line); }
+.data-rows li:first-child { border-top: 0; }
+.data-rows b { font: 600 1.25rem/1.2 var(--display); letter-spacing: -.01em; }
+.data-rows a { font-size: .93rem; white-space: nowrap; }
+.data-msg { margin-top: 1.2rem; max-width: 44rem; background: var(--ok-soft); border-left: 4px solid var(--ok); border-radius: 0 12px 12px 0; padding: .8rem 1rem; }
+.note.warn { margin-top: 1.2rem; max-width: 44rem; border-left: 4px solid var(--warn); border-radius: 0 12px 12px 0; padding: .8rem 1rem; }
+.btn.danger { color: var(--bad); border-color: var(--bad); }
+.btn.danger:hover { background: var(--bad-soft); color: var(--bad); border-color: var(--bad); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.bk-pick { cursor: pointer; }
+.row:has(#bk-file:focus-visible) .bk-pick { outline: 2px solid var(--focus); outline-offset: 2px; }
+.bk-found { display: grid; gap: .7rem; margin-top: 1.1rem; max-width: 44rem; padding: 1.1rem 1.2rem; border-radius: 16px; background: var(--card); border: 1px solid var(--line-strong); box-shadow: var(--shadow); }
+.bk-found .plainlist { margin-top: 0; }
+.off-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; margin-top: 1.2rem; max-width: 60rem; }
+.off-card { display: grid; gap: .7rem; align-content: start; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.off-card h4 { font: 600 1.08rem/1.3 var(--display); }
+.off-card progress { width: 100%; height: .7rem; accent-color: var(--pencil); }
+.off-ok b { color: var(--ok); }
+.off-how summary { cursor: pointer; font-weight: 600; }
+.off-grid + .fine { margin-top: 1rem; }
+.offnote { background: var(--hl); color: var(--hl-ink); font-size: .93rem; padding: .5rem 0; }
+.offnote .wrap { display: block; }
+.offnote a { color: inherit; }
+.offq { margin: .4rem 0; }
+@media (max-width: 560px) {
+  .data-rows li { grid-template-columns: 3.4rem minmax(0, 1fr); }
+  .data-rows a { grid-column: 2; }
+}
 
 </style>
 
@@ -1937,6 +2020,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
   </div>
 </header>
 <nav class="secnav" id="tabs" aria-label="Sections" hidden><div class="wrap secin" id="secin"></div><div class="wrap"><div class="subnav" id="subnav" hidden></div><p class="secwhat" id="secwhat"></p></div></nav>
+<p class="offnote" id="offnote" role="status" hidden><span class="wrap">You are offline. Lessons and the questions saved on this device still work. <a href="#my-data-offline">What is saved?</a></span></p>
 
 <main id="main" tabindex="-1">
   <section id="v-home" class="view" aria-label="Home"></section>
@@ -1960,6 +2044,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
   <section id="v-mmap" class="view" aria-label="My math mastery map" hidden></section>
   <section id="v-rwmap" class="view" aria-label="My Reading and Writing mastery map" hidden></section>
   <section id="v-plan" class="view" aria-label="My study plan" hidden></section>
+  <section id="v-data" class="view" aria-label="My progress, backup and offline use" hidden></section>
   <section id="v-suggest" class="view" aria-label="Suggest a change" hidden></section>
 </main>
 
@@ -3776,7 +3861,7 @@ function rReasoningHTML() {
       var attempt = practiceAttempt(prev, ok, t, lim, confidence);
       TS.res.push({ it: it, k: k, ok: ok, t: t, l: lim, fresh: !prev, confidence: confidence, cause: attempt.cause, evidence: attempt.evidence });
       store[bucket][it.id] = attempt;
-      srNote('rw', it.id, ok);
+      noteAnswer('rw', it.id, ok);
       save();
       return t == null ? null : { time: t, limit: lim };
     };
@@ -4667,7 +4752,7 @@ function rReasoningHTML() {
     mpPause(); c.done = true;
     var secs = Math.round(mpElapsed());
     MP.res[MP.i] = { id: q.id, ok: ok, secs: secs, given: given };
-    store.m[q.id] = [ok ? 1 : 0, secs, Date.now()]; srNote('m', q.id, ok); save();
+    store.m[q.id] = [ok ? 1 : 0, secs, Date.now()]; noteAnswer('m', q.id, ok); save();
     clearInterval(mpInterval); mpTick();
     if (q.mc) {
       $$('.mpch', viewEl.mprac).forEach(function (b) {
@@ -4891,7 +4976,7 @@ function rReasoningHTML() {
       if (!el.parentNode) { return; }
       if (!body || !q) {
         var pic = document.createElement('div');
-        pic.innerHTML = q ? mPic(kind, q) : '';
+        pic.innerHTML = !q ? '' : navigator.onLine === false ? '<p class="note offq">You are offline, and this question is not saved on this device yet. When you are online again, open <a href="#my-data-offline">Use it offline</a> and save every question.</p>' : mPic(kind, q);
         el.parentNode.replaceChild(pic.firstChild || document.createTextNode(''), el);
         return;
       }
@@ -5198,7 +5283,7 @@ function rReasoningHTML() {
     viewEl.mmap.innerHTML = '<div class="wrap">' +
       mHead('Math · My map', 'Your mastery map', 'Each square is one of the ' + N + ' question types, colored by how you did the last time you tried its questions. Tap a square to see its trap and practice just that type.') +
       '<div class="mst-stats mm-stats"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
-      diagLineHTML('m') +
+      diagLineHTML('m') + dataLineHTML() +
       (tried ? '' : '<aside class="mnote"><p><b>Nothing practiced yet.</b> Answer a few questions and this map fills in. Results are saved in this browser only.</p><a class="btn sm" href="#m-practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="mm-next"><h3 class="h2">Work on these next</h3>' + (next.length
         ? '<p class="lede">Your lowest-scoring types so far. Read the trap, then practice just that type.</p><div class="mm-nexts">' + next.map(function (m) { return mmCardHTML(m, stat[m.id]); }).join('') + '</div>'
@@ -5519,7 +5604,7 @@ function rReasoningHTML() {
       if (given) { ok = q.mc ? given === q.a : mpGridOK(given, q.a) === true; }
       var secs = Math.round(MP.spent[i] / 1000);
       /* a question left blank counts against the module, but is not saved as a miss */
-      if (ok !== null) { store.m[q.id] = [ok ? 1 : 0, secs, ts]; srNote('m', q.id, ok); }
+      if (ok !== null) { store.m[q.id] = [ok ? 1 : 0, secs, ts]; noteAnswer('m', q.id, ok); }
       if (ok) { right += 1; }
       return { id: q.id, ok: ok, secs: secs, given: given, flag: !!MP.flag[i] };
     });
@@ -5765,7 +5850,7 @@ function rReasoningHTML() {
     viewEl.rwmap.innerHTML = '<div class="wrap">' +
       '<header class="read"><p class="eyebrow">Reading and Writing · My map</p><h2 class="vtitle">Your mastery map</h2><p class="lede">Each square is a kind of reading question or one grammar rule, colored by how you did the last time you tried its questions. Tap one to see what to look at and practice just that.</p></header>' +
       '<div class="mst-stats mm-stats rw"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
-      diagLineHTML('rw') +
+      diagLineHTML('rw') + dataLineHTML() +
       (tried ? '' : '<aside class="mnote"><p><b>Nothing practiced yet.</b> Answer a few questions and this map fills in. Results are saved in this browser only.</p><a class="btn sm" href="#practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="rwm-next"><h3 class="h2">Work on these next</h3>' + (next.length
         ? '<p class="lede">Your lowest-scoring types so far. Study the rule or the routine, then practice just that type.</p><div class="mm-nexts">' + next.map(function (t) { return rwCardHTML(t, stat[t.id]); }).join('') + '</div>'
@@ -5967,7 +6052,7 @@ function rReasoningHTML() {
         var a = practiceAttempt(result(it), ok, secs, RM_PACE, RM.flag[i] ? 'unsure' : 'skip');
         a.mode = 'module';
         store[bucketOf(it)][it.id] = a;
-        srNote('rw', it.id, ok);
+        noteAnswer('rw', it.id, ok);
       }
       if (ok) { right += 1; }
       return { it: it, ok: ok, secs: secs, given: given, flag: !!RM.flag[i] };
@@ -6298,7 +6383,7 @@ function rReasoningHTML() {
         '<ul class="mfacts diag-facts"><li><b>Built from your results.</b> Your weakest question types come first, then new ones, the most common first.</li>' +
         '<li><b>Misses come back.</b> A question you miss returns after 1 day, then 3, then 7, until it sticks.</li>' +
         '<li><b>No account.</b> The plan and your results are saved in this browser only.</li></ul>' +
-        planFormHTML(null) +
+        planFormHTML(null) + dataLineHTML() +
         '<section class="sec"><h3 class="h2">Not sure where you stand?</h3><p class="lede">A 10-question check for each section gives a rough score range and the question types to begin with.</p>' +
         '<div class="mm-nexts">' + planStandHTML('m') + planStandHTML('rw') + '</div></section></div>';
       planWire();
@@ -6329,7 +6414,8 @@ function rReasoningHTML() {
         '<p class="row" style="margin-top:1rem"><button class="linkbtn" type="button" id="plan-more">Add one more set</button></p></section>' : '') +
       (week ? '<section class="sec" id="plan-week"><h3 class="h2">The week ahead</h3><p class="lede">' + (subs.length === 2 ? 'The two sections take turns, so each gets a full session every other day.' : 'One session a day.') + ' Each day’s sets are chosen that morning from your latest results.</p><ol class="plan-week">' + week + '</ol></section>' : '') +
       '<section class="sec" id="plan-stand"><h3 class="h2">Where you stand</h3><div class="mm-nexts">' + subs.map(planStandHTML).join('') + '</div></section>' +
-      '<section class="sec" id="plan-setup"><h3 class="h2">Change my plan</h3>' + planFormHTML(P) + '<p class="fine" style="margin-top:.8rem">Your plan and results are saved in this browser only.</p></section>' +
+      '<section class="sec" id="plan-days"><h3 class="h2">Days you practiced</h3><p class="lede">' + habitLine() + '</p>' + habitCalHTML(13) + '</section>' +
+      '<section class="sec" id="plan-setup"><h3 class="h2">Change my plan</h3>' + planFormHTML(P) + dataLineHTML() + '</section>' +
       '</div>';
     planWire();
     var more = document.getElementById('plan-more');
@@ -6361,6 +6447,427 @@ function rReasoningHTML() {
       h += '<div class="hcheck"><p><b>New here?</b> Find your starting point: 10 questions, a rough score range, and what to study first.</p><p class="row"><a class="btn sm ghost" href="#m-check">Math check</a><a class="btn sm ghost" href="#rw-check">Reading &amp; Writing check</a></p></div>';
     }
     return h;
+  }
+
+  /* =================== Both subjects: the days you practiced, the streak, and the question of the day =================== */
+  /* store.s.days['2026-11-12'] = [Math answers, Reading and Writing answers] on that day, added to wherever an answer is saved. */
+  function dayBump(d, t, i) { var k = dayKey(t), r = Array.isArray(d[k]) ? d[k] : [0, 0]; r[i] = (r[i] || 0) + 1; d[k] = r; }
+  /* the days a set of saved answers can still tell: the last attempt at each question, on the day it was made */
+  function daysFrom(d) {
+    var out = {}, rw = {}, lo = 1.5e12, hi = Date.now() + DAY;
+    Object.keys(isObj(d.m) ? d.m : {}).forEach(function (id) { var r = d.m[id]; if (Array.isArray(r) && r[2] > lo && r[2] < hi && MQBY[id]) { dayBump(out, r[2], 0); } });
+    ['t', 'r', 'b'].forEach(function (b) {
+      Object.keys(isObj(d[b]) ? d[b] : {}).forEach(function (id) { var x = d[b][id]; if (isObj(x) && x.at > lo && x.at < hi && x.at > (rw[id] || 0)) { rw[id] = x.at; } });
+    });
+    Object.keys(rw).forEach(function (id) { dayBump(out, rw[id], 1); });
+    return out;
+  }
+  function daysAll() {
+    if (!isObj(store.s.days)) { store.s.days = daysFrom(store); }
+    return store.s.days;
+  }
+  /* every place that saves an answer calls this: the question's repeat is scheduled and the day is counted */
+  function noteAnswer(subj, id, ok) {
+    srNote(subj, id, ok);
+    /* the answer is already saved, so a day log that is built just now has counted it */
+    var built = isObj(store.s.days), d = daysAll();
+    if (built) { dayBump(d, Date.now(), subj === 'm' ? 0 : 1); }
+  }
+  function dayCount(t) { var r = daysAll()[dayKey(t)]; return Array.isArray(r) ? [r[0] || 0, r[1] || 0] : [0, 0]; }
+  function dayBefore(t) { var d = new Date(t); d.setDate(d.getDate() - 1); return dayStart(d.getTime()); }
+  /* n: days in a row up to today; a streak is still alive if the last day was yesterday. best: the longest run on record. */
+  function habitStreak() {
+    var today = dayStart(Date.now()), did = function (t) { var c = dayCount(t); return c[0] + c[1] > 0; };
+    var n = 0, t = did(today) ? today : dayBefore(today);
+    while (did(t)) { n += 1; t = dayBefore(t); }
+    var keys = Object.keys(daysAll()).filter(function (k) { var r = daysAll()[k]; return Array.isArray(r) && (r[0] || 0) + (r[1] || 0) > 0 && !isNaN(parseDay(k)); }).map(function (k) { return dayNo(parseDay(k)); }).sort(function (a, b) { return a - b; });
+    var best = 0, run = 0;
+    keys.forEach(function (k, i) { run = i && k === keys[i - 1] + 1 ? run + 1 : 1; if (run > best) { best = run; } });
+    return { n: n, today: did(today), best: Math.max(best, n), days: keys.length };
+  }
+  function habitLine() {
+    var s = habitStreak();
+    if (!s.days) { return 'Answer one question to start a streak.'; }
+    if (!s.n) { return 'No streak right now. Your longest so far is ' + plural(s.best, 'day') + '; one question today starts a new one.'; }
+    return (s.today ? 'You have practiced ' + plural(s.n, 'day') + ' in a row, today included.' : 'Your streak is ' + plural(s.n, 'day') + '. Answer one question today to keep it.') + (s.best > s.n ? ' Your longest is ' + s.best + '.' : '');
+  }
+  /* the last weeks, a column a week, Sunday at the top; darker means more questions that day */
+  function habitCalHTML(weeks) {
+    var today = dayStart(Date.now()), start = new Date(today), cols = '', active = 0, total = 0;
+    start.setDate(start.getDate() - start.getDay() - 7 * (weeks - 1));
+    var d = new Date(start.getTime()), month = -1;
+    for (var w = 0; w < weeks; w += 1) {
+      var cells = '', label = '';
+      for (var i = 0; i < 7; i += 1) {
+        var t = d.getTime();
+        if (i === 0 && d.getMonth() !== month && d.getDate() <= 7 + 6) { month = d.getMonth(); label = d.toLocaleDateString(undefined, { month: 'short' }); }
+        if (t > today) { cells += '<i class="hcal-c none"></i>'; }
+        else {
+          var c = dayCount(t), n = c[0] + c[1], lv = !n ? 0 : n < 5 ? 1 : n < 10 ? 2 : n < 20 ? 3 : 4;
+          if (n) { active += 1; total += n; }
+          cells += '<i class="hcal-c l' + lv + (t === today ? ' now' : '') + '" title="' + d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }) + ': ' + (n ? plural(n, 'question') + ' (Math ' + c[0] + ', Reading &amp; Writing ' + c[1] + ')' : 'no practice') + '"></i>';
+        }
+        d.setDate(d.getDate() + 1);
+      }
+      cols += '<div class="hcal-w"><span class="hcal-m">' + label + '</span>' + cells + '</div>';
+    }
+    return '<div class="hcal" role="img" aria-label="Practice in the last ' + weeks + ' weeks: ' + plural(active, 'day') + ' with practice, ' + plural(total, 'question') + ' answered.">' + cols + '</div>' +
+      '<p class="hcal-key"><span>Less</span><i class="hcal-c l0"></i><i class="hcal-c l1"></i><i class="hcal-c l2"></i><i class="hcal-c l3"></i><i class="hcal-c l4"></i><span>More</span><span class="muted">' + plural(active, 'day') + ' with practice in ' + weeks + ' weeks</span></p>';
+  }
+  /* one question a day in each subject, the same for everyone that day: Easy, Medium and Hard take turns */
+  function qotd(subj) {
+    var n = dayNo(Date.now()), want = 'EMH'[n % 3], pool;
+    if (subj === 'm') { pool = MQ.filter(function (q) { return q.d === want && mtxHas(q.id); }); if (!pool.length) { pool = MQ; } }
+    else { want = { E: 'Easy', M: 'Medium', H: 'Hard' }[want]; pool = rwItems().filter(function (it) { return it.d === want; }); }
+    return pool[(n * 7919) % pool.length];
+  }
+  function qotdDone(subj, q) {
+    var t = dayStart(Date.now());
+    if (subj === 'm') { var r = mDone(q.id); return !!r && r[2] >= t; }
+    var x = result(q);
+    return !!x && (x.at || 0) >= t;
+  }
+  function habitHomeHTML() {
+    var m = qotd('m'), r = qotd('rw'), s = habitStreak();
+    function card(subj, q, href, what) {
+      var done = qotdDone(subj, q);
+      return '<a class="hqotd hqotd-' + (subj === 'm' ? 'math' : 'rw') + (done ? ' done' : '') + '" href="#' + href + '"><span class="label">' + (subj === 'm' ? 'Math' : 'Reading &amp; Writing') + ' · question of the day</span><b>' + esc(what) + '</b>' +
+        '<span class="hqotd-s">' + (done ? '✓ Answered today' : 'Answer it →') + '</span></a>';
+    }
+    var rt = RWTBY[RWQT[r.id]];
+    return '<section class="hsec htoday" id="htoday"><div class="hsec-h"><h2 class="h2">Today</h2><p class="muted">' + habitLine() + '</p></div>' +
+      '<div class="htoday-grid">' +
+        card('m', m, 'mq-' + m.id, MSK[m.k].name + ' · ' + MDIFF[m.d]) +
+        card('rw', r, 'rq-' + r.id, (rt ? rt.name : 'Reading and Writing') + ' · ' + r.d) +
+        '<div class="hstreak"><p class="hstreak-n"><b>' + s.n + '</b><span>' + (s.n === 1 ? 'day' : 'days') + ' in a row</span><span class="muted">longest: ' + s.best + '</span></p><div class="hstreak-cal">' + habitCalHTML(narrow() ? 13 : 26) + '</div></div>' +
+      '</div><p class="htoday-foot"><a href="#my-data">Back up my progress</a> · <a href="#my-data-offline">Use it offline</a></p></section>';
+  }
+
+  /* =================== Both subjects: what is saved on this device, a backup file, and offline use =================== */
+  /* A backup is one file: { app: 'sat-sprint', version, saved, theme, data: the whole store }. Nothing is sent anywhere. */
+  var BK_APP = 'sat-sprint', BK_VER = 1, BK_MAX = 12 * 1024 * 1024;
+  var BK_KEY = /^[\w.\-]{1,64}$/, BK_STR = /^[\w .:,+\-\/]{0,200}$/;
+  /* the only places a backup may hold free text, and how long it may be; each of these is escaped wherever it is shown */
+  function bkFree(path) {
+    if (path.length === 2 && path[0] === 's' && path[1] === 'notes') { return 10000; }
+    if (path.length === 3 && path[0] === 'g') { return 2000; }
+    if (path.length === 3 && /^[trb]$/.test(path[0]) && path[2] === 'evidence') { return 800; }
+    return 0;
+  }
+  /* a file can come from anywhere, so nothing in it is trusted: plain values only, short plain strings, ordinary names */
+  function bkClean(v, path) {
+    if (v === null || typeof v === 'boolean') { return v; }
+    if (typeof v === 'number') { return isFinite(v) ? v : 0; }
+    if (typeof v === 'string') { var free = bkFree(path); return free ? v.slice(0, free) : BK_STR.test(v) ? v : ''; }
+    if (typeof v !== 'object' || path.length > 7) { return null; }
+    if (Array.isArray(v)) { return v.slice(0, 5000).map(function (x, i) { return bkClean(x, path.concat(String(i))); }); }
+    var out = {};
+    Object.keys(v).forEach(function (k) { if (BK_KEY.test(k) && k !== '__proto__' && k !== 'constructor' && k !== 'prototype') { out[k] = bkClean(v[k], path.concat(k)); } });
+    return out;
+  }
+  function bkParse(text) {
+    var o;
+    try { o = JSON.parse(text); } catch (e) { return { err: 'That file could not be read. Choose a file this site made: its name starts with “sat-sprint-backup”.' }; }
+    if (!isObj(o) || o.app !== BK_APP || !isObj(o.data)) { return { err: 'That file is not a SAT Sprint backup. Its name should start with “sat-sprint-backup”.' }; }
+    if (typeof o.version === 'number' && o.version > BK_VER) { return { err: 'That backup was made by a newer version of this site. Reload this page, then try again.' }; }
+    var data = {};
+    Object.keys(store).forEach(function (k) { var c = bkClean(o.data[k], [k]); data[k] = isObj(c) ? c : {}; });
+    var theme = THEMES.filter(function (t) { return t[0] === o.theme; }).length ? o.theme : '';
+    return { data: data, saved: typeof o.saved === 'string' ? Date.parse(o.saved) : NaN, theme: theme };
+  }
+  function bkCount(d) {
+    var m = 0, rw = {}, days = isObj(d.s) && isObj(d.s.days) ? d.s.days : daysFrom(d);
+    Object.keys(isObj(d.m) ? d.m : {}).forEach(function (id) { if (Array.isArray(d.m[id]) && MQBY[id]) { m += 1; } });
+    rwItems();
+    ['t', 'r', 'b'].forEach(function (b) { Object.keys(isObj(d[b]) ? d[b] : {}).forEach(function (id) { if (isObj(d[b][id]) && RWIT[id]) { rw[id] = 1; } }); });
+    return { m: m, rw: Object.keys(rw).length, days: Object.keys(days).filter(function (k) { var r = days[k]; return Array.isArray(r) && (r[0] || 0) + (r[1] || 0) > 0; }).length };
+  }
+  function bkCountText(c) { return plural(c.m, 'Math answer') + ', ' + plural(c.rw, 'Reading &amp; Writing answer') + ', ' + plural(c.days, 'day') + ' with practice'; }
+
+  /* ---------- adding a backup to what is here: for each question the newer attempt stays ---------- */
+  function bkNewer(a, b, at) {
+    var out = {};
+    Object.keys(a).forEach(function (k) { out[k] = a[k]; });
+    Object.keys(b).forEach(function (k) { if (!has(out, k) || at(b[k]) > at(out[k])) { out[k] = b[k]; } });
+    return out;
+  }
+  function bkUnion(under, over) {
+    var out = {};
+    Object.keys(under).forEach(function (k) { out[k] = under[k]; });
+    Object.keys(over).forEach(function (k) { out[k] = over[k]; });
+    return out;
+  }
+  /* when a question was last answered in one set of saved answers */
+  function bkAt(d, subj, id) {
+    if (subj === 'm') { var r = d.m[id]; return Array.isArray(r) && typeof r[2] === 'number' ? r[2] : 0; }
+    var at = 0;
+    ['t', 'r', 'b'].forEach(function (b) { var x = d[b][id]; if (isObj(x) && typeof x.at === 'number' && x.at > at) { at = x.at; } });
+    return at;
+  }
+  function bkMerge(cur, inc) {
+    var out = {}, cs = cur.s, is = inc.s;
+    out.m = bkNewer(cur.m, inc.m, function (r) { return Array.isArray(r) ? r[2] || 0 : -1; });
+    out.x = bkNewer(cur.x, inc.x, function (r) { return Array.isArray(r) ? r[1] || 0 : -1; });
+    ['t', 'r', 'b'].forEach(function (b) { out[b] = bkNewer(cur[b], inc[b], function (r) { return isObj(r) ? r.at || 0 : -1; }); });
+    /* lessons read, drills, suggestions, settings and the plan: both sets, and what is here stays where they differ */
+    ['l', 'rl', 'd', 'g'].forEach(function (b) { out[b] = bkUnion(inc[b], cur[b]); });
+    var s = bkUnion(is, cs);
+    /* days: the larger count for each day, so the same backup added twice changes nothing */
+    var da = isObj(cs.days) ? cs.days : daysFrom(cur), db = isObj(is.days) ? is.days : daysFrom(inc), days = {};
+    Object.keys(da).concat(Object.keys(db)).forEach(function (k) {
+      var p = Array.isArray(da[k]) ? da[k] : [0, 0], q = Array.isArray(db[k]) ? db[k] : [0, 0];
+      if (!isNaN(parseDay(k))) { days[k] = [Math.max(p[0] || 0, q[0] || 0), Math.max(p[1] || 0, q[1] || 0)]; }
+    });
+    s.days = days;
+    /* a question's next repeat comes from the side that answered it last */
+    var sr = { m: {}, rw: {} };
+    ['m', 'rw'].forEach(function (subj) {
+      var a = isObj(cs.sr) && isObj(cs.sr[subj]) ? cs.sr[subj] : {}, b = isObj(is.sr) && isObj(is.sr[subj]) ? is.sr[subj] : {};
+      Object.keys(bkUnion(a, b)).forEach(function (id) {
+        var from = bkAt(inc, subj, id) > bkAt(cur, subj, id) ? b : a;
+        if (Array.isArray(from[id])) { sr[subj][id] = from[id]; }
+      });
+    });
+    s.sr = sr;
+    ['modules', 'rwmodules'].forEach(function (k) {
+      var seen = {}, all = (Array.isArray(cs[k]) ? cs[k] : []).concat(Array.isArray(is[k]) ? is[k] : []).filter(function (r) { if (!isObj(r) || seen[r.t]) { return false; } seen[r.t] = 1; return true; });
+      if (all.length) { s[k] = all.sort(function (p, q) { return (p.t || 0) - (q.t || 0); }).slice(-20); }
+    });
+    var dg = {};
+    ['m', 'rw'].forEach(function (subj) {
+      var a = isObj(cs.diag) ? cs.diag[subj] : null, b = isObj(is.diag) ? is.diag[subj] : null, pick = isObj(a) && isObj(b) ? ((b.t || 0) > (a.t || 0) ? b : a) : isObj(a) ? a : b;
+      if (isObj(pick)) { dg[subj] = pick; }
+    });
+    s.diag = dg;
+    var na = typeof cs.notes === 'string' ? cs.notes.trim() : '', nb = typeof is.notes === 'string' ? is.notes.trim() : '';
+    s.notes = !nb || na === nb || na.indexOf(nb) >= 0 ? na : !na ? nb : (na + '\n\n' + nb).slice(0, 10000);
+    out.s = s;
+    return out;
+  }
+  function bkApply(data, theme) {
+    Object.keys(store).forEach(function (k) { store[k] = isObj(data[k]) ? data[k] : {}; });
+    save();
+    if (theme) { setTheme(theme); }
+  }
+
+  /* ---------- making the file ---------- */
+  function bkBody() { return JSON.stringify({ app: BK_APP, version: BK_VER, saved: new Date().toISOString(), theme: getTheme(), data: store }); }
+  function bkName(ext) { return 'sat-sprint-backup-' + dayKey(Date.now()) + '.' + ext; }
+  function bkMark() { store.s.bk = Date.now(); save(); }
+  function bkDownload() {
+    bkMark();
+    var url = URL.createObjectURL(new Blob([bkBody()], { type: 'application/json' })), a = document.createElement('a');
+    a.href = url; a.download = bkName('json'); a.style.display = 'none';
+    document.body.appendChild(a); a.click(); a.parentNode.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  }
+  /* phones: hand the file to the share sheet (mail, a drive, Files). A plain-text file is the kind every share sheet takes. */
+  function bkShareFile() { try { return new File([bkBody()], bkName('txt'), { type: 'text/plain' }); } catch (e) { return null; } }
+  function bkCanShare() { try { var f = bkShareFile(); return !!f && !!navigator.canShare && navigator.canShare({ files: [f] }); } catch (e) { return false; } }
+  function bkAgo() {
+    var t = typeof store.s.bk === 'number' ? store.s.bk : 0;
+    if (!t) { return 'You have not made a backup on this device yet.'; }
+    var n = dayNo(Date.now()) - dayNo(t);
+    return 'Last backup: ' + (n <= 0 ? 'today' : n === 1 ? 'yesterday' : n + ' days ago') + '.';
+  }
+  /* one line for the pages that show results */
+  function dataLineHTML() {
+    return '<p class="data-line"><span class="muted">' + (canStore ? 'Saved in this browser only.' : 'This browser is not saving your progress.') + '</span> <a href="#my-data">Back up my progress</a> · <a href="#my-data-offline">Use it offline</a></p>';
+  }
+
+  /* ---------- offline: the site as an app, and the questions kept on the device ---------- */
+  var PWA_OK = 'serviceWorker' in navigator && !!window.caches && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1');
+  var PWA_Q = 'sat-sprint-q-v1', pwaPrompt = null, offRun = null;
+  if (PWA_OK) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+    window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); pwaPrompt = e; if (cur.view === 'data') { offDraw(); } });
+    window.addEventListener('appinstalled', function () { pwaPrompt = null; if (cur.view === 'data') { offDraw(); } });
+  }
+  function pwaStandalone() { try { return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; } catch (e) { return false; } }
+  /* every file a question needs that is not already inside the page */
+  function offList() {
+    var out = ['m/t/_glyphs.js'], seen = {};
+    MQ.forEach(function (q) {
+      if (MTXT.on && !MTX_HELD[q.id]) { out.push('m/t/' + q.id + '.js'); return; }
+      out.push('m/q/' + q.id + '.webp', 'm/r/' + q.id + '.webp');
+      if (q.qnw) { out.push('m/qn/' + q.id + '.webp'); }
+      if (q.rnw) { out.push('m/rn/' + q.id + '.webp'); }
+    });
+    (document.getElementById('sprint-data').textContent.match(/rw\/f\/[\w\-]+\.webp/g) || []).forEach(function (u) { if (!seen[u]) { seen[u] = 1; out.push(u); } });
+    rwItems().forEach(function (it) { var b = it.b; if (b && b.qsrc && !b.txt && !seen[b.qsrc]) { seen[b.qsrc] = 1; out.push(b.qsrc); if (b.rsrc) { out.push(b.rsrc); } } });
+    return out;
+  }
+  function offHave(list) {
+    return caches.open(PWA_Q).then(function (c) { return c.keys(); }).then(function (keys) {
+      var have = {}, n = 0;
+      keys.forEach(function (r) { have[r.url] = 1; });
+      list.forEach(function (u) { if (have[new URL(u, location.href).href]) { n += 1; } });
+      return n;
+    });
+  }
+  function offSaveAll() {
+    if (offRun) { return; }
+    var list = offList(), run = offRun = { done: 0, failed: 0, of: list.length, full: false, stop: false }, i = 0;
+    if (navigator.storage && navigator.storage.persist) { try { navigator.storage.persist().catch(function () {}); } catch (e) {} }
+    offDraw();
+    caches.open(PWA_Q).then(function (cache) {
+      function next() {
+        if (i >= list.length || run.stop) { return Promise.resolve(); }
+        var u = list[i++];
+        return cache.match(u).then(function (hit) {
+          return hit || fetch(u).then(function (res) { if (!res.ok) { throw new Error('missing'); } return cache.put(u, res); });
+        }).then(function () { run.done += 1; }, function (err) {
+          run.failed += 1;
+          if (err && err.name === 'QuotaExceededError') { run.full = true; run.stop = true; }
+          if (navigator.onLine === false) { run.stop = true; }
+        }).then(function () { offTick(run); return next(); });
+      }
+      var lanes = [];
+      for (var k = 0; k < 6; k += 1) { lanes.push(next()); }
+      return Promise.all(lanes);
+    }).then(function () { offRun = null; offDraw(run); }, function () { offRun = null; run.failed += 1; offDraw(run); });
+  }
+  function offTick(run) {
+    var bar = document.getElementById('off-bar'), st = document.getElementById('off-st');
+    if (bar) { bar.value = run.done + run.failed; }
+    if (st) { st.textContent = 'Saving ' + mfmt(run.done + run.failed) + ' of ' + mfmt(run.of) + ' files…'; }
+  }
+  function offDraw(last) {
+    var host = document.getElementById('off-box');
+    if (!host) { return; }
+    if (location.protocol === 'file:') {
+      host.innerHTML = '<p class="note">You opened this site from a folder on this device, so it already works with no connection. Only the Desmos calculator and the web fonts need the internet.</p>';
+      return;
+    }
+    if (!PWA_OK) { host.innerHTML = '<p class="note">This browser cannot keep the site for use without a connection. Try a current version of Chrome, Edge, Safari or Firefox.</p>'; return; }
+    var install = pwaStandalone()
+      ? '<p class="off-ok"><b>Installed.</b> You are using the app.</p>'
+      : (pwaPrompt ? '<p class="row"><button class="btn" type="button" id="off-install">Install SAT Sprint</button><span class="muted">Adds it to your home screen or apps. No store, no account.</span></p>' : '') +
+        '<details class="off-how"' + (pwaPrompt ? '' : ' open') + '><summary>How to add it to your home screen</summary><ul class="plainlist">' +
+          '<li><b>iPhone or iPad (Safari):</b> tap Share, then “Add to Home Screen”.</li>' +
+          '<li><b>Android (Chrome):</b> open the ⋮ menu, then “Add to Home screen” or “Install app”.</li>' +
+          '<li><b>Computer (Chrome or Edge):</b> use the install icon at the right of the address bar.</li></ul></details>';
+    var list = offList();
+    host.innerHTML = '<div class="off-grid">' +
+      '<div class="off-card"><h4>1 · The site</h4><p>Lessons, methods, every Reading &amp; Writing passage and your progress are saved on this device the first time you open the site online. After that it opens with no connection.</p>' + install + '</div>' +
+      '<div class="off-card"><h4>2 · The questions</h4><p>Each Math question, and each Reading &amp; Writing table or graph, is a small file. The ones you open are kept as you go. To have all ' + mfmt(list.length) + ' on this device, save them once while you are online: about 32 MB.</p>' +
+        (offRun
+          ? '<progress id="off-bar" max="' + offRun.of + '" value="' + (offRun.done + offRun.failed) + '" aria-label="Saving questions for offline use"></progress><p class="fine" id="off-st" aria-live="polite">Saving ' + mfmt(offRun.done + offRun.failed) + ' of ' + mfmt(offRun.of) + ' files…</p>'
+          : '<p class="row"><button class="btn" type="button" id="off-save">Save every question for offline use</button><button class="linkbtn" type="button" id="off-clear" hidden>Remove the saved questions</button></p><p class="fine" id="off-st" aria-live="polite"></p>') +
+      '</div></div>' +
+      '<p class="fine">With no connection, everything works except the Desmos calculator panel and “Suggest a change”. Your progress is separate from these saved files: removing them never removes your answers.</p>';
+    var st = document.getElementById('off-st');
+    if (!offRun) {
+      offHave(list).then(function (n) {
+        var go = document.getElementById('off-save'), clear = document.getElementById('off-clear');
+        if (!go || !st) { return; }
+        if (n >= list.length) { go.hidden = true; }
+        else if (n) { go.textContent = 'Save the other ' + mfmt(list.length - n) + ' for offline use'; }
+        if (clear) { clear.hidden = !n; }
+        var said = last ? (last.full ? 'This device has no more room for the site, so saving stopped. ' : last.failed ? (navigator.onLine === false ? 'The connection dropped, so saving stopped. ' : plural(last.failed, 'file') + ' could not be fetched. ') + 'Try again when you are online. ' : '') : '';
+        st.innerHTML = said + (n >= list.length ? '<b>All ' + mfmt(list.length) + ' question files are saved on this device.</b>' : n ? mfmt(n) + ' of ' + mfmt(list.length) + ' question files are saved on this device.' : 'No question files are saved on this device yet.');
+      }).catch(function () { if (st) { st.textContent = 'This browser would not open its offline storage.'; } });
+    }
+    var b = document.getElementById('off-install');
+    if (b) { b.addEventListener('click', function () { var p = pwaPrompt; pwaPrompt = null; if (p) { p.prompt(); if (p.userChoice) { p.userChoice.then(function () { offDraw(); }, function () { offDraw(); }); } } }); }
+    b = document.getElementById('off-save');
+    if (b) { b.addEventListener('click', offSaveAll); }
+    b = document.getElementById('off-clear');
+    if (b) { b.addEventListener('click', function () { if (window.confirm('Remove the question files saved for offline use? Your progress is not touched.')) { caches.delete(PWA_Q).then(function () { offDraw(); }); } }); }
+  }
+  /* a small line under the section bar while there is no connection */
+  function offNote() {
+    var el = document.getElementById('offnote');
+    if (el) { el.hidden = navigator.onLine !== false; }
+  }
+  window.addEventListener('online', function () {
+    /* questions that could not load while offline get another try */
+    MTX_BAD = {};
+    if (mtxLib === 3) { mtxLib = 0; MTX_ON = !!MTXT.on; }
+    offNote();
+  });
+  window.addEventListener('offline', offNote);
+
+  /* ---------- the page ---------- */
+  var bkFound = null;
+  function buildData(msg) {
+    var host = viewEl.data, c = bkCount(store), s = habitStreak();
+    var lessons = countDone() + countReadDone(), mods = (Array.isArray(store.s.modules) ? store.s.modules.length : 0) + (Array.isArray(store.s.rwmodules) ? store.s.rwmodules.length : 0);
+    var P = planGet(), notes = typeof store.s.notes === 'string' ? store.s.notes.trim().length : 0, any = c.m + c.rw + lessons + mods + notes > 0 || !!P;
+    function row(n, what, href, link) { return '<li><b>' + n + '</b><span>' + what + '</span>' + (href ? '<a href="#' + href + '">' + link + '</a>' : '') + '</li>'; }
+    bkFound = null;
+    host.innerHTML = '<div class="wrap">' +
+      '<header class="mhead"><p class="eyebrow">My progress</p><h2 class="vtitle">Keep a copy, move it, and study with no connection</h2>' +
+      '<p class="lede">There is no account, so your progress lives in this browser on this device. A backup file keeps it safe and carries it to another device.</p></header>' +
+      (canStore ? '' : '<p class="note warn">This browser is not saving data (private browsing, or storage is turned off), so progress is lost when you close the page. A backup file still works.</p>') +
+      (msg ? '<p class="note data-msg" id="data-msg" role="status" tabindex="-1">' + msg + '</p>' : '') +
+      '<section class="sec first" id="data-here"><h3 class="h2">Saved on this device</h3><ul class="data-rows">' +
+        row(mfmt(c.m), 'Math questions answered', 'm-map', 'Math map') +
+        row(mfmt(c.rw), 'Reading &amp; Writing questions answered', 'rw-map', 'Reading &amp; Writing map') +
+        row(lessons, 'lessons marked as read') +
+        row(mods, 'timed modules scored') +
+        row(c.days, 'days with practice · longest streak ' + s.best) +
+        row(P ? '✓' : '–', P ? 'A study plan for ' + new Date(parseDay(P.date)).toLocaleDateString(undefined, { month: 'long', day: 'numeric' }) : 'No study plan yet', 'plan', P ? 'My plan' : 'Make one') +
+        row(notes ? '✓' : '–', notes ? 'Private notes' : 'No notes yet', 'suggest-notes', 'My notes') +
+      '</ul></section>' +
+      '<section class="sec" id="data-days"><h3 class="h2">Days you practiced</h3><p class="lede">' + habitLine() + '</p>' + habitCalHTML(26) + '</section>' +
+      '<section class="sec" id="data-backup"><h3 class="h2">Back up</h3><p class="lede">One small file with your answers, miss reasons, plan, notes and settings, for both sections. It stays with you: nothing is uploaded.</p>' +
+        '<p class="row"><button class="btn" type="button" id="bk-save"' + (any ? '' : ' disabled') + '>Download a backup file</button>' + (bkCanShare() ? '<button class="btn ghost" type="button" id="bk-share"' + (any ? '' : ' disabled') + '>Send it to myself</button>' : '') + '</p>' +
+        '<p class="fine" id="bk-ago">' + (any ? bkAgo() + ' Make a new one every week or two, and before you clear your browser or change devices.' : 'There is nothing to back up yet. Answer a question first.') + '</p></section>' +
+      '<section class="sec" id="data-restore"><h3 class="h2">Restore, or move to this device</h3><p class="lede">Choose a backup file made by this site. You then decide whether to add it to what is here or to replace what is here.</p>' +
+        '<p class="row"><label class="btn ghost bk-pick" for="bk-file">Choose a backup file</label><input class="sr" type="file" id="bk-file" accept=".json,.txt,application/json,text/plain"></p>' +
+        '<div id="bk-found" aria-live="polite"></div></section>' +
+      '<section class="sec" id="my-data-offline"><h3 class="h2">Use it offline</h3><p class="lede">On a bus, on a plane, or anywhere with a weak signal.</p><div id="off-box"></div></section>' +
+      '<section class="sec" id="data-erase"><h3 class="h2">Start over</h3><p class="lede">Erases every answer, the plan, notes and settings saved on this device, for both sections. It cannot be undone, so download a backup first.</p>' +
+        '<p class="row"><button class="btn ghost danger" type="button" id="bk-erase"' + (any ? '' : ' disabled') + '>Erase my progress on this device</button></p></section>' +
+      '</div>';
+    offDraw();
+    $('#bk-save', host).addEventListener('click', function () { bkDownload(); $('#bk-ago', host).textContent = 'Downloaded ' + bkName('json') + '. Keep it somewhere safe: your files, a drive, or an email to yourself.'; });
+    var share = $('#bk-share', host);
+    if (share) {
+      share.addEventListener('click', function () {
+        var f = bkShareFile();
+        if (!f) { return; }
+        navigator.share({ files: [f], title: 'SAT Sprint backup' }).then(function () { bkMark(); $('#bk-ago', host).textContent = 'Sent. ' + bkAgo(); }, function () {});
+      });
+    }
+    $('#bk-file', host).addEventListener('change', function () {
+      var file = this.files && this.files[0], box = $('#bk-found', host), input = this;
+      bkFound = null;
+      if (!file) { box.innerHTML = ''; return; }
+      if (file.size > BK_MAX) { box.innerHTML = '<p class="note warn">That file is too large to be a SAT Sprint backup.</p>'; input.value = ''; return; }
+      var rd = new FileReader();
+      rd.onerror = function () { box.innerHTML = '<p class="note warn">That file could not be opened.</p>'; };
+      rd.onload = function () {
+        var got = bkParse(String(rd.result || ''));
+        input.value = '';
+        if (got.err) { box.innerHTML = '<p class="note warn">' + esc(got.err) + '</p>'; return; }
+        bkFound = got;
+        var n = bkCount(got.data), here = bkCount(store);
+        box.innerHTML = '<div class="bk-found"><p><b>' + esc(file.name) + '</b>' + (isNaN(got.saved) ? '' : ' · saved ' + new Date(got.saved).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })) + '</p>' +
+          '<ul class="plainlist"><li><b>In the file:</b> ' + bkCountText(n) + '.</li><li><b>On this device now:</b> ' + bkCountText(here) + '.</li></ul>' +
+          '<p class="row"><button class="btn" type="button" id="bk-add">Add it to what is here</button><button class="btn ghost" type="button" id="bk-replace">Replace what is here</button><button class="linkbtn" type="button" id="bk-cancel">Cancel</button></p>' +
+          '<p class="fine"><b>Add</b> keeps both: for a question answered in both places, the more recent answer stays, and your plan and settings here are kept. <b>Replace</b> makes this device match the file exactly.</p></div>';
+        $('#bk-add', box).addEventListener('click', function () {
+          if (!bkFound) { return; }
+          bkApply(bkMerge(store, bkFound.data), '');
+          buildData('<b>Added.</b> This device now has ' + bkCountText(bkCount(store)) + '.'); focusQuiet(document.getElementById('data-msg')); toTop();
+        });
+        $('#bk-replace', box).addEventListener('click', function () {
+          if (!bkFound || !window.confirm('Replace everything saved on this device with this backup? What is here now will be lost.')) { return; }
+          bkApply(bkFound.data, bkFound.theme);
+          buildData('<b>Restored.</b> This device now has ' + bkCountText(bkCount(store)) + '.'); focusQuiet(document.getElementById('data-msg')); toTop();
+        });
+        $('#bk-cancel', box).addEventListener('click', function () { bkFound = null; box.innerHTML = ''; });
+        focusQuiet($('#bk-add', box));
+      };
+      rd.readAsText(file);
+    });
+    $('#bk-erase', host).addEventListener('click', function () {
+      if (!window.confirm('Erase every answer, your plan, notes and settings on this device? This cannot be undone.')) { return; }
+      bkApply({}, '');
+      buildData('<b>Erased.</b> This device is back to a fresh start. Your appearance setting and any questions saved for offline use were kept.'); focusQuiet(document.getElementById('data-msg')); toTop();
+    });
   }
 
   /* =================== Learn: one overview per subject, with one search across everything there is to learn =================== */
@@ -6495,9 +7002,17 @@ function rReasoningHTML() {
   document.addEventListener('click', function (e) {
     var b = e.target && e.target.closest ? e.target.closest('[data-htry],[data-htry-next]') : null;
     if (!b) { return; }
-    if (b.hasAttribute('data-htry-next')) { var s = b.getAttribute('data-htry-next'); htryN[s] += 1; htryShow(s); focusQuiet($('#htry .mpch, #htry .opt')); return; }
+    if (b.hasAttribute('data-htry-next')) { var s = b.getAttribute('data-htry-next'); htryN[s] += 1; htryShow(s); focusQuiet($('#htry .mpch, #htry .opt')); htrySee(); return; }
     htryShow(b.getAttribute('data-htry'));
+    htrySee();
   });
+  /* the answer and its notes are long on a phone: when the next question would be left off the screen, bring it back */
+  function htrySee() {
+    var box = $('.hh-try');
+    if (!box) { return; }
+    var r = box.getBoundingClientRect();
+    if (r.top < 0 || r.top > window.innerHeight - 160) { box.scrollIntoView({ block: 'start' }); }
+  }
   function htryHTML() {
     return '<div class="hh-try" aria-label="Try a real question"><div class="htry-top"><p class="label">Try a real question</p>' +
       '<div class="htry-tabs" id="htry-tabs" role="group" aria-label="Section"><button type="button" data-htry="math" aria-pressed="false">Math</button><button type="button" data-htry="rw" aria-pressed="false">Reading &amp; Writing</button></div></div>' +
@@ -6533,7 +7048,7 @@ function rReasoningHTML() {
   };
   /* the pages to list on Home and in the footer: the Learn overview is named for what it is */
   function navList(subj) { return SUBJ[subj].items.map(function (x) { return x[2] === 'Overview' ? [x[0], x[1], 'Learn: overview', x[3], x[4]] : x; }); }
-  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home' };
+  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/></svg>',
@@ -6605,7 +7120,7 @@ function rReasoningHTML() {
     host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from an export of College Board’s question bank.</p></div>' +
       col('Reading & Writing', navList('rw').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
       col('Math', navList('math').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
-      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>','<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']);
+      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline</a>', '<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']);
   }());
 
   /* ---------- appearance: saved in this browser under its own key ---------- */
@@ -6623,7 +7138,15 @@ function rReasoningHTML() {
   function setTheme(t) {
     if (t === 'auto') { document.documentElement.removeAttribute('data-theme'); } else { document.documentElement.setAttribute('data-theme', t); }
     try { window.localStorage.setItem(THEME_KEY, t); } catch (e) {}
+    themeBar();
   }
+  /* the browser's own bar, and the installed app's title bar, take the page color */
+  function themeBar() {
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) { try { var c = getComputedStyle(document.documentElement).getPropertyValue('--paper').trim(); if (c) { m.setAttribute('content', c); } } catch (e) {} }
+  }
+  themeBar();
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', themeBar); } catch (e) {}
   function themePopHTML() {
     var cur = getTheme();
     return '<fieldset class="theme-list"><legend>Appearance</legend>' + THEMES.map(function (t) {
@@ -6677,7 +7200,7 @@ function rReasoningHTML() {
         '<li><b>' + MST.methods.length + '</b> math question types, each with a method</li>' +
         '<li><b>' + MD.desmos.length + '</b> Desmos moves, checked on ' + MD.nver + ' real questions</li>' +
         '<li><b>19</b> grammar lessons covering every rule tested</li>' +
-      '</ul>' +
+      '</ul>' + habitHomeHTML() +
       '<section class="hsec"><div class="hsec-h"><h2 class="h2">Choose a subject</h2><p class="muted">Each subject starts with a short guide, then lessons, then practice.</p></div><div class="hsubjs">' +
         card('rw', 'Reading passages, grammar and transitions. 54 questions on the test, in two parts of 32 minutes.', [mfmt(nRW) + ' bank questions studied', 'A routine for every question type']) +
         card('math', 'Algebra, advanced math, data and geometry. 44 questions on the test, in two parts of 35 minutes.', [mfmt(MQ.length) + ' real questions to practice', MD.patterns.length + ' big patterns', 'Desmos playbook']) +
@@ -6701,7 +7224,7 @@ function rReasoningHTML() {
         '<li><b>Pick a subject.</b><span>Use Home, Reading &amp; Writing and Math at the top of every page.</span></li>' +
         '<li><b>Read “Start here”.</b><span>Five minutes. It tells you what the test asks and the routine to use.</span></li>' +
         '<li><b>Learn one lesson, then practice it.</b><span>Every lesson ends with a button for real questions on just that topic.</span></li>' +
-        '<li><b>Come back any time.</b><span>Progress is saved on this device' + (mt ? ': ' + plural(mt, 'math question') + ' practiced so far' : '') + '.</span></li>' +
+        '<li><b>Come back any time.</b><span>Progress is saved on this device' + (mt ? ': ' + plural(mt, 'math question') + ' practiced so far' : '') + '. <a href="#my-data">Back it up or use the site offline</a>.</span></li>' +
       '</ol></section>' +
       '<section class="hband"><div><h2 class="h2">Something missing, or a tip to share?</h2><p>Tell us what to add or change, or leave a tip for other students.</p></div><a class="btn big" href="#suggest">Suggest a change</a></section>' +
       '</div>';
@@ -6805,7 +7328,7 @@ function rReasoningHTML() {
   }
 
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -6908,6 +7431,11 @@ function rReasoningHTML() {
       toTop(); return;
     }
     if (token === 'plan') { showView('plan'); buildPlan(); toTop(); return; }
+    if (token === 'my-data' || token === 'my-data-offline') {
+      showView('data'); buildData();
+      if (token === 'my-data-offline') { scrollToEl(document.getElementById('my-data-offline')); } else { toTop(); }
+      return;
+    }
     if (token === 'rw-hub') { showView('rwhub'); buildHub('rw'); toTop(); return; }
     if (token === 'rw-check') {
       showView('practice');
@@ -7029,6 +7557,7 @@ function rReasoningHTML() {
   });
 
   /* ---------- start ---------- */
+  offNote();
   go(location.hash || 'home');
   var hot = window.claude && window.claude.hot;
   if (hot) {

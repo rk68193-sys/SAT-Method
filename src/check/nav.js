@@ -38,6 +38,7 @@ const { chromium } = require('playwright');
   await p.click('#htry [data-htry-next="math"]'); await p.waitForTimeout(300);
   await p.waitForSelector('#htry .mtx[data-mtx-s="d"]', { timeout: 15000 });
   ok((await p.getAttribute('#htry .mtx', 'data-mtx')) !== firstQ && !(await p.$('#htry .mpch:disabled')), '“Try another” brings a different question');
+  ok(await p.evaluate(() => { const r = document.querySelector('.hh-try').getBoundingClientRect(); return r.top >= 0 && r.top < window.innerHeight - 160; }), 'and the new question is on the screen, not left above it');
   await p.click('#htry-tabs [data-htry="rw"]'); await p.waitForTimeout(300);
   ok(await p.isVisible('#htry .q .passage') && (await p.$$('#htry .opt')).length === 4, 'the Reading and Writing sample is a real grammar question');
   await p.click('#htry .opt[data-k="A"]'); await p.waitForTimeout(300);

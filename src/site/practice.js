@@ -196,7 +196,7 @@
       var attempt = practiceAttempt(prev, ok, t, lim, confidence);
       TS.res.push({ it: it, k: k, ok: ok, t: t, l: lim, fresh: !prev, confidence: confidence, cause: attempt.cause, evidence: attempt.evidence });
       store[bucket][it.id] = attempt;
-      srNote('rw', it.id, ok);
+      noteAnswer('rw', it.id, ok);
       save();
       return t == null ? null : { time: t, limit: lim };
     };

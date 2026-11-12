@@ -150,7 +150,7 @@
       if (given) { ok = q.mc ? given === q.a : mpGridOK(given, q.a) === true; }
       var secs = Math.round(MP.spent[i] / 1000);
       /* a question left blank counts against the module, but is not saved as a miss */
-      if (ok !== null) { store.m[q.id] = [ok ? 1 : 0, secs, ts]; srNote('m', q.id, ok); }
+      if (ok !== null) { store.m[q.id] = [ok ? 1 : 0, secs, ts]; noteAnswer('m', q.id, ok); }
       if (ok) { right += 1; }
       return { id: q.id, ok: ok, secs: secs, given: given, flag: !!MP.flag[i] };
     });

@@ -5,7 +5,7 @@ A free single-page study site for the digital SAT, in two subjects:
 - **Reading and Writing:** a 60-second grammar method with 19 lessons, a four-step reading routine, passage structure, drills, and timed practice on real College Board questions.
 - **Math:** a start-here routine, lessons for all 19 skills, 102 broad question types (each with how to spot it, the steps, and the usual trap), shortcuts, formulas and Desmos tips, and practice on all 1,925 questions in College Board's SAT Math question bank, checked against College Board's answers with College Board's explanations. The **Expanded types** tab adds **249 finer teaching types**, detailed reasoning and steps, close-variant comparisons, and **998 Desmos arithmetic checks labeled by scope**.
 
-Open `index.html`, or the GitHub Pages site (Settings → Pages → Deploy from a branch → `main`, `/ (root)`). Math questions are in `m/`: `t/` holds each question as text with its expressions drawn, and `q`, `r`, `qn`, `rn` hold the pictures (`q` = question, `r` = explanation, `qn`/`rn` = the same text re-wrapped for phones). The site needs those folders next to `index.html`.
+Open `index.html`, or the GitHub Pages site (Settings → Pages → Deploy from a branch → `main`, `/ (root)`). Math questions are in `m/`: `t/` holds each question as text with its expressions drawn, and `q`, `r`, `qn`, `rn` hold the pictures (`q` = question, `r` = explanation, `qn`/`rn` = the same text re-wrapped for phones). The site needs those folders next to `index.html`, together with `sw.js`, `manifest.webmanifest` and `icons/` (offline use and the installed app).
 
 Every page has the same layout: the subjects at the top (Home, Reading & Writing, Math); under them the same four tabs in both subjects, **Start here**, **Learn**, **Practice** and **My map**; a second row with the pages of the tab you are in, where it has more than one (Learn in both subjects, Practice and Drills in Reading and Writing); a short "On this page" line; and a footer listing every page. **Learn** opens an overview of that subject with one search across everything in it: lessons, question types, patterns, shortcuts and calculator moves in Math (`#m-hub`); reading steps, grammar lessons and rules, worked examples, terms and transition words in Reading and Writing (`#rw-hub`). Every earlier address still works.
 
@@ -15,7 +15,7 @@ The October source review adds detailed calculator-versus-hand methods, 11 proba
 
 Review scope, source corrections, and validation limits are documented in [src/REVIEW.md](src/REVIEW.md).
 
-Progress, notes and the chosen appearance are saved in your browser only.
+Progress, notes and the chosen appearance are saved in your browser only; **Backup and offline** (`#my-data`) makes a file of them and moves them to another device.
 
 ## Questions as text
 
@@ -39,6 +39,16 @@ Both subjects have a **starting check** (`#m-check`, `#rw-check`): ten questions
 - **The check** first, for a section with no check and almost no history, and **a timed module** on Saturdays and every other day in the last week.
 
 With both sections chosen they take turns day by day; from 30 minutes a day each section gets a set every day. A task is ticked when its questions have been answered since the day was built, and "Add one more set" adds another. The page also shows the week ahead and where you stand in each section. Everything is saved in this browser only; deleting the plan keeps your results.
+
+## Daily practice, backup and offline use
+
+All of this works the same for Math and for Reading and Writing, and none of it needs an account.
+
+- **Today** on Home has a **question of the day** for each section: the same question for everyone that day, Easy, Medium and Hard taking turns. Each opens as ordinary practice, so the answer is saved, shows on the map and counts toward the plan.
+- **The streak** is the number of days in a row with at least one answer in either section. It stays alive through today if yesterday had practice. Beside it, a calendar of the last weeks shows how much was answered each day (hover or press a square for the Math and Reading and Writing counts). The plan page and the backup page show it too. Answers saved before this existed are turned into days once, from the date of the last attempt at each question.
+- **Backup** (`#my-data`, "Backup and offline" in the footer, and a line on both maps and the plan): **Download a backup file** writes one small dated file with every answer, miss reason, plan, note and setting. On a phone, "Send it to myself" hands the same file to the share sheet. Nothing is uploaded.
+- **Restore** reads such a file and offers two choices. **Add it to what is here** keeps both: for a question answered in both places the more recent attempt stays, days and module scores are joined, notes from both are kept, and the plan and settings on this device stay. **Replace what is here** makes the device match the file. A file is checked before anything is used: only plain values are kept, and adding the same file twice changes nothing. **Erase my progress** starts over.
+- **Offline.** Over https the site registers a service worker (`sw.js`). After one visit the page opens with no connection; every question file or picture you have opened is kept as you go, and **Save every question for offline use** fetches the rest once (about 32 MB). The site can be installed to the home screen or as a desktop app (`manifest.webmanifest`). With no connection, everything works except the Desmos calculator panel and Suggest. Opened as a file from a folder, the site already works offline and none of this is used.
 
 ## Timed modules, the mastery map and the trap report
 

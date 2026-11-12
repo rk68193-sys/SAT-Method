@@ -149,7 +149,7 @@
         var a = practiceAttempt(result(it), ok, secs, RM_PACE, RM.flag[i] ? 'unsure' : 'skip');
         a.mode = 'module';
         store[bucketOf(it)][it.id] = a;
-        srNote('rw', it.id, ok);
+        noteAnswer('rw', it.id, ok);
       }
       if (ok) { right += 1; }
       return { it: it, ok: ok, secs: secs, given: given, flag: !!RM.flag[i] };
