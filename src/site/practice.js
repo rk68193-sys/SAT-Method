@@ -387,9 +387,8 @@
       });
       var tr = b.tr || {};
       $('.qfeed', el).innerHTML = verdictHTML(ok, b.ans, res) +
-        (EXPLANATION_PILOT[b.id] ? simplifiedExplanationHTML(b.id) :
-          (b.why[b.ans] ? '<p class="fine"><b>Why ' + b.ans + '.</b> ' + b.why[b.ans] + '</p>' : '') +
-          (!ok && b.why[k] ? '<p class="fine"><b>Why not ' + k + '.</b> ' + b.why[k] + (tr[k] ? ' <span class="wn">' + esc(tr[k]) + '</span>' : '') + '</p>' : ''));
+        (b.why[b.ans] ? '<p class="fine"><b>Why ' + b.ans + '.</b> ' + b.why[b.ans] + '</p>' : '') +
+        (!ok && b.why[k] ? '<p class="fine"><b>Why not ' + k + '.</b> ' + b.why[k] + (tr[k] ? ' <span class="wn">' + esc(tr[k]) + '</span>' : '') + '</p>' : '');
       var job = RD.jobs.filter(function (j) { return j.name === b.jn; })[0];
       $('.rwalk', el).innerHTML = (b.tg ? '<h3 class="fasth">The passage, tagged</h3><p class="fine">' + (b.pt >= 0 ? 'The boxed line is the Point. ' : 'This passage has no single Point. ') +
         (b.rs.length ? 'The shaded ' + (b.rs.length === 1 ? 'line is the one' : 'lines are the ones') + ' the answer rests on.' : '') + '</p>' + passage(true) +
@@ -397,7 +396,7 @@
           return '<li><b>' + x + ': ' + esc(tr[x]) + '.</b> It ' + KIND_DEF[tr[x]] + '</li>'; }).join('') + '</ul>' : '') +
         (job ? '<p class="fine"><a href="#' + job.id + '">The ' + esc(b.jn) + ' job: what to look at first</a></p>' : '') +
         (b.qsrc ? '<p class="fine asprinted">As printed: <a href="' + esc(b.qsrc) + '" target="_blank" rel="noopener">the question</a> · <a href="' + esc(b.rsrc) + '" target="_blank" rel="noopener">the explanation</a></p>' : '') +
-        '<p class="fine muted">Answer: College Board’s key. ' + (EXPLANATION_PILOT[b.id] ? 'Explanation: independently written for this site. Original source rationale retained in the question data.' : 'Explanations: College Board’s rationale' + (b.txt ? ', in full.' : '; source-image cards retain the full explanation.') + (b.tg ? ' Tags and wrong-choice labels: Claude’s annotation, done twice blind and settled by a third pass.' : '')) + '</p>';
+        '<p class="fine muted">Answer: College Board’s key. Explanations: College Board’s rationale' + (b.txt ? ', in full.' : '; source-image cards retain the full explanation.') + (b.tg ? ' Tags and wrong-choice labels: Claude’s annotation, done twice blind and settled by a third pass.' : '') + '</p>';
       if (o.after) { o.after(ok); }
       showFeedback($('.verdict', el));
     }

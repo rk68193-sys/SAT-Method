@@ -174,7 +174,6 @@
       '<p class="lede">Short guides, lessons and ' + mfmt(nAll) + ' real practice questions with College Board’s own answers. Nothing to sign up for and nothing to unlock: every page is open, and your progress stays in this browser.</p>' +
       '<p class="row hh-cta"><a class="btn big" href="#math">Start Math</a><a class="btn big ghost" href="#start">Start Reading &amp; Writing</a></p>' + planHomeHTML() + cont + '</div>' +
       htryHTML() + '</section>' +
-      '<p class="wrap"><a href="explanation-preview.html">New: review 20 simplified explanations · Reading and Math</a></p>' +
       '<ul class="hfacts" aria-label="At a glance">' +
         '<li><b>' + mfmt(nAll) + '</b> real questions, with official answers</li>' +
         '<li><b>' + MST.methods.length + '</b> math question types, each with a method</li>' +
