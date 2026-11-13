@@ -255,6 +255,13 @@ def figures(gfx, spans, top, bottom, merge=True):
             return False                                # at the margin: a choice's letter or prose
         if core.y0 - 2 <= s.box.cy <= core.y1 + 2 and core.x0 - 45 <= s.box.cx <= core.x1 + 45:
             return True                                 # beside the plot
+        mates = [o for o in spans if not o.used and abs(o.base - s.base) < 3]
+        short = len(s.text.strip()) <= 22 and sum(len(o.text.strip()) for o in mates) <= 30 and not any(o.box.x0 < LEFT + 3 for o in mates)
+        if short and core.h > 60 and core.y0 - 2 <= s.box.cy <= core.y1 + 2 and core.x0 - 120 <= s.box.cx <= core.x1 + 120 and s.box.x0 > LEFT + 30:
+            return True                                 # an axis title in a few short lines, set further out
+        if short and core.y1 < s.box.cy <= core.y1 + 52 and abs(s.box.cx - core.cx) < 45 and s.box.x0 > LEFT + 30 and core.h > 60 \
+                and not any(o.kind != 'i' and is_rule(o) and core.y1 < o.box.cy < core.y1 + 60 for o in gfx):
+            return True                                 # the second line of the title under a plot (not a table's next header)
         if not (core.x0 - 18 <= s.box.cx <= core.x1 + 18 and core.y0 - 18 <= s.box.cy <= core.y1 + 34):
             return False
         row = [o for o in spans if not o.used and abs(o.base - s.base) < 3 and not box.holds(o.box, 2.0)]
@@ -267,19 +274,29 @@ def figures(gfx, spans, top, bottom, merge=True):
     for members, box in found:
         core = Box(box.x0, box.y0, box.x1, box.y1)
         grew = True
+        edge = []                                       # symbols taken in from outside the lines: tick labels, axis names
         while grew:                                     # take in symbols that belong to the figure
             grew = False
             for g in gfx:
                 if g.used or not (top <= g.box.cy < bottom):
                     continue
-                if box.holds(g.box, 3.0) or (core.holds(g.box, 14.0) and not level_with_text(g, spans, core)):
+                beside = core.y0 - 2 <= g.box.cy <= core.y1 + 2 and box.x0 - 16 <= g.box.cx <= box.x1 + 16 and is_glyph(g)
+                near = (core.holds(g.box, 14.0) or beside) and not level_with_text(g, spans, core)
+                # the rest of a long tick label such as 5,000: a digit that touches one already taken in
+                more = not near and is_glyph(g) and any(e.box.near(g.box, 3.6, 0.5) and abs(e.box.cy - g.box.cy) < 6 for e in edge) and not level_with_text(g, spans, core)
+                if box.holds(g.box, 3.0) or near or more:
+                    if (near or more) and not core.holds(g.box, 0.0):
+                        edge.append(g)
                     members.append(g); g.used = True; box.add(g.box); grew = True
         inside = [s for s in spans if not s.used and top <= s.base < bottom and (box.holds(s.box, 2.0) or label(s, core, box))]
         for s in inside:
             s.used = True
         if inside:
             box.add(union([s.box for s in inside]))
-        out.append({'kind': 'fig', 'box': box, 'page': members[0].page, 'label': ' '.join(s.text.strip() for s in sorted(inside, key=lambda s: (round(s.base), s.box.x0))).replace('\ufffd', '')})
+        # a figure that is one placed picture and nothing else is taken from the picture itself, not from the page:
+        # the export lets the line of text below run into its last rows
+        alone = members[0] if len(members) == 1 and members[0].kind == 'i' and not inside else None
+        out.append({'kind': 'fig', 'box': box, 'page': members[0].page, 'img': alone, 'label': ' '.join(s.text.strip() for s in sorted(inside, key=lambda s: (round(s.base), s.box.x0))).replace('\ufffd', '')})
     return out
 
 
@@ -381,7 +398,153 @@ def layout(spans, gfx, top, bottom, merge=True):
     free = []
     todo = [g for g in gfx if not g.used and top <= g.box.cy < bottom]
     # drawn symbols go as attached clusters; placed pictures (the older formulas) each stand for themselves
+    # A fraction's bar lies on the axis of its line. Whatever stands just over it or hangs just under it is that
+    # fraction's, whichever line of text its middle happens to be nearer to (lines of small fractions sit close).
+    fbars = []
+    for g in todo:
+        if g.kind == 'v' and g.box.w > 4 and g.box.h < 1.6:
+            near = [l for l in lines if abs(g.box.cy - (l.base - AXIS)) < 3.2]
+            if near:
+                fbars.append((g, min(near, key=lambda l: abs(g.box.cy - (l.base - AXIS)))))
+    taken = set()
+    owner = {}                                           # id of a symbol -> (bar, line) it was given to
+    vec = [g for g in todo if g.kind == 'v']
+    # first what touches the bar: the top row of a denominator, the bottom row of a numerator
+    for g in vec:
+        best_bar, far = None, 3.2
+        for r, l in fbars:
+            if r is g or not (r.box.x0 - 1 <= g.box.cx <= r.box.x1 + 1) or abs(g.box.cy - r.box.cy) >= 11:
+                continue
+            gap = r.box.y0 - g.box.y1 if g.box.cy < r.box.cy else g.box.y0 - r.box.y1
+            if -1.5 < gap < far:
+                best_bar, far = (r, l), gap
+        if best_bar is not None:
+            owner[id(g)] = best_bar
+    # a fraction's bar has something on it and something under it. A bar with one side bare is the bar of a root or
+    # the line over a name that happens to lie level with the line of text above: it takes nothing.
+    for r, l in fbars:
+        mine = [g for g in vec if owner.get(id(g), (None,))[0] is r]
+        if not (any(g.box.cy < r.box.cy for g in mine) and any(g.box.cy > r.box.cy for g in mine)):
+            for g in mine:
+                del owner[id(g)]
+    # then what stands right beside one of those, on the same side of the same bar: its exponent, its subscript, the
+    # next digit. A symbol that is only underneath (the exponent of a word on the next line) is left alone.
+    grew = True
+    while grew:
+        grew = False
+        for g in vec:
+            if id(g) in owner:
+                continue
+            for t in vec:
+                o = owner.get(id(t))
+                if o is None:
+                    continue
+                r = o[0]
+                if t is r or not (r.box.x0 - 1 <= g.box.cx <= r.box.x1 + 1) or abs(g.box.cy - r.box.cy) >= 19:
+                    continue
+                if (g.box.cy < r.box.cy) != (t.box.cy < r.box.cy):
+                    continue
+                side = -0.6 <= g.box.x0 - t.box.x1 <= 1.6 or -0.6 <= t.box.x0 - g.box.x1 <= 1.6
+                if side and g.box.y0 < t.box.y1 + 1.0 and t.box.y0 < g.box.y1 + 1.0:
+                    owner[id(g)] = o
+                    grew = True
+                    break
+    # inside such a fraction: the bar over a root's contents or of a small fraction goes with what it covers, what
+    # stands on that small bar goes with it, and then whatever stands right beside those (as above)
+    more = True
+    while more:
+        more = False
+        for g in vec:
+            if id(g) in owner:
+                continue
+            thin = g.box.w > 2.5 and g.box.h < 1.6
+            for t in vec:
+                o = owner.get(id(t))
+                if o is None or t is o[0] or abs(g.box.cy - o[0].box.cy) >= 19:
+                    continue
+                share = min(g.box.x1, t.box.x1) - max(g.box.x0, t.box.x0)
+                tthin = t.box.w > 2.5 and t.box.h < 1.6
+                over = thin and share > 0.5 * t.box.w and -0.8 < t.box.y0 - g.box.y1 < 3.5
+                on = tthin and not thin and share > 0.5 * g.box.w and -0.8 < t.box.y0 - g.box.y1 < 3.2
+                side = (g.box.cy < o[0].box.cy) == (t.box.cy < o[0].box.cy) and (-0.6 <= g.box.x0 - t.box.x1 <= 1.6 or -0.6 <= t.box.x0 - g.box.x1 <= 1.6) and g.box.y0 < t.box.y1 + 1.0 and t.box.y0 < g.box.y1 + 1.0
+                if over or on or side:
+                    owner[id(g)] = o
+                    more = True
+                    break
+    for g in vec:
+        o = owner.get(id(g))
+        if o is not None and not any(g is r for r, _ in fbars):
+            o[1].gfx.append(g); g.used = True; taken.add(id(g))
+    for r, l in fbars:
+        if any(True for g in l.gfx if id(g) in taken and r.box.x0 - 1 <= g.box.cx <= r.box.x1 + 1 and abs(g.box.cy - r.box.cy) < 11):
+            l.gfx.append(r); r.used = True; taken.add(id(r))
+    todo = [g for g in todo if id(g) not in taken]
     units = clusters([g for g in todo if g.kind == 'v']) + [([g], g.box) for g in todo if g.kind == 'i']
+    # tall pieces on two neighbouring lines can touch (a big bracket above a big root) and come out as one cluster:
+    # where a cluster reaches over the axes of two lines and a level cut between them crosses none of its symbols, cut it
+    cut_units = []
+    for members, cbox in units:
+        axes = sorted(l.base - AXIS for l in lines if cbox.y0 + 2 < l.base - AXIS < cbox.y1 - 2)
+        parts = [members]
+        for a, b in zip(axes, axes[1:]):
+            done = []
+            for part in parts:
+                best_cut = None
+                for step in range(0, 13):
+                    y = a + (b - a) * (0.2 + 0.05 * step)
+                    if all(g.box.y1 <= y + 0.6 or g.box.y0 >= y - 0.6 for g in part):
+                        up = [g for g in part if g.box.cy < y]
+                        if up and len(up) < len(part):
+                            best_cut = y
+                            break
+                if best_cut is None:
+                    # no clear cut: small fractions on two close lines interlock. Each symbol goes with the nearer axis,
+                    # provided both lines then get something and no symbol is tall enough to belong to both.
+                    up = [g for g in part if abs(g.box.cy - a) <= abs(g.box.cy - b)]
+                    bar = lambda y: any(g.box.w > 4 and g.box.h < 1.6 and abs(g.box.cy - y) < 3.2 for g in part)
+                    small = all(g.box.h < (b - a) * 0.8 for g in part)
+                    if up and len(up) < len(part) and b - a < 20 and (small or (bar(a) and bar(b))):
+                        done.append(up)
+                        done.append([g for g in part if abs(g.box.cy - a) > abs(g.box.cy - b)])
+                    else:
+                        done.append(part)
+                else:
+                    done.append([g for g in part if g.box.cy < best_cut])
+                    done.append([g for g in part if g.box.cy >= best_cut])
+            parts = done
+        for part in parts:
+            cut_units.append((part, union([g.box for g in part])))
+    units = cut_units
+    # a bar (the line over a segment's name, a fraction's bar) holds together what stands just above and just below it,
+    # so that a numerator, its bar and its denominator cannot be given to two different lines
+    pool = [[list(m), Box(b.x0, b.y0, b.x1, b.y1)] for m, b in units]
+    changed = True
+    while changed:
+        changed = False
+        for u in pool:
+            bars = [g for g in u[0] if g.kind == 'v' and g.box.w > 4 and g.box.h < 1.6]
+            for r in bars:
+                # a fraction's bar lies on its line's axis and holds both sides; any other bar (over a segment's
+                # name, over a root's contents) holds only what is under it
+                frac = any(abs(r.box.cy - (l.base - AXIS)) < 3.2 for l in lines)
+                for v in pool:
+                    if v is u:
+                        continue
+                    o = v[1]
+                    if not frac and o.cy < r.box.cy:
+                        continue
+                    share = min(r.box.x1, o.x1) - max(r.box.x0, o.x0)
+                    gap = max(o.y0 - r.box.y1, r.box.y0 - o.y1)
+                    if share > 0.5 * min(r.box.w, o.w) and gap < 3.5 and o.h < 16:
+                        u[0].extend(v[0]); u[1].add(o)
+                        pool.remove(v)
+                        changed = True
+                        break
+                if changed:
+                    break
+            if changed:
+                break
+    units = [(m, b) for m, b in pool]
     for members, cbox in units:
         best, dist = None, 1e9
         for l in lines:
@@ -394,7 +557,16 @@ def layout(spans, gfx, top, bottom, merge=True):
             for g in members:
                 g.used = True
         else:
-            free.extend(members)
+            # a tall piece (a big bracket, a root over a fraction) whose middle is off the axis still overlaps its line;
+            # it joins that line by itself, before pieces from two neighbouring lines can be taken for one row
+            over = [l for l in lines if cbox.y0 < l.base + DESC and cbox.y1 > l.base - ASC] if cbox.h > 14 else []
+            if over:
+                host = min(over, key=lambda l: abs(cbox.cy - (l.base - AXIS)))
+                host.gfx.extend(members)
+                for g in members:
+                    g.used = True
+            else:
+                free.extend(members)
     # graphics level with no text: display equations. Group into rows by height.
     free.sort(key=lambda g: g.box.cy)
     rows = []
@@ -407,11 +579,9 @@ def layout(spans, gfx, top, bottom, merge=True):
     # a row can still be the tall part of a neighbouring text line (a big fraction): attach when they overlap in height
     eqs = []
     for r in rows:
-        host = None
-        for l in lines:
-            if r['box'].y0 < l.base + DESC and r['box'].y1 > l.base - ASC:
-                host = l
-                break
+        # a tall expression overlaps the line above as well: its own line is the one its middle is level with
+        over = [l for l in lines if r['box'].y0 < l.base + DESC and r['box'].y1 > l.base - ASC]
+        host = min(over, key=lambda l: abs(r['box'].cy - (l.base - AXIS))) if over else None
         if host is not None:
             host.gfx.extend(r['gfx'])
         else:
@@ -430,7 +600,7 @@ def layout(spans, gfx, top, bottom, merge=True):
                 mid = abs(it['box'].cx - (LEFT + RIGHT) / 2) < 24 and it['box'].x0 > LEFT + 30
                 blocks.append({'t': 'eq', 'centre': mid, 'gfx': it['gfx'], 'box': it['box']})
             else:
-                blocks.append({'t': 'fig', 'box': it['box'], 'page': it['page'], 'label': it['label']})
+                blocks.append({'t': 'fig', 'box': it['box'], 'page': it['page'], 'label': it['label'], 'img': it.get('img')})
             continue
         new = para is None
         if not new:
@@ -529,6 +699,9 @@ def split_choices(blocks, problems):
             else:
                 cur = None
                 rest.append({'t': 'p', 'lines': [l], 'indent': l.box.x0 - LEFT})
+    # when no letter has words of its own, every choice is a graph or table, and the export prints the letter
+    # beside the foot of its graph: whatever stands above a letter then belongs to that letter
+    drawn = bool(letters) and all(not L[2][0]['lines'] for L in letters) and any(block_span(b)[1] < letters[0][0] - 8 for b in rest)
     for b in rest:
         y0, y1 = block_span(b)
         owner = None
@@ -536,6 +709,9 @@ def split_choices(blocks, problems):
             if y0 - 8 <= L[0] <= y1 + 8:
                 owner = L
                 break
+        if owner is None and drawn:
+            after = [L for L in letters if L[0] >= y1]
+            owner = after[0] if after else None
         if owner is None:
             before = [L for L in letters if L[0] < y0]
             owner = before[-1] if before else None

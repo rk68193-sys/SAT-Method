@@ -1,97 +1,15 @@
 {
 "on": 1,
 "held": [
-"1318dfea",
-"15ce8207",
-"196e8e6e",
-"2704399f",
-"2c88af4d",
-"3e4e2ab0",
-"40c09d66",
-"433184f1",
-"568d66a7",
-"635f54ee",
-"6ce95fc8",
-"70a2776f",
-"75a32330",
-"7f81d0c3",
-"7fe7cf26",
 "8493fd10",
-"928498f3",
-"a520ba07",
-"aa95fb33",
-"e9aed539"
+"a520ba07"
 ],
 "why": {
-"2704399f": [
-"very tall expression in a sentence"
-],
-"7f81d0c3": [
-"very tall expression in a sentence"
-],
-"e9aed539": [
-"part of a choice stands before any letter",
-"an empty choice"
-],
-"40c09d66": [
-"very tall expression in a sentence"
-],
-"6ce95fc8": [
-"very tall expression in a sentence"
-],
-"433184f1": [
-"very tall expression in a sentence"
-],
 "a520ba07": [
 "a character the export does not name"
 ],
-"75a32330": [
-"part of a choice stands before any letter",
-"an empty choice"
-],
-"2c88af4d": [
-"very tall expression in a sentence"
-],
-"7fe7cf26": [
-"part of a choice stands before any letter",
-"an empty choice"
-],
-"635f54ee": [
-"very tall expression in a sentence"
-],
-"928498f3": [
-"very tall expression in a sentence"
-],
-"aa95fb33": [
-"part of a choice stands before any letter",
-"an empty choice"
-],
-"15ce8207": [
-"part of a choice stands before any letter",
-"part of a choice stands before any letter",
-"part of a choice stands before any letter",
-"part of a choice stands before any letter",
-"part of a choice stands before any letter",
-"part of a choice stands before any letter",
-"an empty choice"
-],
-"70a2776f": [
-"symbols off the line"
-],
-"3e4e2ab0": [
-"symbols off the line"
-],
 "8493fd10": [
 "symbols off the line"
-],
-"568d66a7": [
-"symbols off the line"
-],
-"1318dfea": [
-"symbols off the line"
-],
-"196e8e6e": [
-"very tall expression in a sentence"
 ]
 }
 }

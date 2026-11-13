@@ -148,6 +148,29 @@ def image_html(ctx, g, base):
 def figure_bytes(ctx, block, quality=82, scale=2.6):
     """A figure or table cropped from the page: (webp bytes, pixel width, pixel height, width in em)."""
     box = block['box']
+    g = block.get('img')
+    if g is not None:
+        try:
+            pix = pymupdf.Pixmap(ctx.doc, g.data['xref'])
+            sm = ctx.doc.extract_image(g.data['xref']).get('smask')
+            if pix.colorspace is not None and pix.colorspace.n > 3:
+                pix = pymupdf.Pixmap(pymupdf.csRGB, pix)
+            if pix.alpha:
+                pix = pymupdf.Pixmap(pix, 0)
+            im = Image.frombytes('RGB' if pix.n == 3 else 'L', (pix.width, pix.height), pix.samples).convert('RGB')
+            if sm:
+                mask = pymupdf.Pixmap(ctx.doc, sm)
+                m = Image.frombytes('L', (mask.width, mask.height), mask.samples).resize(im.size)
+                white = Image.new('RGB', im.size, (255, 255, 255))
+                white.paste(im, (0, 0), m)
+                im = white
+            if im.width >= 60 and im.height >= 30:
+                buf = io.BytesIO()
+                im.save(buf, 'WEBP', quality=quality, method=6)
+                ctx.counts['fig'] += 1
+                return buf.getvalue(), im.width, im.height, box.w / EM
+        except Exception:
+            pass
     page = ctx.doc[ctx.first + block['page']]
     oy = block['page'] * VSTEP
     pad = 3

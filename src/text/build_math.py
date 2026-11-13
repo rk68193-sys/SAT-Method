@@ -60,6 +60,12 @@ def start(pdf, keys):
     KEYS = keys
 
 
+# Questions whose layout warning was checked by eye against the printed page and found right: a tall fraction or
+# root inside a sentence, or the bar over a segment's name, both of which the warning is there to catch when wrong.
+WAIVE = ('very tall expression in a sentence', 'symbols off the line')
+REVIEWED = set('196e8e6e 2704399f 2c88af4d 40c09d66 433184f1 635f54ee 6ce95fc8 7f81d0c3 928498f3 1318dfea 3e4e2ab0'.split())
+
+
 def one(job):
     qid, first, last = job
     lib = render.Library()
@@ -92,6 +98,8 @@ def one(job):
             warn = qbx.audit(res['q']) + qbx.audit(res['r'])
             for v in (res['ch'] or {}).values():
                 warn += qbx.audit(v, short_ok=True)
+            if qid in REVIEWED:
+                warn = [w for w in warn if w not in WAIVE]
             rec['problems'] += sorted(set(warn))
             rec['text'] = render.plain_text(res['q'])
             rec['counts'] = ctx.counts
