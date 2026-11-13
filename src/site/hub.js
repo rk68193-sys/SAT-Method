@@ -20,7 +20,7 @@
     } else {
       [['routine', 'The reading routine: Job, Chunk, Say, Check'], ['shape', 'What the passages are like'], ['job', 'Step 1 · Job: read the question line first'], ['chunk', 'Step 2 · Chunk: tag each sentence'],
         ['long', 'Long sentences: core first'], ['para', 'Long passages: make them make sense'], ['say', 'Step 3 · Say: your own answer first'], ['check', 'Step 4 · Check: five ways a choice is wrong'],
-        ['reasoning', 'Deeper reading structures'], ['data-patterns', 'Tables and graphs: deeper patterns'], ['others', 'More question types'], ['notesfirst', 'Notes questions: goal first'],
+        ['reasoning', 'Deeper reading structures'], ['data-patterns', 'Tables and graphs: deeper patterns'], ['others', 'More question types'], ['vocab', 'Words to know: the vocabulary for Words in Context'], ['vocab-check', 'Can’t predict the word? Decide plus or minus'], ['vocab-second', 'Second meanings'], ['vocab-func', 'Words in Purpose and structure choices'], ['notesfirst', 'Notes questions: goal first'],
         ['method', 'Grammar in 60 seconds: look, check, confirm'], ['shortcuts', 'Grammar shortcuts'], ['hard', 'What makes a grammar question hard'], ['transitions', 'Every transition offered'], ['glossary', 'Glossary'], ['nottested', 'What is not tested']
       ].forEach(function (r) { add('Guide', r[1], '', r[0]); });
       RD.jobs.forEach(function (j) { add('Reading question', j.name, plain(j.look), j.id, (j.says || []).join(' ')); });
@@ -29,6 +29,8 @@
       Object.keys(U).forEach(function (uid) { var u = U[uid]; add('Grammar rule', u.num + ' ' + plain(u.title), plain(u.rule), uid, CBY[u.c].title + ' ' + plain(u.words || '')); });
       READ_GLOSS.map(function (g) { return [g[0], g[1]]; }).concat(D.glossary.map(function (g) { return [plain(g.term), plain(g.def)]; })).forEach(function (g) { add('Term', g[0], g[1], 'glossary'); });
       TRANS.forEach(function (t) { add('Transition word', t.w, 'Right ' + t.right + ' of the ' + t.offered + ' times it is offered.', 'transitions'); });
+      VOC.words.forEach(function (w) { add('Word', w[0], w[1], 'voc-' + encodeURIComponent(w[0])); });
+      VOC.func.forEach(function (f) { add('Purpose word', f[0], 'The choice says the text ' + f[1] + '.', 'vocab-func'); });
     }
     hubIx[subj] = out;
     return out;

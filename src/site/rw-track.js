@@ -91,6 +91,7 @@
     data: 'Read the title, the labels and the units first. Then find the exact row, bar or point the claim names.',
     goal: 'Read the question line first and name the job before you read the passage.',
     grammar: 'Find the subject and the verb of each clause, then run the one check for that pattern.',
+    vocab: 'Look up every choice you could not define in the word list, learn it in its sentence, then retry the question.',
     pace: 'Practice this type without the clock first, then with it.',
     slip: 'Read the sentence with your answer in place before you move on.',
     other: 'Open these questions again and write down the evidence or rule that decides each one.'
@@ -117,7 +118,7 @@
       var chips = tk.slice(0, 5).map(function (k) { return '<a class="mchip" href="#rw-map-' + k + '">' + esc(RWTBY[k].name) + (types[k] > 1 ? ' × ' + types[k] : '') + '</a>'; }).join('');
       return '<article class="mtr"><header class="mtr-h"><h4 class="h3">' + (i + 1) + ' · ' + esc(x.label) + '</h4><span class="mtr-n">' + plural(x.rows.length, 'question') + ' · ' + pct(x.rows.length, total) + '%</span></header>' +
         '<span class="mbar" aria-hidden="true"><i style="width:' + pct(x.rows.length, total) + '%"></i></span>' +
-        '<p><b>The fix:</b> ' + esc(RW_FIX[x.key]) + '</p>' +
+        '<p><b>The fix:</b> ' + esc(RW_FIX[x.key]) + (x.key === 'vocab' ? ' <a href="#vocab-mine">See the words from these questions</a>' : '') + '</p>' +
         '<p class="mtr-types"><span class="mtag">Where it happened</span> ' + chips + (tk.length > 5 ? '<span class="muted">and ' + (tk.length - 5) + ' more</span>' : '') + '</p>' +
         (still ? '<p class="row"><button class="btn ghost sm" type="button" data-rw-cause="' + x.key + '">' + retryLabel('some', still, 20) + '</button></p>' : '<p class="fine">You have since answered ' + (x.rows.length === 1 ? 'this question' : 'all of these') + ' correctly.</p>') + '</article>';
     }).join('');

@@ -22,7 +22,11 @@
     verb: { part: 'grammar', title: 'Which verb situation?', goal: 15, ask: 'Which situation are you in?',
       blurb: 'A real verb question with its four choices. Decide which of the four verb situations you are in. <a href="#part-b">See the four situations</a>.' },
     link: { part: 'grammar', title: 'Name the link', goal: 15, ask: 'How does the statement after the blank relate to the one before it?',
-      blurb: 'A real passage or excerpt with the transition hidden. Name the relationship before you see a single choice.' }
+      blurb: 'A real passage or excerpt with the transition hidden. Name the relationship before you see a single choice.' },
+    wmean: { part: 'words', title: 'Word meanings', goal: 8, ask: 'What does this word mean?',
+      blurb: 'A word from the choices of the fill-in questions, and four definitions. <a href="#vocab-list">See the word list</a>.' },
+    wsecond: { part: 'words', title: 'Second meanings', goal: 20, ask: 'What does the highlighted word or phrase mean in this sentence?',
+      blurb: 'A familiar word in its sentence from a real question. The sentence often uses one of its less common senses. <a href="#vocab-second">How to read them</a>.' }
   };
   var LINK_OPTS = [
     { k: 'c14', b: 'Contrast', s: 'goes against it, despite it, an exception, admitting a point, a correction or another option' },
@@ -148,6 +152,26 @@
           after: '<p class="passage">' + passageHTML(ex, true) + '</p>' + miniHTML(ex, true, true),
           explain: '<p><b>' + r.head + '.</b> ' + r.tell + '</p><p><b>The answer is ' + ex.a + '.</b> ' + ex.why + '</p>' + ruleLine(u) });
       });
+    } else if (kind === 'wmean') {
+      /* three wrong definitions from words with the same + or − mark, so the mark alone does not give the answer away */
+      var byChg = { p: [], n: [], '': [] };
+      VOC.words.forEach(function (w) { byChg[w[2]].push(w); });
+      VOC.words.forEach(function (w) {
+        var pool = byChg[w[2]].filter(function (o) { return o[0] !== w[0] && o[1] !== w[1] && o[0].split(' ')[0] !== w[0].split(' ')[0]; });
+        var picks = shuffle(pool.slice()).slice(0, 3).concat([w]);
+        items.push({ id: 'w:' + w[0], ref: 'voc-' + encodeURIComponent(w[0]), opts: shuffle(picks).map(function (o) { return { k: o[0], b: esc(o[1]) }; }), ans: w[0], wide: true,
+          prompt: '<p class="vword">' + esc(w[0]) + '</p>',
+          explain: '<p><b>' + esc(w[0]) + '</b>: ' + esc(w[1]) + '.</p><p class="fine">' + (w[3] > 1 ? 'Offered ' + w[3] + ' times' : 'Offered once') + (w[4] ? ', and the right answer ' + (w[4] > 1 ? w[4] + ' times' : 'once') : '') + ' in the fill-in questions: ' +
+            w[5].map(function (id) { return '<a href="#rq-' + id + '">' + id + '</a>'; }).join(', ') + '.</p>' });
+      });
+    } else if (kind === 'wsecond') {
+      VOC.second.forEach(function (x) {
+        var other = x.other.map(function (k) { return '<em>' + esc(x.ch[k].toLowerCase()) + '</em>'; });
+        items.push({ id: 'ws:' + x.id, ref: 'vocab-second', opts: ['A', 'B', 'C', 'D'].map(function (k) { return { k: k, b: esc(x.ch[k]) }; }), ans: x.k,
+          prompt: '<p class="fine">Question ' + x.id + ' · ' + x.d + '</p><p class="passage boxed">' + markWordCI(x.sent, x.w) + '</p>',
+          explain: '<p>Here <b>' + esc(x.w) + '</b> means <b>' + esc(x.ch[x.k].toLowerCase()) + '</b>. ' + (x.sec ? 'Its everyday meaning is “' + esc(x.first) + '”, which is not the sense this sentence uses.' : 'That is close to its everyday meaning, “' + esc(x.first) + '”.') + '</p>' +
+            (other.length ? '<p class="fine">' + (other.length === 1 ? other[0] + ' is' : other.slice(0, -1).join(', ') + ' and ' + other[other.length - 1] + ' are') + ' also a real meaning of the word, just not here.</p>' : '') });
+      });
     } else if (kind === 'link') {
       var used = {};
       var linkItem = function (c, u, before, after, label, word, id) {
@@ -200,6 +224,12 @@
     'Goal': 'What the student wants the sentence to do.'
   };
   var TAG_HINT = { 'Scene': 'background', 'Old idea': 'what people thought', 'Did': 'what someone did', 'Found': 'a result or fact', 'Point': 'the claim', 'Happens': 'what someone does', 'Feeling': 'what someone feels', 'Goal': 'the student wants to…' };
+  function markWordCI(sentence, word) {
+    var norm = function (t) { return t.toLowerCase().replace(/’/g, "'"); };
+    var w = /^an? /i.test(word) ? word.replace(/^an? /i, '') : word, i = norm(sentence).indexOf(norm(w));
+    if (i < 0) { return esc(sentence); }
+    return esc(sentence.slice(0, i)) + '<mark class="ptr">' + esc(sentence.slice(i, i + w.length)) + '</mark>' + esc(sentence.slice(i + w.length));
+  }
   function markWord(sentence, word) {
     var i = sentence.indexOf(word);
     if (i < 0) { return esc(sentence); }
@@ -212,6 +242,7 @@
     if (kind === 'link') { return '<p class="whypick"><b>Not ' + esc(b) + '.</b> Read the two statements with “' + PLAIN_LINK[mine.k] + '” in the blank: the logic breaks.</p>'; }
     if (kind === 'pattern') { return '<p class="whypick"><b>Not ' + esc(b) + '.</b> That would show ' + esc(FAM[mine.k].sub.charAt(0).toLowerCase() + FAM[mine.k].sub.slice(1)) + ' across the four choices.</p>'; }
     if (kind === 'tag') { return '<p class="whypick"><b>Not ' + esc(b) + '.</b> ' + esc(TAG_DEF[mine.k] || '') + '</p>'; }
+    if (kind === 'wmean') { return '<p class="whypick"><b>Not this one.</b> That is what <em>' + esc(mine.k) + '</em> means.</p>'; }
     if (kind === 'why') { var o = KIND_OPTS.filter(function (x) { return x.k === mine.k; })[0]; return '<p class="whypick"><b>Not ' + esc(b) + '.</b> That kind ' + esc(o ? o.s : '') + '.</p>'; }
     return '';
   }
@@ -249,7 +280,8 @@
         return '<label><input type="radio" name="dlen" id="dlen-' + (n || 'all') + '" value="' + n + '"' + (n === len ? ' checked' : '') + '><span>' + (n || 'All') + '</span></label>';
       }).join('') + '</div></fieldset>' +
       '<h3 class="subh">Reading drills</h3><div class="dgrid">' + keys.filter(function (k) { return DR[k].part === 'reading'; }).map(drillCard).join('') + '</div>' +
-      '<h3 class="subh">Grammar drills</h3><div class="dgrid">' + keys.filter(function (k) { return DR[k].part === 'grammar'; }).map(drillCard).join('') + '</div>';
+      '<h3 class="subh">Grammar drills</h3><div class="dgrid">' + keys.filter(function (k) { return DR[k].part === 'grammar'; }).map(drillCard).join('') + '</div>' +
+      '<h3 class="subh">Word drills</h3><div class="dgrid">' + keys.filter(function (k) { return DR[k].part === 'words'; }).map(drillCard).join('') + '</div>';
     var host = document.getElementById('dhost');
     host.innerHTML = h;
     $$('input[name="dlen"]', host).forEach(function (r) { r.addEventListener('change', function () { store.s.dlen = Number(r.value); save(); }); });
@@ -360,7 +392,8 @@
     if (m && REX[m[1]]) { return 'Example ' + m[1] + ' · ' + esc(REX[m[1]].title); }
     var j = RD.jobs.filter(function (x) { return x.id === ref; })[0];
     if (j) { return 'Step 1 · ' + esc(j.name); }
-    return { chunk: 'Step 2 · Chunk: the tags', long: 'Long sentences: core first', para: 'Long passages: make them make sense', method: 'The 60-second method', job: 'Step 1 · Job' }[ref] || ref;
+    if (/^voc-/.test(ref)) { return 'Word list · ' + esc(decodeURIComponent(ref.slice(4))); }
+    return { chunk: 'Step 2 · Chunk: the tags', long: 'Long sentences: core first', para: 'Long passages: make them make sense', method: 'The 60-second method', job: 'Step 1 · Job', 'vocab-second': 'Words to know · Second meanings' }[ref] || ref;
   }
   function drillFinish() {
     var R = drillRun;

@@ -143,10 +143,14 @@
       '<section id="myths" class="sec"><div class="sech"><h3 class="h2">' + esc(RD.myths.title) + '</h3></div>' + blocksHTML(RD.myths) + '</section>' +
       '<div class="nextlinks"><a class="btn" href="#others">The other question types</a><a class="btn ghost" href="#drills" data-drill="why">Drill: Why is it wrong?</a></div>';
   }
+  var OTHERS_MORE = {
+    'o-word': '<p class="pretty"><b>The words themselves:</b> <a href="#vocab">Words to know</a> has every choice from the fill-in questions with a plain definition, the second meanings the test asks about, and a check for when no word comes to mind.</p>',
+    'o-structure': '<p class="pretty"><b>The verbs in the choices:</b> what <em>concede</em>, <em>speculate</em>, <em>refute</em> and the rest claim a text does, with how often each is right, is in <a href="#vocab-func">Words in Purpose and structure choices</a>.</p>'
+  };
   function rOthersHTML() {
     return '<header><p class="eyebrow">Reading · beyond Information and Ideas</p><h2 class="vtitle">The other reading questions</h2>' + RD.othersIntro.map(function (p) { return '<p class="lede">' + p + '</p>'; }).join('') + '</header>' +
       RD.others.map(function (o) {
-        return '<section class="sec" id="' + o.id + '"><div class="sech"><h3 class="h2">' + esc(o.title) + '</h3><p class="lmeta">' + o.meta + '</p></div>' + o.paras.map(function (p) { return '<p class="pretty">' + p + '</p>'; }).join('') + (o.items && o.items.length ? '<ul class="plainlist">' + o.items.map(li).join('') + '</ul>' : '') + '</section>';
+        return '<section class="sec" id="' + o.id + '"><div class="sech"><h3 class="h2">' + esc(o.title) + '</h3><p class="lmeta">' + o.meta + '</p></div>' + o.paras.map(function (p) { return '<p class="pretty">' + p + '</p>'; }).join('') + (o.items && o.items.length ? '<ul class="plainlist">' + o.items.map(li).join('') + '</ul>' : '') + (OTHERS_MORE[o.id] || '') + '</section>';
       }).join('') +
       '<section class="sec" id="train"><div class="sech"><h3 class="h2">How to train it</h3>' + RD.train.intro.map(function (p) { return '<p class="lede">' + p + '</p>'; }).join('') + '</div><ol class="olist drills">' + RD.train.drills.map(li).join('') + '</ol>' +
       '<p class="fine">The Drills tab has timed versions of the first two (Tag the sentence, Core first), plus Find the Point, which trains the step before your Say line.</p></section>';
@@ -298,7 +302,7 @@
           { key: 'job', token: 'job', num: 1, label: 'Job' }, { key: 'chunk', token: 'chunk', num: 2, label: 'Chunk' },
           { key: 'long', token: 'long', label: 'Long sentences: core first' }, { key: 'para', token: 'para', label: 'Long passages: make them make sense' },
           { key: 'say', token: 'say', num: 3, label: 'Say' }, { key: 'check', token: 'check', num: 4, label: 'Check' }] },
-        { group: 'More question types', entries: [{ key: 'reasoning', token: 'reasoning', label: 'Deeper reading structures' }, { key: 'dataPatterns', token: 'data-patterns', label: 'Tables and graphs: deeper patterns' }, { key: 'others', token: 'others', label: 'Words, structure, two texts, notes' }, { key: 'notes', token: 'notesfirst', label: 'Notes questions: goal first' }] },
+        { group: 'More question types', entries: [{ key: 'reasoning', token: 'reasoning', label: 'Deeper reading structures' }, { key: 'dataPatterns', token: 'data-patterns', label: 'Tables and graphs: deeper patterns' }, { key: 'others', token: 'others', label: 'Words, structure, two texts, notes' }, { key: 'vocab', token: 'vocab', label: 'Words to know' }, { key: 'notes', token: 'notesfirst', label: 'Notes questions: goal first' }] },
         { group: 'Worked examples', entries: ex },
         { group: 'More', entries: [{ key: 'reviewFindings', token: 'source-findings', label: 'Further source findings' }, { key: 'sets', token: 'sets', label: 'Practice sets: 1,230 IDs' }, { key: 'measured', token: 'measured', label: 'How this was measured' }] }
       ];
@@ -308,6 +312,7 @@
       if (m && REX[m[1]]) { host.innerHTML = rExampleHTML(REX[m[1]]); wireExample(REX[m[1]], host); return; }
       if (key === 'para') { host.innerHTML = paraHTML(); wirePara(host); return; }
       if (key === 'notes') { host.innerHTML = notesHTML(); wireNotes(host); return; }
+      if (key === 'vocab') { host.innerHTML = vocabHTML(); wireVocab(host); return; }
       host.innerHTML = (READ_PAGES[key] || rRoutineHTML)();
       if (key === 'long') { wireLong(host); }
       if (key === 'sets') { wireSets(host); }

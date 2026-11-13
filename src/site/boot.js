@@ -50,7 +50,7 @@
   var READ_AT = {
     reading: ['routine'], routine: ['routine'], reasoning: ['reasoning'], 'data-patterns': ['dataPatterns'], 'source-findings': ['reviewFindings'], shape: ['shape'], job: ['job'], leadin: ['job', 'leadin'], chunk: ['chunk'], tags: ['chunk', 'tags'],
     turns: ['chunk', 'turns'], names: ['chunk', 'names'], long: ['long'], apart: ['long', 'apart'], para: ['para'], say: ['say'], check: ['check'],
-    traps: ['check', 'traps'], notesfirst: ['notes'], pturn: ['para', 'pturn'], pmethod: ['para', 'pmethod'], goalfirst: ['notes'], partly: ['check', 'partly'], myths: ['check', 'myths'], others: ['others'], train: ['others', 'train'], sets: ['sets'], measured: ['measured']
+    traps: ['check', 'traps'], notesfirst: ['notes'], vocab: ['vocab'], 'vocab-why': ['vocab', 'vocab-why'], 'vocab-check': ['vocab', 'vocab-check'], 'vocab-second': ['vocab', 'vocab-second'], 'vocab-list': ['vocab', 'vocab-list'], 'vocab-func': ['vocab', 'vocab-func'], pturn: ['para', 'pturn'], pmethod: ['para', 'pmethod'], goalfirst: ['notes'], partly: ['check', 'partly'], myths: ['check', 'myths'], others: ['others'], train: ['others', 'train'], sets: ['sets'], measured: ['measured']
   };
   var GRAM_AT = { grammar: ['method'], method: ['method'], try: ['method', 'try'], patterns: ['method', 'patterns'], first: ['method', 'patterns'], steps: ['method', 'steps'],
     shortcuts: ['shortcuts'], gives: ['shortcuts'], hard: ['hard'], lessons: ['home'], glance: ['home'], structure: ['partA'], verbpath: ['partB'] };
@@ -80,6 +80,8 @@
       return;
     }
     if (has(READ_AT, token)) { r = READ_AT[token]; showView('reading'); var ch = readingView.show(r[0]); if (r[1]) { scrollToEl(document.getElementById(r[1])); } else { toTop(); landed(ch); } return; }
+    if (token === 'vocab-mine') { showView('reading'); readingView.show('vocab'); vocShowMine(); scrollToEl(document.getElementById('vocab-list')); return; }
+    if ((m = /^voc-(.+)$/.exec(token))) { showView('reading'); readingView.show('vocab'); vocFind(decodeURIComponent(m[1])); scrollToEl(document.getElementById('vocab-list')); return; }
     if ((m = /^ex-(\d+)$/.exec(token)) && REX[m[1]]) { showView('reading'); landed(readingView.show(token)); toTop(); return; }
     if (/^apart-\d+$/.test(token)) { showView('reading'); readingView.show('long'); scrollToEl(document.getElementById(token)); return; }
     if (/^job-[a-z]+$/.test(token)) { showView('reading'); readingView.show('job'); scrollToEl(document.getElementById(token)); return; }

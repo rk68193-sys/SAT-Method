@@ -1979,3 +1979,28 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
   .data-rows li { grid-template-columns: 3.4rem minmax(0, 1fr); }
   .data-rows a { grid-column: 2; }
 }
+
+/* ---------- Reading: words to know ---------- */
+.vtools { display: flex; flex-wrap: wrap; gap: .8rem 1.4rem; align-items: end; margin-top: 1rem; }
+.vtools .field { flex: 1 1 14rem; max-width: 22rem; }
+.wordlist { display: grid; margin-top: .6rem; border-top: 1px solid var(--line); }
+.vrow { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: .15rem 1.2rem; padding: .55rem 0; border-bottom: 1px solid var(--line); }
+.vrow dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .45rem; }
+.vrow dd p { margin: 0; }
+.vrow .vmeta { font-size: .84rem; color: var(--muted); margin-top: .15rem; }
+.vrow .vmeta b { color: var(--ink-2); font-weight: 600; }
+.vform { font-size: .8rem; color: var(--muted); flex-basis: 100%; }
+.vq { font: 400 .8rem var(--mono); margin-right: .45rem; white-space: nowrap; }
+.vchg { display: inline-grid; place-items: center; min-width: 1.15rem; height: 1.15rem; padding: 0 .2rem; border-radius: 6px; font: 700 .8rem/1 var(--mono); }
+.vchg.p { background: var(--ok-soft); color: var(--ok); }
+.vchg.n { background: var(--bad-soft); color: var(--bad); }
+.vneg { columns: 2 18rem; column-gap: 2rem; }
+.vneg li { break-inside: avoid; }
+.vsec th .vq2 { display: block; font: 400 .78rem var(--mono); color: var(--muted); margin-top: .1rem; }
+.vpos { display: block; font: 600 .7rem/1.3 var(--body); letter-spacing: .05em; text-transform: uppercase; color: var(--warn-text); margin-top: .15rem; }
+.vfunc .num, .vfunc th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.vword { font: 600 2rem/1.2 var(--display); letter-spacing: -.01em; }
+@media (max-width: 640px) {
+  .vrow { grid-template-columns: minmax(0, 1fr); }
+  .vword { font-size: 1.6rem; }
+}
