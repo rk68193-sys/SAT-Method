@@ -149,6 +149,21 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   ok((await p.$$eval('#rwhub-res a', a => a.map(x => x.getAttribute('href')))).includes('#drill-same'), 'the Learn search finds the drill under paraphrase');
   await p.fill('#rwhub-q', '');
 
+  /* ---- Poems and stories, on Step 2 (src/reading/poems.py) ---- */
+  await go('poems'); await p.waitForTimeout(150); await wide('poems');
+  const pm = await p.evaluate(() => {
+    const s = document.getElementById('poems'), r = s ? s.getBoundingClientRect() : null;
+    return { shown: !!r && r.top < innerHeight && r.bottom > 0, moves: s ? s.querySelectorAll('ol.olist > li').length : 0,
+      links: s ? [...s.querySelectorAll('.poemlist a')].map(a => a.getAttribute('href')) : [], intro: s ? s.querySelector('.pretty').textContent : '' };
+  });
+  ok(pm.shown && pm.moves === 4, 'Poems and stories opens at its address with four moves for a poem: ' + pm.moves);
+  ok(pm.links.length === 36 && new Set(pm.links).size === 36 && pm.links.every(h => /^#rq-[0-9a-f]{8}$/.test(h)), 'the poem list links all 36 poem questions: ' + pm.links.length);
+  ok(/^36 reading questions are built on a poem and \d+ on a novel/.test(pm.intro), 'the section opens with the counts from the bank: ' + pm.intro.slice(0, 80));
+  ok((await p.$$eval('#tags a[href="#poems"]', a => a.length)) === 1, 'the tags section points to Poems and stories');
+  await go('rw-hub'); await p.fill('#rwhub-q', 'poem'); await p.waitForTimeout(150);
+  ok((await p.$$eval('#rwhub-res a', a => a.map(x => x.getAttribute('href')))).includes('#poems'), 'the Learn search finds Poems and stories');
+  await p.fill('#rwhub-q', '');
+
   /* ---- Math drills ---- */
   await go('m-drills'); await wide('m-drills');
   const mcards = await p.$$eval('#v-mdrills [data-start]', b => b.map(x => x.getAttribute('data-start')));

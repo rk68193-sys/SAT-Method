@@ -38,6 +38,7 @@
         add('Drill', 'Sentence or fragment?', 'Can a string of words stand alone? The warm-up for Which boundary?', 'drill-frag', 'fragment complete sentence stand alone tensed verb because which');
         D.gbasics.terms.forEach(function (t) { add('Term', t[0], plain(t[1]), 'parts-of-speech'); });
       }
+      if (D.poems) { add('Guide', 'Poems and stories', 'How to read a poem: by sentence, find the turn, name the attitude, stay close to the images. What story questions turn on.', 'poems', 'poem poems poetry poet speaker line lines stanza image story stories novel fiction play character feeling'); }
       if (D.same) { add('Drill', 'Same idea, different words', 'One sentence and four rewordings. Pick the one that keeps the meaning, not the one that keeps the words.', 'drill-same', 'paraphrase restate restatement reword rewording same meaning other words'); }
       RD.jobs.forEach(function (j) { add('Reading question', j.name, plain(j.look), j.id, (j.says || []).join(' ')); });
       RLIST.forEach(function (x) { add('Worked example', 'Example ' + x.n + ': ' + plain(x.title), JOBNAME[x.job] || '', 'ex-' + x.n, x.diff); });

@@ -49,6 +49,8 @@ gbasics_path = os.path.join(S, 'build', 'gbasics.json')   # parts-of-speech prim
 if os.path.exists(gbasics_path): data['gbasics'] = json.load(open(gbasics_path, encoding='utf-8'))
 same_path = os.path.join(S, 'build', 'same.json')   # Same idea, different words cards (src/reading/same_idea.py)
 if os.path.exists(same_path): data['same'] = json.load(open(same_path, encoding='utf-8'))
+poems_path = os.path.join(S, 'build', 'poems.json')   # Poems and stories, on Step 2 (src/reading/poems.py)
+if os.path.exists(poems_path): data['poems'] = json.load(open(poems_path, encoding='utf-8'))
 mnotin_path = os.path.join(S, 'build', 'mnotin.json')
 if os.path.exists(mnotin_path): data['mnotin'] = json.load(open(mnotin_path, encoding='utf-8'))
 mdrills_path = os.path.join(S, 'build', 'mdrills.json')

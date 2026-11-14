@@ -1,0 +1,324 @@
+{
+ "title": "Poems and stories",
+ "intro": "36 reading questions are built on a poem and 111 on a novel, a short story or a play. Most ask for a purpose or a structure, what a word means, or a quotation that fits a claim. They are not the hard ones: College Board rates 14% of the poem questions and 24% of the story questions Hard, against 38% of the other reading questions, and question type by question type they are rated Hard about as often as the rest or less often.",
+ "poemHead": "A poem: four moves",
+ "poem": [
+  "<b>Read by sentence, not by line.</b> The test prints a poem with its line breaks, but the thought runs on past them: where the bank marks the breaks, 141 of 154 lines end in the middle of a sentence. Pause where the punctuation tells you to, and put each sentence in plain words before you read the next.",
+  "<b>Find the turn.</b> A short poem often does one thing and then another: a scene, then what the speaker makes of it; a charge, then an answer. A <em>but</em>, a <em>then</em>, a dash or a sudden question often marks the spot. 3 of the 5 questions on a poem’s overall structure have a right answer of the form “this, then that,” and in each of them all four choices take that form, so find the turn first and check both halves. In <a href=\"#rq-acb852e7\">“Black Finger”</a> the speaker describes a cypress against a gold sky, then asks what it means.",
+  "<b>Name the speaker’s attitude.</b> Ask how the speaker feels about what the poem shows, and whether the feeling changes at the turn. All 8 main idea and main purpose questions on a poem have a right answer about a feeling or a view: longing, regret, praise, encouragement.",
+  "<b>When an image stands for an idea, say the idea plainly and stay close to the words.</b> The right answer translates the picture and adds nothing. In <a href=\"#rq-b7f79059\">“Hymn III”</a> the mind is like a flower because both thrive when they are fed and wilt when they are not, and the answer says just that: it needs proper nourishment to thrive. One wrong choice takes the poem’s dew and rain literally and says the mind draws strength from the weather. In <a href=\"#rq-2fdfe002\">“Thoughts in a Zoo”</a> people are caged like the lion, and the answer is that they have hopes their limits keep them from reaching."
+ ],
+ "storyHead": "A story",
+ "story": [
+  "<b>Read for what a character feels, wants or is like.</b> That is the Feeling tag, and most story questions turn on it: in 19 of the 27 main idea and main purpose questions on a story, the right answer is about what a character feels, wants, thinks or is like (<a href=\"#rq-57485f5e\">Heidi is delighted by a picture</a>, <a href=\"#rq-7a0e31ea\">Francie is set on a goal</a>, <a href=\"#rq-3a1f02b0\">Mary is happy in the garden</a>). Most of the rest describe a scene or what someone does or says.",
+  "<b>Translate the old wording as you go.</b> 61 of the 90 story passages and 20 of the 22 poem passages come from works published before 1925. Swap in plain words as you read; <a href=\"#names\">Names, brackets and old words</a> shows how."
+ ],
+ "listHead": "The 36 poem questions",
+ "list": [
+  {
+   "job": "Quotation",
+   "items": [
+    [
+     "0a77c362",
+     "Aunt Sue’s Stories",
+     "Langston Hughes",
+     "1926",
+     "Easy"
+    ],
+    [
+     "b238a07a",
+     "Banking Coal",
+     "Jean Toomer",
+     "1922",
+     "Easy"
+    ],
+    [
+     "87023f34",
+     "Ghosts of the Old Year",
+     "James Weldon Johnson",
+     "early 1900s",
+     "Medium"
+    ],
+    [
+     "9e5ce27c",
+     "Lines Written in Early Spring",
+     "William Wordsworth",
+     "1798",
+     "Medium"
+    ],
+    [
+     "1f3be847",
+     "Loon Point",
+     "Amy Lowell",
+     "1912",
+     "Medium"
+    ],
+    [
+     "81af81d4",
+     "Often Rebuked, Yet Always Back Returning",
+     "Emily Brontë",
+     "1846",
+     "Medium"
+    ],
+    [
+     "25290c8d",
+     "On Virtue",
+     "Phillis Wheatley",
+     "1766",
+     "Medium"
+    ],
+    [
+     "66fd248a",
+     "Poetry",
+     "Marianne Moore",
+     "1919",
+     "Hard"
+    ],
+    [
+     "abbea24d",
+     "The Mountain",
+     "Robert Frost",
+     "1914",
+     "Easy"
+    ],
+    [
+     "47f2cddd",
+     "The Rock and the Sea",
+     "Charlotte Perkins Gilman",
+     "1893",
+     "Easy"
+    ],
+    [
+     "2ef8e367",
+     "To You",
+     "Walt Whitman",
+     "1856",
+     "Medium"
+    ],
+    [
+     "6f626ae5",
+     "To You",
+     "Walt Whitman",
+     "1856",
+     "Easy"
+    ],
+    [
+     "6df33868",
+     "We Are Marching",
+     "Carrie Law Morgan Figgs",
+     "1921",
+     "Easy"
+    ],
+    [
+     "99fdf71c",
+     "When Dawn Comes to the City",
+     "Claude McKay",
+     "1922",
+     "Medium"
+    ]
+   ]
+  },
+  {
+   "job": "Purpose or structure",
+   "items": [
+    [
+     "ad4f7362",
+     "Aeneid",
+     "Virgil, translated by John Dryden",
+     "1697",
+     "Hard"
+    ],
+    [
+     "749f3334",
+     "At Newport",
+     "Charlotte Forten Grimké",
+     "1888",
+     "Medium"
+    ],
+    [
+     "9c759a09",
+     "Benediction",
+     "Georgia Douglas Johnson",
+     "1922",
+     "Easy"
+    ],
+    [
+     "acb852e7",
+     "Black Finger",
+     "Angelina Weld Grimké",
+     "1923",
+     "Medium"
+    ],
+    [
+     "14b7dced",
+     "Calamus 24",
+     "Walt Whitman",
+     "1860",
+     "Medium"
+    ],
+    [
+     "c4900368",
+     "Cycle",
+     "D’Arcy McNickle",
+     "1924",
+     "Medium"
+    ],
+    [
+     "5f56fdec",
+     "Eternity",
+     "George Marion McClellan",
+     "1895",
+     "Hard"
+    ],
+    [
+     "c7265342",
+     "Marshlands",
+     "Emily Pauline Johnson",
+     "1895",
+     "Medium"
+    ],
+    [
+     "03eeecf3",
+     "Mid-Day",
+     "H.D.",
+     "1916",
+     "Medium"
+    ],
+    [
+     "97360a00",
+     "Street Lamps in Early Spring",
+     "Gwendolyn Bennett",
+     "1926",
+     "Medium"
+    ],
+    [
+     "f2c48e47",
+     "The Earth’s Entail",
+     "Charlotte Perkins Gilman",
+     "1910",
+     "Medium"
+    ],
+    [
+     "213a25d1",
+     "The Poet and His Song",
+     "Paul Laurence Dunbar",
+     "1913",
+     "Medium"
+    ],
+    [
+     "809addda",
+     "The Wanderer",
+     "Ameen Rihani",
+     "1921",
+     "Easy"
+    ]
+   ]
+  },
+  {
+   "job": "Main idea",
+   "items": [
+    [
+     "b69d821d",
+     "Evening",
+     "Vita Sackville-West",
+     "1920",
+     "Hard"
+    ],
+    [
+     "adbcbce0",
+     "Monna Innominata 2",
+     "Christina Rossetti",
+     "1881",
+     "Medium"
+    ],
+    [
+     "5eda42a3",
+     "Poet of Our Race",
+     "Maggie Pogue Johnson",
+     "1910",
+     "Hard"
+    ]
+   ]
+  },
+  {
+   "job": "Detail",
+   "items": [
+    [
+     "b7f79059",
+     "Hymn III",
+     "Ezra Pound",
+     "1909",
+     "Medium"
+    ],
+    [
+     "2fdfe002",
+     "Thoughts in a Zoo",
+     "Countee Cullen",
+     "1926",
+     "Medium"
+    ]
+   ]
+  },
+  {
+   "job": "Words in context",
+   "items": [
+    [
+     "6cf906fc",
+     "At the Salon",
+     "José Martí",
+     "1891",
+     "Easy"
+    ],
+    [
+     "9671d61d",
+     "Morning Joy",
+     "Claude McKay",
+     "1922",
+     "Easy"
+    ],
+    [
+     "5d48f889",
+     "Spring and You",
+     "Mercedes de Acosta",
+     "1921",
+     "Easy"
+    ],
+    [
+     "b11bb2a3",
+     "Summer",
+     "Amy Lowell",
+     "1912",
+     "Easy"
+    ]
+   ]
+  }
+ ],
+ "n": {
+  "poem": 36,
+  "poemPassage": 22,
+  "poemQuote": 14,
+  "story": 111,
+  "storyPassage": 90,
+  "storyQuote": 21,
+  "rest": 732,
+  "poemHard": 14,
+  "storyHard": 24,
+  "restHard": 38,
+  "jobs": {
+   "Quotation": 35,
+   "Purpose or structure": 45,
+   "Main idea": 12,
+   "Detail": 18,
+   "Word": 36
+  },
+  "lines": 154,
+  "runOn": 141,
+  "struct": 5,
+  "turn": 3,
+  "poemMain": 8,
+  "storyMain": 27,
+  "storyFeeling": 19,
+  "storyOld": 61,
+  "poemOld": 20
+ }
+}

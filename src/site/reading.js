@@ -83,14 +83,28 @@
   }
   function rChunkHTML() {
     return '<header><p class="eyebrow">Reading · step 2</p><h2 class="vtitle">Chunk: one sentence at a time</h2></header>' +
-      '<section id="tags" class="sec first"><div class="sech"><h3 class="h2">' + esc(RD.tags.title) + '</h3></div>' + blocksHTML(RD.tags) + '</section>' +
+      '<section id="tags" class="sec first"><div class="sech"><h3 class="h2">' + esc(RD.tags.title) + '</h3></div>' + blocksHTML(RD.tags) +
+        (D.poems ? '<p class="fine">Reading a poem or a story? <a href="#poems">Poems and stories</a>, below, has four moves for a poem and what story questions turn on.</p>' : '') + '</section>' +
       '<section id="turns" class="sec"><div class="sech"><h3 class="h2">' + esc(RD.turns.title) + '</h3></div>' + '<p class="pretty">' + RD.turns.blocks[0].p + '</p>' +
       '<div class="hbars">' + RD.turnShares.map(function (r) {
         var m = /(\d+)%\s*\((\d+) of (\d+)\)/.exec(r[1]) || [0, 0, 0, 0];
         return hbar(esc(r[0]), Number(m[1]), 100, esc(r[1]));
       }).join('') + '</div>' + (RD.turnNote ? '<p class="fine">' + RD.turnNote + '</p>' : '') + blocksHTML({ blocks: RD.turns.blocks.slice(1).filter(function (b) { return !b.table; }) }) + '</section>' +
       '<section id="names" class="sec"><div class="sech"><h3 class="h2">' + esc(RD.names.title) + '</h3></div>' + blocksHTML(RD.names) + '</section>' +
+      (D.poems ? poemsHTML() : '') +
       '<div class="nextlinks"><a class="btn" href="#long">Long sentences: core first</a><a class="btn ghost" href="#drills" data-drill="tag">Drill: Tag the sentence</a></div>';
+  }
+  /* Poems and stories: every number comes from src/reading/poems.py, which counts it in the bank */
+  function poemsHTML() {
+    var P = D.poems, li = function (t) { return '<li>' + t + '</li>'; };
+    return '<section id="poems" class="sec"><div class="sech"><h3 class="h2">' + esc(P.title) + '</h3></div><p class="pretty">' + P.intro + '</p>' +
+      '<h4 class="subh">' + esc(P.poemHead) + '</h4><ol class="olist">' + P.poem.map(li).join('') + '</ol>' +
+      '<h4 class="subh">' + esc(P.storyHead) + '</h4><ul class="plainlist">' + P.story.map(li).join('') + '</ul>' +
+      '<details class="ctx poemlist"><summary>' + esc(P.listHead) + '</summary><div class="ctxbody">' + P.list.map(function (g) {
+        return '<p class="label">' + esc(g.job) + ' · ' + g.items.length + '</p><ul class="plainlist">' + g.items.map(function (it) {
+          return '<li><a href="#rq-' + it[0] + '">“' + esc(it[1]) + '”</a>, ' + esc(it[2]) + ', ' + esc(it[3]) + ' <span class="muted">· ' + esc(it[4]) + '</span></li>';
+        }).join('') + '</ul>';
+      }).join('') + '</div></details></section>';
   }
   function apartHTML(a, i) {
     return '<figure class="apart" id="' + a.id + '"><figcaption class="aphead"><span class="aptitle">' + esc(a.title) + '</span><span class="apmeta">' + esc(a.meta) + '</span></figcaption>' +

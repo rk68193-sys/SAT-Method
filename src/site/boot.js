@@ -49,7 +49,7 @@
   /* token -> [page, anchor] inside the Reading view */
   var READ_AT = {
     reading: ['routine'], routine: ['routine'], reasoning: ['reasoning'], 'data-patterns': ['dataPatterns'], 'source-findings': ['reviewFindings'], shape: ['shape'], job: ['job'], leadin: ['job', 'leadin'], chunk: ['chunk'], tags: ['chunk', 'tags'],
-    turns: ['chunk', 'turns'], names: ['chunk', 'names'], long: ['long'], apart: ['long', 'apart'], para: ['para'], say: ['say'], check: ['check'],
+    turns: ['chunk', 'turns'], names: ['chunk', 'names'], poems: ['chunk', 'poems'], long: ['long'], apart: ['long', 'apart'], para: ['para'], say: ['say'], check: ['check'],
     traps: ['check', 'traps'], notesfirst: ['notes'], vocab: ['vocab'], 'vocab-why': ['vocab', 'vocab-why'], 'vocab-check': ['vocab', 'vocab-check'], 'vocab-second': ['vocab', 'vocab-second'], 'vocab-list': ['vocab', 'vocab-list'], 'vocab-func': ['vocab', 'vocab-func'], pturn: ['para', 'pturn'], pmethod: ['para', 'pmethod'], goalfirst: ['notes'], partly: ['check', 'partly'], myths: ['check', 'myths'], others: ['others'], train: ['others', 'train'], sets: ['sets'], measured: ['measured']
   };
   var GRAM_AT = { grammar: ['method'], method: ['method'], try: ['method', 'try'], patterns: ['method', 'patterns'], first: ['method', 'patterns'], steps: ['method', 'steps'],
