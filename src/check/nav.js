@@ -56,9 +56,9 @@ const { chromium } = require('playwright');
   await shot('math-start');
   await go('m-learn'); b = await bar();
   ok(b.top === 'Start here | Learn* | Practice | My map', 'Lessons is under Learn: ' + b.top);
-  ok(b.sub === 'Overview | Lessons* | Big patterns | Expanded types | Question finder | Shortcuts | Desmos | Formulas', 'second row: ' + b.sub);
+  ok(b.sub === 'Overview | Lessons* | Foundations | Big patterns | Expanded types | Question finder | Shortcuts | Desmos | Formulas', 'second row: ' + b.sub);
   await wide('math lessons'); await shot('math-lessons');
-  for (const [t, name] of [['m-patterns', 'Big patterns'], ['m-study', 'Expanded types'], ['m-types', 'Question finder'], ['m-short', 'Shortcuts'], ['m-desmos', 'Desmos'], ['m-ref', 'Formulas'], ['m-nlf', 'Lessons'], ['mt-sys-count', 'Lessons'], ['md-fit', 'Desmos']]) {
+  for (const [t, name] of [['m-found', 'Foundations'], ['m-found-den', 'Foundations'], ['m-patterns', 'Big patterns'], ['m-study', 'Expanded types'], ['m-types', 'Question finder'], ['m-short', 'Shortcuts'], ['m-desmos', 'Desmos'], ['m-ref', 'Formulas'], ['m-nlf', 'Lessons'], ['mt-sys-count', 'Lessons'], ['md-fit', 'Desmos']]) {
     await go(t); b = await bar();
     ok(b.top.includes('Learn*') && b.sub.includes(name + '*'), t + ' → Learn › ' + name);
     await wide(t);
@@ -74,7 +74,7 @@ const { chromium } = require('playwright');
   // the tab itself goes to the overview; search finds things across every section
   await p.click('#secin a[data-group="learn"]'); await p.waitForTimeout(300);
   ok((await p.evaluate(() => location.hash)) === '#m-hub' && (await bar()).sub.startsWith('Overview*'), 'the Learn tab opens the overview');
-  ok((await p.$$('#v-mhub .hub-card')).length === 7, 'the overview lists the seven Math sections');
+  ok((await p.$$('#v-mhub .hub-card')).length === 8, 'the overview lists the eight Math sections');
   await p.fill('#mhub-q', 'vertex'); await p.waitForTimeout(150);
   const kinds = await p.$$eval('#mhub-res .mtag', L => [...new Set(L.map(x => x.textContent))]);
   ok(kinds.length >= 3 && /results?/.test(await text('#mhub-n')), '“vertex” is found across ' + kinds.join(', '));
@@ -115,7 +115,7 @@ const { chromium } = require('playwright');
   ok((await p.evaluate(() => location.hash)) === '#ex-3', 'a page you visited keeps your place');
   // footer and home still list every page
   await go('home');
-  ok((await p.$$('#footcols nav:nth-of-type(2) a')).length === 12 &&(await text('#footcols')).includes('Learn: overview'), 'the footer lists every page, with the overview named');
+  ok((await p.$$('#footcols nav:nth-of-type(2) a')).length === 13 &&(await text('#footcols')).includes('Learn: overview'), 'the footer lists every page, with the overview named');
   console.log(over.length ? 'OVERFLOW ' + over.join(' ; ') : 'no overflow');
   console.log(errors.length ? 'ERRORS ' + errors.join(' ; ') : 'no errors');
   console.log(fail.length ? fail.length + ' FAILED: ' + fail.join(' ; ') : 'all checks passed');

@@ -143,6 +143,7 @@
     var page = '';
     function home() {
       return '<div class="wrap">' + mHead('Math · Lessons', 'Lessons, one skill at a time', 'College Board sorts every math question into 19 skills in four areas. Each lesson explains the idea from scratch, gives the method, a worked example, the usual trap, and every question type in that skill with how to solve it.') +
+        (mFoundNudgeHTML() || '<aside class="mnote"><p><b>Rusty on the basics?</b> <a href="#m-found">Algebra foundations</a> covers the six moves every lesson assumes, from fractions to an unknown in a denominator, each with a drill.</p></aside>') +
         MD.domains.map(function (d) {
           return '<section class="sec" id="m-learn-' + d.id + '"><div class="mdom-h"><h3 class="h2">' + esc(d.name) + '</h3><p class="mdom-spec">' + esc(d.spec) + '</p></div><p class="lede">' + esc(d.blurb) + '</p><div class="mskills">' +
             d.skills.map(function (k) {

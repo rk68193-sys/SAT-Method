@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -141,6 +141,14 @@
     if (token === 'math') { showView('mstart'); buildMStart(); toTop(); return true; }
     if (token === 'm-learn') { showView('mlearn'); landed(mlearnView.show('home')); toTop(); return true; }
     if ((m = /^m-learn-([a-z]+)$/.exec(token))) { showView('mlearn'); mlearnView.show('home'); scrollToEl(document.getElementById(token)); return true; }
+    if (token === 'm-found') { showView('mfound'); buildMFound(); toTop(); return true; }
+    if (token === 'm-found-practice') {
+      /* Easy Algebra questions, set up and ready to start */
+      var fs = mpSettings(); fs.topic = 'd:alg'; fs.diff = 'E'; fs.mode = 'learn'; store.s.math = fs; save();
+      if (MP && !MP.over) { clearInterval(mpInterval); }
+      showView('mprac'); mpSetup(); toTop(); return true;
+    }
+    if ((m = /^m-found-([a-z]+)$/.exec(token)) && has(MFOUNDBY, m[1])) { showView('mfound'); buildMFound(); scrollToEl(document.getElementById(token)); return true; }
     if ((m = /^m-([a-z0-9]+)$/.exec(token)) && has(MSK, m[1])) { showView('mlearn'); landed(mlearnView.show(m[1])); toTop(); return true; }
     if ((m = /^mt-(.+)$/.exec(token)) && has(MTY, m[1])) { showView('mlearn'); mlearnView.show(MTY[m[1]].skill); scrollToEl($('#' + token, viewEl.mlearn)); return true; }
     if (token === 'm-study') { showView('mstudy'); buildMStudy(); toTop(); return true; }
@@ -187,9 +195,10 @@
     var href = a.getAttribute('href').slice(1);
     var dk = a.getAttribute('data-drill');
     if (dk && has(DR, dk)) {
-      var dsj2 = drillSubjOf(dk);
+      var dsj2 = drillSubjOf(dk), dref = a.getAttribute('data-drill-ref');
       try { history.pushState(null, '', dsj2 === 'math' ? '#m-drills' : '#drills'); } catch (err) {}
-      showView(dsj2 === 'math' ? 'mdrills' : 'drills'); startDrill(dk); return;
+      showView(dsj2 === 'math' ? 'mdrills' : 'drills');
+      startDrill(dk, dref ? drillItems(dk).filter(function (it) { return it.ref === dref; }).map(function (it) { return it.id; }) : null); return;
     }
     var tp = a.getAttribute('data-tpart');
     if (tp) { var s0 = isObj(store.s.timed) ? store.s.timed : {}; s0.src = 'g'; s0.part = tp; s0.which = 'all'; s0.mode = 'set'; store.s.timed = s0; save(); if (built.practice && !TS && !(RM && !RM.over)) { timedSetup(); } }

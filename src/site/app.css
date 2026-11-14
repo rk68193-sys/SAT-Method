@@ -2020,3 +2020,13 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .mtr-drill { font-size: .96rem; }
 .mtr-drill a { white-space: nowrap; }
 #v-mdrills .dprompt .mtx, #v-mdrills .dprompt .mimg { max-width: 100%; }
+
+/* ---------- Math: algebra foundations ---------- */
+.mfound-toc { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1.4rem; }
+.mfound-toc .mchip { font-size: .93rem; padding: .25rem .75rem; }
+.mfound { max-width: 52rem; }
+.mfound-idea { font: 500 1.12rem/1.5 var(--body); color: var(--ink); margin: .6rem 0 1.1rem; }
+.mfx { display: grid; gap: .6rem; margin: .7rem 0 .2rem; padding-left: 1rem; border-left: 3px solid var(--pencil); font: 500 1.12rem/1.45 var(--quote); overflow-wrap: anywhere; }
+.mfx-n { display: block; margin-top: .1rem; font: 400 .9rem/1.4 var(--body); color: var(--muted); }
+.mfound-more { margin-top: .8rem; }
+.mfound-go { margin-top: 1rem; }

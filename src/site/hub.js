@@ -15,6 +15,7 @@
       MORDER.forEach(function (t) { add('Question type', MTY[t].name, MTY[t].spot, 'mt-' + t, MSK[MTY[t].skill].name + ' ' + MTY[t].trap); });
       MST.methods.forEach(function (m) { add('Expanded type', m.title, m.why_it_works, 'm-study-' + encodeURIComponent(m.id), MSK[m.skill].name + ' ' + m.common_trap); });
       MSHORT.forEach(function (s) { add('Shortcut', s.t, s.when, 'ms-' + s.id, s.how.join(' ')); });
+      MFOUND.forEach(function (f) { add('Algebra foundations', f.name, f.idea, 'm-found-' + f.id, f.slip + ' ' + f.why + ' ' + f.words); });
       MD.desmos.forEach(function (m) { add('Desmos move', m.name, m.when, 'md-' + m.id, m.short + ' ' + m.see); });
       add('Formulas', 'Formulas and typing in answers', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'm-ref', 'circle area volume quadratic formula discriminant slope vertex radians sohcahtoa exponent rules');
     } else {
@@ -64,7 +65,7 @@
       '<section class="sec"><h3 class="h2">A good order</h3><ol class="hsteps hub-order">' +
         '<li><b><a href="#' + start[1] + '">Start here</a>.</b><span>Five minutes on what the section asks and the routine to use.</span></li>' +
         (subj === 'math'
-          ? '<li><b><a href="#m-learn">Lessons</a>, one skill at a time.</b><span>Each ends with a button for real questions on just that skill.</span></li><li><b><a href="#m-patterns">Big patterns</a> and <a href="#m-desmos">Desmos</a>.</b><span>The ideas that connect the question types, and the calculator moves that save time.</span></li>'
+          ? '<li><b><a href="#m-found">Algebra foundations</a>, if the basics feel rusty.</b><span>Six moves every lesson assumes, each with a short drill.</span></li><li><b><a href="#m-learn">Lessons</a>, one skill at a time.</b><span>Each ends with a button for real questions on just that skill.</span></li><li><b><a href="#m-patterns">Big patterns</a> and <a href="#m-desmos">Desmos</a>.</b><span>The ideas that connect the question types, and the calculator moves that save time.</span></li>'
           : '<li><b><a href="#reading">Reading</a>: the four-step routine.</b><span>Then the worked examples, trying each before you read it.</span></li><li><b><a href="#method">Grammar</a> in 60 seconds.</b><span>Look at the choices, run one check, confirm. Then the lessons you need.</span></li>') +
         '<li><b><a href="#' + prac[1] + '">Practice</a>, then <a href="#' + (subj === 'math' ? 'm-map' : 'rw-map') + '">My map</a>.</b><span>The map shows which types to come back to.</span></li>' +
       '</ol></section></div>';

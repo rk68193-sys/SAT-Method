@@ -16,6 +16,7 @@
       ['mstart', 'math', 'Start here', 'How to approach every math question, what the test covers, and what the data says.', 'start'],
       ['mhub', 'm-hub', 'Overview', 'Everything there is to learn for Math, with one search across lessons, question types, patterns, shortcuts and calculator moves.', 'learn'],
       ['mlearn', 'm-learn', 'Lessons', 'All 19 skills explained from scratch, each with a method, a worked example and its question types.', 'learn'],
+      ['mfound', 'm-found', 'Foundations', 'The six algebra moves every question assumes, from fractions to an unknown in a denominator, each with a worked example, the usual slip and a drill.', 'learn'],
       ['mpat', 'm-patterns', 'Big patterns', 'A dozen ideas that connect the question types, so one idea solves many kinds of question.', 'learn'],
       ['mstudy', 'm-study', 'Expanded types', '249 fine question types, fuller explanations, close variants, and 998 calculator checks with clear scope.', 'learn'],
       ['mtypes', 'm-types', 'Question finder', 'Type words from a question to see which of the ' + MORDER.length + ' question types it is and how to solve it.', 'learn'],
@@ -23,7 +24,7 @@
       ['mdes', 'm-desmos', 'Desmos', MD.desmos.length + ' calculator moves with exactly what to type, checked on real questions.', 'learn'],
       ['mref', 'm-ref', 'Formulas', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'learn'],
       ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations. Learn one question at a time, or sit a timed 22-question module.', 'practice'],
-      ['mdrills', 'm-drills', 'Drills', 'Short drills on single moves: name the skill, count the solutions, pick the form that shows the answer, and quick reps on exponents, percents, slope and fractions.', 'practice'],
+      ['mdrills', 'm-drills', 'Drills', 'Short drills on single moves: name the skill, count the solutions, pick the form that shows the answer, quick reps on exponents, percents, slope and fractions, and the algebra basics.', 'practice'],
       ['mmap', 'm-map', 'My map', 'All ' + MST.methods.length + ' question types colored by how you are doing, the reasons you miss, and what to practice next.', 'map']] }
   };
   /* the pages to list on Home and in the footer: the Learn overview is named for what it is */

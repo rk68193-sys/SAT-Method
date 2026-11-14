@@ -40,10 +40,12 @@
     mslope: { subj: 'math', part: 'mreps', title: 'Slope from two points', goal: 15, ask: 'What is the slope?',
       blurb: 'Two points, or two readings of a steady rate. Change in y over change in x, with the signs right.' },
     mfrac: { subj: 'math', part: 'mreps', title: 'Clearing fractions', goal: 15, ask: 'Multiply through to clear the fractions. Which equation do you get?',
-      blurb: 'One step only: multiply every term by the right number, and get every term, the whole numbers included.' }
+      blurb: 'One step only: multiply every term by the right number, and get every term, the whole numbers included.' },
+    mfound: { subj: 'math', part: 'mfound', title: 'Algebra foundations', goal: 20, ask: '',
+      blurb: 'Fractions, getting x alone, solving for a whole expression, distributing and factoring, like terms, and an unknown in a denominator. Each wrong choice is a real slip. <a href="#m-found">Read the page</a>.' }
   };
   /* the Math drills written for this site: drill -> key in D.mdrills (src/math/mdrills.py) */
-  var MDR_KIND = { mcount: 'count', mform: 'form', mexp: 'exp', mpct: 'pct', mslope: 'slope', mfrac: 'frac' };
+  var MDR_KIND = { mcount: 'count', mform: 'form', mexp: 'exp', mpct: 'pct', mslope: 'slope', mfrac: 'frac', mfound: 'found' };
   function drillSubjOf(kind) { return DR[kind] && DR[kind].subj === 'math' ? 'math' : 'rw'; }
   function drillsOf(subj) { return Object.keys(DR).filter(function (k) { return drillSubjOf(k) === subj; }); }
   var LINK_OPTS = [
@@ -280,6 +282,8 @@
       var n = types.reduce(function (a, t) { return a + MTY[t].n; }, 0);
       return '<p class="fine">This card was written for this site. The bank has ' + n + ' questions like it: ' + types.map(function (t) { return '<a href="#mp-' + t + '">' + esc(MTY[t].name) + '</a> (' + MTY[t].n + ')'; }).join(', ') + '.</p>';
     }
+    var f = /^m-found-([a-z]+)$/.exec(c.r || '');
+    if (f && MFOUNDBY[f[1]]) { return '<p class="fine">Written for this site. The move: <a href="#' + c.r + '">' + esc(MFOUNDBY[f[1]].name) + '</a>, on the Algebra foundations page.</p>'; }
     var t = /^mt-(.+)$/.exec(c.r || '');
     return t && MTY[t[1]] ? '<p class="fine">Written for this site. It comes up in questions such as <a href="#' + c.r + '">' + esc(MTY[t[1]].name) + '</a>.</p>' : '';
   }
@@ -329,7 +333,7 @@
     drillRun = null; stopWatch();
     var len = dlen();
     var keys = drillsOf(drillSubj || 'rw'), math = drillSubj === 'math';
-    var groups = math ? [['mspot', 'Recognize the question'], ['mreps', 'Quick reps for the usual slips'], ['mfound', 'Foundations']]
+    var groups = math ? [['mspot', 'Recognize the question'], ['mreps', 'Quick reps for the usual slips'], ['mfound', 'The basics underneath']]
       : [['reading', 'Reading drills'], ['grammar', 'Grammar drills'], ['words', 'Word drills']];
     var h = (math ? mHead('Math · Drills', 'Short drills for single moves', 'Each drill trains one move that many questions share. Name the skill uses the bank’s own questions. The other drills use short cards written for this site, and a script works out every card’s answer a second way to check it. Answer with the number keys and press Enter for the next card.')
         : '<header class="read"><p class="eyebrow">Drills</p><h2 class="vtitle">Short drills for the slow steps</h2>' +
@@ -456,7 +460,8 @@
     if (mm && MTY[mm[1]]) { return 'Question type · ' + esc(MTY[mm[1]].name); }
     mm = /^m-(.+)$/.exec(ref);
     if (mm && MSK[mm[1]]) { return 'Lesson · ' + esc(MSK[mm[1]].name); }
-    if (ref === 'm-found') { return 'Algebra foundations'; }
+    mm = /^m-found-([a-z]+)$/.exec(ref);
+    if (mm && MFOUNDBY[mm[1]]) { return 'Algebra foundations · ' + esc(MFOUNDBY[mm[1]].name); }
     return { chunk: 'Step 2 · Chunk: the tags', long: 'Long sentences: core first', para: 'Long passages: make them make sense', method: 'The 60-second method', job: 'Step 1 · Job', 'vocab-second': 'Words to know · Second meanings' }[ref] || ref;
   }
   function drillFinish() {

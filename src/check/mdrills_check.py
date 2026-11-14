@@ -26,7 +26,7 @@ def text(h):
         s = re.sub(r'<span class="fr"><span>([^<]*(?:<sup>[^<]*</sup>[^<]*)*)</span><span>([^<]*(?:<sup>[^<]*</sup>[^<]*)*)</span></span>', r'((\1)/(\2))', s)
     s = re.sub(r'<sup>([^<]*)</sup>', r'**(\1)', s)
     s = re.sub(r'<[^>]+>', '', s)
-    s = s.replace('−', '-').replace('·', '*').replace('×', '*').replace('²', '**2')
+    s = s.replace('−', '-').replace('·', '*').replace('×', '*').replace('÷', '/').replace('²', '**2')
     s = re.sub(r'√(\d+)', r'sqrt(\1)', s)
     s = re.sub(r'∛(\d+)', r'cbrt(\1)', s)
     s = re.sub(r'∜(\d+)', r'(\1)**(1/4)', s)
@@ -112,7 +112,7 @@ def check_form(cards):
 
 
 def equivalent(e1, e2):
-    p = {s: POS[str(s)] for s in (e1.free_symbols | e2.free_symbols)}
+    p = {s: sp.Symbol(str(s), positive=True) for s in (e1.free_symbols | e2.free_symbols)}
     return sp.simplify(e1.subs(p) - e2.subs(p)) == 0
 
 

@@ -773,11 +773,10 @@ def main():
         'slope': gen_slope(rng),
         'frac': gen_frac(rng),
     }
-    try:
-        from foundations import gen_found
-        out['found'] = gen_found(random.Random(20261114))
-    except ImportError:
-        pass
+    import sys
+    sys.path.insert(0, HERE)
+    from foundations import gen_found
+    out['found'] = gen_found(random.Random(20261114))
     for k, v in out.items():
         ids = [c['id'] for c in v]
         assert len(ids) == len(set(ids)), k

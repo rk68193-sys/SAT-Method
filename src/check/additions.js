@@ -128,7 +128,55 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   await go('m-traps'); await p.waitForTimeout(200);
   const mtr = await p.$$eval('#m-traps a', a => a.map(x => x.getAttribute('href')));
   ok(['#m-drill-mexp', '#m-drill-mpct', '#m-drill-mslope', '#m-drill-mfrac', '#m-drill-mskill'].every(h => mtr.includes(h)), 'trap report drill links: ' + mtr.filter(h => /drill/.test(h)).join(' '));
+  ok(mtr.includes('#m-found'), 'a slip in the trap report points to Algebra foundations');
   await wide('m-traps');
+
+  /* ---- Algebra foundations ---- */
+  await go('m-found'); await p.waitForTimeout(150);
+  const fsec = await p.$$eval('#v-mfound section.mfound', s => s.map(x => x.id));
+  ok(fsec.join(' ') === 'm-found-frac m-found-iso m-found-expr m-found-dist m-found-like m-found-den', 'six sections: ' + fsec.join(' '));
+  const fbtn = await p.$$eval('#v-mfound .mfound-go a', a => a.map(x => [x.getAttribute('data-drill-ref'), Number((x.textContent.match(/(\d+) cards/) || [])[1])]));
+  ok(fbtn.length === 6 && fbtn.every(b => b[1] >= 5), 'each section drills its own cards: ' + JSON.stringify(fbtn));
+  ok(/Easy Algebra/.test(await p.textContent('#mfound-you')), 'the page shows your Easy Algebra record');
+  ok(/\b269 of the bank’s 685 Easy questions\b/.test(await p.textContent('#v-mfound .mhead')), 'the page says how much of the easy end is Algebra');
+  await wide('m-found');
+  /* one section's drill: only its cards, and a miss leads back to that section */
+  await p.click('#m-found-frac .mfound-go a'); await p.waitForTimeout(200);
+  ok(!(await p.$eval('#v-mdrills', v => v.hidden)) && /Algebra foundations/.test(await p.textContent('#dhost .dname')), 'a section drill opens on the Math drills page');
+  ok((await p.textContent('#dhost .dbar')).includes('Card 1 of ' + fbtn[0][1]), 'and has just that section’s ' + fbtn[0][1] + ' cards: ' + (await p.textContent('#dhost .dbar')));
+  ok(/Which is equal to it\?/.test(await p.textContent('#dprompt')), 'the question is printed on the card');
+  await p.click('#dhost .dopt:not([data-k="a"])'); await p.waitForTimeout(120);
+  ok(/Why not:/.test(await p.textContent('#dfeed')) && !!(await p.$('#dfeed a[href="#m-found-frac"]')), 'a wrong pick says why, and links to its section');
+  await wide('m-found drill');
+  await p.click('#dend'); await p.waitForTimeout(120);
+  ok(/Algebra foundations · Fractions/.test(await p.textContent('#dhost .missed')), 'the round lists the section to review');
+  await go('m-found-den'); await p.waitForTimeout(200);
+  ok(await p.evaluate(() => { const r = document.getElementById('m-found-den').getBoundingClientRect(); return !document.getElementById('v-mfound').hidden && r.top >= 0 && r.top < 400; }), '#m-found-den opens on its section');
+  /* the Easy Algebra practice link sets the practice up */
+  await go('m-found-practice'); await p.waitForTimeout(200);
+  const fset = await p.evaluate(() => [document.querySelector('input[name="mp-kind"]:checked').value, document.querySelector('input[name="mp-sub"]:checked').value, document.querySelector('input[name="mp-diff"]:checked').value]);
+  ok(fset.join(' ') === 'd alg E' && /^269 questions match/.test(await p.textContent('#mp-count')), 'Easy Algebra practice is set up: ' + fset.join(' ') + ' · ' + await p.textContent('#mp-count'));
+  /* the Learn search reaches the sections */
+  await go('m-hub'); await p.fill('#mhub-q', 'denominator'); await p.waitForTimeout(150);
+  ok((await p.$$eval('#mhub-res a', a => a.map(x => x.getAttribute('href')))).includes('#m-found-den'), 'the Learn search finds the denominator section');
+  /* three Easy Algebra misses bring a pointer to the map and the lessons */
+  ok(!(await p.$('#v-mmap .mfound-nudge')), 'no pointer before the misses');
+  const fmiss = await p.evaluate(() => {
+    const k = 'sat-grammar-sprint.v1', s = JSON.parse(localStorage.getItem(k) || '{}'), D = JSON.parse(document.getElementById('sprint-data').textContent).math;
+    const alg = D.domains.filter(d => d.id === 'alg')[0].skills;
+    const easy = D.qs.filter(r => r[2] === 0 && alg.includes(D.types[D.order[r[1]]].skill));
+    s.m = s.m || {}; easy.slice(0, 3).forEach(r => { s.m[r[0]] = [0, 50, Date.now()]; });
+    localStorage.setItem(k, JSON.stringify(s));
+    return easy.filter(r => s.m[r[0]] && !s.m[r[0]][0]).length;
+  });
+  await p.reload(); await p.waitForTimeout(700);
+  await go('m-map'); await p.waitForTimeout(150);
+  ok(fmiss >= 3 && new RegExp('^' + fmiss + ' Easy Algebra questions still missed').test(await p.textContent('#v-mmap .mfound-nudge').catch(() => '')), 'the map points to the foundations after ' + fmiss + ' Easy Algebra misses');
+  await go('m-learn'); await p.waitForTimeout(150);
+  ok(!!(await p.$('#v-mlearn .mfound-nudge a[href="#m-found"]')), 'and so do the lessons');
+  await go('m-found'); await p.waitForTimeout(150);
+  ok((await p.textContent('#mfound-you')).includes(fmiss + ' still wrong'), 'the page counts them: ' + await p.textContent('#mfound-you'));
+  await wide('m-found with a record');
 
   console.log(over.length ? 'OVERFLOW:\n' + over.join('\n') : 'no overflow');
   console.log(errors.length ? 'ERRORS:\n' + errors.join('\n') : 'no errors');
