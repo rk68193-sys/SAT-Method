@@ -17,6 +17,7 @@
       ['mhub', 'm-hub', 'Overview', 'Everything there is to learn for Math, with one search across lessons, question types, patterns, shortcuts and calculator moves.', 'learn'],
       ['mlearn', 'm-learn', 'Lessons', 'All 19 skills explained from scratch, each with a method, a worked example and its question types.', 'learn'],
       ['mfound', 'm-found', 'Foundations', 'The six algebra moves every question assumes, from fractions to an unknown in a denominator, each with a worked example, the usual slip and a drill.', 'learn'],
+      ['mfirst', 'm-first', 'Shortcut first', 'Six kinds of question where what is asked for drops out in a step or two, the tell for each, and the look-alikes where the short way is not there.', 'learn'],
       ['mpat', 'm-patterns', 'Big patterns', 'A dozen ideas that connect the question types, so one idea solves many kinds of question.', 'learn'],
       ['mstudy', 'm-study', 'Expanded types', '249 fine question types, fuller explanations, close variants, and 998 calculator checks with clear scope.', 'learn'],
       ['mtypes', 'm-types', 'Question finder', 'Type words from a question to see which of the ' + MORDER.length + ' question types it is and how to solve it.', 'learn'],

@@ -21,6 +21,9 @@
         D.mnotin.keep.forEach(function (t) { add('In the bank', t.name, t.why, 'm-notin', 'factor theorem remainder theorem'); });
       }
       MFOUND.forEach(function (f) { add('Algebra foundations', f.name, f.idea, 'm-found-' + f.id, f.slip + ' ' + f.why + ' ' + f.words); });
+      MFIRST.forEach(function (f) { add('Shortcut first', f.name, f.tell, 'm-first-' + f.id, f.move + ' ' + f.watch + ' ' + f.words); });
+      MFIRSTX.forEach(function (f) { add('Shortcut look-alike', f.name, f.why, 'm-first-' + f.id, f.looks + ' ' + f.instead); });
+      add('Shortcut first', 'Picking numbers: a check, not the first move', 'Where picking your own numbers breaks down: constants fixed by a condition, no solution and infinitely many, and choices that agree at your number.', 'm-first-picknum', 'pick a number plug in substitute choose a value');
       MD.desmos.forEach(function (m) { add('Desmos move', m.name, m.when, 'md-' + m.id, m.short + ' ' + m.see); });
       add('Formulas', 'The reference sheet', 'The formulas and facts the test gives you, and the Reference button that opens them while you practice.', 'm-sheet', 'formula sheet circle rectangle triangle pythagorean special right triangles 30-60-90 45-45-90 box rectangular prism cylinder sphere cone pyramid volume area degrees radians');
       add('Formulas', 'Formulas and typing in answers', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'm-ref', 'circle area volume quadratic formula discriminant slope vertex radians sohcahtoa exponent rules');
@@ -71,7 +74,7 @@
       '<section class="sec"><h3 class="h2">A good order</h3><ol class="hsteps hub-order">' +
         '<li><b><a href="#' + start[1] + '">Start here</a>.</b><span>Five minutes on what the section asks and the routine to use.</span></li>' +
         (subj === 'math'
-          ? '<li><b><a href="#m-found">Algebra foundations</a>, if the basics feel rusty.</b><span>Six moves every lesson assumes, each with a short drill.</span></li><li><b><a href="#m-learn">Lessons</a>, one skill at a time.</b><span>Each ends with a button for real questions on just that skill.</span></li><li><b><a href="#m-patterns">Big patterns</a> and <a href="#m-desmos">Desmos</a>.</b><span>The ideas that connect the question types, and the calculator moves that save time.</span></li>'
+          ? '<li><b><a href="#m-found">Algebra foundations</a>, if the basics feel rusty.</b><span>Six moves every lesson assumes, each with a short drill.</span></li><li><b><a href="#m-learn">Lessons</a>, one skill at a time.</b><span>Each ends with a button for real questions on just that skill.</span></li><li><b><a href="#m-first">Shortcut first</a>, <a href="#m-patterns">Big patterns</a> and <a href="#m-desmos">Desmos</a>.</b><span>The habit of checking for a short way, the ideas that connect the question types, and the calculator moves that save time.</span></li>'
           : '<li><b><a href="#reading">Reading</a>: the four-step routine.</b><span>Then the worked examples, trying each before you read it.</span></li><li><b><a href="#method">Grammar</a> in 60 seconds.</b><span>Look at the choices, run one check, confirm. Then the lessons you need.</span></li>') +
         '<li><b><a href="#' + prac[1] + '">Practice</a>, then <a href="#' + (subj === 'math' ? 'm-map' : 'rw-map') + '">My map</a>.</b><span>The map shows which types to come back to.</span></li>' +
       '</ol></section></div>';

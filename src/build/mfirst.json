@@ -1,0 +1,327 @@
+{
+ "kinds": [
+  "scale",
+  "block",
+  "combine",
+  "roots",
+  "match",
+  "mirror",
+  "x-sub",
+  "x-divide",
+  "x-cubic"
+ ],
+ "qs": {
+  "2e8cc1c0": {
+   "k": "scale",
+   "n": "24x is 6 × 4x, so 24x = 6 × 3 = 18. There is no need to find x = 3/4."
+  },
+  "49cd76d5": {
+   "k": "scale",
+   "n": "72x is 9 × 8x, so 72x = 9 × 6 = 54, with no fractions on the way."
+  },
+  "70774aa4": {
+   "k": "scale",
+   "n": "15x is 3 × 5x, so 15x = 3 × 20 = 60."
+  },
+  "b4553284": {
+   "k": "scale",
+   "n": "9x is 4.5 times 2x, so 9x = 4.5 × 12 = 54. Here x = 6 is just as quick."
+  },
+  "b82a943c": {
+   "k": "scale",
+   "n": "Finding x is quickest here: x = 4, so 8x = 32. The question wants 8x, not x."
+  },
+  "088bc84e": {
+   "k": "scale",
+   "n": "2(5x) = 6 already holds 5x. Divide both sides by 2: 5x = 3."
+  },
+  "fa80893a": {
+   "k": "scale",
+   "n": "Triple both sides: 6x + 9 = 27. Then take 10 from both sides: 6x − 1 = 17."
+  },
+  "0adbe034": {
+   "k": "scale",
+   "n": "4x − 28 is 4(x − 7), so divide both sides by 4: x − 7 = −6."
+  },
+  "9b886541": {
+   "k": "scale",
+   "n": "3x + 8 is 16 more than 3x − 8, so add 16 to both sides: 3x + 8 = 23."
+  },
+  "590f2187": {
+   "k": "scale",
+   "n": "3x − 27 is 3(x − 9), so divide both sides by 3: x − 9 = 8."
+  },
+  "2f0a43b2": {
+   "k": "scale",
+   "n": "8/x is x/8 turned upside down, so turn the 5 upside down too: 8/x = 1/5."
+  },
+  "40ba6288": {
+   "k": "scale",
+   "n": "Take 12 from both sides of 3x = 30: 3x − 12 = 18."
+  },
+  "eac739b2": {
+   "k": "scale",
+   "n": "16x + 8 is 4(4x + 2), so it is 4 × 12 = 48."
+  },
+  "3c4ce699": {
+   "k": "scale",
+   "n": "18 + 3x is 3(6 + x), so it is 3 × 9 = 27."
+  },
+  "4e77195b": {
+   "k": "scale",
+   "n": "16 + 8x is 8(2 + x), so it is 8 × 60 = 480."
+  },
+  "5eb4918d": {
+   "k": "scale",
+   "n": "90x + 40 is 10(9x + 4), so it is 10 × 67 = 670."
+  },
+  "ce6b52d8": {
+   "k": "scale",
+   "n": "Expand and collect: 7t − 20 = 40 + 4t, so 3t = 60. That is what is asked, so stop before finding t."
+  },
+  "620abf36": {
+   "k": "block",
+   "n": "Five lots of (x + 4) equal four lots plus 29, so one lot is 29: x + 4 = 29."
+  },
+  "f60aa0dc": {
+   "k": "block",
+   "n": "Nine lots of (4 − 3x) plus 2 equal eight lots plus 18, so one lot is 16: 4 − 3x = 16."
+  },
+  "018a2704": {
+   "k": "block",
+   "n": "Take 16 from both sides: 2(x − 8) = 30, which is exactly what is asked."
+  },
+  "7a5a74a6": {
+   "k": "block",
+   "n": "2x − 6 is 2(x − 3), so the equation is 6(x − 3) − 11 = 4(x − 3) + 6. That gives 2(x − 3) = 17, so x − 3 = 17/2."
+  },
+  "4771a64a": {
+   "k": "block",
+   "n": "Call 2 − 4x the bracket: 5 − 7 × bracket = 16 − 8 × bracket, so the bracket is 11."
+  },
+  "aee9fd2d": {
+   "k": "block",
+   "n": "The same number over 3 and over 13 can be equal only when the number is 0. So x + 6 = 0, which is between −2 and 2."
+  },
+  "f5ff91b2": {
+   "k": "block",
+   "n": "The same number over 7 and over 9 can be equal only when it is 0. So x − 5 = 0, which is between −3 and 3."
+  },
+  "608eeb6e": {
+   "k": "combine",
+   "n": "Add the equations: 5x − 4x + y = 15 − 2, so x + y = 13."
+  },
+  "9db5b5c1": {
+   "k": "combine",
+   "n": "Add the equations: 4x − 3x + y = 20 − 7, so x + y = 13."
+  },
+  "570b5a5d": {
+   "k": "combine",
+   "n": "The first equation plus twice the second: (7/2 + 5)x + 18y = 25 + 46, so (17/2)x + 18y = 71."
+  },
+  "edc1b7b7": {
+   "k": "combine",
+   "n": "Subtract the equations: 4(8x) = 0, so 8x = 0. Add them: 8(7y) = 24, so 7y = 3. So 8x + 7y = 3."
+  },
+  "3a84f885": {
+   "k": "combine",
+   "n": "Add the equations: the 4(y + 7) terms cancel, so 2(x − 2) = 559. Triple both sides: 6(x − 2) = 1677."
+  },
+  "4b6f0a3f": {
+   "k": "roots",
+   "n": "Sum = −b/a = 5. (The solutions are 8 and −3.)"
+  },
+  "ff2e5c76": {
+   "k": "roots",
+   "n": "Sum = −b/a = 40. Finding the solutions themselves would take the quadratic formula and square roots."
+  },
+  "158591f0": {
+   "k": "roots",
+   "n": "Move everything to one side first: 3x² − 29x + 56 = 0. Then the sum is −b/a = 29/3."
+  },
+  "5edc8c98": {
+   "k": "roots",
+   "n": "Sum = (16a + 4b)/64 = 4(4a + b)/64 = (4a + b)/16, so k = 1/16."
+  },
+  "2c05d312": {
+   "k": "roots",
+   "n": "Product = c/a = ab/57, so k = 1/57."
+  },
+  "722de804": {
+   "k": "roots",
+   "n": "x − 47 is 1 or −1, so the two solutions sit 1 either side of 47. Their sum is 2 × 47 = 94."
+  },
+  "c9417793": {
+   "k": "roots",
+   "n": "|x − 9| = 18, so the two solutions sit 18 either side of 9. Their sum is 2 × 9 = 18."
+  },
+  "3a01a5ee": {
+   "k": "roots",
+   "n": "The two solutions sit either side of the x that makes −5x + 13 zero, x = 13/5. So their sum is 2 × 13/5 = 26/5."
+  },
+  "30596346": {
+   "k": "roots",
+   "n": "Read the solutions off the factors: k, 4 and −4. The 4 and −4 cancel, so the sum is k, and k = 59."
+  },
+  "371cbf6b": {
+   "k": "match",
+   "n": "Match the x³ terms: 5a = 20, so a = 4. Match the x² terms: 15 − ab = −9, so ab = 24, which is what is asked."
+  },
+  "b4a6ed81": {
+   "k": "match",
+   "n": "Multiply out the right side: 15ry⁵ − 9ry⁴. Match the y⁵ terms: 15r = 90, so r = 6."
+  },
+  "34847f8a": {
+   "k": "match",
+   "n": "Over the common bottom, the top on the left is 2(x + 5) + 3(x − 2) = 5x + 4. So r = 5, t = 4 and rt = 20."
+  },
+  "ea6d05bb": {
+   "k": "match",
+   "n": "Only the x-term is needed: 3x × 6 − 23 × 19x = 18x − 437x = −419x, so b = −419."
+  },
+  "5355c0ef": {
+   "k": "match",
+   "n": "Match the x² terms: 4a = 0.36, so a = 0.09. Check: 7 × 0.09 = 0.63 and 13 × 0.09 = 1.17."
+  },
+  "c81b6c57": {
+   "k": "match",
+   "n": "Match the x-terms: 3p − 16p − 64 = −155, so −13p = −91 and p = 7."
+  },
+  "a0b4103e": {
+   "k": "match",
+   "n": "(x − k)(x + k) = x² − k², so the right side is x²/3 − k²/3. Match the plain numbers: k²/3 = 2, so k = √6."
+  },
+  "49efde89": {
+   "k": "match",
+   "n": "x(2x + 7) = 2x² + 7x. Match the x-terms: a = 7."
+  },
+  "04887c7b": {
+   "k": "match",
+   "n": "(2x + 3)(7x − 2) − (5x + 6) has x-terms −4x + 21x − 5x = 12x, so b = 12."
+  },
+  "f237ccfc": {
+   "k": "match",
+   "n": "a + b + c is the value at x = 1, so put x = 1 into the sum: (−2 + 1 + 31) + (3 + 7 − 8) = 32."
+  },
+  "a391ed22": {
+   "k": "match",
+   "n": "Only the x-term is needed: (1/2)(1/2) + (3/2)(3/2) = 1/4 + 9/4 = 5/2."
+  },
+  "c8a5c221": {
+   "k": "match",
+   "n": "Collect the x² terms: −5x² − 3x² = −8x², so a = −8."
+  },
+  "911c415b": {
+   "k": "match",
+   "n": "a + b is the value at y = 1: (7532 + 100) + 10(10 − 110) = 7632 − 1000 = 6632."
+  },
+  "16de54c7": {
+   "k": "match",
+   "n": "Match the plain numbers: −3k = −12, so k = 4. Check the x-terms: 2k − 3 = 5."
+  },
+  "26e83bbc": {
+   "k": "match",
+   "n": "Match the x² terms: bx × (−27x) = −27bx² must be −3x², so b = 1/9. Check the x³ terms: −27 + 9b = −26."
+  },
+  "1dd13816": {
+   "k": "match",
+   "n": "Collect the x³ terms: 5x³ + 4x³ = 9x³, so b = 9."
+  },
+  "5c94e6fa": {
+   "k": "match",
+   "n": "Infinitely many solutions means the two sides are the same expression: 3x + 21 = 3x + k, so k = 21."
+  },
+  "e53870b6": {
+   "k": "match",
+   "n": "Infinitely many solutions means the two sides are the same expression, so k = 5."
+  },
+  "15daa8d6": {
+   "k": "match",
+   "n": "a(x + 8) = ax + 8a has to be 2x + 16 for every x, so a = 2."
+  },
+  "40049d49": {
+   "k": "match",
+   "n": "4x + 12 is 4(x + 3) and the right side is (a/2)(x + 3). So a/2 = 4 and a = 8."
+  },
+  "70e29454": {
+   "k": "match",
+   "n": "a(3 − x) − b = −ax + 3a − b. Match the x-terms: a = 2. Match the plain numbers: 6 − b = −1, so b = 7."
+  },
+  "ac472881": {
+   "k": "match",
+   "n": "The left side is 3x + 7 − s/13 and the right side is rx − 8r. Match: r = 3, then 7 − s/13 = −24, so s = 403."
+  },
+  "4b76c7f1": {
+   "k": "match",
+   "n": "8x + 28y is 4(2x + 7y). For the same line the right side must also be 4 times as big: a = 4 × 9 = 36."
+  },
+  "dcc4886a": {
+   "k": "match",
+   "n": "Infinitely many solutions means the second equation is the same line, so b = 3."
+  },
+  "e142f83c": {
+   "k": "match",
+   "n": "Same line: the first is y = (4/5)x + 10 and the second is y = (4/5)x + 8 + v, so v = 2."
+  },
+  "571174f3": {
+   "k": "match",
+   "n": "Same line, so g and k are the same multiple of 2/5 and 7/5. So g/k = (2/5) ÷ (7/5) = 2/7, without finding g or k."
+  },
+  "d909cd31": {
+   "k": "match",
+   "n": "Multiply the given equation by 4/5: −12x + 20y = 52. Same line, so infinitely many solutions."
+  },
+  "8e1da169": {
+   "k": "mirror",
+   "n": "The zeros are 44 and 46, and the minimum is halfway between them: x = 45."
+  },
+  "18e35375": {
+   "k": "mirror",
+   "n": "The zeros are 14 and −19, and the minimum is halfway: (14 − 19)/2 = −5/2."
+  },
+  "083ef63a": {
+   "k": "mirror",
+   "n": "The zeros are 2 and −15, and the minimum is halfway: (2 − 15)/2 = −13/2."
+  },
+  "4d7064a6": {
+   "k": "mirror",
+   "n": "The zeros are 10 and −13, and the minimum is halfway: (10 − 13)/2 = −3/2."
+  },
+  "668f1863": {
+   "k": "mirror",
+   "n": "f(−20) and f(−4) are both 0, so the vertex is halfway between: r = (−20 − 4)/2 = −12."
+  },
+  "271ffad7": {
+   "k": "mirror",
+   "n": "It starts at 7 m at time 0 and is highest at 3 s, so it is back at 7 m the same time after the peak: at 6 s."
+  },
+  "de91a6fc": {
+   "k": "mirror",
+   "n": "The most bowls sell at $10. $8 and $12 are both $2 away from it, so they sell the same number: 5."
+  },
+  "bba18ecb": {
+   "k": "mirror",
+   "n": "−17/4 is 5/4 to the left of the vertex at x = −3, so the other intercept is 5/4 to the right of it: −7/4."
+  },
+  "ea8bd66f": {
+   "k": "x-sub",
+   "n": "Adding these equations does not give x + y. One already says y = 4x, so substitute: 5x − 12x = −14, x = 2, y = 8, and x + y = 10."
+  },
+  "bd45df49": {
+   "k": "x-sub",
+   "n": "Put y = 3x + 9 into the second equation: 9x + 27 = 8x − 6, so x = −33 and y = −90. Then x − y = 57."
+  },
+  "1362ccde": {
+   "k": "x-sub",
+   "n": "Put y = 4x + 1 into the second equation: 16x + 4 = 15x − 8, so x = −12 and y = −47. Then x − y = 35."
+  },
+  "7028c74f": {
+   "k": "x-divide",
+   "n": "Dividing both sides by x + 7 throws away x = −7. Move everything to one side instead: (x + 7)(15x − 260) = 0, so x = −7 or 52/3, and the sum is 31/3."
+  },
+  "911383f2": {
+   "k": "x-cubic",
+   "n": "Three factors, so c/a does not apply. Read the solutions off: 4, −2 and 1. Their product is −8. Multiplying out gives a constant of +8, which is choice A."
+  }
+ }
+}

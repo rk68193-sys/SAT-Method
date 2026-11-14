@@ -236,15 +236,16 @@
   var MSHORT = [
     { id: 'backsolve', t: 'Try the answer choices', when: 'Any multiple-choice question whose choices are plain numbers.', how: ['Choices are usually in order. Try B or C first.', 'Put the choice into the original question.', 'Too big? Go smaller. Too small? Go bigger.'],
       ex: ['If (x − 2)(x + 5) = 18, what is the positive value of x?  A 2  B 3  C 4  D 7', 'Try B, x = 3: (1)(8) = 8. Too small.', 'Try C, x = 4: (2)(9) = 18. Correct: C.'] },
-    { id: 'picknum', t: 'Pick a number', when: 'Choices with letters in them: “which expression is equivalent”, “in terms of”.', how: ['Choose an easy value such as 2 or 3 (not 0 or 1).', 'Work out the original with it.', 'Work out each choice; keep the one that matches. If two match, try a second number.'],
+    { id: 'picknum', t: 'Pick a number', when: 'Choices with letters in them: “which expression is equivalent”, “in terms of”. Best as a check on your algebra, or when the algebra stalls.', how: ['Choose an easy value such as 3 (not 0 or 1, and 2 is risky: x², 2x and x + 2 are all 4 there).', 'Work out the original with it.', 'Work out each choice; keep the one that matches. If two match, try a second number.'],
+      warn: 'It cannot find a constant that a condition fixes, and it cannot show “no solution” or “infinitely many solutions”: one number shows only that an equation holds at that number.',
       ex: ['If 3a + 2b = 12, which gives a in terms of b?  A (12 − 2b)/3  B (12 + 2b)/3', 'Let b = 3: then 3a + 6 = 12, so a = 2.', 'A gives (12 − 6)/3 = 2. B gives 6. Answer: A.'] },
-    { id: 'composite', t: 'Find x + y without finding x and y', when: 'A system that asks for x + y or x − y.', how: ['Add the two equations (or subtract them).', 'See if the result is a multiple of what is asked.'],
+    { id: 'composite', t: 'Find x + y without finding x and y', first: 'combine', when: 'A system that asks for x + y or x − y.', how: ['Add the two equations (or subtract them).', 'See if the result is a multiple of what is asked.'],
       ex: ['2x + 3y = 10 and 3x + 2y = 15. What is x + y?', 'Add: 5x + 5y = 25.', 'Divide by 5: x + y = 5.'] },
     { id: 'ratios', t: 'Count solutions without solving', when: '“no solution”, “infinitely many”, “exactly one solution”.', how: ['For genuine lines, use determinant A₁B₂−A₂B₁ and consistency; coefficient ratios require nonzero denominators.', 'First two different: one solution. First two equal, third different: none. All equal: infinitely many.', 'For a genuine quadratic with a≠0, the discriminant counts polynomial real roots. Check the original domain after transformations.'],
       ex: ['2x + 3y = 7 and 4x + 6y = 9', '2/4 = 3/6 = 1/2, but 7/9 is different.', 'Parallel lines: no solution.'] },
-    { id: 'sumroots', t: 'Sum of the solutions in one line', when: '“What is the sum of the solutions…?” (nearly always Hard).', how: ['Write as ax² + bx + c = 0, with a≠0.', 'Sum = −b/a; product = c/a, counting multiplicity. Check real-root and original-domain requirements.'],
+    { id: 'sumroots', t: 'Sum of the solutions in one line', first: 'roots', when: '“What is the sum of the solutions…?” (nearly always Hard).', how: ['Write as ax² + bx + c = 0, with a≠0.', 'Sum = −b/a; product = c/a, counting multiplicity. Check real-root and original-domain requirements.'],
       ex: ['2x² − 10x + 8 = 0', 'Sum = 10 ÷ 2 = 5.', 'Check: the roots are 1 and 4.'] },
-    { id: 'vertex', t: 'Find the vertex exactly, with or without real zeros', when: 'Maximum, minimum or vertex of a parabola.', how: ['For ax²+bx+c with a≠0, the vertex input is −b/(2a). If real zeros exist, their average gives the same input.', 'Evaluate the function at that input.', 'For a restricted domain, check feasible vertex and endpoints; an open endpoint need not attain its bound.'],
+    { id: 'vertex', t: 'Find the vertex exactly, with or without real zeros', first: 'mirror', when: 'Maximum, minimum or vertex of a parabola.', how: ['For ax²+bx+c with a≠0, the vertex input is −b/(2a). If real zeros exist, their average gives the same input.', 'Evaluate the function at that input.', 'For a restricted domain, check feasible vertex and endpoints; an open endpoint need not attain its bound.'],
       ex: ['f(x) = x² − 6x + 5 = (x − 1)(x − 5)', 'Halfway between 1 and 5 is 3.', 'f(3) = −4. The minimum value is −4.'] },
     { id: 'multipliers', t: 'Successive percent changes: multiply the factors', when: 'Increases and decreases, one after another, or working back to an original.', how: ['Up p%: × (1 + p/100). Down p%: × (1 − p/100).', 'Several changes: multiply the multipliers.', 'Original value: divide by the multiplier.'],
       ex: ['Up 20%, then down 20%: 1.20 × 0.80 = 0.96, a 4% drop.', 'After 15% off, a coat costs $68: 68 ÷ 0.85 = $80.'] },
@@ -267,9 +268,12 @@
     var F = MD.facts;
     viewEl.mshort.innerHTML = '<div class="wrap">' +
       mHead('Math · Shortcuts', 'Faster ways to the right answer', 'Each shortcut is real mathematics, not a guessing trick. Use one when you recognize the shape; otherwise solve the normal way. The first two work on most multiple-choice questions (' + mfmt(F.mc) + ' of the ' + mfmt(MD.tot.n) + ' in the bank).') +
+      '<p class="mshort-pointer">When a question asks for an expression rather than x (12x, x + y, the sum of the solutions), <a href="#m-first">Look for the shortcut first</a> has the six kinds with a short way, the tell for each, and the look-alikes.</p>' +
       '<div class="mshorts">' + MSHORT.map(function (s, i) {
         return '<article class="mshort" id="ms-' + s.id + '"><p class="mshort-n">' + (i + 1) + '</p><div><h3 class="h3">' + esc(s.t) + '</h3><p class="mspot"><span class="mtag">When</span> ' + esc(s.when) + '</p>' + mStepList(s.how) +
-          '<div class="mex"><p class="mtag">Example</p><ol class="mex-l">' + s.ex.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol></div></div></article>';
+          (s.warn ? '<p class="mtrap"><span class="mtag bad">Limits</span> ' + esc(s.warn) + ' <a href="#m-first-picknum">Where it breaks down</a></p>' : '') +
+          '<div class="mex"><p class="mtag">Example</p><ol class="mex-l">' + s.ex.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol></div>' +
+          (s.first ? '<p class="fine mshort-first">One of six kinds of question with a short way: <a href="#m-first-' + s.first + '">how to spot it, and its look-alike</a>.</p>' : '') + '</div></article>';
       }).join('') + '</div>' +
       '<section class="sec"><h3 class="h2">Shortcuts that do not work</h3><ul class="mfacts">' +
         '<li><b>Picking by answer letter.</b> In the bank, D is the answer to ' + mpc(F.mcLetters.H.D, F.mcLetters.H.A + F.mcLetters.H.B + F.mcLetters.H.C + F.mcLetters.H.D) + '% of Hard multiple-choice questions and B to ' + mpc(F.mcLetters.E.B, F.mcLetters.E.A + F.mcLetters.E.B + F.mcLetters.E.C + F.mcLetters.E.D) + '% of Easy ones, against 25% by chance. Number choices are listed smallest to largest, so this may only mean hard answers tend to be the bigger numbers. Do not use it.</li>' +
@@ -541,7 +545,7 @@
   function mFeedbackHTML(q, ok, secs) {
     var T = MTY[q.t], right = q.mc ? q.a : q.a.join(' or ');
     return '<p class="mpverdict">' + (ok ? 'Correct.' : (ok === null ? 'No answer.' : 'Not this time.')) + ' <span>College Board’s answer: <b>' + esc(right) + '</b>' + (q.mc ? '' : (q.a.length > 1 ? ' (any of these is accepted)' : '')) + '</span>' + (secs != null ? ' <span class="muted">· ' + secs + ' s</span>' : '') + '</p>' +
-      (ok === false ? mWhyHTML(q.id) : '') +
+      (ok === false ? mWhyHTML(q.id) : '') + mFirstFeedbackHTML(q.id) +
       '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + mDesLine(T) + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
       mSourceNoteHTML(q.id) +
       mPracticeMethodHTML(q) + mStudyFeedbackHTML(q.id) +
