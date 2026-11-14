@@ -1,5 +1,5 @@
 /* Checks the pages and drills added from the book comparison: Words to know (with its two drills and the
-   "Did not know a word" cause), and the rest as they are added. Usage: node src/check/additions.js index.html 390 */
+   "Did not know a word" cause), and the rest as they are added, Look for the shortcut first among them. Usage: node src/check/additions.js index.html 390 */
 const path = require('path');
 const { chromium } = require(require.resolve('playwright', { paths: [require('child_process').execSync('npm root -g').toString().trim()] }));
 (async () => {
@@ -193,6 +193,83 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   ok(nh[0] === '#m-notin Not in the bank', 'the Learn search says complex numbers are not in the bank: ' + nh.slice(0, 3).join(' | '));
   await p.fill('#mhub-q', 'remainder theorem'); await p.waitForTimeout(150);
   ok((await p.$$eval('#mhub-res .mtag', t => t.map(x => x.textContent))).includes('In the bank'), 'and that the factor theorem is');
+
+  /* ---- Look for the shortcut first ---- */
+  await go('m-first'); await p.waitForTimeout(200);
+  const F = await p.evaluate(() => {
+    const D = JSON.parse(document.getElementById('sprint-data').textContent), qs = D.mfirst.qs, d = {};
+    D.math.qs.forEach(r => { d[r[0]] = 'EMH'[r[2]]; });
+    return { qs, d, study: D.mathStudy.methods.map(m => m.id) };
+  });
+  const kinds = ['scale', 'block', 'combine', 'roots', 'match', 'mirror'];
+  const idsOf = k => Object.keys(F.qs).filter(id => k === 'x' ? F.qs[id].k.startsWith('x-') : F.qs[id].k === k);
+  ok(Object.keys(F.qs).length === 78 && Object.keys(F.qs).every(id => F.d[id]), 'the page data has 78 bank questions, all in the bank');
+  const fsecs = await p.$$eval('#v-mfirst section[id]', s => s.map(x => x.id));
+  ok(fsecs.join(' ') === kinds.map(k => 'm-first-' + k).join(' ') + ' m-first-fakes m-first-picknum m-first-mix', 'sections in order: ' + fsecs.join(' '));
+  const kAll = kinds.flatMap(idsOf);
+  ok(/\b73 bank questions, 31 of them Hard\b/.test(await p.textContent('#v-mfirst .mhead')) && kAll.length === 73 && kAll.filter(id => F.d[id] === 'H').length === 31, 'the lede counts the six kinds’ questions');
+  for (const k of kinds) {
+    const L = idsOf(k), n = (await p.textContent('#m-first-' + k + ' .mfirst-n')).trim();
+    ok(n.startsWith(L.length + ' bank question'), k + ': count line ' + n);
+    const tries = await p.$$eval('#m-first-' + k + ' .mfirst-try a', a => a.map(x => x.getAttribute('href').replace('#mq-', '')));
+    ok(tries.length === 3 && tries.every(id => L.includes(id)), k + ': three questions to try, all of this kind: ' + tries.join(' '));
+    const go1 = await p.getAttribute('#m-first-' + k + ' .mfound-go a', 'href');
+    ok(go1 === '#m-first-practice-' + k, k + ': practice button ' + go1);
+  }
+  const xt = await p.$$eval('#m-first-fakes .mfirst-try a', a => a.map(x => x.getAttribute('href').replace('#mq-', '')));
+  ok(xt.length === 5 && xt.every(id => idsOf('x').includes(id)), 'the look-alikes list their bank questions: ' + xt.join(' '));
+  ok((await p.$$('#m-first-fakes .mfirst-fake')).length === 5, 'five look-alikes');
+  await wide('m-first');
+  /* every link on the page leads somewhere real */
+  const flinks = [...new Set(await p.$$eval('#v-mfirst a[href^="#"]', a => a.map(x => x.getAttribute('href').slice(1))))];
+  const deadf = [];
+  for (const h of flinks) {
+    if (h.startsWith('m-study-') && !h.startsWith('m-study-practice-')) { if (!F.study.includes(decodeURIComponent(h.slice(8)))) { deadf.push(h); } continue; }
+    if (/^(mq-|m-first-practice)/.test(h)) { continue; }
+    await go(h); await p.waitForTimeout(60);
+    const fine = await p.evaluate(t => { const v = [...document.querySelectorAll('.view')].find(x => !x.hidden); return !!v && v.id !== 'v-home' && (!/^(ms-|mpat-|m-found-|m-first-)/.test(t) || !!document.getElementById(t)); }, h);
+    if (!fine) { deadf.push(h); }
+  }
+  ok(!deadf.length, 'links on the page: ' + flinks.length + (deadf.length ? ', dead: ' + deadf.join(' ') : ''));
+  await go('m-first-x-cubic'); await p.waitForTimeout(150);
+  ok(await p.evaluate(() => { const r = document.getElementById('m-first-x-cubic').getBoundingClientRect(); return !document.getElementById('v-mfirst').hidden && r.top >= 0 && r.top < 400; }), '#m-first-x-cubic opens on that look-alike');
+  /* after an answer: the note for that question */
+  async function answerIt() {
+    if (await p.$('#v-mprac .mpch')) { await p.click('#v-mprac .mpch[data-k="A"]'); } else { await p.fill('#mp-gin', '0'); await p.click('#mp-gform button'); }
+    await p.waitForTimeout(200);
+  }
+  const qid = async () => p.evaluate(() => { const t = document.querySelector('#v-mprac .mpq [data-mtx]'), i = document.querySelector('#v-mprac .mpq img'); return t ? t.getAttribute('data-mtx').split(':')[1] : (i ? i.getAttribute('src').replace(/^.*\/|\.webp$/g, '') : ''); });
+  await go('mq-620abf36'); await p.waitForTimeout(300); await answerIt();
+  const fb1 = await p.textContent('#mp-fb .mfirst-fb').catch(() => '');
+  ok(/^Shortcut first/.test(fb1) && fb1.includes('The same bracket twice.') && fb1.includes(F.qs['620abf36'].n) && (await p.getAttribute('#mp-fb .mfirst-fb a', 'href')) === '#m-first-block', 'a kind’s question gets its note after the answer');
+  await wide('shortcut note');
+  await go('mq-ea8bd66f'); await p.waitForTimeout(300); await answerIt();
+  ok(/^Looks like a shortcut, but isn’t/.test(await p.textContent('#mp-fb .mfirst-fb').catch(() => '')) && (await p.getAttribute('#mp-fb .mfirst-fb a', 'href')) === '#m-first-x-sub', 'a look-alike says so, and links to why');
+  await go('mq-89fc23af'); await p.waitForTimeout(300); await answerIt();
+  ok(!(await p.$('#mp-fb .mfirst-fb')), 'other questions get no note');
+  /* practice one kind, and the mixed set */
+  await go('m-first-practice-roots'); await p.waitForTimeout(300);
+  ok((await p.textContent('#v-mprac .mpbar-pos')).trim() === 'Question 1 of ' + idsOf('roots').length && idsOf('roots').includes(await qid()), 'one kind’s practice: its questions');
+  await go('m-first-practice'); await p.waitForTimeout(300);
+  const mixed = [];
+  for (let i = 0; i < 10; i++) {
+    const id = await qid(); await answerIt();
+    const tag = await p.evaluate(() => { const a = document.querySelector('#mp-fb .mfirst-fb a'); return a ? a.getAttribute('href') : ''; });
+    mixed.push([id, tag]);
+    await p.click('#mp-next'); await p.waitForTimeout(250);
+  }
+  const mk = mixed.map(([id]) => (F.qs[id] || {}).k || 'none');
+  ok(new Set(mixed.map(x => x[0])).size === 10 && kinds.every(k => mk.includes(k)) && mk.filter(k => k.startsWith('x-')).length === 2 && !mk.includes('none'), 'the mixed set: ten different questions, every kind, two look-alikes: ' + mk.join(' '));
+  ok(mixed.every(([id, tag]) => tag === '#m-first-' + F.qs[id].k), 'and a note after each answer');
+  /* Shortcuts points here; Pick a number states its limits */
+  await go('m-short'); await p.waitForTimeout(150);
+  ok(!!(await p.$('#v-mshort .mshort-pointer a[href="#m-first"]')), 'Shortcuts points to the page');
+  ok(/Limits/.test(await p.textContent('#ms-picknum')) && !!(await p.$('#ms-picknum a[href="#m-first-picknum"]')), 'Pick a number names where it breaks down');
+  ok(!!(await p.$('#ms-composite a[href="#m-first-combine"]')) && !!(await p.$('#ms-sumroots a[href="#m-first-roots"]')) && !!(await p.$('#ms-vertex a[href="#m-first-mirror"]')), 'the matching shortcuts link to their kinds');
+  await go('m-hub'); await p.fill('#mhub-q', 'sum of the solutions'); await p.waitForTimeout(150);
+  ok((await p.$$eval('#mhub-res a', a => a.map(x => x.getAttribute('href')))).includes('#m-first-roots'), 'the Learn search finds a kind');
+  await p.fill('#mhub-q', 'substitute'); await p.waitForTimeout(150);
+  ok((await p.$$eval('#mhub-res a', a => a.map(x => x.getAttribute('href')))).includes('#m-first-x-sub'), 'and a look-alike');
 
   /* ---- the reference sheet while doing Math questions ---- */
   await go('mq-89fc23af'); await p.waitForTimeout(300);

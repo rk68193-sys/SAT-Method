@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -151,6 +151,10 @@
       showView('mprac'); mpSetup(); toTop(); return true;
     }
     if ((m = /^m-found-([a-z]+)$/.exec(token)) && has(MFOUNDBY, m[1])) { showView('mfound'); buildMFound(); scrollToEl(document.getElementById(token)); return true; }
+    if (token === 'm-first') { showView('mfirst'); buildMFirst(); toTop(); return true; }
+    if (token === 'm-first-practice') { showView('mprac'); mFirstPractice(''); return true; }
+    if ((m = /^m-first-practice-([a-z]+)$/.exec(token)) && (m[1] === 'x' || has(MFIRSTBY, m[1]))) { showView('mprac'); mFirstPractice(m[1]); return true; }
+    if ((m = /^m-first-([a-z-]+)$/.exec(token)) && (has(MFIRSTBY, m[1]) || m[1] === 'fakes' || m[1] === 'picknum' || m[1] === 'mix')) { showView('mfirst'); buildMFirst(); scrollToEl(document.getElementById(token)); return true; }
     if ((m = /^m-([a-z0-9]+)$/.exec(token)) && has(MSK, m[1])) { showView('mlearn'); landed(mlearnView.show(m[1])); toTop(); return true; }
     if ((m = /^mt-(.+)$/.exec(token)) && has(MTY, m[1])) { showView('mlearn'); mlearnView.show(MTY[m[1]].skill); scrollToEl($('#' + token, viewEl.mlearn)); return true; }
     if (token === 'm-study') { showView('mstudy'); buildMStudy(); toTop(); return true; }

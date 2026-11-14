@@ -33,7 +33,7 @@
         '2x = 14<span class="mfx-n">Add the two equations: the y-terms cancel.</span>'],
       slip: 'Answering with x. Solving 4x + 6 = 18 gives x = 3, and the value of x is often waiting among the wrong choices. Read the last sentence again before you choose.',
       why: 'Equal amounts stay equal when you halve both. 2x + 3 is exactly half of 4x + 6, so it must be half of 18. Adding two equations works for the same reason: equal amounts added to equal amounts give equal totals.',
-      more: 'More of this: <a href="#mpat-disguise">The same expression in disguise</a> and <a href="#ms-composite">Find x + y without finding x and y</a>.',
+      more: 'More of this: <a href="#mpat-disguise">The same expression in disguise</a> and <a href="#ms-composite">Find x + y without finding x and y</a>. The whole family, with a tell for each kind: <a href="#m-first">Look for the shortcut first</a>.',
       words: 'expression value of 2x + 3 x + y without solving multiple target disguise' },
     { id: 'dist', name: 'Distributing and factoring', short: 'Distributing, factoring',
       idea: 'A number in front of a bracket multiplies every term inside it. Factoring runs that backward: take out what every term shares.',

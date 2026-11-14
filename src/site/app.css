@@ -1854,9 +1854,10 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 @media (max-width: 520px) { .mpchoices.txt { grid-template-columns: minmax(0, 1fr); } .mpchoices.txt .mmch { grid-template-columns: minmax(0, 1fr); } .mtx { font-size: 1.02rem; } }
 
 /* ---------- section bar: four groups, and a second row for the pages of the group you are in ---------- */
-.subnav { display: flex; flex-wrap: wrap; gap: .4rem; padding-top: .8rem; }
+/* sized so the ten Math Learn pages fit one line at full width */
+.subnav { display: flex; flex-wrap: wrap; gap: .35rem; padding-top: .8rem; }
 .subnav[hidden] { display: none; }
-.subnav a { padding: .4rem .9rem; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--card); font: 500 .93rem/1.2 var(--body); color: var(--ink-2); text-decoration: none; white-space: nowrap; }
+.subnav a { padding: .4rem .72rem; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--card); font: 500 .9rem/1.2 var(--body); color: var(--ink-2); text-decoration: none; white-space: nowrap; }
 .subnav a:hover { border-color: var(--ink); color: var(--ink); background: var(--card); }
 .subnav a[aria-current="page"] { background: var(--subj-soft); border-color: var(--subj); color: var(--ink); font-weight: 600; }
 @media (max-width: 820px) {
@@ -2049,6 +2050,25 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .mfx-n { display: block; margin-top: .1rem; font: 400 .9rem/1.4 var(--body); color: var(--muted); }
 .mfound-more { margin-top: .8rem; }
 .mfound-go { margin-top: 1rem; }
+
+/* ---------- Math: look for the shortcut first ---------- */
+.mfirst-habit { margin-top: 1.4rem; padding: 1.1rem 1.25rem 1.2rem; border-radius: 18px; background: var(--card); border: 1.5px dashed var(--line-strong); max-width: 52rem; }
+.mfirst-habit .msteps { margin-top: .8rem; }
+.mfirst-line { margin-top: .7rem; max-width: 46em; }
+.mfirst .mex { margin-top: 1rem; }
+.mfirst-n { margin-top: 1rem; }
+.mfirst-try { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin-top: .6rem; }
+.mfirst-try .label { margin-right: .2rem; }
+.mfirst-try .mchip { margin: 0; }
+.mfirst-fakes { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: 1rem; margin-top: 1.2rem; }
+.mfirst-fake { display: grid; align-content: start; gap: .55rem; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); min-width: 0; }
+.mfirst-fake .mfirst-try { margin-top: .2rem; }
+.mshort-pointer { margin-top: 1rem; max-width: 46em; }
+.mshort-first { margin-top: .1rem; }
+/* after a practice answer: the short way for this question, or why it was not there */
+.mfirst-fb { display: grid; gap: .45rem; justify-items: start; padding: .95rem 1.1rem; border-radius: 16px; background: var(--card); border-left: 4px solid var(--pencil); }
+.mfirst-fb.x { border-left-color: var(--bad); }
+.mfirst-fb p:not(.mtag) { font-size: 1rem; }
 
 /* ---------- Math: what the bank never asks ---------- */
 .mnotin { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 2rem; margin-top: 1.2rem; align-items: start; }
