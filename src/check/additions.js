@@ -1,5 +1,5 @@
 /* Checks the pages and drills added from the book comparison: Words to know (with its two drills and the
-   "Did not know a word" cause), and the rest as they are added: Look for the shortcut first, the study-method cues and more. Usage: node src/check/additions.js index.html 390 */
+   "Did not know a word" cause), and the rest as they are added: Look for the shortcut first, the study-method cues and why lines, and more. Usage: node src/check/additions.js index.html 390 */
 const path = require('path');
 const { chromium } = require(require.resolve('playwright', { paths: [require('child_process').execSync('npm root -g').toString().trim()] }));
 (async () => {
@@ -281,6 +281,15 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
     ok(shown === 'Recognize it: ' + cues.find(([i]) => i === id)[1], id + ': its page shows the cue: ' + shown.slice(0, 90));
   }
   await wide('study method');
+
+  /* ---- Why it works: no line is shared among methods, and the written ones show (src/math/study_text.py) ---- */
+  const whys = await p.evaluate(() => JSON.parse(document.getElementById('sprint-data').textContent).mathStudy.methods.map(m => [m.id, m.why_it_works]));
+  ok(new Set(whys.map(([, w]) => w)).size === whys.length, 'every study method has a why line of its own');
+  for (const [id, part] of [['EQV-exponents', '(x · x · x)(x · x) = x⁵'], ['AREA-cone', 'one third of the cylinder']]) {
+    await go('m-study-' + encodeURIComponent(id)); await p.waitForTimeout(200);
+    const shown = await p.evaluate(i => { const s = document.getElementById('mst-' + i), b = s && [...s.querySelectorAll('b')].find(x => x.textContent === 'Why it works:'); return b ? b.parentElement.textContent : ''; }, id);
+    ok(shown === 'Why it works: ' + whys.find(([i]) => i === id)[1] && shown.includes(part), id + ': its page shows the written why line: ' + shown.slice(0, 90));
+  }
 
   /* ---- the reference sheet while doing Math questions ---- */
   await go('mq-89fc23af'); await p.waitForTimeout(300);
