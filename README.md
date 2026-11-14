@@ -85,7 +85,7 @@ SAT® is a trademark registered by College Board, which is not affiliated with, 
 
 ## Expanded Math methods
 
-Open **Math → Expanded types** (`#m-study`). Search a topic or a question ID, filter by skill or calculator evidence, and open a type for the recognition cues, reasoning, hand steps, and graphing route. Each type links to its own practice set. In ordinary Math practice, the same material appears under **Expanded method and calculator check** after you submit an answer. Existing lessons link to their related finer types.
+Open **Math → Expanded types** (`#m-study`). Search a topic or a question ID, filter by skill or calculator evidence, and open a type for the recognition cues, reasoning, hand steps, and graphing route. Every type’s **Recognize it** line says what that type’s own bank questions give and ask, so you can spot one before solving it. Each type links to its own practice set. In ordinary Math practice, the same material appears under **Expanded method and calculator check** after you submit an answer. Existing lessons link to their related finer types.
 
 Calculator checks include 382 question-derived target calculations, 528 intermediate source-solution steps, and 88 other labeled checks. They do not independently re-verify every full solution; 927 questions have no recorded numerical check.
 

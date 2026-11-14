@@ -21,7 +21,14 @@ mp = os.path.join(S, 'build', 'mdata.json')
 data['math'] = json.load(open(mp, encoding='utf-8'))
 study_path = os.path.join(S, 'build', 'mstudy.json')
 data['mathStudy'] = json.load(open(study_path, encoding='utf-8'))
-text_path = os.path.join(S, 'build', 'mtext.json')
+# Hand-written "Recognize it" and "Why it works" lines (src/math/study_text.py) replace the imported ones they name.
+study_text_path = os.path.join(S, 'build', 'mstudy_text.json')
+if os.path.exists(study_text_path):
+    study_text = json.load(open(study_text_path, encoding='utf-8'))
+    for m in data['mathStudy']['methods']:
+        m['recognition_pattern'] = study_text['recognize'].get(m['id'], m['recognition_pattern'])
+        m['why_it_works'] = study_text['why'].get(m['id'], m['why_it_works'])
+text_path =os.path.join(S, 'build', 'mtext.json')
 if os.path.exists(text_path):
     mt = json.load(open(text_path, encoding='utf-8'))
     data['mathText'] = {'on': mt.get('on', 0), 'held': mt.get('held', [])}

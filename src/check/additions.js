@@ -1,5 +1,5 @@
 /* Checks the pages and drills added from the book comparison: Words to know (with its two drills and the
-   "Did not know a word" cause), and the rest as they are added, Look for the shortcut first among them. Usage: node src/check/additions.js index.html 390 */
+   "Did not know a word" cause), and the rest as they are added: Look for the shortcut first, the study-method cues and more. Usage: node src/check/additions.js index.html 390 */
 const path = require('path');
 const { chromium } = require(require.resolve('playwright', { paths: [require('child_process').execSync('npm root -g').toString().trim()] }));
 (async () => {
@@ -270,6 +270,17 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   ok((await p.$$eval('#mhub-res a', a => a.map(x => x.getAttribute('href')))).includes('#m-first-roots'), 'the Learn search finds a kind');
   await p.fill('#mhub-q', 'substitute'); await p.waitForTimeout(150);
   ok((await p.$$eval('#mhub-res a', a => a.map(x => x.getAttribute('href')))).includes('#m-first-x-sub'), 'and a look-alike');
+
+  /* ---- Recognize it: every study method has a cue of its own (src/math/study_text.py) ---- */
+  const cues = await p.evaluate(() => JSON.parse(document.getElementById('sprint-data').textContent).mathStudy.methods.map(m => [m.id, m.recognition_pattern]));
+  ok(cues.length === 249 && !cues.some(([, c]) => /Identify the requested quantity|original page/.test(c)), 'no study method shows the template cue');
+  ok(new Set(cues.map(([, c]) => c)).size === cues.length, 'every study method has a cue of its own');
+  for (const id of ['L1-identity', 'NEQ-root_sum', 'PROB-complement']) {
+    await go('m-study-' + encodeURIComponent(id)); await p.waitForTimeout(200);
+    const shown = await p.evaluate(i => { const s = document.getElementById('mst-' + i), b = s && [...s.querySelectorAll('b')].find(x => x.textContent === 'Recognize it:'); return b ? b.parentElement.textContent : ''; }, id);
+    ok(shown === 'Recognize it: ' + cues.find(([i]) => i === id)[1], id + ': its page shows the cue: ' + shown.slice(0, 90));
+  }
+  await wide('study method');
 
   /* ---- the reference sheet while doing Math questions ---- */
   await go('mq-89fc23af'); await p.waitForTimeout(300);
