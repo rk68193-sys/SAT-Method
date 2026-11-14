@@ -15,7 +15,7 @@ The October source review adds detailed calculator-versus-hand methods, 11 proba
 
 Review scope, source corrections, and validation limits are documented in [src/REVIEW.md](src/REVIEW.md).
 
-Progress, notes and the chosen appearance are saved in your browser only; **Backup and offline** (`#my-data`) makes a file of them and moves them to another device.
+Progress, notes and the chosen appearance are saved in your browser only; **Backup and offline** (`#my-data`) makes a file of them and moves them to another device. An optional free account (`#account`, see **Accounts** below) keeps the same progress online and on every device; it is switched off until a project is set.
 
 ## Questions as text
 
@@ -77,3 +77,21 @@ SAT® is a trademark registered by College Board, which is not affiliated with, 
 Open **Math → Expanded types** (`#m-study`). Search a topic or a question ID, filter by skill or calculator evidence, and open a type for the recognition cues, reasoning, hand steps, and graphing route. Each type links to its own practice set. In ordinary Math practice, the same material appears under **Expanded method and calculator check** after you submit an answer. Existing lessons link to their related finer types.
 
 Calculator checks include 382 question-derived target calculations, 528 intermediate source-solution steps, and 88 other labeled checks. They do not independently re-verify every full solution; 927 questions have no recorded numerical check.
+
+
+## Accounts
+
+An account is optional. Without one the site works as before and progress stays in the browser. With one, the streak and days practiced, both maps, the study plan, notes and every answer are also kept online and appear on any device that signs in (`#account`, **Sign in** in the top bar).
+
+Accounts are **switched off** until `src/build/account.json` names a [Supabase](https://supabase.com) project; while it is empty, no sign-in link is shown and nothing is sent anywhere. To switch them on:
+
+1. Create a free Supabase project.
+2. In its SQL editor, run `src/account/setup.sql` once. It makes one table (`progress`, one row per person) whose row rules let a signed-in person read and write only their own row, and the function behind "Delete my account".
+3. Authentication → URL Configuration: set **Site URL** to the site's address (the GitHub Pages URL). Emailed links (confirming an address, choosing a new password) return there.
+4. Authentication → Sign In / Providers → Email: decide whether new accounts must confirm their address. The built-in mail sender allows only a few emails an hour; for real use, turn confirmation off or connect your own mail service (SMTP).
+5. Put the project URL and its **publishable (anon) key** in `src/build/account.json` (`{"url": "https://xxxx.supabase.co", "key": "..."}`) and rebuild (`src/README.md`). This key is meant to be public; never use the secret (service role) key.
+
+How it behaves: answers are sent a few seconds after they are given, and wait on the device when there is no connection. Progress already on a device is added to the account at sign-in. If two devices change things at once, they are joined the way a backup is added (the newer attempt at each question stays). Signing out removes the progress from that device (it stays in the account), which suits shared computers. "Erase my progress" while signed in erases the account's copy too; "Delete my account" removes the account and keeps the device's copy. The service stores an email address and the progress, nothing else.
+
+`node src/check/account.js index.html 390` checks all of this against a stand-in service on localhost. It cannot check the real table's row rules, so after setup, sign in with two different accounts once and confirm each sees only its own progress.
+

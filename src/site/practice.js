@@ -124,7 +124,7 @@
       '<div class="row"><button type="button" class="btn" id="tstart">Start the set</button>' +
       '<button type="button" class="linkbtn" id="tforget"' + (nNew < all.length ? '' : ' hidden') + '>Clear my saved results</button></div>' +
       '<div id="tconfirm" hidden><p class="verdict miss">Clear every saved Reading and Writing practice result in this browser?</p><div class="row"><button type="button" class="btn" id="tyes">Clear them</button><button type="button" class="btn ghost" id="tno">Keep them</button></div></div>' +
-      '<p class="fine">Answer with A, B, C or D, or 1 to 4, and press Enter for the next question. ' + (canStore ? 'Results are saved in this browser only.' : 'Results last until you close this page.') + '</p></div>' +
+      '<p class="fine">Answer with A, B, C or D, or 1 to 4, and press Enter for the next question. ' + (canStore ? 'Results are saved ' + savedIn() + '.' : 'Results last until you close this page.') + '</p></div>' +
       (reviews.length ? '<details class="ctx"><summary>My saved reviews (' + reviews.length + ')</summary><div class="ctxbody"><p class="fine">Latest review for each question. Showing the most recent ' + Math.min(20, reviews.length) + '.</p><ul class="plainlist">' + reviews.slice(0, 20).map(function (x) {
         return '<li><a href="#rq-' + x.it.id + '">Question ' + x.it.id + '</a>' + (x.r.cause ? '<p class="fine">' + esc(causeLabel(x.r.cause)) + '</p>' : '') + (x.r.evidence ? '<p class="fine">' + esc(x.r.evidence) + '</p>' : '') + '</li>';
       }).join('') + '</ul></div></details>' : '') +

@@ -130,7 +130,7 @@
   function mProgHTML() {
     var tried = 0, right = 0;
     Object.keys(store.m).forEach(function (k) { var r = mDone(k); if (r && MQBY[k]) { tried++; right += r[0]; } });
-    if (!tried) { return '<p class="muted">Nothing practiced yet. Your results are saved in this browser only.</p>'; }
+    if (!tried) { return '<p class="muted">Nothing practiced yet. Your results are saved ' + savedIn() + '.</p>'; }
     var rows = MD.domains.map(function (d) {
       var s = d.skills.map(mSkillStats).reduce(function (a, x) { return { n: a.n + x.n, tried: a.tried + x.tried, right: a.right + x.right }; }, { n: 0, tried: 0, right: 0 });
       return '<div class="mprog-row"><span>' + esc(d.name) + '</span><span class="mbar"><i style="width:' + mpc(s.tried, s.n) + '%"></i></span><span class="num">' + s.tried + ' tried · ' + mpc(s.right, s.tried || 1) + '% right</span></div>';

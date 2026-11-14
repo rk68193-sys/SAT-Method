@@ -3,7 +3,7 @@ b = os.path.dirname(os.path.abspath(__file__))
 S = os.path.dirname(b)
 shell = open(os.path.join(b, 'shell.html'), encoding='utf-8').read()
 css = open(os.path.join(b, 'app.css'), encoding='utf-8').read()
-parts = ['core.js', 'grammar.js', 'reasoning.js', 'data-patterns.js', 'review-findings.js', 'reading.js', 'para.js', 'drills.js', 'practice.js', 'start.js', 'lookup.js', 'math.js', 'math-text.js', 'math-study.js', 'math-track.js', 'module-core.js', 'math-module.js', 'rw-track.js', 'rw-module.js', 'plan.js', 'habit.js', 'data.js', 'hub.js', 'home.js', 'boot.js']
+parts = ['core.js', 'grammar.js', 'reasoning.js', 'data-patterns.js', 'review-findings.js', 'reading.js', 'para.js', 'drills.js', 'practice.js', 'start.js', 'lookup.js', 'math.js', 'math-text.js', 'math-study.js', 'math-track.js', 'module-core.js', 'math-module.js', 'rw-track.js', 'rw-module.js', 'plan.js', 'habit.js', 'data.js', 'account.js', 'hub.js', 'home.js', 'boot.js']
 js = "(function () {\n  'use strict';\n" + ''.join(open(os.path.join(b, p), encoding='utf-8').read() for p in parts) + "}());\n"
 open(os.path.join(b, 'bundle.js'), 'w', encoding='utf-8').write(js)
 data = json.load(open(os.path.join(S, 'build', 'data.json'), encoding='utf-8'))
@@ -27,6 +27,8 @@ if os.path.exists(text_path):
     data['mathText'] = {'on': mt.get('on', 0), 'held': mt.get('held', [])}
 np_ = os.path.join(S, 'build', 'notes-page.json')
 if os.path.exists(np_): data['ann']['notesPage'] = json.load(open(np_, encoding='utf-8'))
+acct_path = os.path.join(S, 'build', 'account.json')
+data['account'] = json.load(open(acct_path, encoding='utf-8')) if os.path.exists(acct_path) else {'url': '', 'key': ''}
 blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
 assert '</script' not in js.lower() and '</script' not in css.lower()
 out = shell.replace('/*__CSS__*/', css, 1).replace('/*__JS__*/', js, 1).replace('/*__DATA__*/', blob, 1)

@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -107,6 +107,7 @@
       if (token === 'my-data-offline') { scrollToEl(document.getElementById('my-data-offline')); } else { toTop(); }
       return;
     }
+    if (token === 'account') { showView('account'); buildAccount(); toTop(); return; }
     if (token === 'rw-hub') { showView('rwhub'); buildHub('rw'); toTop(); return; }
     if (token === 'rw-check') {
       showView('practice');

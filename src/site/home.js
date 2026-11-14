@@ -27,7 +27,7 @@
   };
   /* the pages to list on Home and in the footer: the Learn overview is named for what it is */
   function navList(subj) { return SUBJ[subj].items.map(function (x) { return x[2] === 'Overview' ? [x[0], x[1], 'Learn: overview', x[3], x[4]] : x; }); }
-  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home' };
+  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/></svg>',
@@ -78,8 +78,8 @@
     var it = subj !== 'home' ? SUBJ[subj].items.filter(function (x) { return x[0] === v; })[0] : null;
     renderSecnav(subj);
     renderSubnav(subj, it ? it[4] : '');
-    $$('#subj a').forEach(function (a) { if (a.getAttribute('data-subj') === subj && v !== 'suggest') { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
-    $$('[data-tool="suggest"]').forEach(function (a) { if (v === 'suggest') { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
+    $$('#subj a').forEach(function (a) { if (a.getAttribute('data-subj') === subj && v !== 'suggest' && v !== 'account') { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
+    $$('a[data-tool]').forEach(function (a) { if (v === a.getAttribute('data-tool')) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
     $$('#secin a').forEach(function (a) { if (it && a.getAttribute('data-group') === it[4]) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
     $$('#subnav a').forEach(function (a) { if (a.getAttribute('data-view') === v) { a.setAttribute('aria-current', 'page'); } else { a.removeAttribute('aria-current'); } });
     var what = document.getElementById('secwhat');
@@ -87,7 +87,7 @@
       what.innerHTML = it ? '<span class="sec-i">' + ICON.info + '</span><span><b>On this page:</b> ' + esc(it[3]) + '</span>' : '';
     }
     if (subj !== 'home') { var s0 = isObj(store.s.last) ? store.s.last : {}; s0[subj] = v; s0.subj = subj; store.s.last = s0; save(); }
-    if (v !== 'suggest') { lastPage = { v: v, subj: subj }; }
+    if (v !== 'suggest' && v !== 'account') { lastPage = { v: v, subj: subj }; }
   }
   var lastPage = { v: 'home', subj: 'home' };
 
@@ -99,7 +99,7 @@
     host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from an export of College Board’s question bank.</p></div>' +
       col('Reading & Writing', navList('rw').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
       col('Math', navList('math').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
-      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline</a>', '<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']);
+      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']));
   }());
 
   /* ---------- appearance: saved in this browser under its own key ---------- */
@@ -170,8 +170,8 @@
     }
     var mt = 0; Object.keys(store.m).forEach(function (k) { if (MQBY[k]) { mt++; } });
     viewEl.home.innerHTML = '<div class="wrap">' +
-      '<section class="hh"><div class="hh-text"><p class="hpill">Free · no account · no paywall</p><h1>Study for the SAT, one clear step at a time</h1>' +
-      '<p class="lede">Short guides, lessons and ' + mfmt(nAll) + ' real practice questions with College Board’s own answers. Nothing to sign up for and nothing to unlock: every page is open, and your progress stays in this browser.</p>' +
+      '<section class="hh"><div class="hh-text"><p class="hpill">' + (acctOn ? 'Free · no paywall · account optional' : 'Free · no account · no paywall') + '</p><h1>Study for the SAT, one clear step at a time</h1>' +
+      '<p class="lede">Short guides, lessons and ' + mfmt(nAll) + ' real practice questions with College Board’s own answers. ' + (acctOn ? 'Nothing to unlock: every page is open. Your progress stays in this browser, or in a free account if you want it on every device.' : 'Nothing to sign up for and nothing to unlock: every page is open, and your progress stays in this browser.') + '</p>' +
       '<p class="row hh-cta"><a class="btn big" href="#math">Start Math</a><a class="btn big ghost" href="#start">Start Reading &amp; Writing</a></p>' + planHomeHTML() + cont + '</div>' +
       htryHTML() + '</section>' +
       '<ul class="hfacts" aria-label="At a glance">' +
@@ -203,7 +203,7 @@
         '<li><b>Pick a subject.</b><span>Use Home, Reading &amp; Writing and Math at the top of every page.</span></li>' +
         '<li><b>Read “Start here”.</b><span>Five minutes. It tells you what the test asks and the routine to use.</span></li>' +
         '<li><b>Learn one lesson, then practice it.</b><span>Every lesson ends with a button for real questions on just that topic.</span></li>' +
-        '<li><b>Come back any time.</b><span>Progress is saved on this device' + (mt ? ': ' + plural(mt, 'math question') + ' practiced so far' : '') + '. <a href="#my-data">Back it up or use the site offline</a>.</span></li>' +
+        '<li><b>Come back any time.</b><span>Progress is saved ' + (acctIn() ? 'in your account' : 'on this device') + (mt ? ': ' + plural(mt, 'math question') + ' practiced so far' : '') + '. ' + (acctOn && !acctIn() ? '<a href="#account">Make a free account</a> to keep it on every device, or <a href="#my-data">back it up</a>.' : '<a href="#my-data">Back it up or use the site offline</a>.') + '</span></li>' +
       '</ol></section>' +
       '<section class="hband"><div><h2 class="h2">Something missing, or a tip to share?</h2><p>Tell us what to add or change, or leave a tip for other students.</p></div><a class="btn big" href="#suggest">Suggest a change</a></section>' +
       '</div>';

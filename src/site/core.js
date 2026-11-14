@@ -81,7 +81,7 @@
   RD.examples.forEach(function (x) { EXQ[x.qid] = x.n; });
   var ANN = D.ann || { units: {}, drills: {} };
 
-  /* ---------- saved progress: this browser only ---------- */
+  /* ---------- saved progress: this browser, and the account when one is signed in (account.js) ---------- */
   var KEY = 'sat-grammar-sprint.v1';
   var store = { t: {}, l: {}, d: {}, s: {}, r: {}, rl: {}, b: {}, m: {}, g: {}, x: {} }, canStore = false;
   function isObj(x) { return !!x && typeof x === 'object' && !Array.isArray(x); }
@@ -97,8 +97,8 @@
     canStore = true;
   } catch (e) { canStore = false; }
   function save() {
-    if (!canStore) { return; }
-    try { window.localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { canStore = false; }
+    if (canStore) { try { window.localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { canStore = false; } }
+    acctChanged();
   }
   window.addEventListener('storage', function (e) {
     if (e.key !== KEY || !e.newValue) { return; }

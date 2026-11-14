@@ -127,7 +127,7 @@
   }
   /* one line for the pages that show results */
   function dataLineHTML() {
-    return '<p class="data-line"><span class="muted">' + (canStore ? 'Saved in this browser only.' : 'This browser is not saving your progress.') + '</span> <a href="#my-data">Back up my progress</a> · <a href="#my-data-offline">Use it offline</a></p>';
+    return '<p class="data-line"><span class="muted">' + (acctIn() ? 'Saved in this browser and in your account.' : canStore ? 'Saved in this browser only.' : 'This browser is not saving your progress.') + '</span> ' + acctLinkHTML() + '<a href="#my-data">Back up my progress</a> · <a href="#my-data-offline">Use it offline</a></p>';
   }
 
   /* ---------- offline: the site as an app, and the questions kept on the device ---------- */
@@ -253,7 +253,7 @@
     bkFound = null;
     host.innerHTML = '<div class="wrap">' +
       '<header class="mhead"><p class="eyebrow">My progress</p><h2 class="vtitle">Keep a copy, move it, and study with no connection</h2>' +
-      '<p class="lede">There is no account, so your progress lives in this browser on this device. A backup file keeps it safe and carries it to another device.</p></header>' +
+      '<p class="lede">' + (acctIn() ? 'You are signed in, so your progress is also kept in <a href="#account">your account</a> and follows you to other devices. A backup file is a second copy that you hold yourself.' : (acctOn ? 'Without an account, your progress lives in this browser on this device. A backup file keeps it safe and carries it to another device; <a href="#account">a free account</a> does the same without the file.' : 'There is no account, so your progress lives in this browser on this device. A backup file keeps it safe and carries it to another device.')) + '</p></header>' +
       (canStore ? '' : '<p class="note warn">This browser is not saving data (private browsing, or storage is turned off), so progress is lost when you close the page. A backup file still works.</p>') +
       (msg ? '<p class="note data-msg" id="data-msg" role="status" tabindex="-1">' + msg + '</p>' : '') +
       '<section class="sec first" id="data-here"><h3 class="h2">Saved on this device</h3><ul class="data-rows">' +
@@ -273,8 +273,8 @@
         '<p class="row"><label class="btn ghost bk-pick" for="bk-file">Choose a backup file</label><input class="sr" type="file" id="bk-file" accept=".json,.txt,application/json,text/plain"></p>' +
         '<div id="bk-found" aria-live="polite"></div></section>' +
       '<section class="sec" id="my-data-offline"><h3 class="h2">Use it offline</h3><p class="lede">On a bus, on a plane, or anywhere with a weak signal.</p><div id="off-box"></div></section>' +
-      '<section class="sec" id="data-erase"><h3 class="h2">Start over</h3><p class="lede">Erases every answer, the plan, notes and settings saved on this device, for both sections. It cannot be undone, so download a backup first.</p>' +
-        '<p class="row"><button class="btn ghost danger" type="button" id="bk-erase"' + (any ? '' : ' disabled') + '>Erase my progress on this device</button></p></section>' +
+      '<section class="sec" id="data-erase"><h3 class="h2">Start over</h3><p class="lede">Erases every answer, the plan, notes and settings saved on this device' + (acctIn() ? ' <b>and in your account</b>' : '') + ', for both sections. It cannot be undone, so download a backup first.</p>' +
+        '<p class="row"><button class="btn ghost danger" type="button" id="bk-erase"' + (any ? '' : ' disabled') + '>' + (acctIn() ? 'Erase my progress everywhere' : 'Erase my progress on this device') + '</button></p></section>' +
       '</div>';
     offDraw();
     $('#bk-save', host).addEventListener('click', function () { bkDownload(); $('#bk-ago', host).textContent = 'Downloaded ' + bkName('json') + '. Keep it somewhere safe: your files, a drive, or an email to yourself.'; });
@@ -309,7 +309,7 @@
           buildData('<b>Added.</b> This device now has ' + bkCountText(bkCount(store)) + '.'); focusQuiet(document.getElementById('data-msg')); toTop();
         });
         $('#bk-replace', box).addEventListener('click', function () {
-          if (!bkFound || !window.confirm('Replace everything saved on this device with this backup? What is here now will be lost.')) { return; }
+          if (!bkFound || !window.confirm(acctIn() ? 'Replace everything saved on this device and in your account with this backup? What is there now will be lost.' : 'Replace everything saved on this device with this backup? What is here now will be lost.')) { return; }
           bkApply(bkFound.data, bkFound.theme);
           buildData('<b>Restored.</b> This device now has ' + bkCountText(bkCount(store)) + '.'); focusQuiet(document.getElementById('data-msg')); toTop();
         });
@@ -319,7 +319,7 @@
       rd.readAsText(file);
     });
     $('#bk-erase', host).addEventListener('click', function () {
-      if (!window.confirm('Erase every answer, your plan, notes and settings on this device? This cannot be undone.')) { return; }
+      if (!window.confirm(acctIn() ? 'Erase every answer, your plan, notes and settings on this device AND in your account? This cannot be undone.' : 'Erase every answer, your plan, notes and settings on this device? This cannot be undone.')) { return; }
       bkApply({}, '');
       buildData('<b>Erased.</b> This device is back to a fresh start. Your appearance setting and any questions saved for offline use were kept.'); focusQuiet(document.getElementById('data-msg')); toTop();
     });

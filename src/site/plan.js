@@ -262,7 +262,7 @@
         '<p class="lede">Tell us your test date and how long you have each day. Each day you get a few short sets, chosen from what you miss.</p></header>' +
         '<ul class="mfacts diag-facts"><li><b>Built from your results.</b> Your weakest question types come first, then new ones, the most common first.</li>' +
         '<li><b>Misses come back.</b> A question you miss returns after 1 day, then 3, then 7, until it sticks.</li>' +
-        '<li><b>No account.</b> The plan and your results are saved in this browser only.</li></ul>' +
+        '<li>' + (acctIn() ? '<b>In your account.</b> The plan and your results are saved in this browser and in your account.' : '<b>No account needed.</b> The plan and your results are saved in this browser only.') + '</li></ul>' +
         planFormHTML(null) + dataLineHTML() +
         '<section class="sec"><h3 class="h2">Not sure where you stand?</h3><p class="lede">A 10-question check for each section gives a rough score range and the question types to begin with.</p>' +
         '<div class="mm-nexts">' + planStandHTML('m') + planStandHTML('rw') + '</div></section></div>';

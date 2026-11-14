@@ -89,6 +89,6 @@
         card('m', m, 'mq-' + m.id, MSK[m.k].name + ' · ' + MDIFF[m.d]) +
         card('rw', r, 'rq-' + r.id, (rt ? rt.name : 'Reading and Writing') + ' · ' + r.d) +
         '<div class="hstreak"><p class="hstreak-n"><b>' + s.n + '</b><span>' + (s.n === 1 ? 'day' : 'days') + ' in a row</span><span class="muted">longest: ' + s.best + '</span></p><div class="hstreak-cal">' + habitCalHTML(narrow() ? 13 : 26) + '</div></div>' +
-      '</div><p class="htoday-foot"><a href="#my-data">Back up my progress</a> · <a href="#my-data-offline">Use it offline</a></p></section>';
+      '</div><p class="htoday-foot">' + acctLinkHTML() + '<a href="#my-data">Back up my progress</a> · <a href="#my-data-offline">Use it offline</a></p></section>';
   }
 

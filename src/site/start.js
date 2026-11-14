@@ -63,6 +63,6 @@
       '<p class="lede">The wording of each kind of question barely changes from test to test. Match the line, and you know the job, the routine and where to look before you read the passage. The number is how many questions of that kind are in the bank.</p></div>' +
       '<div class="jtable">' + jobRowsHTML() + '</div><p class="row" style="margin-top:1rem"><a class="btn sm" href="#drills" data-drill="job">Drill it: Name the job</a></p></section>' +
       '<section class="sec"><div class="sech"><p class="eyebrow">Train in this order</p><h2 class="h2">From the question line to a full set</h2>' +
-      '<p class="lede">' + (canStore ? 'Your progress is saved in this browser only.' : 'Your progress lasts until you close this page.') + '</p></div><ol class="path" id="path">' + pathHTML() + '</ol></section>' +
+      '<p class="lede">' + (canStore ? 'Your progress is saved ' + savedIn() + '.' : 'Your progress lasts until you close this page.') + '</p></div><ol class="path" id="path">' + pathHTML() + '</ol></section>' +
       '</div>';
   }

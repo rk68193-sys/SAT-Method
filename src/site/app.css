@@ -1979,3 +1979,21 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
   .data-rows li { grid-template-columns: 3.4rem minmax(0, 1fr); }
   .data-rows a { grid-column: 2; }
 }
+
+/* ---------- account (account.js) ---------- */
+.field input[type="email"], .field input[type="password"] { width: 100%; padding: .7rem .9rem; border: 1.5px solid var(--line-strong); border-radius: 12px; background: var(--card); color: var(--ink); font-size: 1.05rem; }
+.field input[type="email"]:focus, .field input[type="password"]:focus { border-color: var(--pencil); outline: 3px solid var(--hl); outline-offset: 0; }
+.acct-dot { display: none; width: .55rem; height: .55rem; border-radius: 50%; background: var(--ok); flex: none; }
+.acct-tool[data-state] .acct-dot { display: block; }
+.acct-tool[data-state=""] .acct-dot { display: none; }
+.acct-tool[data-state="sync"] .acct-dot { background: var(--muted); }
+.acct-tool[data-state="err"] .acct-dot { background: var(--warn); }
+.acct-tool[aria-current="page"] .acct-dot { box-shadow: 0 0 0 2px var(--act-ink); }
+.acct-who { font-weight: 600; overflow-wrap: anywhere; }
+.acct-note, .acct-st { margin-top: 1.2rem; max-width: 44rem; padding: .8rem 1rem; border-radius: 12px; }
+.acct-row { margin-top: 1.1rem; }
+.acct-fine { margin-top: .9rem; }
+.acct-list { margin-top: 1rem; max-width: 46rem; display: grid; gap: .6rem; }
+.acct-inline { display: grid; gap: .9rem; margin-top: 1.1rem; max-width: 26rem; }
+#v-account .sec > .row { margin-top: 1.1rem; }
+#v-account .data-rows { max-width: 44rem; }
