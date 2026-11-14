@@ -11,6 +11,8 @@
       blurb: 'A real passage, sentence by sentence. Pick the claim or conclusion that everything else is there to support.' },
     pointer: { part: 'reading', title: 'Follow the pointer', goal: 15, ask: 'What does the highlighted pointer refer back to?',
       blurb: 'Words like “this pattern” or “these findings” point back. Pick the sentence they point to.' },
+    same: { part: 'reading', title: 'Same idea, different words', goal: 30, ask: 'Which choice says the same thing in other words?',
+      blurb: 'One sentence from a real passage and four rewordings written for this site. One keeps the meaning. The others reuse its words and change what it says. Matching words will not find the answer: on the real test the right choice shares the most words with the passage in only 18% of questions (<a href="#myths">shortcuts that do not work</a>).' },
     notes: { part: 'reading', title: 'Notes: goal first', goal: 60, ask: 'Which choice meets the goal and accurately uses the notes?',
       blurb: 'Read the goal first, select relevant facts, and verify the choice against the visible notes. College Board’s own answers.' },
     why: { part: 'reading', title: 'Why is it wrong?', goal: 25, ask: 'Why is this choice wrong?',
@@ -89,6 +91,13 @@
     { k: 'Wrong about the data', b: 'Wrong about the data', s: 'the table or graph does not show it' }
   ];
   function ruleLine(u) { return '<p class="rule"><span class="rl">Rule ' + u.num + '</span>' + u.rule + '</p>'; }
+  /* Same idea, different words: the words each choice shares with the sentence (src/reading/same_idea.py counts them), and what matching words would pick */
+  function sameWordsLine(c) {
+    var top = Math.max.apply(null, c.m), best = ['A', 'B', 'C', 'D'].filter(function (k, i) { return c.m[i] === top; });
+    var named = best.length > 1 ? best.slice(0, -1).join(', ') + ' or ' + best[best.length - 1] : best[0];
+    return '<p class="fine"><b>Words shared with the sentence</b>, not counting small ones like <em>the</em> and <em>of</em>: ' + c.m.map(function (n, i) { return 'ABCD'.charAt(i) + ' ' + n; }).join(', ') +
+      '. Matching words would pick ' + named + (best.indexOf(c.a) !== -1 ? ', a tie with the right one.' : best.length > 1 ? ', ' + (best.length === 2 ? 'both' : 'all') + ' wrong.' : ', a wrong choice.') + '</p>';
+  }
   function jobOf(name) { return RD.jobs.filter(function (j) { return j.name === name; })[0]; }
   var itemCache = {};
   function drillItems(kind) {
@@ -122,6 +131,13 @@
               '<p class="qstem">' + x.question + '</p><p class="label">Choice ' + c.k + '</p><p class="passage boxed">' + c.t + '</p>',
             explain: '<p><b>' + esc(k) + '.</b> ' + c.why + '</p><p class="fine">The answer is ' + right.k + ': ' + right.why + '</p>' });
         });
+      });
+    } else if (kind === 'same') {
+      ((D.same && D.same.cards) || []).forEach(function (c) {
+        items.push({ id: 'sm:' + c.id, ref: 'say', opts: c.o.map(function (o) { return { k: o[0], b: '<span class="sentopt"><span class="olt">' + o[0] + '.</span> ' + esc(o[1]) + '</span>', n: esc(o[2]) }; }), ans: c.a, wide: true,
+          prompt: '<p class="fine">A sentence from question ' + c.q + ' (' + c.d + ')</p>' + (c.c ? '<p class="fine"><b>Just before it:</b> ' + esc(c.c) + '</p>' : '') + '<p class="passage boxed">' + esc(c.t) + '</p>',
+          explain: '<p><b>The answer is ' + c.a + '.</b> ' + esc(c.x) + '</p>' + sameWordsLine(c) +
+            '<p class="fine">The rewordings were written for this site. The whole passage: <a href="#rq-' + c.q + '">question ' + c.q + '</a>.</p>' });
       });
     } else if (kind === 'notes') {
       ((D.bank && D.bank.notes) || []).forEach(function (b) {
@@ -489,7 +505,7 @@
     if (mm && MSK[mm[1]]) { return 'Lesson · ' + esc(MSK[mm[1]].name); }
     mm = /^m-found-([a-z]+)$/.exec(ref);
     if (mm && MFOUNDBY[mm[1]]) { return 'Algebra foundations · ' + esc(MFOUNDBY[mm[1]].name); }
-    return { chunk: 'Step 2 · Chunk: the tags', long: 'Long sentences: core first', para: 'Long passages: make them make sense', method: 'The 60-second method', 'parts-of-speech': 'Parts of speech in five minutes', job: 'Step 1 · Job', 'vocab-second': 'Words to know · Second meanings' }[ref] || ref;
+    return { chunk: 'Step 2 · Chunk: the tags', long: 'Long sentences: core first', para: 'Long passages: make them make sense', method: 'The 60-second method', 'parts-of-speech': 'Parts of speech in five minutes', say: 'Step 3 · Say: your own answer first', job: 'Step 1 · Job', 'vocab-second': 'Words to know · Second meanings' }[ref] || ref;
   }
   function drillFinish() {
     var R = drillRun;

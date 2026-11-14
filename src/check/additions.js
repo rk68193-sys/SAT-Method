@@ -122,6 +122,33 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   await wide('drill frag');
   await p.click('#dend'); await p.waitForTimeout(80); await p.click('#dhome');
 
+  /* ---- Same idea, different words (src/reading/same_idea.py) ---- */
+  await go('drills');
+  const sorder = await p.$$eval('#dhost [data-start]', b => b.map(x => x.getAttribute('data-start')));
+  ok(sorder.indexOf('same') !== -1 && sorder.indexOf('same') === sorder.indexOf('pointer') + 1, 'Same idea, different words sits right after Follow the pointer: ' + sorder.join(' '));
+  const same = await p.evaluate(() => JSON.parse(document.getElementById('sprint-data').textContent).same.cards);
+  const sameFair = same.every(c => { const r = 'ABCD'.indexOf(c.a); return c.m[r] <= Math.max(...c.m.filter((n, i) => i !== r)); });
+  ok(same.length === 26 && sameFair, 'Same idea has 26 cards, and matching words never picks the right one: ' + same.length);
+  await go('drill-same'); await p.waitForTimeout(150);
+  const sp = await p.evaluate(() => ({ n: document.querySelectorAll('#dhost .dopts.wide .dopt').length, t: (document.querySelector('#dhost .passage.boxed') || {}).textContent || '' }));
+  const sc = same.filter(c => c.t === sp.t)[0];
+  ok(sp.n === 4 && !!sc, 'Same idea shows a sentence from the bank and four rewordings: ' + sp.t.slice(0, 60));
+  await p.keyboard.press(sc && sc.a === 'A' ? '2' : '1'); await p.waitForTimeout(100);
+  const sf = await p.textContent('#dfeed').catch(() => '');
+  ok(/Not this one/.test(sf) && /Why not:/.test(sf) && /The answer is [ABCD]\./.test(sf) && /Matching words would pick [ABCD](?:, [ABCD])*(?: or [ABCD])?, (?:a wrong choice|both wrong|all wrong)\./.test(sf), 'a wrong pick says why, then gives the answer and the shared words: ' + sf.slice(0, 120));
+  ok(!!sc && (await p.$$eval('#dfeed a', a => a.map(x => x.getAttribute('href')))).includes('#rq-' + sc.q), 'the answer links the whole passage');
+  await wide('drill same');
+  await p.click('#dend'); await p.waitForTimeout(80);
+  ok(/Step 3 · Say/.test(await p.textContent('#dhost')), 'a miss points back to Step 3 · Say');
+  await p.click('#dhome');
+  await go('say'); await p.waitForTimeout(100);
+  ok((await p.$$eval('a[data-drill="same"]', a => a.filter(x => x.offsetParent).length)) === 1, 'Step 3 · Say links the drill');
+  await go('myths'); await p.waitForTimeout(100);
+  ok((await p.$$eval('#myths a[href="#drill-same"]', a => a.length)) === 1, 'Shortcuts that do not work links the drill');
+  await go('rw-hub'); await p.fill('#rwhub-q', 'paraphrase'); await p.waitForTimeout(150);
+  ok((await p.$$eval('#rwhub-res a', a => a.map(x => x.getAttribute('href')))).includes('#drill-same'), 'the Learn search finds the drill under paraphrase');
+  await p.fill('#rwhub-q', '');
+
   /* ---- Math drills ---- */
   await go('m-drills'); await wide('m-drills');
   const mcards = await p.$$eval('#v-mdrills [data-start]', b => b.map(x => x.getAttribute('data-start')));

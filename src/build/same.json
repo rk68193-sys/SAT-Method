@@ -1,0 +1,966 @@
+{
+ "cards": [
+  {
+   "id": "p01",
+   "q": "92c2564d",
+   "t": "Pando is one of the largest single organisms by mass on Earth, but ecologists are worried that its growth is declining in part because of grazing by animals.",
+   "o": [
+    [
+     "A",
+     "Ecologists fear that animals feeding on this enormous organism are one reason it is not growing as it once did.",
+     ""
+    ],
+    [
+     "B",
+     "Pando is one of the largest organisms on Earth because the animals grazing on it have declined.",
+     "It reuses the sentence’s words but invents a cause: the sentence never says why Pando is so large."
+    ],
+    [
+     "C",
+     "Ecologists have shown that grazing animals alone are destroying Pando.",
+     "Too strong: grazing is only part of the reason, and the ecologists are worried, not certain."
+    ],
+    [
+     "D",
+     "Ecologists expect Pando to keep growing even though animals graze on it.",
+     "The opposite: they worry that its growth is declining."
+    ]
+   ],
+   "a": "A",
+   "x": "Two claims: Pando is huge, and its growth is slowing, partly because animals eat it. The right choice keeps both, with “in part” as “one reason.”",
+   "c": "",
+   "d": "Medium",
+   "m": [
+    4,
+    7,
+    4,
+    3
+   ]
+  },
+  {
+   "id": "p02",
+   "q": "8a8236e1",
+   "t": "Although the speed at which odor molecules dissipate makes identifying ancient scents challenging, advancements in biomolecular technologies show promise in unlocking ancient aromas from preserved artifacts.",
+   "o": [
+    [
+     "A",
+     "Advancements in biomolecular technologies have made odor molecules dissipate faster from preserved artifacts.",
+     "Same words, wrong link: the new technology does not make smells fade."
+    ],
+    [
+     "B",
+     "Old smells fade fast and are hard to pin down, but new lab methods may let researchers recover them from well-kept objects.",
+     ""
+    ],
+    [
+     "C",
+     "New biomolecular technologies can now identify any ancient scent from any artifact.",
+     "Too strong: the technology shows promise; nothing says it already works on everything."
+    ],
+    [
+     "D",
+     "Because odor molecules dissipate so quickly, ancient scents can never be identified.",
+     "It keeps the first half and drops the second, which says new technology may overcome the problem."
+    ]
+   ],
+   "a": "B",
+   "x": "A difficulty, then a hope: smells fade quickly, but new techniques may still recover them. “Show promise” means “may,” not “can already.”",
+   "c": "",
+   "d": "Easy",
+   "m": [
+    8,
+    0,
+    5,
+    5
+   ]
+  },
+  {
+   "id": "p03",
+   "q": "87aa7bab",
+   "t": "Although records from art exhibitions in the Netherlands from 1820 to 1892 show a decrease in the number of both full-sized and miniature portraits submitted, this trend was established before the invention of photography.",
+   "o": [
+    [
+     "A",
+     "Records from art exhibitions in the Netherlands show that the invention of photography established a decrease in miniature portraits.",
+     "Same words, opposite point: the decline began before photography, so photography did not start it."
+    ],
+    [
+     "B",
+     "Dutch records prove that photography had no effect at all on portrait painting.",
+     "Too strong: the sentence says only that the decline began earlier. It does not rule out any effect."
+    ],
+    [
+     "C",
+     "Fewer portraits of every size were entered in Dutch shows over those decades, but the drop was already under way before photography existed.",
+     ""
+    ],
+    [
+     "D",
+     "After photography was invented, Dutch exhibitions received more full-sized portraits but fewer miniatures.",
+     "Not what the records show: both kinds of portrait decreased."
+    ]
+   ],
+   "a": "C",
+   "x": "Portrait entries of both sizes fell, and the fall had begun before photography. “This trend was established before” is the key: the timing.",
+   "c": "",
+   "d": "Medium",
+   "m": [
+    11,
+    3,
+    3,
+    6
+   ]
+  },
+  {
+   "id": "p04",
+   "q": "409058ee",
+   "t": "Because these threads are unusually strong and elastic, scientist Atsuko Negishi and her colleagues have been trying to recreate them in a lab as an eco-friendly alternative to petroleum-based fibers that are often used in fabrics.",
+   "o": [
+    [
+     "A",
+     "Negishi and her colleagues found that petroleum-based fibers used in fabrics are unusually strong and elastic.",
+     "It moves the words around: the hagfish threads, not the petroleum fibers, are strong and stretchy."
+    ],
+    [
+     "B",
+     "Negishi’s team has already replaced the petroleum-based fibers in fabrics with lab-made hagfish threads.",
+     "Too far: the team has been trying. Nothing says it has succeeded."
+    ],
+    [
+     "C",
+     "The researchers want to farm hagfish so that they can collect the threads for fabrics.",
+     "Not in the sentence: they are making the threads in a lab, not collecting them from hagfish."
+    ],
+    [
+     "D",
+     "Since the slime threads stretch and resist breaking so well, Negishi’s team is working to make them artificially, hoping to offer a greener substitute for oil-based cloth fibers.",
+     ""
+    ]
+   ],
+   "a": "D",
+   "x": "The threads are tough and stretchy, so the team is trying to copy them in a lab to replace fibers made from oil. “Have been trying” means the work is not finished.",
+   "c": "To protect themselves when being attacked, hagfish—jawless marine animals that resemble eels—will release large quantities of slimy, mucus-like threads.",
+   "d": "Medium",
+   "m": [
+    10,
+    7,
+    2,
+    4
+   ]
+  },
+  {
+   "id": "p05",
+   "q": "a66f9b8d",
+   "t": "Cats can judge unseen people’s positions in space by the sound of their voices and thus react with surprise when the same person calls to them from two different locations in a short span of time.",
+   "o": [
+    [
+     "A",
+     "From a voice alone, a cat can tell where someone it cannot see is standing, so it is startled if that person seems to call from two places within moments.",
+     ""
+    ],
+    [
+     "B",
+     "Cats are surprised by the sound of unseen people’s voices, so they judge positions in space poorly.",
+     "Same words, reversed: cats judge positions well, which is exactly why the jump surprises them."
+    ],
+    [
+     "C",
+     "Cats can recognize every person’s voice and always know exactly where each person is.",
+     "Too strong: the sentence is about locating a voice, and it says nothing about always or everyone."
+    ],
+    [
+     "D",
+     "Cats are not surprised when a familiar voice calls from two places, since they expect people to move.",
+     "The opposite: they are surprised."
+    ]
+   ],
+   "a": "A",
+   "x": "Cats place a voice in space, so a voice that seems to jump from one spot to another surprises them.",
+   "c": "",
+   "d": "Medium",
+   "m": [
+    5,
+    8,
+    3,
+    5
+   ]
+  },
+  {
+   "id": "p06",
+   "q": "7c9a65bb",
+   "t": "To overcome the risk of overheating, and thereby damage, researchers sometimes attach nano-sized glass beads to particles, allowing the light to focus on the beads instead of the particles.",
+   "o": [
+    [
+     "A",
+     "Researchers sometimes attach particles to nano-sized glass beads to focus the light and increase the overheating.",
+     "Same words, reversed purpose: the beads are there to prevent overheating."
+    ],
+    [
+     "B",
+     "So that heat does not harm the particles, scientists may fix tiny glass spheres to them and aim the beam at the spheres.",
+     ""
+    ],
+    [
+     "C",
+     "Attaching glass beads always prevents any damage to particles.",
+     "Too strong: researchers sometimes use beads to lower a risk. The sentence promises nothing about always."
+    ],
+    [
+     "D",
+     "Researchers use glass beads because the light cannot reach the particles directly.",
+     "Not the reason given: the light could reach the particles. The beads keep the heat off them."
+    ]
+   ],
+   "a": "B",
+   "x": "The beads take the light, and so the heat, in place of the particles. The purpose is protection from heat damage.",
+   "c": "",
+   "d": "Hard",
+   "m": [
+    11,
+    2,
+    4,
+    5
+   ]
+  },
+  {
+   "id": "p07",
+   "q": "78b265b2",
+   "t": "The craft the team ultimately designed can fly on Mars because its blades are longer and rotate faster than those of a helicopter of the same size built for Earth.",
+   "o": [
+    [
+     "A",
+     "A helicopter built for Earth can fly on Mars if it is the same size as the team’s craft.",
+     "It reuses the words but changes the claim: an Earth helicopter could not fly there."
+    ],
+    [
+     "B",
+     "The team’s craft can fly anywhere because its blades are the longest and fastest ever built.",
+     "Too strong: the blades are compared only with an Earth helicopter of the same size, and only Mars is mentioned."
+    ],
+    [
+     "C",
+     "The team’s final aircraft stays up in Martian air thanks to bigger, quicker-spinning rotors than an Earth helicopter of equal size would have.",
+     ""
+    ],
+    [
+     "D",
+     "The team made the blades shorter and slower so the craft could fly in the thin air of Mars.",
+     "The opposite: the blades are longer and faster."
+    ]
+   ],
+   "a": "C",
+   "x": "The Mars craft flies because of its rotors: longer and faster than an Earth helicopter’s of the same size.",
+   "c": "",
+   "d": "Easy",
+   "m": [
+    9,
+    5,
+    4,
+    5
+   ]
+  },
+  {
+   "id": "p08",
+   "q": "2312021b",
+   "t": "Given that the percentage of Quito respondents who reported living within a 10-minute walk of a park was much lower than that reported by Lima respondents, greater proximity alone can’t explain the difference in park use.",
+   "o": [
+    [
+     "A",
+     "Respondents in Quito more often reported living within a 10-minute walk of a park, which explains the difference in park use.",
+     "Same words, flipped facts: Quito respondents lived near a park less often, and nearness is said not to explain the gap."
+    ],
+    [
+     "B",
+     "Living near a park has no effect on whether people use parks.",
+     "Too strong: the sentence says nearness alone cannot explain this difference, not that it never matters."
+    ],
+    [
+     "C",
+     "Lima residents use parks more because more of them live close to one.",
+     "Not what it says: Quito residents use parks more."
+    ],
+    [
+     "D",
+     "A smaller share of people in Quito than in Lima said they lived close to a park, so being close to one cannot by itself account for how differently the two cities use their parks.",
+     ""
+    ]
+   ],
+   "a": "D",
+   "x": "Quito uses its parks more, yet fewer of its residents live near one, so nearness cannot be the whole story.",
+   "c": "Of the 618 respondents from Quito, 82.9% indicated that they use the city’s parks, and of the 663 respondents from Lima, 72.7% indicated using city parks.",
+   "d": "Medium",
+   "m": [
+    12,
+    3,
+    3,
+    4
+   ]
+  },
+  {
+   "id": "p09",
+   "q": "95146ebb",
+   "t": "The sandal would normally have degraded quickly, but it was instead well preserved for centuries by the surrounding ice.",
+   "o": [
+    [
+     "A",
+     "Under normal conditions, the sandal would have rotted fast; the ice around it kept it intact for hundreds of years.",
+     ""
+    ],
+    [
+     "B",
+     "The surrounding ice quickly degraded the sandal over the centuries.",
+     "Same words, opposite effect: the ice preserved the sandal."
+    ],
+    [
+     "C",
+     "Ice preserves every object perfectly forever.",
+     "Too strong: the sentence is about one sandal kept for centuries."
+    ],
+    [
+     "D",
+     "The sandal survived because it was made of unusually durable material.",
+     "Not in the sentence: it credits the ice, not the material."
+    ]
+   ],
+   "a": "A",
+   "x": "Without the ice, the sandal would have fallen apart. The ice is why it lasted.",
+   "c": "",
+   "d": "Medium",
+   "m": [
+    2,
+    6,
+    1,
+    1
+   ]
+  },
+  {
+   "id": "p10",
+   "q": "96802cc0",
+   "t": "For centuries, the widespread acknowledgment of the involvement of the cerebellum—a dense brain structure in vertebrates—in coordinating motor control in humans has hindered recognition of other possible functions of the structure.",
+   "o": [
+    [
+     "A",
+     "For centuries, the cerebellum has hindered motor control in humans and other vertebrates.",
+     "It reuses the words but changes the meaning: the cerebellum helps control movement. What was hindered was recognizing its other roles."
+    ],
+    [
+     "B",
+     "Because it has long been accepted that the cerebellum helps control movement, people have been slow to see that it might have other jobs too.",
+     ""
+    ],
+    [
+     "C",
+     "The cerebellum’s role in movement has been shown to be a myth.",
+     "Too strong, and wrong: that role is accepted. The point is that it overshadowed the others."
+    ],
+    [
+     "D",
+     "Scientists have long recognized many functions of the cerebellum besides movement.",
+     "The opposite: its other functions went unrecognized."
+    ]
+   ],
+   "a": "B",
+   "x": "Everyone knows the cerebellum helps with movement, and that well-known role has kept people from noticing others.",
+   "c": "",
+   "d": "Medium",
+   "m": [
+    7,
+    2,
+    1,
+    2
+   ]
+  },
+  {
+   "id": "p11",
+   "q": "714e4c10",
+   "t": "Asawa also wanted to bring art to children in her hometown of San Francisco, California.",
+   "o": [
+    [
+     "A",
+     "Children in her hometown of San Francisco wanted Asawa to bring them art.",
+     "Same words, swapped roles: the wish was Asawa’s."
+    ],
+    [
+     "B",
+     "Asawa made sure that every child in California studied art.",
+     "Too strong: she wanted to reach children in her hometown. Nothing says every child, or all of California."
+    ],
+    [
+     "C",
+     "Asawa hoped to give young people in her home city a chance to experience art.",
+     ""
+    ],
+    [
+     "D",
+     "Asawa wanted to leave San Francisco to teach art somewhere else.",
+     "Not in the sentence: her aim was her hometown."
+    ]
+   ],
+   "a": "C",
+   "x": "Besides making art, Asawa wanted the children of San Francisco to have art in their lives.",
+   "c": "Ruth Asawa was an accomplished artist who worked in many art forms, including her unique tied-wire sculptures, but she was dedicated to more than the creation of art.",
+   "d": "Easy",
+   "m": [
+    8,
+    3,
+    2,
+    5
+   ]
+  },
+  {
+   "id": "p12",
+   "q": "7812801f",
+   "t": "Seedlings in plots isolated from the roots of fynbos plants exhibited a growth rate five times greater than that of the seedlings in plots in close proximity to the roots of fynbos plants.",
+   "o": [
+    [
+     "A",
+     "The roots of fynbos plants grew five times faster in plots close to the seedlings.",
+     "Same words, wrong measurement: the seedlings’ growth was compared, not the roots’."
+    ],
+    [
+     "B",
+     "Fynbos roots kill every seedling that grows near them.",
+     "Too strong: the seedlings near the roots grew more slowly. Nothing says they all died."
+    ],
+    [
+     "C",
+     "Seedlings grew faster when they were planted near fynbos roots.",
+     "The opposite: they grew faster away from the roots."
+    ],
+    [
+     "D",
+     "Young trees grew five times as fast where fynbos roots could not reach them as where those roots were nearby.",
+     ""
+    ]
+   ],
+   "a": "D",
+   "x": "Seedlings cut off from fynbos roots grew five times faster than seedlings next to those roots.",
+   "c": "",
+   "d": "Hard",
+   "m": [
+    8,
+    3,
+    3,
+    4
+   ]
+  },
+  {
+   "id": "p13",
+   "q": "64b6427a",
+   "t": "However, the concept has faced skepticism: critics note that although the trees used in Bosco Verticale were specifically cultivated for the project, it’s too early to tell if they can thrive in this unusual setting.",
+   "o": [
+    [
+     "A",
+     "Some critics doubt the idea: even though the trees were raised especially for the building, no one can say yet whether they will do well in such an odd place.",
+     ""
+    ],
+    [
+     "B",
+     "Critics note that the trees were cultivated in an unusual setting because it was too early in the project.",
+     "It reuses the words but scrambles the claim: the doubt is whether the trees will thrive, not why they were grown."
+    ],
+    [
+     "C",
+     "Critics have shown that the trees cannot survive on the balconies.",
+     "Too strong: the critics say it is too early to tell."
+    ],
+    [
+     "D",
+     "Critics object that the trees were not grown specifically for the project.",
+     "The opposite: the trees were grown for the project."
+    ]
+   ],
+   "a": "A",
+   "x": "The trees were raised for the project, but it is too soon to know whether they will flourish there. That uncertainty is the critics’ doubt.",
+   "c": "Stefano Boeri intended his design, which features balconies that are home to hundreds of trees, to serve as a model for promoting urban biodiversity.",
+   "d": "Medium",
+   "m": [
+    2,
+    9,
+    2,
+    4
+   ]
+  },
+  {
+   "id": "p14",
+   "q": "0e3b4967",
+   "t": "Scrapbooks of saved fabric pieces were commonly kept by women in the nineteenth-century United States, but few are as meticulously detailed as Hannah Ditzler Alspaugh’s work.",
+   "o": [
+    [
+     "A",
+     "Few women in the nineteenth-century United States kept scrapbooks of saved fabric pieces as Alspaugh did.",
+     "Same words, changed meaning: such scrapbooks were common. What was rare was Alspaugh’s detail."
+    ],
+    [
+     "B",
+     "Many American women of the 1800s kept books of fabric scraps, yet Alspaugh’s stands out for its care and detail.",
+     ""
+    ],
+    [
+     "C",
+     "Alspaugh’s scrapbook is the only detailed fabric record from the nineteenth century.",
+     "Too strong: few others are as detailed, which is not the same as none."
+    ],
+    [
+     "D",
+     "Alspaugh’s scrapbook is less detailed than most others of its time.",
+     "The opposite."
+    ]
+   ],
+   "a": "B",
+   "x": "Fabric scrapbooks were common; ones as carefully detailed as Alspaugh’s were not.",
+   "c": "",
+   "d": "Easy",
+   "m": [
+    12,
+    4,
+    6,
+    3
+   ]
+  },
+  {
+   "id": "p15",
+   "q": "2592e0de",
+   "t": "This freedom, coupled with the affordability of the vehicle, made the bicycle immensely popular.",
+   "o": [
+    [
+     "A",
+     "The popularity of the bicycle made the vehicle more affordable and gave people this freedom.",
+     "It reverses cause and effect: freedom and low cost made bicycles popular, not the other way round."
+    ],
+    [
+     "B",
+     "Bicycles became popular only because they were cheap.",
+     "Too narrow and too strong: the sentence gives two reasons, freedom and low cost."
+    ],
+    [
+     "C",
+     "Because bicycles let people get around easily and did not cost much, enormous numbers of people took them up.",
+     ""
+    ],
+    [
+     "D",
+     "Although bicycles offered freedom, their high price kept them from catching on.",
+     "The opposite: they were affordable and very popular."
+    ]
+   ],
+   "a": "C",
+   "x": "Two causes, one result: freedom to travel and a low price made bicycles hugely popular.",
+   "c": "Bicycles were first mass-produced in the late nineteenth century throughout Europe and North America, allowing individuals remarkable freedom to travel longer distances quickly and comfortably.",
+   "d": "Easy",
+   "m": [
+    4,
+    2,
+    1,
+    2
+   ]
+  },
+  {
+   "id": "p16",
+   "q": "8c1be131",
+   "t": "They see pachuca style as a form of rebellion against the era’s rigid social expectations for women.",
+   "o": [
+    [
+     "A",
+     "Historians see the era’s rigid social expectations for women as a form of rebellion against pachuca style.",
+     "Same words, reversed: the style rebelled against the expectations, not the other way round."
+    ],
+    [
+     "B",
+     "Historians agree that every woman who dressed in pachuca style was a political rebel.",
+     "Too strong: the sentence describes the style, not the motives of every woman who wore it."
+    ],
+    [
+     "C",
+     "Historians see pachuca style as a way women showed that they accepted traditional roles.",
+     "The opposite."
+    ],
+    [
+     "D",
+     "To historians, the pachuca look was a way of pushing back against the strict rules of the time about how women should behave.",
+     ""
+    ]
+   ],
+   "a": "D",
+   "x": "Historians read the style as resistance to the strict expectations placed on women at the time.",
+   "c": "But historians see things differently.",
+   "d": "Medium",
+   "m": [
+    11,
+    2,
+    4,
+    3
+   ]
+  },
+  {
+   "id": "p17",
+   "q": "9731a22b",
+   "t": "The finding is significant given the previous lack of known nesting sites in northern regions of South America, which led many paleontologists to assume that titanosaurs migrated south to lay eggs.",
+   "o": [
+    [
+     "A",
+     "The discovery matters because, with no nesting sites found before in the north of South America, many experts had concluded that titanosaurs traveled south to nest.",
+     ""
+    ],
+    [
+     "B",
+     "Many paleontologists assume the finding is significant because titanosaurs migrated north to lay eggs in South America.",
+     "It reuses the words but changes the claim: the old belief was that titanosaurs went south, and the finding challenges it."
+    ],
+    [
+     "C",
+     "The finding proves that titanosaurs never migrated.",
+     "Too strong: one northern nesting site weakens the migration idea. It does not prove they never moved."
+    ],
+    [
+     "D",
+     "Nesting sites in northern South America were already well known before this finding.",
+     "The opposite: none were known."
+    ]
+   ],
+   "a": "A",
+   "x": "No northern nesting sites were known, so experts assumed the dinosaurs went south to lay eggs. A northern site matters for that reason.",
+   "c": "",
+   "d": "Hard",
+   "m": [
+    6,
+    11,
+    3,
+    7
+   ]
+  },
+  {
+   "id": "p18",
+   "q": "4a5bda7a",
+   "t": "Instead, participants consistently rated listeners who expressed disagreement as less skilled, regardless of the other traits of the listeners’ summaries.",
+   "o": [
+    [
+     "A",
+     "Participants who expressed disagreement were consistently rated as less skilled listeners.",
+     "Same words, wrong people: the participants did the rating; the listeners were rated."
+    ],
+    [
+     "B",
+     "Whatever else the summaries showed, people judged a listener who disagreed to be a worse listener.",
+     ""
+    ],
+    [
+     "C",
+     "Participants rated every listener as unskilled.",
+     "Too strong: only the listeners who disagreed were rated lower."
+    ],
+    [
+     "D",
+     "Signs of careful listening led participants to rate disagreeing listeners as skilled.",
+     "The opposite: the other traits made no difference."
+    ]
+   ],
+   "a": "B",
+   "x": "Disagreement alone lowered how skilled a listener seemed, no matter what else the summary showed.",
+   "c": "Within selected summaries, researchers embedded markers of attentive listening (e.g., references to specific details), hypothesizing that such indications would positively influence perceptions of listening skill even in the context of disagreement.",
+   "d": "Hard",
+   "m": [
+    8,
+    2,
+    3,
+    3
+   ]
+  },
+  {
+   "id": "p19",
+   "q": "70aacc03",
+   "t": "Elizabeth Asiedu has identified a negative correlation between the share of developing countries’ economies derived from natural-resource extraction and those countries’ receipts of foreign investment.",
+   "o": [
+    [
+     "A",
+     "Asiedu found that foreign investment in developing countries leads to more natural-resource extraction.",
+     "It changes the relationship: a negative correlation means one goes up as the other goes down, and it says nothing about cause."
+    ],
+    [
+     "B",
+     "Asiedu proved that relying on natural resources always drives foreign investors away.",
+     "Too strong: a correlation is a tendency, not proof of a cause that always holds."
+    ],
+    [
+     "C",
+     "The more a developing country’s economy depends on digging up and selling its resources, Asiedu found, the less money it tends to get from investors abroad.",
+     ""
+    ],
+    [
+     "D",
+     "Asiedu found that developing countries with more natural-resource extraction attract more foreign investment.",
+     "The opposite: the correlation is negative."
+    ]
+   ],
+   "a": "C",
+   "x": "A negative correlation: as the share of the economy from resource extraction rises, foreign investment tends to fall.",
+   "c": "",
+   "d": "Hard",
+   "m": [
+    8,
+    4,
+    3,
+    8
+   ]
+  },
+  {
+   "id": "p20",
+   "q": "6762772f",
+   "t": "The technology, while generating lots of interest, is not yet commercially viable as a large-scale energy source.",
+   "o": [
+    [
+     "A",
+     "The technology is generating lots of interest as a large-scale energy source that is commercially viable.",
+     "Same words with the “not yet” dropped: the sentence says it is not viable yet."
+    ],
+    [
+     "B",
+     "The technology will never be practical as a source of energy.",
+     "Too strong: “not yet” is not “never.”"
+    ],
+    [
+     "C",
+     "Few people are interested in the technology because it costs too much.",
+     "Not what it says: the technology is generating lots of interest."
+    ],
+    [
+     "D",
+     "People are excited about the technology, but it cannot yet pay its way as a major source of power.",
+     ""
+    ]
+   ],
+   "a": "D",
+   "x": "Lots of interest, but the technology cannot yet compete in the market as a large-scale power source. “Commercially viable” means able to pay its way.",
+   "c": "",
+   "d": "Hard",
+   "m": [
+    10,
+    3,
+    1,
+    2
+   ]
+  },
+  {
+   "id": "p21",
+   "q": "3cc7d73b",
+   "t": "The researchers had expected the magnetic field to be similar to the more uniform fields seen in galactic bones in other arms of the Milky Way.",
+   "o": [
+    [
+     "A",
+     "The team thought the field would look like the more orderly ones found in galactic bones elsewhere in our galaxy.",
+     ""
+    ],
+    [
+     "B",
+     "The researchers expected galactic bones in other arms of the Milky Way to be similar to the magnetic field.",
+     "It reuses the words but garbles the comparison: the expectation was about this field matching the others."
+    ],
+    [
+     "C",
+     "The researchers were certain the magnetic field would be identical to every other field in the Milky Way.",
+     "Too strong: they expected it to be similar, not identical, and were not certain."
+    ],
+    [
+     "D",
+     "The researchers expected the field to be less uniform than the fields in other arms.",
+     "The opposite."
+    ]
+   ],
+   "a": "A",
+   "x": "The team expected this field to be orderly, like the fields in galactic bones in other arms of the galaxy.",
+   "c": "",
+   "d": "Medium",
+   "m": [
+    3,
+    10,
+    5,
+    5
+   ]
+  },
+  {
+   "id": "p22",
+   "q": "7921b86b",
+   "t": "Moejoh and her team founded the organization to teach young people how their actions affect the environment and why recycling is important.",
+   "o": [
+    [
+     "A",
+     "Young people founded the organization to teach Moejoh and her team why recycling is important.",
+     "Same words, swapped roles: Moejoh’s team does the teaching."
+    ],
+    [
+     "B",
+     "The organization teaches young people everything about the environment.",
+     "Too broad: it teaches two particular things."
+    ],
+    [
+     "C",
+     "The group was started so that young people would learn how what they do shapes the world around them, and why recycling matters.",
+     ""
+    ],
+    [
+     "D",
+     "Moejoh founded the organization to sell art made from recycled materials.",
+     "Not the purpose given: the purpose is teaching, and the sentence mentions no sales."
+    ]
+   ],
+   "a": "C",
+   "x": "The group’s purpose is teaching young people two things: how their actions affect the environment, and why recycling matters.",
+   "c": "",
+   "d": "Easy",
+   "m": [
+    9,
+    4,
+    3,
+    3
+   ]
+  },
+  {
+   "id": "p23",
+   "q": "748995b3",
+   "t": "With more instruments playing at the same time, the orchestra could play extremely loudly at key moments in his operas.",
+   "o": [
+    [
+     "A",
+     "At key moments in his operas, more instruments played at the same time because the orchestra was loud.",
+     "It reverses cause and effect: more instruments made the loudness possible."
+    ],
+    [
+     "B",
+     "The orchestra played extremely loudly all the way through his operas.",
+     "Too strong: only at key moments."
+    ],
+    [
+     "C",
+     "Wagner had fewer instruments play at once to make key moments stand out.",
+     "The opposite."
+    ],
+    [
+     "D",
+     "Adding players let the orchestra reach a huge volume at the important points in his works for the stage.",
+     ""
+    ]
+   ],
+   "a": "D",
+   "x": "More players at once is what let the orchestra get very loud at key moments.",
+   "c": "For example, in some of his operas, German composer Richard Wagner added more horns, trombones, and tubas to the orchestra.",
+   "d": "Easy",
+   "m": [
+    7,
+    4,
+    4,
+    1
+   ]
+  },
+  {
+   "id": "p24",
+   "q": "923ebfe3",
+   "t": "Researchers Youran Fu and Marshall Fisher have found that combining sellers’ own data with information gathered from social media can dramatically improve the accuracy of such forecasts—by 24 to 57 percent in the cases they directly studied.",
+   "o": [
+    [
+     "A",
+     "Fu and Fisher found that social media gathers sellers’ own data to improve forecasts by 24 to 57 percent.",
+     "It reuses the words but changes what happens: the sellers combine their data with information from social media."
+    ],
+    [
+     "B",
+     "Fu and Fisher showed that guesses about how much to order get far better when stores add what people post online to their own records: 24 to 57 percent better in the cases examined.",
+     ""
+    ],
+    [
+     "C",
+     "Fu and Fisher found that social media data makes every forecast at least 57 percent more accurate.",
+     "Too strong: the gain was 24 to 57 percent, and only in the cases studied."
+    ],
+    [
+     "D",
+     "Fu and Fisher found that sellers’ own data is more accurate than information from social media.",
+     "Not what was found: the gain comes from combining the two."
+    ]
+   ],
+   "a": "B",
+   "x": "Adding social media information to a seller’s own data made forecasts much more accurate in the cases studied.",
+   "c": "Businesses selling clothing and other fashion items face obstacles in trying to forecast how much product to order: tastes and styles change quickly, while manufacturing clothing takes a significant amount of time.",
+   "d": "Medium",
+   "m": [
+    13,
+    7,
+    9,
+    9
+   ]
+  },
+  {
+   "id": "p25",
+   "q": "41d5c33e",
+   "t": "Zerviah Holme did not like to be interrupted when he was reading Gibbon; and as he was always reading Gibbon, an interruption was always regarded by him as an insult.",
+   "o": [
+    [
+     "A",
+     "Zerviah Holme was always interrupted when he was reading Gibbon, which he regarded as an insult to Gibbon.",
+     "Same words, new meaning: the insult is to Holme, and the sentence does not say he was always interrupted."
+    ],
+    [
+     "B",
+     "Holme refused to speak to anyone, ever.",
+     "Too strong: he disliked being interrupted while reading."
+    ],
+    [
+     "C",
+     "Holme welcomed interruptions as a break from reading Gibbon.",
+     "The opposite."
+    ],
+    [
+     "D",
+     "Holme hated being disturbed while he read Gibbon, and since he read Gibbon constantly, he took any disturbance as an offense.",
+     ""
+    ]
+   ],
+   "a": "D",
+   "x": "He hated interruptions while reading Gibbon, and since he was always reading Gibbon, every interruption offended him.",
+   "c": "",
+   "d": "Easy",
+   "m": [
+    8,
+    1,
+    4,
+    2
+   ]
+  },
+  {
+   "id": "p26",
+   "q": "3a1f02b0",
+   "t": "She worked and dug and pulled up weeds steadily, only becoming more pleased with her work every hour instead of tiring of it.",
+   "o": [
+    [
+     "A",
+     "She kept at the digging and weeding, and the longer she went on, the happier with it she grew rather than wearier.",
+     ""
+    ],
+    [
+     "B",
+     "She became tired of her work every hour, so she only pulled up weeds steadily.",
+     "Same words, opposite feeling: she grew more pleased, not tired."
+    ],
+    [
+     "C",
+     "She loved every kind of work she had ever done.",
+     "Too broad: the sentence is about this gardening."
+    ],
+    [
+     "D",
+     "She stopped working after an hour because the weeds were too hard to pull.",
+     "Not in the sentence: she kept going, steadily."
+    ]
+   ],
+   "a": "A",
+   "x": "She kept working, and her pleasure grew instead of her tiredness.",
+   "c": "",
+   "d": "Easy",
+   "m": [
+    0,
+    7,
+    2,
+    2
+   ]
+  }
+ ]
+}
