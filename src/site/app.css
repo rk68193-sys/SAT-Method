@@ -1498,7 +1498,8 @@ header.mhead { display: block; max-width: 52rem; }
 .mpgrid { display: flex; flex-wrap: wrap; align-items: end; gap: .7rem; margin-top: 1.2rem; }
 .mpgrid .field { flex: 1 1 14rem; max-width: 22rem; }
 .mpgrid input { font: 600 1.3rem/1.2 var(--mono) !important; }
-.mpfb { margin-top: 1.4rem; padding: 1.2rem 1.3rem; border-radius: 20px; display: grid; gap: 1rem; }
+/* minmax(0, 1fr): a wide formula in the explanation scrolls inside its own line instead of widening the page on a phone */
+.mpfb { margin-top: 1.4rem; padding: 1.2rem 1.3rem; border-radius: 20px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
 .mpfb.ok { background: var(--ok-soft); }
 .mpfb.no { background: var(--bad-soft); }
 .mpfb.warn { background: var(--sunk); }
@@ -1829,6 +1830,8 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .mtx .meq { margin: .9em 0; padding: .1em 0; }
 .mtx .meq.c { text-align: center; }
 .mtx .cap { text-align: center; font-weight: 600; }
+/* an exponent or subscript the export set as small text (x², 10⁸, x₁); it must not widen the gap between lines */
+.mtx sup, .mtx sub, .mpch-c sup, .mpch-c sub { font-size: .72em; line-height: 0; }
 .mfig { display: block; max-width: 100%; height: auto; mix-blend-mode: var(--img-blend); filter: var(--img-filter); }
 .mtx .mfigp { margin: .8em 0; }
 .mtx-ch { display: grid; gap: .5em; list-style: none; padding: 0; }

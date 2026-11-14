@@ -1,4 +1,4 @@
-import json, os, sys
+import hashlib, json, os, sys
 b = os.path.dirname(os.path.abspath(__file__))
 S = os.path.dirname(b)
 shell = open(os.path.join(b, 'shell.html'), encoding='utf-8').read()
@@ -25,6 +25,17 @@ text_path = os.path.join(S, 'build', 'mtext.json')
 if os.path.exists(text_path):
     mt = json.load(open(text_path, encoding='utf-8'))
     data['mathText'] = {'on': mt.get('on', 0), 'held': mt.get('held', [])}
+    # The page asks for every file in m/t with one stamp made from all of them, so that it never puts a question from
+    # one rebuild with the symbol library of another: the symbols are numbered afresh on every rebuild, and a question
+    # drawn with another rebuild's library shows the wrong symbols (π as d, % as g). A device keeps these files, so the
+    # stamp changing is what makes it fetch the new ones.
+    mt_dir = os.path.join(os.path.dirname(S), 'm', 't')
+    if data['mathText']['on']:
+        assert os.path.isdir(mt_dir), 'the question files (m/t) are needed to stamp them: ' + mt_dir
+        stamp = hashlib.sha1()
+        for name in sorted(n for n in os.listdir(mt_dir) if n.endswith('.js')):
+            stamp.update(name.encode('utf-8') + b'\0' + open(os.path.join(mt_dir, name), 'rb').read() + b'\0')
+        data['mathText']['v'] = stamp.hexdigest()[:10]
 vocab_path = os.path.join(S, 'build', 'vocab.json')
 if os.path.exists(vocab_path): data['vocab'] = json.load(open(vocab_path, encoding='utf-8'))
 mnotin_path = os.path.join(S, 'build', 'mnotin.json')

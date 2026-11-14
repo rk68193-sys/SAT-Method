@@ -1,10 +1,16 @@
   /* =================== Math questions as text =================== */
   /* m/t/<id>.js holds one question rebuilt from College Board's export: SATQ(id, { q, c: {A..D}, r }), where the prose is
-     text and each expression is an inline SVG made of <use> references. m/t/_glyphs.js holds every symbol outline once.
+     text, each expression is an inline SVG made of <use> references, and an exponent or subscript the export set as small
+     text is a <sup> or <sub>. m/t/_glyphs.js holds every symbol outline once.
      Both are plain scripts, so they load from a file:// page too. D.mathText.held lists the questions whose rebuild did
      not pass every check; those, and any question whose file fails to load, keep the picture. */
   var MTXT = D.mathText || {}, MTX_ON = !!MTXT.on, MTX_HELD = {}, MTX = {}, MTX_BAD = {}, MTX_WAIT = {};
   (MTXT.held || []).forEach(function (id) { MTX_HELD[id] = 1; });
+  /* Each file is asked for with the stamp of the whole set (MTXT.v, made by assemble.py from every file in m/t). The
+     symbols are numbered afresh on every rebuild, so a question must never meet another rebuild's library: drawn with
+     an old library kept on the device, π came out as d and % as g. A new stamp is a new address, which the device has
+     not kept, so it fetches the matching files. */
+  function mtxUrl(name) { return 'm/t/' + name + '.js' + (MTXT.v ? '?v=' + MTXT.v : ''); }
   function mtxHas(id) { return MTX_ON && !MTX_HELD[id] && !MTX_BAD[id]; }
   function mtxScript(src, fail) {
     var s = document.createElement('script');
@@ -28,7 +34,7 @@
     if (mtxLib === 2) { cb(true); return; }
     if (mtxLib === 3) { cb(false); return; }
     mtxLibWait.push(cb);
-    if (mtxLib === 0) { mtxLib = 1; mtxScript('m/t/_glyphs.js', function () { mtxLibDone(false); }); }
+    if (mtxLib === 0) { mtxLib = 1; mtxScript(mtxUrl('_glyphs'), function () { mtxLibDone(false); }); }
   }
   function mtxDone(id, body) {
     var w = MTX_WAIT[id] || [];
@@ -42,7 +48,7 @@
       if (MTX[id]) { cb(MTX[id]); return; }
       var first = !MTX_WAIT[id];
       (MTX_WAIT[id] = MTX_WAIT[id] || []).push(cb);
-      if (first) { mtxScript('m/t/' + id + '.js', function () { MTX_BAD[id] = 1; mtxDone(id, null); }); }
+      if (first) { mtxScript(mtxUrl(id), function () { MTX_BAD[id] = 1; mtxDone(id, null); }); }
     });
   }
   /* a choice's paragraphs sit inside a button, where only inline elements belong */

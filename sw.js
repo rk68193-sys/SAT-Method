@@ -1,8 +1,11 @@
 /* SAT Sprint: keeps the site, and the questions you have opened, on the device, so it opens with no connection.
    The page itself is always fetched fresh when there is a connection, so a new version of the site needs no change here.
-   Change a cache's name only if the rules in this file change. Progress is not kept here: it lives in localStorage. */
-var SHELL = 'sat-sprint-shell-v1', QS = 'sat-sprint-q-v1', FONTS = 'sat-sprint-fonts-v1';
-var CORE = ['./', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon.svg', 'm/t/_glyphs.js'];
+   Change a cache's name only if the rules in this file change. Progress is not kept here: it lives in localStorage.
+   v2: the page asks for each Math question file and the symbol library with the stamp of their rebuild (?v=…). The v1
+   rules kept the library from the first visit and answered with it forever, so after a rebuild renumbered the symbols,
+   new questions were drawn with old symbols (π as d, % as g). Renaming the caches drops everything v1 kept. */
+var SHELL = 'sat-sprint-shell-v2', QS = 'sat-sprint-q-v2', FONTS = 'sat-sprint-fonts-v1';
+var CORE = ['./', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon.svg'];
 var ROOT = new URL('./', self.location.href).pathname;
 
 self.addEventListener('install', function (e) {
@@ -33,11 +36,20 @@ function page(req) {
     return caches.open(SHELL).then(function (c) { return c.match('./'); }).then(function (hit) { return hit || Response.error(); });
   });
 }
-/* a question file or picture: the saved copy at once, refreshed in the background; anything opened is saved */
+/* a stamped file (?v=…) never changes: a new rebuild has a new stamp. Keeping it replaces the copies of that file kept
+   under older stamps. */
+function keep(c, url, res) {
+  var u = new URL(url);
+  if (!u.search) { return c.put(url, res); }
+  return c.delete(u.origin + u.pathname, { ignoreSearch: true }).then(function () { return c.put(url, res); });
+}
+/* a question file or picture: the saved copy at once, refreshed in the background unless it is stamped; anything
+   opened is saved */
 function asset(req, e) {
   return caches.match(req.url).then(function (hit) {
+    if (hit && new URL(req.url).searchParams.get('v')) { return hit; }
     var net = fetch(req).then(function (res) {
-      if (res && res.ok && res.type === 'basic') { var copy = res.clone(); caches.open(QS).then(function (c) { return c.put(req.url, copy); }).catch(function () {}); }
+      if (res && res.ok && res.type === 'basic') { var copy = res.clone(); caches.open(QS).then(function (c) { return keep(c, req.url, copy); }).catch(function () {}); }
       return res;
     });
     if (hit) { e.waitUntil(net.catch(function () {})); return hit; }
