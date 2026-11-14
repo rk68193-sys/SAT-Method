@@ -178,6 +178,22 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   ok((await p.textContent('#mfound-you')).includes(fmiss + ' still wrong'), 'the page counts them: ' + await p.textContent('#mfound-you'));
   await wide('m-found with a record');
 
+  /* ---- What the bank never asks (Math → Start here) ---- */
+  await go('m-notin'); await p.waitForTimeout(200);
+  ok(await p.evaluate(() => { const r = document.getElementById('m-notin').getBoundingClientRect(); return !document.getElementById('v-mstart').hidden && r.top >= 0 && r.top < 400; }), '#m-notin opens on its section');
+  const nin = await p.$$eval('#m-notin .mfacts', L => L.map(u => u.querySelectorAll('li').length));
+  ok(nin.join(' ') === '7 2 1', 'seven topics with no question, two found once, one to keep: ' + nin.join(' '));
+  const ntxt = await p.textContent('#m-notin');
+  ok(/Complex numbers and i/.test(ntxt) && /all 1,925 questions/.test(ntxt) && /38 questions that mention sine, cosine or tangent/.test(ntxt), 'the section names its topics and counts');
+  await wide('m-notin');
+  await p.click('#m-notin a[href="#mq-89fc23af"]'); await p.waitForTimeout(400);
+  ok(!(await p.$eval('#v-mprac', v => v.hidden)) && !!(await p.$('#v-mprac [data-mtx$="89fc23af"]')), 'its question link opens that question');
+  await go('m-hub'); await p.fill('#mhub-q', 'complex numbers'); await p.waitForTimeout(150);
+  const nh = await p.$$eval('#mhub-res a', a => a.map(x => x.getAttribute('href') + ' ' + x.querySelector('.mtag').textContent));
+  ok(nh[0] === '#m-notin Not in the bank', 'the Learn search says complex numbers are not in the bank: ' + nh.slice(0, 3).join(' | '));
+  await p.fill('#mhub-q', 'remainder theorem'); await p.waitForTimeout(150);
+  ok((await p.$$eval('#mhub-res .mtag', t => t.map(x => x.textContent))).includes('In the bank'), 'and that the factor theorem is');
+
   console.log(over.length ? 'OVERFLOW:\n' + over.join('\n') : 'no overflow');
   console.log(errors.length ? 'ERRORS:\n' + errors.join('\n') : 'no errors');
   console.log(fails.length ? 'FAILED:\n' + fails.join('\n') : 'all checks passed');

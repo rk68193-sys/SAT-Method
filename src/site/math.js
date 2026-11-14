@@ -108,6 +108,7 @@
         '<li><b>Solve, then read the last sentence again.</b><span>Is your number the thing it asked for? x, or x + y? The radius, or the diameter? This one habit catches the most common wrong answer.</span></li>' +
       '</ol></section>' +
       '<section class="sec"><h3 class="h2">What the test covers</h3><p class="lede">Four content areas. College Board’s own test plan says Algebra and Advanced Math are about 35% each and the other two about 15% each, so start with the first two.</p><div class="mdoms">' + doms + '</div></section>' +
+      mNotInHTML() +
       '<section class="sec"><h3 class="h2">Three warning signs that make a question hard</h3><div class="mcards3">' +
         '<div class="mcard"><p class="mtag">“No solution” / “infinitely many”</p><p>Do not solve. Compare the two sides or the two lines. In the bank, ' + F.sol + ' questions ask how many solutions there are, and ' + mpc(F.solHard, F.sol) + '% of them are Hard. They come in three kinds: two lines (' + F.solSys + ' questions: compare slopes), one equation in x (' + F.solOne + ': compare both sides) and quadratics (' + F.solNon + ': use b² − 4ac).</p><a class="linkbtn" href="#mt-sys-count">How to do it</a></div>' +
         '<div class="mcard"><p class="mtag">The word “constant”</p><p>There is a second unknown that is not the one asked for. Pin it down first: match the parts on both sides, or put in a point you know.</p><a class="linkbtn" href="#mt-eqx-coef">How to do it</a></div>' +
@@ -126,6 +127,17 @@
       mNext([['m-learn', 'Next', 'Open the lessons'], ['m-patterns', 'The big ideas', 'Big patterns'], ['m-desmos', 'The calculator', 'Desmos playbook'], ['m-practice', 'Or jump in', 'Practice real questions']]) +
       '</div>';
     viewEl.mstart.innerHTML = h;
+  }
+  /* topics some prep books teach, each checked against every question by src/math/notin.py (D.mnotin) */
+  function mNotInHTML() {
+    var N = D.mnotin;
+    if (!N) { return ''; }
+    function li(t) { return '<li><b>' + esc(t.name) + '.</b> ' + esc(t.why) + (t.qs ? ' <span class="mnotin-q">' + t.qs.map(function (id) { return '<a class="mchip" href="#mq-' + id + '">Try ' + id + '</a>'; }).join('') + '</span>' : '') + '</li>'; }
+    return '<section class="sec" id="m-notin"><h3 class="h2">What the bank never asks</h3><p class="lede">Some prep books teach topics that no question in College Board’s bank uses. Each one below was checked against the wording of all ' + mfmt(N.n) + ' questions, their choices and College Board’s explanations.</p>' +
+      '<div class="mnotin"><div><h4 class="h3">Not one question</h4><ul class="mfacts">' + N.none.map(li).join('') + '</ul></div>' +
+      '<div><h4 class="h3">Once in the whole bank</h4><ul class="mfacts">' + N.rare.map(li).join('') + '</ul>' +
+      '<h4 class="h3">Looks rare, but keep it</h4><ul class="mfacts">' + N.keep.map(li).join('') + '</ul></div></div>' +
+      '<p class="fine">This is College Board’s question bank, not the test itself, so read the list as where not to spend study time rather than a promise about test day.</p></section>';
   }
   function mProgHTML() {
     var tried = 0, right = 0;

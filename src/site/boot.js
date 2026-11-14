@@ -141,6 +141,7 @@
     if (token === 'math') { showView('mstart'); buildMStart(); toTop(); return true; }
     if (token === 'm-learn') { showView('mlearn'); landed(mlearnView.show('home')); toTop(); return true; }
     if ((m = /^m-learn-([a-z]+)$/.exec(token))) { showView('mlearn'); mlearnView.show('home'); scrollToEl(document.getElementById(token)); return true; }
+    if (token === 'm-notin') { showView('mstart'); buildMStart(); scrollToEl(document.getElementById('m-notin')); return true; }
     if (token === 'm-found') { showView('mfound'); buildMFound(); toTop(); return true; }
     if (token === 'm-found-practice') {
       /* Easy Algebra questions, set up and ready to start */

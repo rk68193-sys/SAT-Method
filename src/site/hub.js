@@ -15,6 +15,11 @@
       MORDER.forEach(function (t) { add('Question type', MTY[t].name, MTY[t].spot, 'mt-' + t, MSK[MTY[t].skill].name + ' ' + MTY[t].trap); });
       MST.methods.forEach(function (m) { add('Expanded type', m.title, m.why_it_works, 'm-study-' + encodeURIComponent(m.id), MSK[m.skill].name + ' ' + m.common_trap); });
       MSHORT.forEach(function (s) { add('Shortcut', s.t, s.when, 'ms-' + s.id, s.how.join(' ')); });
+      if (D.mnotin) {
+        D.mnotin.none.forEach(function (t) { add('Not in the bank', t.name, t.why, 'm-notin'); });
+        D.mnotin.rare.forEach(function (t) { add('Once in the bank', t.name, t.why, 'm-notin'); });
+        D.mnotin.keep.forEach(function (t) { add('In the bank', t.name, t.why, 'm-notin', 'factor theorem remainder theorem'); });
+      }
       MFOUND.forEach(function (f) { add('Algebra foundations', f.name, f.idea, 'm-found-' + f.id, f.slip + ' ' + f.why + ' ' + f.words); });
       MD.desmos.forEach(function (m) { add('Desmos move', m.name, m.when, 'md-' + m.id, m.short + ' ' + m.see); });
       add('Formulas', 'Formulas and typing in answers', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'm-ref', 'circle area volume quadratic formula discriminant slope vertex radians sohcahtoa exponent rules');

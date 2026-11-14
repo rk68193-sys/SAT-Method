@@ -2030,3 +2030,13 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .mfx-n { display: block; margin-top: .1rem; font: 400 .9rem/1.4 var(--body); color: var(--muted); }
 .mfound-more { margin-top: .8rem; }
 .mfound-go { margin-top: 1rem; }
+
+/* ---------- Math: what the bank never asks ---------- */
+.mnotin { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 2rem; margin-top: 1.2rem; align-items: start; }
+.mnotin .h3 { font-size: 1.15rem; }
+.mnotin .mfacts { margin-top: .6rem; }
+.mnotin .mfacts + .h3 { margin-top: 1.6rem; }
+.mnotin-q { display: inline-flex; flex-wrap: wrap; gap: .3rem; vertical-align: baseline; }
+.mnotin-q .mchip { margin: 0; }
+#m-notin > .fine { margin-top: 1rem; max-width: 52rem; }
+@media (max-width: 860px) { .mnotin { grid-template-columns: minmax(0, 1fr); } }
