@@ -18,7 +18,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   console.log('auto removes attr', await p.evaluate(() => document.documentElement.getAttribute('data-theme')));
   await p.mouse.click(10, 600); console.log('outside click closes', await p.evaluate(() => document.getElementById('theme-pop').hidden));
   // suggest: remembers the page you came from
-  await p.click('[data-tool="suggest"]'); await p.waitForTimeout(200);
+  await p.click('#footcols a[href="#suggest"]'); await p.waitForTimeout(200);
   console.log('hash', await p.evaluate(() => location.hash), '| where:', await p.$eval('#sg-where option', o => o.textContent));
   await p.click('#sg-form button[type="submit"]'); console.log('empty msg:', await p.textContent('#sg-msg'));
   await p.click('label:has(#sg-kind-tip)');

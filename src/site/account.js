@@ -361,7 +361,7 @@
         row(mfmt(c.m), 'Math questions answered', 'm-map', 'Math map') +
         row(mfmt(c.rw), 'Reading &amp; Writing questions answered', 'rw-map', 'Reading &amp; Writing map') +
         row(lessons, 'lessons marked as read') +
-        row(mods, 'timed modules scored') +
+        row(mods, 'timed tests scored') +
         row(P ? '✓' : '–', P ? 'A study plan' : 'No study plan yet', 'plan', P ? 'My plan' : 'Make one') +
       '</ul><p class="fine acct-fine">Sign in on another device with the same email and all of this is there too. Answers are saved a few seconds after you give them; with no connection they wait on this device and are sent later.</p></section>' +
       '<section class="sec" id="acct-pwsec"><h3 class="h2">Change my password</h3>' +

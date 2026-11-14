@@ -58,8 +58,8 @@
       '<li><i class="sw-check"></i><span><b>5–45 sec · Check</b>Read the whole sentence. Run the one check.</span></li>' +
       '<li><i class="sw-confirm"></i><span><b>45–60 sec · Confirm</b>Read it again with your answer in place.</span></li></ol></figcaption></figure>' +
       '<p class="facts">' + A.q + ' punctuation questions, ' + B.q + ' verb, pronoun, apostrophe and modifier questions, and ' + C.q + ' transition questions, sorted into ' + TOTAL.u + ' rules and ' + TOTAL.v + ' versions.</p></div>' +
-      '<section class="sec" id="try"><div class="sech"><p class="eyebrow">Try one</p><h2 class="h2">A real question and a real minute</h2>' +
-      '<p class="lede">Start the clock and answer. Then read the fast path: the pattern in the choices, the check that settles it, and why each wrong choice fails.</p></div><div class="demo" id="demo"></div></section>' +
+      '<section class="sec" id="try"><div class="sech"><p class="eyebrow">Try one</p><h2 class="h2">Try a real question</h2>' +
+      '<p class="lede">Pick an answer. Then read why it is right and why each wrong choice is wrong. To see how close you get to one minute, press “Time me” first.</p></div><div class="demo" id="demo"></div></section>' +
       '<section class="sec" id="steps"><div class="sech"><p class="eyebrow">The method</p><h2 class="h2">One question, three steps</h2></div><div class="steps3">' +
       step3('1', 'Look', '0–5 s', 'sw-look', s[0], 'The differences suggest what to check. Confirm the sentence structure and meaning before choosing. <a href="#patterns">See the eight patterns</a>.') +
       step3('2', 'Check', '5–45 s', 'sw-check', s[1], 'Each part has its own check: <a href="#part-a">what stands on each side of the blank</a>, <a href="#part-b">four verb situations</a>, and <a href="#part-c">naming the link</a>.') +
@@ -78,10 +78,10 @@
     var host = document.getElementById('demo');
     if (!host) { return; }
     host.innerHTML = '<div class="demobar"><div class="clockbox" id="demo-clock"></div><div class="row">' +
-      '<button type="button" class="btn" id="demo-start">Start the clock</button><button type="button" class="btn ghost" id="demo-next">Try another question</button></div></div><div id="demo-q"></div>';
+      '<button type="button" class="btn ghost" id="demo-start">Time me</button><button type="button" class="btn ghost" id="demo-next">Try another question</button></div></div><div id="demo-q"></div>';
     demo.clock = Clock(document.getElementById('demo-clock'), 60, GRAMMAR_PHASES);
     document.getElementById('demo-start').addEventListener('click', function () {
-      if (demo.card && !demo.card.done()) { demo.clock.start(); this.hidden = true; document.getElementById('demo-q').classList.remove('idle'); focusQuiet($('#demo-q .opt')); }
+      if (demo.card && !demo.card.done()) { demo.clock.start(); this.hidden = true; focusQuiet($('#demo-q .opt')); }
     });
     document.getElementById('demo-next').addEventListener('click', function () { demo.i = (demo.i + 1) % DEMO_Q.length; demoDraw(); });
     demoDraw();
@@ -90,7 +90,6 @@
     var ex = EX[DEMO_Q[demo.i]];
     demo.clock.reset(60); demo.paused = false;
     document.getElementById('demo-start').hidden = false;
-    document.getElementById('demo-q').classList.add('idle');
     demo.card = QCard(ex, {
       split: true,
       meta: 'Question ' + ex.q + ' · ' + ex.d + ' · sample ' + (demo.i + 1) + ' of ' + DEMO_Q.length,
@@ -119,8 +118,8 @@
     }).join('') + '</ul>';
   }
   function lessonsHomeHTML() {
-    var h = '<header><p class="eyebrow">Grammar lessons</p><h2 class="vtitle">Every rule, in every version the bank uses</h2>' +
-      '<p class="lede">' + NC + ' lessons in three parts cover all ' + TOTAL.u + ' rules and the ' + TOTAL.v + ' versions they take across ' + TOTAL.q + ' questions. Each rule comes with a real question to try.</p>' +
+    var h = '<header><p class="eyebrow">Grammar lessons</p><h2 class="vtitle">Every grammar rule the test uses</h2>' +
+      '<p class="lede">' + NC + ' short lessons in three parts. Together they cover all ' + TOTAL.u + ' rules, in every form they take across ' + TOTAL.q + ' real questions. Each rule comes with a real question to try. New to grammar? Start with <a href="#method">the 60-second method</a>, then Part A.</p>' +
       '<p class="lmeta">' + countDone() + ' of ' + NC + ' lessons marked done</p></header>' +
       '<details class="howto-wrap"><summary>How to read a lesson</summary><ul class="howto">' +
       '<li><span class="label">Serif</span><span>Words in the serif face are quoted from the question bank: passages, fragments and answer choices. The plainer face is explanation.</span></li>' +
@@ -131,7 +130,7 @@
       '<li><span class="label">Counts</span><span>Counts describe this bank. A pattern that never failed here can still fail on a test, so each comes with the check that makes it safe.</span></li></ul></details>';
     D.parts.forEach(function (p) {
       var s = partStats[p.key];
-      h += '<section class="partblock"><div class="sech"><p class="eyebrow">Part ' + p.key + ' · ' + s.q + ' questions · ' + s.u + ' rules · ' + s.v + ' versions</p><h3 class="h2">' + esc(p.title) + '</h3><p class="pretty">' + p.intro + '</p></div>' +
+      h += '<section class="partblock"><div class="sech"><p class="eyebrow">Part ' + p.key + ' · ' + s.q + ' questions · ' + s.u + ' rules</p><h3 class="h2">' + esc(p.title) + '</h3><p class="pretty">' + p.intro + '</p>' + cbNote(p) + '</div>' +
         '<p class="startlink"><a href="#part-' + p.key.toLowerCase() + '">Start here: ' + PART_INTRO[p.key] + '</a></p>' + clistHTML(p.concepts) + '</section>';
     });
     return h;
@@ -202,19 +201,21 @@
   }
   /* Parts A and B assume the words subject, tensed verb and clause: point beginners to the primer and the warm-up drill */
   function basicsNote() {
-    return D.gbasics ? '<p class="fine" style="margin-top:.7rem">New to <em>subject</em>, <em>tensed verb</em> and <em>clause</em>? Read <a href="#parts-of-speech">Parts of speech in five minutes</a>, then warm up with the <a href="#drill-frag">Sentence or fragment?</a> drill.</p>' : '';
+    return D.gbasics ? '<p class="fine" style="margin-top:.7rem">New to <em>subject</em>, <em>tensed verb</em> and <em>clause</em>? Read <a href="#parts-of-speech">Parts of speech in five minutes</a>, then warm up with the short exercise <a href="#drill-frag">Sentence or fragment?</a></p>' : '';
   }
+  /* College Board's own name for a part, when it differs from the plain one */
+  function cbNote(p) { return p.cb && p.title.indexOf(p.cb) !== 0 ? '<p class="fine">College Board calls this part “' + esc(p.cb) + '”.</p>' : ''; }
   function partHTML(k) {
     var p = PART[k], s = partStats[k];
-    var h = '<nav class="crumbs"><a href="#lessons">Lessons</a> / Part ' + k + ' · ' + esc(p.title) + '</nav><header style="margin-top:.6rem"><p class="eyebrow">Part ' + k + ' · ' + s.q + ' questions · ' + s.u + ' rules · ' + s.v + ' versions</p>';
+    var h = '<header><p class="eyebrow">Part ' + k + ' · ' + esc(p.title) + ' · ' + s.q + ' questions · ' + s.u + ' rules</p>';
     if (k === 'A') {
       var S = D.structure;
-      h += '<h2 class="vtitle">' + esc(S.title) + '</h2><p class="lede">' + S.intro + '</p>' + basicsNote() + '</header>' +
+      h += '<h2 class="vtitle">' + esc(S.title) + '</h2><p class="lede">' + S.intro + '</p>' + cbNote(p) + basicsNote() + '</header>' +
         '<div class="sits">' + S.rows.map(function (r, i) { return sitHTML(r, 'A', i); }).join('') + '</div>' +
         '<h3 class="subh">' + esc(S.subtitle) + '</h3><ol class="olist">' + S.steps.map(li).join('') + '</ol>';
     } else if (k === 'B') {
       var V = D.verbs;
-      h += '<h2 class="vtitle">' + esc(V.title) + '</h2><p class="lede">' + V.intro + '</p>' + basicsNote() + '</header>' +
+      h += '<h2 class="vtitle">' + esc(V.title) + '</h2><p class="lede">' + V.intro + '</p>' + cbNote(p) + basicsNote() + '</header>' +
         '<div class="sits">' + V.rows.map(function (r, i) { return sitHTML(r, 'B', i); }).join('') + '</div>' +
         '<h3 class="subh">The rest of Part B</h3><div class="sits">' + V.rest.map(function (r, i) { return sitHTML(r, 'B2', i); }).join('') + '</div>' +
         '<h3 class="subh">' + esc(V.formsTitle) + '</h3><p class="pretty">' + V.formsIntro + '</p>' + formsHTML() +
@@ -256,7 +257,7 @@
     var cs = conceptStats[c.id], i = CONCEPTS.indexOf(c), next = CONCEPTS[i + 1], d = !!store.l[c.id];
     var hard = D.hard.rows.filter(function (r) { return U[r.u] && U[r.u].c === c.id && r.why; });
     var spot = c.spot || (c.part === 'C' ? PAT.p8.check : '');
-    return '<nav class="crumbs"><a href="#lessons">Lessons</a> / <a href="#part-' + c.part.toLowerCase() + '">Part ' + c.part + ' · ' + esc(PART[c.part].title) + '</a></nav>' +
+    return '' +
       '<header style="margin-top:.6rem"><p class="eyebrow">Lesson ' + c.n + ' of ' + NC + '</p><h2 class="vtitle">' + esc(c.title) + '</h2>' +
       '<p class="lmeta"><span>' + plural(cs.q, 'question') + ' in the bank · ' + plural(c.uses.length, 'rule') + ' · ' + plural(cs.v, 'version') + '</span>' + mixHTML(c.split) +
       '<span class="mixkey">Easy <b>' + c.split.Easy + '</b> Medium <b>' + c.split.Medium + '</b> Hard <b>' + c.split.Hard + '</b></span></p></header>' +
@@ -348,6 +349,8 @@
   /* ---------- the Grammar view ---------- */
   var grammarView = RailView('grammar', {
     label: 'Grammar',
+    home: 'home',
+    name: function (e) { return e.num ? 'Lesson ' + e.num + ': ' + plain(e.label) : plain(e.label); },
     items: function () {
       var g = [{ group: 'Method', entries: [
         { key: 'method', token: 'method', label: 'The 60-second method' },

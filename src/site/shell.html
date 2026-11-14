@@ -6,7 +6,7 @@
 /*__CSS__*/
 </style>
 
-<script>try { var t0 = localStorage.getItem('sat-sprint-theme'); if (t0 && t0 !== 'auto') { document.documentElement.setAttribute('data-theme', t0); } } catch (e) {}</script>
+<script>try { var t0 = localStorage.getItem('sat-sprint-theme'); if (t0 && t0 !== 'auto') { document.documentElement.setAttribute('data-theme', t0); } var z0 = localStorage.getItem('sat-sprint-size'); if (z0 === 'l' || z0 === 'xl') { document.documentElement.setAttribute('data-size', z0); } } catch (e) {}</script>
 <a class="skip" href="#main" data-skip>Skip to the page</a>
 <header class="top" id="top">
   <div class="wrap topin">
@@ -17,16 +17,16 @@
       <a href="#math" data-subj="math"><i class="sdot math" aria-hidden="true"></i>Math</a>
     </nav>
     <div class="toptools">
-      <a class="tool" href="#suggest" data-tool="suggest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 4v-4h0A1.5 1.5 0 0 1 4 14.5z"/><path d="M8.5 9h7M8.5 12h4.5"/></svg><span>Suggest</span></a>
       <a class="tool acct-tool" href="#account" data-tool="account" id="acct-tool" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 19.5c1-3.4 3.8-5.2 7.2-5.2s6.2 1.8 7.2 5.2"/></svg><span>Sign in</span><i class="acct-dot" aria-hidden="true"></i></a>
       <div class="theme">
-        <button class="tool" type="button" id="theme-btn" aria-expanded="false" aria-controls="theme-pop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.2 0 1.8-.9 1.4-1.9-.5-1.2.3-2.6 1.6-2.6h1.8a3.7 3.7 0 0 0 3.7-3.7C20.5 7.3 16.7 3.5 12 3.5z"/><circle cx="7.8" cy="11" r="1.1"/><circle cx="10.5" cy="7.6" r="1.1"/><circle cx="14.8" cy="7.9" r="1.1"/></svg><span>Appearance</span></button>
-        <div class="theme-pop" id="theme-pop" hidden></div>
+        <button class="tool" type="button" id="theme-btn" aria-expanded="false" aria-controls="theme-pop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 18.5L8 6.5l4.5 12M5.2 14h5.6"/><path d="M14 18.5l3.2-8.5 3.3 8.5M15.2 15.5h4.1"/></svg><span>Text size</span></button>
+        <div class="theme-pop" id="theme-pop" role="dialog" aria-label="Text size and colors" hidden></div>
       </div>
     </div>
   </div>
 </header>
-<nav class="secnav" id="tabs" aria-label="Sections" hidden><div class="wrap secin" id="secin"></div><div class="wrap"><div class="subnav" id="subnav" hidden></div><p class="secwhat" id="secwhat"></p></div></nav>
+<nav class="secnav" id="tabs" aria-label="Steps" hidden><div class="wrap secin" id="secin"></div><div class="wrap"><p class="strail" id="strail"></p></div></nav>
+<nav class="guide" id="guide" aria-label="Where you are" hidden><div class="wrap guidein"><a class="gback" id="gback" href="#home"><span aria-hidden="true">←</span><span>Back</span></a><p class="gtrail" id="gtrail"></p><a class="ghome" href="#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.2L12 4.5l8 6.7"/><path d="M6.5 9.5v10h11v-10"/></svg>Home</a></div></nav>
 <p class="offnote" id="offnote" role="status" hidden><span class="wrap">You are offline. Lessons and the questions saved on this device still work. <a href="#my-data-offline">What is saved?</a></span></p>
 
 <main id="main" tabindex="-1">
@@ -34,21 +34,21 @@
   <section id="v-start" class="view" aria-label="Reading and Writing: start here" hidden></section>
   <section id="v-reading" class="view" aria-label="Reading" hidden></section>
   <section id="v-grammar" class="view" aria-label="Grammar" hidden></section>
-  <section id="v-drills" class="view" aria-label="Drills" hidden></section>
+  <section id="v-drills" class="view" aria-label="Short exercises" hidden></section>
   <section id="v-practice" class="view" aria-label="Practice" hidden></section>
   <section id="v-lookup" class="view" aria-label="Lookup" hidden></section>
   <section id="v-mstart" class="view" aria-label="Math: start here" hidden></section>
   <section id="v-mlearn" class="view" aria-label="Math lessons" hidden></section>
-  <section id="v-mfound" class="view" aria-label="Algebra foundations" hidden></section>
+  <section id="v-mfound" class="view" aria-label="Algebra basics" hidden></section>
   <section id="v-mfirst" class="view" aria-label="Look for the shortcut first" hidden></section>
-  <section id="v-mpat" class="view" aria-label="Math big patterns" hidden></section>
-  <section id="v-mdes" class="view" aria-label="Desmos playbook" hidden></section>
-  <section id="v-mtypes" class="view" aria-label="Math question finder" hidden></section>
+  <section id="v-mpat" class="view" aria-label="Math big ideas" hidden></section>
+  <section id="v-mdes" class="view" aria-label="Calculator tips" hidden></section>
+  <section id="v-mtypes" class="view" aria-label="Find a math question type" hidden></section>
   <section id="v-mstudy" class="view" aria-label="Expanded Math types and calculator checks" hidden></section>
   <section id="v-mshort" class="view" aria-label="Math shortcuts" hidden></section>
   <section id="v-mref" class="view" aria-label="Math formulas and Desmos" hidden></section>
   <section id="v-mprac" class="view" aria-label="Math practice" hidden></section>
-  <section id="v-mdrills" class="view" aria-label="Math drills" hidden></section>
+  <section id="v-mdrills" class="view" aria-label="Math short exercises" hidden></section>
   <section id="v-mhub" class="view" aria-label="Math: everything to learn" hidden></section>
   <section id="v-rwhub" class="view" aria-label="Reading and Writing: everything to learn" hidden></section>
   <section id="v-mmap" class="view" aria-label="My math mastery map" hidden></section>
@@ -56,8 +56,9 @@
   <section id="v-plan" class="view" aria-label="My study plan" hidden></section>
   <section id="v-data" class="view" aria-label="My progress, backup and offline use" hidden></section>
   <section id="v-account" class="view" aria-label="My account" hidden></section>
-  <section id="v-suggest" class="view" aria-label="Suggest a change" hidden></section>
+  <section id="v-suggest" class="view" aria-label="Ask a question or suggest a change" hidden></section>
 </main>
+<div class="wrap"><nav class="nextstep" id="nextbox" aria-label="Next step" hidden></nav></div>
 
 <footer class="foot"><div class="wrap">
   <div class="foot-cols" id="footcols"></div>

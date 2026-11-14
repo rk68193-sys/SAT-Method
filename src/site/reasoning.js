@@ -35,5 +35,5 @@ function rReasoningHTML() {
     '<section class="sec"><h3 class="h2">Read explanations critically, too</h3><p>These two source rationales contain a step that should not become a general rule. The answer keys remain as supplied.</p>' +
     Object.keys(R_REASONING_CAVEATS).map(function (id) { var c = R_REASONING_CAVEATS[id]; return '<article class="sec"><h4>' + esc(c.title) + '</h4><p>' + esc(c.note) + '</p>' + rReasoningSourceHTML(id) + '</article>'; }).join('') +
     '<p class="fine">Review scope: 14 complete source records, including 12 worked patterns and 2 rationale caveats. The remaining source questions have not been reviewed for this page.</p></section>' +
-    '<div class="nextlinks"><a class="btn" href="#routine">Return to the routine</a><a class="btn ghost" href="#practice">Practice the checks</a></div>';
+    nextHTML(['practice', 'Practice real questions', 'Try these checks on real test questions.'], ['reading', 'go back to the four reading steps']);
 }

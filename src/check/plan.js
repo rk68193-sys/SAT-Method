@@ -41,7 +41,7 @@ function estimate(rows) {
   await p.goto(file); await p.waitForTimeout(700);
 
   // Home for someone new
-  ok((await text('#v-home .hcheck')).startsWith('New here?'), 'Home offers the starting check to someone new');
+  ok((await text('#v-home .hcheck')).startsWith('Not sure of your level?'), 'Home offers the starting check to someone new');
   ok((await text('#v-home .hplan')).includes('Have a test date?'), 'Home offers a study plan');
   await wide('home new'); await shot('home-new');
 
@@ -55,10 +55,10 @@ function estimate(rows) {
   await wide('plan form'); await shot('form', true);
   await setPlan('2026-12-05', 15, 'both');
   ok((await text('#v-plan h2')) === '25 days to your test', 'title counts the days: ' + (await text('#v-plan h2')));
-  ok((await text('#v-plan .lede')).includes('Saturday, December 5') && (await text('#v-plan .lede')).includes('Fix and pace'), 'date and phase shown');
+  ok((await text('#v-plan .lede')).includes('Saturday, December 5') && (await text('#v-plan .lede')).includes('Fix and speed up'), 'date and phase shown');
   let tasks = await p.$$eval('#plan-today .plan-task-h b', b => b.map(x => x.textContent));
   ok(tasks.length === 1 && tasks[0] === 'Take the 10-question starting check', 'day one for a new student is the starting check: ' + tasks.join(' | '));
-  ok((await p.$$('#plan-week .plan-day')).length === 7 && (await text('#plan-week')).includes('+ timed module'), 'the week ahead has seven days and a Saturday module');
+  ok((await p.$$('#plan-week .plan-day')).length === 7 && (await text('#plan-week')).includes('+ timed test'), 'the week ahead has seven days and a Saturday timed test');
   await wide('plan day 1'); await shot('day1', true);
   await p.click('[data-plan-go="0"]'); await p.waitForTimeout(300);
   const first = await p.evaluate(() => location.hash);

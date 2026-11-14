@@ -42,20 +42,21 @@
   }
   function mSheetOpen() { var el = document.getElementById('msheet'); return !!el && !el.hidden; }
   function mSheetBtn() {
-    return '<button class="btn ghost sm mcalc-btn" type="button" data-sheet aria-pressed="' + (mSheetOpen() ? 'true' : 'false') + '" title="The formulas and facts given on the test">' + ICON.sheet + '<span>Reference</span></button>';
+    return '<button class="btn ghost sm mcalc-btn" type="button" data-sheet aria-pressed="' + (mSheetOpen() ? 'true' : 'false') + '" title="The formulas and facts given on the test">' + ICON.sheet + '<span>Formula sheet</span></button>';
   }
   function mSheetShow(open) {
     var el = document.getElementById('msheet');
     if (!el) {
       if (!open) { return; }
-      el = document.createElement('aside'); el.id = 'msheet'; el.className = 'mcalc msheet'; el.setAttribute('aria-label', 'Reference sheet');
-      el.innerHTML = '<div class="mcalc-bar"><b>Reference</b><span class="muted">The formulas and facts given on the test</span><button class="btn sm" type="button" data-sheet-close>Close</button></div>' +
+      el = document.createElement('aside'); el.id = 'msheet'; el.className = 'mcalc msheet'; el.setAttribute('aria-label', 'Formula sheet');
+      el.innerHTML = '<div class="mcalc-bar"><b>Formula sheet</b><span class="muted">The formulas and facts given on the test</span><button class="btn sm" type="button" data-sheet-close>Close</button></div>' +
         '<div class="msheet-body">' + mSheetHTML() + '</div>';
       document.body.appendChild(el);
     }
     if (open && mCalcOpen()) { mCalcShow(false); }
     el.hidden = !open;
     document.body.classList.toggle('calc-open', !!open || mCalcOpen());
+    placePanels();
     $$('[data-sheet]').forEach(function (b) { b.setAttribute('aria-pressed', open ? 'true' : 'false'); });
     /* on a phone the panel covers the lower part of the screen, so bring the question to the top */
     var card = open && narrow() ? $('#v-mprac .mpcard') : null;

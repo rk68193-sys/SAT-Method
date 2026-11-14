@@ -58,9 +58,14 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '
   await p.goto(base); await p.waitForTimeout(800);
 
   /* ---------- the question of the day, the streak, the weeks ---------- */
+  // a first visit keeps Home short: the streak section comes once there is practice to show
+  ok(!(await p.$('#htoday')), 'a new visitor’s Home has no streak section yet');
+  // someone back after a break: one answer, 40 days ago
+  await p.evaluate(a => { const st = JSON.parse(localStorage.getItem(a.KEY) || '{}'); st.s = st.s || {}; st.s.days = { [a.k]: [1, 0] }; localStorage.setItem(a.KEY, JSON.stringify(st)); }, { KEY, k: key(T0 - 40 * DAY) });
+  await p.reload(); await p.waitForTimeout(800);
   let t = await today();
   ok(/^#mq-[0-9a-f]{8}$/.test(t.m) && /^#rq-[0-9a-f]{8}$/.test(t.rw), 'Home has a question of the day for Math and for Reading and Writing: ' + t.m + ' ' + t.rw);
-  ok(t.n === '0' && t.line.includes('Answer one question to start a streak') && !t.mDone && !t.rwDone, 'a new visitor has no streak yet');
+  ok(t.n === '0' && t.line.includes('No streak right now. Your longest so far is 1 day') && !t.mDone && !t.rwDone, 'after a long break there is no streak: ' + t.line);
   ok((await p.$$('#htoday .hcal-w')).length === (width > 760 ? 26 : 13) && /no practice$/.test(t.now), 'the last weeks are shown (13 on a phone, 26 on a wide screen), today marked and empty');
   await wide('home new'); await shot('today-new');
   const day1 = t;
@@ -73,7 +78,7 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '
   s = await store();
   ok(s.s.days[key(T0)].join() === '1,1', 'the Reading and Writing one counts for its own section: ' + s.s.days[key(T0)]);
   await go('home'); t = await today();
-  ok(t.mDone && t.rwDone && /2 questions \(Math 1, Reading & Writing 1\)$/.test(t.now), 'both are marked, and today shows both sections: ' + t.now);
+  ok(t.mDone && t.rwDone && /2 answers \(Math 1, Reading & Writing 1\)$/.test(t.now), 'both are marked, and today shows both sections: ' + t.now);
   await wide('home day 1'); await shot('today-done', true);
 
   await p.clock.setFixedTime(T0 + DAY); await p.reload(); await p.waitForTimeout(700);

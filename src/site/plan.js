@@ -193,7 +193,7 @@
   function planTaskText(t) {
     var S = PSUB[t.s], n = Array.isArray(t.ids) ? t.ids.length : 0, mins = Math.max(1, Math.round(n * S.perQ));
     if (t.k === 'check') { return { h: 'Take the 10-question starting check', sub: 'about ' + S.checkMins + ' min', why: 'A rough score range and the question types to begin with.' }; }
-    if (t.k === 'module') { return { h: 'Sit a timed module', sub: S.modMins + ' min', why: S.modN + ' questions on one clock, like one part of the real section. This is the long session of the week, on top of your daily minutes.' }; }
+    if (t.k === 'module') { return { h: 'Take a timed test', sub: S.modMins + ' min', why: S.modN + ' questions on one clock, like one part of the real section. This is the long session of the week, on top of your daily minutes.' }; }
     if (t.k === 'review') { return { h: 'Redo ' + plural(n, 'question') + ' you missed', sub: 'about ' + mins + ' min', why: 'Spaced repeats: a miss comes back after 1 day, then 3, then 7, until it sticks.' }; }
     var names = Array.isArray(t.names) ? t.names : [];
     return { h: names.length === 1 ? names[0] : plural(names.length, 'question type'), sub: plural(n, 'question') + ' · about ' + mins + ' min', why: (t.why || '') + (names.length > 1 ? ' ' + names.join(' · ') : '') };
@@ -210,9 +210,9 @@
   function planPhase(left) {
     if (left < 0) { return 'Your test date has passed. Set a new date below to keep the plan going.'; }
     if (left === 0) { return 'It is test day. Nothing to study: read each last sentence twice, and good luck.'; }
-    if (left <= 7) { return 'Final week: repeats of what you missed and timed modules. Take one full practice test in Bluebook early in the week, and rest the day before.'; }
-    if (left <= 28) { return 'Fix and pace: your weakest types, repeats of what you missed, and a timed module each Saturday.'; }
-    return 'Build: new question types and the ones you miss, a little every day, and a timed module each Saturday.';
+    if (left <= 7) { return 'Final week: the questions you missed, and timed tests. Take one full practice test in Bluebook early in the week, and rest the day before.'; }
+    if (left <= 28) { return 'Fix and speed up: your weakest kinds of question, the ones you missed, and a timed test each Saturday.'; }
+    return 'Build: new kinds of question and the ones you miss, a little every day, and a timed test each Saturday.';
   }
   function planProgress(P) {
     var day = planToday(P), done = 0;
@@ -227,7 +227,8 @@
       seg('plan-mins', 'Minutes a day', [[15, '15'], [30, '30'], [45, '45']], P ? P.mins : 15) +
       seg('plan-subj', 'Sections', [['both', 'Both'], ['m', 'Math'], ['rw', 'Reading & Writing']], P ? P.subj : 'both') +
       '</div><p class="sg-msg bad" id="plan-msg" role="status"></p>' +
-      '<p class="row"><button class="btn big" type="submit">' + (P ? 'Save my plan' : 'Make my plan') + '</button>' + (P ? '<button class="linkbtn" type="button" id="plan-del">Delete my plan</button>' : '') + '</p></form>';
+      '<p class="row"><button class="btn big" type="submit">' + (P ? 'Save my changes' : 'Make my plan') + '</button></p>' +
+      (P ? '<p class="plan-del-row"><button class="btn sm ghost danger" type="button" id="plan-del">Delete my plan</button><span class="fine">Your practice results stay.</span></p>' : '') + '</form>';
   }
   function planWire() {
     var form = document.getElementById('plan-form');
@@ -251,8 +252,8 @@
     T.forEach(function (t) { cnt[t.s.lvl] += 1; });
     return '<article class="mm-next-c"><p class="mm-next-top"><i class="sdot ' + S.cls + '" aria-hidden="true"></i><b>' + S.name + '</b></p>' +
       '<p>' + (d ? 'Starting check: ' + d.r + ' of ' + d.n + ' right, rough range <b>' + d.lo + '–' + d.hi + '</b>.' : 'No starting check yet.') + '</p>' +
-      '<p class="fine">' + (T.length - cnt['new']) + ' of ' + T.length + ' question types tried · ' + cnt.strong + ' strong · ' + cnt.weak + ' need work' + (last ? ' · last timed module ' + last.r + ' of ' + last.n : '') + '</p>' +
-      '<p class="row"><a class="btn ghost sm" href="#' + S.hMap + '">My map</a><a class="linkbtn" href="#' + S.hCheck + '">' + (d ? 'Take the check again' : 'Take the 10-question check') + '</a></p></article>';
+      '<p class="fine">' + (T.length - cnt['new']) + ' of ' + T.length + ' question types tried · ' + cnt.strong + ' strong · ' + cnt.weak + ' need work' + (last ? ' · last timed test ' + last.r + ' of ' + last.n : '') + '</p>' +
+      '<p class="row"><a class="btn ghost sm" href="#' + S.hMap + '">My progress</a><a class="linkbtn" href="#' + S.hCheck + '">' + (d ? 'Take the check again' : 'Take the 10-question check') + '</a></p></article>';
   }
   function buildPlan() {
     var P = planGet(), host = viewEl.plan;
@@ -283,7 +284,7 @@
       var d = new Date(dayStart(Date.now())); d.setDate(d.getDate() + i);
       var isTest = dn + i === testDn, f = PSUB[planFocus(P, dn + i)], sat = d.getDay() === 6 || (testDn - dn - i <= 7 && testDn - dn - i > 0 && (dn + i) % 2 === 0);
       week += '<li class="plan-day' + (i === 0 ? ' today' : '') + (isTest ? ' test' : '') + '"><span class="muted">' + (i === 0 ? 'Today' : d.toLocaleDateString(undefined, { weekday: 'short' })) + ' ' + d.getDate() + '</span>' +
-        (isTest ? '<b>Test day</b>' : '<b><i class="sdot ' + f.cls + '" aria-hidden="true"></i> ' + f.name + '</b>' + (sat ? '<span>+ timed module</span>' : '')) + '</li>';
+        (isTest ? '<b>Test day</b>' : '<b><i class="sdot ' + f.cls + '" aria-hidden="true"></i> ' + f.name + '</b>' + (sat ? '<span>+ timed test</span>' : '')) + '</li>';
     }
     host.innerHTML = '<div class="wrap">' +
       '<header class="mhead"><p class="eyebrow">My study plan</p><h2 class="vtitle">' + title + '</h2>' +
@@ -321,10 +322,10 @@
       var left = planLeft(P), pr = left >= 0 ? planProgress(P) : null;
       h += '<a class="hcont hplan" href="#plan"><span class="label">My study plan</span><b>' + (left < 0 ? 'Set a new test date' : left === 0 ? 'Test day' : plural(left, 'day') + ' to your test') + (pr && pr.of ? ' · today ' + pr.done + ' of ' + pr.of + ' done' : '') + '</b><span class="hcont-go" aria-hidden="true">→</span></a>';
     } else {
-      h += '<a class="hcont hplan" href="#plan"><span class="label">Have a test date?</span><b>Get a short plan for every day</b><span class="hcont-go" aria-hidden="true">→</span></a>';
+      h += '<a class="hcont hplan" href="#plan"><span class="label">Have a test date?</span><b>Make a short plan for every day</b><span class="hcont-go" aria-hidden="true">→</span></a>';
     }
     if (fresh) {
-      h += '<div class="hcheck"><p><b>New here?</b> Find your starting point: 10 questions, a rough score range, and what to study first.</p><p class="row"><a class="btn sm ghost" href="#m-check">Math check</a><a class="btn sm ghost" href="#rw-check">Reading &amp; Writing check</a></p></div>';
+      h += '<div class="hcheck"><p><b>Not sure of your level?</b> Answer 10 questions to see roughly where you stand and what to study first.</p><p class="row"><a class="btn sm ghost" href="#m-check">Math: find my level</a><a class="btn sm ghost" href="#rw-check">Reading &amp; Writing: find my level</a></p></div>';
     }
     return h;
   }

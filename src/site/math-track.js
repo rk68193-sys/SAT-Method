@@ -14,8 +14,8 @@
   MWHY.forEach(function (w) { MWHYBY[w[0]] = w; });
   /* drills that train the habit behind a cause */
   var MWHY_DRILL = {
-    slip: 'Quick reps for the usual slips: <a href="#m-drill-mexp">exponent rules</a>, <a href="#m-drill-mpct">percent multipliers</a>, <a href="#m-drill-mslope">slope from two points</a> and <a href="#m-drill-mfrac">clearing fractions</a>. The basics underneath: <a href="#m-found">Algebra foundations</a>.',
-    method: 'Practice knowing where to start: <a href="#m-drill-mskill">Name the skill</a>, <a href="#m-drill-mcount">How many solutions?</a> and <a href="#m-drill-mform">Which form shows it?</a>'
+    slip: 'Short exercises for the usual mistakes: <a href="#m-drill-mexp">exponent rules</a>, <a href="#m-drill-mpct">percent multipliers</a>, <a href="#m-drill-mslope">slope from two points</a> and <a href="#m-drill-mfrac">clearing fractions</a>. The basics underneath: <a href="#m-found">Algebra basics</a>.',
+    method: 'Short exercises for knowing where to start: <a href="#m-drill-mskill">Name the skill</a>, <a href="#m-drill-mcount">How many solutions?</a> and <a href="#m-drill-mform">Which form shows it?</a>'
   };
   function mWhyOf(id) { var r = store.x[id]; return Array.isArray(r) && has(MWHYBY, r[0]) ? r[0] : ''; }
   function mWhySaid(code) { return '<b>Saved.</b> ' + esc(MWHYBY[code][3]) + ' <a href="#m-traps">See your trap report</a>' + (MWHY_DRILL[code] ? '<br>' + MWHY_DRILL[code] : ''); }
@@ -148,25 +148,26 @@
       }).join('') + '</div>';
     }).join('');
     viewEl.mmap.innerHTML = '<div class="wrap">' +
-      mHead('Math · My map', 'Your mastery map', 'Each square is one of the ' + N + ' question types, colored by how you did the last time you tried its questions. Tap a square to see its trap and practice just that type.') +
+      mHead('Math · My progress', 'My progress', 'How you are doing on each of the ' + N + ' kinds of math question. This page fills in as you answer practice questions. Tap a colored square to see what to watch out for, and to practice just that kind.') +
       '<div class="mst-stats mm-stats"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
       diagLineHTML('m') + dataLineHTML() + mFoundNudgeHTML() +
-      (tried ? '' : '<aside class="mnote"><p><b>Nothing practiced yet.</b> Answer a few questions and this map fills in. Results are saved ' + savedIn() + '.</p><a class="btn sm" href="#m-practice">Practice real questions</a></aside>') +
+      (tried ? '' : '<aside class="mnote"><p><b>No practice questions answered yet.</b> Answer a few and this page fills in.' + (drillTried('math').length ? ' Your short exercises are listed below.' : '') + ' Results are saved ' + savedIn() + '.</p><a class="btn sm" href="#m-practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="mm-next"><h3 class="h2">Work on these next</h3>' + (next.length
         ? '<p class="lede">Your lowest-scoring types so far. Read the trap, then practice just that type.</p><div class="mm-nexts">' + next.map(function (m) { return mmCardHTML(m, stat[m.id]); }).join('') + '</div>'
         : '<p class="lede">Nothing needs work right now. Pick a grey square below to try a type you have not seen.</p>') + '</section>' : '') +
+      drillProgressHTML('math') +
       '<section class="sec' + (tried ? '' : ' first') + '" id="mm-all"><h3 class="h2">All ' + N + ' types</h3><p class="lede">The number in a square is your percent right on the questions you have tried. Grey squares are types you have not tried.</p>' +
         seg('mm-show', 'Show', [['all', 'All'], ['weak', 'Needs work · ' + cnt.weak], ['mid', 'Getting there · ' + cnt.mid], ['strong', 'Strong · ' + cnt.strong], ['new', 'Not tried · ' + cnt['new']]], mmFilter) +
         '<p class="mm-key"><span><i class="mm-t lvl-weak" aria-hidden="true"></i>Needs work: under 60% right</span><span><i class="mm-t lvl-mid" aria-hidden="true"></i>Getting there</span><span><i class="mm-t lvl-strong" aria-hidden="true"></i>Strong: 85% or more, on at least 3 questions</span><span><i class="mm-t lvl-new" aria-hidden="true"></i>Not tried</span></p>' +
         '<div class="mm-map" id="mm-map" data-show="' + mmFilter + '">' + doms + '</div></section>' +
       '<section class="sec" id="m-traps">' + mTrapHTML() + '</section>' +
-      '<section class="sec" id="mm-mods"><h3 class="h2">Timed modules</h3>' + (mods.length
-        ? '<p class="lede">Your last ' + (mods.length > 5 ? '5 modules' : plural(mods.length, 'module')) + ': 22 questions on one clock, like one part of the real Math section.</p><ul class="mm-mods">' + mods.slice(-5).reverse().map(function (r) {
+      '<section class="sec" id="mm-mods"><h3 class="h2">Timed tests</h3>' + (mods.length
+        ? '<p class="lede">Your last ' + (mods.length > 5 ? '5 timed tests' : plural(mods.length, 'timed test')) + ': 22 questions on one clock, like one part of the real Math section.</p><ul class="mm-mods">' + mods.slice(-5).reverse().map(function (r) {
             return '<li><b>' + r.r + ' of ' + r.n + '</b><span>' + clock(r.s) + ' of ' + clock(r.l) + ' used</span><span class="muted">' + new Date(r.t).toLocaleDateString() + '</span></li>';
           }).join('') + '</ul>'
-        : '<p class="lede">Not taken yet. A module is 22 questions on one 35-minute clock, with answers at the end.</p>') +
-        '<p class="row" style="margin-top:1rem"><a class="btn sm" href="#m-module">Take a timed module</a></p></section>' +
-      mNext([['m-practice', 'Keep going', 'Practice real questions'], ['m-study', 'Look up a type', 'Expanded types']]) + '</div>';
+        : '<p class="lede">None taken yet. A timed test is 22 questions on one 35-minute clock, like one part of the real Math section. You see the answers at the end.</p>') +
+        '<p class="row" style="margin-top:1rem"><a class="btn sm" href="#m-module">Take a timed test</a></p></section>' +
+      nextHTML(['m-practice', 'Practice real questions', 'Work on the kinds of question that need it.'], ['m-learn', 'go back to the lessons']) + '</div>';
     if (mmSel) { mmSelect(mmSel, false); }
   }
   function mRetrySet(ids) {

@@ -2,52 +2,52 @@
   var KEYS = '1234567890-';
   var DR = {
     job: { part: 'reading', title: 'Name the job', goal: 4, ask: 'Which job is this question asking you to do?',
-      blurb: 'See only the question line. Name the job, and the routine you will run, before you look at the passage.' },
+      blurb: 'You see only the question, not the passage. Pick what kind of question it is, so you know what to look for before you read.' },
     tag: { part: 'reading', title: 'Tag the sentence', goal: 10, ask: 'Which tag fits the highlighted sentence?',
-      blurb: 'A real passage with one sentence highlighted. Give it one of the routine’s tags.' },
-    core: { part: 'reading', title: 'Core first', goal: 20, ask: 'Tap the pieces that make up the core: the subject, the main verb and what completes them.',
-      blurb: 'A long sentence from the bank, already cut where its pieces join. Find the short sentence hiding inside it.' },
+      blurb: 'A real passage with one sentence highlighted. Pick the label that fits it, such as “Found” for a result or “Point” for the main claim.' },
+    core: { part: 'reading', title: 'Core first', goal: 20, ask: 'Tap the pieces that make up the core: the subject, the main verb and what finishes them. Then press Check.',
+      blurb: 'A long sentence from a real question, cut into pieces. Tap the pieces that make the short sentence hiding inside it.' },
     point: { part: 'reading', title: 'Find the Point', goal: 20, ask: 'Which sentence is the Point: the claim the rest supports?',
-      blurb: 'A real passage, sentence by sentence. Pick the claim or conclusion that everything else is there to support.' },
+      blurb: 'A real passage, one sentence on each button. Pick the main claim: the sentence the others are there to back up.' },
     pointer: { part: 'reading', title: 'Follow the pointer', goal: 15, ask: 'What does the highlighted pointer refer back to?',
-      blurb: 'Words like “this pattern” or “these findings” point back. Pick the sentence they point to.' },
+      blurb: 'Words like “this pattern” or “these findings” point back to something said earlier. Pick the sentence they point to.' },
     same: { part: 'reading', title: 'Same idea, different words', goal: 30, ask: 'Which choice says the same thing in other words?',
-      blurb: 'One sentence from a real passage and four rewordings written for this site. One keeps the meaning. The others reuse its words and change what it says. Matching words will not find the answer: on the real test the right choice shares the most words with the passage in only 18% of questions (<a href="#myths">shortcuts that do not work</a>).' },
-    notes: { part: 'reading', title: 'Notes: goal first', goal: 60, ask: 'Which choice meets the goal and accurately uses the notes?',
-      blurb: 'Read the goal first, select relevant facts, and verify the choice against the visible notes. College Board’s own answers.' },
+      blurb: 'One sentence from a real passage and four rewordings written for this site. Only one keeps the meaning. The others reuse its words but change what it says. Do not pick by matching words: on the real test the right answer shares the most words with the passage in only 18% of questions (<a href="#myths">shortcuts that do not work</a>).' },
+    notes: { part: 'reading', title: 'Notes: goal first', goal: 60, ask: 'Which choice does what the goal asks and matches the notes?',
+      blurb: 'A student’s notes and a goal. Read the goal first, then pick the choice that does what it asks and matches the notes. Real questions, with College Board’s answers.' },
     why: { part: 'reading', title: 'Why is it wrong?', goal: 25, ask: 'Why is this choice wrong?',
-      blurb: 'A wrong choice from a worked example. Name the way it fails, using the five kinds from Step 4.' },
+      blurb: 'A wrong answer from one of the worked examples. Pick why it is wrong, from the five kinds in Step 4 of the reading lessons.' },
     pattern: { part: 'grammar', title: 'Spot the pattern', goal: 5, ask: 'What does this question test?',
-      blurb: 'See only the four answer choices of a real question. Name what it tests before you read a word of the passage.' },
+      blurb: 'You see only the four answer choices of a real question. Say what it tests before you read the passage.' },
     frag: { part: 'grammar', title: 'Sentence or fragment?', goal: 8, ask: 'Can these words stand alone as a sentence? If not, what is missing?',
-      blurb: 'One string of words, punctuated as a sentence. Decide whether it could stand alone. The warm-up for Which boundary?, and the skill behind rule 9.1' +
+      blurb: 'A group of words written like a sentence. Decide whether it can stand on its own. A warm-up for Which boundary?, and the skill behind rule 9.1' +
         (typeof U !== 'undefined' && U['u9-1'] ? ' (' + U['u9-1'].q + ' questions, ' + U['u9-1'].split.Easy + ' of them Easy)' : '') + '. Cards written for this site. <a href="#parts-of-speech">Parts of speech in five minutes</a>.' },
     boundary: { part: 'grammar', title: 'Which boundary?', goal: 10, ask: 'What stands on each side of the highlighted answer?',
-      blurb: 'A sentence from a real question, often cut short, with the right answer in place. Name the situation that makes that mark right. <a href="#part-a">Learn the eight situations first</a>.' },
+      blurb: 'A sentence from a real question with the right answer filled in. Say what makes that punctuation mark right: what stands on each side of it. <a href="#part-a">Learn the eight situations first</a>.' },
     verb: { part: 'grammar', title: 'Which verb situation?', goal: 15, ask: 'Which situation are you in?',
-      blurb: 'A real verb question with its four choices. Decide which of the four verb situations you are in. <a href="#part-b">See the four situations</a>.' },
+      blurb: 'A real verb question with its four choices. Say which of the four verb situations it is. <a href="#part-b">See the four situations</a>.' },
     link: { part: 'grammar', title: 'Name the link', goal: 15, ask: 'How does the statement after the blank relate to the one before it?',
-      blurb: 'A real passage or excerpt with the transition hidden. Name the relationship before you see a single choice.' },
+      blurb: 'A real passage with the linking word (such as “however”) hidden. Say how the two ideas connect before you see the choices.' },
     wmean: { part: 'words', title: 'Word meanings', goal: 8, ask: 'What does this word mean?',
-      blurb: 'A word from the choices of the fill-in questions, and four definitions. <a href="#vocab-list">See the word list</a>.' },
+      blurb: 'A word from the test’s fill-in-the-blank questions, and four meanings. Pick the right one. <a href="#vocab-list">See the word list</a>.' },
     wsecond: { part: 'words', title: 'Second meanings', goal: 20, ask: 'What does the highlighted word or phrase mean in this sentence?',
-      blurb: 'A familiar word in its sentence from a real question. The sentence often uses one of its less common senses. <a href="#vocab-second">How to read them</a>.' },
+      blurb: 'A familiar word in a sentence from a real question. The sentence often uses one of its less common meanings. <a href="#vocab-second">How to read them</a>.' },
     mskill: { subj: 'math', part: 'mspot', title: 'Name the skill', goal: 20, ask: 'Which skill is this question from?',
-      blurb: 'A real question from the bank. Before you solve anything, name the skill College Board files it under. The answer names its question type and the cue that gives it away.' },
+      blurb: 'A real test question. Before you solve anything, say which skill it tests. The answer shows the kind of question and the clue that gives it away.' },
     mcount: { subj: 'math', part: 'mspot', title: 'How many solutions?', goal: 15, ask: 'How many solutions are there?',
-      blurb: 'An equation, two lines, or a line and a parabola. Count the solutions without solving. <a href="#mt-sys-count">See the method</a>.' },
+      blurb: 'An equation, two lines, or a line and a curve. Count the solutions without solving. <a href="#mt-sys-count">See how</a>.' },
     mform: { subj: 'math', part: 'mspot', title: 'Which form shows it?', goal: 12, ask: 'Which form shows it as a number printed in the equation?',
-      blurb: 'Three forms of the same quadratic, and a value you need: the vertex, the zeros or the y-intercept. Pick the form that prints it. <a href="#mpat-form">The form shows the answer</a>.' },
+      blurb: 'The same quadratic written three ways, and a value you need: the vertex, the zeros or the y-intercept. Pick the way of writing it that shows that value. <a href="#mpat-form">The form shows the answer</a>.' },
     mexp: { subj: 'math', part: 'mreps', title: 'Exponent rules', goal: 10, ask: 'Which is equal to it?',
-      blurb: 'Multiply, divide, raise to a power, negative and fractional exponents. Each wrong choice is a real slip, and the answer shows where the rule comes from.' },
+      blurb: 'Multiplying, dividing and raising powers, and negative and fractional exponents. Each wrong choice is a real mistake, and the answer shows where the rule comes from.' },
     mpct: { subj: 'math', part: 'mreps', title: 'Percent multipliers', goal: 15, ask: '',
-      blurb: 'Turn a percent change into one multiplier, chain two changes, undo a discount, and find a percent change.' },
+      blurb: 'Turn a percent change into one number to multiply by, combine two changes, undo a discount, and find a percent change.' },
     mslope: { subj: 'math', part: 'mreps', title: 'Slope from two points', goal: 15, ask: 'What is the slope?',
       blurb: 'Two points, or two readings of a steady rate. Change in y over change in x, with the signs right.' },
     mfrac: { subj: 'math', part: 'mreps', title: 'Clearing fractions', goal: 15, ask: 'Multiply through to clear the fractions. Which equation do you get?',
-      blurb: 'One step only: multiply every term by the right number, and get every term, the whole numbers included.' },
-    mfound: { subj: 'math', part: 'mfound', title: 'Algebra foundations', goal: 20, ask: '',
-      blurb: 'Fractions, getting x alone, solving for a whole expression, distributing and factoring, like terms, and an unknown in a denominator. Each wrong choice is a real slip. <a href="#m-found">Read the page</a>.' }
+      blurb: 'One step only: multiply every term by the right number, the whole numbers included.' },
+    mfound: { subj: 'math', part: 'mfound', title: 'Algebra basics', goal: 20, ask: '',
+      blurb: 'Fractions, getting x alone, solving for a whole expression, brackets and factoring, like terms, and an unknown on the bottom of a fraction. Each wrong choice is a real mistake. <a href="#m-found">Read the page</a>.' }
   };
   /* the Math drills written for this site: drill -> key in D.mdrills (src/math/mdrills.py) */
   var MDR_KIND = { mcount: 'count', mform: 'form', mexp: 'exp', mpct: 'pct', mslope: 'slope', mfrac: 'frac', mfound: 'found' };
@@ -246,7 +246,7 @@
           prompt: '<p class="fine">Question ' + q.id + ' · ' + MDIFF[q.d] + '</p>' + mImg('q', q),
           explain: '<p><b>' + esc(MSK[q.k].name) + '</b>, in ' + esc(MDOM[q.k].name) + '. Its question type: <a href="#mt-' + q.t + '">' + esc(T.name) + '</a>.</p>' +
             '<p><b>The cue:</b> ' + esc(T.spot) + '</p>' +
-            (pats.length ? '<p class="fine">Big pattern' + (pats.length > 1 ? 's' : '') + ': ' + pats.map(function (p) { return '<a href="#mpat-' + p.id + '">' + esc(p.name) + '</a>'; }).join(', ') + '.</p>' : '') });
+            (pats.length ? '<p class="fine">Big idea' + (pats.length > 1 ? 's' : '') + ': ' + pats.map(function (p) { return '<a href="#mpat-' + p.id + '">' + esc(p.name) + '</a>'; }).join(', ') + '.</p>' : '') });
       });
     } else if (has(MDR_KIND, kind)) {
       var made = (D.mdrills || {})[MDR_KIND[kind]] || [];
@@ -325,7 +325,7 @@
       return '<p class="fine">This card was written for this site. The bank has ' + n + ' questions like it: ' + types.map(function (t) { return '<a href="#mp-' + t + '">' + esc(MTY[t].name) + '</a> (' + MTY[t].n + ')'; }).join(', ') + '.</p>';
     }
     var f = /^m-found-([a-z]+)$/.exec(c.r || '');
-    if (f && MFOUNDBY[f[1]]) { return '<p class="fine">Written for this site. The move: <a href="#' + c.r + '">' + esc(MFOUNDBY[f[1]].name) + '</a>, on the Algebra foundations page.</p>'; }
+    if (f && MFOUNDBY[f[1]]) { return '<p class="fine">Written for this site. The move: <a href="#' + c.r + '">' + esc(MFOUNDBY[f[1]].name) + '</a>, on the Algebra basics page.</p>'; }
     var t = /^mt-(.+)$/.exec(c.r || '');
     return t && MTY[t[1]] ? '<p class="fine">Written for this site. It comes up in questions such as <a href="#' + c.r + '">' + esc(MTY[t[1]].name) + '</a>.</p>' : '';
   }
@@ -348,12 +348,25 @@
     if (!drillRun || !drillRun.away) { return; }
     drillRun.t0 += now() - drillRun.away; drillRun.away = 0;
     var d = DR[drillRun.kind], R = drillRun, w = document.getElementById('dwatch');
-    if (w && !R.answered) { stopWatch(); watch = setInterval(function () { var t = (now() - R.t0) / 1000; w.textContent = secs(t); w.classList.toggle('slow', t > d.goal); }, 100); }
+    if (w && !R.answered) { stopWatch(); watch = setInterval(function () { tickWatch(w, R, d); }, 250); }
   }
   function drillCount(kind) { return drillItems(kind).length; }
   function dlen() { return typeof store.s.dlen === 'number' ? store.s.dlen : 10; }
-  function lastLine(r) { return isObj(r) && typeof r.n === 'number' ? 'Last round: ' + r.r + ' of ' + r.n + ' right · ' + secs(r.m) + ' median' : ''; }
+  function lastLine(r) { return isObj(r) && typeof r.n === 'number' ? 'Last time: ' + r.r + ' of ' + r.n + ' right, about ' + wholeSecs(r.m) + ' a card' : ''; }
+  /* the clock on a card counts whole seconds: tenths flicker and make people hurry */
+  function wholeSecs(t) { var n = Math.max(0, Math.round(t)); return n + (n === 1 ? ' second' : ' seconds'); }
+  function tickWatch(w, R, d) { var t = (now() - R.t0) / 1000; w.textContent = Math.floor(t) + ' s'; w.classList.toggle('slow', t > d.goal); }
 
+  /* My progress: the last round of each short exercise tried in this subject */
+  function drillTried(subj) { return drillsOf(subj).filter(function (k) { return isObj(store.d[k]) && typeof store.d[k].n === 'number'; }); }
+  function drillProgressHTML(subj) {
+    var keys = drillTried(subj), math = subj === 'math';
+    if (!keys.length) { return ''; }
+    return '<section class="sec" id="' + (math ? 'mm' : 'rwm') + '-drills"><h3 class="h2">Short exercises</h3><p class="lede">How your last round went on each one you have tried.</p><ul class="mm-mods dprog">' + keys.map(function (k) {
+      var r = store.d[k];
+      return '<li><a href="#' + (math ? 'm-drill-' : 'drill-') + k + '">' + DR[k].title + '</a><b>' + r.r + ' of ' + r.n + ' right</b><span class="muted">about ' + wholeSecs(r.m) + ' a card</span></li>';
+    }).join('') + '</ul><p class="row" style="margin-top:1rem"><a class="btn sm ghost" href="#' + (math ? 'm-drills' : 'drills') + '">All short exercises</a></p></section>';
+  }
   var drillRun = null, watch = null, drillSubj = '';
   function stopWatch() { clearInterval(watch); watch = null; }
   /* Reading and Writing drills live on #drills and Math drills on #m-drills. They share one host, which moves to the
@@ -369,25 +382,27 @@
   }
   function drillCard(k) {
     var d = DR[k], n = drillCount(k), last = store.d[k];
-    return '<div class="dcard"><h3>' + d.title + '</h3><p>' + d.blurb + '</p><p class="dmeta">' + n.toLocaleString('en-US') + ' cards · goal: under ' + d.goal + ' seconds a card</p>' +
-      '<p class="dlast">' + (lastLine(last) || 'Not tried yet') + '</p><button type="button" class="btn" data-start="' + k + '"' + (n ? '' : ' disabled') + '>Start</button></div>';
+    return '<div class="dcard"><h3>' + d.title + '</h3><p>' + d.blurb + '</p><p class="dmeta">' + n.toLocaleString('en-US') + ' cards · aim for ' + d.goal + ' seconds or less a card</p>' +
+      '<p class="dlast">' + (lastLine(last) || 'Not tried yet') + '</p><button type="button" class="btn" data-start="' + k + '"' + (n ? '' : ' disabled') + '>Start <span class="sr">' + d.title + '</span></button></div>';
   }
   function drillHome() {
     drillRun = null; stopWatch();
     var len = dlen();
     var keys = drillsOf(drillSubj || 'rw'), math = drillSubj === 'math';
-    var groups = math ? [['mspot', 'Recognize the question'], ['mreps', 'Quick reps for the usual slips'], ['mfound', 'The basics underneath']]
-      : [['reading', 'Reading drills'], ['grammar', 'Grammar drills'], ['words', 'Word drills']];
-    var h = (math ? mHead('Math · Drills', 'Short drills for single moves', 'Each drill trains one move that many questions share. Name the skill uses the bank’s own questions. The other drills use short cards written for this site, and a script works out every card’s answer a second way to check it. Answer with the number keys and press Enter for the next card.')
-        : '<header class="read"><p class="eyebrow">Drills</p><h2 class="vtitle">Short drills for the slow steps</h2>' +
-          '<p class="lede">Each drill trains one move, on real questions from the bank. Answer with the number keys and press Enter for the next card.</p></header>') +
-      '<fieldset class="seg" style="margin-top:1.4rem"><legend>Cards per round</legend><div class="segrow">' + [10, 20, 0].map(function (n) {
+    var groups = math ? [['mspot', 'Know what the question asks'], ['mreps', 'Avoid the usual mistakes'], ['mfound', 'Algebra basics']]
+      : [['reading', 'Reading'], ['grammar', 'Grammar'], ['words', 'Word meanings']];
+    var how = 'Pick one and press Start. After each card you see the right answer and why. A small clock counts the seconds, but there is no time limit.' +
+      '<span class="kbd-only"> On a keyboard, press 1, 2, 3 or 4 to answer and Enter for the next card.</span>';
+    var h = (math ? mHead('Math · Short exercises', 'Short exercises', 'Quick cards that each train one small step that many questions share. ' + how)
+        : '<header class="read"><p class="eyebrow">Reading &amp; Writing · Short exercises</p><h2 class="vtitle">Short exercises</h2>' +
+          '<p class="lede">Quick cards that each train one small step, most of them on real test questions. ' + how + '</p></header>') +
+      '<fieldset class="seg" style="margin-top:1.4rem"><legend>Cards each time</legend><div class="segrow">' + [10, 20, 0].map(function (n) {
         return '<label><input type="radio" name="dlen" id="dlen-' + (n || 'all') + '" value="' + n + '"' + (n === len ? ' checked' : '') + '><span>' + (n || 'All') + '</span></label>';
       }).join('') + '</div></fieldset>' +
       groups.map(function (g) {
         var ks = keys.filter(function (k) { return DR[k].part === g[0]; });
         return ks.length ? '<h3 class="subh">' + g[1] + '</h3><div class="dgrid">' + ks.map(drillCard).join('') + '</div>' : '';
-      }).join('');
+      }).join('') + (math ? '<p class="fine" style="margin-top:1.4rem">“Name the skill” uses real test questions. The other Math cards were written for this site, and a script works out every card’s answer a second way to check it.</p>' : '');
     var host = document.getElementById('dhost');
     host.innerHTML = h;
     $$('input[name="dlen"]', host).forEach(function (r) { r.addEventListener('change', function () { store.s.dlen = Number(r.value); save(); }); });
@@ -400,7 +415,7 @@
     if (only) { pool = shuffle(all.filter(function (it) { return only.indexOf(it.id) !== -1; })); }
     else { pool = shuffle(all.slice()); if (dlen()) { pool = pool.slice(0, dlen()); } }
     if (!pool.length) { drillHome(); return; }
-    drillRun = { kind: kind, items: pool, i: 0, right: 0, streak: 0, best: 0, res: [], t0: 0, answered: false, sel: {} };
+    drillRun = { kind: kind, items: pool, i: 0, right: 0, streak: 0, best: 0, res: [], t0: 0, answered: false, sel: {}, subj: drillSubjOf(kind) };
     drillDraw();
     toTop();
   }
@@ -412,15 +427,15 @@
       R.sel = {};
       body = '<div class="pieceset" id="pieceset">' + it.pieces.map(function (p, i) {
         return '<button type="button" class="pc" data-i="' + i + '" aria-pressed="false"><span class="k">' + (i < KEYS.length ? KEYS[i] : '') + '</span><span class="pt">' + esc(p.text) + '</span><span class="pl"></span></button>';
-      }).join('') + '</div><p class="row" style="margin-top:.8rem"><button type="button" class="btn" id="pcheck">Check</button><span class="kbd">Enter</span></p>';
+      }).join('') + '</div><p class="row" style="margin-top:.8rem"><button type="button" class="btn big" id="pcheck">Check</button><span class="kbd">Enter</span></p>';
     } else {
       body = '<div class="dopts' + (it.wide ? ' wide' : '') + '">' + it.opts.map(function (o, i) {
         return '<button type="button" class="dopt" data-k="' + o.k + '"><span class="k">' + (i < KEYS.length ? KEYS[i] : '') + '</span><span><b>' + o.b + '</b>' + (o.s ? '<small>' + o.s + '</small>' : '') + '</span></button>';
       }).join('') + '</div>';
     }
     host.innerHTML = '<div class="drun"><div class="dbar"><span class="dname">' + d.title + '</span><span class="dstat">Card ' + (R.i + 1) + ' of ' + R.items.length + '</span>' +
-      '<span class="dstat" id="dright">' + R.right + ' right</span><span class="dstat" id="dstreak">Streak ' + R.streak + '</span><span class="dwatch" id="dwatch">0.0 s</span>' +
-      '<button type="button" class="linkbtn" id="dend">End round</button></div>' +
+      '<span class="dstat" id="dright">' + R.right + ' right</span><span class="dwatch" id="dwatch" aria-hidden="true">0 s</span>' +
+      '<button type="button" class="btn sm ghost" id="dend">Stop</button></div>' +
       '<div class="dprompt" id="dprompt">' + it.prompt + '</div>' + (d.ask ? '<p class="dask">' + d.ask + '</p>' : '') + body + '<div class="dfeed" id="dfeed"></div></div>';
     if (it.type === 'pieces') {
       $$('.pc', host).forEach(function (b) { b.addEventListener('click', function () { togglePiece(Number(b.getAttribute('data-i'))); }); });
@@ -432,11 +447,7 @@
     R.answered = false; R.t0 = now(); R.away = 0;
     stopWatch();
     var w = document.getElementById('dwatch');
-    watch = setInterval(function () {
-      var t = (now() - R.t0) / 1000;
-      w.textContent = secs(t);
-      w.classList.toggle('slow', t > d.goal);
-    }, 100);
+    watch = setInterval(function () { tickWatch(w, R, d); }, 250);
   }
   function togglePiece(i) {
     var R = drillRun;
@@ -455,11 +466,11 @@
     } else { ok = k === it.ans; }
     R.answered = true; stopWatch();
     var w = document.getElementById('dwatch');
-    w.textContent = secs(t); w.classList.toggle('slow', t > goal);
+    w.textContent = Math.round(t) + ' s'; w.classList.toggle('slow', t > goal);
     R.res.push({ id: it.id, ok: ok, t: t, ref: it.ref });
     if (ok) { R.right += 1; R.streak += 1; R.best = Math.max(R.best, R.streak); } else { R.streak = 0; }
     document.getElementById('dright').textContent = R.right + ' right';
-    document.getElementById('dstreak').textContent = 'Streak ' + R.streak;
+    noteDrill(R.subj);
     if (it.type === 'pieces') {
       $$('#dhost .pc').forEach(function (b) {
         var i = Number(b.getAttribute('data-i')), p = it.pieces[i];
@@ -480,11 +491,14 @@
     var last = R.i + 1 >= R.items.length;
     var mine = it.opts ? it.opts.filter(function (o) { return o.k === k; })[0] : null;
     var whyNot = !ok && mine ? wrongPickHTML(R.kind, mine, it) : '';
+    /* the button to go on sits right under the verdict, so it is on screen, and again after the explanation (one of them when it all fits) */
+    var nextRow = function (id) { return '<p class="dnext row"><button type="button" class="btn big" id="' + id + '">' + (last ? 'See how I did' : 'Next card') + ' <span aria-hidden="true">→</span></button><span class="kbd">Enter</span></p>'; };
     document.getElementById('dfeed').innerHTML = '<p class="verdict ' + (ok ? 'good' : 'miss') + '" tabindex="-1">' + (ok ? 'Right.' : 'Not this one.') +
-      '<span class="vt">' + secs(t) + (ok ? (t <= goal ? ' · inside the ' + goal + ' s goal' : ' · the goal is ' + goal + ' s') : '') + '</span></p>' +
-      whyNot + '<div class="dexp">' + it.explain + '</div><p class="dnext row"><button type="button" class="btn" id="dnext">' + (last ? 'See the round' : 'Next card') + '</button><span class="kbd">Enter</span></p>';
-    var nb = document.getElementById('dnext');
-    nb.addEventListener('click', drillNext);
+      '<span class="vt">' + wholeSecs(t) + (ok && t > goal ? ' · aim for ' + goal + ' or less' : '') + '</span></p>' + nextRow('dnext') +
+      whyNot + '<div class="dexp">' + it.explain + '</div>' + nextRow('dnext2');
+    document.getElementById('dnext').addEventListener('click', drillNext);
+    document.getElementById('dnext2').addEventListener('click', drillNext);
+    oneNext($('#dfeed .verdict'), document.getElementById('dnext').parentNode, document.getElementById('dnext2'), document.getElementById('dfeed'));
     showFeedback($('#dfeed .verdict'));
   }
   function drillNext() {
@@ -504,7 +518,7 @@
     mm = /^m-(.+)$/.exec(ref);
     if (mm && MSK[mm[1]]) { return 'Lesson · ' + esc(MSK[mm[1]].name); }
     mm = /^m-found-([a-z]+)$/.exec(ref);
-    if (mm && MFOUNDBY[mm[1]]) { return 'Algebra foundations · ' + esc(MFOUNDBY[mm[1]].name); }
+    if (mm && MFOUNDBY[mm[1]]) { return 'Algebra basics · ' + esc(MFOUNDBY[mm[1]].name); }
     return { chunk: 'Step 2 · Chunk: the tags', long: 'Long sentences: core first', para: 'Long passages: make them make sense', method: 'The 60-second method', 'parts-of-speech': 'Parts of speech in five minutes', say: 'Step 3 · Say: your own answer first', job: 'Step 1 · Job', 'vocab-second': 'Words to know · Second meanings' }[ref] || ref;
   }
   function drillFinish() {
@@ -522,13 +536,13 @@
     missed.forEach(function (x) { if (refs.indexOf(x.ref) === -1) { refs.push(x.ref); } });
     var kind = R.kind, missIds = missed.map(function (x) { return x.id; });
     document.getElementById('dhost').innerHTML = '<div class="drun"><p class="eyebrow">' + DR[kind].title + ' · round finished</p>' +
-      '<p class="dresult">' + R.right + ' of ' + n + ' right · ' + secs(m) + ' median</p>' +
-      '<p class="lede">' + inGoal + ' of ' + n + ' inside the ' + goal + '-second goal. Longest streak: ' + R.best + '.</p>' +
-      '<div class="dots" aria-hidden="true">' + R.res.map(function (x) { return '<i class="' + (x.ok ? 'ok' : 'no') + '" title="' + secs(x.t) + '"></i>'; }).join('') + '</div>' +
-      (refs.length ? '<h3 class="subh">What to review</h3><ul class="missed">' + refs.map(function (ref) { return '<li><a href="#' + ref + '">' + refLabel(ref) + '</a></li>'; }).join('') + '</ul>'
-        : '<p class="subh">No misses this round.</p>') +
-      '<div class="row" style="margin-top:1.4rem">' + (missed.length ? '<button type="button" class="btn" id="dretry">Retry the ' + plural(missed.length, 'miss', 'misses') + '</button>' : '') +
-      '<button type="button" class="btn' + (missed.length ? ' ghost' : '') + '" id="dagain">New round</button><button type="button" class="btn ghost" id="dhome">All drills</button></div></div>';
+      '<p class="dresult">You got ' + R.right + ' of ' + n + ' right</p>' +
+      '<p class="lede">About ' + wholeSecs(m) + ' a card. ' + inGoal + ' of ' + n + ' took ' + goal + ' seconds or less.' + (R.best > 1 ? ' Most right in a row: ' + R.best + '.' : '') + '</p>' +
+      '<div class="dots" aria-hidden="true">' + R.res.map(function (x) { return '<i class="' + (x.ok ? 'ok' : 'no') + '" title="' + wholeSecs(x.t) + '"></i>'; }).join('') + '</div>' +
+      (refs.length ? '<h3 class="subh">Read these again</h3><ul class="missed">' + refs.map(function (ref) { return '<li><a href="#' + ref + '">' + refLabel(ref) + '</a></li>'; }).join('') + '</ul>'
+        : '<p class="subh">Every card right.</p>') +
+      '<div class="row" style="margin-top:1.4rem">' + (missed.length ? '<button type="button" class="btn big" id="dretry">Try the ' + plural(missed.length, 'card', 'cards') + ' I missed again</button>' : '') +
+      '<button type="button" class="btn' + (missed.length ? ' ghost' : ' big') + '" id="dagain">Another round</button><button type="button" class="btn ghost" id="dhome">All short exercises</button></div></div>';
     drillRun = null;
     var rb = document.getElementById('dretry');
     if (rb) { rb.addEventListener('click', function () { startDrill(kind, missIds); }); }

@@ -22,6 +22,8 @@
     var built = isObj(store.s.days), d = daysAll();
     if (built) { dayBump(d, Date.now(), subj === 'm' ? 0 : 1); }
   }
+  /* a card in a short exercise counts toward the day too, in its own subject */
+  function noteDrill(subj) { dayBump(daysAll(), Date.now(), subj === 'math' ? 0 : 1); save(); }
   function dayCount(t) { var r = daysAll()[dayKey(t)]; return Array.isArray(r) ? [r[0] || 0, r[1] || 0] : [0, 0]; }
   function dayBefore(t) { var d = new Date(t); d.setDate(d.getDate() - 1); return dayStart(d.getTime()); }
   /* n: days in a row up to today; a streak is still alive if the last day was yesterday. best: the longest run on record. */
@@ -40,7 +42,7 @@
     if (!s.n) { return 'No streak right now. Your longest so far is ' + plural(s.best, 'day') + '; one question today starts a new one.'; }
     return (s.today ? 'You have practiced ' + plural(s.n, 'day') + ' in a row, today included.' : 'Your streak is ' + plural(s.n, 'day') + '. Answer one question today to keep it.') + (s.best > s.n ? ' Your longest is ' + s.best + '.' : '');
   }
-  /* the last weeks, a column a week, Sunday at the top; darker means more questions that day */
+  /* the last weeks, a column a week, Sunday at the top; darker means more answers that day (questions and exercise cards) */
   function habitCalHTML(weeks) {
     var today = dayStart(Date.now()), start = new Date(today), cols = '', active = 0, total = 0;
     start.setDate(start.getDate() - start.getDay() - 7 * (weeks - 1));
@@ -54,13 +56,13 @@
         else {
           var c = dayCount(t), n = c[0] + c[1], lv = !n ? 0 : n < 5 ? 1 : n < 10 ? 2 : n < 20 ? 3 : 4;
           if (n) { active += 1; total += n; }
-          cells += '<i class="hcal-c l' + lv + (t === today ? ' now' : '') + '" title="' + d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }) + ': ' + (n ? plural(n, 'question') + ' (Math ' + c[0] + ', Reading &amp; Writing ' + c[1] + ')' : 'no practice') + '"></i>';
+          cells += '<i class="hcal-c l' + lv + (t === today ? ' now' : '') + '" title="' + d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }) + ': ' + (n ? plural(n, 'answer') + ' (Math ' + c[0] + ', Reading &amp; Writing ' + c[1] + ')' : 'no practice') + '"></i>';
         }
         d.setDate(d.getDate() + 1);
       }
       cols += '<div class="hcal-w"><span class="hcal-m">' + label + '</span>' + cells + '</div>';
     }
-    return '<div class="hcal" role="img" aria-label="Practice in the last ' + weeks + ' weeks: ' + plural(active, 'day') + ' with practice, ' + plural(total, 'question') + ' answered.">' + cols + '</div>' +
+    return '<div class="hcal" role="img" aria-label="Practice in the last ' + weeks + ' weeks: ' + plural(active, 'day') + ' with practice, ' + plural(total, 'answer') + ' given.">' + cols + '</div>' +
       '<p class="hcal-key"><span>Less</span><i class="hcal-c l0"></i><i class="hcal-c l1"></i><i class="hcal-c l2"></i><i class="hcal-c l3"></i><i class="hcal-c l4"></i><span>More</span><span class="muted">' + plural(active, 'day') + ' with practice in ' + weeks + ' weeks</span></p>';
   }
   /* one question a day in each subject, the same for everyone that day: Easy, Medium and Hard take turns */

@@ -35,18 +35,18 @@
   /* ---------- pages ---------- */
   function rRoutineHTML() {
     return '<header><p class="eyebrow">Reading · the plan</p><h2 class="vtitle">Four steps, adapted to the job</h2>' +
-      '<p class="lede">Identify the task, understand the relevant text, form an expectation when useful, and verify the answer. Use the steps that help this question. You do not need to label every sentence or predict exact wording.</p></header>' +
-      '<p class="fine"><b>One possible pacing split, after untimed learning.</b> Adjust it to the question; these are practice targets, not deadlines for individual steps.</p>' +
+      '<p class="lede">Four steps for any reading question: see what the question asks, read the passage one sentence at a time, say your own answer if it helps, then check the choices against the passage. Use the steps that help with the question in front of you. You do not need to label every sentence or guess the exact words.</p></header>' +
+      '<p class="fine"><b>One way to split the time, once you have learned the steps without a clock.</b> These are goals to practice toward, not deadlines for each step.</p>' +
       '<div class="gintro"><figure class="dial sm">' + dialSVG(READING_DIAL) + '<figcaption><ol class="dlegend">' +
       '<li><i class="sw-look"></i><span><b>0–5 sec · Job</b>Read the question first.</span></li>' +
-      '<li><i class="sw-check"></i><span><b>5–40 sec · Chunk</b>Understand the relevant text.</span></li>' +
-      '<li><i class="sw-say"></i><span><b>40–50 sec · Say</b>Form a useful expectation.</span></li>' +
-      '<li><i class="sw-confirm"></i><span><b>50–70 sec · Check</b>Test the choice against the question’s job.</span></li></ol></figcaption></figure></div>' +
+      '<li><i class="sw-check"></i><span><b>5–40 sec · Chunk</b>Read the passage in pieces.</span></li>' +
+      '<li><i class="sw-say"></i><span><b>40–50 sec · Say</b>Your own answer, if it helps.</span></li>' +
+      '<li><i class="sw-confirm"></i><span><b>50–70 sec · Check</b>Check each choice against the passage.</span></li></ol></figcaption></figure></div>' +
       '<ol class="rsteps">' + RD.steps.map(function (s) {
         return '<li><span class="snum">' + s.n + '</span><div><h3 class="sname">' + esc(s.name) + '</h3><p class="sdo">' + s.do + '</p><p class="swhy">' + s.why + '</p></div><span class="stime">' + esc(s.time) + '</span></li>';
       }).join('') + '</ol>' +
       '<div class="after">' + RD.routineAfter.map(function (p) { return '<p class="pretty">' + p + '</p>'; }).join('') + '</div>' +
-      '<div class="nextlinks"><a class="btn" href="#job">Step 1: Job</a><a class="btn ghost" href="#ex-1">Watch it on a real question</a></div>';
+      nextHTML(['job', 'Go to step 1: Job', 'Read the question line first, so you know what to look for.'], ['ex-1', 'watch all four steps on a real question']);
   }
   function rShapeHTML() {
     var S = RD.shape, fig = S.fig;
@@ -79,7 +79,7 @@
       '<div class="cues">' + RD.cues.map(function (c) {
         return '<div class="cue"><p class="cn2">' + c.n + '</p><div><p><b>' + c.kind + '</b></p>' + (c.cues ? '<p class="bqline">' + c.cues + '</p>' : '') + (c.blank ? '<p class="muted">So the blank is: ' + c.blank + '</p>' : '') + '</div></div>';
       }).join('') + '</div></section>' +
-      '<div class="nextlinks"><a class="btn" href="#chunk">Step 2: Chunk</a><a class="btn ghost" href="#drills" data-drill="job">Drill: Name the job</a></div>';
+      nextHTML(['chunk', 'Go to step 2: Chunk', 'Read the passage one sentence at a time, and say what each one does.'], ['drills', 'practice step 1 with a short exercise', 'job']);
   }
   function rChunkHTML() {
     return '<header><p class="eyebrow">Reading · step 2</p><h2 class="vtitle">Chunk: one sentence at a time</h2></header>' +
@@ -92,7 +92,7 @@
       }).join('') + '</div>' + (RD.turnNote ? '<p class="fine">' + RD.turnNote + '</p>' : '') + blocksHTML({ blocks: RD.turns.blocks.slice(1).filter(function (b) { return !b.table; }) }) + '</section>' +
       '<section id="names" class="sec"><div class="sech"><h3 class="h2">' + esc(RD.names.title) + '</h3></div>' + blocksHTML(RD.names) + '</section>' +
       (D.poems ? poemsHTML() : '') +
-      '<div class="nextlinks"><a class="btn" href="#long">Long sentences: core first</a><a class="btn ghost" href="#drills" data-drill="tag">Drill: Tag the sentence</a></div>';
+      nextHTML(['long', 'Next: long sentences', 'How to find the short sentence hiding inside a long one.'], ['drills', 'practice step 2 with a short exercise', 'tag']);
   }
   /* Poems and stories: every number comes from src/reading/poems.py, which counts it in the bank */
   function poemsHTML() {
@@ -125,7 +125,7 @@
       '<section id="apart" class="sec"><div class="sech"><h3 class="h2">Seven sentences taken apart</h3><p class="lede">Seven long sentences from the bank, cut where their pieces join. Read down the core rows first; six of them come from the worked examples.</p></div>' +
       '<p class="row" style="margin-top:.9rem"><button type="button" class="btn ghost sm" id="coreonly" aria-pressed="false">Show the core only</button></p>' +
       '<div id="aparts">' + RD.aparts.map(apartHTML).join('') + '</div></section>' +
-      '<div class="nextlinks"><a class="btn" href="#para">Long passages: make them make sense</a><a class="btn ghost" href="#drills" data-drill="core">Drill: Core first</a></div>';
+      nextHTML(['para', 'Next: long passages', 'How to make a long passage make sense.'], ['drills', 'practice long sentences with a short exercise', 'core']);
   }
   function wireLong(host) {
     var b = $('#coreonly', host);
@@ -141,7 +141,7 @@
     var t = RD.say.table;
     return '<header><p class="eyebrow">Reading · step 3</p><h2 class="vtitle">Say: form an expectation when useful</h2>' + RD.say.intro.map(function (p) { return '<p class="lede">' + p + '</p>'; }).join('') + '</header>' +
       '<dl class="saylist">' + t.rows.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('') + '</dl>' +
-      '<div class="nextlinks"><a class="btn" href="#check">Step 4: Check</a>' + (D.same ? '<a class="btn ghost" href="#drills" data-drill="same">Drill: Same idea, different words</a>' : '') + '</div>';
+      nextHTML(['check', 'Go to step 4: Check', 'Test each choice. There are five ways a wrong choice goes wrong.'], D.same ? ['drills', 'practice spotting the same idea in other words', 'same'] : null);
   }
   function rCheckHTML() {
     var fig = RD.trapsFig;
@@ -155,8 +155,8 @@
       }).join('') + '</div></figure>' + blocksHTML({ blocks: RD.traps.blocks.filter(function (b) { return !b.tagset; }) }) + '</section>' +
       '<section id="partly" class="sec"><div class="sech"><h3 class="h2">' + esc(RD.partly.title) + '</h3></div>' + blocksHTML(RD.partly) + '</section>' +
       '<section id="myths" class="sec"><div class="sech"><h3 class="h2">' + esc(RD.myths.title) + '</h3></div>' + blocksHTML(RD.myths) +
-        (D.same ? '<p class="fine">To practice reading past the shared words, try the <a href="#drill-same">Same idea, different words</a> drill.</p>' : '') + '</section>' +
-      '<div class="nextlinks"><a class="btn" href="#others">The other question types</a><a class="btn ghost" href="#drills" data-drill="why">Drill: Why is it wrong?</a></div>';
+        (D.same ? '<p class="fine">To practice reading past the shared words, try the short exercise <a href="#drill-same">Same idea, different words</a>.</p>' : '') + '</section>' +
+      nextHTML(['others', 'Next: the other kinds of question', 'Word questions, purpose, two texts and notes.'], ['drills', 'practice spotting wrong choices with a short exercise', 'why']);
   }
   var OTHERS_MORE = {
     'o-word': '<p class="pretty"><b>The words themselves:</b> <a href="#vocab">Words to know</a> has every choice from the fill-in questions with a plain definition, the second meanings the test asks about, and a check for when no word comes to mind.</p>',
@@ -168,7 +168,7 @@
         return '<section class="sec" id="' + o.id + '"><div class="sech"><h3 class="h2">' + esc(o.title) + '</h3><p class="lmeta">' + o.meta + '</p></div>' + o.paras.map(function (p) { return '<p class="pretty">' + p + '</p>'; }).join('') + (o.items && o.items.length ? '<ul class="plainlist">' + o.items.map(li).join('') + '</ul>' : '') + (OTHERS_MORE[o.id] || '') + '</section>';
       }).join('') +
       '<section class="sec" id="train"><div class="sech"><h3 class="h2">How to train it</h3>' + RD.train.intro.map(function (p) { return '<p class="lede">' + p + '</p>'; }).join('') + '</div><ol class="olist drills">' + RD.train.drills.map(li).join('') + '</ol>' +
-      '<p class="fine">The Drills tab has timed versions of the first two (Tag the sentence, Core first), plus Find the Point, which trains the step before your Say line.</p></section>';
+      '<p class="fine">The <a href="#drills">Short exercises</a> page has quick versions of the first two (Tag the sentence, Core first), plus Find the Point, which trains the step before your Say line.</p></section>';
   }
   function rMeasuredHTML() {
     return '<header><p class="eyebrow">Reading · method</p><h2 class="vtitle">How this was measured, and its limits</h2></header><ul class="plainlist">' + RD.method.concat(RD.methodExtra || []).map(li).join('') + '</ul>' +
@@ -271,7 +271,7 @@
   }
   function rExampleHTML(x) {
     var prev = REX[x.n - 1], next = REX[x.n + 1], d = !!store.rl['ex-' + x.n];
-    return '<nav class="crumbs"><a href="#reading">Reading</a> / Worked examples</nav>' +
+    return '' +
       '<header style="margin-top:.6rem"><p class="eyebrow">Example ' + x.n + ' of ' + RLIST.length + ' · ' + esc(x.diff) + ' · question ' + x.qid + '</p><h2 class="vtitle">' + esc(x.title) + '</h2></header>' +
       '<p class="row" style="margin-top:1rem"><span class="label">Mode</span><button type="button" class="btn sm" id="ex-try" aria-pressed="true">Try it first</button><button type="button" class="btn sm ghost" id="ex-read" aria-pressed="false">Show the walkthrough</button></p>' +
       '<div id="ex-host" style="margin-top:1rem"></div>' +
@@ -309,6 +309,8 @@
   };
   var readingView = RailView('reading', {
     label: 'Reading',
+    home: 'routine',
+    name: function (e, g) { return /^ex-/.test(e.key) ? 'Worked example ' + e.num : e.num ? 'Step ' + e.num + ': ' + plain(e.label) : plain(e.label); },
     items: function () {
       var ex = RLIST.map(function (x) { return { key: 'ex-' + x.n, token: 'ex-' + x.n, num: x.n, label: esc(x.title) + ' <span class="rn">' + x.diff.charAt(0) + '</span>', done: !!store.rl['ex-' + x.n] }; });
       return [

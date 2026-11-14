@@ -4,8 +4,29 @@
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
 
-  var topEl = document.getElementById('top');
-  function measure() { document.documentElement.style.setProperty('--top-h', topEl.offsetHeight + 'px'); }
+  var topEl = document.getElementById('top'), guideEl = document.getElementById('guide');
+  /* --head-h: the part of the top bar that stays on screen (none on a phone, where it scrolls away);
+     --top-h: everything that stays on screen above the page, the guide bar with Back included */
+  function measure() {
+    var head = window.getComputedStyle(topEl).position === 'sticky' ? topEl.offsetHeight : 0;
+    var g = guideEl && !guideEl.hidden ? guideEl.offsetHeight : 0;
+    document.documentElement.style.setProperty('--head-h', head + 'px');
+    document.documentElement.style.setProperty('--top-h', (head + g) + 'px');
+    if (typeof placePanels === 'function') { placePanels(); }
+  }
+  /* --panel-top: where the calculator and formula sheet panels start, just below the guide bar.
+     The guide bar sits lower until the page scrolls past the step bar, so this follows the scroll while a panel is open. */
+  var panelRaf = 0;
+  function placePanels() {
+    panelRaf = 0;
+    if (!document.body.classList.contains('calc-open')) { return; }
+    var head = window.getComputedStyle(topEl).position === 'sticky' ? topEl.offsetHeight : 0;
+    var g = guideEl && !guideEl.hidden ? guideEl.getBoundingClientRect().bottom : 0;
+    document.documentElement.style.setProperty('--panel-top', Math.round(Math.max(head, g)) + 'px');
+  }
+  window.addEventListener('scroll', function () {
+    if (!panelRaf && document.body.classList.contains('calc-open')) { panelRaf = window.requestAnimationFrame(placePanels); }
+  }, { passive: true });
   measure();
   window.addEventListener('resize', measure);
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(measure); }
@@ -62,7 +83,7 @@
     go(token);
   }
 
-  function go(token) { route(token); if (cur.view) { viewTok[cur.view] = lastToken; } }
+  function go(token) { route(token); if (cur.view) { viewTok[cur.view] = lastToken; } guide(); }
   function route(token) {
     token = String(token || '').replace(/^#/, '');
     var m, r;
@@ -117,6 +138,7 @@
       if (!(RM && !RM.over)) { rdIntro(); }
       toTop(); return;
     }
+    if (token === 'rw-easy' || token === 'rw-mixed') { showView('practice'); if (!built.practice) { buildPractice(); } rwQuick(token === 'rw-easy' ? 5 : 10, token === 'rw-easy' ? 'Easy' : ''); toTop(); return; }
     if (token === 'practice' || token === 'timed' || token === 'test') { showView('practice'); buildPractice(); if (rdIntroOn && !RM && !TS) { timedSetup(); } toTop(); return; }
     if (token === 'rw-module') {
       showView('practice');
@@ -174,6 +196,7 @@
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
     if (token === 'm-sheet') { showView('mref'); buildMRef(); scrollToEl(document.getElementById('m-sheet')); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
+    if (token === 'm-easy' || token === 'm-mixed') { showView('mprac'); mQuick(token === 'm-easy' ? 5 : 10, token === 'm-easy' ? 'E' : ''); toTop(); return true; }
     if (token === 'm-drills' || /^m-drill-/.test(token)) {
       var mk = token.replace(/^m-drill-/, '');
       showView('mdrills'); buildDrills('math');
@@ -200,6 +223,11 @@
     e.preventDefault();
     if (a.hasAttribute('data-skip')) { var mn = document.getElementById('main'); if (mn) { mn.scrollIntoView({ block: 'start' }); focusQuiet(mn); } return; }
     var href = a.getAttribute('href').slice(1);
+    /* a link to a part of the page you are on */
+    if (a.hasAttribute('data-scroll')) { scrollToEl(document.getElementById(href)); return; }
+    /* Back: the page you came from in this tab */
+    var hg = Number(a.getAttribute('data-go'));
+    if (hg < 0) { try { window.history.go(hg); return; } catch (err) {} }
     var dk = a.getAttribute('data-drill');
     if (dk && has(DR, dk)) {
       var dsj2 = drillSubjOf(dk), dref = a.getAttribute('data-drill-ref');
@@ -213,7 +241,7 @@
     var tv = a.closest('#tabs') ? a.getAttribute('data-view') : '';
     if (tv && tv !== cur.view && viewTok[tv] && (tv === 'reading' || tv === 'grammar' || tv === 'lookup')) {
       try { history.pushState(null, '', '#' + viewTok[tv]); } catch (err) {}
-      lastToken = viewTok[tv]; showView(tv); window.scrollTo(0, viewY[tv] || 0); return;
+      lastToken = viewTok[tv]; showView(tv); guide(); window.scrollTo(0, viewY[tv] || 0); return;
     }
     nav(href);
     if (!a.isConnected && document.activeElement === document.body) { var hd = $('#v-' + cur.view + ' .vtitle'); if (hd) { hd.setAttribute('tabindex', '-1'); focusQuiet(hd); } }
