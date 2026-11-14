@@ -2004,3 +2004,19 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
   .vrow { grid-template-columns: minmax(0, 1fr); }
   .vword { font-size: 1.6rem; }
 }
+
+/* ---------- Math drills ---------- */
+.mxbox { display: grid; gap: .35rem; padding: 1rem 1.2rem; background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+.mxl { font: 500 1.3rem/1.45 var(--quote); letter-spacing: .01em; overflow-wrap: anywhere; }
+.mxl sup, .dopt sup, .dexp sup, .whypick sup { font-size: .7em; line-height: 0; }
+.mxlead { margin-bottom: .5rem; max-width: 40em; }
+.mxwant { font: 600 1.12rem/1.4 var(--display); }
+.mxwant .label { display: block; margin-bottom: .15rem; }
+.mxf { font: 500 1.08rem/1.4 var(--quote); }
+.fr { display: inline-flex; flex-direction: column; align-items: stretch; vertical-align: middle; text-align: center; font-size: .86em; line-height: 1.15; margin: 0 .12em; }
+.fr > span:first-child { border-bottom: 1px solid currentColor; padding: 0 .2em .05em; }
+.fr > span:last-child { padding: .05em .2em 0; }
+.mxl .fr { font-size: .8em; }
+.mtr-drill { font-size: .96rem; }
+.mtr-drill a { white-space: nowrap; }
+#v-mdrills .dprompt .mtx, #v-mdrills .dprompt .mimg { max-width: 100%; }

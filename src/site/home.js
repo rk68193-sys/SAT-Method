@@ -23,6 +23,7 @@
       ['mdes', 'm-desmos', 'Desmos', MD.desmos.length + ' calculator moves with exactly what to type, checked on real questions.', 'learn'],
       ['mref', 'm-ref', 'Formulas', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'learn'],
       ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations. Learn one question at a time, or sit a timed 22-question module.', 'practice'],
+      ['mdrills', 'm-drills', 'Drills', 'Short drills on single moves: name the skill, count the solutions, pick the form that shows the answer, and quick reps on exponents, percents, slope and fractions.', 'practice'],
       ['mmap', 'm-map', 'My map', 'All ' + MST.methods.length + ' question types colored by how you are doing, the reasons you miss, and what to practice next.', 'map']] }
   };
   /* the pages to list on Home and in the footer: the Learn overview is named for what it is */
@@ -187,6 +188,7 @@
       '<section class="hsec"><div class="hsec-h"><h2 class="h2">Everything in one place</h2><p class="muted">Jump straight to the part you need.</p></div><div class="hfeats">' +
         feat('math', 'target', 'Math practice', 'Real questions by skill, pattern or difficulty, with the method after each one.', 'm-practice') +
         feat('math', 'bolt', 'Timed module', '22 questions on one 35-minute clock, with mark for review, cross-out and the calculator.', 'm-module') +
+        feat('math', 'pen', 'Math drills', 'Name the skill, count the solutions, read a form, and quick reps for the usual slips.', 'm-drills') +
         feat('math', 'grid', 'Mastery map', 'Every question type colored by how you are doing, and the reasons you miss.', 'm-map') +
         feat('math', 'graph', 'Desmos playbook', MD.desmos.length + ' calculator moves with exactly what to type.', 'm-desmos') +
         feat('math', 'grid', 'Big patterns', 'The ideas that connect math question types.', 'm-patterns') +

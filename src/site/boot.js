@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -15,7 +15,7 @@
     if (cur.view) { viewY[cur.view] = window.scrollY; }
     if (cur.view === 'practice') { timedPause(); rmPause(); }
     if (cur.view === 'grammar') { demoPause(); }
-    if (cur.view === 'drills') { drillAway(); }
+    if (cur.view === 'drills' || cur.view === 'mdrills') { drillAway(); }
     if (cur.view === 'mprac') { mpPause(); mCalcShow(false); }
     VIEWS.forEach(function (k) { viewEl[k].hidden = k !== v; });
     markNav(v);
@@ -23,7 +23,7 @@
     document.body.setAttribute('data-subj', VIEW_SUBJ[v] || 'home');
     if (v === 'practice') { timedResume(); rmResume(); }
     if (v === 'grammar') { demoResume(); }
-    if (v === 'drills' && !document.hidden) { drillBack(); }
+    if ((v === 'drills' || v === 'mdrills') && !document.hidden) { drillBack(); }
     if (v === 'mprac' && !document.hidden) { mpResume(); }
     var cur_a = $('#tabs a[aria-current]');
     if (cur_a && cur_a.scrollIntoView) { try { cur_a.scrollIntoView({ inline: 'nearest', block: 'nearest' }); } catch (e) {} }
@@ -98,8 +98,8 @@
     if ((m = /^q-([0-9a-f]{8})$/.exec(token)) && EX[m[1]]) { showView('grammar'); grammarView.show(U[EX[m[1]].u].c); scrollToEl(document.getElementById(token)); return; }
     if (/^g-/.test(token)) { showView('grammar'); grammarView.show('shortcuts'); scrollToEl(document.getElementById(token)); return; }
     if (token === 'drills' || /^drill-/.test(token)) {
-      showView('drills'); buildDrills();
-      var dk = token.replace(/^drill-/, '');
+      var dk = token.replace(/^drill-/, ''), dsj = has(DR, dk) ? drillSubjOf(dk) : 'rw';
+      showView(dsj === 'math' ? 'mdrills' : 'drills'); buildDrills(dsj);
       if (has(DR, dk) && !drillRun) { startDrill(dk); }
       toTop(); return;
     }
@@ -159,6 +159,12 @@
     if (/^ms-/.test(token)) { showView('mshort'); buildMShort(); scrollToEl(document.getElementById(token)); return true; }
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
+    if (token === 'm-drills' || /^m-drill-/.test(token)) {
+      var mk = token.replace(/^m-drill-/, '');
+      showView('mdrills'); buildDrills('math');
+      if (has(DR, mk) && drillSubjOf(mk) === 'math' && !drillRun) { startDrill(mk); }
+      toTop(); return true;
+    }
     if (token === 'm-hub') { showView('mhub'); buildHub('math'); toTop(); return true; }
     if (token === 'm-check') { showView('mprac'); if (!(MP && MP.module && !MP.over)) { mdIntro(); } toTop(); return true; }
     if (token === 'm-module') { showView('mprac'); if (!(MP && MP.module && !MP.over)) { clearInterval(mpInterval); mpModePreset = 'module'; mpSetup(); } toTop(); return true; }
@@ -180,7 +186,11 @@
     if (a.hasAttribute('data-skip')) { var mn = document.getElementById('main'); if (mn) { mn.scrollIntoView({ block: 'start' }); focusQuiet(mn); } return; }
     var href = a.getAttribute('href').slice(1);
     var dk = a.getAttribute('data-drill');
-    if (dk && has(DR, dk)) { try { history.pushState(null, '', '#drills'); } catch (err) {} showView('drills'); buildDrills(); startDrill(dk); return; }
+    if (dk && has(DR, dk)) {
+      var dsj2 = drillSubjOf(dk);
+      try { history.pushState(null, '', dsj2 === 'math' ? '#m-drills' : '#drills'); } catch (err) {}
+      showView(dsj2 === 'math' ? 'mdrills' : 'drills'); startDrill(dk); return;
+    }
     var tp = a.getAttribute('data-tpart');
     if (tp) { var s0 = isObj(store.s.timed) ? store.s.timed : {}; s0.src = 'g'; s0.part = tp; s0.which = 'all'; s0.mode = 'set'; store.s.timed = s0; save(); if (built.practice && !TS && !(RM && !RM.over)) { timedSetup(); } }
     /* a tab for a view you have already visited takes you back to where you were */
@@ -211,7 +221,7 @@
         if (k.length === 1 && 'ABCD'.indexOf(k) !== -1) { e.preventDefault(); TS.card.pick(k); }
       } else if (key === 'Enter' && tag !== 'BUTTON' && tag !== 'A') { e.preventDefault(); timedNext(); }
     } else if (cur.view === 'mprac') { mpKey(e, key, tag);
-    } else if (cur.view === 'drills' && drillRun) {
+    } else if ((cur.view === 'drills' || cur.view === 'mdrills') && drillRun) {
       var it = drillRun.items[drillRun.i], i = KEYS.indexOf(key);
       if (!drillRun.answered) {
         if (it.type === 'pieces') {
@@ -226,7 +236,7 @@
     else if (cur.view === 'mprac') { mpResume(); }
     else if (cur.view === 'practice') { timedResume(); rmResume(); }
     else if (cur.view === 'grammar') { demoResume(); }
-    else if (cur.view === 'drills') { drillBack(); }
+    else if (cur.view === 'drills' || cur.view === 'mdrills') { drillBack(); }
   });
 
   /* ---------- start ---------- */

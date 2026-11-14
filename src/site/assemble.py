@@ -27,6 +27,9 @@ if os.path.exists(text_path):
     data['mathText'] = {'on': mt.get('on', 0), 'held': mt.get('held', [])}
 vocab_path = os.path.join(S, 'build', 'vocab.json')
 if os.path.exists(vocab_path): data['vocab'] = json.load(open(vocab_path, encoding='utf-8'))
+mdrills_path = os.path.join(S, 'build', 'mdrills.json')
+if os.path.exists(mdrills_path):
+    data['mdrills'] = {k: [{f: c[f] for f in ('id', 'p', 'o', 'a', 'x', 'r')} for c in v] for k, v in json.load(open(mdrills_path, encoding='utf-8')).items()}
 np_ = os.path.join(S, 'build', 'notes-page.json')
 if os.path.exists(np_): data['ann']['notesPage'] = json.load(open(np_, encoding='utf-8'))
 blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')

@@ -64,7 +64,11 @@ const { chromium } = require('playwright');
     await wide(t);
   }
   await go('m-practice'); b = await bar();
-  ok(b.top === 'Start here | Learn | Practice* | My map' && b.sub === '', 'Practice has no second row in Math');
+  ok(b.top === 'Start here | Learn | Practice* | My map' && b.sub === 'Practice* | Drills', 'Math Practice → Practice, with Drills beside it: ' + b.sub);
+  await go('m-drills'); b = await bar();
+  ok(b.top.includes('Practice*') && b.sub === 'Practice | Drills*', 'm-drills → Practice › Drills: ' + b.sub);
+  await go('m-drill-mcount'); b = await bar();
+  ok(b.sub === 'Practice | Drills*', 'a Math drill stays under Practice › Drills');
   await go('m-map'); b = await bar();
   ok(b.top.endsWith('My map*') && b.sub === '', 'My map');
   // the tab itself goes to the overview; search finds things across every section
@@ -111,7 +115,7 @@ const { chromium } = require('playwright');
   ok((await p.evaluate(() => location.hash)) === '#ex-3', 'a page you visited keeps your place');
   // footer and home still list every page
   await go('home');
-  ok((await p.$$('#footcols nav:nth-of-type(2) a')).length === 11 && (await text('#footcols')).includes('Learn: overview'), 'the footer lists every page, with the overview named');
+  ok((await p.$$('#footcols nav:nth-of-type(2) a')).length === 12 &&(await text('#footcols')).includes('Learn: overview'), 'the footer lists every page, with the overview named');
   console.log(over.length ? 'OVERFLOW ' + over.join(' ; ') : 'no overflow');
   console.log(errors.length ? 'ERRORS ' + errors.join(' ; ') : 'no errors');
   console.log(fail.length ? fail.length + ' FAILED: ' + fail.join(' ; ') : 'all checks passed');

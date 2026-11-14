@@ -83,6 +83,53 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   ok(mine === 4, 'from my misses shows ' + mine + ' words (expected the 4 choices of ' + wq + ')');
   await go('practice'); await wide('practice');
 
+  /* ---- Math drills ---- */
+  await go('m-drills'); await wide('m-drills');
+  const mcards = await p.$$eval('#v-mdrills [data-start]', b => b.map(x => x.getAttribute('data-start')));
+  ok(['mskill', 'mcount', 'mform', 'mexp', 'mpct', 'mslope', 'mfrac'].every(k => mcards.includes(k)), 'Math drill cards: ' + mcards.join(' '));
+  ok(!mcards.some(k => ['job', 'wmean', 'pattern'].includes(k)), 'no Reading and Writing drills on the Math page');
+  const subnav = await p.textContent('#subnav');
+  ok(/Practice/.test(subnav) && /Drills/.test(subnav), 'Math Practice tab lists Practice and Drills: ' + subnav);
+  for (const k of mcards) {
+    await go('math'); await go('m-drill-' + k); await p.waitForTimeout(250);
+    const n = await p.$$eval('#v-mdrills #dhost .dopt', o => o.length);
+    ok(n >= 3, k + ' shows ' + n + ' options');
+    await p.keyboard.press('2'); await p.waitForTimeout(150);
+    const v = await p.textContent('#dfeed .verdict').catch(() => 'NO VERDICT');
+    ok(/Right|Not this one/.test(v), k + ' verdict: ' + v);
+    await wide('m-drill ' + k);
+    await p.keyboard.press('Enter'); await p.waitForTimeout(150);
+    ok(/Card 2 of/.test(await p.textContent('#dhost .dbar')), k + ': Enter goes to the next card');
+    await p.click('#dend'); await p.waitForTimeout(150);
+    ok(/round finished/.test(await p.textContent('#dhost')), k + ': ending the round shows the result');
+  }
+  /* a wrong pick on a card written for this site says why that choice is wrong */
+  await go('math'); await go('m-drill-mexp'); await p.waitForTimeout(200);
+  const wrongKey = await p.$$eval('#dhost .dopt', o => o.map(x => x.getAttribute('data-k')).filter(k => k !== 'a')[0]);
+  await p.click('#dhost .dopt[data-k="' + wrongKey + '"]'); await p.waitForTimeout(120);
+  ok(/Why not:/.test(await p.textContent('#dfeed')), 'wrong pick shows its note');
+  await p.click('#dend'); await p.waitForTimeout(100);
+  /* the Reading and Writing drills come back after the Math page used the host */
+  await go('drills'); await p.waitForTimeout(150);
+  ok(!!(await p.$('#v-drills #dhost [data-start="job"]')), 'Reading and Writing drills after the Math drills');
+  ok(!(await p.$('#v-mdrills #dhost')), 'one drill host at a time');
+  await go('drill-mcount'); await p.waitForTimeout(150);
+  ok(!(await p.$eval('#v-mdrills', v => v.hidden)) && (await p.$$eval('#v-mdrills #dhost .dopt', o => o.length)) === 4, '#drill-mcount opens on the Math page');
+  await p.click('#dend'); await p.waitForTimeout(100);
+  /* the two miss causes link to the drills in the trap report */
+  await p.evaluate(() => {
+    const k = 'sat-grammar-sprint.v1', s = JSON.parse(localStorage.getItem(k) || '{}');
+    s.m = s.m || {}; s.x = s.x || {};
+    s.m['beca03de'] = [0, 40, Date.now()]; s.x['beca03de'] = ['slip', Date.now()];
+    s.m['0013adbd'] = [0, 40, Date.now()]; s.x['0013adbd'] = ['method', Date.now()];
+    localStorage.setItem(k, JSON.stringify(s));
+  });
+  await p.reload(); await p.waitForTimeout(700);
+  await go('m-traps'); await p.waitForTimeout(200);
+  const mtr = await p.$$eval('#m-traps a', a => a.map(x => x.getAttribute('href')));
+  ok(['#m-drill-mexp', '#m-drill-mpct', '#m-drill-mslope', '#m-drill-mfrac', '#m-drill-mskill'].every(h => mtr.includes(h)), 'trap report drill links: ' + mtr.filter(h => /drill/.test(h)).join(' '));
+  await wide('m-traps');
+
   console.log(over.length ? 'OVERFLOW:\n' + over.join('\n') : 'no overflow');
   console.log(errors.length ? 'ERRORS:\n' + errors.join('\n') : 'no errors');
   console.log(fails.length ? 'FAILED:\n' + fails.join('\n') : 'all checks passed');

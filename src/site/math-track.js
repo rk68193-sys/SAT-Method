@@ -12,8 +12,13 @@
   ];
   var MWHYBY = {};
   MWHY.forEach(function (w) { MWHYBY[w[0]] = w; });
+  /* drills that train the habit behind a cause */
+  var MWHY_DRILL = {
+    slip: 'Quick reps for the usual slips: <a href="#m-drill-mexp">exponent rules</a>, <a href="#m-drill-mpct">percent multipliers</a>, <a href="#m-drill-mslope">slope from two points</a> and <a href="#m-drill-mfrac">clearing fractions</a>.',
+    method: 'Practice knowing where to start: <a href="#m-drill-mskill">Name the skill</a>, <a href="#m-drill-mcount">How many solutions?</a> and <a href="#m-drill-mform">Which form shows it?</a>'
+  };
   function mWhyOf(id) { var r = store.x[id]; return Array.isArray(r) && has(MWHYBY, r[0]) ? r[0] : ''; }
-  function mWhySaid(code) { return '<b>Saved.</b> ' + esc(MWHYBY[code][3]) + ' <a href="#m-traps">See your trap report</a>'; }
+  function mWhySaid(code) { return '<b>Saved.</b> ' + esc(MWHYBY[code][3]) + ' <a href="#m-traps">See your trap report</a>' + (MWHY_DRILL[code] ? '<br>' + MWHY_DRILL[code] : ''); }
   function mWhyHTML(id) {
     var cur = mWhyOf(id);
     return '<div class="mwhy" data-why-q="' + id + '"><p class="mwhy-h"><b>What went wrong?</b> <span class="muted">One tap builds your trap report.</span></p><div class="mwhy-row">' +
@@ -103,7 +108,7 @@
       var traps = x.w[0] === 'trap' ? '<ul class="mtr-traps">' + tk.slice(0, 3).map(function (k) { return '<li><b>' + esc(MSTBY[k].title) + ':</b> ' + esc(MSTBY[k].common_trap) + '</li>'; }).join('') + '</ul>' : '';
       return '<article class="mtr"><header class="mtr-h"><h4 class="h3">' + (i + 1) + ' · ' + esc(x.w[1]) + '</h4><span class="mtr-n">' + plural(x.ids.length, 'miss', 'misses') + ' · ' + mpc(x.ids.length, total) + '%</span></header>' +
         '<span class="mbar" aria-hidden="true"><i style="width:' + mpc(x.ids.length, total) + '%"></i></span>' +
-        '<p class="muted">' + esc(x.w[2]) + '</p><p><b>The fix:</b> ' + esc(x.w[3]) + '</p>' + traps +
+        '<p class="muted">' + esc(x.w[2]) + '</p><p><b>The fix:</b> ' + esc(x.w[3]) + '</p>' + (MWHY_DRILL[x.w[0]] ? '<p class="mtr-drill">' + MWHY_DRILL[x.w[0]] + '</p>' : '') + traps +
         '<p class="mtr-types"><span class="mtag">Where it happened</span> ' + chips + (tk.length > 5 ? '<span class="muted">and ' + (tk.length - 5) + ' more</span>' : '') + '</p>' +
         (still ? '<p class="row"><button class="btn ghost sm" type="button" data-mw-retry="' + x.w[0] + '">' + retryLabel('some', still, 22) + '</button></p>' : '<p class="fine">You have since answered ' + (x.ids.length === 1 ? 'this question' : 'all of these') + ' correctly.</p>') + '</article>';
     }).join('');
