@@ -22,6 +22,7 @@
       }
       MFOUND.forEach(function (f) { add('Algebra foundations', f.name, f.idea, 'm-found-' + f.id, f.slip + ' ' + f.why + ' ' + f.words); });
       MD.desmos.forEach(function (m) { add('Desmos move', m.name, m.when, 'md-' + m.id, m.short + ' ' + m.see); });
+      add('Formulas', 'The reference sheet', 'The formulas and facts the test gives you, and the Reference button that opens them while you practice.', 'm-sheet', 'formula sheet circle rectangle triangle pythagorean special right triangles 30-60-90 45-45-90 box rectangular prism cylinder sphere cone pyramid volume area degrees radians');
       add('Formulas', 'Formulas and typing in answers', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'm-ref', 'circle area volume quadratic formula discriminant slope vertex radians sohcahtoa exponent rules');
     } else {
       [['routine', 'The reading routine: Job, Chunk, Say, Check'], ['shape', 'What the passages are like'], ['job', 'Step 1 · Job: read the question line first'], ['chunk', 'Step 2 · Chunk: tag each sentence'],

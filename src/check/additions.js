@@ -194,6 +194,34 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   await p.fill('#mhub-q', 'remainder theorem'); await p.waitForTimeout(150);
   ok((await p.$$eval('#mhub-res .mtag', t => t.map(x => x.textContent))).includes('In the bank'), 'and that the factor theorem is');
 
+  /* ---- the reference sheet while doing Math questions ---- */
+  await go('mq-89fc23af'); await p.waitForTimeout(300);
+  ok(!!(await p.$('#v-mprac .mpbar [data-calc]')) && !!(await p.$('#v-mprac .mpbar [data-sheet]')), 'a Math question has Calculator and Reference buttons');
+  await p.click('#v-mprac [data-sheet]'); await p.waitForTimeout(200);
+  ok(await p.isVisible('#msheet') && (await p.$$('#msheet .msheet-c')).length === 10 && (await p.$$('#msheet .msheet-facts li')).length === 3, 'Reference opens the sheet: ten figures and three facts');
+  const sht = (await p.textContent('#msheet')).replace(/\s+/g, ' ');
+  ok(['A = πr2', 'C = 2πr', 'A = ℓw', 'c2 = a2 + b2', 'V = ℓwh', 'V = πr2h', '360 degrees', '2π radians', '180 degrees'].every(x => sht.includes(x)), 'the formulas and facts are text: ' + sht.slice(0, 120));
+  ok((await p.getAttribute('#v-mprac [data-sheet]', 'aria-pressed')) === 'true', 'the button shows it is open');
+  await wide('reference sheet open');
+  await p.click('#v-mprac [data-calc]'); await p.waitForTimeout(200);
+  ok(!(await p.isVisible('#msheet')) && await p.isVisible('#mcalc'), 'opening the calculator puts the sheet away');
+  await p.click('#v-mprac [data-sheet]'); await p.waitForTimeout(200);
+  ok(await p.isVisible('#msheet') && !(await p.isVisible('#mcalc')), 'and opening the sheet puts the calculator away');
+  await p.keyboard.press('Escape'); await p.waitForTimeout(150);
+  ok(!(await p.isVisible('#msheet')) && (await p.getAttribute('#v-mprac [data-sheet]', 'aria-pressed')) === 'false', 'Escape closes it');
+  await p.click('#v-mprac [data-sheet]'); await p.waitForTimeout(150);
+  await go('m-ref'); await p.waitForTimeout(200);
+  ok(!(await p.isVisible('#msheet')), 'leaving the question closes the sheet');
+  ok((await p.$$('#v-mref #m-sheet .msheet-c')).length === 10, 'the Formulas page shows the same sheet');
+  await wide('m-ref');
+  await go('m-module'); await p.waitForTimeout(300); await p.click('#mp-go'); await p.waitForTimeout(600);
+  ok(!!(await p.$('#v-mprac .mmbar-tools [data-sheet]')), 'a timed module has the Reference button too');
+  await p.click('#v-mprac .mmbar-tools [data-sheet]'); await p.waitForTimeout(200);
+  ok(await p.isVisible('#msheet'), 'and it opens there');
+  await wide('module with the sheet');
+  await p.click('#msheet [data-sheet-close]'); await p.waitForTimeout(150);
+  ok(!(await p.isVisible('#msheet')), 'Close closes it');
+
   console.log(over.length ? 'OVERFLOW:\n' + over.join('\n') : 'no overflow');
   console.log(errors.length ? 'ERRORS:\n' + errors.join('\n') : 'no errors');
   console.log(fails.length ? 'FAILED:\n' + fails.join('\n') : 'all checks passed');

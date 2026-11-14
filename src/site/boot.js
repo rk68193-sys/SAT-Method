@@ -16,7 +16,7 @@
     if (cur.view === 'practice') { timedPause(); rmPause(); }
     if (cur.view === 'grammar') { demoPause(); }
     if (cur.view === 'drills' || cur.view === 'mdrills') { drillAway(); }
-    if (cur.view === 'mprac') { mpPause(); mCalcShow(false); }
+    if (cur.view === 'mprac') { mpPause(); mCalcShow(false); mSheetShow(false); }
     VIEWS.forEach(function (k) { viewEl[k].hidden = k !== v; });
     markNav(v);
     cur.view = v;
@@ -167,6 +167,7 @@
     if (token === 'm-short') { showView('mshort'); buildMShort(); toTop(); return true; }
     if (/^ms-/.test(token)) { showView('mshort'); buildMShort(); scrollToEl(document.getElementById(token)); return true; }
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
+    if (token === 'm-sheet') { showView('mref'); buildMRef(); scrollToEl(document.getElementById('m-sheet')); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
     if (token === 'm-drills' || /^m-drill-/.test(token)) {
       var mk = token.replace(/^m-drill-/, '');
