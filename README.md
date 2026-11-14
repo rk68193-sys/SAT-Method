@@ -83,7 +83,7 @@ Calculator checks include 382 question-derived target calculations, 528 intermed
 
 An account is optional. Without one the site works as before and progress stays in the browser. With one, the streak and days practiced, both maps, the study plan, notes and every answer are also kept online and appear on any device that signs in (`#account`, **Sign in** in the top bar).
 
-Accounts are **switched off** until `src/build/account.json` names a [Supabase](https://supabase.com) project; while it is empty, no sign-in link is shown and nothing is sent anywhere. To switch them on:
+Accounts are on when `src/build/account.json` names a [Supabase](https://supabase.com) project (it does now); with that file empty, no sign-in link is shown and nothing is sent anywhere. Setting up a project:
 
 1. Create a free Supabase project.
 2. In its SQL editor, run `src/account/setup.sql` once. It makes one table (`progress`, one row per person) whose row rules let a signed-in person read and write only their own row, and the function behind "Delete my account".

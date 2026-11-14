@@ -13,8 +13,9 @@ const APIKEY = 'test-public-key-0123456789';
   const root = path.dirname(path.resolve(process.argv[2])), index = path.basename(process.argv[2]);
   const width = Number(process.argv[3] || 390), dir = process.argv[4] || '';
   if (dir) { fs.mkdirSync(dir, { recursive: true }); }
-  const html = fs.readFileSync(path.join(root, index), 'utf8'), OFF = '"account":{"url":"","key":""}';
-  if (!html.includes(OFF)) { console.log('FAIL the page is not built with accounts switched off (src/build/account.json should be empty in the repository)'); process.exit(1); }
+  /* whatever project the page was built with, the check swaps in its own stand-in (or none) */
+  const html = fs.readFileSync(path.join(root, index), 'utf8'), CFG = /"account":\{"url":"[^"]*","key":"[^"]*"\}/;
+  if (!CFG.test(html)) { console.log('FAIL the page has no account settings to swap (rebuild it: src/README.md)'); process.exit(1); }
   let accounts = true, down = false, base = '';
   /* ---------- the stand-in service ---------- */
   const users = {}, rows = {}, access = {}, refresh = {}, log = [];
@@ -81,7 +82,7 @@ const APIKEY = 'test-public-key-0123456789';
     if (!f.startsWith(root) || !fs.existsSync(f) || fs.statSync(f).isDirectory()) { res.writeHead(404); res.end(); return; }
     if (rel === '/' + index) {
       res.writeHead(200, { 'Content-Type': TYPES['.html'], 'Cache-Control': 'no-store' });
-      res.end(accounts ? html.replace(OFF, () => '"account":' + JSON.stringify({ url: base.replace(/\/$/, ''), key: APIKEY })) : html);
+      res.end(html.replace(CFG, () => '"account":' + JSON.stringify(accounts ? { url: base.replace(/\/$/, ''), key: APIKEY } : { url: '', key: '' })));
       return;
     }
     res.writeHead(200, { 'Content-Type': TYPES[path.extname(f)] || 'application/octet-stream', 'Cache-Control': 'no-cache' });
