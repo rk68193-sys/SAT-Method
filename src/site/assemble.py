@@ -47,6 +47,8 @@ vocab_path = os.path.join(S, 'build', 'vocab.json')
 if os.path.exists(vocab_path): data['vocab'] = json.load(open(vocab_path, encoding='utf-8'))
 gbasics_path = os.path.join(S, 'build', 'gbasics.json')   # parts-of-speech primer and Sentence or fragment? cards
 if os.path.exists(gbasics_path): data['gbasics'] = json.load(open(gbasics_path, encoding='utf-8'))
+same_path = os.path.join(S, 'build', 'same.json')   # Same idea, different words cards (src/reading/same_idea.py)
+if os.path.exists(same_path): data['same'] = json.load(open(same_path, encoding='utf-8'))
 mnotin_path = os.path.join(S, 'build', 'mnotin.json')
 if os.path.exists(mnotin_path): data['mnotin'] = json.load(open(mnotin_path, encoding='utf-8'))
 mdrills_path = os.path.join(S, 'build', 'mdrills.json')

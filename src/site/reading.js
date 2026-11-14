@@ -127,7 +127,7 @@
     var t = RD.say.table;
     return '<header><p class="eyebrow">Reading · step 3</p><h2 class="vtitle">Say: form an expectation when useful</h2>' + RD.say.intro.map(function (p) { return '<p class="lede">' + p + '</p>'; }).join('') + '</header>' +
       '<dl class="saylist">' + t.rows.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('') + '</dl>' +
-      '<div class="nextlinks"><a class="btn" href="#check">Step 4: Check</a></div>';
+      '<div class="nextlinks"><a class="btn" href="#check">Step 4: Check</a>' + (D.same ? '<a class="btn ghost" href="#drills" data-drill="same">Drill: Same idea, different words</a>' : '') + '</div>';
   }
   function rCheckHTML() {
     var fig = RD.trapsFig;
@@ -140,7 +140,8 @@
         }).join('') + '</div>';
       }).join('') + '</div></figure>' + blocksHTML({ blocks: RD.traps.blocks.filter(function (b) { return !b.tagset; }) }) + '</section>' +
       '<section id="partly" class="sec"><div class="sech"><h3 class="h2">' + esc(RD.partly.title) + '</h3></div>' + blocksHTML(RD.partly) + '</section>' +
-      '<section id="myths" class="sec"><div class="sech"><h3 class="h2">' + esc(RD.myths.title) + '</h3></div>' + blocksHTML(RD.myths) + '</section>' +
+      '<section id="myths" class="sec"><div class="sech"><h3 class="h2">' + esc(RD.myths.title) + '</h3></div>' + blocksHTML(RD.myths) +
+        (D.same ? '<p class="fine">To practice reading past the shared words, try the <a href="#drill-same">Same idea, different words</a> drill.</p>' : '') + '</section>' +
       '<div class="nextlinks"><a class="btn" href="#others">The other question types</a><a class="btn ghost" href="#drills" data-drill="why">Drill: Why is it wrong?</a></div>';
   }
   var OTHERS_MORE = {
