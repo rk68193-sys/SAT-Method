@@ -24,7 +24,7 @@ const { chromium } = require('playwright');
   await p.goto(file); await p.waitForTimeout(700);
 
   // Home: what it costs, and a real question before anything else
-  ok((await text('#v-home .hpill')) === 'Free · no account · no paywall', 'the hero says free, no account, no paywall');
+  ok(['Free · no account · no paywall', 'Free · no paywall · account optional'].includes(await text('#v-home .hpill')), 'the hero says free and no paywall, with no account needed (optional when accounts are on)');
   await p.waitForSelector('#htry .mtx[data-mtx-s="d"]', { timeout: 15000 });
   ok((await p.$$('#htry .mpchoices.txt .mpch .mpch-c')).length === 4, 'a Math question is ready to answer, its choices in the buttons');
   ok((await p.$$('#v-home .hfacts li')).length === 4 && !(await p.$('#v-home .hh-stats')), 'the numbers are one strip under the hero');
