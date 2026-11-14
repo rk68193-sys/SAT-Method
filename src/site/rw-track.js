@@ -109,7 +109,7 @@
     var head = '<h3 class="h2">Why you miss</h3><p class="lede">After an answer in practice, tap what caused the difficulty. This report adds those taps up, so you fix the habit and not just the question.</p>';
     var retryAll = missed.length ? '<p class="row" style="margin-top:1rem"><button class="btn sm" type="button" data-rw-cause="all">' + retryLabel('all', missed.length, 20) + '</button>' + (untagged && total ? '<span class="fine">' + untagged + ' of them ' + (untagged === 1 ? 'has' : 'have') + ' no cause yet.</span>' : '') + '</p>' : '';
     if (!total) {
-      return head + '<aside class="mnote"><p><b>No causes recorded yet.</b> ' + (missed.length ? 'You have ' + plural(missed.length, 'missed question') + '. Retry them, and when one goes wrong again, tap the cause under the explanation.' : 'Practice a set; after each answer, the causes to choose from appear under the explanation.') + '</p></aside>' + retryAll;
+      return head + '<aside class="mnote"><p><b>No causes recorded yet.</b> ' + (missed.length ? 'You have ' + plural(missed.length, 'missed question') + '. Retry them, and when one goes wrong again, tap the cause under the explanation.' : 'Choose your own set on the Practice page: after each answer there, you can tap what caused the difficulty.') + '</p></aside>' + retryAll;
     }
     var cards = list.map(function (x, i) {
       var types = {}, still = 0;
@@ -176,24 +176,25 @@
     }).join('');
     var mods = Array.isArray(store.s.rwmodules) ? store.s.rwmodules.filter(isObj) : [];
     viewEl.rwmap.innerHTML = '<div class="wrap">' +
-      '<header class="read"><p class="eyebrow">Reading and Writing · My map</p><h2 class="vtitle">Your mastery map</h2><p class="lede">Each square is a kind of reading question or one grammar rule, colored by how you did the last time you tried its questions. Tap one to see what to look at and practice just that.</p></header>' +
+      '<header class="read"><p class="eyebrow">Reading &amp; Writing · My progress</p><h2 class="vtitle">My progress</h2><p class="lede">How you are doing on each kind of reading question and each grammar rule. This page fills in as you answer practice questions. Tap a colored square to see what to look at, and to practice just that kind.</p></header>' +
       '<div class="mst-stats mm-stats rw"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
       diagLineHTML('rw') + dataLineHTML() +
-      (tried ? '' : '<aside class="mnote"><p><b>Nothing practiced yet.</b> Answer a few questions and this map fills in. Results are saved ' + savedIn() + '.</p><a class="btn sm" href="#practice">Practice real questions</a></aside>') +
+      (tried ? '' : '<aside class="mnote"><p><b>No practice questions answered yet.</b> Answer a few and this page fills in.' + (drillTried('rw').length ? ' Your short exercises are listed below.' : '') + ' Results are saved ' + savedIn() + '.</p><a class="btn sm" href="#practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="rwm-next"><h3 class="h2">Work on these next</h3>' + (next.length
         ? '<p class="lede">Your lowest-scoring types so far. Study the rule or the routine, then practice just that type.</p><div class="mm-nexts">' + next.map(function (t) { return rwCardHTML(t, stat[t.id]); }).join('') + '</div>'
         : '<p class="lede">Nothing needs work right now. Pick a grey square below to try a type you have not seen.</p>') + '</section>' : '') +
+      drillProgressHTML('rw') +
       '<section class="sec' + (tried ? '' : ' first') + '" id="rwm-all"><h3 class="h2">All ' + N + ' types</h3><p class="lede">The number is your percent right on the questions you have tried. Grey means not tried yet.</p>' +
         seg('rwm-show', 'Show', [['all', 'All'], ['weak', 'Needs work · ' + cnt.weak], ['mid', 'Getting there · ' + cnt.mid], ['strong', 'Strong · ' + cnt.strong], ['new', 'Not tried · ' + cnt['new']]], rwmFilter) +
         '<p class="mm-key"><span><i class="mm-t lvl-weak" aria-hidden="true"></i>Needs work: under 60% right</span><span><i class="mm-t lvl-mid" aria-hidden="true"></i>Getting there</span><span><i class="mm-t lvl-strong" aria-hidden="true"></i>Strong: 85% or more, on at least 3 questions</span><span><i class="mm-t lvl-new" aria-hidden="true"></i>Not tried</span></p>' +
         '<div class="mm-map" id="rwm-map" data-show="' + rwmFilter + '">' + reading + grammar + '</div></section>' +
       '<section class="sec" id="rw-traps">' + rwTrapHTML() + '</section>' +
-      '<section class="sec" id="rwm-mods"><h3 class="h2">Timed modules</h3>' + (mods.length
-        ? '<p class="lede">Your last ' + (mods.length > 5 ? '5 modules' : plural(mods.length, 'module')) + ': 27 questions on one clock, like one part of the real section.</p><ul class="mm-mods">' + mods.slice(-5).reverse().map(function (r) {
+      '<section class="sec" id="rwm-mods"><h3 class="h2">Timed tests</h3>' + (mods.length
+        ? '<p class="lede">Your last ' + (mods.length > 5 ? '5 timed tests' : plural(mods.length, 'timed test')) + ': 27 questions on one clock, like one part of the real section.</p><ul class="mm-mods">' + mods.slice(-5).reverse().map(function (r) {
             return '<li><b>' + r.r + ' of ' + r.n + '</b><span>' + clock(r.s) + ' of ' + clock(r.l) + ' used</span><span class="muted">' + new Date(r.t).toLocaleDateString() + '</span></li>';
           }).join('') + '</ul>'
-        : '<p class="lede">Not taken yet. A module is 27 questions on one 32-minute clock, in the order the test asks them, with answers at the end.</p>') +
-        '<p class="row" style="margin-top:1rem"><a class="btn sm" href="#rw-module">Take a timed module</a></p></section>' +
+        : '<p class="lede">None taken yet. A timed test is 27 questions on one 32-minute clock, in the order the real test asks them. You see the answers at the end.</p>') +
+        '<p class="row" style="margin-top:1rem"><a class="btn sm" href="#rw-module">Take a timed test</a></p></section>' +
       '</div>';
     if (rwmSel) { rwmSelect(rwmSel, false); }
   }

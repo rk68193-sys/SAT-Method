@@ -13,7 +13,7 @@
         '5x − 2 = 13<span class="mfx-n">What is 5x + 6?</span>',
         '5x + 6 = 13 + 8 = 21<span class="mfx-n">5x + 6 is 8 more than 5x − 2, so add 8 to both sides.</span>'],
       watch: 'Answering with x. The value of x is often waiting among the wrong choices, so read the last line again before you choose. And check the factor: going from 4x to 24x is × 6, not × 20.',
-      more: 'More of this: <a href="#m-found-expr">Solving for an expression</a> in Algebra foundations, and the <a href="#m-study-L1-target_expression.scale">expanded type</a>.',
+      more: 'More of this: <a href="#m-found-expr">Solving for an expression</a> in Algebra basics, and <a href="#m-study-L1-target_expression.scale">this kind of question in detail</a>.',
       tries: ['2e8cc1c0', '9b886541', 'fa80893a'],
       words: 'multiple value of an expression 2x + 3 24x scale times shift add the same number both sides without solving for x' },
     { id: 'block', name: 'The same bracket twice', short: 'Same bracket',
@@ -25,7 +25,7 @@
         mfr('2x − 3', 5) + ' = ' + mfr('2x − 3', 8) + '<span class="mfx-n">What is 2x − 3?</span>',
         '2x − 3 = 0<span class="mfx-n">A fifth of a number equals an eighth of it only when the number is 0.</span>'],
       watch: 'Expanding everything. It gets there, but it takes longer, and each expansion is a chance to drop a sign. And the answer is the bracket, not x.',
-      more: 'More of this: the <a href="#m-study-L1-target_expression.block">expanded type</a>, with every bank question.',
+      more: 'More of this: <a href="#m-study-L1-target_expression.block">this kind of question in detail</a>, with every bank question.',
       tries: ['620abf36', '7a5a74a6', 'aee9fd2d'],
       words: 'bracket parentheses same expression twice repeated group treat as one unknown substitution' },
     { id: 'combine', name: 'Add or subtract the equations', short: 'Add the equations',
@@ -35,7 +35,7 @@
         '8x + 8y = 32<span class="mfx-n">Add the equations.</span>',
         'x + y = 4<span class="mfx-n">Divide by 8. Solving for each letter gives x = −1/2 and y = 9/2: more steps, and fractions.</span>'],
       watch: 'Forcing it. If one equation already says y = …, put that into the other equation instead. That is quicker than hunting for a combination, as the look-alikes below show.',
-      more: 'More of this: <a href="#ms-composite">Find x + y without finding x and y</a> on Shortcuts, and the <a href="#m-study-SYS-target">expanded type</a>.',
+      more: 'More of this: <a href="#ms-composite">Find x + y without finding x and y</a> on the Shortcut list, and <a href="#m-study-SYS-target">this kind of question in detail</a>.',
       tries: ['608eeb6e', '570b5a5d', '3a84f885'],
       words: 'system of equations x + y x − y add subtract elimination combination sum difference' },
     { id: 'roots', name: 'Sum or product of the solutions', short: 'Sum of solutions',
@@ -46,7 +46,7 @@
         '|x − 6| = 10<span class="mfx-n">What is the sum of the solutions?</span>',
         '2 × 6 = 12<span class="mfx-n">The solutions are 10 either side of 6: 16 and −4.</span>'],
       watch: 'Reading b before everything is on one side: in x(x + 1) = 4x, b is −3 only after you rearrange it to x² − 3x = 0. And −b/a and c/a are for quadratics with real solutions: if b² − 4ac is negative, there are no real solutions to add.',
-      more: 'More of this: <a href="#ms-sumroots">Sum of the solutions in one line</a> on Shortcuts, <a href="#mpat-symmetry">A parabola is symmetric</a> in Big patterns, and the <a href="#m-study-NEQ-root_sum">expanded type</a>.',
+      more: 'More of this: <a href="#ms-sumroots">Sum of the solutions in one line</a> on the Shortcut list, <a href="#mpat-symmetry">A parabola is symmetric</a> in Big ideas, and <a href="#m-study-NEQ-root_sum">this kind of question in detail</a>.',
       tries: ['ff2e5c76', '158591f0', '722de804'],
       words: 'sum of the solutions product of the solutions roots −b/a c/a quadratic absolute value' },
     { id: 'match', name: 'Match the two sides', short: 'Match the sides',
@@ -58,7 +58,7 @@
         '(x + 2)(3x − 1) = ax² + bx + c<span class="mfx-n">What is a + b + c?</span>',
         '(1 + 2)(3 − 1) = 6<span class="mfx-n">Put x = 1 into both sides: the right side becomes a + b + c.</span>'],
       watch: 'Matching only works when the equation holds for every x. An ordinary equation, true for one value of x, cannot be matched part by part: see the look-alikes.',
-      more: 'More of this: <a href="#mpat-disguise">The same expression in disguise</a> in Big patterns, and the expanded types for <a href="#m-study-EQV-coefficient">matching coefficients</a>, <a href="#m-study-L1-identity">infinitely many solutions</a> and <a href="#m-study-SYS-infinite">a system with infinitely many solutions</a>.',
+      more: 'More of this: <a href="#mpat-disguise">The same expression in disguise</a> in Big ideas, and these kinds of question in detail: <a href="#m-study-EQV-coefficient">matching coefficients</a>, <a href="#m-study-L1-identity">infinitely many solutions</a> and <a href="#m-study-SYS-infinite">a system with infinitely many solutions</a>.',
       tries: ['371cbf6b', 'f237ccfc', '571174f3'],
       words: 'equivalent for all x identity infinitely many solutions coefficients match compare rewritten constant a + b + c same line' },
     { id: 'mirror', name: 'Halfway between equal heights', short: 'Halfway',
@@ -69,7 +69,7 @@
         'A ball leaves a 2 m ledge and is back at 2 m after 5 s.<span class="mfx-n">When is it highest?</span>',
         'At 2.5 s<span class="mfx-n">0 s and 5 s give the same height, so the top is halfway between them.</span>'],
       watch: 'Only equal outputs count. If two inputs give different outputs, the vertex is not halfway between them. And this is a parabola fact: a line or an exponential curve has no turning point to be halfway to.',
-      more: 'More of this: <a href="#ms-vertex">Find the vertex exactly</a> on Shortcuts, <a href="#mpat-symmetry">A parabola is symmetric</a> in Big patterns, and the expanded type for <a href="#m-study-NF-vertex.symmetry">equal outputs either side of a vertex</a>.',
+      more: 'More of this: <a href="#ms-vertex">Find the vertex exactly</a> on the Shortcut list, <a href="#mpat-symmetry">A parabola is symmetric</a> in Big ideas, and this kind of question in detail: <a href="#m-study-NF-vertex.symmetry">equal outputs either side of a vertex</a>.',
       tries: ['8e1da169', '271ffad7', 'bba18ecb'],
       words: 'parabola vertex symmetric symmetry halfway average zeros maximum minimum highest lowest axis of symmetry' }
   ];
@@ -125,7 +125,7 @@
     var e = mFirstData()[id], f = e ? MFIRSTBY[e.k] : null;
     if (!f) { return ''; }
     var x = e.k.indexOf('x-') === 0;
-    return '<aside class="mfirst-fb' + (x ? ' x' : '') + '"><p class="mtag' + (x ? ' bad' : '') + '">' + (x ? 'Looks like a shortcut, but isn’t' : 'Shortcut first') + '</p>' +
+    return '<aside class="mfirst-fb' + (x ? ' x' : '') + '"><p class="mtag' + (x ? ' bad' : '') + '">' + (x ? 'Looks like a shortcut, but isn’t' : 'A shortcut works here') + '</p>' +
       '<p><b>' + esc(f.name) + '.</b> ' + esc(e.n) + '</p>' +
       '<a class="linkbtn" href="#m-first-' + f.id + '">' + (x ? 'Why the short way is not there' : 'How to spot this kind') + '</a></aside>';
   }
@@ -151,7 +151,7 @@
     MFIRST.forEach(function (f) { all = all.concat(mFirstIds(f.id)); });
     var hard = all.filter(function (id) { return MQBY[id].d === 'H'; }).length;
     viewEl.mfirst.innerHTML = '<div class="wrap">' +
-      mHead('Math · Shortcut first', 'Look for the shortcut first', 'Some questions ask for something other than x: 24x, x + 4, x + y, the sum of the solutions, a constant in an identity. Many of them are built so that the thing asked for drops out in a step or two, while finding x first takes longer and leaves more room for slips. Six kinds come up again and again: ' + all.length + ' bank questions, ' + hard + ' of them Hard. Learn the tell for each, and the look-alikes where the short way is not there.') +
+      mHead('Math · Look for a shortcut', 'Look for the shortcut first', 'Some questions ask for something other than x: 24x, x + 4, x + y, the sum of the solutions, a constant in an identity. Many of them are built so that the thing asked for drops out in a step or two, while finding x first takes longer and leaves more room for slips. Six kinds come up again and again: ' + all.length + ' bank questions, ' + hard + ' of them Hard. Learn the clue that gives each one away, and the look-alikes where the short way is not there.') +
       '<section class="mfirst-habit" aria-labelledby="mfirst-habit-h"><h3 class="h3" id="mfirst-habit-h">The habit, before you solve anything</h3><ol class="msteps">' +
         '<li><span><b>Read the last line first.</b> What exactly is asked for: x itself, or something built from it, such as 3x + 1, x + y or the sum of the solutions?</span></li>' +
         '<li><span><b>Look for it in what you are given.</b> Is that expression, or a multiple of it, already sitting in the equation? Do the words “for all x”, “equivalent” or “infinitely many” appear?</span></li>' +
@@ -187,9 +187,9 @@
           '<li><b>“No solution” and “infinitely many solutions”.</b> A number can show that an equation holds at that number. It cannot show that the equation holds for every x, or for none.</li>' +
           '<li><b>Choices that agree at your number.</b> At x = 2, the expressions x², 2x and x + 2 are all 4. If two choices give the same value, try a second, less friendly number, such as 7.</li>' +
         '</ul>' +
-        '<p class="fine mfound-more">Putting x = 1 into an identity, as in kind 5, is not guessing: the two sides are equal for every x, so they are equal at 1. Putting in a value the question gives you, such as a point on a graph, is exact too. The steps for picking numbers are on Shortcuts: <a href="#ms-picknum">Pick a number</a>.</p></section>' +
+        '<p class="fine mfound-more">Putting x = 1 into an identity, as in kind 5, is not guessing: the two sides are equal for every x, so they are equal at 1. Putting in a value the question gives you, such as a point on a graph, is exact too. The steps for picking numbers are on the Shortcut list: <a href="#ms-picknum">Pick a number</a>.</p></section>' +
       '<section class="sec" id="m-first-mix"><h3 class="h2">Then mix them: shortcut or not?</h3>' +
         '<p class="lede">Ten bank questions from all six kinds and the look-alikes, shuffled. Before you work each one, decide whether there is a short way and which tell gave it away. After each answer, a note shows the short way for that question, or why it was not there.</p>' +
         '<p class="row"><a class="btn" href="#m-first-practice">Shortcut or not? · 10 questions</a></p></section>' +
-      mNext([['m-short', 'Next', 'All the shortcuts'], ['m-patterns', 'Or', 'Big patterns'], ['m-practice', 'Try them out', 'Practice real questions']]) + '</div>';
+      nextHTML(['m-first-practice', 'Practice these questions', 'Real test questions where the short way works.'], ['m-short', 'see the full shortcut list']) + '</div>';
   }

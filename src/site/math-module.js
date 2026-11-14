@@ -17,6 +17,7 @@
     if (open && mSheetOpen()) { mSheetShow(false); }
     el.hidden = !open;
     document.body.classList.toggle('calc-open', !!open || mSheetOpen());
+    placePanels();
     $$('[data-calc]').forEach(function (b) { b.setAttribute('aria-pressed', open ? 'true' : 'false'); });
     /* on a phone the panel covers the lower part of the screen, so bring the question to the top */
     var card = open && narrow() ? $('#v-mprac .mpcard') : null;
@@ -178,7 +179,7 @@
     var missedIds = res.filter(function (r) { return r.ok === false; }).map(function (r) { return r.id; });
     var notRight = res.filter(function (r) { return r.ok !== true; });
     viewEl.mprac.innerHTML = '<div class="wrap">' +
-      mHead(MP.diag ? 'Math · Starting check' : 'Math · Timed module', 'You got ' + right + ' of ' + n + ' right', (MP.timeUp ? 'Time ran out. ' : '') + 'You used ' + clock(MP.used) + ' of ' + clock(MP.limit) + (answered ? ', about ' + avg + ' seconds for each question you answered. The real test allows about 95.' : '.')) +
+      mHead(MP.diag ? 'Math · Starting check' : 'Math · Timed test', 'You got ' + right + ' of ' + n + ' right', (MP.timeUp ? 'Time ran out. ' : '') + 'You used ' + clock(MP.used) + ' of ' + clock(MP.limit) + (answered ? ', about ' + avg + ' seconds for each question you answered. The real test allows about 95.' : '.')) +
       (MP.diag ? diagPanelHTML('m') : '') +
       '<div class="mst-stats mm-stats"><div><b>' + right + '</b><span>right</span></div><div><b>' + wrong + '</b><span>wrong</span></div><div><b>' + blank + '</b><span>no answer</span></div><div><b>' + clock(MP.used) + '</b><span>of ' + clock(MP.limit) + ' used</span></div></div>' +
       '<section class="msec"><h3 class="h3">By area</h3><div class="mprog">' + areas + '</div></section>' +
@@ -188,7 +189,7 @@
         return '<li class="' + (r.ok ? 'ok' : (r.ok === null ? 'mm-blank' : 'no')) + '"><span class="mpsum-v">' + (r.ok ? '✓' : (r.ok === null ? '–' : '✗')) + '</span><span><b>' + (i + 1) + '.</b> ' + esc(MTY[q.t].name) + ' <span class="muted">· ' + MDIFF[q.d] + ' · ' + (r.ok === null ? 'no answer' : r.secs + ' s') + (r.flag ? ' · marked for review' : '') + '</span></span><button class="linkbtn" type="button" data-rev="' + i + '">Review</button></li>';
       }).join('') + '</ol></section>' +
       mWhySetHTML(missedIds) +
-      '<p class="row" style="margin-top:1.5rem">' + (notRight.length ? '<button class="btn big" type="button" id="mm-rev-miss">Review what I missed</button>' : '') + (MP.diag ? '<a class="btn' + (notRight.length ? ' ghost' : ' big') + '" href="#plan">Make my study plan</a>' : '<button class="btn' + (notRight.length ? ' ghost' : ' big') + '" type="button" id="mm-new">New module</button>') + (notRight.length ? '<button class="btn ghost" type="button" id="mm-retry">Retry them, one at a time</button>' : '') + '<a class="btn ghost" href="#m-map">See my map</a></p></div>';
+      '<p class="row" style="margin-top:1.5rem">' + (notRight.length ? '<button class="btn big" type="button" id="mm-rev-miss">Review what I missed</button>' : '') + (MP.diag ? '<a class="btn' + (notRight.length ? ' ghost' : ' big') + '" href="#plan">Make my study plan</a>' : '<button class="btn' + (notRight.length ? ' ghost' : ' big') + '" type="button" id="mm-new">Another timed test</button>') + (notRight.length ? '<button class="btn ghost" type="button" id="mm-retry">Retry them, one at a time</button>' : '') + '<a class="btn ghost" href="#m-map">See my progress</a></p></div>';
     $$('[data-rev]', viewEl.mprac).forEach(function (b) { b.addEventListener('click', function () { mmReview(Number(b.getAttribute('data-rev'))); }); });
     var nw = $('#mm-new'), rm = $('#mm-rev-miss'), rt = $('#mm-retry');
     if (nw) { nw.addEventListener('click', function () { mpModePreset = 'module'; mpSetup(); window.scrollTo(0, 0); }); }

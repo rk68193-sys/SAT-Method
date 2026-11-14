@@ -1,5 +1,5 @@
   /* =================== Practice: learning and paced sets =================== */
-  var TIERS = { learn: { g: null, r: null, label: 'Learn · untimed' }, std: { g: 60, r: 70, label: 'Standard · 1:00 grammar, 1:10 reading' }, fast: { g: 45, r: 55, label: 'Fast · 0:45 and 0:55' }, easy: { g: 80, r: 90, label: 'Relaxed · 1:20 and 1:30' } };
+  var TIERS = { learn: { g: null, r: null, label: 'No clock' }, std: { g: 60, r: 70, label: 'Test pace · 1:00 grammar, 1:10 reading' }, fast: { g: 45, r: 55, label: 'Faster · 0:45 and 0:55' }, easy: { g: 80, r: 90, label: 'Slower · 1:20 and 1:30' } };
   var TS = null, tclock = null;
   var REVIEW_CAUSES = [['', 'Choose a cause'], ['meaning', 'Misread meaning, reference or viewpoint'], ['scope', 'Missed a qualification or comparison'], ['evidence', 'Used unsupported evidence or prior knowledge'], ['data', 'Misread data, units or direction'], ['goal', 'Missed the question’s goal or relationship'], ['grammar', 'Misidentified sentence structure or a grammar rule'], ['vocab', 'Did not know a word'], ['pace', 'Rushed or ran out of time'], ['slip', 'Selection slip'], ['other', 'Other / still investigating']];
   function causeLabel(key) {
@@ -104,31 +104,31 @@
     var nUncertain = all.filter(function (it) { var x = result(it); return x && (x.confidence === 'unsure' || x.confidence === 'guess'); }).length;
     var nSlow = all.filter(function (it) { return overPace(result(it)); }).length;
     var reviews = all.map(function (it) { return { it: it, r: result(it) }; }).filter(function (x) { return x.r && (x.r.evidence || x.r.cause); }).sort(function (a, b) { return (b.r.at || 0) - (a.r.at || 0); });
-    var h = (prefix || '') + '<header class="read"><p class="eyebrow">Practice</p><h2 class="vtitle">Learn first. Then build your pace.</h2>' +
-      '<p class="lede">All 1,845 Reading and Writing questions are available, including ' + BANK.figures.length + ' table and graph questions and ' + BANK.grammarSources.length + ' additional grammar questions with their full official explanations. Mixed sets include each question once. Start untimed while learning a skill; use unfamiliar mixed questions to check your pace.</p></header>' +
-      '<div class="record"><div><b>' + g.tried + '</b><span>of ' + EXLIST.length + ' grammar tried</span></div><div><b>' + g.right + '</b><span>right last time</span></div>' +
-      '<div><b>' + r.tried + '</b><span>of ' + RLIST.length + ' reading tried</span></div><div><b>' + r.right + '</b><span>right last time</span></div>' +
-      '<div><b>' + qb.tried + '</b><span>of ' + BANK.reading.length + ' bank reading tried</span></div><div><b>' + nb.tried + '</b><span>of ' + BANK.notes.length + ' notes tried</span></div><div><b>' + xb.tried + '</b><span>of ' + BANK.trans.length + ' transitions tried</span></div></div>' +
+    var triedAll = g.tried + r.tried + qb.tried + nb.tried + xb.tried, rightAll = g.right + r.right;
+    var h = (prefix || '') + '<header class="read"><p class="eyebrow">Reading &amp; Writing · Practice</p><h2 class="vtitle">Practice real test questions</h2>' +
+      '<p class="lede">All 1,845 questions come from College Board, the makers of the SAT. After each answer you see the right one, and why.</p></header>' +
+      '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#rw-easy">5 easy questions</a><a class="btn big ghost" href="#rw-mixed">10 questions of every level</a></p><p class="fine">One question at a time, with no clock.</p></section>' +
+      '<h3 class="h2 mpown">Or choose your own set</h3>' +
       '<div class="tsetup" id="tsetup" data-mode="' + s.mode + '">' +
-      seg('tmode', 'How to practice', [['set', 'Learn or pace'], ['module', 'Timed module']], s.mode) +
+      seg('tmode', 'How to practice', [['set', 'One at a time'], ['module', 'Timed test']], s.mode) +
       '<p class="mpmode-note" id="tmodenote"></p>' +
-      '<div class="t-setonly">' + seg('tsrc', 'Questions from', [['g', 'Grammar and transition lessons'], ['a', 'Additional grammar (' + BANK.grammarSources.length + ')'], ['r', 'Reading worked examples'], ['q', BANK.reading.length + ' text reading questions'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'All ' + BANK.notes.length + ' notes questions'], ['x', 'All ' + BANK.trans.length + ' transition questions'], ['both', 'Mixed: all 1,845 questions']], s.src) + '</div>' +
-      '<div id="tpartwrap" class="t-setonly">' + seg('tpart', 'Grammar part', [['all', 'All parts'], ['A', 'A · Boundaries'], ['B', 'B · Form, Structure, and Sense'], ['C', 'C · Transitions']], s.part) + '</div>' +
-      seg('tdiff', 'Difficulty', [['all', 'Any'], ['Easy', 'Easy'], ['Medium', 'Medium'], ['Hard', 'Hard']], s.diff) +
-      seg('twhich', 'Which questions', [['all', 'All'], ['new', 'Not tried yet (' + nNew + ')'], ['missed', 'Missed last time (' + nMiss + ')'], ['uncertain', 'Unsure or guessed (' + nUncertain + ')'], ['slow', 'Over the clock last time (' + nSlow + ')']], s.which) +
-      '<div class="t-setonly">' + seg('tlen', 'Questions per set', [[10, '10'], [20, '20'], [0, 'All that match']], s.len) + '</div>' +
+      '<div class="t-setonly">' + seg('tsrc', 'Which questions', [['g', 'From the grammar lessons'], ['a', 'More grammar (' + BANK.grammarSources.length + ')'], ['r', 'From the reading lessons'], ['q', 'Reading (' + BANK.reading.length + ')'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'Notes (' + BANK.notes.length + ')'], ['x', 'Transitions (' + BANK.trans.length + ')'], ['both', 'A mix of all 1,845']], s.src) + '</div>' +
+      '<div id="tpartwrap" class="t-setonly">' + seg('tpart', 'Grammar part', [['all', 'All parts'], ['A', 'A · ' + PART.A.title], ['B', 'B · ' + PART.B.title], ['C', 'C · ' + PART.C.title]], s.part) + '</div>' +
+      seg('tdiff', 'How hard', [['all', 'Any'], ['Easy', 'Easy'], ['Medium', 'Medium'], ['Hard', 'Hard']], s.diff) +
+      seg('twhich', 'Which ones', [['all', 'All'], ['new', 'Not tried yet (' + nNew + ')'], ['missed', 'Got wrong last time (' + nMiss + ')'], ['uncertain', 'Not sure or guessed (' + nUncertain + ')'], ['slow', 'Too slow last time (' + nSlow + ')']], s.which) +
+      '<div class="t-setonly">' + seg('tlen', 'How many', [[10, '10'], [20, '20'], [0, 'All that match']], s.len) + '</div>' +
       '<div class="t-setonly">' + seg('ttier', 'Clock', Object.keys(TIERS).map(function (k) { return [k, TIERS[k].label]; }), s.tier) + '</div>' +
-      '<p class="fine t-setonly">Untimed mode has no clock or speed rating. The other modes use adjustable practice targets, and continue past zero. On the SAT, time belongs to the whole module: 32 minutes for 27 questions, with review within that module. A set here gives feedback after each answer; choose <b>Timed module</b> above to practice one whole module, and use <a href="https://satsuite.collegeboard.org/practice/practice-tests/bluebook" target="_blank" rel="noopener">official Bluebook practice</a> to rehearse a full test.</p>' +
-      '<label class="checkline t-setonly" for="thints"><input type="checkbox" id="thints"' + (s.hints ? ' checked' : '') + '>Highlight what changes in grammar choices</label>' +
+      '<p class="fine t-setonly">No clock is best while you learn. A clock for each question helps you build speed. The <b>Timed test</b> is like one part of the real test: 27 questions in 32 minutes. For a full practice test, use College Board’s free <a href="https://satsuite.collegeboard.org/practice/practice-tests/bluebook" target="_blank" rel="noopener">Bluebook app</a>.</p>' +
+      '<label class="checkline t-setonly" for="thints"><input type="checkbox" id="thints"' + (s.hints ? ' checked' : '') + '>Highlight what changes between the grammar choices</label>' +
       '<p class="h3" id="tcount" role="status"></p>' +
       '<div class="row"><button type="button" class="btn" id="tstart">Start the set</button>' +
       '<button type="button" class="linkbtn" id="tforget"' + (nNew < all.length ? '' : ' hidden') + '>Clear my saved results</button></div>' +
       '<div id="tconfirm" hidden><p class="verdict miss">Clear every saved Reading and Writing practice result in this browser?</p><div class="row"><button type="button" class="btn" id="tyes">Clear them</button><button type="button" class="btn ghost" id="tno">Keep them</button></div></div>' +
-      '<p class="fine">Answer with A, B, C or D, or 1 to 4, and press Enter for the next question. ' + (canStore ? 'Results are saved ' + savedIn() + '.' : 'Results last until you close this page.') + '</p></div>' +
+      '<p class="fine">' + (triedAll ? 'So far you have answered ' + plural(triedAll, 'question') + ' here. ' : '') + (canStore ? 'Your answers are saved ' + savedIn() + '.' : 'Your answers last until you close this page.') + '<span class="kbd-only"> On a keyboard, press A, B, C or D to answer and Enter to go on.</span></p></div>' +
       (reviews.length ? '<details class="ctx"><summary>My saved reviews (' + reviews.length + ')</summary><div class="ctxbody"><p class="fine">Latest review for each question. Showing the most recent ' + Math.min(20, reviews.length) + '.</p><ul class="plainlist">' + reviews.slice(0, 20).map(function (x) {
         return '<li><a href="#rq-' + x.it.id + '">Question ' + x.it.id + '</a>' + (x.r.cause ? '<p class="fine">' + esc(causeLabel(x.r.cause)) + '</p>' : '') + (x.r.evidence ? '<p class="fine">' + esc(x.r.evidence) + '</p>' : '') + '</li>';
       }).join('') + '</ul></div></details>' : '') +
-      '<h3 class="subh">Original questions and explanations</h3><p class="pretty">The table, graph and additional grammar questions are text taken from College Board’s own export, with each table or graph as a picture and the official explanation for every choice. After you answer, each one links to the question and the explanation exactly as printed. Two further figure questions are already in Reading worked examples. <a href="#data-patterns">Study the deeper data patterns</a>.</p>';
+      '<p class="fine" style="margin-top:2rem">After you answer, the table, graph and extra grammar questions link to the question and College Board’s explanation exactly as printed. <a href="#data-patterns">More on tables and graphs</a>.</p>';
     var host = document.getElementById('thost');
     host.innerHTML = h;
     function readSettings() {
@@ -141,13 +141,13 @@
       var st = readSettings(), mod = st.mode === 'module', n = mod ? rmPool(st).length : matching(st).length, get = Math.min(n, RM_N);
       document.getElementById('tsetup').setAttribute('data-mode', st.mode);
       document.getElementById('tmodenote').innerHTML = mod
-        ? '<b>One part of the real section:</b> ' + RM_N + ' questions on a single ' + clock(rmLimit(RM_N)) + ' clock, in the order the test asks them: words and structure, then evidence and inference, then grammar, then transitions and notes. Move back and forth, mark questions for review and cross out choices. Answers and explanations come at the end.'
-        : '<b>One question at a time:</b> the answer and the explanation appear straight after each question, with no clock or with a clock for each question.';
+        ? '<b>Like one part of the real test:</b> ' + RM_N + ' questions in ' + clock(rmLimit(RM_N)) + ' minutes, in the same order as the test. You can go back to any question, mark questions to check later, and cross out choices. You see the answers at the end.'
+        : '<b>One question at a time:</b> you see the answer and why right after each question.';
       document.getElementById('tpartwrap').hidden = st.src !== 'g' && st.src !== 'a' && st.src !== 'both';
       document.getElementById('tcount').textContent = n === 0 ? 'No question matches these settings.'
-        : mod ? plural(n, 'question') + ' match. Your module: ' + plural(get, 'question') + ', ' + clock(rmLimit(get)) + ' on the clock.'
+        : mod ? plural(n, 'question') + ' match. Your test: ' + plural(get, 'question') + ' in ' + clock(rmLimit(get)) + ' minutes.'
         : plural(n, 'question') + ' match.';
-      document.getElementById('tstart').textContent = mod ? 'Start the module' : 'Start the set';
+      document.getElementById('tstart').textContent = mod ? 'Start the timed test' : 'Start the set';
       document.getElementById('tstart').disabled = n === 0;
     }
     $$('input', host).forEach(function (i) { i.addEventListener('change', refresh); });
@@ -166,12 +166,17 @@
     });
     refresh();
   }
+  /* "5 easy questions" and "10 questions of every level": straight to the first question, one at a time, no clock */
+  function rwQuick(n, diff) {
+    var seen = {}, pool = itemsAll().filter(function (it) { if (seen[it.id]) { return false; } seen[it.id] = true; return !diff || it.d === diff; });
+    timedStart(shuffle(pool).slice(0, n), { src: 'both', part: 'all', diff: diff || 'all', which: 'all', len: n, tier: 'learn', hints: false, mode: 'set', quick: true });
+  }
   function timedStart(list, st) {
     rmDrop();
     rdIntroOn = false;
     TS = { items: list, i: 0, res: [], tier: TIERS[st.tier] || TIERS.learn, settings: st, hints: st.hints, card: null, paused: false };
     document.getElementById('thost').innerHTML = '<div class="tplay"><div class="tbar"><span class="tpos" id="tpos"></span><div class="clockbox" id="tclock"></div>' +
-      '<div class="row"><button type="button" class="btn sm" id="tnext2" hidden>Next</button><button type="button" class="linkbtn" id="tend">End set</button></div></div>' +
+      '<div class="row"><button type="button" class="btn sm" id="tnext2" hidden>Next</button><button type="button" class="linkbtn" id="tend">Stop practicing</button></div></div>' +
       '<div id="tconfidence"></div><div id="tcard"></div><div id="treview"></div><div class="tnav" id="tnav"></div></div>';
     tclock = TS.tier.g == null ? null : Clock(document.getElementById('tclock'), TS.tier.g, GRAMMAR_PHASES);
     if (!tclock) { document.getElementById('tclock').innerHTML = '<p class="fine"><b>Untimed learning</b><br>Find the evidence or rule. Take the time you need.</p>'; }
@@ -186,12 +191,14 @@
     document.getElementById('tnav').innerHTML = '';
     document.getElementById('tnext2').hidden = true;
     if (tclock) { tclock.reset(lim, it.t === 'r' || it.t === 'q' || it.t === 'v' ? READING_PHASES : it.t === 'n' ? NOTES_PHASES : GRAMMAR_PHASES); }
-    document.getElementById('tconfidence').innerHTML = seg('tconfidence', 'Before answering: how sure are you? (optional)', [['skip', 'Not recorded'], ['sure', 'Confident'], ['unsure', 'Unsure'], ['guess', 'Guessing']], 'skip');
+    /* the quick sets for a first visit leave out the optional extras: how sure you are, and what caused a miss */
+    var quick = !!TS.settings.quick;
+    document.getElementById('tconfidence').innerHTML = quick ? '' : seg('tconfidence', 'Before answering: how sure are you? (optional)', [['skip', 'Not recorded'], ['sure', 'Confident'], ['unsure', 'Unsure'], ['guess', 'Guessing']], 'skip');
     document.getElementById('treview').innerHTML = '';
     TS.paused = false;
     var onAnswer = function (k, ok) {
       var t = tclock ? tclock.stop() : null, bucket = bucketOf(it), prev = result(it);
-      var confidence = $('input[name="tconfidence"]:checked', document.getElementById('tconfidence')).value;
+      var conf = $('input[name="tconfidence"]:checked', document.getElementById('tconfidence')), confidence = conf ? conf.value : 'skip';
       $$('input', document.getElementById('tconfidence')).forEach(function (input) { input.disabled = true; });
       var attempt = practiceAttempt(prev, ok, t, lim, confidence);
       TS.res.push({ it: it, k: k, ok: ok, t: t, l: lim, fresh: !prev, confidence: confidence, cause: attempt.cause, evidence: attempt.evidence });
@@ -201,10 +208,17 @@
       return t == null ? null : { time: t, limit: lim };
     };
     var after = function () {
-      practiceReflection(it);
-      var last = TS.i + 1 >= TS.items.length;
-      document.getElementById('tnav').innerHTML = '<button type="button" class="btn" id="tnext">' + (last ? 'See the results' : 'Next question') + '</button><span class="kbd">Enter</span>';
+      if (!quick) { practiceReflection(it); }
+      var last = TS.i + 1 >= TS.items.length, label = (last ? 'See my results' : 'Next question') + ' <span aria-hidden="true">→</span>';
+      document.getElementById('tnav').innerHTML = '<button type="button" class="btn big" id="tnext">' + label + '</button><span class="kbd">Enter</span>';
       document.getElementById('tnext').addEventListener('click', timedNext);
+      /* the same button right under the verdict, so it is on screen without scrolling (dropped when the whole answer fits) */
+      var v = TS.card && $('.verdict', TS.card.el);
+      if (v) {
+        v.insertAdjacentHTML('afterend', '<p class="row tnext-top"><button type="button" class="btn big" id="tnext-top">' + label + '</button></p>');
+        document.getElementById('tnext-top').addEventListener('click', timedNext);
+        oneNext(v, document.getElementById('tnext-top').parentNode, document.getElementById('tnext'), TS.card.el);
+      }
       var n2 = document.getElementById('tnext2');
       n2.textContent = last ? 'Results' : 'Next';
       n2.hidden = false;

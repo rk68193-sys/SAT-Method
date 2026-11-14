@@ -23,6 +23,18 @@
     return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2;
   }
   function now() { return window.performance && performance.now ? performance.now() : Date.now(); }
+  /* a double-click on "Next" or "Start" must not answer the question that appears under the pointer: the second click of a
+     double-click that lands on an answer button just after a click on anything else is dropped */
+  var navClickAt = -1e9, ANSWER_BTN = '.dopt, .pc, .opt, .mpch, .gopt';
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target.closest('button, a') : null;
+    if (!t) { return; }
+    if (t.matches(ANSWER_BTN)) {
+      if (e.detail > 1 && now() - navClickAt < 900) { e.preventDefault(); e.stopPropagation(); }
+      return;
+    }
+    navClickAt = now();
+  }, true);
   function put(s, token, html) { return s.replace(token, function () { return html; }); }
   function focusQuiet(el) { if (el) { try { el.focus({ preventScroll: true }); } catch (e) {} } }
   function pct(a, b) { return b ? Math.round(100 * a / b) : 0; }
@@ -31,7 +43,9 @@
   var CONCEPTS = D.concepts, U = D.uses, EX = D.ex, QI = D.qi;
   var CBY = {}, PART = {};
   CONCEPTS.forEach(function (c) { CBY[c.id] = c; });
-  D.parts.forEach(function (p) { PART[p.key] = p; });
+  /* plain names for College Board's three grammar parts; its own names stay in p.cb */
+  var PART_PLAIN = { A: 'Punctuation', B: 'Verbs, pronouns and word forms', C: 'Transitions (linking words)' };
+  D.parts.forEach(function (p) { if (PART_PLAIN[p.key] && !p.cb) { p.cb = p.title; p.title = PART_PLAIN[p.key]; } PART[p.key] = p; });
   var EXLIST = [];
   CONCEPTS.forEach(function (c) { c.uses.forEach(function (uid) { U[uid].ex.forEach(function (q) { EXLIST.push(EX[q]); }); }); });
   var TOTAL = { q: 0, u: 0, v: 0 }, partStats = {}, conceptStats = {};
@@ -111,6 +125,19 @@
     if (!el) { return; }
     focusQuiet(el);
     if (narrow()) { try { el.scrollIntoView({ block: 'start', behavior: 'smooth' }); } catch (e) { el.scrollIntoView(); } }
+  }
+  /* After an answer there is a Next button under the verdict and another after the explanation.
+     When the verdict, the explanation and the second button fit on one screen, the first is dropped, so there is one button to press.
+     A wide screen does not jump to the verdict, so it scrolls just enough to show a Next button. */
+  function oneNext(verdict, topRow, lastBtn, box) {
+    if (!verdict || !topRow || !lastBtn) { return; }
+    var topH = parseFloat(window.getComputedStyle(document.documentElement).getPropertyValue('--top-h')) || 0;
+    var loading = box ? [].some.call(box.querySelectorAll('img'), function (i) { return !i.complete; }) : false;
+    var fits = !loading && lastBtn.getBoundingClientRect().bottom - verdict.getBoundingClientRect().top <= window.innerHeight - topH - 28;
+    if (fits && topRow.parentNode) { topRow.parentNode.removeChild(topRow); }
+    if (narrow()) { return; }
+    var r = (fits ? lastBtn : topRow).getBoundingClientRect(), dy = r.bottom - window.innerHeight + 24;
+    if (dy > 16) { try { window.scrollBy({ top: dy, behavior: 'smooth' }); } catch (e) { window.scrollBy(0, dy); } }
   }
   function rec(bucket, id) { var r = store[bucket][id]; return isObj(r) ? r : null; }
   function countDone() { return CONCEPTS.filter(function (c) { return !!store.l[c.id]; }).length; }
@@ -302,6 +329,16 @@
     return { el: el, pick: pick, done: function () { return done; } };
   }
 
+  /* ---------- the one next step at the foot of a page: a big button, and at most one other way on ---------- */
+  /* main and alt are [address, words, (main only) one line on why, data-drill]; alt reads after "Or" */
+  function nextInner(main, alt) {
+    function drill(k) { return k ? ' data-drill="' + k + '"' : ''; }
+    return '<p class="nextstep-h">Next step</p><a class="btn big nextstep-go" href="#' + main[0] + '"' + drill(main[3]) + '>' + main[1] + ' <span aria-hidden="true">→</span></a>' +
+      (main[2] ? '<p class="nextstep-why">' + main[2] + '</p>' : '') +
+      (alt ? '<p class="nextstep-alt">Or <a href="#' + alt[0] + '"' + drill(alt[2]) + '>' + alt[1] + '</a>.</p>' : '');
+  }
+  function nextHTML(main, alt) { return '<nav class="nextstep" aria-label="Next step">' + nextInner(main, alt) + '</nav>'; }
+
   /* ---------- a page with a contents rail ---------- */
   function RailView(v, o) {
     var st = { built: false, key: '' };
@@ -346,5 +383,13 @@
       mark();
       return true;
     }
-    return { show: show, refresh: refresh, key: function () { return st.key; }, page: function () { build(); return page; } };
+    /* the name of the page that is open, for the "You are here" line; empty on the view's own first page */
+    function label() {
+      var e = null, grp = null;
+      if (!st.key || st.key === o.home) { return ''; }
+      o.items().forEach(function (g) { g.entries.forEach(function (x) { if (x.key === st.key) { e = x; grp = g; } }); });
+      if (!e) { return ''; }
+      return o.name ? o.name(e, grp) : plain(e.label);
+    }
+    return { show: show, refresh: refresh, key: function () { return st.key; }, label: label, page: function () { build(); return page; } };
   }

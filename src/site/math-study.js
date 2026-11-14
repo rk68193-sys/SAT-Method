@@ -67,7 +67,7 @@
   function buildMStudy(openId,legacy) {
     if (!built.mstudy) {
       built.mstudy = true;
-      viewEl.mstudy.innerHTML = '<div class="wrap">' + mHead('Math · Expanded types','249 ways to recognize the question','Find the exact setup, learn why the fast method works, and try it on the original questions. All 1,925 Math questions are mapped to a type.') +
+      viewEl.mstudy.innerHTML = '<div class="wrap">' + mHead('Math · All question types','249 kinds of math question','Each kind with how to recognize it, why the quick method works, and the real questions to try it on. All 1,925 Math questions belong to one of them.') +
         '<div class="mst-stats"><div><b>249</b><span>fine question types</span></div><div><b>1,925</b><span>questions linked</span></div><div><b>998</b><span>scoped Desmos checks</span></div></div>' +
         '<details class="mnote mst-evidence"><summary>What the calculator checks mean</summary><p>The 998 checks include 382 question-derived target calculations, 528 intermediate source-solution steps, and 88 model, coordinate, discriminant, or choice checks. Each question states which kind it has. A numerical test is not a proof of an identity, and 927 questions have no recorded numerical check.</p><p>The 249 types are teaching groupings. Close variants are suggestions, and each question keeps its own official answer. Use the original images for fractions, powers, roots, bars, and diagrams.</p></details>' +
         '<div class="mst-filters"><label class="field"><span class="label">Find a type or question ID</span><input type="search" id="mst-search" placeholder="e.g. vertex, density, 841ef26c"></label>' +

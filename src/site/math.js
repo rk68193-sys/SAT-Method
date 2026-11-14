@@ -83,36 +83,33 @@
   function mHead(eyebrow, title, lede) {
     return '<header class="mhead"><p class="eyebrow">' + eyebrow + '</p><h2 class="vtitle">' + title + '</h2>' + (lede ? '<p class="lede">' + lede + '</p>' : '') + '</header>';
   }
-  function mNext(links) {
-    return '<nav class="mnext" aria-label="Where to go next">' + links.map(function (l) { return '<a class="mnext-a" href="#' + l[0] + '"><span class="label">' + l[1] + '</span><b>' + l[2] + '</b></a>'; }).join('') + '</nav>';
-  }
 
   /* ---------- Math: start here ---------- */
   function buildMStart() {
-    if (built.mstart) { $('#mstart-prog').innerHTML = mProgHTML(); return; }
+    if (built.mstart) { $('#mstart-prog').innerHTML = mProgHTML(); $('#mpath').innerHTML = mPathHTML(); return; }
     built.mstart = true;
     var F = MD.facts, T = MD.tot;
     var doms = MD.domains.map(function (d) {
       var n = d.skills.reduce(function (a, k) { return a + MSK[k].n; }, 0);
-      return '<a class="mdom" href="#m-learn-' + d.id + '"><span class="mdom-spec">' + esc(d.spec) + '</span><b>' + esc(d.name) + '</b><span>' + esc(d.blurb) + '</span><span class="label">' + d.skills.length + ' skills · ' + mfmt(n) + ' bank questions</span></a>';
+      return '<a class="mdom" href="#m-learn-' + d.id + '"><span class="mdom-spec">' + esc(d.spec) + '</span><b>' + esc(d.name) + '</b><span>' + esc(d.blurb) + '</span><span class="label">' + d.skills.length + ' lessons · ' + mfmt(n) + ' questions in the bank</span></a>';
     }).join('');
     var h = '<div class="wrap">' +
-      mHead('Math · Start here', 'How to approach every math question', 'The digital SAT Math section has two parts of 22 questions, 35 minutes each: about a minute and a half per question, with a calculator (Desmos) and a reference sheet of formulas built in. This guide uses an export of ' + mfmt(T.n) + ' math questions.') +
-      '<aside class="mnote mst-discover"><p><b>Go deeper: 249 fine question types.</b> Learn how to recognize each setup, follow expanded steps, and compare close variants. The 998 recorded Desmos checks distinguish question calculations from source steps.</p><a class="btn sm" href="#m-study">Explore expanded types</a></aside>' +
-      '<section class="sec first"><h3 class="h2">The routine: ten seconds before you solve</h3>' +
+      mHead('Math · Start here', 'How to approach every math question', 'The Math part of the test has two halves of 22 questions, 35 minutes each: about a minute and a half for each question. A calculator and a sheet of formulas are built into the test. This guide is built from ' + mfmt(T.n) + ' real math questions.') +
+      '<section class="sec first"><h3 class="h2">Go in this order</h3><p class="lede">' + (canStore ? 'Your progress is saved ' + savedIn() + ', so you can stop and come back.' : 'Your progress lasts until you close this page.') + '</p><ol class="path" id="mpath">' + mPathHTML() + '</ol></section>' +
+      '<section class="sec"><h3 class="h2">Before you solve: five quick checks</h3>' +
       '<ol class="mroutine">' +
         '<li><b>Read the last sentence first.</b><span>It is the real question. Everything above it is information.</span></li>' +
-        '<li><b>Name the question type.</b><span>Certain words give it away: “margin of error”, “line of best fit”, “in terms of”, “vertex”. The <a href="#m-types">Question finder</a> lists them.</span></li>' +
-        '<li><b>Look for the three warning signs.</b><span>“no solution / infinitely many”, the word “constant”, and “positive” or “negative” as a condition. Each one means the question has a twist (below).</span></li>' +
-        '<li><b>Choose your tool.</b><span>Use the fewest reliable operations. A visible factor or coefficient comparison can beat graphing; awkward numeric equations often favor Desmos. The type cards explain the assumptions; the <a href="#m-desmos">Desmos playbook</a> shows the calculator moves.</span></li>' +
+        '<li><b>Notice what kind of question it is.</b><span>Certain words give it away: “margin of error”, “line of best fit”, “in terms of”, “vertex”. <a href="#m-types">Find a question type</a> lists them.</span></li>' +
+        '<li><b>Look for the three warning signs.</b><span>“No solution” or “infinitely many”, the word “constant”, and “positive” or “negative” as a condition. Each one means the question has a twist (below).</span></li>' +
+        '<li><b>Pick the quickest way you trust.</b><span>Sometimes you can see the answer in the equation itself. With messy numbers, the built-in calculator is often faster: <a href="#m-desmos">Calculator tips</a> shows exactly what to type.</span></li>' +
         '<li><b>Solve, then read the last sentence again.</b><span>Is your number the thing it asked for? x, or x + y? The radius, or the diameter? This one habit catches the most common wrong answer.</span></li>' +
       '</ol></section>' +
-      '<section class="sec"><h3 class="h2">What the test covers</h3><p class="lede">Four content areas. College Board’s own test plan says Algebra and Advanced Math are about 35% each and the other two about 15% each, so start with the first two.</p><div class="mdoms">' + doms + '</div></section>' +
+      '<section class="sec"><h3 class="h2">What the test covers</h3><p class="lede">Four areas. College Board’s own test plan says Algebra and Advanced Math are each about 35% of the questions, and the other two about 15% each, so start with the first two.</p><div class="mdoms">' + doms + '</div></section>' +
       mNotInHTML() +
       '<section class="sec"><h3 class="h2">Three warning signs that make a question hard</h3><div class="mcards3">' +
         '<div class="mcard"><p class="mtag">“No solution” / “infinitely many”</p><p>Do not solve. Compare the two sides or the two lines. In the bank, ' + F.sol + ' questions ask how many solutions there are, and ' + mpc(F.solHard, F.sol) + '% of them are Hard. They come in three kinds: two lines (' + F.solSys + ' questions: compare slopes), one equation in x (' + F.solOne + ': compare both sides) and quadratics (' + F.solNon + ': use b² − 4ac).</p><a class="linkbtn" href="#mt-sys-count">How to do it</a></div>' +
         '<div class="mcard"><p class="mtag">The word “constant”</p><p>There is a second unknown that is not the one asked for. Pin it down first: match the parts on both sides, or put in a point you know.</p><a class="linkbtn" href="#mt-eqx-coef">How to do it</a></div>' +
-        '<div class="mcard"><p class="mtag">“Positive” or “negative”</p><p>Apply the requested sign or order restriction to the original equation’s valid roots. Do not assume there are exactly two or that a rejected root appears among the choices.</p><a class="linkbtn" href="#mt-nle-sign">How to do it</a></div>' +
+        '<div class="mcard"><p class="mtag">“Positive” or “negative”</p><p>Find the solutions, check each one in the original equation, and keep only the ones with the sign the question asks for. Do not expect exactly two, or the one you drop to be among the choices.</p><a class="linkbtn" href="#mt-nle-sign">How to do it</a></div>' +
       '</div></section>' +
       '<section class="sec"><h3 class="h2">What the data says, in plain words</h3><ul class="mfacts">' +
         '<li><b>Most wrong answers are right answers to a different question.</b> College Board’s explanations say it again and again: “this is the value of x, not x + 4”. Re-reading the last sentence beats re-checking your arithmetic.</li>' +
@@ -123,10 +120,26 @@
         '<li><b>The answer letter tells you nothing you can use.</b> In the bank, D is right more often on Hard questions and B on Easy ones, but real tests can order choices differently. Never let it override your work.</li>' +
       '</ul></section>' +
       '<section class="sec"><h3 class="h2">Your progress</h3><div id="mstart-prog">' + mProgHTML() + '</div></section>' +
-      '<section class="sec"><h3 class="h2">The ideas underneath</h3><p class="lede">About a dozen ideas connect almost every question type. The same move solves a percent chain, a growth model and a unit conversion; the same picture answers every “how many solutions” question. <a href="#m-patterns">See the big patterns</a>.</p></section>' +
-      mNext([['m-learn', 'Next', 'Open the lessons'], ['m-patterns', 'The big ideas', 'Big patterns'], ['m-desmos', 'The calculator', 'Desmos playbook'], ['m-practice', 'Or jump in', 'Practice real questions']]) +
+      '<section class="sec"><h3 class="h2">The ideas underneath</h3><p class="lede">About a dozen ideas connect almost every kind of question. The same move solves a chain of percent changes, a growth model and a unit conversion; the same picture answers every “how many solutions” question. <a href="#m-patterns">See the big ideas</a>.</p>' +
+        '<p class="fine">Want every detail? <a href="#m-study">All question types</a> lists all ' + MST.methods.length + ' kinds of math question, each with the steps to solve it and a check on the calculator.</p></section>' +
+      nextHTML(['m-learn', 'Start the lessons', 'One lesson for each kind of math on the test, in order.'], ['m-found', 'start with Algebra basics if math feels rusty']) +
       '</div>';
     viewEl.mstart.innerHTML = h;
+  }
+  /* Start here: the order to go in, with what you have done so far */
+  function mPathHTML() {
+    var tried = 0, right = 0, dt = drillTried('math').length, dn = drillsOf('math').length;
+    Object.keys(store.m).forEach(function (k) { var r = mDone(k); if (r && MQBY[k]) { tried++; right += r[0]; } });
+    var items = [
+      ['Algebra basics, if math feels rusty', 'Six basic steps every lesson takes for granted, such as fractions and getting x alone.', '', '<a class="btn sm ghost" href="#m-found">Open Algebra basics</a>'],
+      ['The lessons', MD.domains.reduce(function (a, d) { return a + d.skills.length; }, 0) + ' lessons, one for each kind of math on the test. Go through them in order.', '', '<a class="btn sm" href="#m-learn">Open the lessons</a>'],
+      ['Practice real questions', 'Start with 5 easy ones, with no clock. After each answer you see the right one and why.', tried ? plural(tried, 'question') + ' tried · ' + right + ' right' : 'Not tried yet', '<a class="btn sm ghost" href="#m-easy">Try 5 easy questions</a>'],
+      ['Short exercises', 'Quick cards that each train one small step, such as exponent rules or percent changes.', dt + ' of ' + dn + ' exercises tried', '<a class="btn sm ghost" href="#m-drills">See the short exercises</a>'],
+      ['Check your progress', 'See which kinds of question need more work, and practice just those.', '', '<a class="btn sm ghost" href="#m-map">See my progress</a>']
+    ];
+    return items.map(function (it, i) {
+      return '<li><span class="pn">' + (i + 1) + '</span><div class="pd"><b>' + it[0] + '</b><p>' + it[1] + '</p>' + (it[2] ? '<p class="ps">' + it[2] + '</p>' : '') + '</div>' + it[3] + '</li>';
+    }).join('');
   }
   /* topics some prep books teach, each checked against every question by src/math/notin.py (D.mnotin) */
   function mNotInHTML() {
@@ -142,7 +155,7 @@
   function mProgHTML() {
     var tried = 0, right = 0;
     Object.keys(store.m).forEach(function (k) { var r = mDone(k); if (r && MQBY[k]) { tried++; right += r[0]; } });
-    if (!tried) { return '<p class="muted">Nothing practiced yet. Your results are saved ' + savedIn() + '.</p>'; }
+    if (!tried) { return '<p class="muted">No practice questions answered yet. Your results are saved ' + savedIn() + '.</p>'; }
     var rows = MD.domains.map(function (d) {
       var s = d.skills.map(mSkillStats).reduce(function (a, x) { return { n: a.n + x.n, tried: a.tried + x.tried, right: a.right + x.right }; }, { n: 0, tried: 0, right: 0 });
       return '<div class="mprog-row"><span>' + esc(d.name) + '</span><span class="mbar"><i style="width:' + mpc(s.tried, s.n) + '%"></i></span><span class="num">' + s.tried + ' tried · ' + mpc(s.right, s.tried || 1) + '% right</span></div>';
@@ -154,8 +167,8 @@
   var mlearnView = (function () {
     var page = '';
     function home() {
-      return '<div class="wrap">' + mHead('Math · Lessons', 'Lessons, one skill at a time', 'College Board sorts every math question into 19 skills in four areas. Each lesson explains the idea from scratch, gives the method, a worked example, the usual trap, and every question type in that skill with how to solve it.') +
-        (mFoundNudgeHTML() || '<aside class="mnote"><p><b>Rusty on the basics?</b> <a href="#m-found">Algebra foundations</a> covers the six moves every lesson assumes, from fractions to an unknown in a denominator, each with a drill.</p></aside>') +
+      return '<div class="wrap">' + mHead('Math · Lessons', 'Lessons, one skill at a time', 'College Board sorts every math question into 19 skills in four areas. Each lesson explains the idea from scratch, gives the method, a worked example, the usual trap, and every question type in that skill with how to solve it. Start with the first lesson and go in order.') +
+        (mFoundNudgeHTML() || '<aside class="mnote"><p><b>Rusty on the basics?</b> <a href="#m-found">Algebra basics</a> covers the six steps every lesson takes for granted, from fractions to an unknown on the bottom of a fraction, each with a short exercise.</p></aside>') +
         MD.domains.map(function (d) {
           return '<section class="sec" id="m-learn-' + d.id + '"><div class="mdom-h"><h3 class="h2">' + esc(d.name) + '</h3><p class="mdom-spec">' + esc(d.spec) + '</p></div><p class="lede">' + esc(d.blurb) + '</p><div class="mskills">' +
             d.skills.map(function (k) {
@@ -172,7 +185,6 @@
       if (next) { nav.push(['m-' + next, 'Next skill', MSK[next].name]); }
       else { var di = MD.domains.indexOf(d), nd = MD.domains[di + 1]; if (nd) { nav.push(['m-' + nd.skills[0], 'Next area: ' + nd.name, MSK[nd.skills[0]].name]); } }
       return '<div class="wrap mlesson">' +
-        '<nav class="crumbs"><a href="#m-learn">Lessons</a> / <a href="#m-learn-' + d.id + '">' + esc(d.name) + '</a></nav>' +
         mHead(esc(d.name) + ' · ' + S.n + ' questions in the bank · ' + mpc(S.H, S.n) + '% Hard', esc(S.name), '') +
         '<div class="mlesson-grid"><div class="mlesson-main">' +
         '<div class="midea"><p class="mtag">The idea</p><p>' + esc(S.idea) + '</p></div>' +
@@ -184,7 +196,7 @@
         '<section class="sec" id="m-types-' + k + '"><h3 class="h2">The ' + S.types.length + ' question types in this skill</h3><p class="lede">Every question in this skill belongs to one of these. Learn to recognize each one from the words in the question.</p>' +
           '<div class="mtypes">' + S.types.slice().sort(function (a, b) { return MTY[b].n - MTY[a].n; }).map(function (t) { return mTypeCard(t); }).join('') + '</div></section>' +
         '</div><aside class="mlesson-side" aria-label="Skills in this area"><p class="label">' + esc(d.name) + '</p><ul>' + d.skills.map(function (x) { return '<li><a href="#m-' + x + '"' + (x === k ? ' aria-current="page"' : '') + '>' + esc(MSK[x].short) + '</a></li>'; }).join('') + '</ul></aside></div>' +
-        mNext(nav) + '</div>';
+        '</div>';
     }
     return {
       show: function (p) {
@@ -207,7 +219,7 @@
       return '<tr><td>“' + esc(r[0]) + '”</td><td><a href="#m-' + r[1] + '">' + esc(MSK[r[1]].short) + '</a></td><td class="num">' + r[3] + '%</td><td class="num">' + r[2] + '</td></tr>';
     }).join('');
     viewEl.mtypes.innerHTML = '<div class="wrap">' +
-      mHead('Math · Question finder', 'Which kind of question is this?', 'Type a few words from a question, like “margin of error”, “vertex” or “perpendicular”, and see which question type it is and how to solve it. Every one of the ' + mfmt(MD.tot.n) + ' bank questions belongs to one of these ' + MORDER.length + ' types.') +
+      mHead('Math · Find a question type', 'Which kind of question is this?', 'Type a few words from a question, like “margin of error”, “vertex” or “perpendicular”, and see which question type it is and how to solve it. Every one of the ' + mfmt(MD.tot.n) + ' bank questions belongs to one of these ' + MORDER.length + ' types.') +
       '<div class="mfind"><label class="field"><span class="label">Words from the question</span><input type="text" id="mf-q" placeholder="for example: line of best fit" autocomplete="off"></label>' +
       '<label class="field"><span class="label">Area</span><select id="mf-d">' + opts + '</select></label></div>' +
       '<p class="muted" id="mf-n" aria-live="polite"></p><div class="mtypes" id="mf-list"></div>' +
@@ -267,8 +279,8 @@
     built.mshort = true;
     var F = MD.facts;
     viewEl.mshort.innerHTML = '<div class="wrap">' +
-      mHead('Math · Shortcuts', 'Faster ways to the right answer', 'Each shortcut is real mathematics, not a guessing trick. Use one when you recognize the shape; otherwise solve the normal way. The first two work on most multiple-choice questions (' + mfmt(F.mc) + ' of the ' + mfmt(MD.tot.n) + ' in the bank).') +
-      '<p class="mshort-pointer">When a question asks for an expression rather than x (12x, x + y, the sum of the solutions), <a href="#m-first">Look for the shortcut first</a> has the six kinds with a short way, the tell for each, and the look-alikes.</p>' +
+      mHead('Math · Shortcut list', 'Faster ways to the right answer', 'Each shortcut is real mathematics, not a guessing trick. Use one when you recognize the shape; otherwise solve the normal way. The first two work on most multiple-choice questions (' + mfmt(F.mc) + ' of the ' + mfmt(MD.tot.n) + ' in the bank).') +
+      '<p class="mshort-pointer">When a question asks for an expression rather than x (12x, x + y, the sum of the solutions), <a href="#m-first">Look for the shortcut first</a> has the six kinds with a short way, the clue that gives each one away, and the look-alikes.</p>' +
       '<div class="mshorts">' + MSHORT.map(function (s, i) {
         return '<article class="mshort" id="ms-' + s.id + '"><p class="mshort-n">' + (i + 1) + '</p><div><h3 class="h3">' + esc(s.t) + '</h3><p class="mspot"><span class="mtag">When</span> ' + esc(s.when) + '</p>' + mStepList(s.how) +
           (s.warn ? '<p class="mtrap"><span class="mtag bad">Limits</span> ' + esc(s.warn) + ' <a href="#m-first-picknum">Where it breaks down</a></p>' : '') +
@@ -280,7 +292,7 @@
         '<li><b>Trying the choices on a typed-in question.</b> About one question in four (' + mfmt(F.grid) + ' in the bank) has no choices. Solve those directly.</li>' +
         '<li><b>Using Desmos for everything.</b> On a two-step question, typing it in takes longer than doing it by hand.</li>' +
       '</ul></section>' +
-      mNext([['m-desmos', 'Next', 'Desmos playbook'], ['m-ref', 'Then', 'Formulas'], ['m-practice', 'Try them out', 'Practice real questions']]) + '</div>';
+      nextHTML(['m-practice', 'Practice real questions', 'Try the shortcuts on real test questions.'], ['m-desmos', 'see the calculator tips']) + '</div>';
   }
 
   /* ---------- Math: formulas and Desmos ---------- */
@@ -290,10 +302,10 @@
     var off = [['Slope from two points', 'm = (y₂ − y₁) ÷ (x₂ − x₁)'], ['Line', 'y = mx + b; slope of Ax + By = C is −A/B if B≠0; B=0 can be vertical'], ['Perpendicular slopes', 'm₁m₂=−1 for finite nonzero slopes; horizontal and vertical lines are perpendicular'], ['Vertex form', 'y = a(x − h)² + k, vertex (h, k)'], ['Vertex x', 'x = −b ÷ 2a'], ['Quadratic formula', 'x = (−b ± √(b² − 4ac)) ÷ 2a'], ['Discriminant', 'b² − 4ac: positive 2, zero 1, negative 0 real solutions'], ['Sum and product of roots', '−b/a and c/a'], ['Circle equation', '(x − h)² + (y − k)² = r²'], ['Exponential model', 'y = a·bˣ; b = 1 + rate or 1 − rate'], ['Percent change', '(new − old) ÷ old'], ['SOH CAH TOA', 'sin = opp/hyp, cos = adj/hyp, tan = opp/adj'], ['Complementary angles', 'sin x° = cos(90° − x°)'], ['Polygon angles', 'Sum = 180(n − 2)'], ['Arc and sector', '(angle ÷ 360) × circumference or area'], ['Radians', 'π radians = 180°'], ['Exponent rules', 'xᵃxᵇ = xᵃ⁺ᵇ, (xᵃ)ᵇ = xᵃᵇ, x^(1/n) = n-th root']];
     function tbl(rows) { return '<div class="tablewrap"><table class="mtable"><tbody>' + rows.map(function (r) { return '<tr><th scope="row">' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</tbody></table></div>'; }
     viewEl.mref.innerHTML = '<div class="wrap">' +
-      mHead('Math · Formulas', 'Formulas and typing in answers', 'You get a reference sheet on test day. Know what is on it, learn what is not, and know how to type in your own answers.') +
-      '<section class="sec first" id="m-sheet"><h3 class="h2">On the reference sheet</h3><p class="lede">The formulas and facts the test gives you, drawn for this site. While you practice, the <b>Reference</b> button beside Calculator opens them, as on the test. No need to memorize them; know what is there so you can find it fast.</p>' + mSheetHTML() + '</section>' +
+      mHead('Math · Formula sheet', 'Formulas, and typing in your answers', 'The test gives you a sheet of formulas. Know what is on it, learn what is not, and know how to type in your own answers.') +
+      '<section class="sec first" id="m-sheet"><h3 class="h2">On the formula sheet</h3><p class="lede">The formulas and facts the test gives you, drawn for this site. While you practice, the <b>Formula sheet</b> button beside Calculator opens them, as on the test. No need to memorize them; know what is there so you can find it fast.</p>' + mSheetHTML() + '</section>' +
       '<section class="sec"><h3 class="h2">Not on the sheet: learn these</h3><p class="lede">These come up again and again and are not printed for you.</p>' + tbl(off) + '</section>' +
-      '<section class="sec"><h3 class="h2">When Desmos helps</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>Question</th><th>What to do in Desmos</th></tr></thead><tbody>' +
+      '<section class="sec"><h3 class="h2">When the calculator helps</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>Question</th><th>What to do on the calculator</th></tr></thead><tbody>' +
         [['Two lines crossing (systems)', 'Type both equations; click the crossing point.'], ['Maximum, minimum, vertex', 'Type the function; click the grey turning point.'], ['Zeros, x-intercepts', 'Type the function; click where it crosses the x-axis.'], ['Nonlinear equation', 'Type each side as y = …; the crossings are the solutions.'], ['Mean, median, spread', 'Type L = [3, 5, 8]; then mean(L), median(L), stdev(L) for sample spread or stdevp(L) for population spread.'], ['A constant to find', 'Use arithmetic or coefficient equations for exact values. Sliders explore; ~ regression requires the specified model and enough independent data. Rounded fits are not exact proofs.'], ['Circle equations', 'For normalized x²+y²+Dx+Ey+F=0, center=(−D/2,−E/2), r²=(D²+E²)/4−F. This also handles fractional centers; check r²≥0.']].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>'; }).join('') +
       '</tbody></table></div><ul class="mfacts">' +
         '<li><b>Clicked points show rounded decimals.</b> If the choices are fractions or roots, compare decimals.</li>' +
@@ -301,7 +313,7 @@
         '<li><b>Use x as the letter.</b> Desmos graphs y against x. To solve an equation in t, rewrite it with x.</li>' +
         '<li><b>Short questions: skip it.</b> Typing a two-step question takes longer than solving it.</li>' +
       '</ul></section>' +
-      '<section class="sec"><h3 class="h2">Desmos</h3><p class="lede">When the calculator saves time, and exactly what to type, is in the <a href="#m-desmos">Desmos playbook</a>: ' + MD.desmos.length + ' moves, each checked on real bank questions.</p></section>' +
+      '<section class="sec"><h3 class="h2">More calculator tips</h3><p class="lede">When the calculator saves time, and exactly what to type: <a href="#m-desmos">Calculator tips</a>, ' + MD.desmos.length + ' tips, each checked on real questions from the bank.</p></section>' +
       '<section class="sec"><h3 class="h2">Typing in your own answer</h3><ul class="mfacts">' +
         '<li>About one math question in four has no choices: you type the answer.</li>' +
         '<li>Fractions are fine: type 7/6. Do not type mixed numbers like 1 1/6.</li>' +
@@ -309,19 +321,19 @@
         '<li>Negative answers are allowed. Leave out units, commas, dollar signs and percent signs.</li>' +
         '<li>If more than one answer is correct, type just one.</li>' +
       '</ul></section>' +
-      mNext([['m-desmos', 'Next', 'Desmos playbook'], ['m-practice', 'Or', 'Practice real questions']]) + '</div>';
+      nextHTML(['m-practice', 'Practice real questions', 'While you practice, the “Formula sheet” button above each question opens these formulas.'], ['m-desmos', 'see the calculator tips']) + '</div>';
   }
 
   /* ---------- Math: practice ---------- */
   var MP = null;                         /* the running set */
   var mpPreset = null;                   /* {kind:'skill'|'type'|'domain', id} from a link */
   var mpModePreset = null;               /* 'module' from a link such as #m-module */
-  function mpSettings() { var s = isObj(store.s.math) ? store.s.math : {}; return { mode: s.mode === 'module' ? 'module' : 'learn', topic: s.topic || 'all', diff: s.diff || 'all', n: s.n || 10, pick: s.pick || 'any', timer: s.timer !== false }; }
+  function mpSettings() { var s = isObj(store.s.math) ? store.s.math : {}; return { mode: s.mode === 'module' ? 'module' : 'learn', topic: s.topic || 'all', diff: s.diff || 'all', n: s.n || 10, pick: s.pick || 'any', timer: s.timer === true }; }
   /* step 1: what kind of set; step 2: a short group of big buttons for that kind */
   function mpKindHTML(topic) {
     var kind = topic === 'all' ? 'all' : topic.split(':')[0];
-    var opts = [['all', 'Everything, mixed'], ['d', 'One area'], ['k', 'One skill'], ['p', 'One big pattern']];
-    if (kind === 't') { opts.push(['t', 'One question type']); }
+    var opts = [['all', 'A mix of everything'], ['d', 'One area of math'], ['k', 'One lesson'], ['p', 'One big idea']];
+    if (kind === 't') { opts.push(['t', 'One kind of question']); }
     return seg('mp-kind', '1 · What to practice', opts, kind);
   }
   function mpSubHTML(kind, topic) {
@@ -341,13 +353,13 @@
         }).join('') + '</div></fieldset>';
       }).join('');
     }
-    if (kind === 'p') { return group('Choose a pattern', MD.patterns.map(function (p) { return [p.id, p.name, p.n]; })); }
+    if (kind === 'p') { return group('Choose an idea', MD.patterns.map(function (p) { return [p.id, p.name, p.n]; })); }
     if (kind === 't') { return group('Question type', cur ? [[cur, MTY[cur].name, MTY[cur].n]] : []); }
     return '';
   }
   function mpTopicOptions(sel) {
     var h = '<option value="all"' + (sel === 'all' ? ' selected' : '') + '>Everything, mixed</option>';
-    h += '<optgroup label="Big patterns">' + MD.patterns.map(function (p) { return '<option value="p:' + p.id + '"' + (sel === 'p:' + p.id ? ' selected' : '') + '>Pattern: ' + esc(p.name) + '</option>'; }).join('') + '</optgroup>';
+    h += '<optgroup label="Big ideas">' + MD.patterns.map(function (p) { return '<option value="p:' + p.id + '"' + (sel === 'p:' + p.id ? ' selected' : '') + '>Idea: ' + esc(p.name) + '</option>'; }).join('') + '</optgroup>';
     MD.domains.forEach(function (d) {
       h += '<optgroup label="' + esc(d.name) + '"><option value="d:' + d.id + '"' + (sel === 'd:' + d.id ? ' selected' : '') + '>All of ' + esc(d.name) + '</option>';
       d.skills.forEach(function (k) {
@@ -391,16 +403,19 @@
     var s = mpSettings();
     if (mpPreset) { s.topic = mpPreset; mpPreset = null; s.mode = 'learn'; }
     if (mpModePreset) { s.mode = mpModePreset; mpModePreset = null; }
+    var preset = s.topic !== 'all';
     viewEl.mprac.innerHTML = '<div class="wrap">' +
-      mHead('Math · Practice', 'Practice real SAT questions', 'Every question is from College Board’s question bank, with College Board’s answer and explanation. After each one you also see how to solve that type of question.') +
+      mHead('Math · Practice', 'Practice real test questions', 'Every question comes from College Board, the makers of the SAT. After each answer you see the right one, and how to solve that kind of question.') +
+      (preset ? '' : '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#m-easy">5 easy questions</a><a class="btn big ghost" href="#m-mixed">10 questions of every level</a></p><p class="fine">One question at a time, with no clock.</p></section>' +
+        '<h3 class="h2 mpown">Or choose your own set</h3>') +
       '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
-        seg('mp-mode', 'How to practice', [['learn', 'Learn'], ['module', 'Timed module']], s.mode) +
+        seg('mp-mode', 'How to practice', [['learn', 'One at a time'], ['module', 'Timed test']], s.mode) +
         '<p class="mpmode-note" id="mp-mode-note"></p>' +
         mpKindHTML(s.topic) + '<div id="mp-sub" class="mpsub"></div>' +
         seg('mp-diff', '2 · How hard', [['all', 'Any'], ['E', 'Easy'], ['M', 'Medium'], ['H', 'Hard']], s.diff) +
-        '<div class="mp-learnonly">' + seg('mp-n', '3 · How many', [[5, '5'], [10, '10'], [22, '22 (one module)']], s.n) + '</div>' +
-        seg('mp-pick', '4 · Which ones', [['any', 'Any'], ['new', 'Not tried yet'], ['missed', 'Ones I missed']], s.pick) +
-        '<label class="checkline mp-learnonly"><input type="checkbox" id="mp-timer"' + (s.timer ? ' checked' : '') + '> Show a timer (about 95 seconds a question on the real test)</label>' +
+        '<div class="mp-learnonly">' + seg('mp-n', '3 · How many', [[5, '5'], [10, '10'], [22, '22']], s.n) + '</div>' +
+        seg('mp-pick', '4 · Which ones', [['any', 'Any'], ['new', 'Ones I have not tried'], ['missed', 'Ones I got wrong']], s.pick) +
+        '<label class="checkline mp-learnonly"><input type="checkbox" id="mp-timer"' + (s.timer ? ' checked' : '') + '> Show a clock (the real test allows about 95 seconds a question)</label>' +
       '</div><p class="mpset-n" id="mp-count" aria-live="polite"></p><p class="row"><button class="btn big" type="submit" id="mp-go">Start practicing</button></p></form>' +
       '</div>';
     var form = $('#mp-form');
@@ -413,12 +428,12 @@
       var st = read(), n = mpPool(st).length, mod = st.mode === 'module', get = Math.min(n, mod ? MM_N : st.n);
       form.setAttribute('data-mode', st.mode);
       $('#mp-mode-note').innerHTML = mod
-        ? '<b>One part of the real Math section:</b> ' + MM_N + ' questions on a single ' + clock(mmLimit(MM_N)) + ' clock. Move back and forth, mark questions for review, cross out choices and open the calculator. Answers and methods come at the end.'
-        : '<b>One question at a time:</b> College Board’s answer and the method for that question type appear straight after each question.';
+        ? '<b>Like one part of the real test:</b> ' + MM_N + ' questions in ' + clock(mmLimit(MM_N)) + ' minutes. You can go back to any question, mark questions to check later, and use the calculator. You see the answers at the end.'
+        : '<b>One question at a time:</b> you see the right answer, and how to solve that kind of question, after each one.';
       $('#mp-count').textContent = !n ? 'No questions match these choices. Try “Any” for difficulty or for which ones.'
-        : mod ? mfmt(n) + ' questions match. Your module: ' + plural(get, 'question') + ', ' + clock(mmLimit(get)) + ' on the clock.' + (st.topic === 'all' && st.diff === 'all' && n >= MM_N ? ' Mixed like the real test: mostly Algebra and Advanced Math, easier questions first.' : '')
+        : mod ? mfmt(n) + ' questions match. Your test: ' + plural(get, 'question') + ' in ' + clock(mmLimit(get)) + ' minutes.' + (st.topic === 'all' && st.diff === 'all' && n >= MM_N ? ' Mixed like the real test, easier questions first.' : '')
         : mfmt(n) + ' questions match. You will get ' + get + '.';
-      $('#mp-go').textContent = mod ? 'Start the module' : 'Start practicing';
+      $('#mp-go').textContent = mod ? 'Start the timed test' : 'Start practicing';
       $('#mp-go').disabled = !n;
     }
     function drawSub(keep) {
@@ -441,6 +456,13 @@
     });
     count();
   }
+  /* "5 easy questions" and "10 questions of every level": straight to the first question, one at a time, no clock */
+  function mQuick(n, diff) {
+    var pool = shuffle(MQ.filter(function (q) { return !diff || (q.d === diff && q.mc); }).slice()).slice(0, n);
+    if (MP && !MP.over) { clearInterval(mpInterval); }
+    MP = { qs: pool, i: 0, res: [], timer: false, over: false, settings: { mode: 'learn', topic: 'all', diff: diff || 'all', n: n, pick: 'any', timer: false } };
+    mpShow();
+  }
   function mpElapsed() { if (!MP || !MP.cur) { return 0; } var c = MP.cur; return (c.acc + (c.t0 ? now() - c.t0 : 0)) / 1000; }
   function mpPause() { if (MP && MP.module) { mmPause(); return; } if (MP && MP.cur && MP.cur.t0 && !MP.cur.done) { MP.cur.acc += now() - MP.cur.t0; MP.cur.t0 = 0; } }
   function mpResume() { if (MP && MP.module) { mmResume(); return; } if (MP && MP.cur && !MP.cur.t0 && !MP.cur.done && !MP.over) { MP.cur.t0 = now(); } }
@@ -459,7 +481,7 @@
       ? '<div class="mpchoices" role="group" aria-label="Your answer">' + ['A', 'B', 'C', 'D'].map(function (L, i) { return '<button class="mpch" type="button" data-k="' + L + '"><span class="mpch-l">' + L + '</span><span class="kbd">' + (i + 1) + '</span></button>'; }).join('') + '</div><p class="fine mpch-note">Choose the letter of your answer. The choices are in the question above.</p>'
       : '<form class="mpgrid" id="mp-gform"><label class="field"><span class="label">Type your answer</span><input type="text" id="mp-gin" inputmode="decimal" autocomplete="off" placeholder="e.g. 12, −3, 7/6 or 2.5"></label><button class="btn" type="submit">Check</button></form><p class="fine">Numbers only. Fractions like 7/6 are fine; leave out units.</p>';
     viewEl.mprac.innerHTML = '<div class="wrap mpwrap">' +
-      '<div class="mpbar"><span class="mpbar-pos"><b>Question ' + (MP.i + 1) + '</b> of ' + MP.qs.length + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.qs.map(function (x, i) { var r = MP.res[i]; return '<i class="' + (r ? (r.ok ? 'ok' : 'no') : (i === MP.i ? 'cur' : '')) + '"></i>'; }).join('') + '</span>' + (MP.timer ? '<span class="mpclock" id="mp-clock" aria-label="Time on this question">0:00</span>' : '') + mCalcBtn() + mSheetBtn() + '<button class="linkbtn" type="button" id="mp-end">End set</button></div>' +
+      '<div class="mpbar"><span class="mpbar-pos"><b>Question ' + (MP.i + 1) + '</b> of ' + MP.qs.length + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.qs.map(function (x, i) { var r = MP.res[i]; return '<i class="' + (r ? (r.ok ? 'ok' : 'no') : (i === MP.i ? 'cur' : '')) + '"></i>'; }).join('') + '</span>' + (MP.timer ? '<span class="mpclock" id="mp-clock" aria-label="Time on this question">0:00</span>' : '') + mCalcBtn() + mSheetBtn() + '<button class="linkbtn" type="button" id="mp-end">Stop practicing</button></div>' +
       '<article class="mpcard"><header class="mpcard-h"><span class="mtag">' + esc(S.name) + '</span><span class="mdiff d' + q.d + '">' + MDIFF[q.d] + '</span><span class="muted">' + (q.mc ? 'Multiple choice' : 'Type in your answer') + '</span></header>' +
         '<div class="mpq">' + mImg('q', q, true) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans +
         '<div id="mp-fb" class="mpfb" tabindex="-1" hidden></div></article></div>';
@@ -535,9 +557,13 @@
     var last = MP.i === MP.qs.length - 1;
     var fb = $('#mp-fb');
     fb.hidden = false; fb.className = 'mpfb ' + (ok ? 'ok' : 'no');
-    fb.innerHTML = mFeedbackHTML(q, ok, MP.timer ? secs : null) +
-      '<p class="row mpnext"><button class="btn big" type="button" id="mp-next">' + (last ? 'See my results' : 'Next question') + '</button><span class="fine">or press Enter</span></p>';
+    /* the button to go on sits right under the verdict, and again after the explanation (one of them when it all fits) */
+    var fbh = mFeedbackHTML(q, ok, MP.timer ? secs : null), cut = fbh.indexOf('</p>') + 4;
+    var nextRow = function (id) { return '<p class="row mpnext"><button class="btn big" type="button" id="' + id + '">' + (last ? 'See my results' : 'Next question') + ' <span aria-hidden="true">→</span></button><span class="fine kbd-only">or press Enter</span></p>'; };
+    fb.innerHTML = fbh.slice(0, cut) + nextRow('mp-next-top') + fbh.slice(cut) + nextRow('mp-next');
     $('#mp-next').addEventListener('click', mpNextQ);
+    $('#mp-next-top').addEventListener('click', mpNextQ);
+    oneNext($('.mpverdict', fb), $('#mp-next-top').parentNode, $('#mp-next'), fb);
     showFeedback(fb);
   }
   /* verdict, the method for this type, and College Board's explanation: used after a practice answer and when reviewing a module.
@@ -571,7 +597,7 @@
         return '<li class="' + (r.ok ? 'ok' : 'no') + '"><span class="mpsum-v">' + (r.ok ? '✓' : '✗') + '</span><span>' + esc(MTY[q.t].name) + ' <span class="muted">· ' + MDIFF[q.d] + ' · ' + r.secs + ' s</span></span><a class="linkbtn" href="#mt-' + q.t + '">How to solve</a></li>';
       }).join('') + '</ol></section>' +
       mWhySetHTML(done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; })) +
-      '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '<a class="btn ghost" href="#m-map">See my map</a>' + (planGet() ? '<a class="btn ghost" href="#plan">Back to my plan</a>' : '') + '</p></div>';
+      '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '<a class="btn ghost" href="#m-map">See my progress</a>' + (planGet() ? '<a class="btn ghost" href="#plan">Back to my plan</a>' : '') + '</p></div>';
     $('#mp-again').addEventListener('click', mpSetup);
     var mm = $('#mp-miss');
     if (mm) { mm.addEventListener('click', function () { var pool = done.filter(function (r) { return !r.ok; }).map(function (r) { return MQBY[r.id]; }); MP = { qs: pool, i: 0, res: [], timer: MP.timer, over: false }; mpShow(); }); }
@@ -645,12 +671,12 @@
         '<p class="mrare-try">' + tries.map(function (id) { return '<a class="linkbtn" href="#mq-' + id + '">Try ' + id + '</a>'; }).join(' · ') + '</p></article>';
     }).join('');
     viewEl.mpat.innerHTML = '<div class="wrap">' +
-      mHead('Math · Big patterns', 'A dozen ideas under every question', 'College Board sorts math into 19 skills, but the same few ideas keep solving questions in different skills. We tagged all ' + mfmt(MD.tot.n) + ' bank questions by the idea that solves them: ' + P.length + ' ideas reach ' + mpc(anyN, MD.tot.n) + '% of the bank, and ' + mpc(multi, MD.tot.n) + '% of questions use two or more. Learn the idea once and it works everywhere it appears.') +
-      '<div class="mnote"><p><b>How this was checked.</b> Each question was tagged from its type and from the method College Board’s own explanation uses, so the counts are close, not exact. Then ' + MD.nver + ' real bank questions have saved checks against College Board’s answer key using symbolic algebra and numerical calculations. These checks do not verify the live SAT Desmos interface.</p></div>' +
+      mHead('Math · Big ideas', 'A dozen ideas under every question', 'College Board sorts math into 19 skills, but the same few ideas solve questions in many of them. We sorted all ' + mfmt(MD.tot.n) + ' questions in the bank by the idea that solves them: these ' + P.length + ' ideas solve ' + mpc(anyN, MD.tot.n) + '% of them, and ' + mpc(multi, MD.tot.n) + '% use two or more. Learn an idea once and it works everywhere it appears.') +
+      '<div class="mnote"><p><b>How this was checked.</b> Each question was tagged from its type and from the method College Board’s own explanation uses, so the counts are close, not exact. Then ' + MD.nver + ' real bank questions have saved checks against College Board’s answer key using symbolic algebra and numerical calculations. These checks were not done in the calculator of the real test app.</p></div>' +
       '<nav class="mpidxs" aria-label="The patterns">' + idx + '</nav>' +
       mOpenAll('mpats') + '<div class="mpats" id="mpats">' + cards + '</div>' +
       '<section class="sec" id="mrare"><h3 class="h2">Rare patterns worth memorizing</h3><p class="lede">Each of these appears only a handful of times in the bank, but most are Hard, so one memorized trick can be worth a hard question. Sorted from most often Hard.</p><div class="mrares">' + rare + '</div></section>' +
-      mNext([['m-desmos', 'Next', 'Desmos playbook'], ['mpp-constant', 'Hardest pattern', 'Practice “A constant plus one fact”']]) + '</div>';
+      nextHTML(['m-practice', 'Practice real questions', 'Try the ideas on real test questions.'], ['mpp-constant', 'practice the hardest one, “A constant plus one fact”']) + '</div>';
   }
   function buildMDes() {
     if (built.mdes) { return; }
@@ -682,12 +708,11 @@
       }).join('') + '</tbody></table></div></details>';
     }).join('');
     viewEl.mdes.innerHTML = '<div class="wrap">' +
-      mHead('Math · Desmos playbook', MD.desmos.length + ' Desmos moves, and exactly what to type', 'The digital SAT has the Desmos graphing calculator built in, for every math question. These moves turn the hardest algebra into reading a graph. Each one was checked on real questions from College Board’s bank: ' + MD.nver + ' saved mathematical checks against College Board’s answers. Live SAT Desmos validation remains unavailable.') +
-      '<aside class="mnote mst-discover"><p><b>Go deeper: 249 fine question types.</b> Learn how to recognize each setup, follow expanded steps, and compare close variants. The 998 recorded Desmos checks distinguish question calculations from source steps.</p><a class="btn sm" href="#m-study">Explore expanded types</a></aside>' +
-      '<section class="sec first"><h3 class="h2">Before you start: eight things Desmos does not tell you</h3><div class="mgotchas">' + MD.gotchas.map(function (g) { return '<div class="mgotcha"><b>' + esc(g[0]) + '</b><span>' + esc(g[1]) + '</span></div>'; }).join('') + '</div></section>' +
-      '<section class="sec"><h3 class="h2">Which move?</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>If the question has…</th><th>Use</th></tr></thead><tbody>' + chooser + '</tbody></table></div></section>' +
-      '<section class="sec"><h3 class="h2">The ' + MD.desmos.length + ' moves</h3><p class="lede">Tap a move to see what to type, what you will see, and the real questions it was checked on.</p>' + mOpenAll('mmoves') + '<div class="mmoves" id="mmoves">' + moves + '</div></section>' +
-      '<section class="sec" id="md-types"><h3 class="h2">Every question type, the Desmos way</h3><p class="lede">For each of the ' + MORDER.length + ' question types: the move to use, or why to do it by hand.</p><div class="mtblds">' + bySkill + '</div></section>' +
-      mNext([['m-patterns', 'The ideas behind the moves', 'Big patterns'], ['m-practice', 'Try the moves', 'Practice real questions']]) + '</div>';
+      mHead('Math · Calculator tips', MD.desmos.length + ' ways to use the built-in calculator, and exactly what to type', 'The test has a graphing calculator called Desmos built in, for every math question. These tips turn some of the hardest algebra into reading a graph. Each one was checked against College Board’s answers on real questions from its bank (' + MD.nver + ' checks in all). They have not been tried inside the calculator of the real test app.') +
+      '<section class="sec first"><h3 class="h2">Before you start: eight things the calculator does not tell you</h3><div class="mgotchas">' + MD.gotchas.map(function (g) { return '<div class="mgotcha"><b>' + esc(g[0]) + '</b><span>' + esc(g[1]) + '</span></div>'; }).join('') + '</div></section>' +
+      '<section class="sec"><h3 class="h2">Which tip to use?</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>If the question has…</th><th>Use</th></tr></thead><tbody>' + chooser + '</tbody></table></div></section>' +
+      '<section class="sec"><h3 class="h2">The ' + MD.desmos.length + ' tips</h3><p class="lede">Tap a tip to see what to type, what you will see, and the real questions it was checked on.</p>' + mOpenAll('mmoves') + '<div class="mmoves" id="mmoves">' + moves + '</div></section>' +
+      '<section class="sec" id="md-types"><h3 class="h2">Every kind of question, with the calculator</h3><p class="lede">For each of the ' + MORDER.length + ' kinds of question: the tip to use, or why to do it by hand. For the full steps of every kind, see <a href="#m-study">All question types</a>.</p><div class="mtblds">' + bySkill + '</div></section>' +
+      nextHTML(['m-practice', 'Practice real questions', 'The calculator opens from the button above each question.'], ['m-patterns', 'see the big ideas']) + '</div>';
   }
 

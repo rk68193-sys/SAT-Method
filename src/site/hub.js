@@ -10,22 +10,22 @@
     function add(k, t, s, h, more) { out.push({ k: k, t: t, s: s || '', h: h, tx: hubNorm(t), x: hubNorm(t + ' ' + (s || '') + ' ' + (more || '')) }); }
     if (subj === 'math') {
       MD.domains.forEach(function (d) { d.skills.forEach(function (k) { add('Lesson', MSK[k].name, MSK[k].idea, 'm-' + k, d.name + ' ' + MSK[k].plain); }); });
-      MD.patterns.forEach(function (p) { add('Big pattern', p.name, p.idea, 'mpat-' + p.id, p.spot); });
+      MD.patterns.forEach(function (p) { add('Big idea', p.name, p.idea, 'mpat-' + p.id, p.spot); });
       MD.rare.forEach(function (r) { add('Rare pattern', r.name, r.trick, 'mrare'); });
       MORDER.forEach(function (t) { add('Question type', MTY[t].name, MTY[t].spot, 'mt-' + t, MSK[MTY[t].skill].name + ' ' + MTY[t].trap); });
-      MST.methods.forEach(function (m) { add('Expanded type', m.title, m.why_it_works, 'm-study-' + encodeURIComponent(m.id), MSK[m.skill].name + ' ' + m.common_trap); });
+      MST.methods.forEach(function (m) { add('Question type in detail', m.title, m.why_it_works, 'm-study-' + encodeURIComponent(m.id), MSK[m.skill].name + ' ' + m.common_trap); });
       MSHORT.forEach(function (s) { add('Shortcut', s.t, s.when, 'ms-' + s.id, s.how.join(' ')); });
       if (D.mnotin) {
         D.mnotin.none.forEach(function (t) { add('Not in the bank', t.name, t.why, 'm-notin'); });
         D.mnotin.rare.forEach(function (t) { add('Once in the bank', t.name, t.why, 'm-notin'); });
         D.mnotin.keep.forEach(function (t) { add('In the bank', t.name, t.why, 'm-notin', 'factor theorem remainder theorem'); });
       }
-      MFOUND.forEach(function (f) { add('Algebra foundations', f.name, f.idea, 'm-found-' + f.id, f.slip + ' ' + f.why + ' ' + f.words); });
-      MFIRST.forEach(function (f) { add('Shortcut first', f.name, f.tell, 'm-first-' + f.id, f.move + ' ' + f.watch + ' ' + f.words); });
+      MFOUND.forEach(function (f) { add('Algebra basics', f.name, f.idea, 'm-found-' + f.id, f.slip + ' ' + f.why + ' ' + f.words); });
+      MFIRST.forEach(function (f) { add('Look for a shortcut', f.name, f.tell, 'm-first-' + f.id, f.move + ' ' + f.watch + ' ' + f.words); });
       MFIRSTX.forEach(function (f) { add('Shortcut look-alike', f.name, f.why, 'm-first-' + f.id, f.looks + ' ' + f.instead); });
-      add('Shortcut first', 'Picking numbers: a check, not the first move', 'Where picking your own numbers breaks down: constants fixed by a condition, no solution and infinitely many, and choices that agree at your number.', 'm-first-picknum', 'pick a number plug in substitute choose a value');
-      MD.desmos.forEach(function (m) { add('Desmos move', m.name, m.when, 'md-' + m.id, m.short + ' ' + m.see); });
-      add('Formulas', 'The reference sheet', 'The formulas and facts the test gives you, and the Reference button that opens them while you practice.', 'm-sheet', 'formula sheet circle rectangle triangle pythagorean special right triangles 30-60-90 45-45-90 box rectangular prism cylinder sphere cone pyramid volume area degrees radians');
+      add('Look for a shortcut', 'Picking numbers: a check, not the first move', 'Where picking your own numbers breaks down: constants fixed by a condition, no solution and infinitely many, and choices that agree at your number.', 'm-first-picknum', 'pick a number plug in substitute choose a value');
+      MD.desmos.forEach(function (m) { add('Calculator tip', m.name, m.when, 'md-' + m.id, m.short + ' ' + m.see); });
+      add('Formulas', 'The formula sheet', 'The formulas and facts the test gives you, and the Formula sheet button that opens them while you practice.', 'm-sheet', 'formula sheet circle rectangle triangle pythagorean special right triangles 30-60-90 45-45-90 box rectangular prism cylinder sphere cone pyramid volume area degrees radians');
       add('Formulas', 'Formulas and typing in answers', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'm-ref', 'circle area volume quadratic formula discriminant slope vertex radians sohcahtoa exponent rules');
     } else {
       [['routine', 'The reading routine: Job, Chunk, Say, Check'], ['shape', 'What the passages are like'], ['job', 'Step 1 · Job: read the question line first'], ['chunk', 'Step 2 · Chunk: tag each sentence'],
@@ -35,11 +35,11 @@
       ].forEach(function (r) { add('Guide', r[1], '', r[0]); });
       if (D.gbasics) {
         add('Guide', 'Parts of speech in five minutes', 'Noun, pronoun, verb, adjective, adverb, preposition, conjunction and determiner, with a short exercise.', 'parts-of-speech', 'part of speech grammar basics subject tensed verb');
-        add('Drill', 'Sentence or fragment?', 'Can a string of words stand alone? The warm-up for Which boundary?', 'drill-frag', 'fragment complete sentence stand alone tensed verb because which');
+        add('Short exercise', 'Sentence or fragment?', 'Can a group of words stand on its own as a sentence? The warm-up for Which boundary?', 'drill-frag', 'fragment complete sentence stand alone tensed verb because which');
         D.gbasics.terms.forEach(function (t) { add('Term', t[0], plain(t[1]), 'parts-of-speech'); });
       }
       if (D.poems) { add('Guide', 'Poems and stories', 'How to read a poem: by sentence, find the turn, name the attitude, stay close to the images. What story questions turn on.', 'poems', 'poem poems poetry poet speaker line lines stanza image story stories novel fiction play character feeling'); }
-      if (D.same) { add('Drill', 'Same idea, different words', 'One sentence and four rewordings. Pick the one that keeps the meaning, not the one that keeps the words.', 'drill-same', 'paraphrase restate restatement reword rewording same meaning other words'); }
+      if (D.same) { add('Short exercise', 'Same idea, different words', 'One sentence and four rewordings. Pick the one that keeps the meaning, not the one that keeps the words.', 'drill-same', 'paraphrase restate restatement reword rewording same meaning other words'); }
       RD.jobs.forEach(function (j) { add('Reading question', j.name, plain(j.look), j.id, (j.says || []).join(' ')); });
       RLIST.forEach(function (x) { add('Worked example', 'Example ' + x.n + ': ' + plain(x.title), JOBNAME[x.job] || '', 'ex-' + x.n, x.diff); });
       CONCEPTS.forEach(function (c) { add('Grammar lesson', 'Lesson ' + c.n + ': ' + plain(c.title), PART[c.part].title, c.id); });
@@ -68,23 +68,24 @@
     var H = HUB[subj], host = viewEl[H.view], p = H.p;
     if (built[H.view]) { return; }
     built[H.view] = true;
-    var pages = SUBJ[subj].items.filter(function (it) { return it[4] === 'learn' && it[0] !== H.view; });
-    var start = SUBJ[subj].items[0], prac = SUBJ[subj].items.filter(function (it) { return it[4] === 'practice'; })[0];
+    var pages = SUBJ[subj].items.filter(function (it) { return it[4] === 'learn' && it[0] !== H.view; }).map(function (it) { return [it[1], it[2], it[3]]; });
+    var main, more;
+    if (subj === 'math') { main = pages.slice(0, 4); more = pages.slice(4); }
+    else {
+      main = pages.slice(0, 2).concat([['vocab', 'Words to know', 'The words that come up in the word questions, with their meanings.']]);
+      more = [pages[2]];
+      if (D.poems) { more.push(['poems', 'Poems and stories', 'How to read a poem or a story passage.']); }
+      if (D.gbasics) { more.push(['parts-of-speech', 'Parts of speech', 'Noun, verb, adjective and the rest, in five minutes.']); }
+    }
+    function card(x, i) { return '<a class="hub-card' + (i >= 0 ? ' hub-big' : '') + '" href="#' + x[0] + '">' + (i >= 0 ? '<span class="hub-n" aria-hidden="true">' + (i + 1) + '</span>' : '') + '<b>' + esc(x[1]) + '</b><span>' + esc(x[2]) + '</span></a>'; }
     host.innerHTML = '<div class="wrap">' +
-      '<header class="mhead"><p class="eyebrow">' + SUBJ[subj].name + ' · Learn</p><h2 class="vtitle">Everything to learn, in one place</h2>' +
-      '<p class="lede">Search across every ' + (subj === 'math' ? 'lesson, question type, pattern, shortcut and calculator move' : 'reading step, grammar lesson, rule, worked example and term') + ', or open a section below.</p></header>' +
-      '<div class="hub-find"><label class="field"><span class="label">Search everything in Learn</span><input type="text" id="' + p + '-q" autocomplete="off" placeholder="' + H.eg + '"></label></div>' +
-      '<p class="muted hub-n" id="' + p + '-n" aria-live="polite"></p><ul class="hub-res" id="' + p + '-res"></ul>' +
-      '<section class="sec first"><h3 class="h2">Sections</h3><div class="hub-cards">' + pages.map(function (it) {
-        return '<a class="hub-card" href="#' + it[1] + '"><b>' + esc(it[2]) + '</b><span>' + esc(it[3]) + '</span></a>';
-      }).join('') + '</div></section>' +
-      '<section class="sec"><h3 class="h2">A good order</h3><ol class="hsteps hub-order">' +
-        '<li><b><a href="#' + start[1] + '">Start here</a>.</b><span>Five minutes on what the section asks and the routine to use.</span></li>' +
-        (subj === 'math'
-          ? '<li><b><a href="#m-found">Algebra foundations</a>, if the basics feel rusty.</b><span>Six moves every lesson assumes, each with a short drill.</span></li><li><b><a href="#m-learn">Lessons</a>, one skill at a time.</b><span>Each ends with a button for real questions on just that skill.</span></li><li><b><a href="#m-first">Shortcut first</a>, <a href="#m-patterns">Big patterns</a> and <a href="#m-desmos">Desmos</a>.</b><span>The habit of checking for a short way, the ideas that connect the question types, and the calculator moves that save time.</span></li>'
-          : '<li><b><a href="#reading">Reading</a>: the four-step routine.</b><span>Then the worked examples, trying each before you read it.</span></li><li><b><a href="#method">Grammar</a> in 60 seconds.</b><span>Look at the choices, run one check, confirm. Then the lessons you need.</span></li>') +
-        '<li><b><a href="#' + prac[1] + '">Practice</a>, then <a href="#' + (subj === 'math' ? 'm-map' : 'rw-map') + '">My map</a>.</b><span>The map shows which types to come back to.</span></li>' +
-      '</ol></section></div>';
+      '<header class="mhead"><p class="eyebrow">' + SUBJ[subj].name + ' · Learn</p><h2 class="vtitle">Learn ' + (subj === 'math' ? 'Math' : 'Reading and Writing') + ', one topic at a time</h2>' +
+      '<p class="lede">Start with number 1 and go down the list. The extra help further down is there when you want it.</p></header>' +
+      '<section class="sec first"><h3 class="h2">Start with these</h3><div class="hub-cards hub-main">' + main.map(function (x, i) { return card(x, i); }).join('') + '</div></section>' +
+      '<section class="sec"><h3 class="h2">Extra help, when you want it</h3><div class="hub-cards">' + more.map(function (x) { return card(x, -1); }).join('') + '</div></section>' +
+      '<section class="sec"><h3 class="h2">Looking for something?</h3><div class="hub-find"><label class="field"><span class="label">Type a word to search all of ' + (subj === 'math' ? 'Math' : 'Reading and Writing') + '</span><input type="text" id="' + p + '-q" autocomplete="off" placeholder="' + H.eg + '"></label></div>' +
+      '<p class="muted hub-n" id="' + p + '-n" aria-live="polite"></p><ul class="hub-res" id="' + p + '-res"></ul></section>' +
+      '</div>';
     var inp = document.getElementById(p + '-q'), res = document.getElementById(p + '-res'), cnt = document.getElementById(p + '-n');
     inp.addEventListener('input', function () {
       var hits = hubSearch(subj, inp.value);
@@ -161,8 +162,8 @@
     if (r.top < 0 || r.top > window.innerHeight - 160) { box.scrollIntoView({ block: 'start' }); }
   }
   function htryHTML() {
-    return '<div class="hh-try" aria-label="Try a real question"><div class="htry-top"><p class="label">Try a real question</p>' +
+    return '<div class="hh-try" aria-label="Try one easy question"><div class="htry-top">' +
       '<div class="htry-tabs" id="htry-tabs" role="group" aria-label="Section"><button type="button" data-htry="math" aria-pressed="false">Math</button><button type="button" data-htry="rw" aria-pressed="false">Reading &amp; Writing</button></div></div>' +
-      '<div id="htry"></div><p class="fine htry-note">Answer it to see how to spot this kind of question. Nothing is saved from here.</p></div>';
+      '<div id="htry"></div></div>';
   }
 
