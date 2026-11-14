@@ -200,17 +200,21 @@
         w.items.map(function (i) { return '<span>' + esc(i.job) + ' <span class="wn">' + i.n + '</span></span>'; }).join('') + '</dd></div>';
     }).join('') + '</dl>';
   }
+  /* Parts A and B assume the words subject, tensed verb and clause: point beginners to the primer and the warm-up drill */
+  function basicsNote() {
+    return D.gbasics ? '<p class="fine" style="margin-top:.7rem">New to <em>subject</em>, <em>tensed verb</em> and <em>clause</em>? Read <a href="#parts-of-speech">Parts of speech in five minutes</a>, then warm up with the <a href="#drill-frag">Sentence or fragment?</a> drill.</p>' : '';
+  }
   function partHTML(k) {
     var p = PART[k], s = partStats[k];
     var h = '<nav class="crumbs"><a href="#lessons">Lessons</a> / Part ' + k + ' · ' + esc(p.title) + '</nav><header style="margin-top:.6rem"><p class="eyebrow">Part ' + k + ' · ' + s.q + ' questions · ' + s.u + ' rules · ' + s.v + ' versions</p>';
     if (k === 'A') {
       var S = D.structure;
-      h += '<h2 class="vtitle">' + esc(S.title) + '</h2><p class="lede">' + S.intro + '</p></header>' +
+      h += '<h2 class="vtitle">' + esc(S.title) + '</h2><p class="lede">' + S.intro + '</p>' + basicsNote() + '</header>' +
         '<div class="sits">' + S.rows.map(function (r, i) { return sitHTML(r, 'A', i); }).join('') + '</div>' +
         '<h3 class="subh">' + esc(S.subtitle) + '</h3><ol class="olist">' + S.steps.map(li).join('') + '</ol>';
     } else if (k === 'B') {
       var V = D.verbs;
-      h += '<h2 class="vtitle">' + esc(V.title) + '</h2><p class="lede">' + V.intro + '</p></header>' +
+      h += '<h2 class="vtitle">' + esc(V.title) + '</h2><p class="lede">' + V.intro + '</p>' + basicsNote() + '</header>' +
         '<div class="sits">' + V.rows.map(function (r, i) { return sitHTML(r, 'B', i); }).join('') + '</div>' +
         '<h3 class="subh">The rest of Part B</h3><div class="sits">' + V.rest.map(function (r, i) { return sitHTML(r, 'B2', i); }).join('') + '</div>' +
         '<h3 class="subh">' + esc(V.formsTitle) + '</h3><p class="pretty">' + V.formsIntro + '</p>' + formsHTML() +

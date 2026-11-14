@@ -25,7 +25,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   await p.click('#ex-host .opt[data-k="A"]'); await p.waitForTimeout(100);
   const w = await p.textContent('#ex-host .verdict');
   await p.click('#ex-read'); await p.waitForTimeout(100);
-  for (const k of ['job','tag','core','point','pointer','notes','why','pattern','boundary','verb','link']) {
+  for (const k of ['job','tag','core','point','pointer','notes','why','pattern','frag','boundary','verb','link']) {
     await p.evaluate(() => { location.hash = 'drills'; }); await p.waitForTimeout(100);
     const b = await p.$('[data-start="' + k + '"]');
     if (!b) { await p.click('#dhome').catch(()=>{}); await p.waitForTimeout(50); }

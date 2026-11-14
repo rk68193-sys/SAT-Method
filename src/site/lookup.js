@@ -34,7 +34,7 @@
     var out = '';
     var ab = D.absent.items.filter(function (t) { return normQ(plain(t)).indexOf(q) !== -1; });
     if (ab.length) { out += '<h4 class="subh">Not tested in this bank</h4><ul class="plainlist">' + ab.map(function (t) { return '<li>' + t + ' <a href="#nottested">See the list</a></li>'; }).join('') + '</ul>'; }
-    var gl = READ_GLOSS.map(function (g) { return { term: esc(g[0]), def: esc(g[1]) }; }).concat(D.glossary).filter(function (g) { return normQ(plain(g.term)).indexOf(q) !== -1; });
+    var gl = READ_GLOSS.map(function (g) { return { term: esc(g[0]), def: esc(g[1]) }; }).concat(D.glossary, basicTerms()).filter(function (g) { return normQ(plain(g.term)).indexOf(q) !== -1; });
     if (gl.length) { out += '<h4 class="subh">Glossary</h4><ul class="plainlist">' + gl.map(function (g) { return '<li><b>' + g.term + '</b>: ' + g.def + ' <a href="#glossary">All terms</a></li>'; }).join('') + '</ul>'; }
     return out;
   }
@@ -66,9 +66,33 @@
       return '<li><a href="#' + x.h.uid + '">' + u.num + ' ' + u.title + '</a> <span class="muted">· ' + esc(c.title) + '</span></li>';
     }).join('') + '</ul>' + (hits.length > 40 ? '<p class="fine">Showing the best 40.</p>' : '') : '') + extra;
   }
+  /* the parts-of-speech primer and the terms it adds to the glossary (src/reading/grammar_basics.py) */
+  function basicTerms() { return ((D.gbasics && D.gbasics.terms) || []).map(function (t) { return { term: esc(t[0]), def: t[1] }; }); }
+  function posHTML() {
+    var G = D.gbasics;
+    if (!G) { return ''; }
+    return '<div class="posbox" id="parts-of-speech"><h4 class="subh">Parts of speech in five minutes</h4>' +
+      '<p class="pretty">The rules on this site name the pieces of a sentence: a subject, a tensed verb, a prepositional phrase, a coordinating conjunction. Every word in a sentence does one of eight jobs, and its job is its part of speech.</p>' +
+      '<dl class="gloss posl">' + G.pos.map(function (p) {
+        return '<div><dt>' + p[0].charAt(0).toUpperCase() + p[0].slice(1) + '</dt><dd class="gdef">' + p[1] + ' ' + p[2] + '<span class="posex">' + esc(p[3]) + '</span></dd></div>';
+      }).join('') + '</dl>' +
+      '<p class="pretty" style="margin-top:1rem"><b>What makes a sentence.</b> A subject, a noun or pronoun, with a tensed verb that belongs to it. Everything else attaches to that pair. When the pair is missing, or the only tensed verb sits inside a <em>because</em> or <em>which</em> clause, the words are a fragment, however long they are. <a href="#drill-frag">Practice telling them apart</a>.</p>' +
+      '<h4 class="subh">Try it</h4><p class="pretty">Name each word’s part of speech in your head, then tap the word to check.</p>' +
+      G.try.map(function (t) {
+        return '<div class="posx"><p class="poss">' + t.words.map(function (w) {
+          return '<button type="button" class="posw" aria-pressed="false"><span class="pw">' + esc(w[0]) + '</span><span class="pl">' + esc(w[1]) + '</span></button>';
+        }).join('') + '</p><p class="fine posnote" hidden>' + t.note + '</p></div>';
+      }).join('') +
+      '<p class="row" style="margin-top:.9rem"><button type="button" class="btn sm ghost" id="posall">Show every answer</button></p></div>';
+  }
+  function posShow(b, on) {
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    var box = b.closest('.posx');
+    if (box && !$('.posw[aria-pressed="false"]', box)) { $('.posnote', box).hidden = false; }
+  }
   function glossHTML(q) {
     q = (q || '').trim().toLowerCase();
-    var all = READ_GLOSS.map(function (g) { return { term: esc(g[0]), def: esc(g[1]), r: 1 }; }).concat(D.glossary);
+    var all = READ_GLOSS.map(function (g) { return { term: esc(g[0]), def: esc(g[1]), r: 1 }; }).concat(D.glossary, basicTerms());
     var list = all.filter(function (g) { return !q || plain(g.term + ' ' + g.def).toLowerCase().indexOf(q) !== -1; });
     if (!list.length) { return '<p class="empty">No term matches “' + esc(q) + '”.</p>'; }
     return list.map(function (g) { return '<div><dt>' + g.term + (g.r ? ' <span class="wn">reading</span>' : '') + '</dt><dd class="gdef">' + g.def + '</dd></div>'; }).join('');
@@ -79,7 +103,7 @@
     viewEl.lookup.innerHTML = '<div class="wrap"><header class="read"><p class="eyebrow">Lookup</p><h2 class="vtitle">Quick answers while you study</h2>' +
       '<p class="lede">Find the rule or job for any question ID, check whether a transition is ever right, see every verb form the choices use, and look up a term.</p>' +
       '<nav class="subnav" aria-label="On this page"><a class="ulink" href="#find">Find a rule or ID</a><a class="ulink" href="#transitions">Transitions</a><a class="ulink" href="#verbforms">Verb forms</a>' +
-      '<a class="ulink" href="#glossary">Glossary</a><a class="ulink" href="#nottested">Not tested</a><a class="ulink" href="#about">About this guide</a></nav></header>' +
+      '<a class="ulink" href="#parts-of-speech">Parts of speech</a><a class="ulink" href="#glossary">Glossary</a><a class="ulink" href="#nottested">Not tested</a><a class="ulink" href="#about">About this guide</a></nav></header>' +
       '<section class="lsec" id="find"><div class="sech"><h3 class="h2">Find a rule or a question ID</h3></div><label class="field" for="fq" style="display:block;margin-top:1rem"><span class="label">Search every grammar rule and version, or any of the ' + (TOTAL.q + RTOTAL).toLocaleString('en-US') + ' question IDs</span>' +
       '<input type="text" id="fq" inputmode="search" autocomplete="off" spellcheck="false" placeholder="for example, such as · semicolon · 7b950fc2"></label><div id="flist" aria-live="polite"></div></section>' +
       '<section class="lsec" id="transitions"><div class="sech"><h3 class="h2">Is this transition ever right?</h3><p class="pretty" style="margin-top:.4rem">' + D.trans.intro + '</p></div>' +
@@ -87,7 +111,8 @@
       seg('tsort', 'Order', [['job', 'By job'], ['offered', 'Most offered']], 'job') + '</div><div id="tlist"></div></section>' +
       '<section class="lsec" id="verbforms"><div class="sech"><h3 class="h2">' + esc(D.verbs.formsTitle) + '</h3><p class="pretty" style="margin-top:.4rem">' + D.verbs.formsIntro + '</p></div>' + formsHTML() +
       (D.verbs.formsNote ? '<p class="fine" style="margin-top:.6rem">' + D.verbs.formsNote + '</p>' : '') + '</section>' +
-      '<section class="lsec" id="glossary"><div class="sech"><h3 class="h2">Words used in this guide</h3></div><label class="field" for="gq" style="display:block;margin-top:1rem"><span class="label">Filter the terms</span>' +
+      '<section class="lsec" id="glossary"><div class="sech"><h3 class="h2">Words used in this guide</h3></div>' + posHTML() +
+      '<h4 class="subh">Every term</h4><label class="field" for="gq" style="display:block;margin-top:.6rem"><span class="label">Filter the terms</span>' +
       '<input type="text" id="gq" autocomplete="off" spellcheck="false" placeholder="for example, clause"></label><dl class="gloss" id="glist"></dl></section>' +
       '<section class="lsec" id="nottested"><div class="sech"><h3 class="h2">Not tested in this bank</h3><p class="pretty" style="margin-top:.4rem">' + D.absent.intro + '</p></div><ul class="plainlist">' + D.absent.items.map(li).join('') + '</ul>' + (D.absent.more || []).map(function (t) { return '<p class="pretty" style="margin-top:.8rem">' + t + '</p>'; }).join('') + '</section>' +
       '<section class="lsec" id="about"><div class="sech"><h3 class="h2">About this guide</h3></div><h4 class="subh">Grammar and transitions</h4><ul class="plainlist">' + D.method.map(li).join('') + '</ul>' +
@@ -104,4 +129,7 @@
     document.getElementById('flist').innerHTML = findHTML(fq.value);
     drawT();
     document.getElementById('glist').innerHTML = glossHTML(gq.value);
+    $$('.posw', viewEl.lookup).forEach(function (b) { b.addEventListener('click', function () { posShow(b, b.getAttribute('aria-pressed') !== 'true'); }); });
+    var pa = document.getElementById('posall');
+    if (pa) { pa.addEventListener('click', function () { $$('.posw', viewEl.lookup).forEach(function (b) { posShow(b, true); }); }); }
   }
