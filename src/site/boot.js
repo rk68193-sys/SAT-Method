@@ -54,7 +54,7 @@
   };
   var GRAM_AT = { grammar: ['method'], method: ['method'], try: ['method', 'try'], patterns: ['method', 'patterns'], first: ['method', 'patterns'], steps: ['method', 'steps'],
     shortcuts: ['shortcuts'], gives: ['shortcuts'], hard: ['hard'], lessons: ['home'], glance: ['home'], structure: ['partA'], verbpath: ['partB'] };
-  var LOOKUP_AT = { lookup: '', find: 'find', transitions: 'transitions', alltrans: 'transitions', verbforms: 'verbforms', glossary: 'glossary', words: 'glossary', absent: 'nottested', nottested: 'nottested', about: 'about' };
+  var LOOKUP_AT = { lookup: '', find: 'find', transitions: 'transitions', alltrans: 'transitions', verbforms: 'verbforms', glossary: 'glossary', words: 'glossary', 'parts-of-speech': 'parts-of-speech', absent: 'nottested', nottested: 'nottested', about: 'about' };
   function has(o, k) { return Object.prototype.hasOwnProperty.call(o, k); }
   function nav(token) {
     var h = '#' + String(token || '').replace(/^#/, '');

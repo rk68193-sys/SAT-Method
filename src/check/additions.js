@@ -83,6 +83,45 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   ok(mine === 4, 'from my misses shows ' + mine + ' words (expected the 4 choices of ' + wq + ')');
   await go('practice'); await wide('practice');
 
+  /* ---- Parts of speech in five minutes, and the Sentence or fragment? drill (src/reading/grammar_basics.py) ---- */
+  await go('parts-of-speech'); await p.waitForTimeout(150); await wide('parts of speech');
+  const pos = await p.evaluate(() => {
+    const box = document.getElementById('parts-of-speech'), r = box ? box.getBoundingClientRect() : null, pl = document.querySelector('#parts-of-speech .posw .pl');
+    return { shown: !!r && r.top < innerHeight && r.bottom > 0, parts: [...document.querySelectorAll('.posl dt')].map(d => d.textContent).join(' '), words: document.querySelectorAll('.posw').length, lab: pl ? getComputedStyle(pl).display : '' };
+  });
+  ok(pos.shown && pos.parts === 'Noun Pronoun Verb Adjective Adverb Preposition Conjunction Determiner', 'the primer opens at its address with the eight parts: ' + pos.parts);
+  ok(pos.words === 35 && pos.lab === 'none', 'the exercise hides each part until the word is tapped: ' + pos.words + ' words, label ' + pos.lab);
+  const firstWord = p.locator('.posx').first().locator('.posw').first();
+  await firstWord.click(); await p.waitForTimeout(80);
+  const fw = (await firstWord.innerText()).replace(/\s+/g, ' ');
+  ok((await firstWord.getAttribute('aria-pressed')) === 'true' && /During preposition/.test(fw), 'tapping a word shows its part: ' + fw);
+  await p.click('#posall'); await p.waitForTimeout(80);
+  const notes = await p.$$eval('.posnote', n => n.filter(x => !x.hidden).length);
+  ok(notes === 3, 'Show every answer reveals the three notes: ' + notes);
+  await p.fill('#gq', 'prepositional'); await p.waitForTimeout(80);
+  ok(/Prepositional phrase/.test(await p.textContent('#glist')), 'the glossary list has Prepositional phrase');
+  await p.fill('#gq', '');
+  await go('rw-hub'); await p.fill('#rwhub-q', 'parts of speech'); await p.waitForTimeout(150);
+  const ph = await p.$$eval('#rwhub-res a', a => a.map(x => x.getAttribute('href')));
+  ok(ph.includes('#parts-of-speech'), 'the Learn search finds the primer: ' + ph.slice(0, 4).join(' '));
+  for (const t of ['part-a', 'part-b']) {
+    await go(t);
+    const hrefs = await p.$$eval('#v-grammar header a', a => a.map(x => x.getAttribute('href')));
+    ok(hrefs.includes('#parts-of-speech') && hrefs.includes('#drill-frag'), t + ' points to the primer and the drill');
+  }
+  await go('drills');
+  const order = await p.$$eval('#dhost [data-start]', b => b.map(x => x.getAttribute('data-start')));
+  ok(order.indexOf('frag') !== -1 && order.indexOf('frag') === order.indexOf('boundary') - 1, 'Sentence or fragment? sits right before Which boundary?: ' + order.join(' '));
+  const fkinds = await p.evaluate(() => { const n = {}; JSON.parse(document.getElementById('sprint-data').textContent).gbasics.cards.forEach(c => { n[c.k] = (n[c.k] || 0) + 1; }); return n; });
+  ok(fkinds.ok === 16 && fkinds.verb === 10 && fkinds.sub === 9 && fkinds.rel === 9, 'Sentence or fragment? card kinds: ' + JSON.stringify(fkinds));
+  await go('drill-frag'); await p.waitForTimeout(150);
+  ok((await p.$$eval('#dhost .dopt', o => o.length)) === 4, 'Sentence or fragment? shows four options');
+  await p.keyboard.press('1'); await p.waitForTimeout(100);
+  const fv = await p.textContent('#dfeed').catch(() => '');
+  ok(/Right|Not this one/.test(fv) && /Tensed verb:|One way to fix it:/.test(fv), 'the answer names the core or a fix: ' + fv.slice(0, 120));
+  await wide('drill frag');
+  await p.click('#dend'); await p.waitForTimeout(80); await p.click('#dhome');
+
   /* ---- Math drills ---- */
   await go('m-drills'); await wide('m-drills');
   const mcards = await p.$$eval('#v-mdrills [data-start]', b => b.map(x => x.getAttribute('data-start')));

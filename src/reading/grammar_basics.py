@@ -1,0 +1,277 @@
+"""Build src/build/gbasics.json: the parts-of-speech primer on the Look up page and the cards of the
+"Sentence or fragment?" drill. Everything here was written for this site.
+
+The grammar rules name the pieces of a sentence (subject, tensed verb, prepositional phrase, coordinating
+conjunction), and the boundary table assumes a student can tell whether a string of words could stand alone. The
+primer gives the eight parts of speech those names rest on, with a short exercise, and the drill trains the
+stand-alone test on the four kinds of fragment the wrong answers build.
+
+    python3 -I src/reading/grammar_basics.py           writes build/gbasics.json
+    python3 -I src/reading/grammar_basics.py --check   checks that file is current and that every rule below holds
+"""
+import json, re, sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / 'build' / 'gbasics.json'
+
+# The eight parts of speech: name, what it does, a quick test or a note, examples.
+POS = [
+    ['noun', 'Names a person, place, thing or idea.',
+     'Most nouns can follow <em>the</em>; names of people and places are nouns too.',
+     'scientist, Lagos, telescope, freedom'],
+    ['pronoun', 'Stands in for a noun the reader already knows.',
+     '<em>Which</em>, <em>who</em> and <em>that</em> are pronouns too when they open a clause that describes a noun.',
+     'it, they, them, she, someone'],
+    ['verb', 'Says what the subject does or is.',
+     'Only a <b>tensed verb</b> can be the verb of a clause: <em>kept</em>, <em>is</em>, <em>has kept</em>. An <em>-ing</em>, <em>to</em> or <em>-ed</em> form with no helping verb cannot: <em>keeping</em>, <em>to keep</em>, <em>kept by</em>.',
+     'discovered, is, has collected, will open'],
+    ['adjective', 'Describes a noun: which one, what kind, how many.',
+     'It usually sits right before its noun or after <em>is</em>: <em>a rare coin</em>, <em>the coin is rare</em>.',
+     'ancient, blue, rare, careful'],
+    ['adverb', 'Describes a verb, an adjective, another adverb or a whole clause: how, when, where, how much.',
+     'Transitions such as <em>however</em> and <em>therefore</em> are adverbs, not conjunctions, so a comma alone cannot join two sentences with them.',
+     'quickly, rarely, very, soon'],
+    ['preposition', 'A short word that ties a noun to the rest of the sentence, often to show place, time or connection.',
+     'A preposition and its noun make a <b>prepositional phrase</b>: <em>in the lab</em>, <em>of the samples</em>. The subject is never inside one: in <em>The box of samples is heavy</em>, the subject is <em>box</em>.',
+     'in, on, of, by, during, between, without'],
+    ['conjunction', 'Joins words, phrases or clauses.',
+     '<b>Coordinating</b> conjunctions (<em>and, but, or, so, yet, for, nor</em>) can join two sentences after a comma. <b>Subordinating</b> ones (<em>because, although, when, while, if, since</em>) make a clause that cannot stand alone.',
+     'and, but, because, although'],
+    ['determiner', 'Comes before a noun to point to it or count it.',
+     '<em>The</em> and <em>a</em> are the commonest. Possessives such as <em>its</em> and <em>their</em> are determiners too.',
+     'the, a, this, these, its, their, many'],
+]
+
+# Terms the rule names use that the glossary did not define. They join the glossary list on the Look up page.
+TERMS = [
+    ['Noun', 'A word that names a person, place, thing or idea: <em>scientist</em>, <em>Lagos</em>, <em>freedom</em>.'],
+    ['Noun phrase', 'A noun with the words that describe it: <em>the oldest bridge in the city</em>.'],
+    ['Pronoun', 'A word that stands in for a noun: <em>it</em>, <em>they</em>, <em>someone</em>.'],
+    ['Verb', 'A word that says what the subject does or is. See <em>tensed verb</em>.'],
+    ['Helping verb', 'A verb such as <em>is</em>, <em>has</em>, <em>will</em> or <em>can</em> that comes before another verb form: <em>has kept</em>, <em>was found</em>.'],
+    ['Adjective', 'A word that describes a noun: <em>rare</em>, <em>ancient</em>.'],
+    ['Adverb', 'A word that describes a verb, an adjective or a whole clause: <em>quickly</em>, <em>very</em>, <em>however</em>.'],
+    ['Preposition', 'A short word that ties a noun to the rest of the sentence: <em>in</em>, <em>of</em>, <em>by</em>, <em>during</em>.'],
+    ['Prepositional phrase', 'A preposition and the noun it ties in: <em>in the lab</em>, <em>of the samples</em>. The subject of a sentence is never inside one.'],
+    ['Subordinating conjunction', '<em>Because</em>, <em>although</em>, <em>when</em>, <em>while</em>, <em>if</em>, <em>since</em> and the like: words that turn a clause into one that cannot stand alone.'],
+    ['Subject', 'The noun or pronoun a clause is about: who or what does the verb.'],
+]
+
+# A short exercise: name each word's part of speech, then tap to check. Each word is [shown text, part of speech].
+TRY = [
+    {'words': [['During', 'preposition'], ['the', 'determiner'], ['storm,', 'noun'], ['the', 'determiner'], ['old', 'adjective'],
+               ['keeper', 'noun'], ['carefully', 'adverb'], ['lit', 'verb'], ['both', 'determiner'], ['lamps.', 'noun']],
+     'note': '<em>During the storm</em> is a prepositional phrase. The subject is <em>keeper</em> and the tensed verb is <em>lit</em>.'},
+    {'words': [['The', 'determiner'], ['scientists', 'noun'], ['tested', 'verb'], ['the', 'determiner'], ['samples,', 'noun'],
+               ['but', 'conjunction'], ['they', 'pronoun'], ['found', 'verb'], ['no', 'determiner'], ['trace', 'noun'],
+               ['of', 'preposition'], ['iron.', 'noun']],
+     'note': '<em>But</em> is a coordinating conjunction, so a comma before it can join two sentences: <em>The scientists tested the samples</em> and <em>they found no trace of iron</em>.'},
+    {'words': [['Because', 'conjunction'], ['the', 'determiner'], ['river', 'noun'], ['rose', 'verb'], ['quickly,', 'adverb'],
+               ['the', 'determiner'], ['village', 'noun'], ['moved', 'verb'], ['its', 'determiner'], ['school', 'noun'],
+               ['to', 'preposition'], ['a', 'determiner'], ['hill.', 'noun']],
+     'note': '<em>Because</em> is a subordinating conjunction: <em>Because the river rose quickly</em> cannot stand alone, so it leans on <em>the village moved its school</em>.'},
+]
+
+# The drill. k: ok (a sentence), verb (no tensed verb), sub (a clause opened by because, although and the like),
+# rel (only a which, who or that clause). A sentence names its subject s and tensed verb v; a fragment gives a fix.
+CARDS = [
+    # sentences, several built to look like fragments
+    {'id': 's01', 'k': 'ok', 't': 'Because the river flooded every spring, the farmers built their houses on the hill.', 's': 'the farmers', 'v': 'built',
+     'x': 'The <em>because</em> clause is an opener. After the comma comes a main clause that could stand alone.'},
+    {'id': 's02', 'k': 'ok', 't': 'Hoping to find older fossils, the team dug below the clay.', 's': 'the team', 'v': 'dug',
+     'x': '<em>Hoping to find older fossils</em> is an <em>-ing</em> phrase that opens the sentence. The main clause follows the comma.'},
+    {'id': 's03', 'k': 'ok', 't': 'The bridge, which opened in 1932, still carries trains.', 's': 'The bridge', 'v': 'carries',
+     'x': 'The <em>which</em> clause is an aside between commas. Lift it out and <em>The bridge still carries trains</em> is left.'},
+    {'id': 's04', 'k': 'ok', 't': 'Many of them were painted on silk.', 's': 'Many', 'v': 'were painted',
+     'x': 'With <em>which</em> in place of <em>them</em>, this would be a fragment: <em>many of which</em> opens a describing clause.'},
+    {'id': 's05', 'k': 'ok', 't': 'Known for its long winters, the town holds a festival every January.', 's': 'the town', 'v': 'holds',
+     'x': '<em>Known for its long winters</em> is an <em>-ed</em> phrase describing the town. The main clause follows the comma.'},
+    {'id': 's06', 'k': 'ok', 't': 'Although the test was short, it covered every unit.', 's': 'it', 'v': 'covered',
+     'x': 'The <em>although</em> clause leans on the main clause after the comma, and that main clause is there.'},
+    {'id': 's07', 'k': 'ok', 't': 'The researchers who studied the ice for a decade found traces of ancient dust.', 's': 'The researchers', 'v': 'found',
+     'x': 'The <em>who</em> clause has its own verb, <em>studied</em>. The main clause has <em>found</em>: <em>The researchers found traces of ancient dust</em>.'},
+    {'id': 's08', 'k': 'ok', 't': 'Studying the ice cores took the team nearly a decade.', 's': 'Studying the ice cores', 'v': 'took',
+     'x': 'Here the <em>-ing</em> phrase is the subject: studying the ice cores is what took a decade. <em>Took</em> is a tensed verb.'},
+    {'id': 's09', 'k': 'ok', 't': 'To finish the mural by spring seemed impossible.', 's': 'To finish the mural by spring', 'v': 'seemed',
+     'x': 'The <em>to</em> phrase is the subject: finishing by spring is what seemed impossible. <em>Seemed</em> is a tensed verb.'},
+    {'id': 's10', 'k': 'ok', 't': 'The samples collected in 2019 were stored in a freezer.', 's': 'The samples', 'v': 'were stored',
+     'x': '<em>Collected in 2019</em> describes the samples. The tensed verb comes after it.'},
+    {'id': 's11', 'k': 'ok', 't': 'When the lights went out, the orchestra kept playing.', 's': 'the orchestra', 'v': 'kept',
+     'x': 'The <em>when</em> clause is an opener, and the main clause after the comma completes it.'},
+    {'id': 's12', 'k': 'ok', 't': 'Rain fell.', 's': 'Rain', 'v': 'fell',
+     'x': 'Two words are enough: a subject and a tensed verb. Length has nothing to do with it.'},
+    {'id': 's13', 'k': 'ok', 't': 'The museum has reopened, and its roof no longer leaks.', 's': 'The museum', 'v': 'has reopened',
+     'x': 'Two main clauses joined by a comma and <em>and</em>. Either one could stand alone: <em>its roof no longer leaks</em> has its own subject and verb.'},
+    {'id': 's14', 'k': 'ok', 't': 'Each of the two maps shows a different coastline.', 's': 'Each', 'v': 'shows',
+     'x': '<em>Of the two maps</em> is a prepositional phrase, so the subject is <em>each</em>, and its verb is <em>shows</em>.'},
+    {'id': 's15', 'k': 'ok', 't': 'Below the clay lay a layer of ash.', 's': 'a layer', 'v': 'lay',
+     'x': 'The order is flipped: the verb comes before its subject, <em>a layer of ash</em>. A subject and a tensed verb still make a sentence.'},
+    {'id': 's16', 'k': 'ok', 't': 'However, the second trial failed.', 's': 'the second trial', 'v': 'failed',
+     'x': '<em>However</em> is a transition that comments on the sentence before. What follows the comma is a full clause.'},
+    # no tensed verb: an -ing, -ed or to phrase on its own
+    {'id': 'v01', 'k': 'verb', 't': 'Scientists studying the ice cores from Greenland.', 'v': '',
+     'x': '<em>Studying</em> is an <em>-ing</em> form with no helping verb, so <em>scientists</em> never gets a tensed verb.',
+     'fix': 'Scientists studied the ice cores from Greenland.'},
+    {'id': 'v02', 'k': 'verb', 't': 'The team hoping to finish the survey before the rains.', 'v': '',
+     'x': '<em>Hoping</em> is an <em>-ing</em> form and <em>to finish</em> a <em>to</em> form. Neither is a tensed verb.',
+     'fix': 'The team hoped to finish the survey before the rains.'},
+    {'id': 'v03', 'k': 'verb', 't': 'A novel published in 1925 and set in a single day.', 'v': '',
+     'x': '<em>Published</em> and <em>set</em> are <em>-ed</em> forms describing the novel. Nothing says what the novel does or is.',
+     'fix': 'The novel was published in 1925 and set in a single day.'},
+    {'id': 'v04', 'k': 'verb', 't': 'To test the paint for lead and other metals.', 'v': '',
+     'x': 'A <em>to</em> form is never a tensed verb, and there is no subject either.',
+     'fix': 'The lab took samples to test the paint for lead and other metals.'},
+    {'id': 'v05', 'k': 'verb', 't': 'The old mill, built in 1820 and still standing beside the river.', 'v': '',
+     'x': '<em>Built</em> and <em>standing</em> describe the mill, but the mill itself never gets a tensed verb.',
+     'fix': 'The old mill, built in 1820, still stands beside the river.'},
+    {'id': 'v06', 'k': 'verb', 't': 'Having spent a decade on the project.', 'v': '',
+     'x': '<em>Having spent</em> is not tensed: <em>having</em> plus an <em>-ed</em> form. There is no subject either.',
+     'fix': 'She had spent a decade on the project.'},
+    {'id': 'v07', 'k': 'verb', 't': 'The violinist, known for her fast tempos and her refusal to record.', 'v': '',
+     'x': 'Everything after <em>the violinist</em> describes her. <em>Known</em> has no helping verb, so she never gets a verb.',
+     'fix': 'The violinist was known for her fast tempos and her refusal to record.'},
+    {'id': 'v08', 'k': 'verb', 't': 'Researchers in the lab working late into the night.', 'v': '',
+     'x': '<em>In the lab</em> is a prepositional phrase and <em>working</em> an <em>-ing</em> form. Neither gives <em>researchers</em> a tensed verb.',
+     'fix': 'Researchers in the lab were working late into the night.'},
+    {'id': 'v09', 'k': 'verb', 't': 'Two new species of frog, both found in the cloud forests of Ecuador.', 'v': '',
+     'x': '<em>Found</em> has no helping verb here, so it only describes the frogs. With <em>were</em> in front, it becomes a verb.',
+     'fix': 'Two new species of frog were found in the cloud forests of Ecuador.'},
+    {'id': 'v10', 'k': 'verb', 't': 'The first printed map of the city, drawn by a sailor in 1562.', 'v': '',
+     'x': '<em>Drawn</em> is an <em>-ed</em> form describing the map. The map itself has no verb.',
+     'fix': 'The first printed map of the city was drawn by a sailor in 1562.'},
+    # a clause opened by because, although, when and the like, with no main clause
+    {'id': 'b01', 'k': 'sub', 't': 'Because the river flooded the lower fields every spring.', 'v': 'flooded',
+     'x': '<em>The river flooded</em> is a clause, but <em>because</em> makes it lean on a main clause, and none follows.',
+     'fix': 'Because the river flooded the lower fields every spring, farmers planted on the hills.'},
+    {'id': 'b02', 'k': 'sub', 't': 'Although the first test showed no trace of iron.', 'v': 'showed',
+     'x': '<em>Although</em> sets up a contrast with a main clause that never arrives.',
+     'fix': 'Although the first test showed no trace of iron, the second found plenty.'},
+    {'id': 'b03', 'k': 'sub', 't': 'When the city finally opened its new library in 1998.', 'v': 'opened',
+     'x': 'A <em>when</em> clause gives the time of something else, and the something else is missing.',
+     'fix': 'When the city finally opened its new library in 1998, the old one became a museum.'},
+    {'id': 'b04', 'k': 'sub', 't': 'While most of the class preferred the shorter route.', 'v': 'preferred',
+     'x': '<em>While</em> makes the clause lean on another one. Drop it, or add the main clause it needs.',
+     'fix': 'Most of the class preferred the shorter route.'},
+    {'id': 'b05', 'k': 'sub', 't': 'Since the bridge was closed for repairs all summer.', 'v': 'was closed',
+     'x': '<em>Since</em> gives a reason, and the result it explains never comes.',
+     'fix': 'Since the bridge was closed for repairs all summer, the ferry ran twice as often.'},
+    {'id': 'b06', 'k': 'sub', 't': 'If the samples are stored above freezing for more than a day.', 'v': 'are stored',
+     'x': 'An <em>if</em> clause is a condition, and the sentence stops before saying what happens then.',
+     'fix': 'If the samples are stored above freezing for more than a day, they spoil.'},
+    {'id': 'b07', 'k': 'sub', 't': 'Even though the composer never heard the symphony performed.', 'v': 'heard',
+     'x': '<em>Even though</em> works like <em>although</em>: the clause after it cannot stand alone.',
+     'fix': 'The composer never heard the symphony performed.'},
+    {'id': 'b08', 'k': 'sub', 't': 'Unless the committee approves the budget by Friday.', 'v': 'approves',
+     'x': '<em>Unless</em> brings in a condition, and the main clause it belongs to is missing.',
+     'fix': 'Unless the committee approves the budget by Friday, the project will stop.'},
+    {'id': 'b09', 'k': 'sub', 't': 'Whereas earlier maps showed the river running north.', 'v': 'showed',
+     'x': '<em>Whereas</em> sets up a contrast, and the other half of it never comes.',
+     'fix': 'Whereas earlier maps showed the river running north, the new survey shows it bending east.'},
+    # only a which, who or that clause: its verb belongs to the clause, and no main clause is left
+    {'id': 'r01', 'k': 'rel', 't': 'Many of which were painted on silk.', 'v': 'were painted',
+     'x': '<em>Which</em> makes this a describing clause with nothing here to describe. <em>Many of them</em> would make a sentence.',
+     'fix': 'Many of them were painted on silk.'},
+    {'id': 'r02', 'k': 'rel', 't': 'The bridge, which opened in 1932 after six years of work.', 'v': 'opened',
+     'x': 'The only tensed verb, <em>opened</em>, belongs to the <em>which</em> clause. <em>The bridge</em> itself never gets a verb.',
+     'fix': 'The bridge opened in 1932 after six years of work.'},
+    {'id': 'r03', 'k': 'rel', 't': 'The researchers who studied the ice for nearly a decade.', 'v': 'studied',
+     'x': '<em>Studied</em> is the verb of the <em>who</em> clause. The researchers need a verb of their own.',
+     'fix': 'The researchers who studied the ice for nearly a decade found traces of ancient dust.'},
+    {'id': 'r04', 'k': 'rel', 't': 'Some of whom had never left their village before.', 'v': 'had left',
+     'x': '<em>Whom</em> points back to people in another sentence, so this clause cannot stand alone. <em>Some of them</em> would make a sentence.',
+     'fix': 'Some of them had never left their village before.'},
+    {'id': 'r05', 'k': 'rel', 't': 'A species of moth that feeds only on one kind of orchid.', 'v': 'feeds',
+     'x': '<em>Feeds</em> is the verb of the <em>that</em> clause describing the moth. The moth itself has no verb.',
+     'fix': 'This species of moth feeds only on one kind of orchid.'},
+    {'id': 'r06', 'k': 'rel', 't': 'The letters, most of which were written in French.', 'v': 'were written',
+     'x': '<em>Most of which</em> opens a describing clause, so <em>the letters</em> are left without a verb.',
+     'fix': 'Most of the letters were written in French.'},
+    {'id': 'r07', 'k': 'rel', 't': 'An engineer whose designs shaped the city’s skyline.', 'v': 'shaped',
+     'x': '<em>Shaped</em> belongs to the <em>whose</em> clause. The engineer never gets a verb.',
+     'fix': 'She was an engineer whose designs shaped the city’s skyline.'},
+    {'id': 'r08', 'k': 'rel', 't': 'Which made the results hard to repeat.', 'v': 'made',
+     'x': 'A <em>which</em> clause cannot stand on its own to comment on the sentence before. <em>This</em> can.',
+     'fix': 'This made the results hard to repeat.'},
+    {'id': 'r09', 'k': 'rel', 't': 'The mural, which the students painted over three summers.', 'v': 'painted',
+     'x': '<em>Painted</em> belongs to the <em>which</em> clause. Lift the clause out and only <em>The mural</em> is left.',
+     'fix': 'The students painted the mural over three summers.'},
+]
+
+KINDS = ['ok', 'verb', 'sub', 'rel']
+SUBORDINATORS = ('Because', 'Although', 'When', 'While', 'Since', 'If', 'Even though', 'Unless', 'Whereas', 'After', 'Before', 'Once')
+RELATIVE = re.compile(r'\b(which|who|whom|whose|that)\b', re.I)
+TAGS = re.compile(r'</?(em|b)>')
+
+
+def payload():
+    return {'pos': POS, 'terms': TERMS, 'try': TRY,
+            'cards': [{f: c[f] for f in ('id', 'k', 't', 's', 'v', 'x', 'fix') if f in c} for c in CARDS]}
+
+
+def problems():
+    bad = []
+    names = [p[0] for p in POS]
+    for p in POS:
+        if len(p) != 4 or not all(p) or not p[1].endswith('.') or not p[2].endswith('.'):
+            bad.append('primer entry %s is incomplete' % p[0])
+    for w in TRY:
+        for word, tag in w['words']:
+            if tag not in names:
+                bad.append('exercise word %r has no part of speech %r' % (word, tag))
+        if not w['words'][-1][0].endswith('.') or not w['note'].endswith('.'):
+            bad.append('exercise sentence %r is not finished' % ' '.join(x[0] for x in w['words'])[:40])
+    if set(tag for w in TRY for _, tag in w['words']) != set(names):
+        bad.append('the exercise does not use all eight parts of speech')
+    ids, texts = set(), set()
+    for c in CARDS:
+        cid, k, t = c['id'], c['k'], c['t']
+        if cid in ids or t in texts:
+            bad.append('%s repeats an id or a text' % cid)
+        ids.add(cid); texts.add(t)
+        if k not in KINDS:
+            bad.append('%s: unknown kind %s' % (cid, k))
+        if not (t[0].isupper() and t.endswith('.')) or '  ' in t or "'" in t or '"' in t:
+            bad.append('%s: write it as one sentence-shaped string with curly quotes' % cid)
+        for f in ('x', 'fix'):
+            if f in c and TAGS.sub('', c[f]) != re.sub(r'<[^>]+>', '', c[f]):
+                bad.append('%s: only <em> and <b> are allowed in %s' % (cid, f))
+        if not c['x'].endswith('.'):
+            bad.append('%s: the explanation does not end a sentence' % cid)
+        if k == 'ok':
+            if 'fix' in c or not c.get('s') or not c.get('v') or c['s'] not in t or c['v'] not in t:
+                bad.append('%s: a sentence names a subject and a tensed verb from its text, and has no fix' % cid)
+        else:
+            fix = c.get('fix', '')
+            if not fix or fix == t or not fix.endswith('.') or 's' in c:
+                bad.append('%s: a fragment needs a fix that differs from it' % cid)
+        if k == 'verb' and (c['v'] or t.startswith(SUBORDINATORS) or not re.search(r'\w(ing|ed|en)\b|\bto \w+|\b(set|built|found|spent|drawn|known)\b', t, re.I)):
+            bad.append('%s: a no-verb fragment is built on an -ing, -ed or to form and has no tensed verb' % cid)
+        if k == 'sub' and (not t.startswith(SUBORDINATORS) or c['v'] not in t):
+            bad.append('%s: a because-type fragment opens with the conjunction and keeps its clause verb' % cid)
+        if k == 'rel' and not RELATIVE.search(t):
+            bad.append('%s: a which-type fragment needs which, who, whom, whose or that' % cid)
+        if k == 'rel' and not all(x in t for x in c['v'].split()):
+            bad.append('%s: the clause verb is not in the text' % cid)
+    counts = {k: sum(c['k'] == k for c in CARDS) for k in KINDS}
+    if counts['ok'] < 12 or min(counts['verb'], counts['sub'], counts['rel']) < 8:
+        bad.append('too few cards of a kind: %s' % counts)
+    return bad
+
+
+def main():
+    bad = problems()
+    if bad:
+        sys.exit('\n'.join(bad))
+    text = json.dumps(payload(), ensure_ascii=False, indent=1) + '\n'
+    if '--check' in sys.argv:
+        if not OUT.exists() or OUT.read_text(encoding='utf-8') != text:
+            sys.exit('build/gbasics.json is out of date: run python3 -I src/reading/grammar_basics.py')
+        print('primer, exercise and all %d Sentence or fragment cards check out' % len(CARDS))
+        return
+    OUT.write_text(text, encoding='utf-8')
+    print('wrote %d parts of speech, %d terms, %d exercise sentences and %d cards to %s' % (len(POS), len(TERMS), len(TRY), len(CARDS), OUT.relative_to(ROOT.parent)))
+
+
+if __name__ == '__main__':
+    main()

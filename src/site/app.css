@@ -848,6 +848,17 @@ a.qref:hover code { background: var(--hl); color: var(--hl-ink); }
 .gloss > div { display: grid; grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); gap: .2rem 1.2rem; padding-block: .6rem; border-bottom: 1px solid var(--line); }
 .gloss dt { font-weight: 700; }
 @media (max-width: 640px) { .gloss > div { grid-template-columns: minmax(0, 1fr); } }
+/* Parts of speech in five minutes (Look up): the eight parts, then tap a word to see its part */
+.posbox { margin-top: 1rem; }
+.posbox > .subh:first-child { margin-top: 1.2rem; }
+.posex { display: block; margin-top: .2rem; font-style: italic; color: var(--muted); }
+.poss { display: flex; flex-wrap: wrap; gap: .4rem .35rem; margin-top: .9rem; }
+.posw { display: inline-flex; flex-direction: column; align-items: center; min-width: 2.4rem; padding: .3rem .55rem; border: 1.5px solid var(--line-strong); border-radius: 10px; background: var(--card); color: var(--ink); font: 400 1.04rem/1.35 var(--quote); cursor: pointer; }
+.posw:hover { border-color: var(--ink); }
+.posw .pl { display: none; margin-top: .15rem; font: 600 .7rem/1.3 var(--mono); color: var(--muted); }
+.posw[aria-pressed="true"] { border-color: var(--ink); background: var(--hl); color: var(--hl-ink); }
+.posw[aria-pressed="true"] .pl { display: block; color: inherit; }
+.posnote { margin-top: .55rem; max-width: 44em; }
 .plainlist { display: grid; gap: .6rem; margin-top: .8rem; max-width: 44em; }
 .plainlist li { padding-left: 1.1rem; position: relative; }
 .plainlist li::before { content: ""; position: absolute; left: 0; top: .62em; width: .4rem; height: .4rem; background: var(--line-strong); }

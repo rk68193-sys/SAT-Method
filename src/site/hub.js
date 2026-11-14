@@ -33,6 +33,11 @@
         ['reasoning', 'Deeper reading structures'], ['data-patterns', 'Tables and graphs: deeper patterns'], ['others', 'More question types'], ['vocab', 'Words to know: the vocabulary for Words in Context'], ['vocab-check', 'Can’t predict the word? Decide plus or minus'], ['vocab-second', 'Second meanings'], ['vocab-func', 'Words in Purpose and structure choices'], ['notesfirst', 'Notes questions: goal first'],
         ['method', 'Grammar in 60 seconds: look, check, confirm'], ['shortcuts', 'Grammar shortcuts'], ['hard', 'What makes a grammar question hard'], ['transitions', 'Every transition offered'], ['glossary', 'Glossary'], ['nottested', 'What is not tested']
       ].forEach(function (r) { add('Guide', r[1], '', r[0]); });
+      if (D.gbasics) {
+        add('Guide', 'Parts of speech in five minutes', 'Noun, pronoun, verb, adjective, adverb, preposition, conjunction and determiner, with a short exercise.', 'parts-of-speech', 'part of speech grammar basics subject tensed verb');
+        add('Drill', 'Sentence or fragment?', 'Can a string of words stand alone? The warm-up for Which boundary?', 'drill-frag', 'fragment complete sentence stand alone tensed verb because which');
+        D.gbasics.terms.forEach(function (t) { add('Term', t[0], plain(t[1]), 'parts-of-speech'); });
+      }
       RD.jobs.forEach(function (j) { add('Reading question', j.name, plain(j.look), j.id, (j.says || []).join(' ')); });
       RLIST.forEach(function (x) { add('Worked example', 'Example ' + x.n + ': ' + plain(x.title), JOBNAME[x.job] || '', 'ex-' + x.n, x.diff); });
       CONCEPTS.forEach(function (c) { add('Grammar lesson', 'Lesson ' + c.n + ': ' + plain(c.title), PART[c.part].title, c.id); });

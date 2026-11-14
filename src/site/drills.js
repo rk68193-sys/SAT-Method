@@ -17,6 +17,9 @@
       blurb: 'A wrong choice from a worked example. Name the way it fails, using the five kinds from Step 4.' },
     pattern: { part: 'grammar', title: 'Spot the pattern', goal: 5, ask: 'What does this question test?',
       blurb: 'See only the four answer choices of a real question. Name what it tests before you read a word of the passage.' },
+    frag: { part: 'grammar', title: 'Sentence or fragment?', goal: 8, ask: 'Can these words stand alone as a sentence? If not, what is missing?',
+      blurb: 'One string of words, punctuated as a sentence. Decide whether it could stand alone. The warm-up for Which boundary?, and the skill behind rule 9.1' +
+        (typeof U !== 'undefined' && U['u9-1'] ? ' (' + U['u9-1'].q + ' questions, ' + U['u9-1'].split.Easy + ' of them Easy)' : '') + '. Cards written for this site. <a href="#parts-of-speech">Parts of speech in five minutes</a>.' },
     boundary: { part: 'grammar', title: 'Which boundary?', goal: 10, ask: 'What stands on each side of the highlighted answer?',
       blurb: 'A sentence from a real question, often cut short, with the right answer in place. Name the situation that makes that mark right. <a href="#part-a">Learn the eight situations first</a>.' },
     verb: { part: 'grammar', title: 'Which verb situation?', goal: 15, ask: 'Which situation are you in?',
@@ -56,6 +59,21 @@
     { k: 'c18', b: 'Time and order', s: 'next, finally, earlier, meanwhile, numbered points' },
     { k: 'c19', b: 'Other relations', s: 'how often, fitness, place' }
   ];
+  /* Sentence or fragment?: a sentence, or one of the three kinds of fragment the wrong answers build (src/reading/grammar_basics.py) */
+  var FRAG_OPTS = [
+    { k: 'ok', b: 'A sentence', s: 'a subject with a tensed verb of its own' },
+    { k: 'verb', b: 'Fragment: no tensed verb', s: 'only an <em>-ing</em>, <em>to</em> or <em>-ed</em> form' },
+    { k: 'sub', b: 'Fragment: because, although, when…', s: 'that clause leans on a main clause that is not there' },
+    { k: 'rel', b: 'Fragment: which, who, many of which…', s: 'the only verb belongs to a describing clause' }
+  ];
+  var FRAG_REF = { ok: 'parts-of-speech', verb: 'u9-1', sub: 'u6-2', rel: 'u9-2' };
+  var FRAG_HEAD = { ok: 'A sentence', verb: 'Fragment: no tensed verb', sub: 'Fragment: a clause opened by a word like because, and no main clause', rel: 'Fragment: a describing clause (which, who, that), and no main clause' };
+  var FRAG_WHYNOT = {
+    ok: 'A sentence needs a subject with a tensed verb of its own, outside any <em>because</em> or <em>which</em> clause.',
+    verb: 'That kind has no tensed verb at all: only <em>-ing</em>, <em>to</em> or <em>-ed</em> forms with no helping verb.',
+    sub: 'That kind opens with a word such as <em>because</em> or <em>although</em>, and no main clause follows.',
+    rel: 'That kind is only a <em>which</em>, <em>who</em> or <em>that</em> clause, so its one verb belongs to the clause.'
+  };
   var JOB_OPTS = [
     { k: 'main', b: 'Main idea' }, { k: 'detail', b: 'Detail' }, { k: 'inference', b: 'Inference', s: 'finish the last sentence' },
     { k: 'support', b: 'Support or weaken', s: 'a finding and a claim' }, { k: 'quote', b: 'Quotation' }, { k: 'data', b: 'Table or graph' },
@@ -146,6 +164,14 @@
           prompt: '<p class="label">The four choices of question ' + ex.q + '</p>' + miniHTML(ex, false, false),
           after: '<p class="label">The four choices of question ' + ex.q + '</p>' + miniHTML(ex, true, true),
           explain: '<p><b>' + FAM[c.fam].label + '.</b> ' + (ex.look || PAT[ex.pat].pat) + (ex.tie ? ' ' + ex.tie : '') + '</p><p>This question is rule <a href="#' + u.id + '">' + u.num + '</a>: ' + u.title + '.</p>' });
+      });
+    } else if (kind === 'frag') {
+      ((D.gbasics && D.gbasics.cards) || []).forEach(function (c) {
+        var u = U[FRAG_REF[c.k]];
+        items.push({ id: 'fr:' + c.id, ref: FRAG_REF[c.k], opts: FRAG_OPTS, ans: c.k,
+          prompt: '<p class="passage boxed">' + esc(c.t) + '</p>',
+          explain: '<p><b>' + FRAG_HEAD[c.k] + '.</b> ' + (c.k === 'ok' ? 'Subject: <b>' + esc(c.s) + '</b>. Tensed verb: <b>' + esc(c.v) + '</b>. ' : '') + c.x + '</p>' +
+            (c.fix ? '<p class="fine"><b>One way to fix it:</b> ' + esc(c.fix) + '</p>' : '') + (u ? ruleLine(u) : '') });
       });
     } else if (kind === 'boundary') {
       var sitOpts = D.structure.rows.map(function (r, i) { return { k: String(i), b: r.head }; });
@@ -295,6 +321,7 @@
     if (kind === 'mskill' && MSK[mine.k]) { return '<p class="whypick"><b>Not ' + esc(MSK[mine.k].name) + '.</b> That skill: ' + esc(MSK[mine.k].idea) + '</p>'; }
     if (kind === 'link') { return '<p class="whypick"><b>Not ' + esc(b) + '.</b> Read the two statements with “' + PLAIN_LINK[mine.k] + '” in the blank: the logic breaks.</p>'; }
     if (kind === 'pattern') { return '<p class="whypick"><b>Not ' + esc(b) + '.</b> That would show ' + esc(FAM[mine.k].sub.charAt(0).toLowerCase() + FAM[mine.k].sub.slice(1)) + ' across the four choices.</p>'; }
+    if (kind === 'frag') { return '<p class="whypick"><b>Not “' + esc(b) + '”.</b> ' + FRAG_WHYNOT[mine.k] + '</p>'; }
     if (kind === 'tag') { return '<p class="whypick"><b>Not ' + esc(b) + '.</b> ' + esc(TAG_DEF[mine.k] || '') + '</p>'; }
     if (kind === 'wmean') { return '<p class="whypick"><b>Not this one.</b> That is what <em>' + esc(mine.k) + '</em> means.</p>'; }
     if (kind === 'why') { var o = KIND_OPTS.filter(function (x) { return x.k === mine.k; })[0]; return '<p class="whypick"><b>Not ' + esc(b) + '.</b> That kind ' + esc(o ? o.s : '') + '.</p>'; }
@@ -462,7 +489,7 @@
     if (mm && MSK[mm[1]]) { return 'Lesson · ' + esc(MSK[mm[1]].name); }
     mm = /^m-found-([a-z]+)$/.exec(ref);
     if (mm && MFOUNDBY[mm[1]]) { return 'Algebra foundations · ' + esc(MFOUNDBY[mm[1]].name); }
-    return { chunk: 'Step 2 · Chunk: the tags', long: 'Long sentences: core first', para: 'Long passages: make them make sense', method: 'The 60-second method', job: 'Step 1 · Job', 'vocab-second': 'Words to know · Second meanings' }[ref] || ref;
+    return { chunk: 'Step 2 · Chunk: the tags', long: 'Long sentences: core first', para: 'Long passages: make them make sense', method: 'The 60-second method', 'parts-of-speech': 'Parts of speech in five minutes', job: 'Step 1 · Job', 'vocab-second': 'Words to know · Second meanings' }[ref] || ref;
   }
   function drillFinish() {
     var R = drillRun;
