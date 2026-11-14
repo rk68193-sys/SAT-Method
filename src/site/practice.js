@@ -1,7 +1,7 @@
   /* =================== Practice: learning and paced sets =================== */
   var TIERS = { learn: { g: null, r: null, label: 'Learn · untimed' }, std: { g: 60, r: 70, label: 'Standard · 1:00 grammar, 1:10 reading' }, fast: { g: 45, r: 55, label: 'Fast · 0:45 and 0:55' }, easy: { g: 80, r: 90, label: 'Relaxed · 1:20 and 1:30' } };
   var TS = null, tclock = null;
-  var REVIEW_CAUSES = [['', 'Choose a cause'], ['meaning', 'Misread meaning, reference or viewpoint'], ['scope', 'Missed a qualification or comparison'], ['evidence', 'Used unsupported evidence or prior knowledge'], ['data', 'Misread data, units or direction'], ['goal', 'Missed the question’s goal or relationship'], ['grammar', 'Misidentified sentence structure or a grammar rule'], ['pace', 'Rushed or ran out of time'], ['slip', 'Selection slip'], ['other', 'Other / still investigating']];
+  var REVIEW_CAUSES = [['', 'Choose a cause'], ['meaning', 'Misread meaning, reference or viewpoint'], ['scope', 'Missed a qualification or comparison'], ['evidence', 'Used unsupported evidence or prior knowledge'], ['data', 'Misread data, units or direction'], ['goal', 'Missed the question’s goal or relationship'], ['grammar', 'Misidentified sentence structure or a grammar rule'], ['vocab', 'Did not know a word'], ['pace', 'Rushed or ran out of time'], ['slip', 'Selection slip'], ['other', 'Other / still investigating']];
   function causeLabel(key) {
     var cause = REVIEW_CAUSES.filter(function (c) { return c[0] === key; })[0];
     return cause && key ? cause[1] : '';

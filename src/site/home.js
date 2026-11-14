@@ -16,6 +16,7 @@
       ['mstart', 'math', 'Start here', 'How to approach every math question, what the test covers, and what the data says.', 'start'],
       ['mhub', 'm-hub', 'Overview', 'Everything there is to learn for Math, with one search across lessons, question types, patterns, shortcuts and calculator moves.', 'learn'],
       ['mlearn', 'm-learn', 'Lessons', 'All 19 skills explained from scratch, each with a method, a worked example and its question types.', 'learn'],
+      ['mfound', 'm-found', 'Foundations', 'The six algebra moves every question assumes, from fractions to an unknown in a denominator, each with a worked example, the usual slip and a drill.', 'learn'],
       ['mpat', 'm-patterns', 'Big patterns', 'A dozen ideas that connect the question types, so one idea solves many kinds of question.', 'learn'],
       ['mstudy', 'm-study', 'Expanded types', '249 fine question types, fuller explanations, close variants, and 998 calculator checks with clear scope.', 'learn'],
       ['mtypes', 'm-types', 'Question finder', 'Type words from a question to see which of the ' + MORDER.length + ' question types it is and how to solve it.', 'learn'],
@@ -23,6 +24,7 @@
       ['mdes', 'm-desmos', 'Desmos', MD.desmos.length + ' calculator moves with exactly what to type, checked on real questions.', 'learn'],
       ['mref', 'm-ref', 'Formulas', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'learn'],
       ['mprac', 'm-practice', 'Practice', mfmt(MQ.length) + ' real College Board questions with official answers and explanations. Learn one question at a time, or sit a timed 22-question module.', 'practice'],
+      ['mdrills', 'm-drills', 'Drills', 'Short drills on single moves: name the skill, count the solutions, pick the form that shows the answer, quick reps on exponents, percents, slope and fractions, and the algebra basics.', 'practice'],
       ['mmap', 'm-map', 'My map', 'All ' + MST.methods.length + ' question types colored by how you are doing, the reasons you miss, and what to practice next.', 'map']] }
   };
   /* the pages to list on Home and in the footer: the Learn overview is named for what it is */
@@ -39,6 +41,7 @@
     target: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6"/></svg>',
     search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>',
     bolt: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/></svg>',
+    sheet: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h7.5l3.5 3.5v13a.5.5 0 0 1-.5.5h-10.5a.5.5 0 0 1-.5-.5v-16a.5.5 0 0 1 .5-.5z"/><path d="M14 3.5V7h3.5"/><path d="M9 12h6M9 15.5h6"/></svg>',
     pen: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-4L16 5l3 3L8 19z"/><path d="M14 7l3 3"/></svg>',
     chat: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 4v-4A1.5 1.5 0 0 1 4 14.5z"/></svg>'
   };
@@ -187,6 +190,7 @@
       '<section class="hsec"><div class="hsec-h"><h2 class="h2">Everything in one place</h2><p class="muted">Jump straight to the part you need.</p></div><div class="hfeats">' +
         feat('math', 'target', 'Math practice', 'Real questions by skill, pattern or difficulty, with the method after each one.', 'm-practice') +
         feat('math', 'bolt', 'Timed module', '22 questions on one 35-minute clock, with mark for review, cross-out and the calculator.', 'm-module') +
+        feat('math', 'pen', 'Math drills', 'Name the skill, count the solutions, read a form, and quick reps for the usual slips.', 'm-drills') +
         feat('math', 'grid', 'Mastery map', 'Every question type colored by how you are doing, and the reasons you miss.', 'm-map') +
         feat('math', 'graph', 'Desmos playbook', MD.desmos.length + ' calculator moves with exactly what to type.', 'm-desmos') +
         feat('math', 'grid', 'Big patterns', 'The ideas that connect math question types.', 'm-patterns') +

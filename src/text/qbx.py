@@ -58,10 +58,11 @@ class Span:
     """A run of text in one font."""
     kind = 't'
 
-    def __init__(self, text, box, base, font, page, chars):
-        self.text, self.box, self.base, self.font, self.page, self.chars = text, box, base, font, page, chars
+    def __init__(self, text, box, base, font, page, chars, size=None):
+        self.text, self.box, self.base, self.font, self.page, self.chars, self.size = text, box, base, font, page, chars, size
         self.used = False
         self.under = False
+        self.script = None      # 'sup' or 'sub' for an exponent or subscript set as smaller text, 'lost' if it has no line
 
 
 class Gfx:
@@ -85,7 +86,7 @@ def page_atoms(page, k):
                 if not text.strip():
                     continue
                 x0, y0, x1, y1 = s['bbox']
-                spans.append(Span(text, Box(x0, y0 + dy, x1, y1 + dy), s['origin'][1] + dy, s['font'], k, chars))
+                spans.append(Span(text, Box(x0, y0 + dy, x1, y1 + dy), s['origin'][1] + dy, s['font'], k, chars, s['size']))
     for g in page.get_drawings():
         r = g['rect']
         if r.width <= 0 and r.height <= 0:
@@ -125,7 +126,7 @@ class Line:
         self.base = base
         self.spans = []
         self.gfx = []
-        self.tokens = []        # filled by tokens(): ('t', text, under) | ('g', [Gfx], Box)
+        self.tokens = []        # filled by build(): ['t', text, under, script] | ['g', [Gfx], Box]
 
     @property
     def box(self):
@@ -134,10 +135,10 @@ class Line:
     def build(self):
         items = [(s.box.x0, 0, s) for s in self.spans] + [(g.box.x0, 1, g) for g in self.gfx]
         items.sort(key=lambda t: (t[0], t[1]))
-        out = []          # ['t', text, underlined, x0, x1] | ['g', [Gfx], Box]
+        out = []          # ['t', text, underlined, x0, x1, script] | ['g', [Gfx], Box]
         for _, k, it in items:
             if k == 0:
-                out.append(['t', it.text, it.under, it.box.x0, it.box.x1])
+                out.append(['t', it.text, it.under, it.box.x0, it.box.x1, it.script])
             elif out and out[-1][0] == 'g' and it.box.x0 - out[-1][2].x1 < 14:
                 out[-1][1].append(it); out[-1][2].add(it.box)
             else:
@@ -153,10 +154,10 @@ class Line:
                 b[1] = ' ' + b[1]
         tok = []
         for t in out:
-            if t[0] == 't' and tok and tok[-1][0] == 't' and tok[-1][2] == t[2]:
+            if t[0] == 't' and tok and tok[-1][0] == 't' and tok[-1][2] == t[2] and tok[-1][3] == t[5]:
                 tok[-1][1] += t[1]
             elif t[0] == 't':
-                tok.append(['t', t[1], t[2]])
+                tok.append(['t', t[1], t[2], t[5]])
             else:
                 tok.append(t)
         self.tokens = tok
@@ -348,9 +349,50 @@ def split_under(s, x0, x1, spans):
             s.text, s.chars, s.box, s.under = ''.join(c[0] for c in chars), chars, box, under
             first = False
         else:
-            n = Span(''.join(c[0] for c in chars), box, s.base, s.font, s.page, chars)
+            n = Span(''.join(c[0] for c in chars), box, s.base, s.font, s.page, chars, s.size)
             n.under = under
+            n.script = s.script
             spans.append(n)
+
+
+SCRIPT = 0.85     # body text is set at 0.9 in the export's units; the older questions set an exponent or subscript at 0.75
+
+
+def attach_scripts(spans, top, bottom):
+    """The older questions set an exponent or a subscript as smaller text, raised or lowered by a few points (x2, 10 to
+    the 8, x1). Raised that far, it would be read as a line of its own, and its digits would end up away from what they
+    belong to. Each run of small text that touches a word of ordinary text a little above or below it takes that word's
+    baseline and is marked as an exponent ('sup') or a subscript ('sub'). A run with no such neighbour is marked 'lost',
+    which the audit reports."""
+    live = [s for s in spans if not s.used and top <= s.base < bottom and s.size is not None]
+    small = sorted([s for s in live if s.size < SCRIPT], key=lambda s: (round(s.base, 1), s.box.x0))
+    body = [s for s in live if s.size >= SCRIPT]
+    runs = []
+    for s in small:
+        r = runs[-1] if runs else None
+        if r and abs(r[-1].base - s.base) < 0.6 and -0.6 <= s.box.x0 - r[-1].box.x1 < 1.5:
+            r.append(s)
+        else:
+            runs.append([s])
+    for r in runs:
+        x0, x1, base = r[0].box.x0, r[-1].box.x1, r[0].base
+        best = None
+        for b in body:
+            lift = b.base - base                        # above the word's baseline when positive
+            if not 1.5 < abs(lift) < 5.0:
+                continue
+            after = -0.6 <= x0 - b.box.x1 < 1.5         # the run follows the word, as an exponent follows its base
+            before = -0.6 <= b.box.x0 - x1 < 1.5
+            if after or before:
+                rank = (0 if after else 1, abs(x0 - b.box.x1) if after else abs(b.box.x0 - x1))
+                if best is None or rank < best[0]:
+                    best = (rank, b, lift)
+        for s in r:
+            if best is None:
+                s.script = 'lost'
+            else:
+                s.base = best[1].base
+                s.script = 'sup' if best[2] > 0 else 'sub'
 
 
 def centred(line):
@@ -386,6 +428,7 @@ def layout(spans, gfx, top, bottom, merge=True):
     """Blocks for everything between two heights: paragraphs, display equations and figures, in reading order."""
     figs = figures(gfx, spans, top, bottom, merge)
     underlines(gfx, spans, top, bottom)
+    attach_scripts(spans, top, bottom)
     text = sorted([s for s in spans if not s.used and top <= s.base < bottom], key=lambda s: s.base)
     lines = []
     for s in text:
@@ -746,6 +789,8 @@ def audit(blocks, short_ok=False):
             out.append('a character the export does not name')
         for l in b['lines']:
             for t in l.tokens:
+                if t[0] == 't' and t[3] == 'lost':
+                    out.append('small raised or lowered text with nothing beside it')
                 if t[0] != 'g':
                     continue
                 box = t[2]

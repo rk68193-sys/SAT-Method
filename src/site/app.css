@@ -1456,8 +1456,6 @@ header.mhead { display: block; max-width: 52rem; }
 .mtable thead th { font: 700 .78rem/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--pencil-text); background: var(--sunk); }
 .mtable tbody th { font-weight: 700; width: 38%; }
 .mtable tr:last-child > * { border-bottom: 0; }
-.mref2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; margin-top: 2rem; }
-@media (max-width: 900px) { .mref2 { grid-template-columns: 1fr; } }
 .mshorts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 26rem), 1fr)); gap: 1rem; margin-top: 1.8rem; }
 .mshort { display: grid; grid-template-columns: 2.6rem 1fr; gap: 1rem; padding: 1.2rem; border-radius: 20px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
 .mshort > div { display: grid; gap: .65rem; min-width: 0; }
@@ -1500,7 +1498,8 @@ header.mhead { display: block; max-width: 52rem; }
 .mpgrid { display: flex; flex-wrap: wrap; align-items: end; gap: .7rem; margin-top: 1.2rem; }
 .mpgrid .field { flex: 1 1 14rem; max-width: 22rem; }
 .mpgrid input { font: 600 1.3rem/1.2 var(--mono) !important; }
-.mpfb { margin-top: 1.4rem; padding: 1.2rem 1.3rem; border-radius: 20px; display: grid; gap: 1rem; }
+/* minmax(0, 1fr): a wide formula in the explanation scrolls inside its own line instead of widening the page on a phone */
+.mpfb { margin-top: 1.4rem; padding: 1.2rem 1.3rem; border-radius: 20px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
 .mpfb.ok { background: var(--ok-soft); }
 .mpfb.no { background: var(--bad-soft); }
 .mpfb.warn { background: var(--sunk); }
@@ -1831,6 +1830,8 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .mtx .meq { margin: .9em 0; padding: .1em 0; }
 .mtx .meq.c { text-align: center; }
 .mtx .cap { text-align: center; font-weight: 600; }
+/* an exponent or subscript the export set as small text (x², 10⁸, x₁); it must not widen the gap between lines */
+.mtx sup, .mtx sub, .mpch-c sup, .mpch-c sub { font-size: .72em; line-height: 0; }
 .mfig { display: block; max-width: 100%; height: auto; mix-blend-mode: var(--img-blend); filter: var(--img-filter); }
 .mtx .mfigp { margin: .8em 0; }
 .mtx-ch { display: grid; gap: .5em; list-style: none; padding: 0; }
@@ -1997,3 +1998,84 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .acct-inline { display: grid; gap: .9rem; margin-top: 1.1rem; max-width: 26rem; }
 #v-account .sec > .row { margin-top: 1.1rem; }
 #v-account .data-rows { max-width: 44rem; }
+
+/* ---------- Reading: words to know ---------- */
+.vtools { display: flex; flex-wrap: wrap; gap: .8rem 1.4rem; align-items: end; margin-top: 1rem; }
+.vtools .field { flex: 1 1 14rem; max-width: 22rem; }
+.wordlist { display: grid; margin-top: .6rem; border-top: 1px solid var(--line); }
+.vrow { display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: .15rem 1.2rem; padding: .55rem 0; border-bottom: 1px solid var(--line); }
+.vrow dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .45rem; }
+.vrow dd p { margin: 0; }
+.vrow .vmeta { font-size: .84rem; color: var(--muted); margin-top: .15rem; }
+.vrow .vmeta b { color: var(--ink-2); font-weight: 600; }
+.vform { font-size: .8rem; color: var(--muted); flex-basis: 100%; }
+.vq { font: 400 .8rem var(--mono); margin-right: .45rem; white-space: nowrap; }
+.vchg { display: inline-grid; place-items: center; min-width: 1.15rem; height: 1.15rem; padding: 0 .2rem; border-radius: 6px; font: 700 .8rem/1 var(--mono); }
+.vchg.p { background: var(--ok-soft); color: var(--ok); }
+.vchg.n { background: var(--bad-soft); color: var(--bad); }
+.vneg { columns: 2 18rem; column-gap: 2rem; }
+.vneg li { break-inside: avoid; }
+.vsec th .vq2 { display: block; font: 400 .78rem var(--mono); color: var(--muted); margin-top: .1rem; }
+.vpos { display: block; font: 600 .7rem/1.3 var(--body); letter-spacing: .05em; text-transform: uppercase; color: var(--warn-text); margin-top: .15rem; }
+.vfunc .num, .vfunc th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.vword { font: 600 2rem/1.2 var(--display); letter-spacing: -.01em; }
+@media (max-width: 640px) {
+  .vrow { grid-template-columns: minmax(0, 1fr); }
+  .vword { font-size: 1.6rem; }
+}
+
+/* ---------- Math drills ---------- */
+.mxbox { display: grid; gap: .35rem; padding: 1rem 1.2rem; background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+.mxl { font: 500 1.3rem/1.45 var(--quote); letter-spacing: .01em; overflow-wrap: anywhere; }
+.mxl sup, .dopt sup, .dexp sup, .whypick sup { font-size: .7em; line-height: 0; }
+.mxlead { margin-bottom: .5rem; max-width: 40em; }
+.mxwant { font: 600 1.12rem/1.4 var(--display); }
+.mxwant .label { display: block; margin-bottom: .15rem; }
+.mxf { font: 500 1.08rem/1.4 var(--quote); }
+.fr { display: inline-flex; flex-direction: column; align-items: stretch; vertical-align: middle; text-align: center; font-size: .86em; line-height: 1.15; margin: 0 .12em; }
+.fr > span:first-child { border-bottom: 1px solid currentColor; padding: 0 .2em .05em; }
+.fr > span:last-child { padding: .05em .2em 0; }
+.mxl .fr { font-size: .8em; }
+.mtr-drill { font-size: .96rem; }
+.mtr-drill a { white-space: nowrap; }
+#v-mdrills .dprompt .mtx, #v-mdrills .dprompt .mimg { max-width: 100%; }
+
+/* ---------- Math: algebra foundations ---------- */
+.mfound-toc { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1.4rem; }
+.mfound-toc .mchip { font-size: .93rem; padding: .25rem .75rem; }
+.mfound { max-width: 52rem; }
+.mfound-idea { font: 500 1.12rem/1.5 var(--body); color: var(--ink); margin: .6rem 0 1.1rem; }
+.mfx { display: grid; gap: .6rem; margin: .7rem 0 .2rem; padding-left: 1rem; border-left: 3px solid var(--pencil); font: 500 1.12rem/1.45 var(--quote); overflow-wrap: anywhere; }
+.mfx-n { display: block; margin-top: .1rem; font: 400 .9rem/1.4 var(--body); color: var(--muted); }
+.mfound-more { margin-top: .8rem; }
+.mfound-go { margin-top: 1rem; }
+
+/* ---------- Math: what the bank never asks ---------- */
+.mnotin { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 2rem; margin-top: 1.2rem; align-items: start; }
+.mnotin .h3 { font-size: 1.15rem; }
+.mnotin .mfacts { margin-top: .6rem; }
+.mnotin .mfacts + .h3 { margin-top: 1.6rem; }
+.mnotin-q { display: inline-flex; flex-wrap: wrap; gap: .3rem; vertical-align: baseline; }
+.mnotin-q .mchip { margin: 0; }
+#m-notin > .fine { margin-top: 1rem; max-width: 52rem; }
+@media (max-width: 860px) { .mnotin { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Math: the reference sheet ---------- */
+.msheet-body { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 1rem; }
+.msheet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.6rem, 1fr)); gap: .7rem; }
+.msheet-c { display: grid; align-content: start; gap: .4rem; margin: 0; padding: .7rem .75rem .8rem; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+.msheet .msheet-c { background: var(--paper); }
+.msheet-c.wide { grid-column: span 2; }
+.msheet-c svg { display: block; width: 100%; height: auto; max-height: 7.5rem; color: var(--ink); fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.msheet-c svg .d { stroke-dasharray: 4 3; }
+.msheet-c svg .dot { fill: currentColor; stroke: none; }
+.msheet-c svg text { fill: currentColor; stroke: none; font: italic 500 15px var(--quote); }
+.msheet-c svg text.ang { font: 400 10px var(--body); }
+.msheet-c figcaption { display: grid; gap: .1rem; }
+.msheet-c figcaption b { font: 600 .88rem/1.3 var(--body); color: var(--ink-2); }
+.msheet-f { font: 500 1.08rem/1.45 var(--quote); }
+.msheet-f sup { font-size: .7em; line-height: 0; }
+.msheet-f .fr { font-size: .8em; }
+.msheet-facts { display: grid; gap: .35rem; margin-top: .9rem; padding: .8rem 1rem .8rem 2rem; border-radius: 14px; background: var(--sunk); list-style: disc; font-size: .97rem; }
+#m-sheet .msheet-grid { grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); margin-top: 1.2rem; }
+@media (max-width: 340px) { .msheet-c.wide { grid-column: auto; } }

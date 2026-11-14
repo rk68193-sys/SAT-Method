@@ -14,8 +14,9 @@
         '<iframe title="Desmos graphing calculator, College Board version" src="' + MCALC_URL + '"></iframe>';
       document.body.appendChild(el);
     }
+    if (open && mSheetOpen()) { mSheetShow(false); }
     el.hidden = !open;
-    document.body.classList.toggle('calc-open', !!open);
+    document.body.classList.toggle('calc-open', !!open || mSheetOpen());
     $$('[data-calc]').forEach(function (b) { b.setAttribute('aria-pressed', open ? 'true' : 'false'); });
     /* on a phone the panel covers the lower part of the screen, so bring the question to the top */
     var card = open && narrow() ? $('#v-mprac .mpcard') : null;
@@ -70,8 +71,8 @@
   function mmRun(qs, o) {
     if (!qs.length) { return; }
     clearInterval(mpInterval);
-    mCalcReset();
-    var R = modNew({ p: 'mm', host: viewEl.mprac, wrap: 'wrap mpwrap mmwrap', n: qs.length, limit: mmLimit(qs.length), tools: mCalcBtn(),
+    mCalcReset(); mSheetShow(false);
+    var R = modNew({ p: 'mm', host: viewEl.mprac, wrap: 'wrap mpwrap mmwrap', n: qs.length, limit: mmLimit(qs.length), tools: mCalcBtn() + mSheetBtn(),
       kind: function (i) { return qs[i].mc ? 'Multiple choice' : 'Type in your answer'; },
       answered: function (i) { return String(R.ans[i]).trim() !== ''; },
       draw: mmDraw, finish: mmFinish, alive: function () { return MP === R; } });
@@ -142,7 +143,7 @@
   /* ---------- finishing: grade, save, results ---------- */
   function mmFinish(timeUp) {
     if (!MP || !MP.module || MP.over) { return; }
-    mCalcShow(false);
+    mCalcShow(false); mSheetShow(false);
     MP.used = modStop(MP); MP.timeUp = !!timeUp; MP.rev = null;
     var ts = Date.now(), right = 0;
     MP.res = MP.qs.map(function (q, i) {

@@ -132,7 +132,7 @@
 
   /* ---------- offline: the site as an app, and the questions kept on the device ---------- */
   var PWA_OK = 'serviceWorker' in navigator && !!window.caches && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1');
-  var PWA_Q = 'sat-sprint-q-v1', pwaPrompt = null, offRun = null;
+  var PWA_Q = 'sat-sprint-q-v2', pwaPrompt = null, offRun = null;      /* the same name as QS in sw.js */
   if (PWA_OK) {
     window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
     window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); pwaPrompt = e; if (cur.view === 'data') { offDraw(); } });
@@ -141,9 +141,9 @@
   function pwaStandalone() { try { return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; } catch (e) { return false; } }
   /* every file a question needs that is not already inside the page */
   function offList() {
-    var out = ['m/t/_glyphs.js'], seen = {};
+    var out = [mtxUrl('_glyphs')], seen = {};
     MQ.forEach(function (q) {
-      if (MTXT.on && !MTX_HELD[q.id]) { out.push('m/t/' + q.id + '.js'); return; }
+      if (MTXT.on && !MTX_HELD[q.id]) { out.push(mtxUrl(q.id)); return; }
       out.push('m/q/' + q.id + '.webp', 'm/r/' + q.id + '.webp');
       if (q.qnw) { out.push('m/qn/' + q.id + '.webp'); }
       if (q.rnw) { out.push('m/rn/' + q.id + '.webp'); }
@@ -151,6 +151,12 @@
     (document.getElementById('sprint-data').textContent.match(/rw\/f\/[\w\-]+\.webp/g) || []).forEach(function (u) { if (!seen[u]) { seen[u] = 1; out.push(u); } });
     rwItems().forEach(function (it) { var b = it.b; if (b && b.qsrc && !b.txt && !seen[b.qsrc]) { seen[b.qsrc] = 1; out.push(b.qsrc); if (b.rsrc) { out.push(b.rsrc); } } });
     return out;
+  }
+  /* a question file kept under a new stamp (?v=) replaces the copies kept under older ones, as sw.js does */
+  function offKeep(cache, u, res) {
+    var url = new URL(u, location.href);
+    if (!url.search) { return cache.put(u, res); }
+    return cache.delete(url.origin + url.pathname, { ignoreSearch: true }).then(function () { return cache.put(u, res); });
   }
   function offHave(list) {
     return caches.open(PWA_Q).then(function (c) { return c.keys(); }).then(function (keys) {
@@ -170,7 +176,7 @@
         if (i >= list.length || run.stop) { return Promise.resolve(); }
         var u = list[i++];
         return cache.match(u).then(function (hit) {
-          return hit || fetch(u).then(function (res) { if (!res.ok) { throw new Error('missing'); } return cache.put(u, res); });
+          return hit || fetch(u).then(function (res) { if (!res.ok) { throw new Error('missing'); } return offKeep(cache, u, res); });
         }).then(function () { run.done += 1; }, function (err) {
           run.failed += 1;
           if (err && err.name === 'QuotaExceededError') { run.full = true; run.stop = true; }

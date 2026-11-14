@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -15,15 +15,15 @@
     if (cur.view) { viewY[cur.view] = window.scrollY; }
     if (cur.view === 'practice') { timedPause(); rmPause(); }
     if (cur.view === 'grammar') { demoPause(); }
-    if (cur.view === 'drills') { drillAway(); }
-    if (cur.view === 'mprac') { mpPause(); mCalcShow(false); }
+    if (cur.view === 'drills' || cur.view === 'mdrills') { drillAway(); }
+    if (cur.view === 'mprac') { mpPause(); mCalcShow(false); mSheetShow(false); }
     VIEWS.forEach(function (k) { viewEl[k].hidden = k !== v; });
     markNav(v);
     cur.view = v;
     document.body.setAttribute('data-subj', VIEW_SUBJ[v] || 'home');
     if (v === 'practice') { timedResume(); rmResume(); }
     if (v === 'grammar') { demoResume(); }
-    if (v === 'drills' && !document.hidden) { drillBack(); }
+    if ((v === 'drills' || v === 'mdrills') && !document.hidden) { drillBack(); }
     if (v === 'mprac' && !document.hidden) { mpResume(); }
     var cur_a = $('#tabs a[aria-current]');
     if (cur_a && cur_a.scrollIntoView) { try { cur_a.scrollIntoView({ inline: 'nearest', block: 'nearest' }); } catch (e) {} }
@@ -50,7 +50,7 @@
   var READ_AT = {
     reading: ['routine'], routine: ['routine'], reasoning: ['reasoning'], 'data-patterns': ['dataPatterns'], 'source-findings': ['reviewFindings'], shape: ['shape'], job: ['job'], leadin: ['job', 'leadin'], chunk: ['chunk'], tags: ['chunk', 'tags'],
     turns: ['chunk', 'turns'], names: ['chunk', 'names'], long: ['long'], apart: ['long', 'apart'], para: ['para'], say: ['say'], check: ['check'],
-    traps: ['check', 'traps'], notesfirst: ['notes'], pturn: ['para', 'pturn'], pmethod: ['para', 'pmethod'], goalfirst: ['notes'], partly: ['check', 'partly'], myths: ['check', 'myths'], others: ['others'], train: ['others', 'train'], sets: ['sets'], measured: ['measured']
+    traps: ['check', 'traps'], notesfirst: ['notes'], vocab: ['vocab'], 'vocab-why': ['vocab', 'vocab-why'], 'vocab-check': ['vocab', 'vocab-check'], 'vocab-second': ['vocab', 'vocab-second'], 'vocab-list': ['vocab', 'vocab-list'], 'vocab-func': ['vocab', 'vocab-func'], pturn: ['para', 'pturn'], pmethod: ['para', 'pmethod'], goalfirst: ['notes'], partly: ['check', 'partly'], myths: ['check', 'myths'], others: ['others'], train: ['others', 'train'], sets: ['sets'], measured: ['measured']
   };
   var GRAM_AT = { grammar: ['method'], method: ['method'], try: ['method', 'try'], patterns: ['method', 'patterns'], first: ['method', 'patterns'], steps: ['method', 'steps'],
     shortcuts: ['shortcuts'], gives: ['shortcuts'], hard: ['hard'], lessons: ['home'], glance: ['home'], structure: ['partA'], verbpath: ['partB'] };
@@ -80,6 +80,8 @@
       return;
     }
     if (has(READ_AT, token)) { r = READ_AT[token]; showView('reading'); var ch = readingView.show(r[0]); if (r[1]) { scrollToEl(document.getElementById(r[1])); } else { toTop(); landed(ch); } return; }
+    if (token === 'vocab-mine') { showView('reading'); readingView.show('vocab'); vocShowMine(); scrollToEl(document.getElementById('vocab-list')); return; }
+    if ((m = /^voc-(.+)$/.exec(token))) { showView('reading'); readingView.show('vocab'); vocFind(decodeURIComponent(m[1])); scrollToEl(document.getElementById('vocab-list')); return; }
     if ((m = /^ex-(\d+)$/.exec(token)) && REX[m[1]]) { showView('reading'); landed(readingView.show(token)); toTop(); return; }
     if (/^apart-\d+$/.test(token)) { showView('reading'); readingView.show('long'); scrollToEl(document.getElementById(token)); return; }
     if (/^job-[a-z]+$/.test(token)) { showView('reading'); readingView.show('job'); scrollToEl(document.getElementById(token)); return; }
@@ -96,8 +98,8 @@
     if ((m = /^q-([0-9a-f]{8})$/.exec(token)) && EX[m[1]]) { showView('grammar'); grammarView.show(U[EX[m[1]].u].c); scrollToEl(document.getElementById(token)); return; }
     if (/^g-/.test(token)) { showView('grammar'); grammarView.show('shortcuts'); scrollToEl(document.getElementById(token)); return; }
     if (token === 'drills' || /^drill-/.test(token)) {
-      showView('drills'); buildDrills();
-      var dk = token.replace(/^drill-/, '');
+      var dk = token.replace(/^drill-/, ''), dsj = has(DR, dk) ? drillSubjOf(dk) : 'rw';
+      showView(dsj === 'math' ? 'mdrills' : 'drills'); buildDrills(dsj);
       if (has(DR, dk) && !drillRun) { startDrill(dk); }
       toTop(); return;
     }
@@ -140,6 +142,15 @@
     if (token === 'math') { showView('mstart'); buildMStart(); toTop(); return true; }
     if (token === 'm-learn') { showView('mlearn'); landed(mlearnView.show('home')); toTop(); return true; }
     if ((m = /^m-learn-([a-z]+)$/.exec(token))) { showView('mlearn'); mlearnView.show('home'); scrollToEl(document.getElementById(token)); return true; }
+    if (token === 'm-notin') { showView('mstart'); buildMStart(); scrollToEl(document.getElementById('m-notin')); return true; }
+    if (token === 'm-found') { showView('mfound'); buildMFound(); toTop(); return true; }
+    if (token === 'm-found-practice') {
+      /* Easy Algebra questions, set up and ready to start */
+      var fs = mpSettings(); fs.topic = 'd:alg'; fs.diff = 'E'; fs.mode = 'learn'; store.s.math = fs; save();
+      if (MP && !MP.over) { clearInterval(mpInterval); }
+      showView('mprac'); mpSetup(); toTop(); return true;
+    }
+    if ((m = /^m-found-([a-z]+)$/.exec(token)) && has(MFOUNDBY, m[1])) { showView('mfound'); buildMFound(); scrollToEl(document.getElementById(token)); return true; }
     if ((m = /^m-([a-z0-9]+)$/.exec(token)) && has(MSK, m[1])) { showView('mlearn'); landed(mlearnView.show(m[1])); toTop(); return true; }
     if ((m = /^mt-(.+)$/.exec(token)) && has(MTY, m[1])) { showView('mlearn'); mlearnView.show(MTY[m[1]].skill); scrollToEl($('#' + token, viewEl.mlearn)); return true; }
     if (token === 'm-study') { showView('mstudy'); buildMStudy(); toTop(); return true; }
@@ -157,7 +168,14 @@
     if (token === 'm-short') { showView('mshort'); buildMShort(); toTop(); return true; }
     if (/^ms-/.test(token)) { showView('mshort'); buildMShort(); scrollToEl(document.getElementById(token)); return true; }
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
+    if (token === 'm-sheet') { showView('mref'); buildMRef(); scrollToEl(document.getElementById('m-sheet')); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
+    if (token === 'm-drills' || /^m-drill-/.test(token)) {
+      var mk = token.replace(/^m-drill-/, '');
+      showView('mdrills'); buildDrills('math');
+      if (has(DR, mk) && drillSubjOf(mk) === 'math' && !drillRun) { startDrill(mk); }
+      toTop(); return true;
+    }
     if (token === 'm-hub') { showView('mhub'); buildHub('math'); toTop(); return true; }
     if (token === 'm-check') { showView('mprac'); if (!(MP && MP.module && !MP.over)) { mdIntro(); } toTop(); return true; }
     if (token === 'm-module') { showView('mprac'); if (!(MP && MP.module && !MP.over)) { clearInterval(mpInterval); mpModePreset = 'module'; mpSetup(); } toTop(); return true; }
@@ -179,7 +197,12 @@
     if (a.hasAttribute('data-skip')) { var mn = document.getElementById('main'); if (mn) { mn.scrollIntoView({ block: 'start' }); focusQuiet(mn); } return; }
     var href = a.getAttribute('href').slice(1);
     var dk = a.getAttribute('data-drill');
-    if (dk && has(DR, dk)) { try { history.pushState(null, '', '#drills'); } catch (err) {} showView('drills'); buildDrills(); startDrill(dk); return; }
+    if (dk && has(DR, dk)) {
+      var dsj2 = drillSubjOf(dk), dref = a.getAttribute('data-drill-ref');
+      try { history.pushState(null, '', dsj2 === 'math' ? '#m-drills' : '#drills'); } catch (err) {}
+      showView(dsj2 === 'math' ? 'mdrills' : 'drills');
+      startDrill(dk, dref ? drillItems(dk).filter(function (it) { return it.ref === dref; }).map(function (it) { return it.id; }) : null); return;
+    }
     var tp = a.getAttribute('data-tpart');
     if (tp) { var s0 = isObj(store.s.timed) ? store.s.timed : {}; s0.src = 'g'; s0.part = tp; s0.which = 'all'; s0.mode = 'set'; store.s.timed = s0; save(); if (built.practice && !TS && !(RM && !RM.over)) { timedSetup(); } }
     /* a tab for a view you have already visited takes you back to where you were */
@@ -210,7 +233,7 @@
         if (k.length === 1 && 'ABCD'.indexOf(k) !== -1) { e.preventDefault(); TS.card.pick(k); }
       } else if (key === 'Enter' && tag !== 'BUTTON' && tag !== 'A') { e.preventDefault(); timedNext(); }
     } else if (cur.view === 'mprac') { mpKey(e, key, tag);
-    } else if (cur.view === 'drills' && drillRun) {
+    } else if ((cur.view === 'drills' || cur.view === 'mdrills') && drillRun) {
       var it = drillRun.items[drillRun.i], i = KEYS.indexOf(key);
       if (!drillRun.answered) {
         if (it.type === 'pieces') {
@@ -225,7 +248,7 @@
     else if (cur.view === 'mprac') { mpResume(); }
     else if (cur.view === 'practice') { timedResume(); rmResume(); }
     else if (cur.view === 'grammar') { demoResume(); }
-    else if (cur.view === 'drills') { drillBack(); }
+    else if (cur.view === 'drills' || cur.view === 'mdrills') { drillBack(); }
   });
 
   /* ---------- start ---------- */

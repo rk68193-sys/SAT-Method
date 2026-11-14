@@ -205,7 +205,19 @@ def line_pieces(ctx, line):
     """[('t', html) | ('m', html)] for one line."""
     out = []
     for tok in line.tokens:
-        if tok[0] == 't':
+        if tok[0] == 't' and tok[3] in ('sup', 'sub'):
+            # an exponent or a subscript set as small text: it stays with what it is attached to, like an expression,
+            # and the space the export keeps inside it goes outside the tag
+            s = text_html(tok[1])
+            core = s.strip(' ')
+            lead, trail = s[:len(s) - len(s.lstrip(' '))], s[len(s.rstrip(' ')):]
+            if lead:
+                out.append(('t', lead, tok[2]))
+            if core:
+                out.append(('m', '<%s>%s</%s>' % (tok[3], core, tok[3])))
+            if trail:
+                out.append(('t', trail, tok[2]))
+        elif tok[0] == 't':
             s = text_html(tok[1])
             out.append(('t', s, tok[2]))
         else:

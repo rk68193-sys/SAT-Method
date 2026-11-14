@@ -97,7 +97,7 @@
       return '<a class="mdom" href="#m-learn-' + d.id + '"><span class="mdom-spec">' + esc(d.spec) + '</span><b>' + esc(d.name) + '</b><span>' + esc(d.blurb) + '</span><span class="label">' + d.skills.length + ' skills · ' + mfmt(n) + ' bank questions</span></a>';
     }).join('');
     var h = '<div class="wrap">' +
-      mHead('Math · Start here', 'How to approach every math question', 'The digital SAT Math section has two parts of 22 questions, 35 minutes each: about a minute and a half per question, with a calculator (Desmos) built in. This guide uses an export of ' + mfmt(T.n) + ' math questions.') +
+      mHead('Math · Start here', 'How to approach every math question', 'The digital SAT Math section has two parts of 22 questions, 35 minutes each: about a minute and a half per question, with a calculator (Desmos) and a reference sheet of formulas built in. This guide uses an export of ' + mfmt(T.n) + ' math questions.') +
       '<aside class="mnote mst-discover"><p><b>Go deeper: 249 fine question types.</b> Learn how to recognize each setup, follow expanded steps, and compare close variants. The 998 recorded Desmos checks distinguish question calculations from source steps.</p><a class="btn sm" href="#m-study">Explore expanded types</a></aside>' +
       '<section class="sec first"><h3 class="h2">The routine: ten seconds before you solve</h3>' +
       '<ol class="mroutine">' +
@@ -108,6 +108,7 @@
         '<li><b>Solve, then read the last sentence again.</b><span>Is your number the thing it asked for? x, or x + y? The radius, or the diameter? This one habit catches the most common wrong answer.</span></li>' +
       '</ol></section>' +
       '<section class="sec"><h3 class="h2">What the test covers</h3><p class="lede">Four content areas. College Board’s own test plan says Algebra and Advanced Math are about 35% each and the other two about 15% each, so start with the first two.</p><div class="mdoms">' + doms + '</div></section>' +
+      mNotInHTML() +
       '<section class="sec"><h3 class="h2">Three warning signs that make a question hard</h3><div class="mcards3">' +
         '<div class="mcard"><p class="mtag">“No solution” / “infinitely many”</p><p>Do not solve. Compare the two sides or the two lines. In the bank, ' + F.sol + ' questions ask how many solutions there are, and ' + mpc(F.solHard, F.sol) + '% of them are Hard. They come in three kinds: two lines (' + F.solSys + ' questions: compare slopes), one equation in x (' + F.solOne + ': compare both sides) and quadratics (' + F.solNon + ': use b² − 4ac).</p><a class="linkbtn" href="#mt-sys-count">How to do it</a></div>' +
         '<div class="mcard"><p class="mtag">The word “constant”</p><p>There is a second unknown that is not the one asked for. Pin it down first: match the parts on both sides, or put in a point you know.</p><a class="linkbtn" href="#mt-eqx-coef">How to do it</a></div>' +
@@ -127,6 +128,17 @@
       '</div>';
     viewEl.mstart.innerHTML = h;
   }
+  /* topics some prep books teach, each checked against every question by src/math/notin.py (D.mnotin) */
+  function mNotInHTML() {
+    var N = D.mnotin;
+    if (!N) { return ''; }
+    function li(t) { return '<li><b>' + esc(t.name) + '.</b> ' + esc(t.why) + (t.qs ? ' <span class="mnotin-q">' + t.qs.map(function (id) { return '<a class="mchip" href="#mq-' + id + '">Try ' + id + '</a>'; }).join('') + '</span>' : '') + '</li>'; }
+    return '<section class="sec" id="m-notin"><h3 class="h2">What the bank never asks</h3><p class="lede">Some prep books teach topics that no question in College Board’s bank uses. Each one below was checked against the wording of all ' + mfmt(N.n) + ' questions, their choices and College Board’s explanations.</p>' +
+      '<div class="mnotin"><div><h4 class="h3">Not one question</h4><ul class="mfacts">' + N.none.map(li).join('') + '</ul></div>' +
+      '<div><h4 class="h3">Once in the whole bank</h4><ul class="mfacts">' + N.rare.map(li).join('') + '</ul>' +
+      '<h4 class="h3">Looks rare, but keep it</h4><ul class="mfacts">' + N.keep.map(li).join('') + '</ul></div></div>' +
+      '<p class="fine">This is College Board’s question bank, not the test itself, so read the list as where not to spend study time rather than a promise about test day.</p></section>';
+  }
   function mProgHTML() {
     var tried = 0, right = 0;
     Object.keys(store.m).forEach(function (k) { var r = mDone(k); if (r && MQBY[k]) { tried++; right += r[0]; } });
@@ -143,6 +155,7 @@
     var page = '';
     function home() {
       return '<div class="wrap">' + mHead('Math · Lessons', 'Lessons, one skill at a time', 'College Board sorts every math question into 19 skills in four areas. Each lesson explains the idea from scratch, gives the method, a worked example, the usual trap, and every question type in that skill with how to solve it.') +
+        (mFoundNudgeHTML() || '<aside class="mnote"><p><b>Rusty on the basics?</b> <a href="#m-found">Algebra foundations</a> covers the six moves every lesson assumes, from fractions to an unknown in a denominator, each with a drill.</p></aside>') +
         MD.domains.map(function (d) {
           return '<section class="sec" id="m-learn-' + d.id + '"><div class="mdom-h"><h3 class="h2">' + esc(d.name) + '</h3><p class="mdom-spec">' + esc(d.spec) + '</p></div><p class="lede">' + esc(d.blurb) + '</p><div class="mskills">' +
             d.skills.map(function (k) {
@@ -270,13 +283,12 @@
   function buildMRef() {
     if (built.mref) { return; }
     built.mref = true;
-    var on = [['Circle', 'A = πr²,  C = 2πr'], ['Rectangle', 'A = lw'], ['Triangle', 'A = ½bh'], ['Right triangle', 'c² = a² + b²'], ['Special right triangles', '45-45-90: x, x, x√2 · 30-60-90: x, x√3, 2x'], ['Box (rectangular prism)', 'V = lwh'], ['Cylinder', 'V = πr²h'], ['Sphere', 'V = (4/3)πr³'], ['Cone', 'V = (1/3)πr²h'], ['Pyramid', 'V = (1/3)lwh'], ['Angles', 'A circle has 360° = 2π radians. A triangle’s angles add to 180°.']];
     var off = [['Slope from two points', 'm = (y₂ − y₁) ÷ (x₂ − x₁)'], ['Line', 'y = mx + b; slope of Ax + By = C is −A/B if B≠0; B=0 can be vertical'], ['Perpendicular slopes', 'm₁m₂=−1 for finite nonzero slopes; horizontal and vertical lines are perpendicular'], ['Vertex form', 'y = a(x − h)² + k, vertex (h, k)'], ['Vertex x', 'x = −b ÷ 2a'], ['Quadratic formula', 'x = (−b ± √(b² − 4ac)) ÷ 2a'], ['Discriminant', 'b² − 4ac: positive 2, zero 1, negative 0 real solutions'], ['Sum and product of roots', '−b/a and c/a'], ['Circle equation', '(x − h)² + (y − k)² = r²'], ['Exponential model', 'y = a·bˣ; b = 1 + rate or 1 − rate'], ['Percent change', '(new − old) ÷ old'], ['SOH CAH TOA', 'sin = opp/hyp, cos = adj/hyp, tan = opp/adj'], ['Complementary angles', 'sin x° = cos(90° − x°)'], ['Polygon angles', 'Sum = 180(n − 2)'], ['Arc and sector', '(angle ÷ 360) × circumference or area'], ['Radians', 'π radians = 180°'], ['Exponent rules', 'xᵃxᵇ = xᵃ⁺ᵇ, (xᵃ)ᵇ = xᵃᵇ, x^(1/n) = n-th root']];
     function tbl(rows) { return '<div class="tablewrap"><table class="mtable"><tbody>' + rows.map(function (r) { return '<tr><th scope="row">' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join('') + '</tbody></table></div>'; }
     viewEl.mref.innerHTML = '<div class="wrap">' +
-      mHead('Math · Formulas', 'Formulas and typing in answers', 'You get a formula sheet on test day. Know what is on it, learn what is not, and know how to type in your own answers.') +
-      '<div class="mref2"><section><h3 class="h2">On the formula sheet</h3><p class="lede">No need to memorize these. Practice finding them quickly.</p>' + tbl(on) + '</section>' +
-      '<section><h3 class="h2">Not on the sheet: learn these</h3><p class="lede">These come up again and again and are not printed for you.</p>' + tbl(off) + '</section></div>' +
+      mHead('Math · Formulas', 'Formulas and typing in answers', 'You get a reference sheet on test day. Know what is on it, learn what is not, and know how to type in your own answers.') +
+      '<section class="sec first" id="m-sheet"><h3 class="h2">On the reference sheet</h3><p class="lede">The formulas and facts the test gives you, drawn for this site. While you practice, the <b>Reference</b> button beside Calculator opens them, as on the test. No need to memorize them; know what is there so you can find it fast.</p>' + mSheetHTML() + '</section>' +
+      '<section class="sec"><h3 class="h2">Not on the sheet: learn these</h3><p class="lede">These come up again and again and are not printed for you.</p>' + tbl(off) + '</section>' +
       '<section class="sec"><h3 class="h2">When Desmos helps</h3><div class="tablewrap"><table class="mtable"><thead><tr><th>Question</th><th>What to do in Desmos</th></tr></thead><tbody>' +
         [['Two lines crossing (systems)', 'Type both equations; click the crossing point.'], ['Maximum, minimum, vertex', 'Type the function; click the grey turning point.'], ['Zeros, x-intercepts', 'Type the function; click where it crosses the x-axis.'], ['Nonlinear equation', 'Type each side as y = …; the crossings are the solutions.'], ['Mean, median, spread', 'Type L = [3, 5, 8]; then mean(L), median(L), stdev(L) for sample spread or stdevp(L) for population spread.'], ['A constant to find', 'Use arithmetic or coefficient equations for exact values. Sliders explore; ~ regression requires the specified model and enough independent data. Rounded fits are not exact proofs.'], ['Circle equations', 'For normalized x²+y²+Dx+Ey+F=0, center=(−D/2,−E/2), r²=(D²+E²)/4−F. This also handles fractional centers; check r²≥0.']].map(function (r) { return '<tr><td>' + esc(r[0]) + '</td><td>' + esc(r[1]) + '</td></tr>'; }).join('') +
       '</tbody></table></div><ul class="mfacts">' +
@@ -443,7 +455,7 @@
       ? '<div class="mpchoices" role="group" aria-label="Your answer">' + ['A', 'B', 'C', 'D'].map(function (L, i) { return '<button class="mpch" type="button" data-k="' + L + '"><span class="mpch-l">' + L + '</span><span class="kbd">' + (i + 1) + '</span></button>'; }).join('') + '</div><p class="fine mpch-note">Choose the letter of your answer. The choices are in the question above.</p>'
       : '<form class="mpgrid" id="mp-gform"><label class="field"><span class="label">Type your answer</span><input type="text" id="mp-gin" inputmode="decimal" autocomplete="off" placeholder="e.g. 12, −3, 7/6 or 2.5"></label><button class="btn" type="submit">Check</button></form><p class="fine">Numbers only. Fractions like 7/6 are fine; leave out units.</p>';
     viewEl.mprac.innerHTML = '<div class="wrap mpwrap">' +
-      '<div class="mpbar"><span class="mpbar-pos"><b>Question ' + (MP.i + 1) + '</b> of ' + MP.qs.length + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.qs.map(function (x, i) { var r = MP.res[i]; return '<i class="' + (r ? (r.ok ? 'ok' : 'no') : (i === MP.i ? 'cur' : '')) + '"></i>'; }).join('') + '</span>' + (MP.timer ? '<span class="mpclock" id="mp-clock" aria-label="Time on this question">0:00</span>' : '') + mCalcBtn() + '<button class="linkbtn" type="button" id="mp-end">End set</button></div>' +
+      '<div class="mpbar"><span class="mpbar-pos"><b>Question ' + (MP.i + 1) + '</b> of ' + MP.qs.length + '</span><span class="mpbar-dots" aria-hidden="true">' + MP.qs.map(function (x, i) { var r = MP.res[i]; return '<i class="' + (r ? (r.ok ? 'ok' : 'no') : (i === MP.i ? 'cur' : '')) + '"></i>'; }).join('') + '</span>' + (MP.timer ? '<span class="mpclock" id="mp-clock" aria-label="Time on this question">0:00</span>' : '') + mCalcBtn() + mSheetBtn() + '<button class="linkbtn" type="button" id="mp-end">End set</button></div>' +
       '<article class="mpcard"><header class="mpcard-h"><span class="mtag">' + esc(S.name) + '</span><span class="mdiff d' + q.d + '">' + MDIFF[q.d] + '</span><span class="muted">' + (q.mc ? 'Multiple choice' : 'Type in your answer') + '</span></header>' +
         '<div class="mpq">' + mImg('q', q, true) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="q">See the question larger</button></p>' + ans +
         '<div id="mp-fb" class="mpfb" tabindex="-1" hidden></div></article></div>';

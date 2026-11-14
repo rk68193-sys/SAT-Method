@@ -15,12 +15,19 @@
       MORDER.forEach(function (t) { add('Question type', MTY[t].name, MTY[t].spot, 'mt-' + t, MSK[MTY[t].skill].name + ' ' + MTY[t].trap); });
       MST.methods.forEach(function (m) { add('Expanded type', m.title, m.why_it_works, 'm-study-' + encodeURIComponent(m.id), MSK[m.skill].name + ' ' + m.common_trap); });
       MSHORT.forEach(function (s) { add('Shortcut', s.t, s.when, 'ms-' + s.id, s.how.join(' ')); });
+      if (D.mnotin) {
+        D.mnotin.none.forEach(function (t) { add('Not in the bank', t.name, t.why, 'm-notin'); });
+        D.mnotin.rare.forEach(function (t) { add('Once in the bank', t.name, t.why, 'm-notin'); });
+        D.mnotin.keep.forEach(function (t) { add('In the bank', t.name, t.why, 'm-notin', 'factor theorem remainder theorem'); });
+      }
+      MFOUND.forEach(function (f) { add('Algebra foundations', f.name, f.idea, 'm-found-' + f.id, f.slip + ' ' + f.why + ' ' + f.words); });
       MD.desmos.forEach(function (m) { add('Desmos move', m.name, m.when, 'md-' + m.id, m.short + ' ' + m.see); });
+      add('Formulas', 'The reference sheet', 'The formulas and facts the test gives you, and the Reference button that opens them while you practice.', 'm-sheet', 'formula sheet circle rectangle triangle pythagorean special right triangles 30-60-90 45-45-90 box rectangular prism cylinder sphere cone pyramid volume area degrees radians');
       add('Formulas', 'Formulas and typing in answers', 'What is on the formula sheet, what is not, and how to type in your own answers.', 'm-ref', 'circle area volume quadratic formula discriminant slope vertex radians sohcahtoa exponent rules');
     } else {
       [['routine', 'The reading routine: Job, Chunk, Say, Check'], ['shape', 'What the passages are like'], ['job', 'Step 1 · Job: read the question line first'], ['chunk', 'Step 2 · Chunk: tag each sentence'],
         ['long', 'Long sentences: core first'], ['para', 'Long passages: make them make sense'], ['say', 'Step 3 · Say: your own answer first'], ['check', 'Step 4 · Check: five ways a choice is wrong'],
-        ['reasoning', 'Deeper reading structures'], ['data-patterns', 'Tables and graphs: deeper patterns'], ['others', 'More question types'], ['notesfirst', 'Notes questions: goal first'],
+        ['reasoning', 'Deeper reading structures'], ['data-patterns', 'Tables and graphs: deeper patterns'], ['others', 'More question types'], ['vocab', 'Words to know: the vocabulary for Words in Context'], ['vocab-check', 'Can’t predict the word? Decide plus or minus'], ['vocab-second', 'Second meanings'], ['vocab-func', 'Words in Purpose and structure choices'], ['notesfirst', 'Notes questions: goal first'],
         ['method', 'Grammar in 60 seconds: look, check, confirm'], ['shortcuts', 'Grammar shortcuts'], ['hard', 'What makes a grammar question hard'], ['transitions', 'Every transition offered'], ['glossary', 'Glossary'], ['nottested', 'What is not tested']
       ].forEach(function (r) { add('Guide', r[1], '', r[0]); });
       RD.jobs.forEach(function (j) { add('Reading question', j.name, plain(j.look), j.id, (j.says || []).join(' ')); });
@@ -29,6 +36,8 @@
       Object.keys(U).forEach(function (uid) { var u = U[uid]; add('Grammar rule', u.num + ' ' + plain(u.title), plain(u.rule), uid, CBY[u.c].title + ' ' + plain(u.words || '')); });
       READ_GLOSS.map(function (g) { return [g[0], g[1]]; }).concat(D.glossary.map(function (g) { return [plain(g.term), plain(g.def)]; })).forEach(function (g) { add('Term', g[0], g[1], 'glossary'); });
       TRANS.forEach(function (t) { add('Transition word', t.w, 'Right ' + t.right + ' of the ' + t.offered + ' times it is offered.', 'transitions'); });
+      VOC.words.forEach(function (w) { add('Word', w[0], w[1], 'voc-' + encodeURIComponent(w[0])); });
+      VOC.func.forEach(function (f) { add('Purpose word', f[0], 'The choice says the text ' + f[1] + '.', 'vocab-func'); });
     }
     hubIx[subj] = out;
     return out;
@@ -62,7 +71,7 @@
       '<section class="sec"><h3 class="h2">A good order</h3><ol class="hsteps hub-order">' +
         '<li><b><a href="#' + start[1] + '">Start here</a>.</b><span>Five minutes on what the section asks and the routine to use.</span></li>' +
         (subj === 'math'
-          ? '<li><b><a href="#m-learn">Lessons</a>, one skill at a time.</b><span>Each ends with a button for real questions on just that skill.</span></li><li><b><a href="#m-patterns">Big patterns</a> and <a href="#m-desmos">Desmos</a>.</b><span>The ideas that connect the question types, and the calculator moves that save time.</span></li>'
+          ? '<li><b><a href="#m-found">Algebra foundations</a>, if the basics feel rusty.</b><span>Six moves every lesson assumes, each with a short drill.</span></li><li><b><a href="#m-learn">Lessons</a>, one skill at a time.</b><span>Each ends with a button for real questions on just that skill.</span></li><li><b><a href="#m-patterns">Big patterns</a> and <a href="#m-desmos">Desmos</a>.</b><span>The ideas that connect the question types, and the calculator moves that save time.</span></li>'
           : '<li><b><a href="#reading">Reading</a>: the four-step routine.</b><span>Then the worked examples, trying each before you read it.</span></li><li><b><a href="#method">Grammar</a> in 60 seconds.</b><span>Look at the choices, run one check, confirm. Then the lessons you need.</span></li>') +
         '<li><b><a href="#' + prac[1] + '">Practice</a>, then <a href="#' + (subj === 'math' ? 'm-map' : 'rw-map') + '">My map</a>.</b><span>The map shows which types to come back to.</span></li>' +
       '</ol></section></div>';

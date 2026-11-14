@@ -1,0 +1,74 @@
+{
+ "n": 1925,
+ "none": [
+  {
+   "id": "complex",
+   "name": "Complex numbers and i",
+   "why": "No question, choice or explanation mentions an imaginary or complex number."
+  },
+  {
+   "id": "log",
+   "name": "Logarithms",
+   "why": "No question uses one. Exponential questions are answered by reading the model, or by graphing it."
+  },
+  {
+   "id": "matrix",
+   "name": "Matrices and vectors",
+   "why": "None at all."
+  },
+  {
+   "id": "count",
+   "name": "Permutations, combinations and factorials",
+   "why": "No question asks how many ways something can be arranged or chosen. Probability questions divide one count by another, usually from a table."
+  },
+  {
+   "id": "conic",
+   "name": "Ellipses, hyperbolas, and a parabola’s focus and directrix",
+   "why": "The circle is the only one of these curves in the bank."
+  },
+  {
+   "id": "trig",
+   "name": "Sine waves, and the laws of sines and cosines",
+   "why": "Every one of the 38 questions that mention sine, cosine or tangent is about a right triangle or a circle."
+  },
+  {
+   "id": "remainder",
+   "name": "The remainder theorem",
+   "why": "No question asks for the remainder when a polynomial is divided."
+  }
+ ],
+ "rare": [
+  {
+   "id": "division",
+   "name": "Polynomial division",
+   "why": "One Hard question asks which expression equals (x² − 2x − 5) ÷ (x − 3). The answer is x + 1 − 2/(x − 3). College Board’s explanation rewrites the top in terms of the bottom, and names long division only as another way.",
+   "qs": [
+    "89fc23af"
+   ]
+  },
+  {
+   "id": "sequence",
+   "name": "Sequences",
+   "why": "One Hard question: each term is a fixed multiple of the one before. That is an exponential function, so the exponential lessons cover it.",
+   "qs": [
+    "2c6f214f"
+   ]
+  }
+ ],
+ "keep": [
+  {
+   "id": "factor",
+   "name": "Factors and zeros of a polynomial",
+   "qs": [
+    "0121a235",
+    "4a5af623",
+    "4d425cef",
+    "7355b9d9",
+    "c3b116d7",
+    "dd4ab4c4",
+    "e51bf5b1"
+   ],
+   "why": "The factor theorem, the one piece of the remainder theorem the bank uses: if p(a) = 0, then x − a is a factor of p, and the other way round. 7 questions ask about a factor of a polynomial. Two of them give only a table of values or points on the graph, and the factors come straight from the zeros."
+  }
+ ]
+}
