@@ -12,6 +12,12 @@ const file = 'file://' + path.resolve(process.argv[2] || 'index.html');
 const width = Number(process.argv[3]) || 390;
 const KEY = 'sat-grammar-sprint.v1';
 let fails = 0, passes = 0;
+/* the catalog, read from the source (PZ_ITEMS in site/prizes.js): { id: kind:key, tier, series } */
+const CATALOG = (() => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'site', 'prizes.js'), 'utf8'), a = src.indexOf('var PZ_ITEMS = [');
+  return [...src.slice(a, src.indexOf('].map(function (r)', a)).matchAll(/\['([^']+)', '(?:[^'\\]|\\.)*', '([crelm])', '(theme|paper|fx|streak|aura)', '([a-z]+)'/g)].map(m => ({ id: m[3] + ':' + m[1], tier: m[2], series: m[4] }));
+})();
+const TOTAL = CATALOG.length;
 function ok(c, msg) { if (c) { passes++; console.log('ok   ' + msg); } else { fails++; console.log('FAIL ' + msg); } }
 
 /* saved progress written before the page's own scripts run, once per browser (the mark is kept in localStorage) */
@@ -30,6 +36,7 @@ async function fresh(fn, arg, opt) {
   const ctx = await browser.newContext({ viewport: { width: (opt && opt.width) || width, height: 844 }, reducedMotion: opt && opt.reduce ? 'reduce' : 'no-preference' });
   if (fn) { await ctx.addInitScript(seeder(), [fn.toString(), arg === undefined ? null : arg, KEY]); }
   const p = await ctx.newPage(), errs = [];
+  if (opt && opt.clock) { await p.clock.setFixedTime(new Date(opt.clock)); }
   p.on('pageerror', e => errs.push(e.message));
   p.on('console', m => { if (m.type() === 'error' && !/favicon|ERR_FILE_NOT_FOUND/.test(m.text())) { errs.push('console: ' + m.text()); } });
   /* a real reload in the same page: a hop through another page can read localStorage before the last save reaches it */
@@ -56,7 +63,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     await t.go('crates');
     ok((await t.p.textContent('.pz-bal b')).trim() === '0', 'a new student has 0 coins');
     ok(await t.p.$eval('[data-pz-open="pencil"]', b => b.disabled), 'a crate cannot be opened without 50 coins');
-    ok((await t.p.$$('#v-crates .pz-item')).length === 56, '56 prizes in the collection, ' + (await t.p.$$('#v-crates .pz-item.locked')).length + ' still to find');
+    ok(TOTAL >= 59 && (await t.p.$$('#v-crates .pz-item')).length === TOTAL, TOTAL + ' prizes in the collection, ' + (await t.p.$$('#v-crates .pz-item.locked')).length + ' still to find');
     ok(!(await t.p.$('[data-pz-open="test"]')), 'the Test Day crate is closed without a test date this week');
     ok(!(await t.p.$('.pz-free')), 'no free crate before the first answer');
     /* Home shows the question of the day once a student has practiced; the Crates page always links to it */
@@ -102,7 +109,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     else { ok(st2.s.pz.eq[kind] === rec[2], 'Wear it puts the ' + kind + ' on'); }
     await t.p.click('#pz-close'); await t.p.waitForTimeout(200);
     ok(!(await t.p.$('.pz-modal')), 'Close returns to the page');
-    ok(/Your collection · 1 of 56/.test(await t.p.textContent('#pz-collection h3')), 'the collection counts 1 of 56');
+    ok((await t.p.textContent('#pz-collection h3')).includes('Your collection · 1 of ' + TOTAL), 'the collection counts 1 of ' + TOTAL);
     await t.done('opening');
   }
 
@@ -119,17 +126,12 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
 
   /* ---------- duplicates pay back ---------- */
   {
-    const t2 = await fresh(st => {
+    const t2 = await fresh((st, ids) => {
       st.s.pz = { e: { seed: 500 }, o: {} };
-      const ids = ['theme:prize-graphite', 'theme:prize-highlighter', 'theme:prize-sunrise', 'theme:prize-ocean', 'theme:prize-library', 'theme:prize-varsity', 'theme:prize-chalkboard', 'theme:prize-blueprint', 'theme:prize-lamplight', 'theme:prize-arcade', 'theme:prize-aurora', 'theme:prize-synthwave', 'theme:prize-inferno', 'theme:prize-gold', 'theme:prize-nebula', 'theme:prize-holo',
-        'paper:lined', 'paper:dots', 'paper:graph', 'paper:plot', 'paper:bpgrid', 'paper:stars', 'paper:eqrain', 'paper:const', 'paper:sky',
-        'fx:check', 'fx:swipe', 'fx:star', 'fx:stamp', 'fx:sparkle', 'fx:confetti', 'fx:neon', 'fx:lightning', 'fx:storm', 'fx:fireworks', 'fx:golden', 'fx:comet', 'fx:supernova', 'fx:shatter',
-        'streak:candle', 'streak:coffee', 'streak:books', 'streak:rocket', 'streak:plant',
-        'aura:glow', 'aura:twinkle', 'aura:orbit', 'aura:sine', 'aura:static', 'aura:ember', 'aura:spiral', 'aura:equation', 'aura:unit', 'aura:prism', 'aura:infinity', 'aura:horizon'];
       ids.forEach((id, i) => { st.s.pz.o['own' + i] = [Date.now() - 1e6 + i, 'pencil', id, 'c', 0, '']; });
-    });
+    }, CATALOG.map(it => it.id));
     await t2.go('crates');
-    ok(/Your collection · 56 of 56/.test(await t2.p.textContent('#pz-collection h3')), 'with every prize owned the collection is full');
+    ok((await t2.p.textContent('#pz-collection h3')).includes('Your collection · ' + TOTAL + ' of ' + TOTAL), 'with every prize owned the collection is full');
     await t2.p.click('[data-pz-open="night"]'); await t2.p.waitForSelector('.pz-modal'); await t2.p.click('#pz-skip');
     const st = await t2.saved(), id = Object.keys(st.s.pz.o).find(k => k.indexOf('own') !== 0);
     ok(st.s.pz.o[id][4] === 1 && st.s.pz.e['dupe.' + id] === 20, 'a prize already owned is a duplicate worth 20 coins');
@@ -267,6 +269,33 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     await t.done('looks');
   }
 
+  /* ---------- the Seasons crate follows the school year (on a fixed clock) ---------- */
+  {
+    const tiles = p => p.$$eval('#pz-collection .pz-item.locked', els => els.map(e => ({ tier: (e.querySelector('.pz-tier') || {}).className || '', n: Number(((e.querySelector('.pz-one') || {}).textContent || '').replace(/^1 in /, '').replace(/[^0-9]/g, '')), seasons: /In Seasons/.test(e.textContent), inSeason: !!e.querySelector('.pz-inseason') })));
+    for (const [when, season, want, count] of [['2026-10-15T12:00:00', 'Fall', ['Falling leaves', 'Ember crown'], 2], ['2027-01-20T12:00:00', 'Winter', ['Snowfall', 'Aurora sky', 'Aurora'], 3], ['2027-04-10T12:00:00', 'Spring', ['Blossoms', 'Sunrise'], 2], ['2027-07-04T12:00:00', 'Summer', ['Ocean', 'Inferno'], 2]]) {
+      const t = await fresh(null, null, { clock: when });
+      await t.go('crates');
+      const line = await t.p.textContent('.pz-ser-seasons .pz-season');
+      const all = await tiles(t.p), marked = all.filter(x => x.inSeason);
+      ok(line.includes('In season now · ' + season + ':') && want.every(w => line.includes(w)) && marked.length === count && marked.every(x => x.seasons), season + ': the Seasons crate names ' + want.join(', ') + ', and their tiles say In season');
+      if (season === 'Fall') {
+        /* in the same tier and crate, a prize in season is twice as likely as one out of season: Falling leaves and Snowfall */
+        const rare = all.filter(x => x.seasons && /pz-t-r\b/.test(x.tier)), inR = rare.find(x => x.inSeason), outR = rare.find(x => !x.inSeason);
+        ok(!!inR && !!outR && Math.abs(outR.n - 2 * inR.n) <= 1, 'in season the odds double: 1 in ' + (inR && inR.n) + ' against 1 in ' + (outR && outR.n) + ' out of season');
+      }
+      await t.done('season ' + season);
+    }
+    /* the three new backgrounds draw behind the page */
+    const t = await fresh(st => { st.s.pz = { o: { a: [1, 'seasons', 'paper:leaves', 'r', 0, ''], b: [2, 'seasons', 'paper:snow', 'r', 0, ''], c: [3, 'seasons', 'paper:blossoms', 'e', 0, ''] }, eq: { paper: 'paper:leaves' } }; });
+    const drawn = () => t.p.evaluate(() => { const cv = document.querySelector('canvas.pz-bg'); if (!cv || !cv.width) { return 0; } const d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data; let n = 0; for (let i = 3; i < d.length; i += 16) { if (d[i] > 0) { n++; } } return n; });
+    for (const key of ['leaves', 'snow', 'blossoms']) {
+      if (key !== 'leaves') { await t.go('crates'); await t.p.click('[data-pz-wear="paper"][data-pz-id="paper:' + key + '"]'); await t.p.waitForTimeout(800); }
+      await t.go('home', 1200);
+      ok((await drawn()) > 20, key + ' draws behind Home');
+    }
+    await t.done('seasonal backgrounds');
+  }
+
   /* ---------- the coin count in the top bar: shown where it fits, never making the bar taller ---------- */
   for (const w of [320, width, 1280]) {
     const t = await fresh((st, a, dk) => { st.s.pz = { e: { seed: 120 } }; st.s.days = {}; st.s.days[dk(Date.now())] = [1, 0]; }, null, { width: w });
@@ -299,11 +328,11 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     await t.p.goto(page + '#home'); await t.p.reload(); await t.p.waitForTimeout(700);
     await t.p.evaluate(() => { location.hash = 'gift-wrongwrongwrongwrong'; }); await t.p.waitForTimeout(600);
     ok((await hash()) === '#crates' && /does not unlock/.test(await t.p.textContent('#pz-toast')), 'a wrong code unlocks nothing, and leaves the address bar for Crates');
-    ok(/Your collection · 0 of 56/.test(await t.p.textContent('#pz-collection h3')), 'the collection is still empty');
+    ok((await t.p.textContent('#pz-collection h3')).includes('Your collection · 0 of ' + TOTAL), 'the collection is still empty');
     await t.p.evaluate(c => { location.hash = 'gift-' + c; }, code); await t.p.waitForTimeout(800);
     const st = await t.saved();
     ok((await hash()) === '#crates', 'the right code leaves the address bar at once');
-    ok(/Your collection · 56 of 56/.test(await t.p.textContent('#pz-collection h3')), 'it unlocks all 56 prizes');
+    ok((await t.p.textContent('#pz-collection h3')).includes('Your collection · ' + TOTAL + ' of ' + TOTAL), 'it unlocks all ' + TOTAL + ' prizes');
     ok(Object.keys(st.s.pz.st).length === 48 && Object.keys(st.s.pz.g).filter(k => /^page\./.test(k)).length === 6, 'every sticker, with the free crate for each full sticker page');
     ok((await t.p.$$('[data-pz-title]')).length === 7, 'every title can be shown');
     ok((await t.p.textContent('.pz-bal b')).trim() === '10,040' && bal(st) === 10040, 'and 10,000 coins on top of the 40 there were, shown as 10,040');
@@ -314,7 +343,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     /* the link as the first page opened: lands on Crates, and a second time adds nothing */
     await t.p.goto(page + '?again#gift-' + code); await t.p.waitForTimeout(900);
     const st2 = await t.saved();
-    ok((await hash()) === '#crates' && /Your collection · 56 of 56/.test(await t.p.textContent('#pz-collection h3')), 'opened as a new page, it lands on Crates');
+    ok((await hash()) === '#crates' && (await t.p.textContent('#pz-collection h3')).includes('Your collection · ' + TOTAL + ' of ' + TOTAL), 'opened as a new page, it lands on Crates');
     ok(bal(st2) === 10040, 'opening it again adds no more coins');
     fs.unlinkSync(tmp);
     await t.done('owner link');

@@ -3279,6 +3279,16 @@ html.tour-open { overflow: hidden; }
 .pz-pt-const { background-color: #07071A; background-image: linear-gradient(32deg, transparent 47%, rgba(165, 180, 252, .5) 48% 49%, transparent 50%), radial-gradient(#C7D2FE 2px, transparent 2.5px); background-size: 60px 40px, 30px 20px; }
 .pz-pt-sky { background: linear-gradient(180deg, #07071A 0%, #0B3B2E 45%, #1E1B4B 100%); }
 .pz-pt-sky::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 40% at 30% 40%, rgba(74, 222, 128, .55), transparent), radial-gradient(50% 35% at 70% 55%, rgba(167, 139, 250, .5), transparent); }
+.pz-pt-leaves { background-color: #FFF7ED; background-image: radial-gradient(8px 4px at 22% 28%, #EA580C 96%, transparent), radial-gradient(7px 3.5px at 66% 52%, #DC2626 96%, transparent), radial-gradient(8px 4px at 38% 78%, #D97706 96%, transparent), radial-gradient(6px 3px at 84% 22%, #CA8A04 96%, transparent), radial-gradient(6px 3px at 88% 82%, #B45309 96%, transparent); }
+.pz-pt-snow { background-color: #0F172A; background-image: radial-gradient(#FFFFFF 1.7px, transparent 2.1px), radial-gradient(rgba(255, 255, 255, .65) 1px, transparent 1.4px); background-size: 29px 31px, 17px 19px; background-position: 0 0, 8px 11px; }
+.pz-pt-blossoms { background-color: #FFF1F5; background-image: radial-gradient(5px 3.2px at 24% 34%, #F472B6 96%, transparent), radial-gradient(4.5px 3px at 70% 24%, #F9A8D4 96%, transparent), radial-gradient(5px 3.2px at 56% 70%, #FDA4AF 96%, transparent), radial-gradient(4.5px 3px at 14% 80%, #F9A8D4 96%, transparent), radial-gradient(4.5px 3px at 86% 64%, #F472B6 96%, transparent); }
+/* the Seasons crate: what is in season now */
+.pz-season { margin: .4rem 0 0; padding: .45rem .7rem; border-radius: 12px; font-size: .9rem; background: var(--sunk); color: var(--ink); }
+.pz-season-fall { border-left: 4px solid #C2410C; }
+.pz-season-winter { border-left: 4px solid #0369A1; }
+.pz-season-spring { border-left: 4px solid #BE185D; }
+.pz-season-summer { border-left: 4px solid #0F766E; }
+.pz-inseason { display: inline-block; margin-left: .25rem; padding: 0 .45rem; border-radius: 999px; font-size: .78rem; font-weight: 600; background: var(--ok-soft); color: var(--ink); }
 
 /* auras sit on a dark plate in every theme */
 .pz-plate { position: relative; display: grid; place-items: center; overflow: hidden; border-radius: 16px; background: radial-gradient(120% 90% at 50% 50%, #1D1A3A 0%, #0A0915 70%); color: #F5F3FF; padding: 2.6rem 1rem; min-height: 9.5rem; }
@@ -8832,7 +8842,7 @@ function rReasoningHTML() {
     ['varsity', 'Varsity Locker', 'School spirit, classrooms and math on the board.'],
     ['night', 'Night Shift', 'Dark themes, stars and the black hole.'],
     ['arcade', 'Arcade', 'Neon, sunsets and electricity.'],
-    ['seasons', 'Seasons', 'Bright colors that come back every year.'],
+    ['seasons', 'Seasons', 'Changes with the school year: what is in season is twice as likely, and every prize comes back next year.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value */
@@ -8862,6 +8872,9 @@ function rReasoningHTML() {
     ['eqrain', 'Equation rain', 'e', 'paper', 'varsity', 'Moving: math symbols fall softly down the page.'],
     ['const', 'Constellation', 'l', 'paper', 'night', 'Moving: stars drift and link up whenever two come close.'],
     ['sky', 'Aurora sky', 'l', 'paper', 'seasons', 'Moving: curtains of green and violet light ripple across the page.'],
+    ['leaves', 'Falling leaves', 'r', 'paper', 'seasons', 'Moving: red, orange and gold leaves tumble down the page.'],
+    ['snow', 'Snowfall', 'r', 'paper', 'seasons', 'Moving: snow drifts down, the near flakes faster than the far ones.'],
+    ['blossoms', 'Blossoms', 'e', 'paper', 'seasons', 'Moving: pink petals flutter across the page on a breeze.'],
     ['check', 'Pencil check', 'c', 'fx', 'pencil', 'A check mark draws itself beside your answer.'],
     ['swipe', 'Highlighter swipe', 'c', 'fx', 'pencil', 'A highlighter stroke runs across the right answer.'],
     ['star', 'Gold star', 'r', 'fx', 'varsity', 'A gold star sticker slaps onto your answer.'],
@@ -8897,6 +8910,16 @@ function rReasoningHTML() {
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });
   PZ_SERIES.forEach(function (s) { PZ_SER[s[0]] = { id: s[0], name: s[1], what: s[2] }; });
+  /* the Seasons crate follows the school year: [id, name, months (0 = January), the prizes in season]. In season, a prize is
+     twice as likely in that crate as the series' other prizes; out of season it can still turn up, and it comes back next year. */
+  var PZ_SEASONS = [
+    ['fall', 'Fall', [8, 9, 10], ['paper:leaves', 'aura:ember']],
+    ['winter', 'Winter', [11, 0, 1], ['paper:snow', 'paper:sky', 'theme:prize-aurora']],
+    ['spring', 'Spring', [2, 3, 4], ['paper:blossoms', 'theme:prize-sunrise']],
+    ['summer', 'Summer', [5, 6, 7], ['theme:prize-ocean', 'theme:prize-inferno']]
+  ];
+  function pzSeason() { var m = new Date().getMonth(); return PZ_SEASONS.filter(function (s) { return s[2].indexOf(m) >= 0; })[0]; }
+  function pzInSeason(id) { return pzSeason()[3].indexOf(id) >= 0; }
   /* eight stickers to a series page; finishing a page earns a free crate from that series */
   var PZ_STK = {
     pencil: ['Sharp Pencil', 'Eraser Pro', 'Highlighter Hero', 'Margin Notes', 'Sticky Note', 'Paper Clip', 'Coffee Break', 'Early Bird'],
@@ -8952,7 +8975,7 @@ function rReasoningHTML() {
     PZ_TIERS.forEach(function (t) { o[t] = tot ? o[t] / tot * 100 : 0; });
     return o;
   }
-  function pzWeight(it, series) { return it.series === series ? 3 : 1; }
+  function pzWeight(it, series) { return it.series !== series ? 1 : series === 'seasons' && pzInSeason(it.id) ? 6 : 3; }
   function pzChance(it, series, minTier, luck) {
     var o = pzOdds(minTier, luck), pool = PZ_ITEMS.filter(function (x) { return x.tier === it.tier; }), w = 0;
     pool.forEach(function (x) { w += pzWeight(x, series); });
@@ -9641,6 +9664,62 @@ function rReasoningHTML() {
         });
         c.globalAlpha = 1;
       };
+    },
+    /* the Seasons backgrounds: fall, winter and spring */
+    leaves: function (s) {
+      var L = [], COL = ['#EA580C', '#DC2626', '#D97706', '#CA8A04', '#B45309'], n = Math.min(26, Math.round(s.w * s.h / 28000)) + 9;
+      function leaf(top) { return { x: fxR(0, s.w), y: top ? fxR(-40, -10) : fxR(-s.h * 0.2, s.h), vy: fxR(26, 52), sw: fxR(16, 38), ph: fxR(0, FX_TAU), fr: fxR(0.6, 1.3), r: fxR(0, FX_TAU), vr: fxR(-1.5, 1.5), z: fxR(8, 14), col: COL[Math.floor(Math.random() * COL.length)] }; }
+      for (var i = 0; i < n; i++) { L.push(leaf(false)); }
+      return function (t, dt) {
+        var c = s.ctx, a = FX_INK.dark ? 0.55 : 0.42;
+        L.forEach(function (q, i) {
+          q.y += q.vy * dt; q.r += q.vr * dt;
+          if (q.y > s.h + 30) { L[i] = leaf(true); return; }
+          /* it sways from side to side, and turns over now and then (the flattening) */
+          var x = q.x + Math.sin(t * q.fr + q.ph) * q.sw, turn = Math.cos(t * q.fr * 1.7 + q.ph);
+          c.save(); c.translate(x, q.y); c.rotate(q.r); c.scale(1, 0.3 + 0.7 * Math.abs(turn));
+          c.globalAlpha = a; c.fillStyle = q.col;
+          c.beginPath(); c.moveTo(-q.z, 0); c.quadraticCurveTo(0, -q.z * 0.8, q.z, 0); c.quadraticCurveTo(0, q.z * 0.8, -q.z, 0); c.fill();
+          c.globalAlpha = a * 0.7; c.strokeStyle = '#7C2D12'; c.lineWidth = 0.9; c.beginPath(); c.moveTo(-q.z, 0); c.lineTo(q.z * 1.3, 0); c.stroke();
+          c.restore();
+        });
+        c.globalAlpha = 1;
+      };
+    },
+    snow: function (s) {
+      var F = [], n = Math.min(150, Math.round(s.w * s.h / 8500));
+      for (var i = 0; i < n; i++) { F.push({ x: Math.random(), y: Math.random(), z: fxR(0.3, 1), ph: fxR(0, FX_TAU) }); }
+      return function (t, dt) {
+        var c = s.ctx, D = FX_INK.dark;
+        if (D) { c.globalCompositeOperation = 'lighter'; }
+        F.forEach(function (q) {
+          q.y += (0.02 + 0.055 * q.z) * dt;
+          if (q.y > 1.03) { q.y = -0.03; q.x = Math.random(); }
+          var x = (q.x + Math.sin(t * 0.7 * q.z + q.ph) * 0.014) * s.w, y = q.y * s.h, r = 0.8 + 2.3 * q.z;
+          if (D) { fxGlow(c, '226,232,240', x, y, r * 2.2, 0.3 + 0.55 * q.z); }
+          else { c.globalAlpha = 0.2 + 0.35 * q.z; c.fillStyle = '#94A3B8'; c.beginPath(); c.arc(x, y, r, 0, FX_TAU); c.fill(); }
+        });
+        c.globalAlpha = 1;
+      };
+    },
+    blossoms: function (s) {
+      var P = [], COL = ['#F9A8D4', '#F472B6', '#FBCFE8', '#FDA4AF'], n = Math.min(36, Math.round(s.w * s.h / 20000)) + 10;
+      function petal(first) { return { x: first ? fxR(0, s.w) : fxR(-80, s.w * 0.7), y: first ? fxR(0, s.h) : fxR(-40, -10), vx: fxR(16, 38), vy: fxR(20, 42), ph: fxR(0, FX_TAU), fr: fxR(1.2, 2.4), r: fxR(0, FX_TAU), vr: fxR(-2, 2), z: fxR(5, 9), col: COL[Math.floor(Math.random() * COL.length)] }; }
+      for (var i = 0; i < n; i++) { P.push(petal(true)); }
+      return function (t, dt) {
+        var c = s.ctx, a = FX_INK.dark ? 0.7 : 0.6;
+        P.forEach(function (q, i) {
+          /* a breeze from the left that rises and falls, and a flutter of its own */
+          q.x += (q.vx + Math.sin(t * 0.5) * 10) * dt; q.y += (q.vy + Math.sin(t * q.fr + q.ph) * 14) * dt; q.r += q.vr * dt;
+          if (q.y > s.h + 20 || q.x > s.w + 40) { P[i] = petal(false); return; }
+          var flut = Math.sin(t * q.fr + q.ph);
+          c.save(); c.translate(q.x, q.y); c.rotate(q.r); c.scale(0.4 + 0.6 * Math.abs(flut), 1);
+          c.globalAlpha = a; c.fillStyle = q.col;
+          c.beginPath(); c.moveTo(0, q.z); c.bezierCurveTo(q.z * 1.1, q.z * 0.2, q.z * 0.6, -q.z, 0, -q.z * 0.55); c.bezierCurveTo(-q.z * 0.6, -q.z, -q.z * 1.1, q.z * 0.2, 0, q.z); c.fill();
+          c.restore();
+        });
+        c.globalAlpha = 1;
+      };
     }
   };
   var FX_LIVING = {
@@ -9781,14 +9860,15 @@ function rReasoningHTML() {
   }
   function pzSeriesHTML() {
     var bal = pzBalance();
-    return '<section class="pz-sec"><h3 class="h3">Crates · ' + PZ_PRICE + ' coins each</h3><p class="fine">Any crate can hold any prize; a series’ own prizes are 3 times as likely in its crate. These odds are exact.</p><div class="pz-grid">' + PZ_SERIES.map(function (s) {
+    return '<section class="pz-sec"><h3 class="h3">Crates · ' + PZ_PRICE + ' coins each</h3><p class="fine">Any crate can hold any prize; a series’ own prizes are 3 times as likely in its crate, and the Seasons prizes in season 6 times. These odds are exact.</p><div class="pz-grid">' + PZ_SERIES.map(function (s) {
       var id = s[0], test = id === 'test', open = !test || pzTestOpen(), own = PZ_ITEMS.filter(function (it) { return it.series === id; }), have = own.filter(function (it) { return pzOwns(it.id); }).length;
       var btn = !open ? '<p class="fine">Opens 7 days before the test date in <a href="#plan">your plan</a>.</p>'
         : '<button class="btn" type="button" data-pz-open="' + id + '"' + (bal < PZ_PRICE ? ' disabled' : '') + '>Open · ' + PZ_PRICE + ' coins</button>' + (bal < PZ_PRICE ? '<p class="fine">You need ' + (PZ_PRICE - Math.max(0, bal)) + ' more coins.</p>' : '');
-      return '<article class="pz-card pz-ser pz-ser-' + id + '"><div class="pz-ser-art" aria-hidden="true">' + pzLockerArt() + '</div><h4>' + esc(s[1]) + '</h4><p class="muted">' + esc(s[2]) + '</p>' +
+      return '<article class="pz-card pz-ser pz-ser-' + id + '"><div class="pz-ser-art" aria-hidden="true">' + pzLockerArt() + '</div><h4>' + esc(s[1]) + '</h4><p class="muted">' + esc(s[2]) + '</p>' + (id === 'seasons' ? pzSeasonLine() : '') +
         '<p class="pz-have">' + have + ' of ' + own.length + ' of its prizes found</p>' + pzOddsList(id, test ? 'e' : 'c') + btn + '</article>';
     }).join('') + '</div></section>';
   }
+  function pzSeasonLine() { var S = pzSeason(); return '<p class="pz-season pz-season-' + S[0] + '"><b>In season now · ' + S[1] + ':</b> ' + S[3].map(function (id) { return esc(PZ_BY[id].name); }).join(', ') + '</p>'; }
   function pzLockerArt() { return '<span class="pz-lk"><span class="pz-lk-vents"></span><span class="pz-lk-dial"></span><span class="pz-lk-handle"></span></span>'; }
   function pzCollectionHTML() {
     var own = pzOwned();
@@ -9797,7 +9877,8 @@ function rReasoningHTML() {
       var off = slot === 'theme' ? '' : '<button class="linkbtn" type="button" data-pz-wear="' + slot + '" data-pz-id=""' + (worn ? '' : ' disabled') + '>' + (worn ? 'Take it off' : 'Nothing on') + '</button>';
       return '<div class="pz-slot"><div class="pz-slot-h"><h4>' + sl[1] + '</h4>' + off + '</div><div class="pz-items">' + items.map(function (it) {
         var have = !!own[it.id], on = worn === it.id;
-        if (!have) { return '<div class="pz-item locked"><span class="pz-pic pz-q" aria-hidden="true">?</span><span class="pz-nm">' + pzTierChip(it.tier) + pzOdd(it) + '</span><span class="fine">In ' + esc(PZ_SER[it.series].name) + '</span></div>'; }
+        var season = pzInSeason(it.id) ? ' <span class="pz-inseason">In season</span>' : '';
+        if (!have) { return '<div class="pz-item locked"><span class="pz-pic pz-q" aria-hidden="true">?</span><span class="pz-nm">' + pzTierChip(it.tier) + pzOdd(it) + '</span><span class="fine">In ' + esc(PZ_SER[it.series].name) + season + '</span></div>'; }
         var act = slot === 'fx' ? '<button class="btn ghost sm" type="button" data-pz-try="' + it.key + '">Try</button>' : '';
         return '<div class="pz-item' + (on ? ' on' : '') + '">' + pzPicture(it) + '<span class="pz-nm"><b>' + esc(it.name) + '</b>' + pzTierChip(it.tier) + '</span><span class="fine">' + esc(it.what) + '</span>' +
           '<span class="pz-acts">' + act + '<button class="btn sm' + (on ? ' ghost' : '') + '" type="button" data-pz-wear="' + slot + '" data-pz-id="' + it.id + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + (on ? 'Wearing' : 'Wear') + '</button></span></div>';
@@ -9889,7 +9970,7 @@ function rReasoningHTML() {
       if (hex !== PZ_GIFT) { pzToast('That link does not unlock anything', ''); return; }
       pzGiftAll();
       if (viewEl.crates && !viewEl.crates.hidden) { buildCrates(); }
-      pzToast('Everything is unlocked', 'All 56 prizes, every sticker and title, and ' + pzNum(PZ_GIFT_COINS) + ' coins' + (acctIn() ? '.' : '. Sign in to keep them on every device.'), 8000);
+      pzToast('Everything is unlocked', 'All ' + PZ_ITEMS.length + ' prizes, every sticker and title, and ' + pzNum(PZ_GIFT_COINS) + ' coins' + (acctIn() ? '.' : '. Sign in to keep them on every device.'), 8000);
     }).catch(function () {});
   }
   pzGiftLink();

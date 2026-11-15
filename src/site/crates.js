@@ -50,14 +50,15 @@
   }
   function pzSeriesHTML() {
     var bal = pzBalance();
-    return '<section class="pz-sec"><h3 class="h3">Crates · ' + PZ_PRICE + ' coins each</h3><p class="fine">Any crate can hold any prize; a series’ own prizes are 3 times as likely in its crate. These odds are exact.</p><div class="pz-grid">' + PZ_SERIES.map(function (s) {
+    return '<section class="pz-sec"><h3 class="h3">Crates · ' + PZ_PRICE + ' coins each</h3><p class="fine">Any crate can hold any prize; a series’ own prizes are 3 times as likely in its crate, and the Seasons prizes in season 6 times. These odds are exact.</p><div class="pz-grid">' + PZ_SERIES.map(function (s) {
       var id = s[0], test = id === 'test', open = !test || pzTestOpen(), own = PZ_ITEMS.filter(function (it) { return it.series === id; }), have = own.filter(function (it) { return pzOwns(it.id); }).length;
       var btn = !open ? '<p class="fine">Opens 7 days before the test date in <a href="#plan">your plan</a>.</p>'
         : '<button class="btn" type="button" data-pz-open="' + id + '"' + (bal < PZ_PRICE ? ' disabled' : '') + '>Open · ' + PZ_PRICE + ' coins</button>' + (bal < PZ_PRICE ? '<p class="fine">You need ' + (PZ_PRICE - Math.max(0, bal)) + ' more coins.</p>' : '');
-      return '<article class="pz-card pz-ser pz-ser-' + id + '"><div class="pz-ser-art" aria-hidden="true">' + pzLockerArt() + '</div><h4>' + esc(s[1]) + '</h4><p class="muted">' + esc(s[2]) + '</p>' +
+      return '<article class="pz-card pz-ser pz-ser-' + id + '"><div class="pz-ser-art" aria-hidden="true">' + pzLockerArt() + '</div><h4>' + esc(s[1]) + '</h4><p class="muted">' + esc(s[2]) + '</p>' + (id === 'seasons' ? pzSeasonLine() : '') +
         '<p class="pz-have">' + have + ' of ' + own.length + ' of its prizes found</p>' + pzOddsList(id, test ? 'e' : 'c') + btn + '</article>';
     }).join('') + '</div></section>';
   }
+  function pzSeasonLine() { var S = pzSeason(); return '<p class="pz-season pz-season-' + S[0] + '"><b>In season now · ' + S[1] + ':</b> ' + S[3].map(function (id) { return esc(PZ_BY[id].name); }).join(', ') + '</p>'; }
   function pzLockerArt() { return '<span class="pz-lk"><span class="pz-lk-vents"></span><span class="pz-lk-dial"></span><span class="pz-lk-handle"></span></span>'; }
   function pzCollectionHTML() {
     var own = pzOwned();
@@ -66,7 +67,8 @@
       var off = slot === 'theme' ? '' : '<button class="linkbtn" type="button" data-pz-wear="' + slot + '" data-pz-id=""' + (worn ? '' : ' disabled') + '>' + (worn ? 'Take it off' : 'Nothing on') + '</button>';
       return '<div class="pz-slot"><div class="pz-slot-h"><h4>' + sl[1] + '</h4>' + off + '</div><div class="pz-items">' + items.map(function (it) {
         var have = !!own[it.id], on = worn === it.id;
-        if (!have) { return '<div class="pz-item locked"><span class="pz-pic pz-q" aria-hidden="true">?</span><span class="pz-nm">' + pzTierChip(it.tier) + pzOdd(it) + '</span><span class="fine">In ' + esc(PZ_SER[it.series].name) + '</span></div>'; }
+        var season = pzInSeason(it.id) ? ' <span class="pz-inseason">In season</span>' : '';
+        if (!have) { return '<div class="pz-item locked"><span class="pz-pic pz-q" aria-hidden="true">?</span><span class="pz-nm">' + pzTierChip(it.tier) + pzOdd(it) + '</span><span class="fine">In ' + esc(PZ_SER[it.series].name) + season + '</span></div>'; }
         var act = slot === 'fx' ? '<button class="btn ghost sm" type="button" data-pz-try="' + it.key + '">Try</button>' : '';
         return '<div class="pz-item' + (on ? ' on' : '') + '">' + pzPicture(it) + '<span class="pz-nm"><b>' + esc(it.name) + '</b>' + pzTierChip(it.tier) + '</span><span class="fine">' + esc(it.what) + '</span>' +
           '<span class="pz-acts">' + act + '<button class="btn sm' + (on ? ' ghost' : '') + '" type="button" data-pz-wear="' + slot + '" data-pz-id="' + it.id + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + (on ? 'Wearing' : 'Wear') + '</button></span></div>';
@@ -158,7 +160,7 @@
       if (hex !== PZ_GIFT) { pzToast('That link does not unlock anything', ''); return; }
       pzGiftAll();
       if (viewEl.crates && !viewEl.crates.hidden) { buildCrates(); }
-      pzToast('Everything is unlocked', 'All 56 prizes, every sticker and title, and ' + pzNum(PZ_GIFT_COINS) + ' coins' + (acctIn() ? '.' : '. Sign in to keep them on every device.'), 8000);
+      pzToast('Everything is unlocked', 'All ' + PZ_ITEMS.length + ' prizes, every sticker and title, and ' + pzNum(PZ_GIFT_COINS) + ' coins' + (acctIn() ? '.' : '. Sign in to keep them on every device.'), 8000);
     }).catch(function () {});
   }
   pzGiftLink();

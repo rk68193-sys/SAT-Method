@@ -99,6 +99,16 @@
 .pz-pt-const { background-color: #07071A; background-image: linear-gradient(32deg, transparent 47%, rgba(165, 180, 252, .5) 48% 49%, transparent 50%), radial-gradient(#C7D2FE 2px, transparent 2.5px); background-size: 60px 40px, 30px 20px; }
 .pz-pt-sky { background: linear-gradient(180deg, #07071A 0%, #0B3B2E 45%, #1E1B4B 100%); }
 .pz-pt-sky::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 40% at 30% 40%, rgba(74, 222, 128, .55), transparent), radial-gradient(50% 35% at 70% 55%, rgba(167, 139, 250, .5), transparent); }
+.pz-pt-leaves { background-color: #FFF7ED; background-image: radial-gradient(8px 4px at 22% 28%, #EA580C 96%, transparent), radial-gradient(7px 3.5px at 66% 52%, #DC2626 96%, transparent), radial-gradient(8px 4px at 38% 78%, #D97706 96%, transparent), radial-gradient(6px 3px at 84% 22%, #CA8A04 96%, transparent), radial-gradient(6px 3px at 88% 82%, #B45309 96%, transparent); }
+.pz-pt-snow { background-color: #0F172A; background-image: radial-gradient(#FFFFFF 1.7px, transparent 2.1px), radial-gradient(rgba(255, 255, 255, .65) 1px, transparent 1.4px); background-size: 29px 31px, 17px 19px; background-position: 0 0, 8px 11px; }
+.pz-pt-blossoms { background-color: #FFF1F5; background-image: radial-gradient(5px 3.2px at 24% 34%, #F472B6 96%, transparent), radial-gradient(4.5px 3px at 70% 24%, #F9A8D4 96%, transparent), radial-gradient(5px 3.2px at 56% 70%, #FDA4AF 96%, transparent), radial-gradient(4.5px 3px at 14% 80%, #F9A8D4 96%, transparent), radial-gradient(4.5px 3px at 86% 64%, #F472B6 96%, transparent); }
+/* the Seasons crate: what is in season now */
+.pz-season { margin: .4rem 0 0; padding: .45rem .7rem; border-radius: 12px; font-size: .9rem; background: var(--sunk); color: var(--ink); }
+.pz-season-fall { border-left: 4px solid #C2410C; }
+.pz-season-winter { border-left: 4px solid #0369A1; }
+.pz-season-spring { border-left: 4px solid #BE185D; }
+.pz-season-summer { border-left: 4px solid #0F766E; }
+.pz-inseason { display: inline-block; margin-left: .25rem; padding: 0 .45rem; border-radius: 999px; font-size: .78rem; font-weight: 600; background: var(--ok-soft); color: var(--ink); }
 
 /* auras sit on a dark plate in every theme */
 .pz-plate { position: relative; display: grid; place-items: center; overflow: hidden; border-radius: 16px; background: radial-gradient(120% 90% at 50% 50%, #1D1A3A 0%, #0A0915 70%); color: #F5F3FF; padding: 2.6rem 1rem; min-height: 9.5rem; }

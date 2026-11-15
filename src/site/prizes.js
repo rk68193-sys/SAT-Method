@@ -22,7 +22,7 @@
     ['varsity', 'Varsity Locker', 'School spirit, classrooms and math on the board.'],
     ['night', 'Night Shift', 'Dark themes, stars and the black hole.'],
     ['arcade', 'Arcade', 'Neon, sunsets and electricity.'],
-    ['seasons', 'Seasons', 'Bright colors that come back every year.'],
+    ['seasons', 'Seasons', 'Changes with the school year: what is in season is twice as likely, and every prize comes back next year.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value */
@@ -52,6 +52,9 @@
     ['eqrain', 'Equation rain', 'e', 'paper', 'varsity', 'Moving: math symbols fall softly down the page.'],
     ['const', 'Constellation', 'l', 'paper', 'night', 'Moving: stars drift and link up whenever two come close.'],
     ['sky', 'Aurora sky', 'l', 'paper', 'seasons', 'Moving: curtains of green and violet light ripple across the page.'],
+    ['leaves', 'Falling leaves', 'r', 'paper', 'seasons', 'Moving: red, orange and gold leaves tumble down the page.'],
+    ['snow', 'Snowfall', 'r', 'paper', 'seasons', 'Moving: snow drifts down, the near flakes faster than the far ones.'],
+    ['blossoms', 'Blossoms', 'e', 'paper', 'seasons', 'Moving: pink petals flutter across the page on a breeze.'],
     ['check', 'Pencil check', 'c', 'fx', 'pencil', 'A check mark draws itself beside your answer.'],
     ['swipe', 'Highlighter swipe', 'c', 'fx', 'pencil', 'A highlighter stroke runs across the right answer.'],
     ['star', 'Gold star', 'r', 'fx', 'varsity', 'A gold star sticker slaps onto your answer.'],
@@ -87,6 +90,16 @@
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });
   PZ_SERIES.forEach(function (s) { PZ_SER[s[0]] = { id: s[0], name: s[1], what: s[2] }; });
+  /* the Seasons crate follows the school year: [id, name, months (0 = January), the prizes in season]. In season, a prize is
+     twice as likely in that crate as the series' other prizes; out of season it can still turn up, and it comes back next year. */
+  var PZ_SEASONS = [
+    ['fall', 'Fall', [8, 9, 10], ['paper:leaves', 'aura:ember']],
+    ['winter', 'Winter', [11, 0, 1], ['paper:snow', 'paper:sky', 'theme:prize-aurora']],
+    ['spring', 'Spring', [2, 3, 4], ['paper:blossoms', 'theme:prize-sunrise']],
+    ['summer', 'Summer', [5, 6, 7], ['theme:prize-ocean', 'theme:prize-inferno']]
+  ];
+  function pzSeason() { var m = new Date().getMonth(); return PZ_SEASONS.filter(function (s) { return s[2].indexOf(m) >= 0; })[0]; }
+  function pzInSeason(id) { return pzSeason()[3].indexOf(id) >= 0; }
   /* eight stickers to a series page; finishing a page earns a free crate from that series */
   var PZ_STK = {
     pencil: ['Sharp Pencil', 'Eraser Pro', 'Highlighter Hero', 'Margin Notes', 'Sticky Note', 'Paper Clip', 'Coffee Break', 'Early Bird'],
@@ -142,7 +155,7 @@
     PZ_TIERS.forEach(function (t) { o[t] = tot ? o[t] / tot * 100 : 0; });
     return o;
   }
-  function pzWeight(it, series) { return it.series === series ? 3 : 1; }
+  function pzWeight(it, series) { return it.series !== series ? 1 : series === 'seasons' && pzInSeason(it.id) ? 6 : 3; }
   function pzChance(it, series, minTier, luck) {
     var o = pzOdds(minTier, luck), pool = PZ_ITEMS.filter(function (x) { return x.tier === it.tier; }), w = 0;
     pool.forEach(function (x) { w += pzWeight(x, series); });
