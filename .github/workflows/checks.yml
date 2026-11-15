@@ -22,11 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.13'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
       - name: Python packages
@@ -69,21 +69,22 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - group: accounts and prizes
-            checks: account prizes
+          - group: accounts, prizes and visits
+            checks: account prizes visits
           - group: pages and practice
             checks: additions habit smoke nav msmoke
           - group: tracks, text and sources
             checks: rwtrack text plan symbols mtrack suggest qtext skip source-review
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0  # symbols.js serves the site as it was at two older commits
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
       - name: Playwright and Chromium
         run: |
+          npm install --global playwright@1.63.0  # some checks load it from the global folder (npm root -g)
           npm install --no-save --no-package-lock playwright@1.63.0
           npx playwright install --with-deps chromium
       - name: Run the checks
@@ -93,7 +94,7 @@ jobs:
           failed=""
           for c in $CHECKS; do
             case $c in
-              symbols|suggest|skip) args="index.html" ;;
+              symbols|suggest|skip|visits) args="index.html" ;;
               msmoke) args="index.html 390 light" ;;
               text) args="index.html $RUNNER_TEMP/text-dump.txt" ;;
               *) args="index.html 390" ;;
