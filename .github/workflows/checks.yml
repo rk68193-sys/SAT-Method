@@ -45,6 +45,9 @@ jobs:
           cmp -s "$RUNNER_TEMP/app.css" src/site/app.css || { echo "::error::The theme block in app.css is out of date: run src/tools/themes.py on it."; exit 1; }
           python3 -I src/tools/themes.py --prizes "$RUNNER_TEMP/prize-themes.css"
           cmp -s "$RUNNER_TEMP/prize-themes.css" src/site/prize-themes.css || { echo "::error::prize-themes.css is out of date: run src/tools/themes.py --prizes."; exit 1; }
+          cp src/site/fx.js "$RUNNER_TEMP/fx.js"
+          python3 -I src/tools/themes.py --fxpal "$RUNNER_TEMP/fx.js"
+          cmp -s "$RUNNER_TEMP/fx.js" src/site/fx.js || { echo "::error::The theme colors in fx.js (FX_PAL) are out of date: run src/tools/themes.py --fxpal src/site/fx.js."; exit 1; }
       - name: Generated Math lists are up to date
         run: |
           python3 -I src/math/notin.py

@@ -53,6 +53,7 @@
 .pz-card p { margin: 0; }
 .pz-ser { border-top: 5px solid var(--pz-ser, var(--line-strong)); }
 .pz-ser-pencil { --pz-ser: #F5B400; } .pz-ser-varsity { --pz-ser: #1E2A5A; } .pz-ser-night { --pz-ser: #4338CA; } .pz-ser-arcade { --pz-ser: #DB2777; } .pz-ser-seasons { --pz-ser: #16A34A; }
+.pz-ser-deep { --pz-ser: #0E7490; } .pz-ser-myth { --pz-ser: #9333EA; } .pz-ser-tech { --pz-ser: #65A30D; }
 .pz-ser-test { border-top: 5px solid transparent; border-image: linear-gradient(90deg, #F472B6, #FDE047, #4ADE80, #22D3EE, #A78BFA) 1; }
 .pz-ser-art { display: flex; justify-content: flex-start; }
 .pz-lk { position: relative; display: block; width: 40px; height: 62px; border-radius: 5px; background: linear-gradient(180deg, #4B5D85, #3A4A6E); }
@@ -102,6 +103,14 @@
 .pz-pt-leaves { background-color: #FFF7ED; background-image: radial-gradient(8px 4px at 22% 28%, #EA580C 96%, transparent), radial-gradient(7px 3.5px at 66% 52%, #DC2626 96%, transparent), radial-gradient(8px 4px at 38% 78%, #D97706 96%, transparent), radial-gradient(6px 3px at 84% 22%, #CA8A04 96%, transparent), radial-gradient(6px 3px at 88% 82%, #B45309 96%, transparent); }
 .pz-pt-snow { background-color: #0F172A; background-image: radial-gradient(#FFFFFF 1.7px, transparent 2.1px), radial-gradient(rgba(255, 255, 255, .65) 1px, transparent 1.4px); background-size: 29px 31px, 17px 19px; background-position: 0 0, 8px 11px; }
 .pz-pt-blossoms { background-color: #FFF1F5; background-image: radial-gradient(5px 3.2px at 24% 34%, #F472B6 96%, transparent), radial-gradient(4.5px 3px at 70% 24%, #F9A8D4 96%, transparent), radial-gradient(5px 3.2px at 56% 70%, #FDA4AF 96%, transparent), radial-gradient(4.5px 3px at 14% 80%, #F9A8D4 96%, transparent), radial-gradient(4.5px 3px at 86% 64%, #F472B6 96%, transparent); }
+.pz-pt-bubbles { background-color: #ECFEFF; background-image: radial-gradient(circle at 24% 70%, transparent 6px, rgba(14, 116, 144, .55) 6.5px 7.5px, transparent 8px), radial-gradient(circle at 62% 40%, transparent 9px, rgba(14, 116, 144, .5) 9.5px 10.5px, transparent 11px), radial-gradient(circle at 80% 78%, transparent 4px, rgba(14, 116, 144, .55) 4.5px 5.5px, transparent 6px), radial-gradient(circle at 38% 22%, transparent 3px, rgba(14, 116, 144, .5) 3.5px 4.3px, transparent 4.8px); }
+.pz-pt-kelp { background: linear-gradient(180deg, #BAE6FD 0%, #E0F2FE 60%, #ECFEFF 100%); }
+.pz-pt-kelp::before { content: ""; position: absolute; inset: 0; background: radial-gradient(9px 34px at 12% 100%, #15803D 96%, transparent), radial-gradient(7px 26px at 22% 100%, #4D7C0F 96%, transparent), radial-gradient(9px 30px at 86% 100%, #0F766E 96%, transparent), radial-gradient(7px 22px at 76% 100%, #15803D 96%, transparent); }
+.pz-pt-fireflies { background-color: #14102A; background-image: radial-gradient(circle at 20% 30%, #ECFCCB 1.5px, rgba(190, 242, 100, .5) 3px, transparent 8px), radial-gradient(circle at 70% 55%, #ECFCCB 1.5px, rgba(190, 242, 100, .45) 3px, transparent 9px), radial-gradient(circle at 45% 80%, #ECFCCB 1px, rgba(190, 242, 100, .4) 2.5px, transparent 7px), radial-gradient(circle at 85% 20%, #ECFCCB 1px, rgba(190, 242, 100, .4) 2.5px, transparent 6px); }
+.pz-pt-circuit { background-color: #F0FDF4; background-image: linear-gradient(90deg, transparent 18%, rgba(101, 163, 13, .55) 18% 20%, transparent 20%), linear-gradient(0deg, transparent 58%, rgba(101, 163, 13, .55) 58% 61%, transparent 61%), radial-gradient(circle at 19% 59%, #65A30D 3px, transparent 3.5px), radial-gradient(circle at 70% 59%, #65A30D 3px, transparent 3.5px), radial-gradient(circle at 19% 20%, #FDE047 3.5px, transparent 5px); }
+.pz-pt-warp { background: radial-gradient(circle at 50% 45%, #DBEAFE 0, #60A5FA 6%, #1E3A8A 30%, #020617 70%); }
+.pz-pt-warp::before { content: ""; position: absolute; inset: 0; background: repeating-conic-gradient(from 0deg at 50% 45%, rgba(224, 242, 254, .55) 0 1.5deg, transparent 1.5deg 12deg); -webkit-mask: radial-gradient(circle at 50% 45%, transparent 12%, #000 40%); mask: radial-gradient(circle at 50% 45%, transparent 12%, #000 40%); }
+.pz-pt-kelp, .pz-pt-warp { position: relative; overflow: hidden; }
 /* the Seasons crate: what is in season now */
 .pz-season { margin: .4rem 0 0; padding: .45rem .7rem; border-radius: 12px; font-size: .9rem; background: var(--sunk); color: var(--ink); }
 .pz-season-fall { border-left: 4px solid #C2410C; }
@@ -133,6 +142,22 @@
 .pz-i-soil { stroke: #8B5E3C; stroke-width: 3; stroke-linecap: round; } .pz-i-seed { fill: #8B5E3C; } .pz-i-stem { stroke: #16A34A; stroke-width: 2.5; fill: none; stroke-linecap: round; }
 .pz-i-leaf { fill: #16A34A; } .pz-i-petal { fill: #DB2777; } .pz-i-core { fill: #F5B400; }
 .pz-plate .pz-i-wax { fill: #2A2850; stroke: #4C4A7A; } .pz-plate .pz-i-wick { stroke: #F5F3FF; } .pz-plate .pz-i-body { fill: #1E1B3A; stroke: #F5F3FF; }
+/* the dragon egg: it rocks, faster once it cracks; hatched, the dragon blinks; with wings, they beat */
+.pz-i-egg { fill: #5EEAD4; stroke: #0F766E; stroke-width: 1.5; } .pz-i-spot { fill: #FBBF24; } .pz-i-crack { fill: none; stroke: #134E4A; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.pz-i-drg { fill: #34D399; stroke: #065F46; stroke-width: 1.2; } .pz-i-belly { fill: #FDE68A; } .pz-i-horn { fill: #FBBF24; } .pz-i-eye { fill: #111827; } .pz-i-glint { fill: #FFFFFF; }
+.pz-egg { overflow: visible; transform-origin: 50% 92%; animation: pz-rock 3.2s ease-in-out infinite; }
+.pz-egg-hot { animation-duration: 1.6s; }
+.pz-egg .pz-i-eye { transform-box: fill-box; transform-origin: center; animation: pz-blink 4s infinite; }
+.pz-egg-wings { animation: none; } .pz-i-wing { transform-box: fill-box; transform-origin: 50% 80%; animation: pz-flap 1.4s ease-in-out infinite; }
+@keyframes pz-rock { 0%, 60%, 100% { transform: rotate(0); } 68% { transform: rotate(-7deg); } 76% { transform: rotate(6deg); } 84% { transform: rotate(-4deg); } 92% { transform: rotate(2deg); } }
+@keyframes pz-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+@keyframes pz-flap { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.55); } }
+/* the battery: a bolt pulses while it charges; full, the bars glow */
+.pz-i-bat { fill: none; stroke: var(--ink); stroke-width: 2.2; } .pz-i-nub { fill: var(--ink); } .pz-i-bar { fill: var(--line); } .pz-i-bar.on { fill: #22C55E; }
+.pz-i-bolt { fill: #FDE047; stroke: #713F12; stroke-width: 1; stroke-linejoin: round; animation: pz-charge 1.6s ease-in-out infinite; }
+.pz-battery.full .pz-i-bar.on { fill: #4ADE80; filter: drop-shadow(0 0 2px #4ADE80); } .pz-battery.full .pz-i-bolt { animation: none; opacity: 0; }
+.pz-plate .pz-i-bat { stroke: #F5F3FF; } .pz-plate .pz-i-nub { fill: #F5F3FF; } .pz-plate .pz-i-bar { fill: #2A2850; } .pz-plate .pz-i-bar.on { fill: #22C55E; }
+@keyframes pz-charge { 0%, 100% { opacity: .15; } 50% { opacity: 1; } }
 
 /* sticker book and titles */
 .pz-pages { display: grid; gap: .9rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
@@ -217,11 +242,16 @@ html.pz-plain { background-image: none !important; }
 html.pz-plain .pz-bg { display: none; }
 /* living themes: the main buttons shimmer */
 :root[data-theme="prize-synthwave"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-inferno"] .btn:not(.ghost):not(:disabled),
-:root[data-theme="prize-nebula"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-holo"] .btn:not(.ghost):not(:disabled) { background-size: 220% 100%; animation: pz-sheen 2.6s ease-in-out infinite alternate; }
+:root[data-theme="prize-nebula"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-holo"] .btn:not(.ghost):not(:disabled),
+:root[data-theme="prize-abyss"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-enchanted"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-terminal"] .btn:not(.ghost):not(:disabled) { background-size: 220% 100%; animation: pz-sheen 2.6s ease-in-out infinite alternate; }
+/* Terminal: headings and buttons in the typewriter face, with a faint phosphor glow */
+:root[data-theme="prize-terminal"] .vtitle, :root[data-theme="prize-terminal"] .h2, :root[data-theme="prize-terminal"] .h3, :root[data-theme="prize-terminal"] .btn { font-family: var(--mono); letter-spacing: 0; }
+:root[data-theme="prize-terminal"] .vtitle, :root[data-theme="prize-terminal"] .h2 { text-shadow: 0 0 10px rgba(74, 222, 128, .45); }
 @keyframes pz-sheen { from { background-position: 0 0; } to { background-position: 100% 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   .pz-t-m, .pz-r-m.show, .pz-shake, .pz-check path, .pz-star, .pz-stamp, .pz-swipe, .pz-neon::before, .pz-neon-run { animation: none !important; }
+  .pz-egg, .pz-egg .pz-i-eye, .pz-i-wing, .pz-i-bolt { animation: none !important; }
   .pz-prize.show { animation: none !important; transform: translate(-50%, -50%) scale(1); opacity: 1; }
   .pz-door, .pz-dial, .pz-toast { transition: none !important; }
   :root[data-theme^="prize-"] .btn:not(.ghost):not(:disabled) { animation: none !important; }

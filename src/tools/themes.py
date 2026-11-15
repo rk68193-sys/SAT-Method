@@ -1,6 +1,10 @@
 """Theme tokens for the site. Writes the token block at the top of site/app.css.
-Light is the default; with no saved choice the site follows the device (light or dark)."""
-import re, sys
+Light is the default; with no saved choice the site follows the device (light or dark).
+  python3 -I src/tools/themes.py src/site/app.css                  the token block
+  python3 -I src/tools/themes.py --prizes src/site/prize-themes.css the prize themes
+  python3 -I src/tools/themes.py --fxpal src/site/fx.js             the prize themes' colors for swatches and previews (FX_PAL)
+Each refuses to write while any pair of colors is below 4.5:1."""
+import json, re, sys
 COMMON_LIGHT = dict(
   ok='#15803D', ok_soft='#DCFCE7', bad='#BE123C', bad_soft='#FFE4E9', warn='#B45309', warn_text='#92400E',
   rw='#BE185D', rw_soft='#FDF2F8', rw_line='#FBCFE8', math='#1D4ED8', math_soft='#EFF6FF', math_line='#BFDBFE',
@@ -94,6 +98,18 @@ PRIZE = {
  'prize-inferno': dict(COMMON_DARK, paper='#120806', card='#1E0F0A', sunk='#2A1610', ink='#FFF4EC', ink2='#FED7C3', muted='#C4A08E', line='#3A1E14', line_strong='#57301F',
    pencil='#FB923C', pencil_text='#FDBA74', hl='#4A1D0C', hl_ink='#FFF1E6', act='#F97316', act_ink='#1C0A02', act_hover='#EA580C', focus='#FDBA74',
    d1='#3A1E14', d2='#C2410C', d3='#FDE68A', grad='linear-gradient(90deg, #FDE047 0%, #FB923C 50%, #F43F5E 100%)', on_grad='#1C0A02', aura='rgba(249, 115, 22, .32)'),
+ # deep sea: glowing plankton and slow light from far above
+ 'prize-abyss': dict(COMMON_DARK, paper='#030B18', card='#08162B', sunk='#0D2038', ink='#E6F6FF', ink2='#BFE3F5', muted='#8FB4CC', line='#12304F', line_strong='#1D4870',
+   pencil='#22D3EE', pencil_text='#67E8F9', hl='#0E3A4F', hl_ink='#E0FBFF', act='#2DD4BF', act_ink='#03201C', act_hover='#14B8A6', focus='#67E8F9',
+   d1='#12304F', d2='#0E7490', d3='#A5F3FC', grad='linear-gradient(120deg, #A5F3FC 0%, #5EEAD4 50%, #C4B5FD 100%)', on_grad='#03201C', aura='rgba(45, 212, 191, .3)'),
+ # an old screen: green phosphor, scanlines and a flicker
+ 'prize-terminal': dict(COMMON_DARK, paper='#030806', card='#07110B', sunk='#0B1A11', ink='#D5FFE0', ink2='#A7F3C0', muted='#6FBF8A', line='#123322', line_strong='#1C4D33',
+   pencil='#4ADE80', pencil_text='#86EFAC', hl='#0F3A22', hl_ink='#E6FFEE', act='#22C55E', act_ink='#021208', act_hover='#16A34A', focus='#86EFAC',
+   d1='#123322', d2='#15803D', d3='#86EFAC', grad='linear-gradient(90deg, #86EFAC 0%, #4ADE80 50%, #22D3EE 100%)', on_grad='#021208', aura='rgba(74, 222, 128, .3)'),
+ # an enchanted wood at night: fireflies, mist and runes
+ 'prize-enchanted': dict(COMMON_DARK, paper='#0C0718', card='#160E28', sunk='#1F1536', ink='#F7F1FF', ink2='#E2D4FB', muted='#AE9CD0', line='#2B1F48', line_strong='#433169',
+   pencil='#A3E635', pencil_text='#D9F99D', hl='#2E1F4F', hl_ink='#F7FEE7', act='#A3E635', act_ink='#142004', act_hover='#84CC16', focus='#D9F99D',
+   d1='#2B1F48', d2='#7C3AED', d3='#D9F99D', grad='linear-gradient(120deg, #D9F99D 0%, #A7F3D0 40%, #C4B5FD 100%)', on_grad='#142004', aura='rgba(163, 230, 53, .28)'),
 }
 def finish(d):
     """fill the shadow and glass tokens the prize palettes leave out, from the light or dark theme they build on"""
@@ -161,6 +177,16 @@ if __name__ == '__main__':
     if sys.argv[1] == '--prizes':
         open(sys.argv[2], 'w', encoding='utf-8').write(prize_css())
         print('prize themes written', len(PRIZE))
+        sys.exit(0)
+    if sys.argv[1] == '--fxpal':
+        pal = {t: {k: PRIZE[t][k] for k in ('paper', 'card', 'ink', 'line', 'act', 'act_ink', 'ok', 'ok_soft')} for t in PRIZE}
+        line = '  var FX_PAL = ' + json.dumps(pal, separators=(',', ':')) + ';'
+        s = open(sys.argv[2], encoding='utf-8').read()
+        s2, n = re.subn(r'^  var FX_PAL = \{.*\};$', lambda m: line, s, count=1, flags=re.M)
+        if n != 1:
+            sys.exit('no FX_PAL line in ' + sys.argv[2])
+        open(sys.argv[2], 'w', encoding='utf-8').write(s2)
+        print('FX_PAL written', len(pal))
         sys.exit(0)
     p = sys.argv[1]
     s = open(p, encoding='utf-8').read()
