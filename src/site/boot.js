@@ -143,7 +143,7 @@
     }
     if (token === 'rw-missed') { showView('practice'); if (!built.practice) { buildPractice(); } rwMissed(); toTop(); return; }
     if (token === 'rw-easy' || token === 'rw-mixed') { showView('practice'); if (!built.practice) { buildPractice(); } rwQuick(token === 'rw-easy' ? 5 : 10, token === 'rw-easy' ? 'Easy' : ''); toTop(); return; }
-    if (token === 'practice' || token === 'timed' || token === 'test') { showView('practice'); buildPractice(); if (rdIntroOn && !RM && !TS) { timedSetup(); } toTop(); return; }
+    if (token === 'practice' || token === 'timed' || token === 'test') { showView('practice'); buildPractice(); if ((rdIntroOn || tOver) && !RM && !TS) { timedSetup(); } toTop(); return; }
     if (token === 'rw-module') {
       showView('practice');
       if (!(RM && !RM.over)) { rmModePreset = 'module'; if (built.practice) { timedSetup(); } else { buildPractice(); } }

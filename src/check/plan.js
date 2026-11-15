@@ -42,7 +42,7 @@ function estimate(rows) {
 
   // Home for someone new
   ok((await text('#v-home .hcheck')).startsWith('Not sure of your level?'), 'Home offers the starting check to someone new');
-  ok((await text('#v-home .hplan')).includes('Have a test date?'), 'Home offers a study plan');
+  ok((await text('#v-home #hplan')).includes('Have a test date?') && await p.isVisible('#v-home #plan-form'), 'Home offers a study plan, with its three questions right there');
   await wide('home new'); await shot('home-new');
 
   // the plan page before there is a plan
@@ -112,7 +112,7 @@ function estimate(rows) {
   await go('m-map'); ok((await text('#v-mmap .diag-line')).includes('rough range'), 'the Math map shows the check');
   await go('rw-map'); ok((await text('#v-rwmap .diag-line')).includes('rough range'), 'the Reading and Writing map shows the check');
   await go('home'); ok(!(await p.$('#v-home .hcheck')), 'Home stops offering the check once it is taken');
-  ok(/25 days to your test · today \d of \d done/.test(await text('#v-home .hplan')), 'Home shows the plan: ' + (await text('#v-home .hplan')));
+  ok(/25 days to your test/.test(await text('#v-home .tday .eyebrow')) && (await p.$$('#v-home .tday-tasks .plan-task')).length >= 1, 'Home is the plan for today: ' + (await text('#v-home .tday h1')));
   await shot('home-plan');
 
   // back to the plan: the check is done, and one more set can be added

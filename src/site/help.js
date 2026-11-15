@@ -21,7 +21,7 @@
       ['How do I practice what I just read?', 'Press <b>3 Practice</b> at the top, then “5 easy questions”.']]],
     setup: ['the Practice page', [
       ['How do I start practicing?', 'Press <b>5 easy questions</b>. You get one question at a time, with no clock.'],
-      ['What is “Build your own practice set”?', 'It lets you choose the kind of question, how hard it is and how many you get. You can leave it closed until you want it.'],
+      ['What is “Pick what to practice”?', 'It lets you choose the kind of question, how hard it is and how many you get. You can leave it closed until you want it.'],
       ['Where can I see my mistakes?', 'Once you have a wrong answer, a button named “Try again the ones I got wrong” appears on this page. <b>4 My progress</b> also shows which kinds of question need more work.']]],
     question: ['answering a question', [
       ['How do I answer?', 'Press the choice you think is right. The site then tells you whether you were right and explains why.'],

@@ -66,9 +66,9 @@
   }
   function buildHub(subj) {
     var H = HUB[subj], host = viewEl[H.view], p = H.p;
-    if (built[H.view]) { return; }
+    if (built[H.view]) { var cc = $('[data-ccard]', host); if (cc) { cc.innerHTML = courseCardHTML(cc.getAttribute('data-ccard')); } return; }
     built[H.view] = true;
-    var pages = SUBJ[subj].items.filter(function (it) { return it[4] === 'learn' && it[0] !== H.view; }).map(function (it) { return [it[1], it[2], it[3]]; });
+    var pages = SUBJ[subj].items.filter(function (it) { return it[4] === 'learn' && it[0] !== H.view && it[0] !== 'start' && it[0] !== 'mstart'; }).map(function (it) { return [it[1], it[2], it[3]]; });
     var main, more;
     if (subj === 'math') { main = pages.slice(0, 4); more = pages.slice(4); }
     else {
@@ -80,9 +80,11 @@
     function card(x, i) { return '<a class="hub-card' + (i >= 0 ? ' hub-big' : '') + '" href="#' + x[0] + '">' + (i >= 0 ? '<span class="hub-n" aria-hidden="true">' + (i + 1) + '</span>' : '') + '<b>' + esc(x[1]) + '</b><span>' + esc(x[2]) + '</span></a>'; }
     host.innerHTML = '<div class="wrap">' +
       '<header class="mhead"><p class="eyebrow">' + SUBJ[subj].name + ' · Learn</p><h2 class="vtitle">Learn ' + (subj === 'math' ? 'Math' : 'Reading and Writing') + ', one topic at a time</h2>' +
-      '<p class="lede">Start with number 1 and work your way down the list. The extra help further down is optional, so open it only when you want it.</p></header>' +
+      '<p class="lede">Start with number 1 and work your way down the list. The extra help further down is optional, so open it only when you want it.</p>' +
+      '<p class="hub-new">New here? <a href="#' + (subj === 'math' ? 'math' : 'start') + '">Read the short welcome first</a>. It explains what this part of the test asks.</p></header>' +
+      '<div class="hub-course" data-ccard="' + (subj === 'math' ? 'm' : 'rw') + '">' + courseCardHTML(subj === 'math' ? 'm' : 'rw') + '</div>' +
       '<section class="sec first"><h3 class="h2">Start with these</h3><div class="hub-cards hub-main">' + main.map(function (x, i) { return card(x, i); }).join('') + '</div></section>' +
-      '<section class="sec"><h3 class="h2">Extra help, when you want it</h3><div class="hub-cards">' + more.map(function (x) { return card(x, -1); }).join('') + '</div></section>' +
+      '<section class="sec" id="' + p + '-library"><h3 class="h2">Library: things to look up</h3><p class="lede">These pages are for looking something up while you study. You do not need to read them in order.</p><div class="hub-cards">' + more.map(function (x) { return card(x, -1); }).join('') + '</div></section>' +
       '<section class="sec"><h3 class="h2">Looking for something?</h3><div class="hub-find"><label class="field"><span class="label">Type a word to search all of ' + (subj === 'math' ? 'Math' : 'Reading and Writing') + '</span><input type="text" id="' + p + '-q" autocomplete="off" placeholder="' + H.eg + '"></label></div>' +
       '<p class="muted hub-n" id="' + p + '-n" aria-live="polite"></p><ul class="hub-res" id="' + p + '-res"></ul></section>' +
       '</div>';

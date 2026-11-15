@@ -308,17 +308,17 @@
     check: rCheckHTML, others: rOthersHTML, sets: rSetsHTML, measured: rMeasuredHTML
   };
   var readingView = RailView('reading', {
-    label: 'Reading',
+    label: 'Reading', course: 'rw',
     home: 'routine',
     name: function (e, g) { return /^ex-/.test(e.key) ? 'Worked example ' + e.num : e.num ? 'Step ' + e.num + ': ' + plain(e.label) : plain(e.label); },
     items: function () {
       var ex = RLIST.map(function (x) { return { key: 'ex-' + x.n, token: 'ex-' + x.n, num: x.n, label: esc(x.title) + ' <span class="rn">' + x.diff.charAt(0) + '</span>', done: !!store.rl['ex-' + x.n] }; });
       return [
-        { group: 'The routine', entries: [{ key: 'routine', token: 'routine', label: 'Four steps for any reading question' }, { key: 'shape', token: 'shape', label: 'What the passages are like' }] },
+        { group: 'The routine', entries: [{ key: 'routine', token: 'routine', label: 'Four steps for any reading question', done: courseDone('rw', 'routine') }, { key: 'shape', token: 'shape', label: 'What the passages are like' }] },
         { group: 'The steps', entries: [
-          { key: 'job', token: 'job', num: 1, label: 'Job' }, { key: 'chunk', token: 'chunk', num: 2, label: 'Chunk' },
-          { key: 'long', token: 'long', label: 'Long sentences: core first' }, { key: 'para', token: 'para', label: 'Long passages: make them make sense' },
-          { key: 'say', token: 'say', num: 3, label: 'Say' }, { key: 'check', token: 'check', num: 4, label: 'Check' }] },
+          { key: 'job', token: 'job', num: 1, label: 'Job', done: courseDone('rw', 'job') }, { key: 'chunk', token: 'chunk', num: 2, label: 'Chunk', done: courseDone('rw', 'chunk') },
+          { key: 'long', token: 'long', label: 'Long sentences: core first', done: courseDone('rw', 'long') }, { key: 'para', token: 'para', label: 'Long passages: make them make sense', done: courseDone('rw', 'para') },
+          { key: 'say', token: 'say', num: 3, label: 'Say', done: courseDone('rw', 'say') }, { key: 'check', token: 'check', num: 4, label: 'Check', done: courseDone('rw', 'check') }] },
         { group: 'More question types', entries: [{ key: 'reasoning', token: 'reasoning', label: 'Deeper reading structures' }, { key: 'dataPatterns', token: 'data-patterns', label: 'Tables and graphs: deeper patterns' }, { key: 'others', token: 'others', label: 'Words, structure, two texts, notes' }, { key: 'vocab', token: 'vocab', label: 'Words to know' }, { key: 'notes', token: 'notesfirst', label: 'Notes questions: goal first' }] },
         { group: 'Worked examples', entries: ex },
         { group: 'More', entries: [{ key: 'reviewFindings', token: 'source-findings', label: 'Further source findings' }, { key: 'sets', token: 'sets', label: 'Practice sets: 1,230 IDs' }, { key: 'measured', token: 'measured', label: 'How this was measured' }] }

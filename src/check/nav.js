@@ -23,7 +23,7 @@ const { chromium } = require('playwright');
   const text = async sel => ((await p.textContent(sel)) || '').replace(/\s+/g, ' ').trim();
   /* the steps, with a star on the one you are in, and the "You are here" line */
   const bar = async () => p.evaluate(() => ({
-    steps: [...document.querySelectorAll('#secin a')].map(a => a.querySelector('.secn').textContent + ' ' + a.querySelector('.secw').textContent + (a.getAttribute('aria-current') ? '*' : '')).join(' | '),
+    steps: [...document.querySelectorAll('#secin a')].map(a => a.querySelector('.secw').textContent + (a.getAttribute('aria-current') ? '*' : '')).join(' | '),
     trail: [...document.querySelectorAll('#gtrail .gc')].map(c => c.textContent.replace('›', '').trim()).join(' › '),
     back: document.getElementById('guide').hidden ? '' : document.getElementById('gback').innerText.replace(/\s+/g, ' ').replace('←', '').trim()
   }));
@@ -32,7 +32,7 @@ const { chromium } = require('playwright');
 
   // Home: what it is, the two subjects first, how it works, then one easy question
   ok(await text('#v-home .hpill') === 'Free · no sign-up needed', 'the hero says free, with no sign-up needed');
-  ok(JSON.stringify(await p.$$eval('#v-home .hpick', a => a.map(x => x.getAttribute('href')))) === '["#start","#math"]', 'two big buttons, one for each subject');
+  ok(JSON.stringify(await p.$$eval('#v-home .hpick', a => a.map(x => x.getAttribute('href')))) === '["#rw-hub","#m-hub"]', 'two big buttons, one for each subject');
   ok(await inView('#v-home .hpick-math'), 'both subjects are on the first screen');
   ok(await p.evaluate(() => { const h = document.getElementById('hhow'), t = document.getElementById('htry-sec'); return !!h && !!t && (h.compareDocumentPosition(t) & Node.DOCUMENT_POSITION_FOLLOWING) > 0; }), '“How this site works” comes before the sample question');
   ok((await p.$$('#v-home a[href^="#"]')).length <= 25, 'the home page has a handful of links, not dozens (' + (await p.$$('#v-home a[href^="#"]')).length + ')');
@@ -66,28 +66,28 @@ const { chromium } = require('playwright');
   // Math: four numbered steps, and the guide bar says where you are
   await go('math');
   let b = await bar();
-  ok(b.steps === '1 Start here* | 2 Learn | 3 Practice | 4 My progress', 'Math steps on Start here: ' + b.steps);
-  ok(b.trail === 'Home › Math › Start here', 'You are here: ' + b.trail);
+  ok(b.steps === 'Learn* | Practice | My progress', 'Math steps on Start here: ' + b.steps);
+  ok(b.trail === 'Home › Math › Learn › New here? A short welcome', 'You are here: ' + b.trail);
   ok(!(await p.$('#subnav')) && !(await p.$('#secwhat')), 'no second row of buttons and no extra box above the page');
   await shot('math-start');
   await go('m-learn'); b = await bar();
-  ok(b.steps === '1 Start here | 2 Learn* | 3 Practice | 4 My progress', 'Lessons is in step 2, Learn: ' + b.steps);
+  ok(b.steps === 'Learn* | Practice | My progress', 'Lessons is in step 2, Learn: ' + b.steps);
   ok(b.trail === 'Home › Math › Learn › Lessons', 'You are here: ' + b.trail);
-  ok(b.back === 'Back to Start here', 'Back names the page you came from: ' + b.back);
+  ok(b.back === 'Back to New here? A short welcome', 'Back names the page you came from: ' + b.back);
   await wide('math lessons'); await shot('math-lessons');
   for (const [t, name] of [['m-found', 'Algebra basics'], ['m-found-den', 'Algebra basics'], ['m-first', 'Look for a shortcut'], ['m-first-roots', 'Look for a shortcut'], ['m-patterns', 'Big ideas'], ['m-study', 'All question types'], ['m-types', 'Find a question type'], ['m-short', 'Shortcut list'], ['m-desmos', 'Calculator tips'], ['m-ref', 'Formula sheet'], ['m-nlf', 'Lessons › Nonlinear functions'], ['mt-sys-count', 'Lessons › Systems of two linear equations'], ['md-fit', 'Calculator tips']]) {
     await go(t); b = await bar();
-    ok(b.steps.includes('2 Learn*') && b.trail === 'Home › Math › Learn › ' + name, t + ' → ' + b.trail);
+    ok(b.steps.includes('Learn*') && b.trail === 'Home › Math › Learn › ' + name, t + ' → ' + b.trail);
     await wide(t);
   }
   await go('m-practice'); b = await bar();
-  ok(b.steps.includes('3 Practice*') && b.trail === 'Home › Math › Practice', 'Math practice: ' + b.trail);
+  ok(b.steps.includes('Practice*') && b.trail === 'Home › Math › Practice', 'Math practice: ' + b.trail);
   await go('m-drills'); b = await bar();
-  ok(b.steps.includes('3 Practice*') && b.trail === 'Home › Math › Practice › Short exercises', 'Math exercises: ' + b.trail);
+  ok(b.steps.includes('Practice*') && b.trail === 'Home › Math › Practice › Short exercises', 'Math exercises: ' + b.trail);
   await go('m-drill-mcount'); b = await bar();
   ok(b.trail === 'Home › Math › Practice › Short exercises', 'an exercise in progress stays under Practice');
   await go('m-map'); b = await bar();
-  ok(b.steps.endsWith('4 My progress*') && b.trail === 'Home › Math › My progress', 'My progress: ' + b.trail);
+  ok(b.steps.endsWith('My progress*') && b.trail === 'Home › Math › My progress', 'My progress: ' + b.trail);
 
   // Back: the page you came from, and Home, stay on screen while you scroll
   await go('m-learn'); await go('m-nlf'); b = await bar();
@@ -127,14 +127,14 @@ const { chromium } = require('playwright');
 
   // Reading and Writing: the same four steps
   await go('start'); b = await bar();
-  ok(b.steps === '1 Start here* | 2 Learn | 3 Practice | 4 My progress' && b.trail === 'Home › Reading & Writing › Start here', 'Reading and Writing on Start here');
+  ok(b.steps === 'Learn* | Practice | My progress' && b.trail === 'Home › Reading & Writing › Learn › New here? A short welcome', 'Reading and Writing on Start here');
   for (const [t, name] of [['reading', 'Reading lessons'], ['lessons', 'Grammar lessons'], ['method', 'Grammar lessons › The 60-second method'], ['c8', 'Grammar lessons › Lesson 8: Subject–verb agreement'], ['lookup', 'Look up a rule'], ['ex-3', 'Reading lessons › Worked example 3'], ['job', 'Reading lessons › Step 1: Job'], ['glossary', 'Look up a rule']]) {
     await go(t); b = await bar();
-    ok(b.steps.includes('2 Learn*') && b.trail === 'Home › Reading & Writing › Learn › ' + name, t + ' → ' + b.trail);
+    ok(b.steps.includes('Learn*') && b.trail === 'Home › Reading & Writing › Learn › ' + name, t + ' → ' + b.trail);
     await wide(t);
   }
   await go('practice'); b = await bar();
-  ok(b.steps.includes('3 Practice*') && b.trail === 'Home › Reading & Writing › Practice', 'Reading and Writing practice');
+  ok(b.steps.includes('Practice*') && b.trail === 'Home › Reading & Writing › Practice', 'Reading and Writing practice');
   await go('drills'); b = await bar();
   ok(b.trail === 'Home › Reading & Writing › Practice › Short exercises', 'Reading and Writing exercises');
   await wide('rw drills'); await shot('rw-drills');

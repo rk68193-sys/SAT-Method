@@ -269,9 +269,7 @@
       '<p class="chips"><span class="label">Rules</span>' + c.uses.map(function (uid) { return '<a class="ulink" href="#' + uid + '">' + U[uid].num + '</a>'; }).join('') + '</p>' +
       c.uses.map(useHTML).join('') +
       (c.could ? '<aside class="could"><p class="label">Could still appear · not from the bank</p><p class="fine" style="margin-top:.3rem">Standard forms of the same rules that this bank does not use. The example sentences are written for this guide.</p><ul>' + c.could.items.map(li).join('') + '</ul></aside>' : '') +
-      '<div class="lfoot"><span class="row"><button type="button" class="btn ghost donebtn" id="donebtn" aria-pressed="' + (d ? 'true' : 'false') + '">' + (d ? 'Lesson done ✓' : 'Mark this lesson done') + '</button>' +
-      '<a class="btn ghost" href="#practice" data-tpart="' + c.part + '">Practice Part ' + c.part + ' against the clock</a></span>' +
-      (next ? '<a class="btn" href="#' + next.id + '">Next: ' + next.n + ' ' + esc(next.title) + '</a>' : '<a class="btn" href="#practice">Take a timed set</a>') + '</div>';
+      '<div class="lfoot"><span class="row"><a class="btn ghost" href="#practice" data-tpart="' + c.part + '">Practice Part ' + c.part + ' against the clock</a></span></div>';
   }
   function mountExamples(host) {
     $$('.exhost', host).forEach(function (slot) {
@@ -348,12 +346,12 @@
 
   /* ---------- the Grammar view ---------- */
   var grammarView = RailView('grammar', {
-    label: 'Grammar',
+    label: 'Grammar', course: 'rw',
     home: 'home',
     name: function (e) { return e.num ? 'Lesson ' + e.num + ': ' + plain(e.label) : plain(e.label); },
     items: function () {
       var g = [{ group: 'Method', entries: [
-        { key: 'method', token: 'method', label: 'The 60-second method' },
+        { key: 'method', token: 'method', label: 'The 60-second method', done: courseDone('rw', 'method') },
         { key: 'shortcuts', token: 'shortcuts', label: 'What this bank shows' },
         { key: 'hard', token: 'hard', label: 'Where the hard questions are' }
       ] }, { group: 'Lessons', entries: [{ key: 'home', token: 'lessons', label: 'All grammar lessons', tail: '<span class="rn">' + countDone() + '/' + NC + '</span>' }] }];
