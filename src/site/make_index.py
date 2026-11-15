@@ -7,6 +7,18 @@ pre = '''<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="A free SAT study site: Reading and Writing routines and grammar lessons, and Math lessons, question types, shortcuts and 1,925 real practice questions with College Board's answers.">
 <meta name="theme-color" content="#FFFFFF">
+<link rel="canonical" href="https://satsprint.org/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SAT Sprint">
+<meta property="og:title" content="SAT Sprint: free SAT practice, one step at a time">
+<meta property="og:description" content="Reading and Writing routines and grammar lessons, Math lessons and shortcuts, a study plan, and 1,925 real practice questions with College Board's answers. Free, no account needed.">
+<meta property="og:url" content="https://satsprint.org/">
+<meta property="og:image" content="https://satsprint.org/icons/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SAT Sprint: free SAT practice for Reading and Writing and Math, with a sample question answered right.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
