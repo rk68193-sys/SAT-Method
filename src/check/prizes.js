@@ -12,11 +12,10 @@ const KEY = 'sat-grammar-sprint.v1';
 let fails = 0, passes = 0;
 function ok(c, msg) { if (c) { passes++; console.log('ok   ' + msg); } else { fails++; console.log('FAIL ' + msg); } }
 
-/* saved progress written before the page's own scripts run, once per browser */
+/* saved progress written before the page's own scripts run, once per browser (the mark is kept in localStorage) */
 function seeder(fn, arg) {
   return ([src, a, key]) => {
-    if (location.protocol !== 'file:') { return; }
-    try { if (sessionStorage.getItem('pz-seeded')) { return; } sessionStorage.setItem('pz-seeded', '1'); } catch (e) { return; }
+    try { if (localStorage.getItem('pz-check-seeded')) { return; } localStorage.setItem('pz-check-seeded', '1'); } catch (e) { return; }
     let st = {}; try { st = JSON.parse(localStorage.getItem(key) || '{}') || {}; } catch (e) { st = {}; }
     ['t', 'l', 'd', 's', 'r', 'rl', 'b', 'm', 'g', 'x'].forEach(k => { if (!st[k] || typeof st[k] !== 'object') { st[k] = {}; } });
     const dk = d => { const x = new Date(d); return x.getFullYear() + '-' + ('0' + (x.getMonth() + 1)).slice(-2) + '-' + ('0' + x.getDate()).slice(-2); };
@@ -31,7 +30,8 @@ async function fresh(fn, arg, opt) {
   const p = await ctx.newPage(), errs = [];
   p.on('pageerror', e => errs.push(e.message));
   p.on('console', m => { if (m.type() === 'error' && !/favicon|ERR_FILE_NOT_FOUND/.test(m.text())) { errs.push('console: ' + m.text()); } });
-  const go = async (hash, wait) => { await p.goto('about:blank'); await p.goto(file + '#' + hash); await p.waitForTimeout(wait || 700); };
+  /* a real reload in the same page: a hop through another page can read localStorage before the last save reaches it */
+  const go = async (hash, wait) => { await p.goto(file + '#' + hash); await p.reload(); await p.waitForTimeout(wait || 700); };
   const saved = () => p.evaluate(k => JSON.parse(localStorage.getItem(k)), KEY);
   const done = async name => { ok(!errs.length, name + ': no script errors' + (errs.length ? ' (' + errs.join(' | ') + ')' : '')); await ctx.close(); };
   return { ctx, p, go, saved, done };
@@ -76,7 +76,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     const st = await t.saved(), rec = Object.values(st.s.pz.o)[0];
     ok(Object.keys(st.s.pz.o).length === 1 && Object.values(st.s.pz.x)[0] === 50, 'one crate opened for 50 coins');
     ok(bal(st) === 450, 'balance is 450 after the crate');
-    const shown = (await t.p.textContent('#pz-prize b')).trim();
+    const shown = (await t.p.textContent('#pz-prize .pz-prize-name')).trim();
     ok(!!rec && !!rec[2] && shown.length > 0, 'the prize card names the prize won: ' + shown + ' (' + rec[2] + ', ' + rec[3] + ')');
     ok(!!rec[5], 'the crate also held a sticker (' + rec[5] + ')');
     const kind = rec[2].split(':')[0];
@@ -177,14 +177,14 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
   {
     const t = await fresh(st => { st.s.pz = { o: { c1: [1, 'pencil', 'fx:check', 'c', 0, ''], c2: [2, 'arcade', 'fx:confetti', 'e', 0, ''] }, eq: { fx: 'fx:check' } }; });
     const answerRight = async () => {
-      for (let i = 0; i < 24; i++) {
+      for (let i = 0; i < 48; i++) {
         const a = await t.p.waitForSelector('#tcard .opt[data-k="A"]:not([disabled])', { timeout: 3000 }).catch(() => null);
-        if (!a) { await t.p.keyboard.press('Enter'); await t.p.waitForTimeout(200); continue; }
+        if (!a) { await startSet(); continue; }
         await a.click(); await t.p.waitForTimeout(60);
-        if (await t.p.$('#tcard .opt[data-k="A"].right')) { return true; }
+        if (await t.p.$('#tcard .opt[data-k="A"].right')) { return i + 1; }
         await t.p.keyboard.press('Enter'); await t.p.waitForTimeout(160);
       }
-      return false;
+      return 0;
     };
     const startSet = async () => { await t.go('practice'); await t.p.check('#tmode-set', { force: true }); await t.p.check('#tsrc-both', { force: true }); await t.p.click('#tstart'); await t.p.waitForTimeout(500); };
     await startSet();
@@ -192,9 +192,12 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok(!!(await t.p.$('#tcard .opt.right .pz-check')), 'the pencil check draws on it');
     ok(!(await t.p.$('#tcard .opt.wrong .pz-d')), 'nothing on a wrong answer');
     await t.go('crates'); await t.p.click('[data-pz-wear="fx"][data-pz-id="fx:confetti"]'); await t.p.waitForTimeout(150);
+    ok((await t.saved()).s.pz.eq.fx === 'fx:confetti', 'Wear puts confetti on');
     await startSet();
+    ok((await t.saved()).s.pz.eq.fx === 'fx:confetti', 'and it is still on in a new set');
     const got = await answerRight();
-    ok(got && !!(await t.p.$('canvas.pz-over')), 'with confetti on, a right answer bursts over the page');
+    ok(got > 0, 'a right answer in the second set (try ' + got + ')');
+    ok(!!(await t.p.$('canvas.pz-over')), 'with confetti on, the right answer bursts over the page');
     await t.p.waitForTimeout(1900);
     ok(!(await t.p.$('canvas.pz-over')), 'and is gone in under 2 seconds');
     await t.done('effects');
@@ -221,8 +224,10 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     await t.p.click('#pz-close');
     await t.go('practice'); await t.p.check('#tmode-set', { force: true }); await t.p.check('#tsrc-both', { force: true }); await t.p.click('#tstart'); await t.p.waitForTimeout(400);
     let right = false;
-    for (let i = 0; i < 24 && !right; i++) { if (!(await t.p.waitForSelector('#tcard .opt[data-k="B"]:not([disabled])', { timeout: 3000 }).catch(() => null))) { await t.p.keyboard.press('Enter'); await t.p.waitForTimeout(200); continue; } await t.p.click('#tcard .opt[data-k="B"]'); await t.p.waitForTimeout(60); right = !!(await t.p.$('#tcard .opt[data-k="B"].right')); if (!right) { await t.p.keyboard.press('Enter'); await t.p.waitForTimeout(150); } }
-    ok(right && !(await t.p.$('canvas.pz-over')), 'and a right answer plays no effect');
+    const restart = async () => { await t.go('practice'); await t.p.check('#tmode-set', { force: true }); await t.p.check('#tsrc-both', { force: true }); await t.p.click('#tstart'); await t.p.waitForTimeout(400); };
+    for (let i = 0; i < 48 && !right; i++) { if (!(await t.p.waitForSelector('#tcard .opt[data-k="B"]:not([disabled])', { timeout: 3000 }).catch(() => null))) { await restart(); continue; } await t.p.click('#tcard .opt[data-k="B"]'); await t.p.waitForTimeout(60); right = !!(await t.p.$('#tcard .opt[data-k="B"].right')); if (!right) { await t.p.keyboard.press('Enter'); await t.p.waitForTimeout(150); } }
+    ok(right, 'a right answer with reduced motion');
+    ok(!(await t.p.$('canvas.pz-over')), 'and it plays no effect');
     await t.done('reduced motion');
   }
 

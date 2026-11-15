@@ -280,11 +280,21 @@
     }
   };
   function fxBox(el) { var r = el.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height, cx: r.left + r.width / 2, cy: r.top + r.height / 2 }; }
+  function fxSeen(b) { var H = window.innerHeight || 800; return b.h > 0 && b.y + b.h > 40 && b.y < H - 40; }
+  /* the verdict under the answer ("Correct."): on a phone the page scrolls to it right after the answer */
+  function fxVerdict(el) { for (var n = el.parentElement, i = 0; n && i < 8; n = n.parentElement, i++) { var v = n.querySelector('.verdict, #mp-fb:not([hidden])'); if (v) { return v; } } return null; }
+  function fxAnchor(el, st) {
+    if (el.isConnected) { var b = fxBox(el); if (fxSeen(b)) { return b; } }
+    if (!st.v || !st.v.isConnected) { st.v = fxVerdict(el); }
+    if (st.v) { var v = fxBox(st.v); if (fxSeen(v)) { return v; } }
+    var W = window.innerWidth || 390, H = window.innerHeight || 800;
+    return { x: W * 0.12, y: H * 0.42, w: W * 0.76, h: 56, cx: W / 2, cy: H * 0.42 + 28 };
+  }
   /* a full-screen layer for one effect; the answer's box is read again every frame, so a scroll does not leave it behind */
   function fxOverlay(el, dur, make, end) {
     var cv = document.createElement('canvas'); cv.className = 'pz-over'; cv.setAttribute('aria-hidden', 'true'); document.body.appendChild(cv);
-    var k = fxBox(el);
-    return fxScene(cv, function (s) { var draw = make(s, k); return function (t, dt) { if (el.isConnected) { var b = fxBox(el); k.x = b.x; k.y = b.y; k.w = b.w; k.h = b.h; k.cx = b.cx; k.cy = b.cy; } draw(t, dt); }; }, { dur: dur, end: function () { cv.remove(); if (end) { end(); } } });
+    var st = {}, k = fxAnchor(el, st);
+    return fxScene(cv, function (s) { var draw = make(s, k); return function (t, dt) { var b = fxAnchor(el, st); k.x = b.x; k.y = b.y; k.w = b.w; k.h = b.h; k.cx = b.cx; k.cy = b.cy; draw(t, dt); }; }, { dur: dur, end: function () { cv.remove(); if (end) { end(); } } });
   }
   var FX_SVG = {
     check: '<svg class="pz-d pz-check" viewBox="0 0 30 24" aria-hidden="true"><path d="M3 13l7.5 7.5L27 3"/></svg>',
@@ -295,7 +305,7 @@
   };
   function fxShatter(el) {
     var r = fxBox(el), box = document.createElement('div'), cols = 5, rows = 3, pts = [], tris = [], i, j;
-    box.className = 'pz-shards'; box.style.left = r.x + 'px'; box.style.top = r.y + 'px'; box.style.width = r.w + 'px'; box.style.height = r.h + 'px';
+    box.className = 'pz-shards'; box.style.left = (r.x + window.scrollX) + 'px'; box.style.top = (r.y + window.scrollY) + 'px'; box.style.width = r.w + 'px'; box.style.height = r.h + 'px';
     document.body.appendChild(box);
     for (j = 0; j <= rows; j++) { pts.push([]); for (i = 0; i <= cols; i++) { var x = i / cols * 100, y = j / rows * 100; if (i > 0 && i < cols) { x += fxR(-6, 6); } if (j > 0 && j < rows) { y += fxR(-12, 12); } pts[j].push([x, y]); } }
     for (j = 0; j < rows; j++) { for (i = 0; i < cols; i++) { var a = pts[j][i], b = pts[j][i + 1], c = pts[j + 1][i], d = pts[j + 1][i + 1]; if ((i + j) % 2) { tris.push([a, b, d], [a, d, c]); } else { tris.push([a, b, c], [b, d, c]); } } }
