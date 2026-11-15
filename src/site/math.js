@@ -31,6 +31,7 @@
     return '<picture><source media="(max-width: 720px)" srcset="' + MIMG + kind + 'n/' + q.id + '.webp ' + MSCALEN + 'x" width="' + Math.round(nw / MSCALEN) + '" height="' + Math.round(nh / MSCALEN) + '">' + img + '</picture>';
   }
   function mDone(id) { var r = store.m[id]; return Array.isArray(r) ? r : null; }
+  function mpAnyTried() { return Object.keys(store.m).some(function (k) { return !!(mDone(k) && MQBY[k]); }); }
   function mSkillStats(k) {
     var L = MQ.filter(function (q) { return q.k === k; }), tried = 0, right = 0;
     L.forEach(function (q) { var r = mDone(q.id); if (r) { tried++; right += r[0]; } });
@@ -93,36 +94,46 @@
       var n = d.skills.reduce(function (a, k) { return a + MSK[k].n; }, 0);
       return '<a class="mdom" href="#m-learn-' + d.id + '"><span class="mdom-spec">' + esc(d.spec) + '</span><b>' + esc(d.name) + '</b><span>' + esc(d.blurb) + '</span><span class="label">' + d.skills.length + ' lessons · ' + mfmt(n) + ' questions in the bank</span></a>';
     }).join('');
+    var habits = '<p>These five habits take a few seconds each, and together they prevent most of the mistakes people make on the Math section.</p><ol class="mroutine">' +
+        '<li><b>Read the last sentence first.</b><span>The last sentence is the actual question. Everything above it is information you may or may not need.</span></li>' +
+        '<li><b>Notice what kind of question it is.</b><span>Certain words give the kind away, such as “margin of error”, “line of best fit”, “in terms of” or “vertex”. If you are not sure, <a href="#m-types">Find a question type</a> lists them all.</span></li>' +
+        '<li><b>Look for the three warning signs.</b><span>The words “no solution” or “infinitely many”, the word “constant”, and “positive” or “negative” used as a condition. Each one tells you the question has a twist, which is explained further down this page.</span></li>' +
+        '<li><b>Pick the quickest way you trust.</b><span>Sometimes you can see the answer in the equation itself. When the numbers are messy, the calculator built into the test is often faster, and <a href="#m-desmos">Calculator tips</a> shows you exactly what to type.</span></li>' +
+        '<li><b>Solve, then read the last sentence again.</b><span>Check that your number is the thing the question asked for. Did it want x, or x + y? The radius, or the diameter? This one habit catches the most common wrong answer on the test.</span></li>' +
+      '</ol>';
+    var covers = '<p>The test covers four areas. College Board’s own plan says Algebra and Advanced Math each make up about 35% of the questions, and the other two about 15% each. That is why the lessons begin with those first two.</p><div class="mdoms">' + doms + '</div>';
+    var signs = '<p>When you spot one of these three in a question, slow down for a moment. Each one changes what you should do.</p><div class="mcards3">' +
+        '<div class="mcard"><p class="mtag">“No solution” / “infinitely many”</p><p>You do not need to solve anything. Compare the two sides of the equation, or the two lines, instead. On this site ' + F.sol + ' questions ask how many solutions there are, and ' + mpc(F.solHard, F.sol) + '% of them are rated Hard. They come in three kinds: two lines (' + F.solSys + ' questions, where you compare slopes), one equation in x (' + F.solOne + ', where you compare both sides) and quadratics (' + F.solNon + ', where you use b² − 4ac).</p><a class="linkbtn" href="#mt-sys-count">How to do it</a></div>' +
+        '<div class="mcard"><p class="mtag">The word “constant”</p><p>The question contains a second unknown that is not the one you are asked for. Pin that one down first, either by matching the parts on both sides or by putting in a point you already know.</p><a class="linkbtn" href="#mt-eqx-coef">How to do it</a></div>' +
+        '<div class="mcard"><p class="mtag">“Positive” or “negative”</p><p>Find every solution, check each one in the original equation, and keep only the ones with the sign the question asks for. Do not expect exactly two solutions, and do not expect the one you drop to appear among the choices.</p><a class="linkbtn" href="#mt-nle-sign">How to do it</a></div>' +
+      '</div>';
+    var facts = '<p>These findings come from going through all ' + mfmt(T.n) + ' real questions and College Board’s explanations of them.</p><ul class="mfacts">' +
+        '<li><b>Most wrong answers are right answers to a different question.</b> College Board’s explanations say it again and again: “this is the value of x, not x + 4”. Reading the last sentence again helps more than checking your arithmetic again.</li>' +
+        '<li><b>About one question in four has no choices.</b> ' + mfmt(F.grid) + ' of the ' + mfmt(T.n) + ' questions ask you to type in your answer. ' + F.gridFrac + ' of those accept a fraction and ' + F.gridNeg + ' have a negative answer, so a fraction or a minus sign does not mean you went wrong. You can type a fraction such as 7/6 instead of a long decimal.</li>' +
+        '<li><b>Maximum and minimum questions are the hardest single kind.</b> ' + F.vx + ' questions ask for the highest or lowest point of a parabola, and ' + F.vxHard + ' of them are rated Hard. It helps to say the answer as a full sentence, “the minimum is −4, and it happens at x = 3”, and then match that sentence to what was asked.</li>' +
+        '<li><b>Circles are mostly algebra, but not only.</b> ' + F.cirEq + ' of the ' + F.cir + ' circle questions are about the circle’s equation. The rest are about arcs, radians, tangent lines and triangles inside circles.</li>' +
+        '<li><b>Hard questions are usually two ordinary steps joined together.</b> When a question feels impossible, look for the place where the two steps meet, and ask yourself what you could work out first.</li>' +
+        '<li><b>The answer letter tells you nothing you can use.</b> On this site D is right a little more often on Hard questions and B on Easy ones, but a real test can order its choices differently. Never let the letter override your work.</li>' +
+      '</ul>';
+    var ideas = '<p>About a dozen ideas connect almost every kind of question on the test. The same move solves a chain of percent changes, a growth model and a unit conversion, and the same picture answers every “how many solutions” question. <a href="#m-patterns">See the big ideas</a>.</p>' +
+      '<p>If you want every detail, <a href="#m-study">All question types</a> lists all ' + MST.methods.length + ' kinds of math question. Each one comes with the steps to solve it and a way to check it on the calculator.</p>';
     var h = '<div class="wrap">' +
-      mHead('Math · Start here', 'How to approach every math question', 'The Math part of the test has two halves of 22 questions, 35 minutes each: about a minute and a half for each question. A calculator and a sheet of formulas are built into the test. This guide is built from ' + mfmt(T.n) + ' real math questions.') +
-      '<section class="sec first"><h3 class="h2">Go in this order</h3><p class="lede">' + (canStore ? 'Your progress is saved ' + savedIn() + ', so you can stop and come back.' : 'Your progress lasts until you close this page.') + '</p><ol class="path" id="mpath">' + mPathHTML() + '</ol></section>' +
-      '<section class="sec"><h3 class="h2">Before you solve: five quick checks</h3>' +
-      '<ol class="mroutine">' +
-        '<li><b>Read the last sentence first.</b><span>It is the real question. Everything above it is information.</span></li>' +
-        '<li><b>Notice what kind of question it is.</b><span>Certain words give it away: “margin of error”, “line of best fit”, “in terms of”, “vertex”. <a href="#m-types">Find a question type</a> lists them.</span></li>' +
-        '<li><b>Look for the three warning signs.</b><span>“No solution” or “infinitely many”, the word “constant”, and “positive” or “negative” as a condition. Each one means the question has a twist (below).</span></li>' +
-        '<li><b>Pick the quickest way you trust.</b><span>Sometimes you can see the answer in the equation itself. With messy numbers, the built-in calculator is often faster: <a href="#m-desmos">Calculator tips</a> shows exactly what to type.</span></li>' +
-        '<li><b>Solve, then read the last sentence again.</b><span>Is your number the thing it asked for? x, or x + y? The radius, or the diameter? This one habit catches the most common wrong answer.</span></li>' +
-      '</ol></section>' +
-      '<section class="sec"><h3 class="h2">What the test covers</h3><p class="lede">Four areas. College Board’s own test plan says Algebra and Advanced Math are each about 35% of the questions, and the other two about 15% each, so start with the first two.</p><div class="mdoms">' + doms + '</div></section>' +
-      mNotInHTML() +
-      '<section class="sec"><h3 class="h2">Three warning signs that make a question hard</h3><div class="mcards3">' +
-        '<div class="mcard"><p class="mtag">“No solution” / “infinitely many”</p><p>Do not solve. Compare the two sides or the two lines. In the bank, ' + F.sol + ' questions ask how many solutions there are, and ' + mpc(F.solHard, F.sol) + '% of them are Hard. They come in three kinds: two lines (' + F.solSys + ' questions: compare slopes), one equation in x (' + F.solOne + ': compare both sides) and quadratics (' + F.solNon + ': use b² − 4ac).</p><a class="linkbtn" href="#mt-sys-count">How to do it</a></div>' +
-        '<div class="mcard"><p class="mtag">The word “constant”</p><p>There is a second unknown that is not the one asked for. Pin it down first: match the parts on both sides, or put in a point you know.</p><a class="linkbtn" href="#mt-eqx-coef">How to do it</a></div>' +
-        '<div class="mcard"><p class="mtag">“Positive” or “negative”</p><p>Find the solutions, check each one in the original equation, and keep only the ones with the sign the question asks for. Do not expect exactly two, or the one you drop to be among the choices.</p><a class="linkbtn" href="#mt-nle-sign">How to do it</a></div>' +
+      '<header class="mhead"><p class="eyebrow">Math · Start here</p><h2 class="vtitle">Welcome to Math</h2>' +
+      '<p class="lede">The Math half of the SAT has 44 questions in two sets of 22, and you get 35 minutes for each set. That is about a minute and a half for each question. A calculator and a sheet of formulas are built into the test, so you never have to memorize those.</p>' +
+      '<p class="lede">On this site you will find a short lesson for every kind of math the test asks, followed by plenty of real questions to practice on.</p>' +
+      '<p class="row mstart-go"><a class="btn big" href="#m-learn">Start the lessons</a><a class="btn big ghost" href="#m-easy">Try 5 easy questions</a></p></header>' +
+      '<section class="sec first"><div class="sech"><p class="eyebrow">Your path</p><h3 class="h2">Four steps, in this order</h3><p class="lede">' + (canStore ? 'Take them one at a time. Your progress is saved ' + savedIn() + '. You can stop whenever you like and pick up where you left off.' : 'Take them one at a time. Your progress lasts until you close this page.') + '</p></div><ol class="path" id="mpath">' + mPathHTML() + '</ol>' +
+      '<div class="mstart-prog" id="mstart-prog">' + mProgHTML() + '</div></section>' +
+      '<section class="sec"><div class="sech"><p class="eyebrow">Good to know</p><h3 class="h2">Questions people ask before they start</h3>' +
+      '<p class="lede">You do not need any of this to begin. Open one when you are curious.</p></div><div class="folds">' +
+      foldHTML('m-habits', 'What should I do on every math question?', habits) +
+      foldHTML('m-covers', 'What does the Math test cover?', covers) +
+      foldHTML('m-signs', 'What makes a question tricky?', signs) +
+      foldHTML('m-facts', 'What did 1,925 real questions teach us?'.replace('1,925', mfmt(T.n)), facts) +
+      (D.mnotin ? foldHTML('m-notin', 'Which topics can I skip?', mNotInHTML()) : '') +
+      foldHTML('m-ideas', 'Is there a bigger picture behind all these questions?', ideas) +
       '</div></section>' +
-      '<section class="sec"><h3 class="h2">What the data says, in plain words</h3><ul class="mfacts">' +
-        '<li><b>Most wrong answers are right answers to a different question.</b> College Board’s explanations say it again and again: “this is the value of x, not x + 4”. Re-reading the last sentence beats re-checking your arithmetic.</li>' +
-        '<li><b>About one question in four has no choices.</b> ' + mfmt(F.grid) + ' of the ' + mfmt(T.n) + ' are typed-in answers. ' + F.gridFrac + ' of those accept a fraction and ' + F.gridNeg + ' have a negative answer, so a fraction or a minus sign is not a sign you went wrong. You can type a fraction like 7/6 instead of a long decimal.</li>' +
-        '<li><b>Maximum and minimum questions are the hardest single shape.</b> ' + F.vx + ' questions ask for a parabola’s highest or lowest point; ' + F.vxHard + ' are Hard. Say the answer as a sentence: “the minimum is −4, at x = 3”, then match it to what was asked.</li>' +
-        '<li><b>Circles are mostly algebra, but not only.</b> ' + F.cirEq + ' of the ' + F.cir + ' circle questions are about the circle’s equation; the rest are arcs, radians, tangent lines and triangles inside circles.</li>' +
-        '<li><b>Hard questions are usually two ordinary steps joined together.</b> When one feels impossible, look for the seam: what could you work out first?</li>' +
-        '<li><b>The answer letter tells you nothing you can use.</b> In the bank, D is right more often on Hard questions and B on Easy ones, but real tests can order choices differently. Never let it override your work.</li>' +
-      '</ul></section>' +
-      '<section class="sec"><h3 class="h2">Your progress</h3><div id="mstart-prog">' + mProgHTML() + '</div></section>' +
-      '<section class="sec"><h3 class="h2">The ideas underneath</h3><p class="lede">About a dozen ideas connect almost every kind of question. The same move solves a chain of percent changes, a growth model and a unit conversion; the same picture answers every “how many solutions” question. <a href="#m-patterns">See the big ideas</a>.</p>' +
-        '<p class="fine">Want every detail? <a href="#m-study">All question types</a> lists all ' + MST.methods.length + ' kinds of math question, each with the steps to solve it and a check on the calculator.</p></section>' +
-      nextHTML(['m-learn', 'Start the lessons', 'One lesson for each kind of math on the test, in order.'], ['m-found', 'start with Algebra basics if math feels rusty']) +
+      nextHTML(['m-learn', 'Start the lessons', 'One short lesson for each kind of math on the test, in order.'], ['m-found', 'warm up with Algebra basics if math feels rusty']) +
       '</div>';
     viewEl.mstart.innerHTML = h;
   }
@@ -131,11 +142,10 @@
     var tried = 0, right = 0, dt = drillTried('math').length, dn = drillsOf('math').length;
     Object.keys(store.m).forEach(function (k) { var r = mDone(k); if (r && MQBY[k]) { tried++; right += r[0]; } });
     var items = [
-      ['Algebra basics, if math feels rusty', 'Six basic steps every lesson takes for granted, such as fractions and getting x alone.', '', '<a class="btn sm ghost" href="#m-found">Open Algebra basics</a>'],
-      ['The lessons', MD.domains.reduce(function (a, d) { return a + d.skills.length; }, 0) + ' lessons, one for each kind of math on the test. Go through them in order.', '', '<a class="btn sm" href="#m-learn">Open the lessons</a>'],
-      ['Practice real questions', 'Start with 5 easy ones, with no clock. After each answer you see the right one and why.', tried ? plural(tried, 'question') + ' tried · ' + right + ' right' : 'Not tried yet', '<a class="btn sm ghost" href="#m-easy">Try 5 easy questions</a>'],
-      ['Short exercises', 'Quick cards that each train one small step, such as exponent rules or percent changes.', dt + ' of ' + dn + ' exercises tried', '<a class="btn sm ghost" href="#m-drills">See the short exercises</a>'],
-      ['Check your progress', 'See which kinds of question need more work, and practice just those.', '', '<a class="btn sm ghost" href="#m-map">See my progress</a>']
+      ['Warm up with Algebra basics (optional)', 'If it has been a while since you did algebra, start here. Six short refreshers cover the steps that every lesson relies on, such as working with fractions and getting x by itself.', '', '<a class="btn sm ghost" href="#m-found">Open Algebra basics</a>'],
+      ['Work through the lessons', 'There are ' + MD.domains.reduce(function (a, d) { return a + d.skills.length; }, 0) + ' lessons, one for each kind of math on the test. Take them in order. Each one shows you how to recognize the question and how to solve it.', '', '<a class="btn sm" href="#m-learn">Open the lessons</a>'],
+      ['Practice on real questions', 'Begin with 5 easy questions and no clock. After each answer you see the right one and the reason why. For a quick warm-up, the <a href="#m-drills">short exercises</a> train one small step at a time, such as exponent rules or percent changes.' + (dt ? ' You have tried ' + dt + ' of the ' + dn + ' so far.' : ''), tried ? plural(tried, 'question') + ' tried so far, ' + right + ' right' : '', '<a class="btn sm ghost" href="#m-easy">Try 5 easy questions</a>'],
+      ['See how you are doing', 'The My progress page shows which kinds of question you are already good at and which ones need more practice, so you always know what to do next.', '', '<a class="btn sm ghost" href="#m-map">See my progress</a>']
     ];
     return items.map(function (it, i) {
       return '<li><span class="pn">' + (i + 1) + '</span><div class="pd"><b>' + it[0] + '</b><p>' + it[1] + '</p>' + (it[2] ? '<p class="ps">' + it[2] + '</p>' : '') + '</div>' + it[3] + '</li>';
@@ -146,16 +156,16 @@
     var N = D.mnotin;
     if (!N) { return ''; }
     function li(t) { return '<li><b>' + esc(t.name) + '.</b> ' + esc(t.why) + (t.qs ? ' <span class="mnotin-q">' + t.qs.map(function (id) { return '<a class="mchip" href="#mq-' + id + '">Try ' + id + '</a>'; }).join('') + '</span>' : '') + '</li>'; }
-    return '<section class="sec" id="m-notin"><h3 class="h2">What the bank never asks</h3><p class="lede">Some prep books teach topics that no question in College Board’s bank uses. Each one below was checked against the wording of all ' + mfmt(N.n) + ' questions, their choices and College Board’s explanations.</p>' +
+    return '<p>Some prep books teach topics that no question in College Board’s practice bank uses. Each topic below was checked against the wording of all ' + mfmt(N.n) + ' questions, their answer choices and College Board’s explanations, so you can spend your study time where it counts.</p>' +
       '<div class="mnotin"><div><h4 class="h3">Not one question</h4><ul class="mfacts">' + N.none.map(li).join('') + '</ul></div>' +
       '<div><h4 class="h3">Once in the whole bank</h4><ul class="mfacts">' + N.rare.map(li).join('') + '</ul>' +
       '<h4 class="h3">Looks rare, but keep it</h4><ul class="mfacts">' + N.keep.map(li).join('') + '</ul></div></div>' +
-      '<p class="fine">This is College Board’s question bank, not the test itself, so read the list as where not to spend study time rather than a promise about test day.</p></section>';
+      '<p class="fine">Keep in mind that this is College Board’s practice bank and not the test itself. Read the list as advice on where not to spend study time, and not as a promise about test day.</p>';
   }
   function mProgHTML() {
     var tried = 0, right = 0;
     Object.keys(store.m).forEach(function (k) { var r = mDone(k); if (r && MQBY[k]) { tried++; right += r[0]; } });
-    if (!tried) { return '<p class="muted">No practice questions answered yet. Your results are saved ' + savedIn() + '.</p>'; }
+    if (!tried) { return ''; }
     var rows = MD.domains.map(function (d) {
       var s = d.skills.map(mSkillStats).reduce(function (a, x) { return { n: a.n + x.n, tried: a.tried + x.tried, right: a.right + x.right }; }, { n: 0, tried: 0, right: 0 });
       return '<div class="mprog-row"><span>' + esc(d.name) + '</span><span class="mbar"><i style="width:' + mpc(s.tried, s.n) + '%"></i></span><span class="num">' + s.tried + ' tried · ' + mpc(s.right, s.tried || 1) + '% right</span></div>';
@@ -167,8 +177,8 @@
   var mlearnView = (function () {
     var page = '';
     function home() {
-      return '<div class="wrap">' + mHead('Math · Lessons', 'Lessons, one skill at a time', 'College Board sorts every math question into 19 skills in four areas. Each lesson explains the idea from scratch, gives the method, a worked example, the usual trap, and every question type in that skill with how to solve it. Start with the first lesson and go in order.') +
-        (mFoundNudgeHTML() || '<aside class="mnote"><p><b>Rusty on the basics?</b> <a href="#m-found">Algebra basics</a> covers the six steps every lesson takes for granted, from fractions to an unknown on the bottom of a fraction, each with a short exercise.</p></aside>') +
+      return '<div class="wrap">' + mHead('Math · Lessons', 'Lessons, one skill at a time', 'College Board sorts every math question into 19 skills in four areas, and there is one lesson here for each skill. Every lesson explains the idea from the beginning, shows the method on a worked example, warns you about the usual trap, and then walks through each kind of question you might see. It is best to start with the first lesson and go in order.') +
+        (mFoundNudgeHTML() || '<aside class="mnote"><p><b>Does math feel rusty?</b> <a href="#m-found">Algebra basics</a> goes over the six steps that every lesson takes for granted, from fractions to solving for an unknown on the bottom of a fraction. Each step comes with a short exercise.</p></aside>') +
         MD.domains.map(function (d) {
           return '<section class="sec" id="m-learn-' + d.id + '"><div class="mdom-h"><h3 class="h2">' + esc(d.name) + '</h3><p class="mdom-spec">' + esc(d.spec) + '</p></div><p class="lede">' + esc(d.blurb) + '</p><div class="mskills">' +
             d.skills.map(function (k) {
@@ -405,10 +415,9 @@
     if (mpModePreset) { s.mode = mpModePreset; mpModePreset = null; }
     var preset = s.topic !== 'all';
     viewEl.mprac.innerHTML = '<div class="wrap">' +
-      mHead('Math · Practice', 'Practice real test questions', 'Every question comes from College Board, the makers of the SAT. After each answer you see the right one, and how to solve that kind of question.') +
-      (preset ? '' : '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#m-easy">5 easy questions</a><a class="btn big ghost" href="#m-mixed">10 questions of every level</a></p><p class="fine">One question at a time, with no clock.</p></section>' +
-        '<h3 class="h2 mpown">Or choose your own set</h3>') +
-      '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
+      mHead('Math · Practice', 'Practice real test questions', 'Every question here was written by College Board, the people who make the SAT. After each answer you will see which choice is right, along with the steps for solving that kind of question.') +
+      (preset ? '' : '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#m-easy">5 easy questions</a><a class="btn big ghost" href="#m-mixed">10 questions of every level</a></p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>') +
+      '<div class="folds setfold">' + foldHTML('mp-fold', 'Build your own practice set', '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
         seg('mp-mode', 'How to practice', [['learn', 'One at a time'], ['module', 'Timed test']], s.mode) +
         '<p class="mpmode-note" id="mp-mode-note"></p>' +
         mpKindHTML(s.topic) + '<div id="mp-sub" class="mpsub"></div>' +
@@ -416,7 +425,7 @@
         '<div class="mp-learnonly">' + seg('mp-n', '3 · How many', [[5, '5'], [10, '10'], [22, '22']], s.n) + '</div>' +
         seg('mp-pick', '4 · Which ones', [['any', 'Any'], ['new', 'Ones I have not tried'], ['missed', 'Ones I got wrong']], s.pick) +
         '<label class="checkline mp-learnonly"><input type="checkbox" id="mp-timer"' + (s.timer ? ' checked' : '') + '> Show a clock (the real test allows about 95 seconds a question)</label>' +
-      '</div><p class="mpset-n" id="mp-count" aria-live="polite"></p><p class="row"><button class="btn big" type="submit" id="mp-go">Start practicing</button></p></form>' +
+      '</div><p class="mpset-n" id="mp-count" aria-live="polite"></p><p class="row"><button class="btn big" type="submit" id="mp-go">Start practicing</button></p></form>', 'Choose the topic, how hard it is and how many questions you want. The timed test is here too.', preset || s.mode === 'module' || mpAnyTried()) + '</div>' +
       '</div>';
     var form = $('#mp-form');
     function read() {

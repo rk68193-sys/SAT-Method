@@ -80,7 +80,7 @@
     function card(x, i) { return '<a class="hub-card' + (i >= 0 ? ' hub-big' : '') + '" href="#' + x[0] + '">' + (i >= 0 ? '<span class="hub-n" aria-hidden="true">' + (i + 1) + '</span>' : '') + '<b>' + esc(x[1]) + '</b><span>' + esc(x[2]) + '</span></a>'; }
     host.innerHTML = '<div class="wrap">' +
       '<header class="mhead"><p class="eyebrow">' + SUBJ[subj].name + ' · Learn</p><h2 class="vtitle">Learn ' + (subj === 'math' ? 'Math' : 'Reading and Writing') + ', one topic at a time</h2>' +
-      '<p class="lede">Start with number 1 and go down the list. The extra help further down is there when you want it.</p></header>' +
+      '<p class="lede">Start with number 1 and work your way down the list. The extra help further down is optional, so open it only when you want it.</p></header>' +
       '<section class="sec first"><h3 class="h2">Start with these</h3><div class="hub-cards hub-main">' + main.map(function (x, i) { return card(x, i); }).join('') + '</div></section>' +
       '<section class="sec"><h3 class="h2">Extra help, when you want it</h3><div class="hub-cards">' + more.map(function (x) { return card(x, -1); }).join('') + '</div></section>' +
       '<section class="sec"><h3 class="h2">Looking for something?</h3><div class="hub-find"><label class="field"><span class="label">Type a word to search all of ' + (subj === 'math' ? 'Math' : 'Reading and Writing') + '</span><input type="text" id="' + p + '-q" autocomplete="off" placeholder="' + H.eg + '"></label></div>' +

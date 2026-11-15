@@ -391,11 +391,11 @@
     var keys = drillsOf(drillSubj || 'rw'), math = drillSubj === 'math';
     var groups = math ? [['mspot', 'Know what the question asks'], ['mreps', 'Avoid the usual mistakes'], ['mfound', 'Algebra basics']]
       : [['reading', 'Reading'], ['grammar', 'Grammar'], ['words', 'Word meanings']];
-    var how = 'Pick one and press Start. After each card you see the right answer and why. A small clock counts the seconds, but there is no time limit.' +
+    var how = 'Pick one and press Start. After each card you will see the right answer and the reason for it. A small clock counts the seconds so you can see your pace, but there is no time limit.' +
       '<span class="kbd-only"> On a keyboard, press 1, 2, 3 or 4 to answer and Enter for the next card.</span>';
-    var h = (math ? mHead('Math · Short exercises', 'Short exercises', 'Quick cards that each train one small step that many questions share. ' + how)
+    var h = (math ? mHead('Math · Short exercises', 'Short exercises', 'These are quick cards, and each one trains a single small step that many questions share.</p><p class="lede">' + how)
         : '<header class="read"><p class="eyebrow">Reading &amp; Writing · Short exercises</p><h2 class="vtitle">Short exercises</h2>' +
-          '<p class="lede">Quick cards that each train one small step, most of them on real test questions. ' + how + '</p></header>') +
+          '<p class="lede">These are quick cards, and each one trains a single small step. Most of them use real test questions.</p><p class="lede">' + how + '</p></header>') +
       '<fieldset class="seg" style="margin-top:1.4rem"><legend>Cards each time</legend><div class="segrow">' + [10, 20, 0].map(function (n) {
         return '<label><input type="radio" name="dlen" id="dlen-' + (n || 'all') + '" value="' + n + '"' + (n === len ? ' checked' : '') + '><span>' + (n || 'All') + '</span></label>';
       }).join('') + '</div></fieldset>' +

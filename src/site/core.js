@@ -121,6 +121,10 @@
   function endDot(html) { return /[.,;:?!…”’)]\s*$/.test(plain(html)) ? html : html + '.'; }
   function quoteIfOdd(html) { return /^\W/.test(plain(html)) ? '“' + html + '”' : html; }
   function narrow() { return window.matchMedia && window.matchMedia('(max-width: 760px)').matches; }
+  /* a part of a page that stays closed until the visitor asks for it: a question as its title, the answer inside */
+  function foldHTML(id, title, body, sub, open) {
+    return '<details class="fold"' + (id ? ' id="' + id + '"' : '') + (open ? ' open' : '') + '><summary><span class="fold-t">' + title + '</span>' + (sub ? '<span class="fold-s">' + sub + '</span>' : '') + '<span class="fold-i" aria-hidden="true"></span></summary><div class="fold-b">' + body + '</div></details>';
+  }
   function showFeedback(el) {
     if (!el) { return; }
     focusQuiet(el);

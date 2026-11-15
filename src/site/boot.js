@@ -52,6 +52,8 @@
   function toTop() { window.scrollTo(0, 0); }
   function scrollToEl(el) {
     if (!el) { toTop(); return; }
+    /* a link into a closed part of the page opens it first */
+    for (var d = el; d && d !== document.body; d = d.parentNode) { if (d.tagName === 'DETAILS' && !d.open) { d.open = true; } }
     el.scrollIntoView({ block: 'start' });
     if (!el.hasAttribute('tabindex')) { el.setAttribute('tabindex', '-1'); }
     focusQuiet(el);
@@ -286,6 +288,7 @@
   /* ---------- start ---------- */
   offNote();
   go(location.hash || 'home');
+  tourMaybe();
   var hot = window.claude && window.claude.hot;
   if (hot) {
     try { if (typeof hot.snapshot === 'function') { hot.snapshot(function () { return { route: lastToken }; }); } } catch (e) {}

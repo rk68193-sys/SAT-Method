@@ -148,15 +148,15 @@
       }).join('') + '</div>';
     }).join('');
     viewEl.mmap.innerHTML = '<div class="wrap">' +
-      mHead('Math · My progress', 'My progress', 'How you are doing on each of the ' + N + ' kinds of math question. This page fills in as you answer practice questions. Tap a colored square to see what to watch out for, and to practice just that kind.') +
-      '<div class="mst-stats mm-stats"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
+      mHead('Math · My progress', 'My progress', 'This page shows how you are doing on each of the ' + N + ' kinds of math question. It fills in by itself as you answer practice questions, so there is nothing to set up. Once a square has a color, you can tap it to see what to watch out for and to practice just that kind of question.') +
+      (tried ? '<div class="mst-stats mm-stats"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' : '') +
       diagLineHTML('m') + dataLineHTML() + mFoundNudgeHTML() +
-      (tried ? '' : '<aside class="mnote"><p><b>No practice questions answered yet.</b> Answer a few and this page fills in.' + (drillTried('math').length ? ' Your short exercises are listed below.' : '') + ' Results are saved ' + savedIn() + '.</p><a class="btn sm" href="#m-practice">Practice real questions</a></aside>') +
+      (tried ? '' : '<aside class="mnote"><p><b>No practice questions answered yet.</b> That is fine. Answer a few, and this page will start to show what you are good at and what needs more work.' + (drillTried('math').length ? ' Your short exercises are listed below.' : '') + ' Your results are saved ' + savedIn() + '.</p><a class="btn sm" href="#m-practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="mm-next"><h3 class="h2">Work on these next</h3>' + (next.length
-        ? '<p class="lede">Your lowest-scoring types so far. Read the trap, then practice just that type.</p><div class="mm-nexts">' + next.map(function (m) { return mmCardHTML(m, stat[m.id]); }).join('') + '</div>'
+        ? '<p class="lede">These are your lowest scores so far. Read what to watch out for, then practice just that kind of question.</p><div class="mm-nexts">' + next.map(function (m) { return mmCardHTML(m, stat[m.id]); }).join('') + '</div>'
         : '<p class="lede">Nothing needs work right now. Pick a grey square below to try a type you have not seen.</p>') + '</section>' : '') +
       drillProgressHTML('math') +
-      '<section class="sec' + (tried ? '' : ' first') + '" id="mm-all"><h3 class="h2">All ' + N + ' types</h3><p class="lede">The number in a square is your percent right on the questions you have tried. Grey squares are types you have not tried.</p>' +
+      (function (all) { return tried ? all : '<div class="folds mapfold">' + foldHTML('mm-fold', 'Look at all ' + N + ' kinds of question', all, 'Every square stays grey until you have tried that kind. You can look around now, or come back after some practice.', !!mmSel) + '</div>'; })('<section class="sec' + (tried ? '' : ' first') + '" id="mm-all"><h3 class="h2">All ' + N + ' types</h3><p class="lede">The number in a square is your percent right on the questions you have tried. Grey squares are types you have not tried.</p>' +
         seg('mm-show', 'Show', [['all', 'All'], ['weak', 'Needs work · ' + cnt.weak], ['mid', 'Getting there · ' + cnt.mid], ['strong', 'Strong · ' + cnt.strong], ['new', 'Not tried · ' + cnt['new']]], mmFilter) +
         '<p class="mm-key"><span><i class="mm-t lvl-weak" aria-hidden="true"></i>Needs work: under 60% right</span><span><i class="mm-t lvl-mid" aria-hidden="true"></i>Getting there</span><span><i class="mm-t lvl-strong" aria-hidden="true"></i>Strong: 85% or more, on at least 3 questions</span><span><i class="mm-t lvl-new" aria-hidden="true"></i>Not tried</span></p>' +
         '<div class="mm-map" id="mm-map" data-show="' + mmFilter + '">' + doms + '</div></section>' +
@@ -166,7 +166,7 @@
             return '<li><b>' + r.r + ' of ' + r.n + '</b><span>' + clock(r.s) + ' of ' + clock(r.l) + ' used</span><span class="muted">' + new Date(r.t).toLocaleDateString() + '</span></li>';
           }).join('') + '</ul>'
         : '<p class="lede">None taken yet. A timed test is 22 questions on one 35-minute clock, like one part of the real Math section. You see the answers at the end.</p>') +
-        '<p class="row" style="margin-top:1rem"><a class="btn sm" href="#m-module">Take a timed test</a></p></section>' +
+        '<p class="row" style="margin-top:1rem"><a class="btn sm" href="#m-module">Take a timed test</a></p></section>') +
       nextHTML(['m-practice', 'Practice real questions', 'Work on the kinds of question that need it.'], ['m-learn', 'go back to the lessons']) + '</div>';
     if (mmSel) { mmSelect(mmSel, false); }
   }

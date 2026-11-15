@@ -322,10 +322,10 @@
       var left = planLeft(P), pr = left >= 0 ? planProgress(P) : null;
       h += '<a class="hcont hplan" href="#plan"><span class="label">My study plan</span><b>' + (left < 0 ? 'Set a new test date' : left === 0 ? 'Test day' : plural(left, 'day') + ' to your test') + (pr && pr.of ? ' · today ' + pr.done + ' of ' + pr.of + ' done' : '') + '</b><span class="hcont-go" aria-hidden="true">→</span></a>';
     } else {
-      h += '<a class="hcont hplan" href="#plan"><span class="label">Have a test date?</span><b>Make a short plan for every day</b><span class="hcont-go" aria-hidden="true">→</span></a>';
+      h += '<a class="hcont hplan" href="#plan"><span class="label">Have a test date?</span><b>Make a simple day-by-day study plan</b><span class="hcont-go" aria-hidden="true">→</span></a>';
     }
     if (fresh) {
-      h += '<div class="hcheck"><p><b>Not sure of your level?</b> Answer 10 questions to see roughly where you stand and what to study first.</p><p class="row"><a class="btn sm ghost" href="#m-check">Math: find my level</a><a class="btn sm ghost" href="#rw-check">Reading &amp; Writing: find my level</a></p></div>';
+      h += '<div class="hcheck"><p><b>Not sure of your level?</b> Answer 10 questions, and the site will show you roughly where you stand and what to study first.</p><p class="row"><a class="btn sm ghost" href="#m-check">Math: find my level</a><a class="btn sm ghost" href="#rw-check">Reading &amp; Writing: find my level</a></p></div>';
     }
     return h;
   }

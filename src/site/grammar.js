@@ -52,19 +52,19 @@
   function grammarMethodHTML() {
     var A = partStats.A, B = partStats.B, C = partStats.C, s = D.first.steps;
     return '<header><p class="eyebrow">Grammar and transitions · ' + TOTAL.q + ' questions in the bank</p><h2 class="vtitle">The 60-second method</h2>' +
-      '<p class="lede">Most grammar and transition questions change one small thing across their four answer choices. See what changes, run the one check that settles it, and move on.</p></header>' +
+      '<p class="lede">Grammar questions look harder than they are. In most of them, the four answer choices are almost the same, and only one small thing changes from one choice to the next. Once you see what changes, you know which rule the question is testing. Then one quick check settles it, and you can move on.</p></header>' +
       '<div class="gintro"><figure class="dial sm">' + dialSVG(GRAMMAR_DIAL) + '<figcaption><ol class="dlegend">' +
-      '<li><i class="sw-look"></i><span><b>0–5 sec · Look</b>Read the four choices. Name what changes.</span></li>' +
-      '<li><i class="sw-check"></i><span><b>5–45 sec · Check</b>Read the whole sentence. Run the one check.</span></li>' +
-      '<li><i class="sw-confirm"></i><span><b>45–60 sec · Confirm</b>Read it again with your answer in place.</span></li></ol></figcaption></figure>' +
-      '<p class="facts">' + A.q + ' punctuation questions, ' + B.q + ' verb, pronoun, apostrophe and modifier questions, and ' + C.q + ' transition questions, sorted into ' + TOTAL.u + ' rules and ' + TOTAL.v + ' versions.</p></div>' +
+      '<li><i class="sw-look"></i><span><b>0–5 sec · Look</b>Read the four choices and notice what changes.</span></li>' +
+      '<li><i class="sw-check"></i><span><b>5–45 sec · Check</b>Read the whole sentence, then run the one check that fits.</span></li>' +
+      '<li><i class="sw-confirm"></i><span><b>45–60 sec · Confirm</b>Read the sentence again with your answer in it.</span></li></ol></figcaption></figure>' +
+      '<p class="facts">The lessons are built from ' + A.q + ' punctuation questions, ' + B.q + ' questions on verbs, pronouns, apostrophes and modifiers, and ' + C.q + ' transition questions. This site sorts them into ' + TOTAL.u + ' rules.</p></div>' +
       '<section class="sec" id="try"><div class="sech"><p class="eyebrow">Try one</p><h2 class="h2">Try a real question</h2>' +
-      '<p class="lede">Pick an answer. Then read why it is right and why each wrong choice is wrong. To see how close you get to one minute, press “Time me” first.</p></div><div class="demo" id="demo"></div></section>' +
+      '<p class="lede">Here is a real question to try. Pick an answer, and then read why it is right and why each of the other choices is wrong. If you are curious how close you come to one minute, press “Time me” before you start.</p></div><div class="demo" id="demo"></div></section>' +
       '<section class="sec" id="steps"><div class="sech"><p class="eyebrow">The method</p><h2 class="h2">One question, three steps</h2></div><div class="steps3">' +
-      step3('1', 'Look', '0–5 s', 'sw-look', s[0], 'The differences suggest what to check. Confirm the sentence structure and meaning before choosing. <a href="#patterns">See the eight patterns</a>.') +
-      step3('2', 'Check', '5–45 s', 'sw-check', s[1], 'Each part has its own check: <a href="#part-a">what stands on each side of the blank</a>, <a href="#part-b">four verb situations</a>, and <a href="#part-c">naming the link</a>.') +
-      step3('3', 'Confirm', '45–60 s', 'sw-confirm', s[2], 'Torn between two? Name the structural or meaning difference. Progressive verbs such as <em>is growing</em> can be correct; a pattern’s frequency in this bank cannot settle a new question.') +
-      '</div><p class="fine" style="margin-top:.9rem">' + D.first.fine + ' Learn untimed first. The 5, 40 and 15 second split is an adjustable practice target; some questions need more time and others less.</p></section>' +
+      step3('1', 'Look', '0–5 s', 'sw-look', s[0], 'What changes between the choices tells you what to check. For example, if only the punctuation changes, the question is about punctuation. There are eight patterns in all, and you can <a href="#patterns">see them further down this page</a>.') +
+      step3('2', 'Check', '5–45 s', 'sw-check', s[1], 'Each kind of question has its own check. For punctuation, you look at <a href="#part-a">what stands on each side of the blank</a>. For verbs, you decide which of <a href="#part-b">four situations</a> you are in. For transitions, you <a href="#part-c">name how the two ideas are linked</a>.') +
+      step3('3', 'Confirm', '45–60 s', 'sw-confirm', s[2], 'If you are torn between two choices, put into words exactly how they differ, in structure or in meaning. That usually shows which one the sentence needs. Do not pick a choice only because that kind of answer is often right. Each sentence has to be judged for itself.') +
+      '</div><p class="fine" style="margin-top:.9rem">' + D.first.fine + ' Learn the steps without a clock first. The split of 5, 40 and 15 seconds is only a target to practice toward. Some questions need more time and others need less.</p></section>' +
       patternsHTML();
   }
 

@@ -176,15 +176,15 @@
     }).join('');
     var mods = Array.isArray(store.s.rwmodules) ? store.s.rwmodules.filter(isObj) : [];
     viewEl.rwmap.innerHTML = '<div class="wrap">' +
-      '<header class="read"><p class="eyebrow">Reading &amp; Writing · My progress</p><h2 class="vtitle">My progress</h2><p class="lede">How you are doing on each kind of reading question and each grammar rule. This page fills in as you answer practice questions. Tap a colored square to see what to look at, and to practice just that kind.</p></header>' +
-      '<div class="mst-stats mm-stats rw"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' +
+      '<header class="read"><p class="eyebrow">Reading &amp; Writing · My progress</p><h2 class="vtitle">My progress</h2><p class="lede">This page shows how you are doing on each kind of reading question and each grammar rule. It fills in by itself as you answer practice questions, so there is nothing to set up. Once a square has a color, you can tap it to see what to work on and to practice just that kind of question.</p></header>' +
+      (tried ? '<div class="mst-stats mm-stats rw"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' : '') +
       diagLineHTML('rw') + dataLineHTML() +
-      (tried ? '' : '<aside class="mnote"><p><b>No practice questions answered yet.</b> Answer a few and this page fills in.' + (drillTried('rw').length ? ' Your short exercises are listed below.' : '') + ' Results are saved ' + savedIn() + '.</p><a class="btn sm" href="#practice">Practice real questions</a></aside>') +
+      (tried ? '' : '<aside class="mnote"><p><b>No practice questions answered yet.</b> That is fine. Answer a few, and this page will start to show what you are good at and what needs more work.' + (drillTried('rw').length ? ' Your short exercises are listed below.' : '') + ' Your results are saved ' + savedIn() + '.</p><a class="btn sm" href="#practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="rwm-next"><h3 class="h2">Work on these next</h3>' + (next.length
-        ? '<p class="lede">Your lowest-scoring types so far. Study the rule or the routine, then practice just that type.</p><div class="mm-nexts">' + next.map(function (t) { return rwCardHTML(t, stat[t.id]); }).join('') + '</div>'
+        ? '<p class="lede">These are your lowest scores so far. Study the rule or the routine first, then practice just that kind of question.</p><div class="mm-nexts">' + next.map(function (t) { return rwCardHTML(t, stat[t.id]); }).join('') + '</div>'
         : '<p class="lede">Nothing needs work right now. Pick a grey square below to try a type you have not seen.</p>') + '</section>' : '') +
       drillProgressHTML('rw') +
-      '<section class="sec' + (tried ? '' : ' first') + '" id="rwm-all"><h3 class="h2">All ' + N + ' types</h3><p class="lede">The number is your percent right on the questions you have tried. Grey means not tried yet.</p>' +
+      (function (all) { return tried ? all : '<div class="folds mapfold">' + foldHTML('rwm-fold', 'Look at all ' + N + ' kinds of question', all, 'Every square stays grey until you have tried that kind. You can look around now, or come back after some practice.', !!rwmSel) + '</div>'; })('<section class="sec' + (tried ? '' : ' first') + '" id="rwm-all"><h3 class="h2">All ' + N + ' types</h3><p class="lede">The number is your percent right on the questions you have tried. Grey means not tried yet.</p>' +
         seg('rwm-show', 'Show', [['all', 'All'], ['weak', 'Needs work · ' + cnt.weak], ['mid', 'Getting there · ' + cnt.mid], ['strong', 'Strong · ' + cnt.strong], ['new', 'Not tried · ' + cnt['new']]], rwmFilter) +
         '<p class="mm-key"><span><i class="mm-t lvl-weak" aria-hidden="true"></i>Needs work: under 60% right</span><span><i class="mm-t lvl-mid" aria-hidden="true"></i>Getting there</span><span><i class="mm-t lvl-strong" aria-hidden="true"></i>Strong: 85% or more, on at least 3 questions</span><span><i class="mm-t lvl-new" aria-hidden="true"></i>Not tried</span></p>' +
         '<div class="mm-map" id="rwm-map" data-show="' + rwmFilter + '">' + reading + grammar + '</div></section>' +
@@ -194,7 +194,7 @@
             return '<li><b>' + r.r + ' of ' + r.n + '</b><span>' + clock(r.s) + ' of ' + clock(r.l) + ' used</span><span class="muted">' + new Date(r.t).toLocaleDateString() + '</span></li>';
           }).join('') + '</ul>'
         : '<p class="lede">None taken yet. A timed test is 27 questions on one 32-minute clock, in the order the real test asks them. You see the answers at the end.</p>') +
-        '<p class="row" style="margin-top:1rem"><a class="btn sm" href="#rw-module">Take a timed test</a></p></section>' +
+        '<p class="row" style="margin-top:1rem"><a class="btn sm" href="#rw-module">Take a timed test</a></p></section>') +
       '</div>';
     if (rwmSel) { rwmSelect(rwmSel, false); }
   }

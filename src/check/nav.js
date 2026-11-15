@@ -170,8 +170,29 @@ const { chromium } = require('playwright');
   await go('m-learn'); await wide('large text lessons');
   await go('home'); await p.click('#theme-btn'); await p.click('#theme-pop .size-opt:nth-child(1)'); await p.waitForTimeout(100);
   ok(!(await p.evaluate(() => document.documentElement.getAttribute('data-size'))), 'Normal puts it back');
-  // the footer still lists every page
-  ok((await p.$$('#footcols nav:nth-of-type(2) a')).length === 14 && (await text('#footcols')).includes('All topics'), 'the footer lists every Math page');
+  // the footer is short: the five main pages of each subject, and the tour
+  ok((await p.$$('#footcols nav:nth-of-type(2) a')).length === 5 && (await text('#footcols')).includes('All lessons and topics'), 'the footer lists the five main Math pages');
+  ok((await p.$$('.foot [data-tour]')).length === 1, 'the footer can open the tour again');
+  // the welcome tour: opened by hand from Home, four cards, and the last one leads into a subject
+  await go('home'); await p.click('#v-home [data-tour]'); await p.waitForTimeout(200);
+  ok(await p.isVisible('#tour') && (await text('#tour h2')).includes('Welcome'), 'the tour opens from Home');
+  let cards = 1;
+  while (cards < 8 && await p.$('#tour [data-tour-next]')) { await p.click('#tour [data-tour-next]'); await p.waitForTimeout(120); cards++; }
+  ok(cards === 4, 'the tour has four cards (' + cards + ')');
+  await wide('tour'); await shot('tour');
+  await p.click('#tour a[href="#math"]'); await p.waitForTimeout(300);
+  ok(!(await p.$('#tour')) && (await p.evaluate(() => location.hash)) === '#math', 'the last card starts a subject');
+  // a first-time visitor (not an automated browser) gets the tour by itself, once
+  const ctxFirst = await browser.newContext({ viewport: { width, height: 900 } });
+  await ctxFirst.addInitScript(() => { Object.defineProperty(Navigator.prototype, 'webdriver', { get: () => false }); });
+  const pFirst = await ctxFirst.newPage(); pFirst.on('pageerror', e => errors.push('pageerror: ' + e.message));
+  await pFirst.goto(file); await pFirst.waitForTimeout(700);
+  ok(await pFirst.isVisible('#tour'), 'a first visit to Home opens the tour');
+  await pFirst.keyboard.press('Escape'); await pFirst.waitForTimeout(150);
+  ok(!(await pFirst.$('#tour')), 'Escape closes it');
+  await pFirst.reload(); await pFirst.waitForTimeout(600);
+  ok(!(await pFirst.$('#tour')), 'it does not open again on the next visit');
+  await ctxFirst.close();
   console.log(over.length ? 'OVERFLOW ' + over.join(' ; ') : 'no overflow');
   console.log(errors.length ? 'ERRORS ' + errors.join(' ; ') : 'no errors');
   console.log(fail.length ? fail.length + ' FAILED: ' + fail.join(' ; ') : 'all checks passed');

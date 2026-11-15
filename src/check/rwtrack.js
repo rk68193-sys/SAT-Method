@@ -28,6 +28,9 @@ const { chromium } = require('playwright');
   ok((await p.textContent('#v-rwmap .mnote')).includes('No practice questions answered yet'), 'empty state');
   ok((await p.textContent('#tabs a[aria-current] .secw')) === 'My progress', 'step 4 is marked');
   await wide('map empty'); await shot('map-empty', true);
+  // before any practice the full grid waits in a fold
+  ok(await p.evaluate(() => { const f = document.getElementById('rwm-fold'); return !!f && !f.open; }), 'the full grid is folded away before any practice');
+  await p.click('#rwm-fold > summary'); await p.waitForTimeout(100); await wide('map empty, grid open');
   await p.click('#rwm-map .mm-t.mm-tw'); await p.waitForTimeout(100);
   ok((await p.textContent('#rwm-detail')).includes('What to look at first'), 'a reading type opens what to look at first');
   await p.click('#rwm-map .mm-t:not(.mm-tw)'); await p.waitForTimeout(100);

@@ -106,10 +106,9 @@
     var reviews = all.map(function (it) { return { it: it, r: result(it) }; }).filter(function (x) { return x.r && (x.r.evidence || x.r.cause); }).sort(function (a, b) { return (b.r.at || 0) - (a.r.at || 0); });
     var triedAll = g.tried + r.tried + qb.tried + nb.tried + xb.tried, rightAll = g.right + r.right;
     var h = (prefix || '') + '<header class="read"><p class="eyebrow">Reading &amp; Writing · Practice</p><h2 class="vtitle">Practice real test questions</h2>' +
-      '<p class="lede">All 1,845 questions come from College Board, the makers of the SAT. After each answer you see the right one, and why.</p></header>' +
-      '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#rw-easy">5 easy questions</a><a class="btn big ghost" href="#rw-mixed">10 questions of every level</a></p><p class="fine">One question at a time, with no clock.</p></section>' +
-      '<h3 class="h2 mpown">Or choose your own set</h3>' +
-      '<div class="tsetup" id="tsetup" data-mode="' + s.mode + '">' +
+      '<p class="lede">Every one of these 1,845 questions was written by College Board, the people who make the SAT. After each answer you will see which choice is right and why, so every question teaches you something.</p></header>' +
+      '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#rw-easy">5 easy questions</a><a class="btn big ghost" href="#rw-mixed">10 questions of every level</a></p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>' +
+      '<div class="folds setfold">' + foldHTML('tfold', 'Build your own practice set', '<div class="tsetup" id="tsetup" data-mode="' + s.mode + '">' +
       seg('tmode', 'How to practice', [['set', 'One at a time'], ['module', 'Timed test']], s.mode) +
       '<p class="mpmode-note" id="tmodenote"></p>' +
       '<div class="t-setonly">' + seg('tsrc', 'Which questions', [['g', 'From the grammar lessons'], ['a', 'More grammar (' + BANK.grammarSources.length + ')'], ['r', 'From the reading lessons'], ['q', 'Reading (' + BANK.reading.length + ')'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'Notes (' + BANK.notes.length + ')'], ['x', 'Transitions (' + BANK.trans.length + ')'], ['both', 'A mix of all 1,845']], s.src) + '</div>' +
@@ -118,17 +117,19 @@
       seg('twhich', 'Which ones', [['all', 'All'], ['new', 'Not tried yet (' + nNew + ')'], ['missed', 'Got wrong last time (' + nMiss + ')'], ['uncertain', 'Not sure or guessed (' + nUncertain + ')'], ['slow', 'Too slow last time (' + nSlow + ')']], s.which) +
       '<div class="t-setonly">' + seg('tlen', 'How many', [[10, '10'], [20, '20'], [0, 'All that match']], s.len) + '</div>' +
       '<div class="t-setonly">' + seg('ttier', 'Clock', Object.keys(TIERS).map(function (k) { return [k, TIERS[k].label]; }), s.tier) + '</div>' +
-      '<p class="fine t-setonly">No clock is best while you learn. A clock for each question helps you build speed. The <b>Timed test</b> is like one part of the real test: 27 questions in 32 minutes. For a full practice test, use College Board’s free <a href="https://satsuite.collegeboard.org/practice/practice-tests/bluebook" target="_blank" rel="noopener">Bluebook app</a>.</p>' +
+      '<p class="fine t-setonly">While you are still learning, it is best to practice without a clock. Once the questions feel comfortable, a clock on each question will help you build speed. The <b>Timed test</b> works like one part of the real SAT: 27 questions in 32 minutes. When you want a full practice test, College Board offers one for free in its <a href="https://satsuite.collegeboard.org/practice/practice-tests/bluebook" target="_blank" rel="noopener">Bluebook app</a>.</p>' +
       '<label class="checkline t-setonly" for="thints"><input type="checkbox" id="thints"' + (s.hints ? ' checked' : '') + '>Highlight what changes between the grammar choices</label>' +
       '<p class="h3" id="tcount" role="status"></p>' +
       '<div class="row"><button type="button" class="btn" id="tstart">Start the set</button>' +
       '<button type="button" class="linkbtn" id="tforget"' + (nNew < all.length ? '' : ' hidden') + '>Clear my saved results</button></div>' +
       '<div id="tconfirm" hidden><p class="verdict miss">Clear every saved Reading and Writing practice result in this browser?</p><div class="row"><button type="button" class="btn" id="tyes">Clear them</button><button type="button" class="btn ghost" id="tno">Keep them</button></div></div>' +
       '<p class="fine">' + (triedAll ? 'So far you have answered ' + plural(triedAll, 'question') + ' here. ' : '') + (canStore ? 'Your answers are saved ' + savedIn() + '.' : 'Your answers last until you close this page.') + '<span class="kbd-only"> On a keyboard, press A, B, C or D to answer and Enter to go on.</span></p></div>' +
+      '<p class="fine">After you answer a table, graph or extra grammar question, you will find a link to the question and to College Board’s explanation, exactly as they were printed. <a href="#data-patterns">More on tables and graphs</a>.</p>',
+      'Choose the kind of question, how hard it is and how many you want. The timed test is here too.', s.mode === 'module' || !!prefix || triedAll > 0) + '</div>' +
       (reviews.length ? '<details class="ctx"><summary>My saved reviews (' + reviews.length + ')</summary><div class="ctxbody"><p class="fine">Latest review for each question. Showing the most recent ' + Math.min(20, reviews.length) + '.</p><ul class="plainlist">' + reviews.slice(0, 20).map(function (x) {
         return '<li><a href="#rq-' + x.it.id + '">Question ' + x.it.id + '</a>' + (x.r.cause ? '<p class="fine">' + esc(causeLabel(x.r.cause)) + '</p>' : '') + (x.r.evidence ? '<p class="fine">' + esc(x.r.evidence) + '</p>' : '') + '</li>';
       }).join('') + '</ul></div></details>' : '') +
-      '<p class="fine" style="margin-top:2rem">After you answer, the table, graph and extra grammar questions link to the question and College Board’s explanation exactly as printed. <a href="#data-patterns">More on tables and graphs</a>.</p>';
+      '';
     var host = document.getElementById('thost');
     host.innerHTML = h;
     function readSettings() {

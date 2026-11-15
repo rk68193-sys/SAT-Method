@@ -34,19 +34,19 @@
 
   /* ---------- pages ---------- */
   function rRoutineHTML() {
-    return '<header><p class="eyebrow">Reading · the plan</p><h2 class="vtitle">Four steps, adapted to the job</h2>' +
-      '<p class="lede">Four steps for any reading question: see what the question asks, read the passage one sentence at a time, say your own answer if it helps, then check the choices against the passage. Use the steps that help with the question in front of you. You do not need to label every sentence or guess the exact words.</p></header>' +
-      '<p class="fine"><b>One way to split the time, once you have learned the steps without a clock.</b> These are goals to practice toward, not deadlines for each step.</p>' +
+    return '<header><p class="eyebrow">Reading · the plan</p><h2 class="vtitle">Four steps for any reading question</h2>' +
+      '<p class="lede">These four steps work on every reading question. First, see what the question asks. Second, read the passage one piece at a time. Third, say your own answer if that helps. Fourth, check the choices against the passage.</p><p class="lede">You do not have to use every step on every question, and you never need to label every sentence or guess the exact words. Use the steps that help with the question in front of you.</p></header>' +
+      '<p class="fine"><b>Here is one way to split your time</b> once you have learned the steps without a clock. Think of these numbers as goals to practice toward. They are not deadlines for each step.</p>' +
       '<div class="gintro"><figure class="dial sm">' + dialSVG(READING_DIAL) + '<figcaption><ol class="dlegend">' +
       '<li><i class="sw-look"></i><span><b>0–5 sec · Job</b>Read the question first.</span></li>' +
       '<li><i class="sw-check"></i><span><b>5–40 sec · Chunk</b>Read the passage in pieces.</span></li>' +
-      '<li><i class="sw-say"></i><span><b>40–50 sec · Say</b>Your own answer, if it helps.</span></li>' +
+      '<li><i class="sw-say"></i><span><b>40–50 sec · Say</b>Say your own answer, if it helps.</span></li>' +
       '<li><i class="sw-confirm"></i><span><b>50–70 sec · Check</b>Check each choice against the passage.</span></li></ol></figcaption></figure></div>' +
       '<ol class="rsteps">' + RD.steps.map(function (s) {
         return '<li><span class="snum">' + s.n + '</span><div><h3 class="sname">' + esc(s.name) + '</h3><p class="sdo">' + s.do + '</p><p class="swhy">' + s.why + '</p></div><span class="stime">' + esc(s.time) + '</span></li>';
       }).join('') + '</ol>' +
       '<div class="after">' + RD.routineAfter.map(function (p) { return '<p class="pretty">' + p + '</p>'; }).join('') + '</div>' +
-      nextHTML(['job', 'Go to step 1: Job', 'Read the question line first, so you know what to look for.'], ['ex-1', 'watch all four steps on a real question']);
+      nextHTML(['job', 'Go to step 1: Job', 'Start by learning to read the question first, so you know what to look for.'], ['ex-1', 'watch all four steps on a real question']);
   }
   function rShapeHTML() {
     var S = RD.shape, fig = S.fig;
@@ -314,7 +314,7 @@
     items: function () {
       var ex = RLIST.map(function (x) { return { key: 'ex-' + x.n, token: 'ex-' + x.n, num: x.n, label: esc(x.title) + ' <span class="rn">' + x.diff.charAt(0) + '</span>', done: !!store.rl['ex-' + x.n] }; });
       return [
-        { group: 'The routine', entries: [{ key: 'routine', token: 'routine', label: 'Four steps, adapted to the job' }, { key: 'shape', token: 'shape', label: 'What the passages are like' }] },
+        { group: 'The routine', entries: [{ key: 'routine', token: 'routine', label: 'Four steps for any reading question' }, { key: 'shape', token: 'shape', label: 'What the passages are like' }] },
         { group: 'The steps', entries: [
           { key: 'job', token: 'job', num: 1, label: 'Job' }, { key: 'chunk', token: 'chunk', num: 2, label: 'Chunk' },
           { key: 'long', token: 'long', label: 'Long sentences: core first' }, { key: 'para', token: 'para', label: 'Long passages: make them make sense' },

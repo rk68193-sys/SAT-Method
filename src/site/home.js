@@ -5,19 +5,19 @@
   var GROUPS = [['start', 'Start here'], ['learn', 'Learn'], ['practice', 'Practice'], ['map', 'My progress']];
   var SUBJ = {
     rw: { name: 'Reading & Writing', icon: 'book', items: [
-      ['start', 'start', 'Start here', 'What the Reading and Writing test asks, and the order to study in.', 'start'],
-      ['rwhub', 'rw-hub', 'All topics', 'Every Reading and Writing topic in the order to learn it, with a search box.', 'learn'],
-      ['reading', 'reading', 'Reading lessons', 'Four steps for any reading question, shown on 17 real questions.', 'learn'],
-      ['grammar', 'lessons', 'Grammar lessons', 'A one-minute method for grammar questions, and 19 short lessons on the rules.', 'learn'],
+      ['start', 'start', 'Start here', 'A short welcome that explains what the Reading and Writing test asks and what to study first.', 'start'],
+      ['rwhub', 'rw-hub', 'All topics', 'Every Reading and Writing topic, listed in the order to learn it. There is a search box too.', 'learn'],
+      ['reading', 'reading', 'Reading lessons', 'Learn four steps that work on any reading question, then watch them used on 17 real questions.', 'learn'],
+      ['grammar', 'lessons', 'Grammar lessons', 'Learn a one-minute method for grammar questions, then take 19 short lessons on the rules.', 'learn'],
       ['lookup', 'lookup', 'Look up a rule', 'Search for a grammar rule, a linking word such as “however”, or a term.', 'learn'],
-      ['practice', 'practice', 'Practice questions', 'Real test questions with the answers explained. Go at your own pace, or time yourself.', 'practice'],
-      ['drills', 'drills', 'Short exercises', 'Quick exercises that each train one small step.', 'practice'],
-      ['rwmap', 'rw-map', 'My progress', 'How you are doing on each kind of question, and what to practice next.', 'map']] },
+      ['practice', 'practice', 'Practice questions', 'Real test questions, each with the answer explained. Go at your own pace, or time yourself when you are ready.', 'practice'],
+      ['drills', 'drills', 'Short exercises', 'Quick exercises that each train one small step. They make a good five-minute warm-up.', 'practice'],
+      ['rwmap', 'rw-map', 'My progress', 'See how you are doing on each kind of question, and what to practice next.', 'map']] },
     math: { name: 'Math', icon: 'calc', items: [
-      ['mstart', 'math', 'Start here', 'What the Math test asks, and the order to study in.', 'start'],
-      ['mhub', 'm-hub', 'All topics', 'Every Math topic in the order to learn it, with a search box.', 'learn'],
-      ['mlearn', 'm-learn', 'Lessons', '19 lessons, one for each kind of math on the test.', 'learn'],
-      ['mfound', 'm-found', 'Algebra basics', 'Six basic algebra steps, for when math feels rusty.', 'learn'],
+      ['mstart', 'math', 'Start here', 'A short welcome that explains what the Math test asks and what to study first.', 'start'],
+      ['mhub', 'm-hub', 'All topics', 'Every Math topic, listed in the order to learn it. There is a search box too.', 'learn'],
+      ['mlearn', 'm-learn', 'Lessons', 'There are 19 lessons, one for each kind of math on the test. Start with the first.', 'learn'],
+      ['mfound', 'm-found', 'Algebra basics', 'Six basic algebra steps to warm up with when math feels rusty.', 'learn'],
       ['mref', 'm-ref', 'Formula sheet', 'The formulas the test gives you, and how to type in your own answers.', 'learn'],
       ['mdes', 'm-desmos', 'Calculator tips', MD.desmos.length + ' ways to use the calculator built into the test, with exactly what to type.', 'learn'],
       ['mfirst', 'm-first', 'Look for a shortcut', 'Questions where one quick step gets the answer, and how to spot them.', 'learn'],
@@ -25,9 +25,9 @@
       ['mpat', 'm-patterns', 'Big ideas', 'A dozen ideas that each solve many kinds of question.', 'learn'],
       ['mstudy', 'm-study', 'All question types', 'All ' + MST.methods.length + ' kinds of math question, each with the steps to solve it.', 'learn'],
       ['mtypes', 'm-types', 'Find a question type', 'Type words from a question to see what kind it is and how to solve it.', 'learn'],
-      ['mprac', 'm-practice', 'Practice questions', mfmt(MQ.length) + ' real test questions with the answers explained. Go at your own pace, or time yourself.', 'practice'],
-      ['mdrills', 'm-drills', 'Short exercises', 'Quick exercises that each train one small step.', 'practice'],
-      ['mmap', 'm-map', 'My progress', 'How you are doing on each kind of question, and what to practice next.', 'map']] }
+      ['mprac', 'm-practice', 'Practice questions', mfmt(MQ.length) + ' real test questions, each with the answer explained. Go at your own pace, or time yourself when you are ready.', 'practice'],
+      ['mdrills', 'm-drills', 'Short exercises', 'Quick exercises that each train one small step. They make a good five-minute warm-up.', 'practice'],
+      ['mmap', 'm-map', 'My progress', 'See how you are doing on each kind of question, and what to practice next.', 'map']] }
   };
   function navList(subj) { return SUBJ[subj].items; }
   var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home' };
@@ -171,6 +171,8 @@
     if (back) { b.setAttribute('data-go', String(j - gIdx)); } else { b.removeAttribute('data-go'); }
     b.innerHTML = '<span aria-hidden="true">←</span><span>Back<span class="gback-to"> to ' + esc(back ? back.n : up[0]) + '</span></span>';
     document.getElementById('gtrail').innerHTML = trailHTML(c);
+    var gh = document.getElementById('ghere');
+    if (gh) { gh.textContent = here[0]; }
     var st2 = document.getElementById('strail');
     if (st2) { st2.innerHTML = trailHTML(c); }
     bar.hidden = false;
@@ -183,11 +185,16 @@
   (function () {
     var host = document.getElementById('footcols');
     if (!host) { return; }
+    /* the four steps of a subject, with its exercises; every other page is one tap away under "All lessons and topics" */
+    function footList(subj) {
+      var keep = subj === 'rw' ? ['start', 'rw-hub', 'practice', 'drills', 'rw-map'] : ['math', 'm-hub', 'm-practice', 'm-drills', 'm-map'];
+      return keep.map(function (t) { var x = navList(subj).filter(function (y) { return y[1] === t; })[0]; return '<a href="#' + x[1] + '">' + esc(/hub$/.test(t) ? 'All lessons and topics' : x[2]) + '</a>'; });
+    }
     function col(title, items) { return '<nav aria-label="' + esc(title) + '"><p class="foot-h">' + esc(title) + '</p><ul>' + items.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></nav>'; }
     host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from College Board’s own practice questions.</p></div>' +
-      col('Reading & Writing', navList('rw').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
-      col('Math', navList('math').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
-      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline use</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Ask a question or suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Text size and colors</button>']));
+      col('Reading & Writing', footList('rw')) +
+      col('Math', footList('math')) +
+      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline use</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Ask a question or suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Text size and colors</button>', '<button class="linkbtn foot-tour" type="button" data-tour>Take the one-minute tour</button>']));
   }());
 
   /* ---------- appearance: saved in this browser under its own key ---------- */
@@ -268,19 +275,18 @@
     }
     viewEl.home.innerHTML = '<div class="wrap">' +
       '<section class="hh hh-simple"><div class="hh-text"><p class="hpill">Free · no sign-up needed</p><h1>Get ready for the SAT, one step at a time</h1>' +
-      '<p class="lede">Free lessons and ' + mfmt(nAll) + ' real practice questions, with the official answers explained.</p>' + cont +
-      '<h2 class="hq">What do you want to study?</h2><div class="hpicks">' + pick('rw', 'Reading short passages, and grammar') + pick('math', 'Algebra, geometry and data') + '</div>' +
-      '<p class="hnot">Not sure yet? <a href="#htry-sec" data-scroll>Try one easy question first</a>.</p></div></section>' +
-      '<section class="hsec hhow" id="hhow"><div class="hsec-h"><h2 class="h2">How this site works</h2></div><ol class="hsteps">' +
-        '<li><b>Pick a subject.</b><span>Reading &amp; Writing or Math, with the big buttons above.</span></li>' +
-        '<li><b>Read “Start here”.</b><span>It takes five minutes and tells you what to do first.</span></li>' +
-        '<li><b>Follow the “Next step” button.</b><span>The bottom of every page has one, so you always know where to go. “Back” at the top of the page takes you back.</span></li>' +
-        '<li><b>Come back any time.</b><span>Your progress is saved ' + (acctIn() ? 'in your account' : 'on this device') + (mt ? ': ' + plural(mt, 'math question') + ' so far' : '') + '. ' + (acctOn && !acctIn() ? '<a href="#account">Make a free account</a> to keep it on every device, or <a href="#my-data">save a copy</a>.' : '<a href="#my-data">Save a copy, or use the site offline</a>.') + '</span></li>' +
-      '</ol></section>' +
-      '<section class="hsec" id="htry-sec"><div class="hsec-h"><h2 class="h2">Try one easy question</h2><p class="muted">A real question from the test. Answer it to see how this kind of question works. Nothing is saved.</p></div>' + htryHTML() + '</section>' +
-      '<section class="hsec"><div class="hsec-h"><h2 class="h2">Plan ahead</h2></div><div class="hplanrow">' + planHomeHTML() + '</div></section>' +
+      '<p class="lede">Welcome! This free study guide has short lessons and ' + mfmt(nAll) + ' real SAT questions, and it explains every answer so you learn why. Pick a subject below, and the site will guide you one small step at a time.</p>' + cont +
+      '<h2 class="hq">What would you like to study?</h2><div class="hpicks">' + pick('rw', 'Short passages to read, plus grammar and punctuation') + pick('math', 'Algebra, geometry, and working with data') + '</div>' +
+      '<p class="hnot">Not sure where to begin? <a href="#htry-sec" data-scroll>Try one easy question first</a>, or <button type="button" class="linkbtn" data-tour>take the one-minute tour</button>.</p></div></section>' +
+      '<section class="hsec hhow" id="hhow"><div class="hsec-h"><h2 class="h2">How this site works</h2><p class="muted">Each subject follows the same three steps, so you always know what comes next.</p></div><ol class="hsteps">' +
+        '<li><b>Learn</b><span>Short lessons teach you one simple method at a time, using real SAT questions worked out step by step.</span></li>' +
+        '<li><b>Practice</b><span>Try real questions at your own pace. After every answer you see the right choice and the reason for it.</span></li>' +
+        '<li><b>Check your progress</b><span>The site remembers what you have done' + (mt ? ' (' + plural(mt, 'math question') + ' so far)' : '') + ' and shows you what to practice next.</span></li>' +
+      '</ol><p class="hsave">Your progress is saved ' + (acctIn() ? 'in your account' : 'on this device') + ', so you can stop whenever you like and come back later. ' + (acctOn && !acctIn() ? '<a href="#account">Make a free account</a> if you would like it on every device, or <a href="#my-data">save a copy</a>.' : '<a href="#my-data">Save a copy, or use the site offline</a>.') + '</p></section>' +
+      '<section class="hsec" id="htry-sec"><div class="hsec-h"><h2 class="h2">Try one easy question</h2><p class="muted">This is a real SAT question. Give it a try. There is no clock and nothing is saved, so it is a safe way to see what the test is like.</p></div>' + htryHTML() + '</section>' +
       (habitStreak().days ? habitHomeHTML() : '') +
-      '<section class="hband"><div><h2 class="h2">A question, or an idea?</h2><p>Ask a question, tell us what to add or change, or leave a tip for other students.</p></div><a class="btn big" href="#suggest">Ask or suggest</a></section>' +
+      '<section class="hsec"><div class="hsec-h"><h2 class="h2">More ways to get started</h2></div><div class="hplanrow">' + planHomeHTML() +
+      '<a class="hcont hask" href="#suggest"><span class="label">Have a question or an idea?</span><b>Ask us, or suggest a change</b><span class="hcont-go" aria-hidden="true">→</span></a></div></section>' +
       '</div>';
     htryShow(store.s.htry === 'rw' ? 'rw' : 'math');
   }
