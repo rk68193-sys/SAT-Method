@@ -210,9 +210,9 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok(!(await t.p.$('#tcard .opt.wrong .pz-d')), 'nothing on a wrong answer');
     await t.go('crates'); await t.p.click('[data-pz-wear="fx"][data-pz-id="fx:confetti"]'); await t.p.waitForTimeout(150);
     ok((await t.saved()).s.pz.eq.fx === 'fx:confetti', 'Wear puts confetti on');
-    /* a reload straight after a save can read the saved progress from before it; give the save a moment to land */
-    await t.p.waitForTimeout(800);
-    await startSet();
+    /* the next set starts from inside the page, the way a student starts one: in this test browser a reload straight after a
+       save can read the saved progress from before it */
+    await t.p.evaluate(() => { location.hash = 'rw-mixed'; }); await t.p.waitForTimeout(900);
     ok((await t.saved()).s.pz.eq.fx === 'fx:confetti', 'and it is still on in a new set');
     const got = await answerRight();
     ok(got > 0, 'a right answer in the second set (try ' + got + ')');
