@@ -10345,6 +10345,8 @@ function rReasoningHTML() {
     if (code === 'same_password') { return 'That is your current password. Choose a different one.'; }
     if (code === 'email_address_invalid' || code === 'validation_failed' || /invalid.*email|email.*invalid/i.test(msg)) { return 'That does not look like an email address.'; }
     if (/signup.*disabled|signups not allowed/i.test(msg + code)) { return 'New accounts are closed right now.'; }
+    /* the project sends its emails through Resend; should that stop, Supabase's own service writes only to the project's team */
+    if (code === 'email_address_not_authorized' || /not authorized/i.test(msg)) { return 'This site cannot send password emails yet. Your progress is still saved in this browser. Tell us on the Ask or suggest page and we will help you get back in.'; }
     return 'That did not work (' + (msg.slice(0, 120) || 'error ' + r.status) + '). Try again in a moment.';
   }
   /* the session has ended: the device keeps its progress and remembers whose it is, until that person signs in again */
@@ -10663,6 +10665,31 @@ function rReasoningHTML() {
     });
     window.addEventListener('pagehide', function () { if (acctIn() && A.dirty) { acctSync(); } });
     window.addEventListener('online', function () { if (acctIn()) { acctSync(); } });
+  }
+  /* =================== Visit counts: how often each page is shown, per day, and nothing about who =================== */
+  /* No cookie, no ID and nothing kept on the device: each page shown adds one to that day's count for its name in the visits
+     table (public.count_visit in src/account/extras.sql), and each page load also adds one to "visit". Only on satsprint.org,
+     never in a copy of the page or in a check, and never when the browser asks not to be tracked (Do Not Track or Global
+     Privacy Control). A question's own address counts under its kind (rq, mq), not its number. Until the SQL has been run the
+     requests fail, quietly. Called by go() in boot.js. */
+  var VISIT_HOST = 'satsprint.org', visitLoad = true, visitLast = '', visitAt = 0;
+  function visitOn() {
+    try {
+      if (!acctOn || location.hostname !== VISIT_HOST) { return false; }
+      return !(navigator.globalPrivacyControl === true || navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1');
+    } catch (e) { return false; }
+  }
+  function visitName(token) {
+    return String(token || 'home').toLowerCase().replace(/^#/, '').replace(/-[0-9a-f]{6,}$/, '').replace(/[^a-z0-9-]/g, '').slice(0, 40) || 'home';
+  }
+  function visitCount(token) {
+    if (!visitOn()) { return; }
+    var page = visitName(token), now = Date.now();
+    /* the same page twice in a moment (a hash change and a history step for one move) counts once */
+    if (page === visitLast && now - visitAt < 3000) { return; }
+    visitLast = page; visitAt = now;
+    if (visitLoad) { visitLoad = false; acctReq('POST', '/rest/v1/rpc/count_visit', { p: 'visit' }); }
+    acctReq('POST', '/rest/v1/rpc/count_visit', { p: page });
   }
   /* =================== Learn: one overview per subject, with one search across everything there is to learn =================== */
   var HUB = { math: { view: 'mhub', p: 'mhub', name: 'Math', eg: 'for example: vertex, percent, no solution' },
@@ -11323,11 +11350,18 @@ function rReasoningHTML() {
         seg('sg-kind', '1 · What kind of message?', SG_KINDS, 'ask') +
         '<label class="field"><span class="label">2 · Which part of the site is it about?</span><select id="sg-where">' + where.map(function (w) { return '<option value="' + w[0] + '">' + esc(w[1]) + '</option>'; }).join('') + '</select></label>' +
         '<label class="field"><span class="label">3 · Your message</span><textarea id="sg-text" rows="6" maxlength="2000" required placeholder="For example: how do I see my answers again? Or: please add a lesson on percent word problems."></textarea><span class="sg-count muted" id="sg-count" aria-live="polite">0 / 2000</span></label>' +
-        '<label class="field"><span class="label">Your name (optional)</span><input type="text" id="sg-name" maxlength="60" autocomplete="nickname"></label>' +
-        '<p class="label sg-how-h">4 · Send it, one of two ways</p>' +
-        '<p class="row sg-actions"><button class="btn big" type="submit">Send it on GitHub</button><button class="btn big ghost" type="button" id="sg-copy">Copy it instead</button></p>' +
-        '<ul class="plainlist fine sg-how"><li><b>Send it on GitHub.</b> GitHub is the free website where this site is kept. It opens in a new tab with your message already filled in. To post it there you need a free GitHub account.</li>' +
-          '<li><b>Copy it instead.</b> No account needed: your message is copied, and you paste it into an email or a text to whoever shared this site with you.</li></ul>' +
+        '<label class="field"><span class="label">Your first name or a nickname (optional)</span><input type="text" id="sg-name" maxlength="60" autocomplete="nickname"></label>' +
+        /* left empty by people; a robot filling in every box gives itself away */
+        '<div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Leave this empty <input type="text" id="sg-web" tabindex="-1" autocomplete="off"></label></div>' +
+        (acctOn ?
+          '<p class="label sg-how-h">4 · Send it</p>' +
+          '<p class="row sg-actions"><button class="btn big" type="submit">Send it</button><button class="btn big ghost" type="button" id="sg-copy">Copy it instead</button></p>' +
+          '<ul class="plainlist fine sg-how"><li><b>Send it.</b> It goes straight to the people who run this site. No account or email needed.</li>' +
+            '<li><b>Copy it instead.</b> Your message is copied, and you paste it into an email or a text to whoever shared this site with you.</li></ul>' :
+          '<p class="label sg-how-h">4 · Send it, one of two ways</p>' +
+          '<p class="row sg-actions"><button class="btn big" type="submit">Send it on GitHub</button><button class="btn big ghost" type="button" id="sg-copy">Copy it instead</button></p>' +
+          '<ul class="plainlist fine sg-how"><li><b>Send it on GitHub.</b> GitHub is the free website where this site is kept. It opens in a new tab with your message already filled in. To post it there you need a free GitHub account.</li>' +
+            '<li><b>Copy it instead.</b> No account needed: your message is copied, and you paste it into an email or a text to whoever shared this site with you.</li></ul>') +
         '<p class="sg-msg" id="sg-msg" role="status" aria-live="polite"></p>' +
       '</form>' +
       '<section class="sec" id="sg-mine"></section>' +
@@ -11355,15 +11389,33 @@ function rReasoningHTML() {
       return true;
     }
     text.addEventListener('input', function () { $('#sg-count').textContent = text.value.length + ' / 2000'; });
+    function githubUrl(c) {
+      var title = c.kindName + ': ' + c.text.replace(/\s+/g, ' ').slice(0, 60) + (c.text.length > 60 ? '…' : '');
+      return SUGGEST_REPO + '?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(asText(c) + '\n\n(Sent from the site’s Ask or suggest page.)');
+    }
+    /* messages written on this device today, sent or copied */
+    function today() { var t0 = dayStart(Date.now()); return Object.keys(store.g).filter(function (k) { return Number(k) >= t0; }).length; }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var c = current();
       if (!check(c)) { return; }
-      var title = c.kindName + ': ' + c.text.replace(/\s+/g, ' ').slice(0, 60) + (c.text.length > 60 ? '…' : '');
-      var url = SUGGEST_REPO + '?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(asText(c) + '\n\n(Sent from the site’s Ask or suggest page.)');
-      remember(c);
-      window.open(url, '_blank', 'noopener');
-      msg.className = 'sg-msg ok'; msg.textContent = 'GitHub opened in a new tab with your message filled in. Press the green “Submit new issue” button there to send it. A copy is saved below.';
+      if (!acctOn) {
+        remember(c);
+        window.open(githubUrl(c), '_blank', 'noopener');
+        msg.className = 'sg-msg ok'; msg.textContent = 'GitHub opened in a new tab with your message filled in. Press the green “Submit new issue” button there to send it. A copy is saved below.';
+        return;
+      }
+      var sentNote = function () { text.value = ''; $('#sg-count').textContent = '0 / 2000'; msg.className = 'sg-msg ok'; msg.textContent = 'Sent. Thank you: every message is read. A copy is saved below, on this device only.'; };
+      if ($('#sg-web').value) { remember(c); sentNote(); return; }
+      if (today() >= 10) { msg.className = 'sg-msg bad'; msg.textContent = 'That is 10 messages from this device today. Please send more tomorrow.'; return; }
+      var btn = $('button[type="submit"]', form);
+      btn.disabled = true; msg.className = 'sg-msg'; msg.textContent = 'Sending…';
+      acctReq('POST', '/rest/v1/suggestions', { kind: c.kind, part: c.where.slice(0, 120), body: c.text.slice(0, 2000), name: c.name.slice(0, 60) }, null, { Prefer: 'return=minimal' }).then(function (r) {
+        btn.disabled = false;
+        if (r.ok) { remember(c); sentNote(); return; }
+        msg.className = 'sg-msg bad';
+        msg.innerHTML = (r.status ? 'It did not send just now.' : 'It did not send: there is no internet connection.') + ' Try again in a moment, choose <b>Copy it instead</b>, or <a href="' + esc(githubUrl(c)) + '" target="_blank" rel="noopener">post it on GitHub</a>.';
+      });
     });
     $('#sg-copy').addEventListener('click', function () {
       var c = current();
@@ -11486,7 +11538,7 @@ function rReasoningHTML() {
     go(token);
   }
 
-  function go(token) { route(token); if (cur.view) { viewTok[cur.view] = lastToken; } guide(); }
+  function go(token) { route(token); if (cur.view) { viewTok[cur.view] = lastToken; } guide(); visitCount(lastToken); }
   function route(token) {
     token = String(token || '').replace(/^#/, '');
     var m, r;

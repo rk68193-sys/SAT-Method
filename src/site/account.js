@@ -99,6 +99,8 @@
     if (code === 'same_password') { return 'That is your current password. Choose a different one.'; }
     if (code === 'email_address_invalid' || code === 'validation_failed' || /invalid.*email|email.*invalid/i.test(msg)) { return 'That does not look like an email address.'; }
     if (/signup.*disabled|signups not allowed/i.test(msg + code)) { return 'New accounts are closed right now.'; }
+    /* the project sends its emails through Resend; should that stop, Supabase's own service writes only to the project's team */
+    if (code === 'email_address_not_authorized' || /not authorized/i.test(msg)) { return 'This site cannot send password emails yet. Your progress is still saved in this browser. Tell us on the Ask or suggest page and we will help you get back in.'; }
     return 'That did not work (' + (msg.slice(0, 120) || 'error ' + r.status) + '). Try again in a moment.';
   }
   /* the session has ended: the device keeps its progress and remembers whose it is, until that person signs in again */

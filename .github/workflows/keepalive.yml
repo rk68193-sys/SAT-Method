@@ -1,0 +1,35 @@
+# Keeps the Supabase project behind accounts (and suggestions and visit counts) awake. Supabase pauses a Free project after a
+# week with too little database activity, and sign-in and sync stop until someone restores it in the dashboard. This asks
+# the database one small question every day. A red run means the project did not answer: open the Supabase dashboard and
+# restore it. The address and the public key come from src/build/account.json, the same ones the site uses.
+name: Keep Supabase awake
+
+on:
+  schedule:
+    - cron: '41 13 * * *'  # every day, 13:41 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout: src/build/account.json
+          sparse-checkout-cone-mode: false
+      - name: Ask the database one small question
+        run: |
+          url=$(jq -r .url src/build/account.json); key=$(jq -r .key src/build/account.json)
+          ask() { curl -sS -o /tmp/out -w '%{http_code}' --max-time 30 -H "apikey: $key" "$@" || echo 000; }
+          # public.ping() is in src/account/extras.sql; until that is run, a read of the progress table (refused to visitors,
+          # but still a database request) does the same job
+          code=$(ask -X POST -H 'Content-Type: application/json' -d '{}' "$url/rest/v1/rpc/ping")
+          if [ "$code" = 404 ]; then code=$(ask "$url/rest/v1/progress?select=user_id&limit=1"); fi
+          echo "Supabase answered $code: $(head -c 200 /tmp/out)"
+          case $code in
+            000|5*) echo "::error::Supabase did not answer ($code). The project may be paused: restore it in the Supabase dashboard."; exit 1 ;;
+          esac

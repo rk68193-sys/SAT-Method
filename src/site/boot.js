@@ -85,7 +85,7 @@
     go(token);
   }
 
-  function go(token) { route(token); if (cur.view) { viewTok[cur.view] = lastToken; } guide(); }
+  function go(token) { route(token); if (cur.view) { viewTok[cur.view] = lastToken; } guide(); visitCount(lastToken); }
   function route(token) {
     token = String(token || '').replace(/^#/, '');
     var m, r;

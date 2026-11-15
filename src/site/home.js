@@ -316,11 +316,18 @@
         seg('sg-kind', '1 · What kind of message?', SG_KINDS, 'ask') +
         '<label class="field"><span class="label">2 · Which part of the site is it about?</span><select id="sg-where">' + where.map(function (w) { return '<option value="' + w[0] + '">' + esc(w[1]) + '</option>'; }).join('') + '</select></label>' +
         '<label class="field"><span class="label">3 · Your message</span><textarea id="sg-text" rows="6" maxlength="2000" required placeholder="For example: how do I see my answers again? Or: please add a lesson on percent word problems."></textarea><span class="sg-count muted" id="sg-count" aria-live="polite">0 / 2000</span></label>' +
-        '<label class="field"><span class="label">Your name (optional)</span><input type="text" id="sg-name" maxlength="60" autocomplete="nickname"></label>' +
-        '<p class="label sg-how-h">4 · Send it, one of two ways</p>' +
-        '<p class="row sg-actions"><button class="btn big" type="submit">Send it on GitHub</button><button class="btn big ghost" type="button" id="sg-copy">Copy it instead</button></p>' +
-        '<ul class="plainlist fine sg-how"><li><b>Send it on GitHub.</b> GitHub is the free website where this site is kept. It opens in a new tab with your message already filled in. To post it there you need a free GitHub account.</li>' +
-          '<li><b>Copy it instead.</b> No account needed: your message is copied, and you paste it into an email or a text to whoever shared this site with you.</li></ul>' +
+        '<label class="field"><span class="label">Your first name or a nickname (optional)</span><input type="text" id="sg-name" maxlength="60" autocomplete="nickname"></label>' +
+        /* left empty by people; a robot filling in every box gives itself away */
+        '<div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Leave this empty <input type="text" id="sg-web" tabindex="-1" autocomplete="off"></label></div>' +
+        (acctOn ?
+          '<p class="label sg-how-h">4 · Send it</p>' +
+          '<p class="row sg-actions"><button class="btn big" type="submit">Send it</button><button class="btn big ghost" type="button" id="sg-copy">Copy it instead</button></p>' +
+          '<ul class="plainlist fine sg-how"><li><b>Send it.</b> It goes straight to the people who run this site. No account or email needed.</li>' +
+            '<li><b>Copy it instead.</b> Your message is copied, and you paste it into an email or a text to whoever shared this site with you.</li></ul>' :
+          '<p class="label sg-how-h">4 · Send it, one of two ways</p>' +
+          '<p class="row sg-actions"><button class="btn big" type="submit">Send it on GitHub</button><button class="btn big ghost" type="button" id="sg-copy">Copy it instead</button></p>' +
+          '<ul class="plainlist fine sg-how"><li><b>Send it on GitHub.</b> GitHub is the free website where this site is kept. It opens in a new tab with your message already filled in. To post it there you need a free GitHub account.</li>' +
+            '<li><b>Copy it instead.</b> No account needed: your message is copied, and you paste it into an email or a text to whoever shared this site with you.</li></ul>') +
         '<p class="sg-msg" id="sg-msg" role="status" aria-live="polite"></p>' +
       '</form>' +
       '<section class="sec" id="sg-mine"></section>' +
@@ -348,15 +355,33 @@
       return true;
     }
     text.addEventListener('input', function () { $('#sg-count').textContent = text.value.length + ' / 2000'; });
+    function githubUrl(c) {
+      var title = c.kindName + ': ' + c.text.replace(/\s+/g, ' ').slice(0, 60) + (c.text.length > 60 ? '…' : '');
+      return SUGGEST_REPO + '?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(asText(c) + '\n\n(Sent from the site’s Ask or suggest page.)');
+    }
+    /* messages written on this device today, sent or copied */
+    function today() { var t0 = dayStart(Date.now()); return Object.keys(store.g).filter(function (k) { return Number(k) >= t0; }).length; }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var c = current();
       if (!check(c)) { return; }
-      var title = c.kindName + ': ' + c.text.replace(/\s+/g, ' ').slice(0, 60) + (c.text.length > 60 ? '…' : '');
-      var url = SUGGEST_REPO + '?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(asText(c) + '\n\n(Sent from the site’s Ask or suggest page.)');
-      remember(c);
-      window.open(url, '_blank', 'noopener');
-      msg.className = 'sg-msg ok'; msg.textContent = 'GitHub opened in a new tab with your message filled in. Press the green “Submit new issue” button there to send it. A copy is saved below.';
+      if (!acctOn) {
+        remember(c);
+        window.open(githubUrl(c), '_blank', 'noopener');
+        msg.className = 'sg-msg ok'; msg.textContent = 'GitHub opened in a new tab with your message filled in. Press the green “Submit new issue” button there to send it. A copy is saved below.';
+        return;
+      }
+      var sentNote = function () { text.value = ''; $('#sg-count').textContent = '0 / 2000'; msg.className = 'sg-msg ok'; msg.textContent = 'Sent. Thank you: every message is read. A copy is saved below, on this device only.'; };
+      if ($('#sg-web').value) { remember(c); sentNote(); return; }
+      if (today() >= 10) { msg.className = 'sg-msg bad'; msg.textContent = 'That is 10 messages from this device today. Please send more tomorrow.'; return; }
+      var btn = $('button[type="submit"]', form);
+      btn.disabled = true; msg.className = 'sg-msg'; msg.textContent = 'Sending…';
+      acctReq('POST', '/rest/v1/suggestions', { kind: c.kind, part: c.where.slice(0, 120), body: c.text.slice(0, 2000), name: c.name.slice(0, 60) }, null, { Prefer: 'return=minimal' }).then(function (r) {
+        btn.disabled = false;
+        if (r.ok) { remember(c); sentNote(); return; }
+        msg.className = 'sg-msg bad';
+        msg.innerHTML = (r.status ? 'It did not send just now.' : 'It did not send: there is no internet connection.') + ' Try again in a moment, choose <b>Copy it instead</b>, or <a href="' + esc(githubUrl(c)) + '" target="_blank" rel="noopener">post it on GitHub</a>.';
+      });
     });
     $('#sg-copy').addEventListener('click', function () {
       var c = current();
