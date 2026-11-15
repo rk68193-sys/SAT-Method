@@ -337,7 +337,14 @@
     var wrap = tb.closest('.theme') || tb, a = document.getElementById('pz-chip'), n = Math.max(0, pzBalance());
     if (!wrap.parentNode) { return; }
     if (!a) { a = document.createElement('a'); a.id = 'pz-chip'; a.className = 'tool pz-chip'; a.href = '#crates'; wrap.parentNode.insertBefore(a, wrap); }
-    a.innerHTML = PZ_COIN + '<span>' + pzNum(n) + '</span>';
+    a.innerHTML = PZ_COIN + '<span class="pz-n">' + pzNum(n) + '</span>';
+    /* the streak sits beside the coins once there is one */
+    var sk = document.getElementById('st-chip'), sn = 0;
+    try { sn = habitStreak().n; } catch (e) { sn = 0; }
+    if (!sk) { sk = document.createElement('a'); sk.id = 'st-chip'; sk.className = 'tool st-chip'; sk.href = '#home'; wrap.parentNode.insertBefore(sk, a); }
+    sk.innerHTML = '<svg class="st-flame" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.6 3.2 4.6 5 4.6 9.6A4.6 4.6 0 0 1 12 17.2a4.6 4.6 0 0 1-4.6-4.6c0-1.7.8-2.9 1.7-3.8.3 1.2.9 1.9 1.7 2.2C10.400 8.200 11 5.200 12 3z"/></svg><span class="pz-n">' + sn + '</span>';
+    sk.setAttribute('aria-label', sn ? 'You have practiced ' + plural(sn, 'day') + ' in a row. Open Today.' : 'No streak yet. Open Today.');
+    sk.hidden = !sn;
     a.setAttribute('aria-label', plural(n, 'coin') + '. Open crates.');
     a.hidden = true; var h0 = top.offsetHeight; a.hidden = false;
     if (top.offsetHeight > h0 + 2) { a.hidden = true; }

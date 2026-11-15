@@ -205,6 +205,7 @@
         '<p class="row" style="margin-top:1.4rem"><a class="btn" href="#mp-' + k + '">Practice all ' + S.n + ' ' + esc(S.short.toLowerCase()) + ' questions</a></p>' +
         '<section class="sec" id="m-types-' + k + '"><h3 class="h2">The ' + S.types.length + ' question types in this skill</h3><p class="lede">Every question in this skill belongs to one of these. Learn to recognize each one from the words in the question.</p>' +
           '<div class="mtypes">' + S.types.slice().sort(function (a, b) { return MTY[b].n - MTY[a].n; }).map(function (t) { return mTypeCard(t); }).join('') + '</div></section>' +
+        courseBarHTML('m', 'm-' + k) +
         '</div><aside class="mlesson-side" aria-label="Skills in this area"><p class="label">' + esc(d.name) + '</p><ul>' + d.skills.map(function (x) { return '<li><a href="#m-' + x + '"' + (x === k ? ' aria-current="page"' : '') + '>' + esc(MSK[x].short) + '</a></li>'; }).join('') + '</ul></aside></div>' +
         '</div>';
     }

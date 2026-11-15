@@ -1,12 +1,12 @@
   /* =================== Home, navigation, appearance and suggestions =================== */
-  /* each page: [view, address, name, what is on it, group]. Inside a subject the step bar shows the four groups in
-     order (1 Start here, 2 Learn, 3 Practice, 4 My progress). The guide bar under it says where you are and holds
-     Back (and Home on a phone), and the foot of every page offers one next step. */
-  var GROUPS = [['start', 'Start here'], ['learn', 'Learn'], ['practice', 'Practice'], ['map', 'My progress']];
+  /* each page: [view, address, name, what is on it, group]. The top bar holds Today and the two subjects. Inside a
+     subject one row of three tabs shows its groups (Learn, Practice, My progress); the first page of a group is the
+     tab's own page. A page deeper than that gets a slim bar with Back, and the foot of every page offers one next step. */
+  var GROUPS = [['learn', 'Learn'], ['practice', 'Practice'], ['map', 'My progress']];
   var SUBJ = {
     rw: { name: 'Reading & Writing', icon: 'book', items: [
-      ['start', 'start', 'Start here', 'A short welcome that explains what the Reading and Writing test asks and what to study first.', 'start'],
       ['rwhub', 'rw-hub', 'All topics', 'Every Reading and Writing topic, listed in the order to learn it. There is a search box too.', 'learn'],
+      ['start', 'start', 'New here? A short welcome', 'A short welcome that explains what the Reading and Writing test asks and what to study first.', 'learn'],
       ['reading', 'reading', 'Reading lessons', 'Learn four steps that work on any reading question, then watch them used on 17 real questions.', 'learn'],
       ['grammar', 'lessons', 'Grammar lessons', 'Learn a one-minute method for grammar questions, then take 19 short lessons on the rules.', 'learn'],
       ['lookup', 'lookup', 'Look up a rule', 'Search for a grammar rule, a linking word such as “however”, or a term.', 'learn'],
@@ -14,8 +14,8 @@
       ['drills', 'drills', 'Short exercises', 'Quick exercises that each train one small step. They make a good five-minute warm-up.', 'practice'],
       ['rwmap', 'rw-map', 'My progress', 'See how you are doing on each kind of question, and what to practice next.', 'map']] },
     math: { name: 'Math', icon: 'calc', items: [
-      ['mstart', 'math', 'Start here', 'A short welcome that explains what the Math test asks and what to study first.', 'start'],
       ['mhub', 'm-hub', 'All topics', 'Every Math topic, listed in the order to learn it. There is a search box too.', 'learn'],
+      ['mstart', 'math', 'New here? A short welcome', 'A short welcome that explains what the Math test asks and what to study first.', 'learn'],
       ['mlearn', 'm-learn', 'Lessons', 'There are 19 lessons, one for each kind of math on the test. Start with the first.', 'learn'],
       ['mfound', 'm-found', 'Algebra basics', 'Six basic algebra steps to warm up with when math feels rusty.', 'learn'],
       ['mref', 'm-ref', 'Formula sheet', 'The formulas the test gives you, and how to type in your own answers.', 'learn'],
@@ -60,7 +60,7 @@
     host.innerHTML = '<p class="secnav-t"><span class="sec-ico">' + ICON[S.icon] + '</span>' + S.name + '</p><div class="secnav-l">' +
       GROUPS.map(function (g, i) {
         var first = S.items.filter(function (it) { return it[4] === g[0]; })[0];
-        return '<a href="#' + first[1] + '" data-group="' + g[0] + '"><span class="secn" aria-hidden="true">' + (i + 1) + '</span><span class="secw">' + g[1] + '</span></a>';
+        return '<a href="#' + first[1] + '" data-group="' + g[0] + '"><span class="secw">' + g[1] + '</span></a>';
       }).join('') + '</div>';
   }
   function markNav(v) {
@@ -163,6 +163,9 @@
     var bar = document.getElementById('guide'), box = document.getElementById('nextbox');
     if (!bar) { return; }
     if (v === 'home') { bar.hidden = true; box.hidden = true; box.innerHTML = ''; measure(); return; }
+    /* a tab's own page needs no Back: the tabs above it already say where you are */
+    var Sg = SUBJ[VIEW_SUBJ[v]], itg = Sg ? Sg.items.filter(function (x) { return x[0] === v; })[0] : null;
+    var leadPage = !!itg && Sg.items.filter(function (x) { return x[4] === itg[4]; })[0][0] === v && !deepName(v, tok);
     /* Back goes to the last different page you were on in this tab, or else one level up */
     var j = gIdx - 1;
     while (j >= 0 && gHist[j] && gHist[j].n === here[0] && gHist[j].v === v) { j--; }
@@ -175,7 +178,7 @@
     if (gh) { gh.textContent = here[0]; }
     var st2 = document.getElementById('strail');
     if (st2) { st2.innerHTML = trailHTML(c); }
-    bar.hidden = false;
+    bar.hidden = leadPage;
     var own = viewEl[v] && $('.nextstep', viewEl[v]), nx = own ? null : nextFor(v, tok);
     if (nx) { box.innerHTML = nextInner(nx[0], nx[1]); box.hidden = false; } else { box.hidden = true; box.innerHTML = ''; }
     measure();
@@ -262,6 +265,9 @@
 
   /* ---------- Home: what this is, the two subjects, how it works, and one easy question ---------- */
   function buildHome() {
+    var P0 = planGet();
+    viewEl.plan.innerHTML = '';   /* the plan page is drawn again when it is opened, so its form is never on the page twice */
+    if (P0) { buildToday(P0); return; }
     var last = isObj(store.s.last) ? store.s.last : null, cont = '';
     if (last && last.subj && SUBJ[last.subj]) {
       var lv = last[last.subj], it = SUBJ[last.subj].items.filter(function (x) { return x[0] === lv; })[0];
@@ -278,6 +284,7 @@
       '<p class="lede">Welcome! This free study guide has short lessons and ' + mfmt(nAll) + ' real SAT questions, and it explains every answer so you learn why. Pick a subject below, and the site will guide you one small step at a time.</p>' + cont +
       '<h2 class="hq">What would you like to study?</h2><div class="hpicks">' + pick('rw', 'Short passages to read, plus grammar and punctuation') + pick('math', 'Algebra, geometry, and working with data') + '</div>' +
       '<p class="hnot">Not sure where to begin? <a href="#htry-sec" data-scroll>Try one easy question first</a>, or <button type="button" class="linkbtn" data-tour>take the one-minute tour</button>.</p></div></section>' +
+      '<section class="hsec tplan" id="hplan"><div class="hsec-h"><h2 class="h2">Have a test date? Let the site plan each day</h2><p class="muted">Answer three questions, and this page becomes your list for today: a few short tasks, chosen from what you most need.</p></div>' + planFormHTML(null) + '</section>' +
       '<section class="hsec hhow" id="hhow"><div class="hsec-h"><h2 class="h2">How this site works</h2><p class="muted">Each subject follows the same three steps, so you always know what comes next.</p></div><ol class="hsteps">' +
         '<li><b>Learn</b><span>Short lessons teach you one simple method at a time, using real SAT questions worked out step by step.</span></li>' +
         '<li><b>Practice</b><span>Try real questions at your own pace. After every answer you see the right choice and the reason for it.</span></li>' +
@@ -289,6 +296,23 @@
       '<a class="hcont hask" href="#suggest"><span class="label">Have a question or an idea?</span><b>Ask us, or suggest a change</b><span class="hcont-go" aria-hidden="true">→</span></a></div></section>' +
       '</div>';
     htryShow(store.s.htry === 'rw' ? 'rw' : 'math');
+    planWire();
+  }
+
+  /* Today, with a plan: the day's list first, then the streak and the two subjects */
+  function buildToday(P) {
+    function subj(key, s) {
+      var S = SUBJ[key], d = diagGet(s), T = PSUB[s].types(), tried = T.filter(function (t) { return t.s.lvl !== 'new'; }).length;
+      return '<a class="tsub tsub-' + key + '" href="#' + S.items[0][1] + '"><span class="hpick-ico">' + ICON[S.icon] + '</span><span class="tsub-t"><b>' + S.name + '</b>' +
+        '<span>' + (d ? 'Rough score range ' + d.lo + '–' + d.hi : 'No starting check yet') + ' · ' + tried + ' of ' + T.length + ' kinds of question tried</span></span><span class="hcont-go" aria-hidden="true">→</span></a>';
+    }
+    var subs = planSubs(P);
+    viewEl.home.innerHTML = '<div class="wrap">' + planTodayHTML(P) +
+      habitHomeHTML().replace('<h2 class="h2">Today</h2>', '<h2 class="h2">Questions of the day, and your streak</h2>') +
+      '<section class="hsec"><div class="hsec-h"><h2 class="h2">Your subjects</h2><p class="muted">Open a subject for its lessons, practice and progress.</p></div><div class="tsubs">' + (subs.indexOf('rw') !== -1 ? subj('rw', 'rw') : '') + (subs.indexOf('m') !== -1 ? subj('math', 'm') : '') +
+        (subs.length === 1 ? subj(subs[0] === 'm' ? 'rw' : 'math', subs[0] === 'm' ? 'rw' : 'm') : '') + '</div></section>' +
+      '</div>';
+    try { if (typeof pzAuras === 'function') { pzAuras(); } } catch (e) {}
   }
 
   /* ---------- Suggest a change, and private notes ---------- */

@@ -2441,6 +2441,59 @@ html.tour-open { overflow: hidden; }
 @media (max-width: 340px) { .ghere { display: none; } .ghome { margin-left: auto; } }
 .help-top { position: sticky; top: calc(-1 * clamp(1.3rem, 4vw, 2.1rem)); z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: calc(-1 * clamp(1.3rem, 4vw, 2.1rem)) calc(-1 * clamp(1.3rem, 4vw, 2.1rem)) 0; padding: .8rem clamp(1.3rem, 4vw, 2.1rem) .5rem; background: var(--paper); border-radius: 26px 26px 0 0; }
 .help-x { padding: .5rem 1rem; font-size: .95rem; }
+
+/* =================== the rebuilt frame: Today, two subjects, three tabs =================== */
+.subj-ico { width: 1.15rem; height: 1.15rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.secnav-l a { padding-inline: 1rem; }
+.hub-new { margin-top: .6rem; color: var(--ink-2); }
+/* Today */
+.tday .eyebrow { margin-bottom: .5rem; }
+.tday-tasks { margin-top: 1.5rem; max-width: 52rem; }
+.tday-foot { margin-top: 1rem; }
+.tplan .plan-form { margin-top: 1rem; }
+.tsubs { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: .9rem; max-width: 52rem; }
+.tsub { display: flex; align-items: center; gap: .9rem; padding: 1rem 1.1rem; border: 1.5px solid var(--line-strong); border-radius: 16px; background: var(--card); color: var(--ink); text-decoration: none; min-width: 0; }
+.tsub:hover { border-color: var(--ink); background: var(--card); color: var(--ink); }
+.tsub-t { display: grid; gap: .15rem; min-width: 0; flex: 1; }
+.tsub-t b { font: 600 1.1rem/1.2 var(--display); }
+.tsub-t span { color: var(--ink-2); font-size: .95rem; line-height: 1.4; }
+/* on a phone the three places sit in a bar at the bottom of the screen, within reach of a thumb, and the top row keeps the name and the tools */
+@media (max-width: 700px) {
+  .subj { position: fixed; left: 0; right: 0; bottom: 0; z-index: 31; margin: 0; gap: 0; justify-content: space-around; background: var(--paper); border-top: 1px solid var(--line-strong); padding: .3rem max(.4rem, env(safe-area-inset-right, 0px)) calc(.3rem + env(safe-area-inset-bottom, 0px)) max(.4rem, env(safe-area-inset-left, 0px)); }
+  .subj a { flex: 1 1 0; flex-direction: column; gap: .2rem; min-height: 3.1rem; padding: .35rem .3rem; font-size: .86rem; white-space: normal; text-align: center; line-height: 1.15; border-radius: 12px; }
+  .subj a .sdot { width: .7rem; height: .7rem; margin-block: .2rem; }
+  body { padding-bottom: calc(4.2rem + env(safe-area-inset-bottom, 0px)); }
+  body.calc-open .subj { display: none; }
+  .topin { flex-wrap: nowrap; min-height: 3.4rem; }
+  /* a blurred bar would trap the fixed row inside itself, so the top bar is plain on a phone */
+  .top { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--paper); }
+  .secnav-l { width: 100%; }
+  .toptools .tool > span:not(.pz-n) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .toptools { gap: .25rem; min-width: 0; }
+  .toptools .tool { min-width: 2.6rem; padding-inline: .45rem; justify-content: center; }
+  .topin { gap: .4rem; }
+  .brand { font-size: 1.1rem; gap: .45rem; min-width: 0; }
+  .brand-mark { width: 1.8rem; height: 1.8rem; }
+  .toptools .tool svg { display: inline-block; width: 1.25rem; height: 1.25rem; }
+  .secnav-t { display: none; }
+  .secnav-l a { flex: 1 1 0; justify-content: center; }
+}
+/* the streak beside the coins */
+.st-chip { gap: .3rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.tool.st-chip svg.st-flame { fill: #E2571C; stroke: none; }
+/* the bar under every lesson */
+.lbar { margin-top: 2.6rem; padding-top: 1.1rem; border-top: 3px solid var(--ink); display: grid; gap: .8rem; }
+.lbar-at { display: flex; flex-wrap: wrap; gap: .3rem .9rem; align-items: baseline; }
+.lbar-at b { font: 600 1.05rem/1.2 var(--display); }
+.lbar-n { color: var(--ink-2); font-size: .95rem; }
+.lbar-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: .7rem; align-items: stretch; }
+.lbar-row .btn { min-width: 0; height: auto; white-space: normal; text-align: left; line-height: 1.25; gap: .6rem; padding: .7rem 1rem; }
+.lbar-next { justify-content: space-between; }
+.lbar-next > span:first-child, .lbar-prev > span:last-child { display: grid; min-width: 0; }
+.lbar-k { font-size: .8rem; font-weight: 500; opacity: .8; }
+.lbar-done { justify-content: center; text-align: center; }
+@media (max-width: 700px) { .lbar-row { grid-template-columns: 1fr; } .lbar-done { order: -1; } .lbar-gap { display: none; } }
+@media (max-width: 380px) { .toptools .tool svg { display: inline-block; } .brand-w { display: none; } }
 /* ---------- prize themes (written by src/tools/themes.py --prizes; do not edit by hand) ---------- */
 :root[data-theme="prize-graphite"] {
   --paper: #F5F5F2;
@@ -3415,9 +3468,9 @@ html.pz-plain .pz-bg { display: none; }
   <div class="wrap topin">
     <a class="brand" href="#home" aria-label="SAT Sprint home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a>
     <nav class="subj" id="subj" aria-label="Subjects">
-      <a href="#home" data-subj="home">Home</a>
-      <a href="#start" data-subj="rw"><i class="sdot rw" aria-hidden="true"></i>Reading &amp; Writing</a>
-      <a href="#math" data-subj="math"><i class="sdot math" aria-hidden="true"></i>Math</a>
+      <a href="#home" data-subj="home"><svg class="subj-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg>Today</a>
+      <a href="#rw-hub" data-subj="rw"><i class="sdot rw" aria-hidden="true"></i>Reading &amp; Writing</a>
+      <a href="#m-hub" data-subj="math"><i class="sdot math" aria-hidden="true"></i>Math</a>
     </nav>
     <div class="toptools">
       <a class="tool acct-tool" href="#account" data-tool="account" id="acct-tool" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 19.5c1-3.4 3.8-5.2 7.2-5.2s6.2 1.8 7.2 5.2"/></svg><span>Sign in</span><i class="acct-dot" aria-hidden="true"></i></a>
@@ -3864,6 +3917,8 @@ html.pz-plain .pz-bg { display: none; }
       st.key = key;
       page.innerHTML = '';
       o.render(key, page);
+      /* a page that is a lesson of the course ends with the bar that moves through it */
+      if (o.course) { var ce = null; o.items().forEach(function (g) { g.entries.forEach(function (x) { if (x.key === key) { ce = x; } }); }); if (ce) { page.insertAdjacentHTML('beforeend', courseBarHTML(o.course, ce.token)); } }
       mark();
       return true;
     }
@@ -4148,9 +4203,7 @@ html.pz-plain .pz-bg { display: none; }
       '<p class="chips"><span class="label">Rules</span>' + c.uses.map(function (uid) { return '<a class="ulink" href="#' + uid + '">' + U[uid].num + '</a>'; }).join('') + '</p>' +
       c.uses.map(useHTML).join('') +
       (c.could ? '<aside class="could"><p class="label">Could still appear · not from the bank</p><p class="fine" style="margin-top:.3rem">Standard forms of the same rules that this bank does not use. The example sentences are written for this guide.</p><ul>' + c.could.items.map(li).join('') + '</ul></aside>' : '') +
-      '<div class="lfoot"><span class="row"><button type="button" class="btn ghost donebtn" id="donebtn" aria-pressed="' + (d ? 'true' : 'false') + '">' + (d ? 'Lesson done ✓' : 'Mark this lesson done') + '</button>' +
-      '<a class="btn ghost" href="#practice" data-tpart="' + c.part + '">Practice Part ' + c.part + ' against the clock</a></span>' +
-      (next ? '<a class="btn" href="#' + next.id + '">Next: ' + next.n + ' ' + esc(next.title) + '</a>' : '<a class="btn" href="#practice">Take a timed set</a>') + '</div>';
+      '<div class="lfoot"><span class="row"><a class="btn ghost" href="#practice" data-tpart="' + c.part + '">Practice Part ' + c.part + ' against the clock</a></span></div>';
   }
   function mountExamples(host) {
     $$('.exhost', host).forEach(function (slot) {
@@ -4227,12 +4280,12 @@ html.pz-plain .pz-bg { display: none; }
 
   /* ---------- the Grammar view ---------- */
   var grammarView = RailView('grammar', {
-    label: 'Grammar',
+    label: 'Grammar', course: 'rw',
     home: 'home',
     name: function (e) { return e.num ? 'Lesson ' + e.num + ': ' + plain(e.label) : plain(e.label); },
     items: function () {
       var g = [{ group: 'Method', entries: [
-        { key: 'method', token: 'method', label: 'The 60-second method' },
+        { key: 'method', token: 'method', label: 'The 60-second method', done: courseDone('rw', 'method') },
         { key: 'shortcuts', token: 'shortcuts', label: 'What this bank shows' },
         { key: 'hard', token: 'hard', label: 'Where the hard questions are' }
       ] }, { group: 'Lessons', entries: [{ key: 'home', token: 'lessons', label: 'All grammar lessons', tail: '<span class="rn">' + countDone() + '/' + NC + '</span>' }] }];
@@ -4622,17 +4675,17 @@ function rReasoningHTML() {
     check: rCheckHTML, others: rOthersHTML, sets: rSetsHTML, measured: rMeasuredHTML
   };
   var readingView = RailView('reading', {
-    label: 'Reading',
+    label: 'Reading', course: 'rw',
     home: 'routine',
     name: function (e, g) { return /^ex-/.test(e.key) ? 'Worked example ' + e.num : e.num ? 'Step ' + e.num + ': ' + plain(e.label) : plain(e.label); },
     items: function () {
       var ex = RLIST.map(function (x) { return { key: 'ex-' + x.n, token: 'ex-' + x.n, num: x.n, label: esc(x.title) + ' <span class="rn">' + x.diff.charAt(0) + '</span>', done: !!store.rl['ex-' + x.n] }; });
       return [
-        { group: 'The routine', entries: [{ key: 'routine', token: 'routine', label: 'Four steps for any reading question' }, { key: 'shape', token: 'shape', label: 'What the passages are like' }] },
+        { group: 'The routine', entries: [{ key: 'routine', token: 'routine', label: 'Four steps for any reading question', done: courseDone('rw', 'routine') }, { key: 'shape', token: 'shape', label: 'What the passages are like' }] },
         { group: 'The steps', entries: [
-          { key: 'job', token: 'job', num: 1, label: 'Job' }, { key: 'chunk', token: 'chunk', num: 2, label: 'Chunk' },
-          { key: 'long', token: 'long', label: 'Long sentences: core first' }, { key: 'para', token: 'para', label: 'Long passages: make them make sense' },
-          { key: 'say', token: 'say', num: 3, label: 'Say' }, { key: 'check', token: 'check', num: 4, label: 'Check' }] },
+          { key: 'job', token: 'job', num: 1, label: 'Job', done: courseDone('rw', 'job') }, { key: 'chunk', token: 'chunk', num: 2, label: 'Chunk', done: courseDone('rw', 'chunk') },
+          { key: 'long', token: 'long', label: 'Long sentences: core first', done: courseDone('rw', 'long') }, { key: 'para', token: 'para', label: 'Long passages: make them make sense', done: courseDone('rw', 'para') },
+          { key: 'say', token: 'say', num: 3, label: 'Say', done: courseDone('rw', 'say') }, { key: 'check', token: 'check', num: 4, label: 'Check', done: courseDone('rw', 'check') }] },
         { group: 'More question types', entries: [{ key: 'reasoning', token: 'reasoning', label: 'Deeper reading structures' }, { key: 'dataPatterns', token: 'data-patterns', label: 'Tables and graphs: deeper patterns' }, { key: 'others', token: 'others', label: 'Words, structure, two texts, notes' }, { key: 'vocab', token: 'vocab', label: 'Words to know' }, { key: 'notes', token: 'notesfirst', label: 'Notes questions: goal first' }] },
         { group: 'Worked examples', entries: ex },
         { group: 'More', entries: [{ key: 'reviewFindings', token: 'source-findings', label: 'Further source findings' }, { key: 'sets', token: 'sets', label: 'Practice sets: 1,230 IDs' }, { key: 'measured', token: 'measured', label: 'How this was measured' }] }
@@ -6257,6 +6310,7 @@ function rReasoningHTML() {
         '<p class="row" style="margin-top:1.4rem"><a class="btn" href="#mp-' + k + '">Practice all ' + S.n + ' ' + esc(S.short.toLowerCase()) + ' questions</a></p>' +
         '<section class="sec" id="m-types-' + k + '"><h3 class="h2">The ' + S.types.length + ' question types in this skill</h3><p class="lede">Every question in this skill belongs to one of these. Learn to recognize each one from the words in the question.</p>' +
           '<div class="mtypes">' + S.types.slice().sort(function (a, b) { return MTY[b].n - MTY[a].n; }).map(function (t) { return mTypeCard(t); }).join('') + '</div></section>' +
+        courseBarHTML('m', 'm-' + k) +
         '</div><aside class="mlesson-side" aria-label="Skills in this area"><p class="label">' + esc(d.name) + '</p><ul>' + d.skills.map(function (x) { return '<li><a href="#m-' + x + '"' + (x === k ? ' aria-current="page"' : '') + '>' + esc(MSK[x].short) + '</a></li>'; }).join('') + '</ul></aside></div>' +
         '</div>';
     }
@@ -8550,6 +8604,9 @@ function rReasoningHTML() {
     if (P.mins < 30) { checks = checks.slice(0, 1); }
     checks.forEach(function (s) { tasks.push({ k: 'check', s: s }); room -= 10; });
     if (checks.length && room < 4) { return tasks; }
+    /* 1b. the next lesson of the day's section, until every lesson is done; it takes the place of about three questions */
+    var les = courseNext(focus);
+    if (les && left > 7) { tasks.push({ k: 'lesson', s: focus, tok: les.e.tok, name: les.e.name, i: les.i }); room = Math.max(3, room - 3); }
     /* 2. questions that are due again: a third of the day, half of it in the last week */
     var rev = P.mins >= 30 ? order : [focus], dues = {}, waiting = 0;
     rev.forEach(function (s) { dues[s] = srDue(s); waiting += dues[s].length; });
@@ -8578,12 +8635,14 @@ function rReasoningHTML() {
   function planTaskState(t, day) {
     var S = PSUB[t.s];
     if (t.k === 'check') { var d = diagGet(t.s); return { done: !!d && d.t >= dayStart(day.made), n: 0, of: 0 }; }
+    if (t.k === 'lesson') { return { done: courseDone(t.s, t.tok), n: 0, of: 0 }; }
     if (t.k === 'module') { var m = S.mods(), last = m[m.length - 1]; return { done: !!last && last.t >= dayStart(day.made), n: 0, of: 0 }; }
     var ids = Array.isArray(t.ids) ? t.ids : [], n = ids.filter(function (id) { return S.doneSince(id, day.made); }).length;
     return { done: n >= ids.length, n: n, of: ids.length };
   }
   function planTaskText(t) {
     var S = PSUB[t.s], n = Array.isArray(t.ids) ? t.ids.length : 0, mins = Math.max(1, Math.round(n * S.perQ));
+    if (t.k === 'lesson') { return { h: 'Lesson: ' + (t.name || ''), sub: 'lesson ' + ((t.i || 0) + 1) + ' of ' + courseList(t.s).length + ' · about 8 min', why: 'Read the lesson, then press “Mark this lesson done” at the bottom of it.' }; }
     if (t.k === 'check') { return { h: 'Take the 10-question starting check', sub: 'about ' + S.checkMins + ' min', why: 'A rough score range and the question types to begin with.' }; }
     if (t.k === 'module') { return { h: 'Take a timed test', sub: S.modMins + ' min', why: S.modN + ' questions on one clock, like one part of the real section. This is the long session of the week, on top of your daily minutes.' }; }
     if (t.k === 'review') { return { h: 'Redo ' + plural(n, 'question') + ' you missed', sub: 'about ' + mins + ' min', why: 'Spaced repeats: a miss comes back after 1 day, then 3, then 7, until it sticks.' }; }
@@ -8594,6 +8653,7 @@ function rReasoningHTML() {
     var P = planGet(), day = P ? planToday(P) : null, t = day ? day.tasks[i] : null;
     if (!t || !PSUB[t.s]) { return; }
     var S = PSUB[t.s];
+    if (t.k === 'lesson') { nav(t.tok); return; }
     if (t.k === 'check') { nav(S.hCheck); return; }
     if (t.k === 'module') { nav(S.hModule); return; }
     var left = t.ids.filter(function (id) { return !S.doneSince(id, day.made) && S.valid(id); });
@@ -8633,6 +8693,8 @@ function rReasoningHTML() {
       if (dayNo(t) < dayNo(Date.now())) { msg.textContent = 'That date has passed. Choose a date from today on.'; focusQuiet(document.getElementById('plan-date')); return; }
       store.s.plan = { date: date, mins: [15, 30, 45].indexOf(Number(pick('plan-mins'))) !== -1 ? Number(pick('plan-mins')) : 15, subj: ['both', 'm', 'rw'].indexOf(pick('plan-subj')) !== -1 ? pick('plan-subj') : 'both' };
       save();
+      /* a plan made on Today turns Today into the plan */
+      if (cur.view === 'home') { buildHome(); toTop(); focusQuiet($('#v-home h1')); return; }
       buildPlan(); toTop();
       focusQuiet($('#v-plan .vtitle'));
     });
@@ -8649,6 +8711,8 @@ function rReasoningHTML() {
   }
   function buildPlan() {
     var P = planGet(), host = viewEl.plan;
+    /* Today holds the same form before a plan exists; only one copy is ever on the page */
+    var hf = $('#plan-form', viewEl.home); if (hf) { viewEl.home.innerHTML = ''; }
     if (!P) {
       host.innerHTML = '<div class="wrap">' +
         '<header class="mhead"><p class="eyebrow">My study plan</p><h2 class="vtitle">A short plan for every day until your test</h2>' +
@@ -8707,6 +8771,29 @@ function rReasoningHTML() {
     var b = e.target && e.target.closest ? e.target.closest('[data-plan-go]') : null;
     if (b) { planGo(Number(b.getAttribute('data-plan-go'))); }
   });
+  /* Today, once a plan exists: the day's tasks in order, the way the plan page lists them */
+  function planTodayHTML(P) {
+    var left = planLeft(P), when = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+    if (left < 0) {
+      return '<section class="hh hh-simple tday"><div class="hh-text"><p class="eyebrow">' + esc(when) + '</p><h1>Your test date has passed</h1>' +
+        '<p class="lede">Set a new date and the site will lay out each day for you again. Everything you have done so far is kept.</p><p class="row"><a class="btn big" href="#plan">Set a new test date</a></p></div></section>';
+    }
+    var day = planToday(P), done = 0, first = -1;
+    var rows = day.tasks.map(function (t, i) {
+      var st = planTaskState(t, day), x = planTaskText(t), S = PSUB[t.s];
+      if (st.done) { done += 1; } else if (first < 0) { first = i; }
+      return '<li class="plan-task' + (st.done ? ' done' : '') + '"><span class="plan-check" aria-hidden="true">✓</span><div><p class="plan-task-h"><b>' + esc(x.h) + '</b><span class="plan-sub"><i class="sdot ' + S.cls + '" aria-hidden="true"></i>' + S.name + ' · ' + x.sub + '</span></p><p class="fine">' + esc(x.why) + '</p></div>' +
+        (st.done ? '<span class="plan-state">Done</span>' : '<button class="btn sm' + (i === first ? '' : ' ghost') + '" type="button" data-plan-go="' + i + '">' + (t.k === 'lesson' ? 'Open lesson' : st.n ? 'Continue · ' + st.n + ' of ' + st.of : 'Start') + '</button>') + '</li>';
+    }).join('');
+    var n = day.tasks.length - done;
+    var h1 = left === 0 ? 'It is test day' : !day.tasks.length ? 'Nothing is due today' : n ? 'Today has ' + n + ' short ' + (n === 1 ? 'task' : 'tasks') + ' left' : 'You are done for today';
+    var lede = left === 0 ? 'There is nothing to study today. Read each last sentence twice, and good luck.'
+      : n ? 'Work down the list in order. Each task opens on its own, and you come back here when it ends.'
+      : 'Well done. Come back tomorrow for a new list, or add one more set if you have time.';
+    return '<section class="hh hh-simple tday"><div class="hh-text"><p class="eyebrow">' + esc(when) + ' · ' + (left === 0 ? 'test day' : left === 1 ? 'your test is tomorrow' : left + ' days to your test') + '</p><h1>' + h1 + '</h1><p class="lede">' + lede + '</p></div>' +
+      (left > 0 && day.tasks.length ? '<ol class="plan-tasks tday-tasks">' + rows + '</ol>' : '') +
+      '<p class="tday-foot"><a href="#plan">See the week ahead, add a set or change my plan</a></p></section>';
+  }
   /* on Home: today's plan, or the way in to one; and the starting check for someone new */
   function planHomeHTML() {
     var P = planGet(), fresh = !diagGet('m') && !diagGet('rw') && PSUB.m.tried() + PSUB.rw.tried() === 0, h = '';
@@ -8722,6 +8809,71 @@ function rReasoningHTML() {
     return h;
   }
 
+  /* =================== The course: each subject's lessons in one order, with Previous, Next and a done tick =================== */
+  /* Reading and Writing, Grammar and Math lessons were three systems with three ways of moving on. This is the one list
+     they all share: courseList gives a subject's lessons in order, the bar under every lesson (courseBarHTML) moves
+     through it, and the study plan hands out the next lesson not yet done. Grammar lessons keep their marks in store.l as
+     before; the rest are in store.s.ld[address] = 1. Subjects use the plan's names, 'm' and 'rw'. */
+  var COURSE_READ = [['routine', 'Four steps for any reading question'], ['job', 'Step 1: Job'], ['chunk', 'Step 2: Chunk'], ['long', 'Long sentences: core first'], ['para', 'Long passages: make them make sense'], ['say', 'Step 3: Say'], ['check', 'Step 4: Check']];
+  var courseMemo = {};
+  function courseList(subj) {
+    if (courseMemo[subj]) { return courseMemo[subj]; }
+    var L = [];
+    if (subj === 'm') {
+      MD.domains.forEach(function (d) { d.skills.forEach(function (k) { L.push({ tok: 'm-' + k, name: MSK[k].name, part: d.name }); }); });
+    } else {
+      COURSE_READ.forEach(function (r) { L.push({ tok: r[0], name: r[1], part: 'Reading' }); });
+      L.push({ tok: 'method', name: 'Grammar: the 60-second method', part: 'Grammar' });
+      CONCEPTS.forEach(function (c) { L.push({ tok: c.id, name: plain(c.title), part: 'Grammar', gid: c.id }); });
+    }
+    courseMemo[subj] = L;
+    return L;
+  }
+  function courseAt(subj, tok) { var L = courseList(subj); for (var i = 0; i < L.length; i += 1) { if (L[i].tok === tok) { return i; } } return -1; }
+  function courseMarks() { if (!isObj(store.s.ld)) { store.s.ld = {}; } return store.s.ld; }
+  function courseDone(subj, tok) {
+    var i = courseAt(subj, tok);
+    if (i < 0) { return false; }
+    var e = courseList(subj)[i];
+    return e.gid ? !!store.l[e.gid] : !!courseMarks()[tok];
+  }
+  function courseSet(subj, tok, on) {
+    var i = courseAt(subj, tok);
+    if (i < 0) { return; }
+    var e = courseList(subj)[i], M = courseMarks();
+    if (e.gid) { if (on) { store.l[e.gid] = 1; } else { delete store.l[e.gid]; } }
+    else if (on) { M[tok] = 1; } else { delete M[tok]; }
+    save();
+  }
+  function courseCount(subj) { var L = courseList(subj), n = 0; L.forEach(function (e) { if (courseDone(subj, e.tok)) { n += 1; } }); return { done: n, of: L.length }; }
+  /* the first lesson not yet done, or null when every one is */
+  function courseNext(subj) { var L = courseList(subj); for (var i = 0; i < L.length; i += 1) { if (!courseDone(subj, L[i].tok)) { return { i: i, e: L[i] }; } } return null; }
+  function courseDoneLabel(on) { return on ? 'Lesson done ✓' : 'Mark this lesson done'; }
+  /* the bar under a lesson: where you are in the course, the way back and forward, and the done button */
+  function courseBarHTML(subj, tok) {
+    var i = courseAt(subj, tok);
+    if (i < 0) { return ''; }
+    var L = courseList(subj), p = L[i - 1], n = L[i + 1], d = courseDone(subj, tok), c = courseCount(subj);
+    return '<nav class="lbar" aria-label="Lessons" data-csubj="' + subj + '" data-ctok="' + esc(tok) + '">' +
+      '<p class="lbar-at"><b>Lesson ' + (i + 1) + ' of ' + L.length + '</b><span class="lbar-n">' + c.done + ' done so far</span></p>' +
+      '<div class="lbar-row">' +
+        (p ? '<a class="btn ghost lbar-prev" href="#' + p.tok + '"><span aria-hidden="true">←</span><span><span class="lbar-k">Previous</span>' + esc(p.name) + '</span></a>' : '<span class="lbar-gap"></span>') +
+        '<button type="button" class="btn ghost donebtn lbar-done" data-cdone aria-pressed="' + (d ? 'true' : 'false') + '">' + courseDoneLabel(d) + '</button>' +
+        (n ? '<a class="btn lbar-next" href="#' + n.tok + '"><span><span class="lbar-k">Next lesson</span>' + esc(n.name) + '</span><span aria-hidden="true">→</span></a>'
+           : '<a class="btn lbar-next" href="#' + (subj === 'm' ? 'm-practice' : 'practice') + '"><span><span class="lbar-k">That was the last lesson</span>Practice real questions</span><span aria-hidden="true">→</span></a>') +
+      '</div></nav>';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('[data-cdone]') : null;
+    if (!b) { return; }
+    var bar = b.closest('.lbar'), subj = bar.getAttribute('data-csubj'), tok = bar.getAttribute('data-ctok');
+    var on = !courseDone(subj, tok);
+    courseSet(subj, tok, on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.textContent = courseDoneLabel(on);
+    var cn = $('.lbar-n', bar); if (cn) { cn.textContent = courseCount(subj).done + ' done so far'; }
+    try { if (subj === 'rw') { grammarView.refresh(); readingView.refresh(); } } catch (err) {}
+    try { if (typeof pzSoon === 'function') { pzSoon(); } } catch (err2) {}
+  });
   /* =================== Both subjects: the days you practiced, the streak, and the question of the day =================== */
   /* store.s.days['2026-11-12'] = [Math answers, Reading and Writing answers] on that day, added to wherever an answer is saved. */
   function dayBump(d, t, i) { var k = dayKey(t), r = Array.isArray(d[k]) ? d[k] : [0, 0]; r[i] = (r[i] || 0) + 1; d[k] = r; }
@@ -9157,7 +9309,14 @@ function rReasoningHTML() {
     var wrap = tb.closest('.theme') || tb, a = document.getElementById('pz-chip'), n = Math.max(0, pzBalance());
     if (!wrap.parentNode) { return; }
     if (!a) { a = document.createElement('a'); a.id = 'pz-chip'; a.className = 'tool pz-chip'; a.href = '#crates'; wrap.parentNode.insertBefore(a, wrap); }
-    a.innerHTML = PZ_COIN + '<span>' + pzNum(n) + '</span>';
+    a.innerHTML = PZ_COIN + '<span class="pz-n">' + pzNum(n) + '</span>';
+    /* the streak sits beside the coins once there is one */
+    var sk = document.getElementById('st-chip'), sn = 0;
+    try { sn = habitStreak().n; } catch (e) { sn = 0; }
+    if (!sk) { sk = document.createElement('a'); sk.id = 'st-chip'; sk.className = 'tool st-chip'; sk.href = '#home'; wrap.parentNode.insertBefore(sk, a); }
+    sk.innerHTML = '<svg class="st-flame" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.6 3.2 4.6 5 4.6 9.6A4.6 4.6 0 0 1 12 17.2a4.6 4.6 0 0 1-4.6-4.6c0-1.7.8-2.9 1.7-3.8.3 1.2.9 1.9 1.7 2.2C10.400 8.200 11 5.200 12 3z"/></svg><span class="pz-n">' + sn + '</span>';
+    sk.setAttribute('aria-label', sn ? 'You have practiced ' + plural(sn, 'day') + ' in a row. Open Today.' : 'No streak yet. Open Today.');
+    sk.hidden = !sn;
     a.setAttribute('aria-label', plural(n, 'coin') + '. Open crates.');
     a.hidden = true; var h0 = top.offsetHeight; a.hidden = false;
     if (top.offsetHeight > h0 + 2) { a.hidden = true; }
@@ -10842,7 +11001,7 @@ function rReasoningHTML() {
     var H = HUB[subj], host = viewEl[H.view], p = H.p;
     if (built[H.view]) { return; }
     built[H.view] = true;
-    var pages = SUBJ[subj].items.filter(function (it) { return it[4] === 'learn' && it[0] !== H.view; }).map(function (it) { return [it[1], it[2], it[3]]; });
+    var pages = SUBJ[subj].items.filter(function (it) { return it[4] === 'learn' && it[0] !== H.view && it[0] !== 'start' && it[0] !== 'mstart'; }).map(function (it) { return [it[1], it[2], it[3]]; });
     var main, more;
     if (subj === 'math') { main = pages.slice(0, 4); more = pages.slice(4); }
     else {
@@ -10854,7 +11013,8 @@ function rReasoningHTML() {
     function card(x, i) { return '<a class="hub-card' + (i >= 0 ? ' hub-big' : '') + '" href="#' + x[0] + '">' + (i >= 0 ? '<span class="hub-n" aria-hidden="true">' + (i + 1) + '</span>' : '') + '<b>' + esc(x[1]) + '</b><span>' + esc(x[2]) + '</span></a>'; }
     host.innerHTML = '<div class="wrap">' +
       '<header class="mhead"><p class="eyebrow">' + SUBJ[subj].name + ' · Learn</p><h2 class="vtitle">Learn ' + (subj === 'math' ? 'Math' : 'Reading and Writing') + ', one topic at a time</h2>' +
-      '<p class="lede">Start with number 1 and work your way down the list. The extra help further down is optional, so open it only when you want it.</p></header>' +
+      '<p class="lede">Start with number 1 and work your way down the list. The extra help further down is optional, so open it only when you want it.</p>' +
+      '<p class="hub-new">New here? <a href="#' + (subj === 'math' ? 'math' : 'start') + '">Read the short welcome first</a>. It explains what this part of the test asks.</p></header>' +
       '<section class="sec first"><h3 class="h2">Start with these</h3><div class="hub-cards hub-main">' + main.map(function (x, i) { return card(x, i); }).join('') + '</div></section>' +
       '<section class="sec"><h3 class="h2">Extra help, when you want it</h3><div class="hub-cards">' + more.map(function (x) { return card(x, -1); }).join('') + '</div></section>' +
       '<section class="sec"><h3 class="h2">Looking for something?</h3><div class="hub-find"><label class="field"><span class="label">Type a word to search all of ' + (subj === 'math' ? 'Math' : 'Reading and Writing') + '</span><input type="text" id="' + p + '-q" autocomplete="off" placeholder="' + H.eg + '"></label></div>' +
@@ -11114,14 +11274,14 @@ function rReasoningHTML() {
     else if (!e.shiftKey && a === lastEl) { e.preventDefault(); first.focus(); }
   }, true);
   /* =================== Home, navigation, appearance and suggestions =================== */
-  /* each page: [view, address, name, what is on it, group]. Inside a subject the step bar shows the four groups in
-     order (1 Start here, 2 Learn, 3 Practice, 4 My progress). The guide bar under it says where you are and holds
-     Back (and Home on a phone), and the foot of every page offers one next step. */
-  var GROUPS = [['start', 'Start here'], ['learn', 'Learn'], ['practice', 'Practice'], ['map', 'My progress']];
+  /* each page: [view, address, name, what is on it, group]. The top bar holds Today and the two subjects. Inside a
+     subject one row of three tabs shows its groups (Learn, Practice, My progress); the first page of a group is the
+     tab's own page. A page deeper than that gets a slim bar with Back, and the foot of every page offers one next step. */
+  var GROUPS = [['learn', 'Learn'], ['practice', 'Practice'], ['map', 'My progress']];
   var SUBJ = {
     rw: { name: 'Reading & Writing', icon: 'book', items: [
-      ['start', 'start', 'Start here', 'A short welcome that explains what the Reading and Writing test asks and what to study first.', 'start'],
       ['rwhub', 'rw-hub', 'All topics', 'Every Reading and Writing topic, listed in the order to learn it. There is a search box too.', 'learn'],
+      ['start', 'start', 'New here? A short welcome', 'A short welcome that explains what the Reading and Writing test asks and what to study first.', 'learn'],
       ['reading', 'reading', 'Reading lessons', 'Learn four steps that work on any reading question, then watch them used on 17 real questions.', 'learn'],
       ['grammar', 'lessons', 'Grammar lessons', 'Learn a one-minute method for grammar questions, then take 19 short lessons on the rules.', 'learn'],
       ['lookup', 'lookup', 'Look up a rule', 'Search for a grammar rule, a linking word such as “however”, or a term.', 'learn'],
@@ -11129,8 +11289,8 @@ function rReasoningHTML() {
       ['drills', 'drills', 'Short exercises', 'Quick exercises that each train one small step. They make a good five-minute warm-up.', 'practice'],
       ['rwmap', 'rw-map', 'My progress', 'See how you are doing on each kind of question, and what to practice next.', 'map']] },
     math: { name: 'Math', icon: 'calc', items: [
-      ['mstart', 'math', 'Start here', 'A short welcome that explains what the Math test asks and what to study first.', 'start'],
       ['mhub', 'm-hub', 'All topics', 'Every Math topic, listed in the order to learn it. There is a search box too.', 'learn'],
+      ['mstart', 'math', 'New here? A short welcome', 'A short welcome that explains what the Math test asks and what to study first.', 'learn'],
       ['mlearn', 'm-learn', 'Lessons', 'There are 19 lessons, one for each kind of math on the test. Start with the first.', 'learn'],
       ['mfound', 'm-found', 'Algebra basics', 'Six basic algebra steps to warm up with when math feels rusty.', 'learn'],
       ['mref', 'm-ref', 'Formula sheet', 'The formulas the test gives you, and how to type in your own answers.', 'learn'],
@@ -11175,7 +11335,7 @@ function rReasoningHTML() {
     host.innerHTML = '<p class="secnav-t"><span class="sec-ico">' + ICON[S.icon] + '</span>' + S.name + '</p><div class="secnav-l">' +
       GROUPS.map(function (g, i) {
         var first = S.items.filter(function (it) { return it[4] === g[0]; })[0];
-        return '<a href="#' + first[1] + '" data-group="' + g[0] + '"><span class="secn" aria-hidden="true">' + (i + 1) + '</span><span class="secw">' + g[1] + '</span></a>';
+        return '<a href="#' + first[1] + '" data-group="' + g[0] + '"><span class="secw">' + g[1] + '</span></a>';
       }).join('') + '</div>';
   }
   function markNav(v) {
@@ -11278,6 +11438,9 @@ function rReasoningHTML() {
     var bar = document.getElementById('guide'), box = document.getElementById('nextbox');
     if (!bar) { return; }
     if (v === 'home') { bar.hidden = true; box.hidden = true; box.innerHTML = ''; measure(); return; }
+    /* a tab's own page needs no Back: the tabs above it already say where you are */
+    var Sg = SUBJ[VIEW_SUBJ[v]], itg = Sg ? Sg.items.filter(function (x) { return x[0] === v; })[0] : null;
+    var leadPage = !!itg && Sg.items.filter(function (x) { return x[4] === itg[4]; })[0][0] === v && !deepName(v, tok);
     /* Back goes to the last different page you were on in this tab, or else one level up */
     var j = gIdx - 1;
     while (j >= 0 && gHist[j] && gHist[j].n === here[0] && gHist[j].v === v) { j--; }
@@ -11290,7 +11453,7 @@ function rReasoningHTML() {
     if (gh) { gh.textContent = here[0]; }
     var st2 = document.getElementById('strail');
     if (st2) { st2.innerHTML = trailHTML(c); }
-    bar.hidden = false;
+    bar.hidden = leadPage;
     var own = viewEl[v] && $('.nextstep', viewEl[v]), nx = own ? null : nextFor(v, tok);
     if (nx) { box.innerHTML = nextInner(nx[0], nx[1]); box.hidden = false; } else { box.hidden = true; box.innerHTML = ''; }
     measure();
@@ -11377,6 +11540,9 @@ function rReasoningHTML() {
 
   /* ---------- Home: what this is, the two subjects, how it works, and one easy question ---------- */
   function buildHome() {
+    var P0 = planGet();
+    viewEl.plan.innerHTML = '';   /* the plan page is drawn again when it is opened, so its form is never on the page twice */
+    if (P0) { buildToday(P0); return; }
     var last = isObj(store.s.last) ? store.s.last : null, cont = '';
     if (last && last.subj && SUBJ[last.subj]) {
       var lv = last[last.subj], it = SUBJ[last.subj].items.filter(function (x) { return x[0] === lv; })[0];
@@ -11393,6 +11559,7 @@ function rReasoningHTML() {
       '<p class="lede">Welcome! This free study guide has short lessons and ' + mfmt(nAll) + ' real SAT questions, and it explains every answer so you learn why. Pick a subject below, and the site will guide you one small step at a time.</p>' + cont +
       '<h2 class="hq">What would you like to study?</h2><div class="hpicks">' + pick('rw', 'Short passages to read, plus grammar and punctuation') + pick('math', 'Algebra, geometry, and working with data') + '</div>' +
       '<p class="hnot">Not sure where to begin? <a href="#htry-sec" data-scroll>Try one easy question first</a>, or <button type="button" class="linkbtn" data-tour>take the one-minute tour</button>.</p></div></section>' +
+      '<section class="hsec tplan" id="hplan"><div class="hsec-h"><h2 class="h2">Have a test date? Let the site plan each day</h2><p class="muted">Answer three questions, and this page becomes your list for today: a few short tasks, chosen from what you most need.</p></div>' + planFormHTML(null) + '</section>' +
       '<section class="hsec hhow" id="hhow"><div class="hsec-h"><h2 class="h2">How this site works</h2><p class="muted">Each subject follows the same three steps, so you always know what comes next.</p></div><ol class="hsteps">' +
         '<li><b>Learn</b><span>Short lessons teach you one simple method at a time, using real SAT questions worked out step by step.</span></li>' +
         '<li><b>Practice</b><span>Try real questions at your own pace. After every answer you see the right choice and the reason for it.</span></li>' +
@@ -11404,6 +11571,23 @@ function rReasoningHTML() {
       '<a class="hcont hask" href="#suggest"><span class="label">Have a question or an idea?</span><b>Ask us, or suggest a change</b><span class="hcont-go" aria-hidden="true">→</span></a></div></section>' +
       '</div>';
     htryShow(store.s.htry === 'rw' ? 'rw' : 'math');
+    planWire();
+  }
+
+  /* Today, with a plan: the day's list first, then the streak and the two subjects */
+  function buildToday(P) {
+    function subj(key, s) {
+      var S = SUBJ[key], d = diagGet(s), T = PSUB[s].types(), tried = T.filter(function (t) { return t.s.lvl !== 'new'; }).length;
+      return '<a class="tsub tsub-' + key + '" href="#' + S.items[0][1] + '"><span class="hpick-ico">' + ICON[S.icon] + '</span><span class="tsub-t"><b>' + S.name + '</b>' +
+        '<span>' + (d ? 'Rough score range ' + d.lo + '–' + d.hi : 'No starting check yet') + ' · ' + tried + ' of ' + T.length + ' kinds of question tried</span></span><span class="hcont-go" aria-hidden="true">→</span></a>';
+    }
+    var subs = planSubs(P);
+    viewEl.home.innerHTML = '<div class="wrap">' + planTodayHTML(P) +
+      habitHomeHTML().replace('<h2 class="h2">Today</h2>', '<h2 class="h2">Questions of the day, and your streak</h2>') +
+      '<section class="hsec"><div class="hsec-h"><h2 class="h2">Your subjects</h2><p class="muted">Open a subject for its lessons, practice and progress.</p></div><div class="tsubs">' + (subs.indexOf('rw') !== -1 ? subj('rw', 'rw') : '') + (subs.indexOf('m') !== -1 ? subj('math', 'm') : '') +
+        (subs.length === 1 ? subj(subs[0] === 'm' ? 'rw' : 'math', subs[0] === 'm' ? 'rw' : 'm') : '') + '</div></section>' +
+      '</div>';
+    try { if (typeof pzAuras === 'function') { pzAuras(); } } catch (e) {}
   }
 
   /* ---------- Suggest a change, and private notes ---------- */
