@@ -86,7 +86,7 @@
   function mFoundNudgeHTML() {
     var r = mFoundRecord();
     if (r.missed < 3) { return ''; }
-    return '<aside class="mnote mfound-nudge"><p><b>' + plural(r.missed, 'Easy Algebra question') + ' still missed.</b> When Easy questions go wrong, check the basic moves first: fractions, getting x alone, signs in brackets. <a href="#m-found">Algebra foundations</a> has a short refresher and a drill for each.</p></aside>';
+    return '<aside class="mnote mfound-nudge"><p><b>' + plural(r.missed, 'Easy Algebra question') + ' still missed.</b> When Easy questions go wrong, check the basic steps first: fractions, getting x alone, signs in brackets. <a href="#m-found">Algebra basics</a> has a short refresher and a short exercise for each.</p></aside>';
   }
   function mFoundYouHTML() {
     var r = mFoundRecord();
@@ -94,7 +94,7 @@
       return '<p><b>Not sure you need this page?</b> Practice ten Easy Algebra questions first. If several go wrong even though you knew the topic, come back here.</p><a class="btn sm" href="#m-found-practice">Practice Easy Algebra questions</a>';
     }
     return '<p><b>Your Easy Algebra questions:</b> ' + r.tried + ' of the ' + r.n + ' tried, ' + (r.missed ? r.missed + ' still wrong.' : 'none still wrong.') +
-      (r.missed >= 3 ? ' That is the pattern this page is for: work through the sections, drill the ones that feel shaky, then retry those questions.' : '') + '</p>' +
+      (r.missed >= 3 ? ' That is the pattern this page is for: work through the sections, practice the ones that feel shaky, then try those questions again.' : '') + '</p>' +
       '<a class="btn sm" href="#m-found-practice">Practice Easy Algebra questions</a>';
   }
   function buildMFound() {
@@ -102,7 +102,7 @@
     built.mfound = true;
     var r = mFoundRecord(), all = mFoundCards().length;
     viewEl.mfound.innerHTML = '<div class="wrap">' +
-      mHead('Math · Algebra foundations', 'The six moves every question assumes', 'Fractions, getting x alone, solving for a whole expression, distributing and factoring, combining like terms, and an unknown in a denominator. The lessons take these for granted. When Easy questions go wrong even though you know the topic, check these moves first. Algebra is the biggest share of the easy end of the test: ' + r.n + ' of the bank’s ' + mfmt(r.easy) + ' Easy questions are Algebra.') +
+      mHead('Math · Algebra basics', 'Six basic steps every question takes for granted', 'Fractions, getting x alone, solving for a whole expression, brackets and factoring, combining like terms, and an unknown on the bottom of a fraction. The lessons assume you can do these. When Easy questions go wrong even though you know the topic, check these steps first. Algebra is the biggest share of the easy questions: ' + r.n + ' of the bank’s ' + mfmt(r.easy) + ' Easy questions are Algebra.') +
       '<aside class="mnote" id="mfound-you">' + mFoundYouHTML() + '</aside>' +
       '<nav class="mfound-toc" aria-label="The six moves">' + MFOUND.map(function (f) { return '<a class="mchip" href="#m-found-' + f.id + '">' + f.n + ' · ' + esc(f.short) + '</a>'; }).join('') + '</nav>' +
       MFOUND.map(function (f) {
@@ -113,10 +113,10 @@
           '<div class="mtrapbox"><p class="mtag bad">The usual slip</p><p>' + esc(f.slip) + '</p></div>' +
           '<div class="mtipbox"><p class="mtag">Why it works</p><p>' + esc(f.why) + '</p></div>' +
           (f.more ? '<p class="fine mfound-more">' + f.more + '</p>' : '') +
-          (n ? '<p class="row mfound-go"><a class="btn sm" href="#m-drills" data-drill="mfound" data-drill-ref="m-found-' + f.id + '">Drill this · ' + n + ' cards</a></p>' : '') +
+          (n ? '<p class="row mfound-go"><a class="btn sm" href="#m-drills" data-drill="mfound" data-drill-ref="m-found-' + f.id + '">Practice this step · ' + n + ' cards</a></p>' : '') +
           '</section>';
       }).join('') +
-      '<section class="sec"><h3 class="h2">Then go back to real questions</h3><p class="lede">The drill mixes all six moves; every wrong choice in it is a real slip, with a note on what went wrong. Then try Easy Algebra questions from the bank again.</p>' +
-        '<p class="row"><a class="btn" href="#m-drills" data-drill="mfound">Drill all six · ' + all + ' cards</a><a class="btn ghost" href="#m-found-practice">Practice Easy Algebra questions</a></p></section>' +
-      mNext([['m-learn', 'Next', 'Open the lessons'], ['mp-alg', 'Or', 'Practice Algebra questions'], ['m-drills', 'More drills', 'Math drills']]) + '</div>';
+      '<section class="sec"><h3 class="h2">Then go back to real questions</h3><p class="lede">The short exercise mixes all six steps. Every wrong choice in it is a real mistake, with a note on what went wrong. Then try Easy Algebra questions from the bank again.</p>' +
+        '<p class="row"><a class="btn" href="#m-drills" data-drill="mfound">Practice all six · ' + all + ' cards</a><a class="btn ghost" href="#m-found-practice">Practice Easy Algebra questions</a></p></section>' +
+      nextHTML(['m-learn', 'Go on to the lessons', 'One lesson for each kind of math on the test.'], ['m-found-practice', 'practice easy algebra questions first']) + '</div>';
   }

@@ -23,9 +23,12 @@ const { chromium } = require('playwright');
   await go('m-map');
   ok(await p.isVisible('#v-mmap'), 'map view opens');
   ok((await p.$$('#mm-map .mm-t')).length === 249, '249 type squares');
-  ok((await p.textContent('#v-mmap .mnote')).includes('Nothing practiced yet'), 'empty state');
-  ok((await p.textContent('#tabs a[aria-current]')) === 'My map', 'tab is marked');
+  ok((await p.textContent('#v-mmap .mnote')).includes('No practice questions answered yet'), 'empty state');
+  ok((await p.textContent('#tabs a[aria-current] .secw')) === 'My progress', 'step 4 is marked');
   await wide('map empty'); await shot('map-empty', true);
+  // before any practice the full grid waits in a fold
+  ok(await p.evaluate(() => { const f = document.getElementById('mm-fold'); return !!f && !f.open; }), 'the full grid is folded away before any practice');
+  await p.click('#mm-fold > summary'); await p.waitForTimeout(100); await wide('map empty, grid open');
   await p.click('#mm-map .mm-t'); await p.waitForTimeout(100);
   ok(await p.isVisible('#mm-detail'), 'a square opens its detail');
   ok((await p.textContent('#mm-detail')).includes('Watch out'), 'detail shows the trap');
@@ -34,7 +37,7 @@ const { chromium } = require('playwright');
   // module setup
   await go('m-module');
   ok(await p.isChecked('#mp-mode-module'), 'module mode preselected from #m-module');
-  ok((await p.textContent('#mp-count')).includes('22 questions, 35:00'), 'count line: ' + (await p.textContent('#mp-count')));
+  ok((await p.textContent('#mp-count')).includes('22 questions in 35:00'), 'count line: ' + (await p.textContent('#mp-count')));
   ok(!(await p.isVisible('#mp-timer')), 'learn-only options hidden');
   await shot('module-setup', true);
   await p.click('#mp-go'); await p.waitForTimeout(400);

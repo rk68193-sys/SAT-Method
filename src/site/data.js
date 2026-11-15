@@ -240,7 +240,11 @@
   /* a small line under the section bar while there is no connection */
   function offNote() {
     var el = document.getElementById('offnote');
-    if (el) { el.hidden = navigator.onLine !== false; }
+    if (!el) { return; }
+    var off = navigator.onLine === false;
+    /* the words are written here, not in the page source, so a reader that shows hidden text never sees a false "offline" */
+    if (off && !el.firstChild) { el.innerHTML = '<span class="wrap"><b>You are offline.</b> You can still use the lessons and any questions already saved on this device, and your progress is safe. New questions will load when you are back online. <a href="#my-data-offline">What works offline?</a></span>'; }
+    el.hidden = !off;
   }
   window.addEventListener('online', function () {
     /* questions that could not load while offline get another try */
@@ -259,32 +263,42 @@
     function row(n, what, href, link) { return '<li><b>' + n + '</b><span>' + what + '</span>' + (href ? '<a href="#' + href + '">' + link + '</a>' : '') + '</li>'; }
     bkFound = null;
     host.innerHTML = '<div class="wrap">' +
-      '<header class="mhead"><p class="eyebrow">My progress</p><h2 class="vtitle">Keep a copy, move it, and study with no connection</h2>' +
+      '<header class="mhead"><p class="eyebrow">Backup and offline use</p><h2 class="vtitle">Save a copy of your progress, or use the site offline</h2>' +
       '<p class="lede">' + (acctIn() ? 'You are signed in, so your progress is also kept in <a href="#account">your account</a> and follows you to other devices. A backup file is a second copy that you hold yourself.' : (acctOn ? 'Without an account, your progress lives in this browser on this device. A backup file keeps it safe and carries it to another device; <a href="#account">a free account</a> does the same without the file.' : 'There is no account, so your progress lives in this browser on this device. A backup file keeps it safe and carries it to another device.')) + '</p></header>' +
       (canStore ? '' : '<p class="note warn">This browser is not saving data (private browsing, or storage is turned off), so progress is lost when you close the page. A backup file still works.</p>') +
       (msg ? '<p class="note data-msg" id="data-msg" role="status" tabindex="-1">' + msg + '</p>' : '') +
-      '<section class="sec first" id="data-here"><h3 class="h2">Saved on this device</h3><ul class="data-rows">' +
-        row(mfmt(c.m), 'Math questions answered', 'm-map', 'Math map') +
-        row(mfmt(c.rw), 'Reading &amp; Writing questions answered', 'rw-map', 'Reading &amp; Writing map') +
+      '<section class="sec first" id="data-where"><h3 class="h2">Where is my progress saved?</h3><dl class="qa">' +
+        '<div><dt>Where is it saved?</dt><dd>' + (acctIn() ? 'In this browser on this device, and in your account.' : 'In this browser, on this device. Nothing is sent anywhere.') + '</dd></div>' +
+        '<div><dt>Can I carry on from another phone or computer?</dt><dd>' + (acctIn() ? 'Yes. Sign in on the other device and your progress is there.' : (acctOn ? 'Not by itself. Either make <a href="#account">a free account</a>, which is optional, or save a backup file below and open it on the other device.' : 'Not by itself. Save a backup file below and open it on the other device.')) + '</dd></div>' +
+        '<div><dt>What happens if I clear my browser data?</dt><dd>' + (acctIn() ? 'The copy on this device is removed, but your account still has it. Sign in again to get it back.' : 'Your progress on this device is erased. A backup file' + (acctOn ? ' or a free account' : '') + ' keeps it safe.') + '</dd></div>' +
+        '<div><dt>Do I have to sign in?</dt><dd>No. The whole site works without an account.</dd></div></dl></section>' +
+      '<section class="sec" id="data-backup"><h3 class="h2">Save a copy</h3><p class="lede">One small file with your answers, miss reasons, plan, notes and settings, for both sections. It stays with you: nothing is uploaded.</p>' +
+        '<p class="row"><button class="btn big" type="button" id="bk-save"' + (any ? '' : ' disabled') + '>Download a backup file</button>' + (bkCanShare() ? '<button class="btn big ghost" type="button" id="bk-share"' + (any ? '' : ' disabled') + '>Send it to myself</button>' : '') + '</p>' +
+        '<p class="fine" id="bk-ago">' + (any ? bkAgo() + ' Make a new one every week or two, and before you clear your browser or change devices.' : 'There is nothing to back up yet. Answer a question first.') + '</p></section>' +
+      '<section class="sec" id="data-here"><h3 class="h2">Saved on this device</h3><ul class="data-rows">' +
+        row(mfmt(c.m), 'Math questions answered', 'm-map', 'Math progress') +
+        row(mfmt(c.rw), 'Reading &amp; Writing questions answered', 'rw-map', 'Reading &amp; Writing progress') +
         row(lessons, 'lessons marked as read') +
-        row(mods, 'timed modules scored') +
+        row(mods, 'timed tests scored') +
         row(c.days, 'days with practice · longest streak ' + s.best) +
         row(P ? '✓' : '–', P ? 'A study plan for ' + new Date(parseDay(P.date)).toLocaleDateString(undefined, { month: 'long', day: 'numeric' }) : 'No study plan yet', 'plan', P ? 'My plan' : 'Make one') +
         row(notes ? '✓' : '–', notes ? 'Private notes' : 'No notes yet', 'suggest-notes', 'My notes') +
       '</ul></section>' +
-      '<section class="sec" id="data-days"><h3 class="h2">Days you practiced</h3><p class="lede">' + habitLine() + '</p>' + habitCalHTML(26) + '</section>' +
-      '<section class="sec" id="data-backup"><h3 class="h2">Back up</h3><p class="lede">One small file with your answers, miss reasons, plan, notes and settings, for both sections. It stays with you: nothing is uploaded.</p>' +
-        '<p class="row"><button class="btn" type="button" id="bk-save"' + (any ? '' : ' disabled') + '>Download a backup file</button>' + (bkCanShare() ? '<button class="btn ghost" type="button" id="bk-share"' + (any ? '' : ' disabled') + '>Send it to myself</button>' : '') + '</p>' +
-        '<p class="fine" id="bk-ago">' + (any ? bkAgo() + ' Make a new one every week or two, and before you clear your browser or change devices.' : 'There is nothing to back up yet. Answer a question first.') + '</p></section>' +
       '<section class="sec" id="data-restore"><h3 class="h2">Restore, or move to this device</h3><p class="lede">Choose a backup file made by this site. You then decide whether to add it to what is here or to replace what is here.</p>' +
         '<p class="row"><label class="btn ghost bk-pick" for="bk-file">Choose a backup file</label><input class="sr" type="file" id="bk-file" accept=".json,.txt,application/json,text/plain"></p>' +
         '<div id="bk-found" aria-live="polite"></div></section>' +
       '<section class="sec" id="my-data-offline"><h3 class="h2">Use it offline</h3><p class="lede">On a bus, on a plane, or anywhere with a weak signal.</p><div id="off-box"></div></section>' +
+      '<section class="sec" id="data-days"><h3 class="h2">Days you practiced</h3><p class="lede">' + habitLine() + '</p>' + habitCalHTML(26) + '</section>' +
       '<section class="sec" id="data-erase"><h3 class="h2">Start over</h3><p class="lede">Erases every answer, the plan, notes and settings saved on this device' + (acctIn() ? ' <b>and in your account</b>' : '') + ', for both sections. It cannot be undone, so download a backup first.</p>' +
         '<p class="row"><button class="btn ghost danger" type="button" id="bk-erase"' + (any ? '' : ' disabled') + '>' + (acctIn() ? 'Erase my progress everywhere' : 'Erase my progress on this device') + '</button></p></section>' +
       '</div>';
     offDraw();
-    $('#bk-save', host).addEventListener('click', function () { bkDownload(); $('#bk-ago', host).textContent = 'Downloaded ' + bkName('json') + '. Keep it somewhere safe: your files, a drive, or an email to yourself.'; });
+    $('#bk-save', host).addEventListener('click', function () {
+      bkDownload();
+      var done = $('#bk-ago', host);
+      done.className = 'note ok bk-done'; done.setAttribute('role', 'status');
+      done.innerHTML = '<b>Downloaded ' + esc(bkName('json')) + '.</b> Your browser put it in your Downloads folder (on a phone, look in the Files app or Downloads). Keep it somewhere safe, such as an email to yourself.';
+    });
     var share = $('#bk-share', host);
     if (share) {
       share.addEventListener('click', function () {

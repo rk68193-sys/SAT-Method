@@ -18,7 +18,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   console.log('auto removes attr', await p.evaluate(() => document.documentElement.getAttribute('data-theme')));
   await p.mouse.click(10, 600); console.log('outside click closes', await p.evaluate(() => document.getElementById('theme-pop').hidden));
   // suggest: remembers the page you came from
-  await p.click('[data-tool="suggest"]'); await p.waitForTimeout(200);
+  await p.click('#footcols a[href="#suggest"]'); await p.waitForTimeout(200);
   console.log('hash', await p.evaluate(() => location.hash), '| where:', await p.$eval('#sg-where option', o => o.textContent));
   await p.click('#sg-form button[type="submit"]'); console.log('empty msg:', await p.textContent('#sg-msg'));
   await p.click('label:has(#sg-kind-tip)');
@@ -45,6 +45,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   // skip link
   await p.keyboard.press('Tab'); console.log('first tab:', await p.evaluate(() => document.activeElement.textContent));
   await p.keyboard.press('Enter'); console.log('focus after skip:', await p.evaluate(() => document.activeElement.id), '| hash still', await p.evaluate(() => location.hash));
+  await p.keyboard.press('Escape');   // Tab from Text size now reaches Help, and Enter opens it: close it again
   // tabs nav in R&W
   await p.click('#subj a[data-subj="rw"]'); await p.waitForTimeout(150);
   console.log('rw tabs:', await p.$$eval('#secin a', a => a.map(x => x.textContent + (x.getAttribute('aria-current') ? '*' : '')).join(', ')));

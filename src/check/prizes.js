@@ -50,9 +50,9 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok((await t.p.$$('#v-crates .pz-item')).length === 56, '56 prizes in the collection, ' + (await t.p.$$('#v-crates .pz-item.locked')).length + ' still to find');
     ok(!(await t.p.$('[data-pz-open="test"]')), 'the Test Day crate is closed without a test date this week');
     ok(/Welcome: your first crate is free/.test(await t.p.textContent('#v-crates')), 'a new student gets one free welcome crate');
-    await t.go('home');
-    const href = await t.p.$eval('a.hqotd-rw', a => a.getAttribute('href'));
-    await t.p.click('a.hqotd-rw'); await t.p.waitForTimeout(700);
+    /* Home shows the question of the day once a student has practiced; the Crates page always links to it */
+    const href = await t.p.$eval('.pz-earn li:nth-child(2) a', a => a.getAttribute('href'));
+    await t.p.click('.pz-earn li:nth-child(2) a'); await t.p.waitForTimeout(700);
     const opt = await t.p.$('.view:not([hidden]) .opt[data-k="A"]');
     ok(!!opt, 'the Reading and Writing question of the day opens (' + href + ')');
     if (opt) { await opt.click(); await t.p.waitForTimeout(400); }
@@ -186,7 +186,8 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
       }
       return 0;
     };
-    const startSet = async () => { await t.go('practice'); await t.p.check('#tmode-set', { force: true }); await t.p.check('#tsrc-both', { force: true }); await t.p.click('#tstart'); await t.p.waitForTimeout(500); };
+    /* "10 questions of every level" starts a set straight from its link */
+    const startSet = async () => { await t.go('rw-mixed', 900); };
     await startSet();
     ok(await answerRight(), 'a right answer in a practice set');
     ok(!!(await t.p.$('#tcard .opt.right .pz-check')), 'the pencil check draws on it');
@@ -222,9 +223,9 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     await t.p.click('[data-pz-open="pencil"]'); await t.p.waitForTimeout(150);
     ok(await t.p.isVisible('#pz-prize.show') && !(await t.p.$('canvas.pz-rv')), 'with reduced motion the prize shows at once, with no animation');
     await t.p.click('#pz-close');
-    await t.go('practice'); await t.p.check('#tmode-set', { force: true }); await t.p.check('#tsrc-both', { force: true }); await t.p.click('#tstart'); await t.p.waitForTimeout(400);
+    await t.go('rw-mixed', 900);
     let right = false;
-    const restart = async () => { await t.go('practice'); await t.p.check('#tmode-set', { force: true }); await t.p.check('#tsrc-both', { force: true }); await t.p.click('#tstart'); await t.p.waitForTimeout(400); };
+    const restart = async () => { await t.go('rw-mixed', 900); };
     for (let i = 0; i < 48 && !right; i++) { if (!(await t.p.waitForSelector('#tcard .opt[data-k="B"]:not([disabled])', { timeout: 3000 }).catch(() => null))) { await restart(); continue; } await t.p.click('#tcard .opt[data-k="B"]'); await t.p.waitForTimeout(60); right = !!(await t.p.$('#tcard .opt[data-k="B"].right')); if (!right) { await t.p.keyboard.press('Enter'); await t.p.waitForTimeout(150); } }
     ok(right, 'a right answer with reduced motion');
     ok(!(await t.p.$('canvas.pz-over')), 'and it plays no effect');

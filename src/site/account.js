@@ -293,7 +293,7 @@
       var again = A && A.email ? A.email : '';
       host.innerHTML = '<div class="wrap sgwrap">' +
         '<header class="mhead"><p class="eyebrow">My account</p><h2 class="vtitle">Keep your progress on every device</h2>' +
-        '<p class="lede">An account is free and optional. It saves your streak, your maps, your study plan and every answer, so they are there on your phone, your laptop and a school computer. Without one, the whole site still works and your progress stays in this browser.</p></header>' + note +
+        '<p class="lede">An account is free and optional. It saves your streak, your progress pages, your study plan and every answer, so they are there on your phone, your laptop and a school computer. Without one, the whole site still works and your progress stays in this browser.</p></header>' + note +
         '<form class="sgform acct-form" id="acct-form" novalidate>' +
           seg('acct-mode', 'New here, or coming back?', [['up', 'Create an account'], ['in', 'Sign in']], again ? 'in' : 'up') +
           '<label class="field"><span class="label">Email</span><input type="email" id="acct-email" autocomplete="email" inputmode="email" maxlength="200" required value="' + esc(again) + '"></label>' +
@@ -361,7 +361,7 @@
         row(mfmt(c.m), 'Math questions answered', 'm-map', 'Math map') +
         row(mfmt(c.rw), 'Reading &amp; Writing questions answered', 'rw-map', 'Reading &amp; Writing map') +
         row(lessons, 'lessons marked as read') +
-        row(mods, 'timed modules scored') +
+        row(mods, 'timed tests scored') +
         row(P ? '✓' : '–', P ? 'A study plan' : 'No study plan yet', 'plan', P ? 'My plan' : 'Make one') +
       '</ul><p class="fine acct-fine">Sign in on another device with the same email and all of this is there too. Answers are saved a few seconds after you give them; with no connection they wait on this device and are sent later.</p></section>' +
       '<section class="sec" id="acct-pwsec"><h3 class="h2">Change my password</h3>' +
