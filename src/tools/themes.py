@@ -36,12 +36,81 @@ THEMES = {
    d1='#CBEBD6', d2='#5FBF83', d3='#14532D', grad='linear-gradient(135deg, #166534 0%, #15803D 50%, #0F766E 100%)', on_grad='#FFFFFF', aura='rgba(74, 222, 128, .24)',
    shadow=soft_shadow('21, 128, 61', '.06', '.14'), shadow_lg=soft_shadow('21, 128, 61', '.06', '.22'), btn_shadow='0 6px 18px -8px rgba(21, 128, 61, .45)', glass='rgba(241, 250, 244, .88)'),
 }
+
+# Prize themes: won in crates (src/site/prizes.js), never sold. Same tokens and the same contrast check as the themes above;
+# their CSS goes to site/prize-themes.css (python3 -I src/tools/themes.py --prizes src/site/prize-themes.css), not into app.css.
+PRIZE = {
+ # ---------------- common ----------------
+ 'prize-graphite': dict(COMMON_LIGHT, paper='#F5F5F2', card='#FFFFFF', sunk='#ECECE6', ink='#1C1C1A', ink2='#3D3D39', muted='#5E5E58', line='#E2E2DB', line_strong='#C8C8BF',
+   pencil='#52525B', pencil_text='#3F3F46', hl='#E8E8E1', hl_ink='#1C1C1A', act='#2E2E2B', act_ink='#FFFFFF', act_hover='#1C1C1A', focus='#52525B',
+   d1='#E2E2DB', d2='#9C9C93', d3='#2E2E2B', grad='linear-gradient(135deg, #2E2E2B, #4A4A46)', on_grad='#FFFFFF', aura='transparent'),
+ 'prize-sunrise': dict(COMMON_LIGHT, paper='#FFF6F0', card='#FFFFFF', sunk='#FFEADF', ink='#2E1A10', ink2='#573828', muted='#765344', line='#F8DDCD', line_strong='#EEBFA5',
+   pencil='#EA580C', pencil_text='#9A3412', hl='#FFE6D5', hl_ink='#5C230A', act='#C2410C', act_ink='#FFFFFF', act_hover='#9A3412', focus='#EA580C',
+   d1='#FED9C4', d2='#F59E6B', d3='#9A3412', grad='linear-gradient(135deg, #9A3412 0%, #C2410C 55%, #BE123C 100%)', on_grad='#FFFFFF', aura='rgba(251, 146, 60, .24)'),
+ 'prize-ocean': dict(COMMON_LIGHT, paper='#F0FAFA', card='#FFFFFF', sunk='#E0F3F3', ink='#0B2626', ink2='#24464A', muted='#4B676A', line='#D2EBEB', line_strong='#A3D5D5',
+   pencil='#0D9488', pencil_text='#0F766E', hl='#D6F5F0', hl_ink='#0B3B36', act='#0F766E', act_ink='#FFFFFF', act_hover='#115E59', focus='#0D9488',
+   d1='#CDEFEB', d2='#4FBFB3', d3='#134E4A', grad='linear-gradient(135deg, #115E59 0%, #0F766E 50%, #0E7490 100%)', on_grad='#FFFFFF', aura='rgba(45, 212, 191, .22)'),
+ 'prize-highlighter': dict(COMMON_LIGHT, paper='#FFFDF2', card='#FFFFFF', sunk='#FDF8DC', ink='#1A1A12', ink2='#3D3B2A', muted='#625F47', line='#F1EBC8', line_strong='#DFD48E',
+   pencil='#CA8A04', pencil_text='#854D0E', hl='#FEF08A', hl_ink='#1A1A12', act='#FACC15', act_ink='#1A1A12', act_hover='#EAB308', focus='#A16207',
+   d1='#FEF3C7', d2='#FACC15', d3='#854D0E', grad='linear-gradient(135deg, #FDE047, #FACC15)', on_grad='#1A1A12', aura='rgba(250, 204, 21, .25)'),
+ # ---------------- rare ----------------
+ 'prize-library': dict(COMMON_LIGHT, paper='#FBF7EF', card='#FFFDF8', sunk='#F3ECDF', ink='#2A1D17', ink2='#4A3A31', muted='#6B5A4F', line='#E9DFCF', line_strong='#D6C6AE',
+   pencil='#8B2635', pencil_text='#7A1F2B', hl='#F5E6D3', hl_ink='#4A1A20', act='#7A1F2B', act_ink='#FFFFFF', act_hover='#5E1720', focus='#8B2635',
+   d1='#EEDFD0', d2='#C08A7A', d3='#5E1720', grad='linear-gradient(135deg, #5E1720 0%, #7A1F2B 55%, #8A4B14 100%)', on_grad='#FFFFFF', aura='rgba(139, 38, 53, .14)'),
+ 'prize-varsity': dict(COMMON_LIGHT, paper='#F5F6FA', card='#FFFFFF', sunk='#EAECF3', ink='#141A33', ink2='#333B5C', muted='#575F7D', line='#DFE2EC', line_strong='#C1C7DA',
+   pencil='#B7861F', pencil_text='#7C5A0F', hl='#FFF1C7', hl_ink='#3D2C05', act='#1E2A5A', act_ink='#FFFFFF', act_hover='#141D42', focus='#B7861F',
+   d1='#E3E6F0', d2='#8B95BD', d3='#1E2A5A', grad='linear-gradient(135deg, #141D42 0%, #1E2A5A 60%, #2B3A78 100%)', on_grad='#FFFFFF', aura='rgba(234, 179, 8, .16)'),
+ 'prize-chalkboard': dict(COMMON_DARK, paper='#1E2B24', card='#26352D', sunk='#2F4037', ink='#F1F5EE', ink2='#D7E0D3', muted='#AEBDAC', line='#34473C', line_strong='#4A6155',
+   pencil='#FDE68A', pencil_text='#FDE68A', hl='#3D4A2C', hl_ink='#FFF7D6', act='#F1F5EE', act_ink='#1E2B24', act_hover='#D7E0D3', focus='#FDE68A',
+   d1='#33473B', d2='#6F8D7C', d3='#E2EBDD', grad='linear-gradient(135deg, #F1F5EE, #D7E0D3)', on_grad='#1E2B24', aura='transparent'),
+ 'prize-blueprint': dict(COMMON_DARK, paper='#0E2A52', card='#133566', sunk='#1A3F75', ink='#F0F6FF', ink2='#D2E2F7', muted='#A9C1E0', line='#23497F', line_strong='#3A639C',
+   pencil='#7DD3FC', pencil_text='#BAE6FD', hl='#1E4A82', hl_ink='#F0F9FF', act='#F0F6FF', act_ink='#0E2A52', act_hover='#D2E2F7', focus='#7DD3FC',
+   d1='#22497F', d2='#5F8BC4', d3='#E0ECFB', grad='linear-gradient(135deg, #F0F6FF, #D2E2F7)', on_grad='#0E2A52', aura='transparent',
+   math='#93C5FD'),
+ # ---------------- epic ----------------
+ 'prize-lamplight': dict(COMMON_DARK, paper='#0F1424', card='#171D33', sunk='#1F2640', ink='#F5F1E8', ink2='#DDD6C6', muted='#ABA392', line='#262E4A', line_strong='#3A4466',
+   pencil='#F59E0B', pencil_text='#FCD34D', hl='#3A2E12', hl_ink='#FFF4D6', act='#FBBF24', act_ink='#1A1405', act_hover='#F59E0B', focus='#FCD34D',
+   d1='#262E4A', d2='#8A7240', d3='#FDE68A', grad='linear-gradient(135deg, #FCD34D, #F59E0B)', on_grad='#1A1405', aura='rgba(251, 191, 36, .18)'),
+ 'prize-arcade': dict(COMMON_DARK, paper='#0D0A1A', card='#171230', sunk='#201942', ink='#F8F5FF', ink2='#DCD4F5', muted='#A99FCB', line='#2A2150', line_strong='#3F3370',
+   pencil='#22D3EE', pencil_text='#67E8F9', hl='#3B1747', hl_ink='#FDE7FF', act='#F472B6', act_ink='#14051A', act_hover='#EC4899', focus='#22D3EE',
+   d1='#2A2150', d2='#8B5CF6', d3='#F0ABFC', grad='linear-gradient(135deg, #F472B6 0%, #C084FC 50%, #22D3EE 100%)', on_grad='#14051A', aura='rgba(244, 114, 182, .22)'),
+ 'prize-aurora': dict(COMMON_DARK, paper='#071A1F', card='#0D252C', sunk='#133038', ink='#EFFBF8', ink2='#CDEBE4', muted='#93B8B0', line='#18363E', line_strong='#2A4E58',
+   pencil='#5EEAD4', pencil_text='#99F6E4', hl='#1C3B47', hl_ink='#E6FFFA', act='#5EEAD4', act_ink='#04201C', act_hover='#2DD4BF', focus='#99F6E4',
+   d1='#18363E', d2='#3BA597', d3='#CCFBF1', grad='linear-gradient(135deg, #5EEAD4 0%, #86EFAC 45%, #C4B5FD 100%)', on_grad='#04201C', aura='rgba(94, 234, 212, .2)'),
+ # ---------------- legendary ----------------
+ 'prize-gold': dict(COMMON_DARK, paper='#0A0907', card='#15130E', sunk='#1E1B14', ink='#FBF6E9', ink2='#E3DAC2', muted='#AFA58A', line='#2A2619', line_strong='#403A26',
+   pencil='#E0B54A', pencil_text='#F2D27A', hl='#3A2F12', hl_ink='#FFF6D9', act='#E0B54A', act_ink='#1A1405', act_hover='#C99A2E', focus='#F2D27A',
+   d1='#2A2619', d2='#9C7F35', d3='#F2D27A', grad='linear-gradient(135deg, #F7E3A1 0%, #E0B54A 50%, #B8862B 100%)', on_grad='#1A1405', aura='rgba(224, 181, 74, .22)'),
+ # ---------------- living themes (animated accents and backgrounds) ----------------
+ 'prize-holo': dict(COMMON_LIGHT, paper='#F7F6FD', card='#FFFFFF', sunk='#EFEDFA', ink='#16142B', ink2='#36335A', muted='#5A577E', line='#E4E1F5', line_strong='#C9C4EA',
+   pencil='#7C3AED', pencil_text='#5B21B6', hl='#ECE6FF', hl_ink='#2E1065', act='#1E1B4B', act_ink='#FFFFFF', act_hover='#312E81', focus='#7C3AED',
+   d1='#E4E1F5', d2='#A5B4FC', d3='#3730A3', grad='linear-gradient(110deg, #FBCFE8 0%, #C7D2FE 25%, #A5F3FC 50%, #BBF7D0 75%, #FDE68A 100%)', on_grad='#1E1B4B', aura='rgba(167, 139, 250, .3)'),
+ 'prize-nebula': dict(COMMON_DARK, paper='#0B0820', card='#15112E', sunk='#1E1840', ink='#F5F3FF', ink2='#DDD6FE', muted='#A9A2CF', line='#2A2352', line_strong='#40367A',
+   pencil='#C084FC', pencil_text='#E9D5FF', hl='#3B1D5E', hl_ink='#FAF5FF', act='#E879F9', act_ink='#1A0526', act_hover='#D946EF', focus='#E9D5FF',
+   d1='#2A2352', d2='#7C5BD6', d3='#F0ABFC', grad='linear-gradient(120deg, #F0ABFC 0%, #C4B5FD 50%, #93C5FD 100%)', on_grad='#1A0526', aura='rgba(192, 132, 252, .3)'),
+ 'prize-synthwave': dict(COMMON_DARK, paper='#120A26', card='#1C1238', sunk='#26184A', ink='#FFF5FB', ink2='#F5D0FE', muted='#B9A3D6', line='#33215E', line_strong='#4C3384',
+   pencil='#22D3EE', pencil_text='#67E8F9', hl='#4A1442', hl_ink='#FFE4F3', act='#F472B6', act_ink='#1A0512', act_hover='#EC4899', focus='#67E8F9',
+   d1='#33215E', d2='#C0567F', d3='#FDBA74', grad='linear-gradient(90deg, #FDE047 0%, #FB923C 45%, #F472B6 100%)', on_grad='#1A0512', aura='rgba(244, 114, 182, .3)'),
+ 'prize-inferno': dict(COMMON_DARK, paper='#120806', card='#1E0F0A', sunk='#2A1610', ink='#FFF4EC', ink2='#FED7C3', muted='#C4A08E', line='#3A1E14', line_strong='#57301F',
+   pencil='#FB923C', pencil_text='#FDBA74', hl='#4A1D0C', hl_ink='#FFF1E6', act='#F97316', act_ink='#1C0A02', act_hover='#EA580C', focus='#FDBA74',
+   d1='#3A1E14', d2='#C2410C', d3='#FDE68A', grad='linear-gradient(90deg, #FDE047 0%, #FB923C 50%, #F43F5E 100%)', on_grad='#1C0A02', aura='rgba(249, 115, 22, .32)'),
+}
+def finish(d):
+    """fill the shadow and glass tokens the prize palettes leave out, from the light or dark theme they build on"""
+    base = THEMES['light' if d['scheme'] == 'light' else 'dark']
+    out = dict(d)
+    for k in ('shadow', 'shadow_lg', 'btn_shadow', 'glass'):
+        out.setdefault(k, base[k])
+    if d['scheme'] == 'light':
+        out['glass'] = 'rgba(%d, %d, %d, .88)' % tuple(int(d['paper'][i:i + 2], 16) for i in (1, 3, 5))
+    return out
+PRIZE = {k: finish(v) for k, v in PRIZE.items()}
 ORDER = ['paper','card','sunk','ink','ink2','muted','line','line_strong','pencil','pencil_text','hl','hl_ink','act','act_ink','act_hover','focus',
   'ok','ok_soft','bad','bad_soft','warn','warn_text','d1','d2','d3','grad','on_grad','aura','shadow','shadow_lg','btn_shadow','glass',
   'rw','rw_soft','rw_line','math','math_soft','math_line','des','des_soft','img_filter','img_blend','backdrop']
 NAME = {'ink2': 'ink-2'}
 def block(t, indent='  '):
-    d = THEMES[t]
+    d = THEMES[t] if t in THEMES else PRIZE[t]
     lines = [f"{indent}--{NAME.get(k, k.replace('_', '-'))}: {d[k]};" for k in ORDER]
     lines.append(f"{indent}color-scheme: {d['scheme']};")
     return '\n'.join(lines)
@@ -72,7 +141,7 @@ PAIRS = [('ink', 'paper'), ('ink2', 'paper'), ('muted', 'paper'), ('muted', 'car
   ('rw', 'paper'), ('rw', 'card'), ('rw', 'rw_soft'), ('ink2', 'rw_soft'), ('math', 'paper'), ('math', 'card'), ('math', 'math_soft'), ('ink2', 'math_soft')]
 def check():
     bad = []
-    for t, d in THEMES.items():
+    for t, d in list(THEMES.items()) + list(PRIZE.items()):
         for a, b in PAIRS:
             r = ratio(d[a], d[b])
             if r < 4.5:
@@ -82,10 +151,17 @@ def check():
             if r < 4.5:
                 bad.append(f'{t}: on_grad on gradient {stop} = {r:.2f}')
     return bad
+def prize_css():
+    return '/* ---------- prize themes (written by src/tools/themes.py --prizes; do not edit by hand) ---------- */\n' + '\n'.join(
+        ':root[data-theme="' + t + '"] {\n' + block(t) + '\n}' for t in PRIZE) + '\n'
 if __name__ == '__main__':
     low = check()
     if low:
         sys.exit('contrast below 4.5:1\n' + '\n'.join(low))
+    if sys.argv[1] == '--prizes':
+        open(sys.argv[2], 'w', encoding='utf-8').write(prize_css())
+        print('prize themes written', len(PRIZE))
+        sys.exit(0)
     p = sys.argv[1]
     s = open(p, encoding='utf-8').read()
     mark = '/* ---------- themes:'

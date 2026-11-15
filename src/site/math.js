@@ -529,9 +529,9 @@
     if (q.mc) {
       $$('.mpch', viewEl.mprac).forEach(function (b) {
         var k = b.getAttribute('data-k'); b.disabled = true;
-        if (k === q.a) { b.classList.add('right'); } else if (k === given) { b.classList.add('wrong'); }
+        if (k === q.a) { b.classList.add('right'); if (ok) { pzRight(b); } } else if (k === given) { b.classList.add('wrong'); }
       });
-    } else { $('#mp-gin').disabled = true; $('#mp-gform button').disabled = true; }
+    } else { $('#mp-gin').disabled = true; $('#mp-gform button').disabled = true; if (ok) { pzRight($('#mp-gform')); } }
     var last = MP.i === MP.qs.length - 1;
     var fb = $('#mp-fb');
     fb.hidden = false; fb.className = 'mpfb ' + (ok ? 'ok' : 'no');

@@ -30,7 +30,7 @@
   };
   /* the pages to list on Home and in the footer: the Learn overview is named for what it is */
   function navList(subj) { return SUBJ[subj].items.map(function (x) { return x[2] === 'Overview' ? [x[0], x[1], 'Learn: overview', x[3], x[4]] : x; }); }
-  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home' };
+  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/></svg>',
@@ -103,7 +103,7 @@
     host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from an export of College Board’s question bank.</p></div>' +
       col('Reading & Writing', navList('rw').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
       col('Math', navList('math').map(function (x) { return '<a href="#' + x[1] + '">' + esc(x[2]) + '</a>'; })) +
-      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']));
+      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline</a>', '<a href="#crates">Crates</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Appearance</button>']));
   }());
 
   /* ---------- appearance: saved in this browser under its own key ---------- */
@@ -132,7 +132,7 @@
   try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', themeBar); } catch (e) {}
   function themePopHTML() {
     var cur = getTheme();
-    return '<fieldset class="theme-list"><legend>Appearance</legend>' + THEMES.map(function (t) {
+    return '<fieldset class="theme-list"><legend>Appearance</legend>' + THEMES.concat(pzThemeRows()).map(function (t) {
       return '<label class="theme-opt"><input type="radio" name="theme" value="' + t[0] + '"' + (t[0] === cur ? ' checked' : '') + '><span class="theme-sw" aria-hidden="true" style="background:linear-gradient(135deg,' + t[3][0] + ' 50%,' + t[3][1] + ' 50%)"></span><span class="theme-tx"><b>' + t[1] + '</b><span>' + t[2] + '</span></span></label>';
     }).join('') + '</fieldset><p class="theme-note">Saved on this device.</p>';
   }

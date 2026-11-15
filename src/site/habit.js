@@ -26,10 +26,10 @@
   function dayBefore(t) { var d = new Date(t); d.setDate(d.getDate() - 1); return dayStart(d.getTime()); }
   /* n: days in a row up to today; a streak is still alive if the last day was yesterday. best: the longest run on record. */
   function habitStreak() {
-    var today = dayStart(Date.now()), did = function (t) { var c = dayCount(t); return c[0] + c[1] > 0; };
+    var today = dayStart(Date.now()), did = function (t) { var c = dayCount(t); return c[0] + c[1] > 0 || pzFrozen(t); };
     var n = 0, t = did(today) ? today : dayBefore(today);
     while (did(t)) { n += 1; t = dayBefore(t); }
-    var keys = Object.keys(daysAll()).filter(function (k) { var r = daysAll()[k]; return Array.isArray(r) && (r[0] || 0) + (r[1] || 0) > 0 && !isNaN(parseDay(k)); }).map(function (k) { return dayNo(parseDay(k)); }).sort(function (a, b) { return a - b; });
+    var keys = Object.keys(daysAll()).filter(function (k) { var r = daysAll()[k]; return Array.isArray(r) && (r[0] || 0) + (r[1] || 0) > 0 && !isNaN(parseDay(k)); }).concat(pzFrozenKeys()).map(function (k) { return dayNo(parseDay(k)); }).filter(function (k, i, a) { return !isNaN(k) && a.indexOf(k) === i; }).sort(function (a, b) { return a - b; });
     var best = 0, run = 0;
     keys.forEach(function (k, i) { run = i && k === keys[i - 1] + 1 ? run + 1 : 1; if (run > best) { best = run; } });
     return { n: n, today: did(today), best: Math.max(best, n), days: keys.length };
@@ -88,7 +88,7 @@
       '<div class="htoday-grid">' +
         card('m', m, 'mq-' + m.id, MSK[m.k].name + ' · ' + MDIFF[m.d]) +
         card('rw', r, 'rq-' + r.id, (rt ? rt.name : 'Reading and Writing') + ' · ' + r.d) +
-        '<div class="hstreak"><p class="hstreak-n"><b>' + s.n + '</b><span>' + (s.n === 1 ? 'day' : 'days') + ' in a row</span><span class="muted">longest: ' + s.best + '</span></p><div class="hstreak-cal">' + habitCalHTML(narrow() ? 13 : 26) + '</div></div>' +
+        '<div class="hstreak">' + pzStreakNum('<p class="hstreak-n"><b>' + s.n + '</b><span>' + (s.n === 1 ? 'day' : 'days') + ' in a row</span><span class="muted">longest: ' + s.best + '</span></p>', s) + '<div class="hstreak-cal">' + habitCalHTML(narrow() ? 13 : 26) + '</div></div>' +
       '</div><p class="htoday-foot">' + acctLinkHTML() + '<a href="#my-data">Back up my progress</a> · <a href="#my-data-offline">Use it offline</a></p></section>';
   }
 

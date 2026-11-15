@@ -98,7 +98,7 @@
   } catch (e) { canStore = false; }
   function save() {
     if (canStore) { try { window.localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { canStore = false; } }
-    acctChanged();
+    acctChanged(); pzSoon();
   }
   window.addEventListener('storage', function (e) {
     if (e.key !== KEY || !e.newValue) { return; }
@@ -286,7 +286,7 @@
       $$('.opt', el).forEach(function (b) {
         var bk = b.getAttribute('data-k');
         b.disabled = true;
-        if (bk === ex.a) { b.classList.add('right'); $('.otag', b).textContent = 'Correct'; }
+        if (bk === ex.a) { b.classList.add('right'); $('.otag', b).textContent = 'Correct'; if (ok) { pzRight(b); } }
         else if (bk === k) { b.classList.add('wrong'); $('.otag', b).textContent = 'Your answer'; }
       });
       $('.passage', el).innerHTML = passageHTML(ex, true);

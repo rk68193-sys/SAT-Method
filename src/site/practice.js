@@ -337,7 +337,7 @@
       $$('.opt', el).forEach(function (bt) {
         var bk = bt.getAttribute('data-k');
         bt.disabled = true;
-        if (bk === b.ans) { bt.classList.add('right'); $('.otag', bt).textContent = 'Correct'; }
+        if (bk === b.ans) { bt.classList.add('right'); $('.otag', bt).textContent = 'Correct'; if (ok) { pzRight(bt); } }
         else if (bk === k) { bt.classList.add('wrong'); $('.otag', bt).textContent = 'Your answer'; }
       });
       var u = kind === 'x' ? U[b.u] : null;
@@ -382,7 +382,7 @@
       $$('.opt', el).forEach(function (bt) {
         var bk = bt.getAttribute('data-k');
         bt.disabled = true;
-        if (bk === b.ans) { bt.classList.add('right'); $('.otag', bt).textContent = 'Correct'; }
+        if (bk === b.ans) { bt.classList.add('right'); $('.otag', bt).textContent = 'Correct'; if (ok) { pzRight(bt); } }
         else if (bk === k) { bt.classList.add('wrong'); $('.otag', bt).textContent = 'Your answer'; }
       });
       var tr = b.tr || {};

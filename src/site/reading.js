@@ -258,7 +258,7 @@
       $$('.opt', el).forEach(function (b) {
         var bk = b.getAttribute('data-k');
         b.disabled = true;
-        if (bk === x.ans) { b.classList.add('right'); $('.otag', b).textContent = 'Correct'; }
+        if (bk === x.ans) { b.classList.add('right'); $('.otag', b).textContent = 'Correct'; if (ok) { pzRight(b); } }
         else if (bk === k) { b.classList.add('wrong'); $('.otag', b).textContent = 'Your answer'; }
       });
       var mine = x.choices.filter(function (c) { return c.k === k; })[0];
