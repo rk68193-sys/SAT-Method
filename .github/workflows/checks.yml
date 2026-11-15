@@ -1,0 +1,114 @@
+# Runs the site's checks (src/README.md, "Checks") on every push and pull request, and on demand from the Actions tab.
+# "Build and data" rebuilds index.html from src/ and compares it with the one committed, then runs the checks that need no
+# browser. The browser checks run in three groups at once. A red run means a change broke something the checks cover; the
+# failing step's log names the check. Nothing here deploys: GitHub Pages still publishes main as it is.
+name: Checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and data
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python packages
+        run: pip install sympy==1.14.0
+      - name: index.html is built from the sources
+        run: |
+          python3 -I src/site/assemble.py "$RUNNER_TEMP/page.html"
+          python3 -I src/site/make_index.py "$RUNNER_TEMP/page.html" "$RUNNER_TEMP/index.html"
+          cmp -s "$RUNNER_TEMP/index.html" index.html || { echo "::error::index.html is not a fresh build of src/. Rebuild it (src/README.md) and commit it."; exit 1; }
+      - name: The page's script parses
+        run: node --check src/site/bundle.js
+      - name: Theme colors are readable and their CSS is up to date
+        run: |
+          cp src/site/app.css "$RUNNER_TEMP/app.css"
+          python3 -I src/tools/themes.py "$RUNNER_TEMP/app.css"
+          cmp -s "$RUNNER_TEMP/app.css" src/site/app.css || { echo "::error::The theme block in app.css is out of date: run src/tools/themes.py on it."; exit 1; }
+          python3 -I src/tools/themes.py --prizes "$RUNNER_TEMP/prize-themes.css"
+          cmp -s "$RUNNER_TEMP/prize-themes.css" src/site/prize-themes.css || { echo "::error::prize-themes.css is out of date: run src/tools/themes.py --prizes."; exit 1; }
+      - name: Generated Math lists are up to date
+        run: |
+          python3 -I src/math/notin.py
+          python3 -I src/math/shortcut_first.py
+          git diff --exit-code -- src/build || { echo "::error::A file in src/build changed when rebuilt; commit the rebuilt file."; exit 1; }
+      - name: Study pack coverage
+        run: python3 src/check/study_coverage.py
+      - name: Study method lines
+        run: python3 -I src/math/study_text.py --check
+      - name: Math drill cards
+        run: python3 -I src/check/mdrills_check.py
+      - name: Reading and Writing practice records
+        run: node src/check/rw-practice.js
+      - name: Link previews
+        run: python3 -I src/check/head.py index.html
+
+  browser:
+    name: Browser checks (${{ matrix.group }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - group: accounts and prizes
+            checks: account prizes
+          - group: pages and practice
+            checks: additions habit smoke nav msmoke
+          - group: tracks, text and sources
+            checks: rwtrack text plan symbols mtrack suggest qtext skip source-review
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # symbols.js serves the site as it was at two older commits
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Playwright and Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - name: Run the checks
+        env:
+          CHECKS: ${{ matrix.checks }}
+        run: |
+          failed=""
+          for c in $CHECKS; do
+            case $c in
+              symbols|suggest|skip) args="index.html" ;;
+              msmoke) args="index.html 390 light" ;;
+              text) args="index.html $RUNNER_TEMP/text-dump.txt" ;;
+              *) args="index.html 390" ;;
+            esac
+            echo "::group::$c"
+            if [ "$c" = source-review ]; then
+              python3 -m http.server 8000 --bind 127.0.0.1 > /dev/null 2>&1 &
+              srv=$!
+              sleep 1
+              CHROMIUM_EXECUTABLE="$(node -e "console.log(require('playwright').chromium.executablePath())")" node src/check/source-review.js http://127.0.0.1:8000/ || failed="$failed $c"
+              kill "$srv"
+            else
+              node "src/check/$c.js" $args || failed="$failed $c"
+            fi
+            echo "::endgroup::"
+          done
+          if [ -n "$failed" ]; then echo "::error::Failed:$failed"; exit 1; fi
+          echo "All passed: $CHECKS"
