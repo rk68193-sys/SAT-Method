@@ -18,6 +18,11 @@ const CATALOG = (() => {
   return [...src.slice(a, src.indexOf('].map(function (r)', a)).matchAll(/\['([^']+)', '(?:[^'\\]|\\.)*', '([crelm])', '(theme|paper|fx|streak|aura)', '([a-z]+)'/g)].map(m => ({ id: m[3] + ':' + m[1], tier: m[2], series: m[4] }));
 })();
 const TOTAL = CATALOG.length;
+/* the sticker pages (PZ_STK): one per series, eight stickers each */
+const STICKERS = (() => {
+  const src = fs.readFileSync(path.join(__dirname, '..', 'site', 'prizes.js'), 'utf8'), a = src.indexOf('var PZ_STK = {'), body = src.slice(a, src.indexOf('};', a));
+  return { pages: (body.match(/^\s+[a-z]+: \[/gm) || []).length, all: (body.match(/'[^']+'/g) || []).length };
+})();
 function ok(c, msg) { if (c) { passes++; console.log('ok   ' + msg); } else { fails++; console.log('FAIL ' + msg); } }
 
 /* saved progress written before the page's own scripts run, once per browser (the mark is kept in localStorage) */
@@ -333,7 +338,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     const st = await t.saved();
     ok((await hash()) === '#crates', 'the right code leaves the address bar at once');
     ok((await t.p.textContent('#pz-collection h3')).includes('Your collection · ' + TOTAL + ' of ' + TOTAL), 'it unlocks all ' + TOTAL + ' prizes');
-    ok(Object.keys(st.s.pz.st).length === 48 && Object.keys(st.s.pz.g).filter(k => /^page\./.test(k)).length === 6, 'every sticker, with the free crate for each full sticker page');
+    ok(STICKERS.pages >= 9 && Object.keys(st.s.pz.st).length === STICKERS.all && Object.keys(st.s.pz.g).filter(k => /^page\./.test(k)).length === STICKERS.pages, 'every sticker (' + STICKERS.all + '), with the free crate for each of the ' + STICKERS.pages + ' full sticker pages');
     ok((await t.p.$$('[data-pz-title]')).length === 7, 'every title can be shown');
     ok((await t.p.textContent('.pz-bal b')).trim() === '10,040' && bal(st) === 10040, 'and 10,000 coins on top of the 40 there were, shown as 10,040');
     ok(/Everything is unlocked/.test(await t.p.textContent('#pz-toast')), 'a note says so');
@@ -347,6 +352,40 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok(bal(st2) === 10040, 'opening it again adds no more coins');
     fs.unlinkSync(tmp);
     await t.done('owner link');
+  }
+
+  /* ---------- every look draws: each effect from Try, each aura on its tile, the newer moving backgrounds and living themes ---------- */
+  {
+    const t = await fresh((st, ids) => { st.s.pz = { o: {} }; ids.forEach((id, i) => { st.s.pz.o['all' + i] = [i + 1, 'pencil', id, 'c', 0, '']; }); }, CATALOG.map(it => it.id));
+    await t.go('crates', 1500);
+    const inked = sel => t.p.evaluate(q => { const cv = document.querySelector(q); if (!cv || !cv.width) { return 0; } const d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data; let n = 0; for (let i = 3; i < d.length; i += 16) { if (d[i] > 0) { n++; } } return n; }, sel);
+    const fx = CATALOG.filter(it => it.id.indexOf('fx:') === 0).map(it => it.id.slice(3)), silent = [];
+    for (const k of fx) {
+      const b = await t.p.$('[data-pz-try="' + k + '"]'); if (!b) { silent.push(k + ' (no Try)'); continue; }
+      await b.evaluate(el => el.closest('.pz-item').scrollIntoView({ block: 'center' })); await t.p.waitForTimeout(120);
+      await t.p.evaluate(() => document.querySelectorAll('canvas.pz-over, .pz-shards').forEach(n => { n.dataset.seen = '1'; }));
+      await b.click(); await t.p.waitForTimeout(350);
+      const on = await b.evaluate(el => !!document.querySelector('canvas.pz-over:not([data-seen]), .pz-shards:not([data-seen])') || !!el.closest('.pz-item').querySelector('.pz-d, .pz-neon-run'));
+      if (!on) { silent.push(k); }
+    }
+    ok(!silent.length, 'all ' + fx.length + ' right-answer effects play from Try' + (silent.length ? '; silent: ' + silent.join(', ') : ''));
+    await t.p.waitForTimeout(3600);
+    const auras = await t.p.$$eval('#pz-collection canvas[data-pz-aura]', cs => cs.map(c => c.getAttribute('data-pz-aura'))), dark = [];
+    for (const a of auras) {
+      const sel = '#pz-collection canvas[data-pz-aura="' + a + '"]';
+      await t.p.$eval(sel, c => c.scrollIntoView({ block: 'center' })); await t.p.waitForTimeout(450);
+      if ((await inked(sel)) < 20) { dark.push(a); }
+    }
+    ok(auras.length === CATALOG.filter(it => it.id.indexOf('aura:') === 0).length && !dark.length, 'all ' + auras.length + ' auras draw on their tiles' + (dark.length ? '; blank: ' + dark.join(', ') : ''));
+    const bare = [];
+    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal']) {
+      const slot = id.split(':')[0], b = await t.p.$('[data-pz-wear="' + slot + '"][data-pz-id="' + id + '"]');
+      if (!b) { bare.push(id + ' (no Wear)'); continue; }
+      await b.evaluate(el => el.scrollIntoView({ block: 'center' })); await b.click(); await t.p.waitForTimeout(900);
+      if ((await inked('canvas.pz-bg')) < 20) { bare.push(id); }
+    }
+    ok(!bare.length, 'the newer moving backgrounds and living themes draw behind the page' + (bare.length ? '; blank: ' + bare.join(', ') : ''));
+    await t.done('every look');
   }
 
   /* ---------- the page fits a phone ---------- */

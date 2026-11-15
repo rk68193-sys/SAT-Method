@@ -23,6 +23,9 @@
     ['night', 'Night Shift', 'Dark themes, stars and the black hole.'],
     ['arcade', 'Arcade', 'Neon, sunsets and electricity.'],
     ['seasons', 'Seasons', 'Changes with the school year: what is in season is twice as likely, and every prize comes back next year.'],
+    ['deep', 'Deep Sea', 'Glowing life from the bottom of the ocean: bubbles, koi, jellyfish and the leviathan.'],
+    ['myth', 'Myth & Magic', 'Runes, crystals, a dragon, the phoenix and an enchanted wood.'],
+    ['tech', 'Tech Lab', 'Pixels, circuits, glitches, a warp drive and a machine that stops time.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value */
@@ -85,7 +88,33 @@
     ['unit', 'Unit circle', 'l', 'aura', 'varsity', 'A radius sweeps the circle while sine and cosine waves stream out.'],
     ['prism', 'Prism', 'l', 'aura', 'arcade', 'A rainbow ring with beams of colored light.'],
     ['infinity', 'Infinity', 'm', 'aura', 'test', 'Two comets trace an endless ∞ with rainbow tails.'],
-    ['horizon', 'Event horizon', 'm', 'aura', 'night', 'A black hole: a disk of fire, bent light, stars pulled in.']
+    ['horizon', 'Event horizon', 'm', 'aura', 'night', 'A black hole: a disk of fire, bent light, stars pulled in.'],
+    /* Deep Sea */
+    ['prize-abyss', 'Abyss', 'l', 'theme', 'deep', 'A living theme: glowing plankton drifts through dark water under slow beams of light, and now and then a jellyfish rises.'],
+    ['bubbles', 'Bubbles', 'c', 'paper', 'deep', 'Moving: bubbles wobble up the page and pop near the top.'],
+    ['kelp', 'Kelp forest', 'e', 'paper', 'deep', 'Moving: kelp sways at the edges of the page while sunbeams slant down.'],
+    ['splash', 'Splash', 'c', 'fx', 'deep', 'Water drops leap from your answer and fall back.'],
+    ['koi', 'Koi', 'e', 'fx', 'deep', 'Two koi circle your answer, then leap out in a splash.'],
+    ['jelly', 'Jellyfish', 'r', 'aura', 'deep', 'Two glowing jellyfish pulse and drift around your streak.'],
+    ['leviathan', 'Leviathan', 'm', 'aura', 'deep', 'A sea serpent of light circles your streak in the deep; a pulse runs down its back and its call rings out.'],
+    /* Myth & Magic */
+    ['prize-enchanted', 'Enchanted', 'm', 'theme', 'myth', 'A living theme: a wood at night, with fireflies, rolling mist, runes that glow and fade, and a wisp that streaks past.'],
+    ['fireflies', 'Fireflies', 'r', 'paper', 'myth', 'Moving: fireflies wander the page, blinking on and off.'],
+    ['spell', 'Spell circle', 'r', 'fx', 'myth', 'A magic circle draws itself around your answer and flashes.'],
+    ['phoenix', 'Phoenix', 'l', 'fx', 'myth', 'A phoenix of flame rises from your answer, spreads its wings and bursts into embers.'],
+    ['runes', 'Rune ring', 'c', 'aura', 'myth', 'A ring of glowing runes turns slowly around your streak.'],
+    ['crystal', 'Crystal bloom', 'e', 'aura', 'myth', 'Crystals grow around your streak and catch the light.'],
+    ['dragon', 'Dragon coil', 'l', 'aura', 'myth', 'A dragon coils around your streak and breathes fire.'],
+    ['egg', 'Dragon egg', 'e', 'streak', 'myth', 'Cracks as your streak grows; at 30 days it hatches, and at 100 the dragon has wings.'],
+    /* Tech Lab */
+    ['prize-terminal', 'Terminal', 'e', 'theme', 'tech', 'A living theme: green letters on an old screen, with scanlines, a flicker and ones and zeros at the edges.'],
+    ['circuit', 'Circuit board', 'r', 'paper', 'tech', 'Moving: pulses of light race along circuit traces.'],
+    ['warp', 'Warp speed', 'l', 'paper', 'tech', 'Moving: stars stretch into streaks as you jump to light speed, then drop back.'],
+    ['pixel', 'Pixel pop', 'c', 'fx', 'tech', 'Pixels burst out of your answer in 8-bit steps.'],
+    ['glitch', 'Glitch', 'e', 'fx', 'tech', 'Your answer splits into color-shifted slices, then snaps back clean.'],
+    ['freeze', 'Time freeze', 'm', 'fx', 'tech', 'Time stops: frost creeps in, a clock races backward around your answer, then the ice cracks and color floods back.'],
+    ['radar', 'Radar', 'r', 'aura', 'tech', 'A radar sweep circles your streak and picks up blips.'],
+    ['battery', 'Battery', 'c', 'streak', 'tech', 'Charges one bar for each week of your streak.']
   ].map(function (r) { return { id: r[3] + ':' + r[0], key: r[0], name: r[1], tier: r[2], kind: r[3], series: r[4], what: r[5] }; });
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });
@@ -107,6 +136,9 @@
     night: ['Star Student', 'Moonshot', 'Desk Lamp', 'Deep Focus', 'Quiet Hours', 'North Star', 'Night Sky', 'Constellation Mapper'],
     arcade: ['Back-Solver', 'Plug-In Pro', 'Graphing Wizard', 'Combo Streak', 'Level Up', 'High Score', 'Speed Run', 'Extra Life'],
     seasons: ['First Frost', 'Snow Day Study', 'Spring Bloom', 'Summer Reader', 'Fresh Start', 'Falling Leaves', 'Heatwave Hustle', 'Rainy Day Reps'],
+    deep: ['Deep Diver', 'Pearl of Wisdom', 'Calm Waters', 'Sea Legs', 'Bubble Brain', 'Tide Turner', 'Lighthouse Keeper', 'Kraken Tamer'],
+    myth: ['Spell Checker', 'Rune Reader', 'Potion of Focus', 'Crystal Clear', 'Dragon Scholar', 'Phoenix Rising', 'Wizard of Words', 'Quest Complete'],
+    tech: ['Press Start', 'Save Point', 'Bit by Bit', 'Debug Mode', 'Pixel Perfect', 'Power Up', 'Boot Sequence', 'Time Traveler'],
     test: ['Test Day Ready', 'Pencils Down', 'Calm Breath', 'Full Tank', 'Perfect Score', 'Poem Decoder', 'Trap Spotter', 'Unit Circle Survivor']
   };
   var PZ_TITLES = [
