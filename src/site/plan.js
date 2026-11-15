@@ -166,6 +166,9 @@
       var due = dues[s].slice(0, Math.ceil(cap / rev.length));
       if (due.length) { tasks.push({ k: 'review', s: s, ids: due }); room -= due.length; }
     });
+    /* 2b. after the repeats, the next lesson of the day's section, until every lesson is done; it takes the place of about three questions */
+    var les = courseNext(focus);
+    if (les && left > 7) { tasks.push({ k: 'lesson', s: focus, tok: les.e.tok, name: les.e.name, i: les.i }); room = Math.max(3, room - 3); }
     /* 3. practice by type, the weakest first */
     var slots = P.mins >= 45 ? [focus, order[1] || focus, focus] : P.mins >= 30 ? [focus, order[1] || focus] : [focus];
     var per = Math.max(3, Math.floor(room / slots.length));
@@ -186,12 +189,14 @@
   function planTaskState(t, day) {
     var S = PSUB[t.s];
     if (t.k === 'check') { var d = diagGet(t.s); return { done: !!d && d.t >= dayStart(day.made), n: 0, of: 0 }; }
+    if (t.k === 'lesson') { return { done: courseDone(t.s, t.tok), n: 0, of: 0 }; }
     if (t.k === 'module') { var m = S.mods(), last = m[m.length - 1]; return { done: !!last && last.t >= dayStart(day.made), n: 0, of: 0 }; }
     var ids = Array.isArray(t.ids) ? t.ids : [], n = ids.filter(function (id) { return S.doneSince(id, day.made); }).length;
     return { done: n >= ids.length, n: n, of: ids.length };
   }
   function planTaskText(t) {
     var S = PSUB[t.s], n = Array.isArray(t.ids) ? t.ids.length : 0, mins = Math.max(1, Math.round(n * S.perQ));
+    if (t.k === 'lesson') { return { h: 'Lesson: ' + (t.name || ''), sub: 'lesson ' + ((t.i || 0) + 1) + ' of ' + courseList(t.s).length + ' · about 8 min', why: 'Read the lesson, then press “Mark this lesson done” at the bottom of it.' }; }
     if (t.k === 'check') { return { h: 'Take the 10-question starting check', sub: 'about ' + S.checkMins + ' min', why: 'A rough score range and the question types to begin with.' }; }
     if (t.k === 'module') { return { h: 'Take a timed test', sub: S.modMins + ' min', why: S.modN + ' questions on one clock, like one part of the real section. This is the long session of the week, on top of your daily minutes.' }; }
     if (t.k === 'review') { return { h: 'Redo ' + plural(n, 'question') + ' you missed', sub: 'about ' + mins + ' min', why: 'Spaced repeats: a miss comes back after 1 day, then 3, then 7, until it sticks.' }; }
@@ -202,6 +207,7 @@
     var P = planGet(), day = P ? planToday(P) : null, t = day ? day.tasks[i] : null;
     if (!t || !PSUB[t.s]) { return; }
     var S = PSUB[t.s];
+    if (t.k === 'lesson') { nav(t.tok); return; }
     if (t.k === 'check') { nav(S.hCheck); return; }
     if (t.k === 'module') { nav(S.hModule); return; }
     var left = t.ids.filter(function (id) { return !S.doneSince(id, day.made) && S.valid(id); });
@@ -241,6 +247,8 @@
       if (dayNo(t) < dayNo(Date.now())) { msg.textContent = 'That date has passed. Choose a date from today on.'; focusQuiet(document.getElementById('plan-date')); return; }
       store.s.plan = { date: date, mins: [15, 30, 45].indexOf(Number(pick('plan-mins'))) !== -1 ? Number(pick('plan-mins')) : 15, subj: ['both', 'm', 'rw'].indexOf(pick('plan-subj')) !== -1 ? pick('plan-subj') : 'both' };
       save();
+      /* a plan made on Today turns Today into the plan */
+      if (cur.view === 'home') { buildHome(); toTop(); focusQuiet($('#v-home h1')); return; }
       buildPlan(); toTop();
       focusQuiet($('#v-plan .vtitle'));
     });
@@ -257,6 +265,8 @@
   }
   function buildPlan() {
     var P = planGet(), host = viewEl.plan;
+    /* Today holds the same form before a plan exists; only one copy is ever on the page */
+    var hf = $('#plan-form', viewEl.home); if (hf) { viewEl.home.innerHTML = ''; }
     if (!P) {
       host.innerHTML = '<div class="wrap">' +
         '<header class="mhead"><p class="eyebrow">My study plan</p><h2 class="vtitle">A short plan for every day until your test</h2>' +
@@ -315,6 +325,29 @@
     var b = e.target && e.target.closest ? e.target.closest('[data-plan-go]') : null;
     if (b) { planGo(Number(b.getAttribute('data-plan-go'))); }
   });
+  /* Today, once a plan exists: the day's tasks in order, the way the plan page lists them */
+  function planTodayHTML(P) {
+    var left = planLeft(P), when = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+    if (left < 0) {
+      return '<section class="hh hh-simple tday"><div class="hh-text"><p class="eyebrow">' + esc(when) + '</p><h1>Your test date has passed</h1>' +
+        '<p class="lede">Set a new date and the site will lay out each day for you again. Everything you have done so far is kept.</p><p class="row"><a class="btn big" href="#plan">Set a new test date</a></p></div></section>';
+    }
+    var day = planToday(P), done = 0, first = -1;
+    var rows = day.tasks.map(function (t, i) {
+      var st = planTaskState(t, day), x = planTaskText(t), S = PSUB[t.s];
+      if (st.done) { done += 1; } else if (first < 0) { first = i; }
+      return '<li class="plan-task' + (st.done ? ' done' : '') + '"><span class="plan-check" aria-hidden="true">✓</span><div><p class="plan-task-h"><b>' + esc(x.h) + '</b><span class="plan-sub"><i class="sdot ' + S.cls + '" aria-hidden="true"></i>' + S.name + ' · ' + x.sub + '</span></p><p class="fine">' + esc(x.why) + '</p></div>' +
+        (st.done ? '<span class="plan-state">Done</span>' : '<button class="btn sm' + (i === first ? '' : ' ghost') + '" type="button" data-plan-go="' + i + '">' + (t.k === 'lesson' ? 'Open lesson' : st.n ? 'Continue · ' + st.n + ' of ' + st.of : 'Start') + '</button>') + '</li>';
+    }).join('');
+    var n = day.tasks.length - done;
+    var h1 = left === 0 ? 'It is test day' : !day.tasks.length ? 'Nothing is due today' : n ? 'Today has ' + n + ' short ' + (n === 1 ? 'task' : 'tasks') + ' left' : 'You are done for today';
+    var lede = left === 0 ? 'There is nothing to study today. Read each last sentence twice, and good luck.'
+      : n ? 'Work down the list in order. Each task opens on its own, and you come back here when it ends.'
+      : 'Well done. Come back tomorrow for a new list, or add one more set if you have time.';
+    return '<section class="hh hh-simple tday"><div class="hh-text"><p class="eyebrow">' + esc(when) + ' · ' + (left === 0 ? 'test day' : left === 1 ? 'your test is tomorrow' : left + ' days to your test') + '</p><h1>' + h1 + '</h1><p class="lede">' + lede + '</p></div>' +
+      (left > 0 && day.tasks.length ? '<ol class="plan-tasks tday-tasks">' + rows + '</ol>' : '') +
+      '<p class="tday-foot"><a href="#plan">See the week ahead, add a set or change my plan</a></p></section>';
+  }
   /* on Home: today's plan, or the way in to one; and the starting check for someone new */
   function planHomeHTML() {
     var P = planGet(), fresh = !diagGet('m') && !diagGet('rw') && PSUB.m.tried() + PSUB.rw.tried() === 0, h = '';

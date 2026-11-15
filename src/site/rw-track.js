@@ -178,7 +178,7 @@
     viewEl.rwmap.innerHTML = '<div class="wrap">' +
       '<header class="read"><p class="eyebrow">Reading &amp; Writing · My progress</p><h2 class="vtitle">My progress</h2><p class="lede">This page shows how you are doing on each kind of reading question and each grammar rule. It fills in by itself as you answer practice questions, so there is nothing to set up. Once a square has a color, you can tap it to see what to work on and to practice just that kind of question.</p></header>' +
       (tried ? '<div class="mst-stats mm-stats rw"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' : '') +
-      diagLineHTML('rw') + dataLineHTML() +
+      courseCardHTML('rw') + diagLineHTML('rw') + dataLineHTML() +
       (tried ? '' : '<aside class="mnote"><p><b>No practice questions answered yet.</b> That is fine. Answer a few, and this page will start to show what you are good at and what needs more work.' + (drillTried('rw').length ? ' Your short exercises are listed below.' : '') + ' Your results are saved ' + savedIn() + '.</p><a class="btn sm" href="#practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="rwm-next"><h3 class="h2">Work on these next</h3>' + (next.length
         ? '<p class="lede">These are your lowest scores so far. Study the rule or the routine first, then practice just that kind of question.</p><div class="mm-nexts">' + next.map(function (t) { return rwCardHTML(t, stat[t.id]); }).join('') + '</div>'

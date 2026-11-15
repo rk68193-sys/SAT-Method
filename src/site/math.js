@@ -203,8 +203,9 @@
         '<section class="msec"><h3 class="h3">Worked example</h3><div class="mex"><p class="mex-q">' + esc(ex.q) + '</p><ol class="mex-l">' + ex.lines.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol><p class="mex-c">' + esc(ex.check) + '</p></div><p class="fine">This example was written for this site; the practice questions are College Board’s.</p></section>' +
         '<section class="msec"><div class="mtrapbox"><p class="mtag bad">The trap</p><p>' + esc(S.trap) + '</p></div>' + (S.tip ? '<div class="mtipbox"><p class="mtag">Tip</p><p>' + esc(S.tip) + '</p></div>' : '') + '</section>' +
         '<p class="row" style="margin-top:1.4rem"><a class="btn" href="#mp-' + k + '">Practice all ' + S.n + ' ' + esc(S.short.toLowerCase()) + ' questions</a></p>' +
-        '<section class="sec" id="m-types-' + k + '"><h3 class="h2">The ' + S.types.length + ' question types in this skill</h3><p class="lede">Every question in this skill belongs to one of these. Learn to recognize each one from the words in the question.</p>' +
-          '<div class="mtypes">' + S.types.slice().sort(function (a, b) { return MTY[b].n - MTY[a].n; }).map(function (t) { return mTypeCard(t); }).join('') + '</div></section>' +
+        '<div class="folds mlesson-more">' + foldHTML('m-types-' + k, 'Go deeper: the ' + S.types.length + ' question types in this skill', '<p class="lede">Every question in this skill belongs to one of these. Learn to recognize each one from the words in the question.</p>' +
+          '<div class="mtypes">' + S.types.slice().sort(function (a, b) { return MTY[b].n - MTY[a].n; }).map(function (t) { return mTypeCard(t); }).join('') + '</div>', 'You can finish the lesson without this. Open it when you want to see every kind of question.') + '</div>' +
+        courseBarHTML('m', 'm-' + k) +
         '</div><aside class="mlesson-side" aria-label="Skills in this area"><p class="label">' + esc(d.name) + '</p><ul>' + d.skills.map(function (x) { return '<li><a href="#m-' + x + '"' + (x === k ? ' aria-current="page"' : '') + '>' + esc(MSK[x].short) + '</a></li>'; }).join('') + '</ul></aside></div>' +
         '</div>';
     }
@@ -416,8 +417,12 @@
     var preset = s.topic !== 'all';
     viewEl.mprac.innerHTML = '<div class="wrap">' +
       mHead('Math · Practice', 'Practice real test questions', 'Every question here was written by College Board, the people who make the SAT. After each answer you will see which choice is right, along with the steps for solving that kind of question.') +
-      (preset ? '' : '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#m-easy">5 easy questions</a><a class="btn big ghost" href="#m-mixed">10 questions of every level</a>' + (mStillMissed().length ? '<a class="btn big ghost" href="#m-missed">Try again the ones I got wrong (' + mStillMissed().length + ')</a>' : '') + '</p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>') +
-      '<div class="folds setfold">' + foldHTML('mp-fold', 'Build your own practice set', '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
+      (preset ? '' : '<section class="mpquick pways"><h3 class="h2">Three ways to practice</h3><div class="pway-grid">' +
+        '<a class="pway" href="#m-easy"><b>Quick set</b><span>5 easy questions, one at a time, with no clock. A good first try.</span><span class="pway-go">Start now <span aria-hidden="true">→</span></span></a>' +
+        '<a class="pway" href="#mp-fold" data-scroll><b>Pick what to practice</b><span>Choose the topic, how hard it is and how many questions you want.</span><span class="pway-go">Choose <span aria-hidden="true">→</span></span></a>' +
+        '<a class="pway" href="#m-module"><b>Timed test</b><span>22 questions on one 35-minute clock, like one part of the real test.</span><span class="pway-go">Set it up <span aria-hidden="true">→</span></span></a>' +
+      '</div><p class="row pway-more"><a class="btn ghost" href="#m-mixed">10 questions of every level</a>' + (mStillMissed().length ? '<a class="btn ghost" href="#m-missed">Try again the ones I got wrong (' + mStillMissed().length + ')</a>' : '') + '</p><p class="fine">A quick set has no clock, so take as long as you like.</p></section>') +
+      '<div class="folds setfold">' + foldHTML('mp-fold', 'Pick what to practice', '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
         seg('mp-mode', 'How to practice', [['learn', 'One at a time'], ['module', 'Timed test']], s.mode) +
         '<p class="mpmode-note" id="mp-mode-note"></p>' +
         mpKindHTML(s.topic) + '<div id="mp-sub" class="mpsub"></div>' +
@@ -426,6 +431,7 @@
         seg('mp-pick', '4 · Which ones', [['any', 'Any'], ['new', 'Ones I have not tried'], ['missed', 'Ones I got wrong']], s.pick) +
         '<label class="checkline mp-learnonly"><input type="checkbox" id="mp-timer"' + (s.timer ? ' checked' : '') + '> Show a clock (the real test allows about 95 seconds a question)</label>' +
       '</div><p class="mpset-n" id="mp-count" aria-live="polite"></p><p class="row"><button class="btn big" type="submit" id="mp-go">Start practicing</button></p></form>', 'Choose the topic, how hard it is and how many questions you want. The timed test is here too.', preset || s.mode === 'module' || mpAnyTried()) + '</div>' +
+      (preset ? '' : setsListHTML('m')) +
       '</div>';
     var form = $('#mp-form');
     function read() {
@@ -607,6 +613,12 @@
     var missedTypes = {};
     done.forEach(function (r) { if (!r.ok) { var t = MQBY[r.id].t; missedTypes[t] = (missedTypes[t] || 0) + 1; } });
     var mt = Object.keys(missedTypes);
+    if (!MP.noted && done.length) {
+      MP.noted = true;
+      var sk = {}; done.forEach(function (r) { sk[MQBY[r.id].k] = 1; });
+      var skn = Object.keys(sk);
+      setsNote('m', skn.length === 1 && MSK[skn[0]] ? MSK[skn[0]].name : 'A mix of topics', done.length, right, done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; }));
+    }
     viewEl.mprac.innerHTML = '<div class="wrap">' + mHead('Math · Practice', done.length ? 'You got ' + right + ' of ' + done.length + ' right' : 'Set ended', done.length ? 'Average time ' + avg + ' seconds a question (the real test allows about 95).' : '') +
       (mt.length ? '<section class="msec"><h3 class="h3">Question types to review</h3><div class="mtypes">' + mt.map(function (t) { return mTypeCard(t, { showSkill: true }); }).join('') + '</div></section>' : (done.length ? '<p class="mpraise">Every one right. Try a harder set.</p>' : '')) +
       '<section class="msec"><h3 class="h3">Your answers</h3><ol class="mpsum">' + done.map(function (r) {
