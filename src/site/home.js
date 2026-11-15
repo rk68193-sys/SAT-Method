@@ -299,6 +299,12 @@
     planWire();
   }
 
+  /* the pages that belong to no subject, one tap from Today */
+  function moreRowHTML() {
+    var L = [['plan', 'My study plan', 'The week ahead, and your test date'], ['crates', 'Prizes', 'Coins, crates and the looks you have won'], ['my-data', 'Backup and offline use', 'Save a copy of your progress'], ['suggest-notes', 'My notes', 'A private scratchpad'], ['suggest', 'Ask or suggest', 'Send a question or an idea']];
+    if (acctOn) { L.splice(2, 0, ['account', acctIn() ? 'My account' : 'Sign in', 'Keep your progress on every device']); }
+    return '<section class="hsec tmore" id="tmore"><div class="hsec-h"><h2 class="h2">More</h2></div><ul class="tmore-l">' + L.map(function (x) { return '<li><a href="#' + x[0] + '"><b>' + x[1] + '</b><span>' + x[2] + '</span></a></li>'; }).join('') + '</ul></section>';
+  }
   /* Today, with a plan: the day's list first, then the streak and the two subjects */
   function buildToday(P) {
     function subj(key, s) {
@@ -311,7 +317,7 @@
       habitHomeHTML().replace('<h2 class="h2">Today</h2>', '<h2 class="h2">Questions of the day, and your streak</h2>') +
       '<section class="hsec"><div class="hsec-h"><h2 class="h2">Your subjects</h2><p class="muted">Open a subject for its lessons, practice and progress.</p></div><div class="tsubs">' + (subs.indexOf('rw') !== -1 ? subj('rw', 'rw') : '') + (subs.indexOf('m') !== -1 ? subj('math', 'm') : '') +
         (subs.length === 1 ? subj(subs[0] === 'm' ? 'rw' : 'math', subs[0] === 'm' ? 'rw' : 'm') : '') + '</div></section>' +
-      '</div>';
+      moreRowHTML() + '</div>';
     try { if (typeof pzAuras === 'function') { pzAuras(); } } catch (e) {}
   }
 

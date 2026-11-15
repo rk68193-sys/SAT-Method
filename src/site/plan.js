@@ -158,9 +158,6 @@
     if (P.mins < 30) { checks = checks.slice(0, 1); }
     checks.forEach(function (s) { tasks.push({ k: 'check', s: s }); room -= 10; });
     if (checks.length && room < 4) { return tasks; }
-    /* 1b. the next lesson of the day's section, until every lesson is done; it takes the place of about three questions */
-    var les = courseNext(focus);
-    if (les && left > 7) { tasks.push({ k: 'lesson', s: focus, tok: les.e.tok, name: les.e.name, i: les.i }); room = Math.max(3, room - 3); }
     /* 2. questions that are due again: a third of the day, half of it in the last week */
     var rev = P.mins >= 30 ? order : [focus], dues = {}, waiting = 0;
     rev.forEach(function (s) { dues[s] = srDue(s); waiting += dues[s].length; });
@@ -169,6 +166,9 @@
       var due = dues[s].slice(0, Math.ceil(cap / rev.length));
       if (due.length) { tasks.push({ k: 'review', s: s, ids: due }); room -= due.length; }
     });
+    /* 2b. after the repeats, the next lesson of the day's section, until every lesson is done; it takes the place of about three questions */
+    var les = courseNext(focus);
+    if (les && left > 7) { tasks.push({ k: 'lesson', s: focus, tok: les.e.tok, name: les.e.name, i: les.i }); room = Math.max(3, room - 3); }
     /* 3. practice by type, the weakest first */
     var slots = P.mins >= 45 ? [focus, order[1] || focus, focus] : P.mins >= 30 ? [focus, order[1] || focus] : [focus];
     var per = Math.max(3, Math.floor(room / slots.length));

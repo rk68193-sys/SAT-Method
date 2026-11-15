@@ -150,7 +150,7 @@
     viewEl.mmap.innerHTML = '<div class="wrap">' +
       mHead('Math · My progress', 'My progress', 'This page shows how you are doing on each of the ' + N + ' kinds of math question. It fills in by itself as you answer practice questions, so there is nothing to set up. Once a square has a color, you can tap it to see what to watch out for and to practice just that kind of question.') +
       (tried ? '<div class="mst-stats mm-stats"><div><b>' + started + '</b><span>of ' + N + ' types tried</span></div><div><b>' + cnt.strong + '</b><span>strong</span></div><div><b>' + cnt.mid + '</b><span>getting there</span></div><div><b>' + cnt.weak + '</b><span>need work</span></div></div>' : '') +
-      diagLineHTML('m') + dataLineHTML() + mFoundNudgeHTML() +
+      courseCardHTML('m') + diagLineHTML('m') + dataLineHTML() + mFoundNudgeHTML() +
       (tried ? '' : '<aside class="mnote"><p><b>No practice questions answered yet.</b> That is fine. Answer a few, and this page will start to show what you are good at and what needs more work.' + (drillTried('math').length ? ' Your short exercises are listed below.' : '') + ' Your results are saved ' + savedIn() + '.</p><a class="btn sm" href="#m-practice">Practice real questions</a></aside>') +
       (tried ? '<section class="sec first" id="mm-next"><h3 class="h2">Work on these next</h3>' + (next.length
         ? '<p class="lede">These are your lowest scores so far. Read what to watch out for, then practice just that kind of question.</p><div class="mm-nexts">' + next.map(function (m) { return mmCardHTML(m, stat[m.id]); }).join('') + '</div>'

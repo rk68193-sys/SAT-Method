@@ -52,6 +52,14 @@
            : '<a class="btn lbar-next" href="#' + (subj === 'm' ? 'm-practice' : 'practice') + '"><span><span class="lbar-k">That was the last lesson</span>Practice real questions</span><span aria-hidden="true">→</span></a>') +
       '</div></nav>';
   }
+  /* where you are in a subject's lessons: how many are done, a bar, and the one to open next */
+  function courseCardHTML(subj) {
+    var c = courseCount(subj), nx = courseNext(subj), pct = Math.round(100 * c.done / c.of);
+    return '<div class="ccard"><div class="ccard-t"><p class="label">Lessons</p><p class="ccard-n"><b>' + c.done + ' of ' + c.of + '</b> done</p>' +
+      '<div class="ccard-bar" role="img" aria-label="' + c.done + ' of ' + c.of + ' lessons done"><i style="width:' + pct + '%"></i></div></div>' +
+      (nx ? '<a class="btn" href="#' + nx.e.tok + '"><span><span class="lbar-k">' + (c.done ? 'Continue with lesson ' : 'Start with lesson ') + (nx.i + 1) + '</span>' + esc(nx.e.name) + '</span><span aria-hidden="true">→</span></a>'
+          : '<p class="ccard-all">Every lesson is done. Well done.</p>') + '</div>';
+  }
   document.addEventListener('click', function (e) {
     var b = e.target && e.target.closest ? e.target.closest('[data-cdone]') : null;
     if (!b) { return; }

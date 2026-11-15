@@ -417,8 +417,12 @@
     var preset = s.topic !== 'all';
     viewEl.mprac.innerHTML = '<div class="wrap">' +
       mHead('Math · Practice', 'Practice real test questions', 'Every question here was written by College Board, the people who make the SAT. After each answer you will see which choice is right, along with the steps for solving that kind of question.') +
-      (preset ? '' : '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#m-easy">5 easy questions</a><a class="btn big ghost" href="#m-mixed">10 questions of every level</a>' + (mStillMissed().length ? '<a class="btn big ghost" href="#m-missed">Try again the ones I got wrong (' + mStillMissed().length + ')</a>' : '') + '</p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>') +
-      '<div class="folds setfold">' + foldHTML('mp-fold', 'Build your own practice set', '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
+      (preset ? '' : '<section class="mpquick pways"><h3 class="h2">Three ways to practice</h3><div class="pway-grid">' +
+        '<a class="pway" href="#m-easy"><b>Quick set</b><span>5 easy questions, one at a time, with no clock. A good first try.</span><span class="pway-go">Start now <span aria-hidden="true">→</span></span></a>' +
+        '<a class="pway" href="#mp-fold" data-scroll><b>Pick what to practice</b><span>Choose the topic, how hard it is and how many questions you want.</span><span class="pway-go">Choose <span aria-hidden="true">→</span></span></a>' +
+        '<a class="pway" href="#m-module"><b>Timed test</b><span>22 questions on one 35-minute clock, like one part of the real test.</span><span class="pway-go">Set it up <span aria-hidden="true">→</span></span></a>' +
+      '</div><p class="row pway-more"><a class="btn ghost" href="#m-mixed">10 questions of every level</a>' + (mStillMissed().length ? '<a class="btn ghost" href="#m-missed">Try again the ones I got wrong (' + mStillMissed().length + ')</a>' : '') + '</p><p class="fine">A quick set has no clock, so take as long as you like.</p></section>') +
+      '<div class="folds setfold">' + foldHTML('mp-fold', 'Pick what to practice', '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
         seg('mp-mode', 'How to practice', [['learn', 'One at a time'], ['module', 'Timed test']], s.mode) +
         '<p class="mpmode-note" id="mp-mode-note"></p>' +
         mpKindHTML(s.topic) + '<div id="mp-sub" class="mpsub"></div>' +
