@@ -26,6 +26,9 @@
     ['deep', 'Deep Sea', 'Glowing life from the bottom of the ocean: bubbles, koi, jellyfish and the leviathan.'],
     ['myth', 'Myth & Magic', 'Runes, crystals, a dragon, the phoenix and an enchanted wood.'],
     ['tech', 'Tech Lab', 'Pixels, circuits, glitches, a warp drive and a machine that stops time.'],
+    ['haunt', 'Haunted', 'Friendly frights: ghosts, bats, cobwebs and eyes that open in the dark.'],
+    ['unknown', 'The Unknown', 'Things from far away: portals, visitors, slime, and something that watches.'],
+    ['dream', 'Dreamscape', 'Color and wonder: butterflies, paper cranes, a fox spirit and a whale made of stars.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value */
@@ -114,7 +117,35 @@
     ['glitch', 'Glitch', 'e', 'fx', 'tech', 'Your answer splits into color-shifted slices, then snaps back clean.'],
     ['freeze', 'Time freeze', 'm', 'fx', 'tech', 'Time stops: frost creeps in, a clock races backward around your answer, then the ice cracks and color floods back.'],
     ['radar', 'Radar', 'r', 'aura', 'tech', 'A radar sweep circles your streak and picks up blips.'],
-    ['battery', 'Battery', 'c', 'streak', 'tech', 'Charges one bar for each week of your streak.']
+    ['battery', 'Battery', 'c', 'streak', 'tech', 'Charges one bar for each week of your streak.'],
+    /* Haunted */
+    ['boo', 'Boo', 'c', 'fx', 'haunt', 'A little ghost pops up from your answer.'],
+    ['cobweb', 'Cobwebs', 'c', 'paper', 'haunt', 'Moving: webs in the corners, and a spider that lowers itself and climbs back.'],
+    ['ghosts', 'Little ghosts', 'r', 'aura', 'haunt', 'Three small ghosts float around your streak.'],
+    ['pumpkin', 'Jack-o’-lantern', 'r', 'streak', 'haunt', 'Carved after a week of your streak; at 30 days the candle is lit.'],
+    ['bats', 'Bat swarm', 'e', 'fx', 'haunt', 'A swarm of bats bursts out of your answer.'],
+    ['eyes', 'Watching eyes', 'e', 'aura', 'haunt', 'Eyes open in the dark around your streak, look about, and blink.'],
+    ['prize-haunted', 'Haunted', 'l', 'theme', 'haunt', 'A living theme: a full moon, drifting fog, bats crossing, and eyes in the shadows at the edges.'],
+    ['nightmare', 'Nightmare', 'm', 'fx', 'haunt', 'The lights go out and eyes open everywhere, all staring at your answer; one giant eye opens, then claws tear the dark away.'],
+    /* The Unknown */
+    ['slime', 'Slime', 'c', 'aura', 'unknown', 'Green slime oozes down from above your streak and drips.'],
+    ['meteors', 'Meteor shower', 'r', 'paper', 'unknown', 'Moving: meteors streak down the page in gold, cyan and pink.'],
+    ['wormhole', 'Wormhole', 'r', 'fx', 'unknown', 'Rings spin around your answer and pull stardust in.'],
+    ['portal', 'Portal', 'e', 'aura', 'unknown', 'A spinning gateway opens behind your streak and pulls light into it.'],
+    ['prize-eldritch', 'Eldritch', 'e', 'theme', 'unknown', 'A living theme: tentacles sway up from below while glowing spores drift past.'],
+    ['ufo', 'Flyby', 'l', 'paper', 'unknown', 'Moving: a flying saucer drifts across the page, sweeping a beam of light under it.'],
+    ['abduct', 'Abduction', 'l', 'fx', 'unknown', 'A saucer swoops in, beams sparkles up from your answer, and zips away.'],
+    ['watcher', 'The Watcher', 'm', 'aura', 'unknown', 'Your streak sits in the pupil of a giant eye. Its iris burns, it looks around and blinks, and tentacles reach in from the corners.'],
+    /* Dreamscape */
+    ['paint', 'Paint splat', 'c', 'fx', 'dream', 'Bright paint splats land around your answer.'],
+    ['moon', 'Moon phase', 'c', 'streak', 'dream', 'A moon that fills a little each day and is full at 30.'],
+    ['lava', 'Lava lamp', 'r', 'paper', 'dream', 'Moving: big soft blobs of color rise and sink.'],
+    ['butterflies', 'Butterflies', 'r', 'aura', 'dream', 'Six bright butterflies flutter around your streak.'],
+    ['kaleido', 'Kaleidoscope', 'e', 'paper', 'dream', 'Moving: a mirrored pattern of shapes turns and changes color.'],
+    ['cranes', 'Paper cranes', 'e', 'fx', 'dream', 'Folded paper cranes take off from your answer.'],
+    ['kitsune', 'Kitsune', 'l', 'aura', 'dream', 'A fox spirit: nine tails of flame fan out behind your streak under a fox mask, with blue foxfire circling.'],
+    ['prize-lanterns', 'Lantern festival', 'l', 'theme', 'dream', 'A living theme: glowing paper lanterns rise into a starry dusk.'],
+    ['whale', 'Star whale', 'm', 'paper', 'dream', 'Moving: a whale drawn in stars swims slowly across the page, trailing stardust.']
   ].map(function (r) { return { id: r[3] + ':' + r[0], key: r[0], name: r[1], tier: r[2], kind: r[3], series: r[4], what: r[5] }; });
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });
@@ -139,6 +170,9 @@
     deep: ['Deep Diver', 'Pearl of Wisdom', 'Calm Waters', 'Sea Legs', 'Bubble Brain', 'Tide Turner', 'Lighthouse Keeper', 'Kraken Tamer'],
     myth: ['Spell Checker', 'Rune Reader', 'Potion of Focus', 'Crystal Clear', 'Dragon Scholar', 'Phoenix Rising', 'Wizard of Words', 'Quest Complete'],
     tech: ['Press Start', 'Save Point', 'Bit by Bit', 'Debug Mode', 'Pixel Perfect', 'Power Up', 'Boot Sequence', 'Time Traveler'],
+    haunt: ['Night Owl', 'Ghost Writer', 'Bat Signal', 'Fearless', 'Midnight Oil', 'Boo-k Worm', 'No Tricks', 'Monster Score'],
+    unknown: ['First Contact', 'Unknown Variable', 'Signal Found', 'Deep Thinker', 'Out of This World', 'Portal Hopper', 'Mind Reader', 'The Watcher Blinked'],
+    dream: ['Daydreamer', 'Paper Crane', 'Color Theory', 'Lantern Lighter', 'Fox Wisdom', 'Whale Song', 'Butterfly Effect', 'Sweet Dreams'],
     test: ['Test Day Ready', 'Pencils Down', 'Calm Breath', 'Full Tank', 'Perfect Score', 'Poem Decoder', 'Trap Spotter', 'Unit Circle Survivor']
   };
   var PZ_TITLES = [

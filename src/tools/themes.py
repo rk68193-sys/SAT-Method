@@ -110,6 +110,18 @@ PRIZE = {
  'prize-enchanted': dict(COMMON_DARK, paper='#0C0718', card='#160E28', sunk='#1F1536', ink='#F7F1FF', ink2='#E2D4FB', muted='#AE9CD0', line='#2B1F48', line_strong='#433169',
    pencil='#A3E635', pencil_text='#D9F99D', hl='#2E1F4F', hl_ink='#F7FEE7', act='#A3E635', act_ink='#142004', act_hover='#84CC16', focus='#D9F99D',
    d1='#2B1F48', d2='#7C3AED', d3='#D9F99D', grad='linear-gradient(120deg, #D9F99D 0%, #A7F3D0 40%, #C4B5FD 100%)', on_grad='#142004', aura='rgba(163, 230, 53, .28)'),
+ # a haunted night: moon, fog, bats
+ 'prize-haunted': dict(COMMON_DARK, paper='#0D0A14', card='#17121F', sunk='#201A2B', ink='#F3EEF9', ink2='#D8CCE8', muted='#A596BC', line='#2A2238', line_strong='#40355A',
+   pencil='#FB923C', pencil_text='#FDBA74', hl='#3A2210', hl_ink='#FFF1E0', act='#F97316', act_ink='#1A0B02', act_hover='#EA580C', focus='#FDBA74',
+   d1='#2A2238', d2='#9A3412', d3='#FDBA74', grad='linear-gradient(120deg, #FDBA74 0%, #FB923C 50%, #C4B5FD 100%)', on_grad='#1A0B02', aura='rgba(249, 115, 22, .28)'),
+ # something from below: tentacles and spores
+ 'prize-eldritch': dict(COMMON_DARK, paper='#04100E', card='#0A1B18', sunk='#102622', ink='#E8FFF8', ink2='#BFEFE0', muted='#86B8A8', line='#143630', line_strong='#1F5248',
+   pencil='#C084FC', pencil_text='#E9D5FF', hl='#2B1A4A', hl_ink='#FAF5FF', act='#C4B5FD', act_ink='#12062B', act_hover='#A78BFA', focus='#E9D5FF',
+   d1='#143630', d2='#0F766E', d3='#99F6E4', grad='linear-gradient(120deg, #99F6E4 0%, #C4B5FD 55%, #F0ABFC 100%)', on_grad='#12062B', aura='rgba(167, 139, 250, .3)'),
+ # a lantern festival at dusk
+ 'prize-lanterns': dict(COMMON_DARK, paper='#0E0B24', card='#181436', sunk='#221D48', ink='#FFF7EA', ink2='#F1DFC4', muted='#B5A7C9', line='#2C2556', line_strong='#453B7C',
+   pencil='#FBBF24', pencil_text='#FDE68A', hl='#43300B', hl_ink='#FFF8DC', act='#FBBF24', act_ink='#1F1403', act_hover='#F59E0B', focus='#FDE68A',
+   d1='#2C2556', d2='#B45309', d3='#FDE68A', grad='linear-gradient(120deg, #FDE68A 0%, #FDBA74 50%, #F9A8D4 100%)', on_grad='#1F1403', aura='rgba(251, 191, 36, .28)'),
 }
 def finish(d):
     """fill the shadow and glass tokens the prize palettes leave out, from the light or dark theme they build on"""
