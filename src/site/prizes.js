@@ -114,6 +114,7 @@
   }
   function pzSum(o) { var n = 0; Object.keys(o).forEach(function (k) { if (typeof o[k] === 'number' && o[k] > 0) { n += o[k]; } }); return n; }
   function pzBalance() { var P = pz(); return pzSum(P.e) - pzSum(P.x); }
+  function pzNum(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
   function pzId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
   function pzOpened() { var P = pz(); return Object.keys(P.o).map(function (id) { var r = P.o[id]; return Array.isArray(r) && PZ_BY[r[2]] ? { id: id, t: r[0] || 0, series: r[1], item: PZ_BY[r[2]], dupe: !!r[4], sticker: r[5] || '' } : null; }).filter(Boolean).sort(function (a, b) { return a.t - b.t; }); }
   function pzOwned() { var own = {}; pzOpened().forEach(function (o) { own[o.item.id] = 1; }); return own; }
@@ -266,11 +267,28 @@
     return {
       best: s.best, plans: Object.keys(P.e).filter(function (k) { return k.indexOf('plan.') === 0; }).length, reasons: rw + mx,
       mods: Array.isArray(store.s.modules) && store.s.modules.length > 0 && Array.isArray(store.s.rwmodules) && store.s.rwmodules.length > 0,
-      owned: Object.keys(own).length, mythic: mythic
+      owned: Object.keys(own).length, mythic: mythic, gift: !!P.o['gift.all']
     };
   }
-  function pzTitles() { var c = pzTitleCounts(); return PZ_TITLES.map(function (t) { return { id: t[0], name: t[1], how: t[2], have: !!t[3](c) }; }); }
+  function pzTitles() { var c = pzTitleCounts(); return PZ_TITLES.map(function (t) { return { id: t[0], name: t[1], how: t[2], have: !!t[3](c) || c.gift }; }); }
   function pzShownTitle() { var id = pz().eq.title, t = pzTitles().filter(function (x) { return x.id === id && x.have; })[0]; return t ? t.name : ''; }
+
+  /* ---------- the owner's link (#gift-<code>, crates.js): every prize, sticker and title, and coins to open crates for fun ----------
+     Only the SHA-256 of the code is in the page; the code itself is kept by the site's owner. What it gives is saved like a
+     crate's prizes (records under gift.*, joined by pzMerge), so it reaches every device signed in to the same account. */
+  var PZ_GIFT = 'b1c461100aa6812c8cae2b37a2e3da01083e6f2a862e8b022fd1ee53890b6e3a', PZ_GIFT_COINS = 10000;
+  function pzGiftAll() {
+    var P = pz(), t = Date.now();
+    /* lowest tier first, so the last record is a Mythic and the promise of an Epic starts again at 10 */
+    PZ_ITEMS.slice().sort(function (a, b) { return PZ_TIERS.indexOf(a.tier) - PZ_TIERS.indexOf(b.tier); }).forEach(function (it, i) {
+      var k = 'gift.' + it.id.replace(':', '.');
+      if (!P.o[k]) { P.o[k] = [t + i, it.series, it.id, it.tier, 0, '']; }
+    });
+    Object.keys(PZ_STK).forEach(function (s) { PZ_STK[s].forEach(function (x, i) { P.st[s + '-' + i] = Math.max(P.st[s + '-' + i] || 0, 1); }); pzPageCheck(s); });
+    if (!P.o['gift.all']) { P.o['gift.all'] = [t, '', '', '', 0, '']; }
+    P.e['gift.coins'] = Math.max(P.e['gift.coins'] || 0, PZ_GIFT_COINS);
+    save(); pzChip();
+  }
 
   /* ---------- wearing prizes ---------- */
   function pzEquip(slot, id) {
@@ -291,7 +309,7 @@
     if (icon) { html = html.replace('<p class="hstreak-n">', '<p class="hstreak-n pz-styled">' + icon); }
     if (title) { html += '<p class="pz-title">' + esc(title) + '</p>'; }
     var n = Math.max(0, pzBalance()), free = pzGrants().length;
-    html += '<a class="pz-homecoins" href="#crates">' + PZ_COIN + '<span><b>' + n + '</b> ' + (n === 1 ? 'coin' : 'coins') + (free ? ' · ' + plural(free, 'free crate') : '') + ' · Open crates</span></a>';
+    html += '<a class="pz-homecoins" href="#crates">' + PZ_COIN + '<span><b>' + pzNum(n) + '</b> ' + (n === 1 ? 'coin' : 'coins') + (free ? ' · ' + plural(free, 'free crate') : '') + ' · Open crates</span></a>';
     return aura ? '<div class="pz-plate"><canvas class="pz-aura" data-pz-aura="' + PZ_BY[aura].key + '" aria-hidden="true"></canvas>' + html + '</div>' : '<div class="pz-snum">' + html + '</div>';
   }
 
@@ -306,7 +324,7 @@
     var wrap = tb.closest('.theme') || tb, a = document.getElementById('pz-chip'), n = Math.max(0, pzBalance());
     if (!wrap.parentNode) { return; }
     if (!a) { a = document.createElement('a'); a.id = 'pz-chip'; a.className = 'tool pz-chip'; a.href = '#crates'; wrap.parentNode.insertBefore(a, wrap); }
-    a.innerHTML = PZ_COIN + '<span>' + n + '</span>';
+    a.innerHTML = PZ_COIN + '<span>' + pzNum(n) + '</span>';
     a.setAttribute('aria-label', plural(n, 'coin') + '. Open crates.');
     a.hidden = true; var h0 = top.offsetHeight; a.hidden = false;
     if (top.offsetHeight > h0 + 2) { a.hidden = true; }
@@ -320,12 +338,12 @@
   /* a short note at the bottom when coins come in or a free crate arrives; never during a timed module. It never takes a
      tap, so a button under it still works while it shows. */
   var pzToastT = 0;
-  function pzToast(head, why) {
+  function pzToast(head, why, ms) {
     if (document.querySelector('.view:not([hidden]) .mmwrap')) { return; }
     var el = document.getElementById('pz-toast');
     if (!el) { el = document.createElement('div'); el.id = 'pz-toast'; el.className = 'pz-toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
     el.innerHTML = '<p class="pz-toast-in">' + PZ_COIN + '<b>' + esc(head) + '</b>' + (why ? ' <span>' + esc(why) + '</span>' : '') + '</p>';
     el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
-    clearTimeout(pzToastT); pzToastT = setTimeout(function () { el.classList.remove('show'); }, 3500);
+    clearTimeout(pzToastT); pzToastT = setTimeout(function () { el.classList.remove('show'); }, ms || 3500);
   }
   var PZ_WHY = { qotd: 'Question of the day', plan: 'Today’s plan is done', rev: 'For saying why you missed it' };

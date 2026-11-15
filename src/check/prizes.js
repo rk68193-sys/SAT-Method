@@ -3,8 +3,9 @@
 // (skip, the prize, wearing it), the sure Epic every 10 crates, duplicates paying coins, study luck in the odds, free crates for
 // a long streak and the test-day week, a streak freeze covering a missed day, two devices' backups joining without losing a coin,
 // the effect on a right answer, a timed module staying plain, reduced motion, owned themes in Appearance, an aura on Home, the
-// coin count (top bar only where it fits on one line, always on Home), the note when coins come in, and the page at phone
-// widths. Each part starts from its own saved progress in a fresh browser.
+// coin count (top bar only where it fits on one line, always on Home), the note when coins come in, the owner's link that
+// unlocks everything (tested on a copy of the page holding the hash of a throwaway code, never the real one), and the page at
+// phone widths. Each part starts from its own saved progress in a fresh browser.
 const { chromium } = require('playwright');
 const fs = require('fs'), os = require('os'), path = require('path');
 const file = 'file://' + path.resolve(process.argv[2] || 'index.html');
@@ -209,6 +210,8 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok(!(await t.p.$('#tcard .opt.wrong .pz-d')), 'nothing on a wrong answer');
     await t.go('crates'); await t.p.click('[data-pz-wear="fx"][data-pz-id="fx:confetti"]'); await t.p.waitForTimeout(150);
     ok((await t.saved()).s.pz.eq.fx === 'fx:confetti', 'Wear puts confetti on');
+    /* a reload straight after a save can read the saved progress from before it; give the save a moment to land */
+    await t.p.waitForTimeout(800);
     await startSet();
     ok((await t.saved()).s.pz.eq.fx === 'fx:confetti', 'and it is still on in a new set');
     const got = await answerRight();
@@ -279,6 +282,42 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     if (w >= 1024) { ok(rows[0] === 'normal:120' && rows[2] === 'normal:120', 'on a computer the top bar shows the 120 coins'); }
     ok((await t.p.textContent('.pz-homecoins b')).trim() === '120', 'Home shows the 120 coins at ' + w + ' px');
     await t.done('top bar ' + w);
+  }
+
+  /* ---------- the owner's link: the page holds only the hash of its code; a copy made for this check holds a test code's ---------- */
+  {
+    const crypto = require('crypto');
+    const src = fs.readFileSync(path.resolve(process.argv[2] || 'index.html'), 'utf8');
+    const m = src.match(/PZ_GIFT = '([0-9a-f]{64})'/);
+    ok(!!m, 'the page holds the owner\'s link only as a SHA-256 hash');
+    const code = 'check' + crypto.randomBytes(12).toString('hex');
+    const tmp = path.join(os.tmpdir(), 'pz-gift-check-' + process.pid + '.html');
+    fs.writeFileSync(tmp, src.replace(m[0], "PZ_GIFT = '" + crypto.createHash('sha256').update(code).digest('hex') + "'"));
+    const page = 'file://' + tmp;
+    const t = await fresh((st, a, dk) => { st.s.pz = { e: { seed: 40 } }; st.s.days = {}; st.s.days[dk(Date.now())] = [1, 0]; });
+    const hash = () => t.p.evaluate(() => location.hash);
+    await t.p.goto(page + '#home'); await t.p.reload(); await t.p.waitForTimeout(700);
+    await t.p.evaluate(() => { location.hash = 'gift-wrongwrongwrongwrong'; }); await t.p.waitForTimeout(600);
+    ok((await hash()) === '#crates' && /does not unlock/.test(await t.p.textContent('#pz-toast')), 'a wrong code unlocks nothing, and leaves the address bar for Crates');
+    ok(/Your collection · 0 of 56/.test(await t.p.textContent('#pz-collection h3')), 'the collection is still empty');
+    await t.p.evaluate(c => { location.hash = 'gift-' + c; }, code); await t.p.waitForTimeout(800);
+    const st = await t.saved();
+    ok((await hash()) === '#crates', 'the right code leaves the address bar at once');
+    ok(/Your collection · 56 of 56/.test(await t.p.textContent('#pz-collection h3')), 'it unlocks all 56 prizes');
+    ok(Object.keys(st.s.pz.st).length === 48 && Object.keys(st.s.pz.g).filter(k => /^page\./.test(k)).length === 6, 'every sticker, with the free crate for each full sticker page');
+    ok((await t.p.$$('[data-pz-title]')).length === 7, 'every title can be shown');
+    ok((await t.p.textContent('.pz-bal b')).trim() === '10,040' && bal(st) === 10040, 'and 10,000 coins on top of the 40 there were, shown as 10,040');
+    ok(/Everything is unlocked/.test(await t.p.textContent('#pz-toast')), 'a note says so');
+    const back = [];
+    for (let i = 0; i < 3; i++) { await t.p.goBack(); await t.p.waitForTimeout(250); back.push(await hash()); }
+    ok(back.every(h => h.indexOf('#gift') !== 0), 'Back never returns to a link with a code in it: ' + back.join(', '));
+    /* the link as the first page opened: lands on Crates, and a second time adds nothing */
+    await t.p.goto(page + '?again#gift-' + code); await t.p.waitForTimeout(900);
+    const st2 = await t.saved();
+    ok((await hash()) === '#crates' && /Your collection · 56 of 56/.test(await t.p.textContent('#pz-collection h3')), 'opened as a new page, it lands on Crates');
+    ok(bal(st2) === 10040, 'opening it again adds no more coins');
+    fs.unlinkSync(tmp);
+    await t.done('owner link');
   }
 
   /* ---------- the page fits a phone ---------- */

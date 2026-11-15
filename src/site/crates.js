@@ -28,7 +28,7 @@
     var luck = L > 1 ? '<b>Study luck ×' + L + '</b> from your ' + plural(s.n, 'day') + ' in a row: Legendary and Mythic prizes are ' + (L === 2 ? 'twice' : '1.5 times') + ' as likely.' + (L < 2 ? ' At 30 days they are twice as likely.' : '')
       : 'Practice 7 days in a row for <b>study luck</b>: Legendary and Mythic prizes 1.5 times as likely, and twice as likely at 30 days.';
     return '<section class="pz-wallet" aria-label="Your coins">' +
-      '<p class="pz-bal">' + PZ_COIN + '<b>' + n + '</b><span>' + (n === 1 ? 'coin' : 'coins') + '</span></p>' +
+      '<p class="pz-bal">' + PZ_COIN + '<b>' + pzNum(n) + '</b><span>' + (n === 1 ? 'coin' : 'coins') + '</span></p>' +
       '<p class="pz-luck">' + luck + '</p>' +
       '<p class="fine">An Epic or better is certain within ' + plural(pity, 'more crate') + '.</p>' +
       '<div class="pz-freeze"><p><b>Streak freezes: ' + fz + ' of ' + PZ_FREEZE_MAX + '.</b> One covers a day you miss, so the streak and its luck carry on. It is used on its own.</p>' +
@@ -145,5 +145,23 @@
     });
   }
   pzWire();
+  /* the owner's link, #gift-<code>: it leaves the address bar and the history at once, before the router reads it; the code is
+     then checked against PZ_GIFT. This runs before boot.js, so its hashchange listener goes first too. */
+  function pzGiftLink() {
+    var m = /^#gift-([\w-]{16,64})$/.exec(location.hash);
+    if (!m) { return; }
+    try { history.replaceState(null, '', location.pathname + location.search + '#crates'); } catch (e) { location.hash = 'crates'; }
+    var subtle = window.crypto && window.crypto.subtle;
+    if (!subtle || !window.TextEncoder) { return; }
+    subtle.digest('SHA-256', new TextEncoder().encode(m[1])).then(function (buf) {
+      var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+      if (hex !== PZ_GIFT) { pzToast('That link does not unlock anything', ''); return; }
+      pzGiftAll();
+      if (viewEl.crates && !viewEl.crates.hidden) { buildCrates(); }
+      pzToast('Everything is unlocked', 'All 56 prizes, every sticker and title, and ' + pzNum(PZ_GIFT_COINS) + ' coins' + (acctIn() ? '.' : '. Sign in to keep them on every device.'), 8000);
+    }).catch(function () {});
+  }
+  pzGiftLink();
+  window.addEventListener('hashchange', pzGiftLink);
   /* start once the rest of the page has run: count today's coins, put on the backgrounds, show the coin count */
   setTimeout(function () { try { pzTick(); fxApply(); pzChip(); fxScan(); } catch (e) { /* prizes never stop the page */ } }, 0);
