@@ -250,7 +250,8 @@
   function pzTestOpen() { var n = pzTestDays(); return n >= 0 && n <= 7; }
 
   /* ---------- opening ---------- */
-  function pzGrants() { var P = pz(); return Object.keys(P.g).filter(function (k) { return Array.isArray(P.g[k]) && !P.o['g.' + k]; }).map(function (k) { var g = P.g[k]; return { key: k, t: g[0] || 0, series: g[1] || '', min: g[2] || 'c', why: g[3] || '' }; }).sort(function (a, b) { return a.t - b.t; }); }
+  /* a free crate from a series no longer in the catalog stays in the saved record, unlisted, so it cannot break the Crates page */
+  function pzGrants() { var P = pz(); return Object.keys(P.g).filter(function (k) { return Array.isArray(P.g[k]) && !P.o['g.' + k] && (!P.g[k][1] || !!PZ_SER[P.g[k][1]]); }).map(function (k) { var g = P.g[k]; return { key: k, t: g[0] || 0, series: g[1] || '', min: g[2] || 'c', why: g[3] || '' }; }).sort(function (a, b) { return a.t - b.t; }); }
   function pzCanBuy(series) { return !!PZ_SER[series] && pzBalance() >= PZ_PRICE && (series !== 'test' || pzTestOpen()); }
   function pzOpen(series, grantKey) {
     var P = pz(), id, minTier = series === 'test' ? 'e' : 'c';
