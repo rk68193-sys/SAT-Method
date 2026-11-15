@@ -416,7 +416,7 @@
     var preset = s.topic !== 'all';
     viewEl.mprac.innerHTML = '<div class="wrap">' +
       mHead('Math · Practice', 'Practice real test questions', 'Every question here was written by College Board, the people who make the SAT. After each answer you will see which choice is right, along with the steps for solving that kind of question.') +
-      (preset ? '' : '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#m-easy">5 easy questions</a><a class="btn big ghost" href="#m-mixed">10 questions of every level</a></p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>') +
+      (preset ? '' : '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#m-easy">5 easy questions</a><a class="btn big ghost" href="#m-mixed">10 questions of every level</a>' + (mStillMissed().length ? '<a class="btn big ghost" href="#m-missed">Try again the ones I got wrong (' + mStillMissed().length + ')</a>' : '') + '</p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>') +
       '<div class="folds setfold">' + foldHTML('mp-fold', 'Build your own practice set', '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
         seg('mp-mode', 'How to practice', [['learn', 'One at a time'], ['module', 'Timed test']], s.mode) +
         '<p class="mpmode-note" id="mp-mode-note"></p>' +
@@ -470,6 +470,14 @@
     var pool = shuffle(MQ.filter(function (q) { return !diff || (q.d === diff && q.mc); }).slice()).slice(0, n);
     if (MP && !MP.over) { clearInterval(mpInterval); }
     MP = { qs: pool, i: 0, res: [], timer: false, over: false, settings: { mode: 'learn', topic: 'all', diff: diff || 'all', n: n, pick: 'any', timer: false } };
+    mpShow();
+  }
+  /* up to ten of the questions last answered wrong, one at a time with no clock */
+  function mMissed() {
+    var pool = shuffle(mStillMissed().map(function (id) { return MQBY[id]; })).slice(0, 10);
+    if (!pool.length) { mpSetup(); return; }
+    if (MP && !MP.over) { clearInterval(mpInterval); }
+    MP = { qs: pool, i: 0, res: [], timer: false, over: false, settings: { mode: 'learn', topic: 'all', diff: 'all', n: pool.length, pick: 'missed', timer: false } };
     mpShow();
   }
   function mpElapsed() { if (!MP || !MP.cur) { return 0; } var c = MP.cur; return (c.acc + (c.t0 ? now() - c.t0 : 0)) / 1000; }

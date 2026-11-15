@@ -2376,6 +2376,60 @@ html.tour-open { overflow: hidden; }
   .hpick-t b { font-size: 1.25rem; }
 }
 
+/* ---------- Round 3: checked against WCAG 2.2 and Nielsen Norman Group guidance ---------- */
+/* 1.4.4 Resize text: with the browser's own text size at 200% the header wraps instead of pushing the page sideways */
+.topin { flex-wrap: wrap; }
+/* 2.5.8 Target size: small text links get a taller tap area */
+.foot ul a, .foot .linkbtn { display: inline-block; padding-block: .32rem; min-height: 1.75rem; }
+.foot ul { gap: .1rem; }
+.gtrail a, .strail a { display: inline-block; padding-block: .2rem; }
+.nextstep-alt a, .startlink a { display: inline-block; padding-block: .2rem; }
+/* Back always says where it goes. On a phone the place sits on a second, smaller line */
+@media (max-width: 820px) {
+  .gback > span:last-child { display: grid; text-align: left; line-height: 1.1; }
+  .gback .gback-to { display: block; max-width: 7.2rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .74rem; font-weight: 500; color: var(--ink-2); }
+}
+/* Home: on a phone each subject keeps its picture; on a wider screen the button names the subject */
+.hpick-go-n { display: none; }
+@media (min-width: 641px) { .hpick-go-n { display: inline; } }
+@media (min-width: 381px) and (max-width: 480px) {
+  .hpick { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .hpick-ico { display: grid; width: 2.3rem; height: 2.3rem; border-radius: 11px; }
+  .hpick-ico svg { width: 1.35rem; height: 1.35rem; }
+  .hpick-t b { font-size: 1.2rem; }
+  .hpick-t span { font-size: .93rem; }
+  .hpick-go { padding: .6rem .8rem; }
+}
+/* the footer keeps the trademark line in view and folds the long note about sources */
+.foot-src { margin-bottom: .5rem; }
+.foot-src > summary { display: inline-block; padding-block: .3rem; cursor: pointer; font-weight: 500; text-decoration: underline; text-underline-offset: .2em; }
+.foot-src > summary::-webkit-details-marker { display: none; }
+.foot-src > summary { list-style: none; }
+.foot-src[open] > summary { margin-bottom: .3rem; }
+.noscript { margin: 1rem; padding: 1rem 1.2rem; border: 2px solid var(--line-strong); border-radius: 14px; font-size: 1.1rem; }
+/* Where is my progress saved? */
+.qa { display: grid; gap: .8rem; margin-top: 1rem; max-width: 46rem; }
+.qa > div { padding: .9rem 1.1rem; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card); }
+.qa dt { font: 600 1.08rem/1.3 var(--display); }
+.qa dd { margin: .25rem 0 0; color: var(--ink-2); }
+/* Help: one button in the header on every page, and a box of short answers about the page you are on */
+.help .help-card { gap: .55rem; max-height: calc(100vh - 2rem); overflow-y: auto; }
+.help-qa { padding: .7rem .9rem; border: 1.5px solid var(--line); border-radius: 14px; background: var(--card); }
+.help-qa h3 { font: 600 1.05rem/1.3 var(--display); }
+.help-qa p { margin-top: .2rem; color: var(--ink-2); font-size: 1rem; line-height: 1.5; }
+.help-also { margin-top: .5rem; font: 600 .78rem/1.2 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.help-more { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .4rem; }
+.help-more .btn { font-size: .95rem; padding: .55rem .95rem; }
+/* phone header: the three tools fit on one row beside the name */
+@media (max-width: 480px) {
+  .toptools .tool svg { display: none; }
+  .toptools .tool { padding-inline: .7rem; }
+}
+@media (max-width: 400px) { .toptools .tool { padding-inline: .55rem; font-size: .88rem; } .toptools { gap: .25rem; } }
+@media (max-width: 340px) { .ghere { display: none; } .ghome { margin-left: auto; } }
+.help-top { position: sticky; top: calc(-1 * clamp(1.3rem, 4vw, 2.1rem)); z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: calc(-1 * clamp(1.3rem, 4vw, 2.1rem)) calc(-1 * clamp(1.3rem, 4vw, 2.1rem)) 0; padding: .8rem clamp(1.3rem, 4vw, 2.1rem) .5rem; background: var(--paper); border-radius: 26px 26px 0 0; }
+.help-x { padding: .5rem 1rem; font-size: .95rem; }
+
 </style>
 
 <script>try { var t0 = localStorage.getItem('sat-sprint-theme'); if (t0 && t0 !== 'auto') { document.documentElement.setAttribute('data-theme', t0); } var z0 = localStorage.getItem('sat-sprint-size'); if (z0 === 'l' || z0 === 'xl') { document.documentElement.setAttribute('data-size', z0); } } catch (e) {}</script>
@@ -2394,12 +2448,14 @@ html.tour-open { overflow: hidden; }
         <button class="tool" type="button" id="theme-btn" aria-expanded="false" aria-controls="theme-pop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 18.5L8 6.5l4.5 12M5.2 14h5.6"/><path d="M14 18.5l3.2-8.5 3.3 8.5M15.2 15.5h4.1"/></svg><span>Text size</span></button>
         <div class="theme-pop" id="theme-pop" role="dialog" aria-label="Text size and colors" hidden></div>
       </div>
+      <button class="tool help-tool" type="button" id="help-btn" data-help aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M9.6 9.6a2.5 2.5 0 1 1 3.6 2.2c-.8.5-1.2 1-1.2 2"/><path d="M12 16.9v.1"/></svg><span>Help</span></button>
     </div>
   </div>
 </header>
 <nav class="secnav" id="tabs" aria-label="Steps" hidden><div class="wrap secin" id="secin"></div><div class="wrap"><p class="strail" id="strail"></p></div></nav>
 <nav class="guide" id="guide" aria-label="Where you are" hidden><div class="wrap guidein"><a class="gback" id="gback" href="#home"><span aria-hidden="true">←</span><span>Back</span></a><p class="gtrail" id="gtrail"></p><p class="ghere" id="ghere" aria-hidden="true"></p><a class="ghome" href="#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.2L12 4.5l8 6.7"/><path d="M6.5 9.5v10h11v-10"/></svg>Home</a></div></nav>
-<p class="offnote" id="offnote" role="status" hidden><span class="wrap">You are offline. Lessons and the questions saved on this device still work. <a href="#my-data-offline">What is saved?</a></span></p>
+<p class="offnote" id="offnote" role="status" hidden></p>
+<noscript><p class="noscript">SAT Sprint needs JavaScript to show its lessons and questions. Please turn JavaScript on in your browser settings, then load this page again.</p></noscript>
 
 <main id="main" tabindex="-1">
   <section id="v-home" class="view" aria-label="Home"></section>
@@ -2435,7 +2491,7 @@ html.tour-open { overflow: hidden; }
 <footer class="foot"><div class="wrap">
   <div class="foot-cols" id="footcols"></div>
   <div class="foot-legal">
-    <p>Passages, questions, answer choices, answer keys and explanations come from College Board’s free SAT Suite Question Bank; the literary excerpts belong to their authors. Math questions and explanations are rebuilt from that bank: the words as text, each expression and figure exactly as drawn there, with the printed page one tap away. The methods, lessons, question types and counts were built for this site from an export of that bank.</p>
+    <details class="foot-src"><summary>Where do the questions come from?</summary><p>Passages, questions, answer choices, answer keys and explanations come from College Board’s free SAT Suite Question Bank; the literary excerpts belong to their authors. Math questions and explanations are rebuilt from that bank: the words as text, each expression and figure exactly as drawn there, with the printed page one tap away. The methods, lessons, question types and counts were built for this site from an export of that bank.</p></details>
     <p>SAT® is a trademark registered by College Board, which is not affiliated with, and does not endorse, this site. <span id="foot-saved">Progress is saved in your browser only.</span></p>
   </div>
 </div></footer>
@@ -4487,7 +4543,7 @@ function rReasoningHTML() {
     var triedAll = g.tried + r.tried + qb.tried + nb.tried + xb.tried, rightAll = g.right + r.right;
     var h = (prefix || '') + '<header class="read"><p class="eyebrow">Reading &amp; Writing · Practice</p><h2 class="vtitle">Practice real test questions</h2>' +
       '<p class="lede">Every one of these 1,845 questions was written by College Board, the people who make the SAT. After each answer you will see which choice is right and why, so every question teaches you something.</p></header>' +
-      '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#rw-easy">5 easy questions</a><a class="btn big ghost" href="#rw-mixed">10 questions of every level</a></p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>' +
+      '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#rw-easy">5 easy questions</a><a class="btn big ghost" href="#rw-mixed">10 questions of every level</a>' + (nMiss ? '<a class="btn big ghost" href="#rw-missed">Try again the ones I got wrong (' + nMiss + ')</a>' : '') + '</p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>' +
       '<div class="folds setfold">' + foldHTML('tfold', 'Build your own practice set', '<div class="tsetup" id="tsetup" data-mode="' + s.mode + '">' +
       seg('tmode', 'How to practice', [['set', 'One at a time'], ['module', 'Timed test']], s.mode) +
       '<p class="mpmode-note" id="tmodenote"></p>' +
@@ -4551,6 +4607,12 @@ function rReasoningHTML() {
   function rwQuick(n, diff) {
     var seen = {}, pool = itemsAll().filter(function (it) { if (seen[it.id]) { return false; } seen[it.id] = true; return !diff || it.d === diff; });
     timedStart(shuffle(pool).slice(0, n), { src: 'both', part: 'all', diff: diff || 'all', which: 'all', len: n, tier: 'learn', hints: false, mode: 'set', quick: true });
+  }
+  /* up to ten of the questions last answered wrong, one at a time with no clock */
+  function rwMissed() {
+    var seen = {}, pool = itemsAll().filter(function (it) { if (seen[it.id]) { return false; } seen[it.id] = true; var x = result(it); return !!x && x.c === 0; });
+    if (!pool.length) { timedSetup(); return; }
+    timedStart(shuffle(pool).slice(0, 10), { src: 'both', part: 'all', diff: 'all', which: 'missed', len: 10, tier: 'learn', hints: false, mode: 'set', quick: true });
   }
   function timedStart(list, st) {
     rmDrop();
@@ -5428,7 +5490,7 @@ function rReasoningHTML() {
     var preset = s.topic !== 'all';
     viewEl.mprac.innerHTML = '<div class="wrap">' +
       mHead('Math · Practice', 'Practice real test questions', 'Every question here was written by College Board, the people who make the SAT. After each answer you will see which choice is right, along with the steps for solving that kind of question.') +
-      (preset ? '' : '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#m-easy">5 easy questions</a><a class="btn big ghost" href="#m-mixed">10 questions of every level</a></p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>') +
+      (preset ? '' : '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#m-easy">5 easy questions</a><a class="btn big ghost" href="#m-mixed">10 questions of every level</a>' + (mStillMissed().length ? '<a class="btn big ghost" href="#m-missed">Try again the ones I got wrong (' + mStillMissed().length + ')</a>' : '') + '</p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>') +
       '<div class="folds setfold">' + foldHTML('mp-fold', 'Build your own practice set', '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
         seg('mp-mode', 'How to practice', [['learn', 'One at a time'], ['module', 'Timed test']], s.mode) +
         '<p class="mpmode-note" id="mp-mode-note"></p>' +
@@ -5482,6 +5544,14 @@ function rReasoningHTML() {
     var pool = shuffle(MQ.filter(function (q) { return !diff || (q.d === diff && q.mc); }).slice()).slice(0, n);
     if (MP && !MP.over) { clearInterval(mpInterval); }
     MP = { qs: pool, i: 0, res: [], timer: false, over: false, settings: { mode: 'learn', topic: 'all', diff: diff || 'all', n: n, pick: 'any', timer: false } };
+    mpShow();
+  }
+  /* up to ten of the questions last answered wrong, one at a time with no clock */
+  function mMissed() {
+    var pool = shuffle(mStillMissed().map(function (id) { return MQBY[id]; })).slice(0, 10);
+    if (!pool.length) { mpSetup(); return; }
+    if (MP && !MP.over) { clearInterval(mpInterval); }
+    MP = { qs: pool, i: 0, res: [], timer: false, over: false, settings: { mode: 'learn', topic: 'all', diff: 'all', n: pool.length, pick: 'missed', timer: false } };
     mpShow();
   }
   function mpElapsed() { if (!MP || !MP.cur) { return 0; } var c = MP.cur; return (c.acc + (c.t0 ? now() - c.t0 : 0)) / 1000; }
@@ -8011,7 +8081,11 @@ function rReasoningHTML() {
   /* a small line under the section bar while there is no connection */
   function offNote() {
     var el = document.getElementById('offnote');
-    if (el) { el.hidden = navigator.onLine !== false; }
+    if (!el) { return; }
+    var off = navigator.onLine === false;
+    /* the words are written here, not in the page source, so a reader that shows hidden text never sees a false "offline" */
+    if (off && !el.firstChild) { el.innerHTML = '<span class="wrap"><b>You are offline.</b> You can still use the lessons and any questions already saved on this device, and your progress is safe. New questions will load when you are back online. <a href="#my-data-offline">What works offline?</a></span>'; }
+    el.hidden = !off;
   }
   window.addEventListener('online', function () {
     /* questions that could not load while offline get another try */
@@ -8034,7 +8108,12 @@ function rReasoningHTML() {
       '<p class="lede">' + (acctIn() ? 'You are signed in, so your progress is also kept in <a href="#account">your account</a> and follows you to other devices. A backup file is a second copy that you hold yourself.' : (acctOn ? 'Without an account, your progress lives in this browser on this device. A backup file keeps it safe and carries it to another device; <a href="#account">a free account</a> does the same without the file.' : 'There is no account, so your progress lives in this browser on this device. A backup file keeps it safe and carries it to another device.')) + '</p></header>' +
       (canStore ? '' : '<p class="note warn">This browser is not saving data (private browsing, or storage is turned off), so progress is lost when you close the page. A backup file still works.</p>') +
       (msg ? '<p class="note data-msg" id="data-msg" role="status" tabindex="-1">' + msg + '</p>' : '') +
-      '<section class="sec first" id="data-backup"><h3 class="h2">Save a copy</h3><p class="lede">One small file with your answers, miss reasons, plan, notes and settings, for both sections. It stays with you: nothing is uploaded.</p>' +
+      '<section class="sec first" id="data-where"><h3 class="h2">Where is my progress saved?</h3><dl class="qa">' +
+        '<div><dt>Where is it saved?</dt><dd>' + (acctIn() ? 'In this browser on this device, and in your account.' : 'In this browser, on this device. Nothing is sent anywhere.') + '</dd></div>' +
+        '<div><dt>Can I carry on from another phone or computer?</dt><dd>' + (acctIn() ? 'Yes. Sign in on the other device and your progress is there.' : (acctOn ? 'Not by itself. Either make <a href="#account">a free account</a>, which is optional, or save a backup file below and open it on the other device.' : 'Not by itself. Save a backup file below and open it on the other device.')) + '</dd></div>' +
+        '<div><dt>What happens if I clear my browser data?</dt><dd>' + (acctIn() ? 'The copy on this device is removed, but your account still has it. Sign in again to get it back.' : 'Your progress on this device is erased. A backup file' + (acctOn ? ' or a free account' : '') + ' keeps it safe.') + '</dd></div>' +
+        '<div><dt>Do I have to sign in?</dt><dd>No. The whole site works without an account.</dd></div></dl></section>' +
+      '<section class="sec" id="data-backup"><h3 class="h2">Save a copy</h3><p class="lede">One small file with your answers, miss reasons, plan, notes and settings, for both sections. It stays with you: nothing is uploaded.</p>' +
         '<p class="row"><button class="btn big" type="button" id="bk-save"' + (any ? '' : ' disabled') + '>Download a backup file</button>' + (bkCanShare() ? '<button class="btn big ghost" type="button" id="bk-share"' + (any ? '' : ' disabled') + '>Send it to myself</button>' : '') + '</p>' +
         '<p class="fine" id="bk-ago">' + (any ? bkAgo() + ' Make a new one every week or two, and before you clear your browser or change devices.' : 'There is nothing to back up yet. Answer a question first.') + '</p></section>' +
       '<section class="sec" id="data-here"><h3 class="h2">Saved on this device</h3><ul class="data-rows">' +
@@ -8403,7 +8482,7 @@ function rReasoningHTML() {
       var again = A && A.email ? A.email : '';
       host.innerHTML = '<div class="wrap sgwrap">' +
         '<header class="mhead"><p class="eyebrow">My account</p><h2 class="vtitle">Keep your progress on every device</h2>' +
-        '<p class="lede">An account is free and optional. It saves your streak, your maps, your study plan and every answer, so they are there on your phone, your laptop and a school computer. Without one, the whole site still works and your progress stays in this browser.</p></header>' + note +
+        '<p class="lede">An account is free and optional. It saves your streak, your progress pages, your study plan and every answer, so they are there on your phone, your laptop and a school computer. Without one, the whole site still works and your progress stays in this browser.</p></header>' + note +
         '<form class="sgform acct-form" id="acct-form" novalidate>' +
           seg('acct-mode', 'New here, or coming back?', [['up', 'Create an account'], ['in', 'Sign in']], again ? 'in' : 'up') +
           '<label class="field"><span class="label">Email</span><input type="email" id="acct-email" autocomplete="email" inputmode="email" maxlength="200" required value="' + esc(again) + '"></label>' +
@@ -8771,6 +8850,99 @@ function rReasoningHTML() {
     else if (e.shiftKey && a === first) { e.preventDefault(); lastEl.focus(); }
     else if (!e.shiftKey && a === lastEl) { e.preventDefault(); first.focus(); }
   }, true);
+  /* =================== Help with this page ===================
+     One Help button, in the same place on every page (WCAG 2.2 "Consistent Help"). It answers the few questions a
+     first-time visitor has about the page they are on, and always ends with how to go back, whether an account is
+     needed, and how to make the words bigger. */
+  var HELP_COMMON = [
+    ['How do I go back?', 'Press <b>Back</b> near the top of the page. <b>Home</b> is at the top too, and it always takes you to the first page.'],
+    ['Do I need an account?', 'No. The whole site works without one, and your progress saves itself on this device. A free account adds one thing: your progress follows you to another phone or computer.'],
+    ['The words are too small.', 'Press <b>Text size</b> at the top of the page, then choose Large or Largest.']
+  ];
+  var HELP = {
+    home: ['the Home page', [
+      ['Where do I start?', 'Press <b>Start</b> on Reading &amp; Writing or on Math. Either one is fine. The site then shows you four numbered steps to follow.'],
+      ['What if I only want to look around?', 'Scroll down to “Try one easy question”. It is a real SAT question with no clock, and nothing is saved.'],
+      ['How do I get back to what I was doing?', 'When you come back, Home shows a box named “Pick up where you left off”. Press it.']]],
+    start: ['this page', [
+      ['What should I press first?', 'Press the dark button near the top of the page. If you would rather try a question first, press “Try 5 easy questions”.'],
+      ['What are the numbers 1 to 4 at the top?', 'They are the four steps of this subject: Start here, Learn, Practice and My progress. The dark one is where you are now. Go through them in order.']]],
+    learn: ['the lessons', [
+      ['Which lesson should I read first?', 'Start with number 1 and work down the list. At the bottom of every page a <b>Next step</b> button takes you on.'],
+      ['How do I find one topic?', 'Press <b>2 Learn</b> at the top. That page lists every topic and has a search box at the bottom.'],
+      ['How do I practice what I just read?', 'Press <b>3 Practice</b> at the top, then “5 easy questions”.']]],
+    setup: ['the Practice page', [
+      ['How do I start practicing?', 'Press <b>5 easy questions</b>. You get one question at a time, with no clock.'],
+      ['What is “Build your own practice set”?', 'It lets you choose the kind of question, how hard it is and how many you get. You can leave it closed until you want it.'],
+      ['Where can I see my mistakes?', 'Once you have a wrong answer, a button named “Try again the ones I got wrong” appears on this page. <b>4 My progress</b> also shows which kinds of question need more work.']]],
+    question: ['answering a question', [
+      ['How do I answer?', 'Press the choice you think is right. The site then tells you whether you were right and explains why.'],
+      ['What do I do after I answer?', 'Press the big <b>Next</b> button to go to the next question.'],
+      ['How do I stop?', 'Press the button near the top of the question that ends the set, or press <b>Back</b>. Every answer you have given is kept.']]],
+    drills: ['the short exercises', [
+      ['What are these?', 'Each exercise is a set of quick cards that trains one small step. They are a good warm-up when you have five minutes.'],
+      ['How do I start one?', 'Pick an exercise and press <b>Start</b>. After each card you will see the right answer and the reason for it.']]],
+    progress: ['My progress', [
+      ['Why is there so little here?', 'This page fills in by itself as you answer practice questions. Answer a few and come back.'],
+      ['What do the colored squares mean?', 'Each square is one kind of question. The key above the squares explains the colors. Press a square to see what to work on.'],
+      ['Where can I see my mistakes?', 'Scroll to “Why you miss” on this page, or press <b>3 Practice</b> and then “Try again the ones I got wrong”.']]],
+    saved: ['your saved progress', [
+      ['Where is my progress saved?', 'In the browser on this device. If you sign in to a free account, it is also kept in the account, so it follows you to other devices.'],
+      ['Can I lose it?', 'Yes, if you clear this browser’s data and you have no account and no backup file. An account or a backup file keeps it safe.'],
+      ['Does the site work without the internet?', 'Lessons and any questions you have already opened still work. New questions need a connection.']]],
+    other: ['this page', [
+      ['Where do I start?', 'Press <b>Home</b> at the top, then press <b>Start</b> on Reading &amp; Writing or on Math.']]]
+  };
+  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other' };
+  var helpEl = null, helpFrom = null;
+  function helpKey() {
+    var v = cur.view;
+    if ((v === 'practice' || v === 'mprac') && $('#tend, .mpbar', viewEl[v])) { return 'question'; }
+    return HELP_VIEW[v] || (VIEW_SUBJ[v] && VIEW_SUBJ[v] !== 'home' ? 'learn' : 'other');
+  }
+  function helpOpen() {
+    if (helpEl) { return; }
+    var h = HELP[helpKey()], qa = function (x) { return '<div class="help-qa"><h3>' + x[0] + '</h3><p>' + x[1] + '</p></div>'; };
+    helpFrom = document.activeElement;
+    helpEl = document.createElement('div');
+    helpEl.className = 'tour help'; helpEl.id = 'help';
+    helpEl.setAttribute('role', 'dialog'); helpEl.setAttribute('aria-modal', 'true'); helpEl.setAttribute('aria-labelledby', 'help-h');
+    helpEl.innerHTML = '<div class="tour-card help-card"><div class="help-top"><p class="tour-n">Help</p><button type="button" class="btn ghost help-x" data-help-close>Close</button></div><h2 class="tour-h" id="help-h" tabindex="-1">Help with ' + h[0] + '</h2>' +
+      h[1].map(qa).join('') + '<p class="help-also">Always there</p>' + HELP_COMMON.map(qa).join('') +
+      '<div class="help-more"><button type="button" class="btn ghost" data-help-tour>Take the one-minute tour</button><a class="btn ghost" href="#my-data" data-help-go>Where my progress is saved</a><a class="btn ghost" href="#suggest" data-help-go>Ask a question</a></div>' +
+      '<div class="tour-row"><span></span><button type="button" class="btn big" data-help-close>Close help</button></div></div>';
+    document.body.appendChild(helpEl);
+    document.documentElement.classList.add('tour-open');
+    var b = document.getElementById('help-btn'); if (b) { b.setAttribute('aria-expanded', 'true'); }
+    focusQuiet($('.tour-h', helpEl));
+  }
+  function helpClose(quiet) {
+    if (!helpEl) { return; }
+    helpEl.parentNode.removeChild(helpEl); helpEl = null;
+    document.documentElement.classList.remove('tour-open');
+    var b = document.getElementById('help-btn'); if (b) { b.setAttribute('aria-expanded', 'false'); }
+    if (!quiet && helpFrom && document.body.contains(helpFrom)) { focusQuiet(helpFrom); }
+    helpFrom = null;
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target : null;
+    if (!t) { return; }
+    if (t.closest('[data-help]')) { e.preventDefault(); if (helpEl) { helpClose(); } else { helpOpen(); } return; }
+    if (!helpEl) { return; }
+    if (t.closest('[data-help-tour]')) { helpClose(true); tourOpen(); }
+    else if (t.closest('[data-help-go]')) { helpClose(true); }
+    else if (t.closest('[data-help-close]') || t === helpEl) { helpClose(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!helpEl) { return; }
+    e.stopPropagation();   /* the page's own keys stay quiet under the help box */
+    if (e.key === 'Escape') { helpClose(); return; }
+    if (e.key !== 'Tab') { return; }
+    var f = $$('a[href], button', helpEl), first = f[0], lastEl = f[f.length - 1], a = document.activeElement;
+    if (!helpEl.contains(a) || a === $('.tour-h', helpEl)) { e.preventDefault(); (e.shiftKey ? lastEl : first).focus(); }
+    else if (e.shiftKey && a === first) { e.preventDefault(); lastEl.focus(); }
+    else if (!e.shiftKey && a === lastEl) { e.preventDefault(); first.focus(); }
+  }, true);
   /* =================== Home, navigation, appearance and suggestions =================== */
   /* each page: [view, address, name, what is on it, group]. Inside a subject the step bar shows the four groups in
      order (1 Start here, 2 Learn, 3 Practice, 4 My progress). The guide bar under it says where you are and holds
@@ -9044,7 +9216,7 @@ function rReasoningHTML() {
     var mt = 0; Object.keys(store.m).forEach(function (k) { if (MQBY[k]) { mt++; } });
     function pick(key, what) {
       var S = SUBJ[key];
-      return '<a class="hpick hpick-' + key + '" href="#' + S.items[0][1] + '"><span class="hpick-ico">' + ICON[S.icon] + '</span><span class="hpick-t"><b>' + S.name + '</b><span>' + what + '</span></span><span class="hpick-go">Start <span aria-hidden="true">→</span></span></a>';
+      return '<a class="hpick hpick-' + key + '" href="#' + S.items[0][1] + '"><span class="hpick-ico">' + ICON[S.icon] + '</span><span class="hpick-t"><b>' + S.name + '</b><span>' + what + '</span></span><span class="hpick-go"><span>Start<span class="hpick-go-n"> ' + S.name + '</span></span> <span aria-hidden="true">→</span></span></a>';
     }
     viewEl.home.innerHTML = '<div class="wrap">' +
       '<section class="hh hh-simple"><div class="hh-text"><p class="hpill">Free · no sign-up needed</p><h1>Get ready for the SAT, one step at a time</h1>' +
@@ -9307,6 +9479,7 @@ function rReasoningHTML() {
       if (!(RM && !RM.over)) { rdIntro(); }
       toTop(); return;
     }
+    if (token === 'rw-missed') { showView('practice'); if (!built.practice) { buildPractice(); } rwMissed(); toTop(); return; }
     if (token === 'rw-easy' || token === 'rw-mixed') { showView('practice'); if (!built.practice) { buildPractice(); } rwQuick(token === 'rw-easy' ? 5 : 10, token === 'rw-easy' ? 'Easy' : ''); toTop(); return; }
     if (token === 'practice' || token === 'timed' || token === 'test') { showView('practice'); buildPractice(); if (rdIntroOn && !RM && !TS) { timedSetup(); } toTop(); return; }
     if (token === 'rw-module') {
@@ -9365,6 +9538,7 @@ function rReasoningHTML() {
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
     if (token === 'm-sheet') { showView('mref'); buildMRef(); scrollToEl(document.getElementById('m-sheet')); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
+    if (token === 'm-missed') { showView('mprac'); mMissed(); toTop(); return true; }
     if (token === 'm-easy' || token === 'm-mixed') { showView('mprac'); mQuick(token === 'm-easy' ? 5 : 10, token === 'm-easy' ? 'E' : ''); toTop(); return true; }
     if (token === 'm-drills' || /^m-drill-/.test(token)) {
       var mk = token.replace(/^m-drill-/, '');

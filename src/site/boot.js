@@ -140,6 +140,7 @@
       if (!(RM && !RM.over)) { rdIntro(); }
       toTop(); return;
     }
+    if (token === 'rw-missed') { showView('practice'); if (!built.practice) { buildPractice(); } rwMissed(); toTop(); return; }
     if (token === 'rw-easy' || token === 'rw-mixed') { showView('practice'); if (!built.practice) { buildPractice(); } rwQuick(token === 'rw-easy' ? 5 : 10, token === 'rw-easy' ? 'Easy' : ''); toTop(); return; }
     if (token === 'practice' || token === 'timed' || token === 'test') { showView('practice'); buildPractice(); if (rdIntroOn && !RM && !TS) { timedSetup(); } toTop(); return; }
     if (token === 'rw-module') {
@@ -198,6 +199,7 @@
     if (token === 'm-ref') { showView('mref'); buildMRef(); toTop(); return true; }
     if (token === 'm-sheet') { showView('mref'); buildMRef(); scrollToEl(document.getElementById('m-sheet')); return true; }
     if (token === 'm-practice') { showView('mprac'); buildMPrac(); toTop(); return true; }
+    if (token === 'm-missed') { showView('mprac'); mMissed(); toTop(); return true; }
     if (token === 'm-easy' || token === 'm-mixed') { showView('mprac'); mQuick(token === 'm-easy' ? 5 : 10, token === 'm-easy' ? 'E' : ''); toTop(); return true; }
     if (token === 'm-drills' || /^m-drill-/.test(token)) {
       var mk = token.replace(/^m-drill-/, '');

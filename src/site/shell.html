@@ -22,12 +22,14 @@
         <button class="tool" type="button" id="theme-btn" aria-expanded="false" aria-controls="theme-pop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 18.5L8 6.5l4.5 12M5.2 14h5.6"/><path d="M14 18.5l3.2-8.5 3.3 8.5M15.2 15.5h4.1"/></svg><span>Text size</span></button>
         <div class="theme-pop" id="theme-pop" role="dialog" aria-label="Text size and colors" hidden></div>
       </div>
+      <button class="tool help-tool" type="button" id="help-btn" data-help aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M9.6 9.6a2.5 2.5 0 1 1 3.6 2.2c-.8.5-1.2 1-1.2 2"/><path d="M12 16.9v.1"/></svg><span>Help</span></button>
     </div>
   </div>
 </header>
 <nav class="secnav" id="tabs" aria-label="Steps" hidden><div class="wrap secin" id="secin"></div><div class="wrap"><p class="strail" id="strail"></p></div></nav>
 <nav class="guide" id="guide" aria-label="Where you are" hidden><div class="wrap guidein"><a class="gback" id="gback" href="#home"><span aria-hidden="true">←</span><span>Back</span></a><p class="gtrail" id="gtrail"></p><p class="ghere" id="ghere" aria-hidden="true"></p><a class="ghome" href="#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.2L12 4.5l8 6.7"/><path d="M6.5 9.5v10h11v-10"/></svg>Home</a></div></nav>
-<p class="offnote" id="offnote" role="status" hidden><span class="wrap">You are offline. Lessons and the questions saved on this device still work. <a href="#my-data-offline">What is saved?</a></span></p>
+<p class="offnote" id="offnote" role="status" hidden></p>
+<noscript><p class="noscript">SAT Sprint needs JavaScript to show its lessons and questions. Please turn JavaScript on in your browser settings, then load this page again.</p></noscript>
 
 <main id="main" tabindex="-1">
   <section id="v-home" class="view" aria-label="Home"></section>
@@ -63,7 +65,7 @@
 <footer class="foot"><div class="wrap">
   <div class="foot-cols" id="footcols"></div>
   <div class="foot-legal">
-    <p>Passages, questions, answer choices, answer keys and explanations come from College Board’s free SAT Suite Question Bank; the literary excerpts belong to their authors. Math questions and explanations are rebuilt from that bank: the words as text, each expression and figure exactly as drawn there, with the printed page one tap away. The methods, lessons, question types and counts were built for this site from an export of that bank.</p>
+    <details class="foot-src"><summary>Where do the questions come from?</summary><p>Passages, questions, answer choices, answer keys and explanations come from College Board’s free SAT Suite Question Bank; the literary excerpts belong to their authors. Math questions and explanations are rebuilt from that bank: the words as text, each expression and figure exactly as drawn there, with the printed page one tap away. The methods, lessons, question types and counts were built for this site from an export of that bank.</p></details>
     <p>SAT® is a trademark registered by College Board, which is not affiliated with, and does not endorse, this site. <span id="foot-saved">Progress is saved in your browser only.</span></p>
   </div>
 </div></footer>
