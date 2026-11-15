@@ -173,7 +173,6 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     const st = await t.saved(), y = await t.p.evaluate(() => { const x = new Date(Date.now() - 864e5); return x.getFullYear() + '-' + ('0' + (x.getMonth() + 1)).slice(-2) + '-' + ('0' + x.getDate()).slice(-2); });
     ok(Object.keys(st.s.pz.x).some(k => k.indexOf('freeze.') === 0) && bal(st) === 70, 'a freeze costs 30 coins');
     ok(st.s.pz.fz && st.s.pz.fz[y] === 1, 'it covers yesterday on its own (' + y + ')');
-    await t.p.waitForTimeout(800);   /* let the save land before the reload */
     await t.go('home');
     ok((await t.p.textContent('.hstreak-n b')).trim() === '10', 'the streak carries on: ' + (await t.p.textContent('.hstreak-n b')).trim() + ' days');
     await t.go('crates');
@@ -359,8 +358,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
   {
     const t = await fresh((st, ids) => { st.s.pz = { o: {} }; ids.forEach((id, i) => { st.s.pz.o['all' + i] = [i + 1, 'pencil', id, 'c', 0, '']; }); }, CATALOG.map(it => it.id));
     await t.go('crates', 1500);
-    /* a canvas that has drawn a picture from a file cannot be read back in this test browser: that counts as drawn */
-    const inked = sel => t.p.evaluate(q => { const cv = document.querySelector(q); if (!cv || !cv.width) { return 0; } let d; try { d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data; } catch (e) { return 999; } let n = 0; for (let i = 3; i < d.length; i += 16) { if (d[i] > 0) { n++; } } return n; }, sel);
+    const inked = sel => t.p.evaluate(q => { const cv = document.querySelector(q); if (!cv || !cv.width) { return 0; } const d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data; let n = 0; for (let i = 3; i < d.length; i += 16) { if (d[i] > 0) { n++; } } return n; }, sel);
     const fx = CATALOG.filter(it => it.id.indexOf('fx:') === 0).map(it => it.id.slice(3)), silent = [];
     for (const k of fx) {
       const b = await t.p.$('[data-pz-try="' + k + '"]'); if (!b) { silent.push(k + ' (no Try)'); continue; }
@@ -380,7 +378,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     }
     ok(auras.length === CATALOG.filter(it => it.id.indexOf('aura:') === 0).length && !dark.length, 'all ' + auras.length + ' auras draw on their tiles' + (dark.length ? '; blank: ' + dark.join(', ') : ''));
     const bare = [];
-    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'paper:cobweb', 'paper:meteors', 'paper:ufo', 'paper:lava', 'paper:kaleido', 'paper:whale', 'paper:astral-throne', 'paper:dark-matter-halo', 'paper:aurora-overdrive', 'paper:hellfire-orrery', 'paper:frozen-aurora', 'paper:viridian-cathedral', 'paper:hologram-dominion', 'paper:balance-eternal', 'theme:prize-dawn', 'theme:prize-eclipse', 'theme:prize-boreal', 'theme:prize-megastar', 'theme:prize-haunted', 'theme:prize-eldritch', 'theme:prize-lanterns', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal']) {
+    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'paper:cobweb', 'paper:meteors', 'paper:ufo', 'paper:lava', 'paper:kaleido', 'paper:whale', 'theme:prize-haunted', 'theme:prize-eldritch', 'theme:prize-lanterns', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal']) {
       const slot = id.split(':')[0], b = await t.p.$('[data-pz-wear="' + slot + '"][data-pz-id="' + id + '"]');
       if (!b) { bare.push(id + ' (no Wear)'); continue; }
       await b.evaluate(el => el.scrollIntoView({ block: 'center' })); await b.click(); await t.p.waitForTimeout(900);
