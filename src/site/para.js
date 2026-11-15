@@ -68,7 +68,7 @@
       '</dl><p class="pretty" style="margin-top:.8rem"><b>' + esc(A.takeaway) + '</b></p></section>';
     h += '<section class="sec" id="ppointers"><div class="sech"><h3 class="h2">Follow the pointers</h3><p class="lede">' + esc(P.pointers.intro) + '</p></div><ul class="plainlist">' +
       P.pointers.tips.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' +
-      ((ANN.pointer || []).length ? '<p class="row" style="margin-top:.9rem"><a class="btn sm" href="#drills" data-drill="pointer">Drill: Follow the pointer</a></p>' : '') + '</section>';
+      ((ANN.pointer || []).length ? '<p class="row" style="margin-top:.9rem"><a class="btn sm" href="#drills" data-drill="pointer">Short exercise: Follow the pointer</a></p>' : '') + '</section>';
     var L = P.longs, LB = L.bank;
     h += '<section class="sec" id="plongs"><div class="sech"><h3 class="h2">Long sentences: where the weight sits</h3><p class="lede">' + esc(LB.intro) + '</p></div>' +
       '<div class="ctable">' + LB.rows.map(function (r) {
@@ -76,7 +76,7 @@
       }).join('') + '</div>' +
       '<h4 class="subh">Inside a long sentence</h4><p class="fine">From ' + P.nLong + ' long sentences cut into pieces by hand in the first sample.</p><ul class="plainlist">' + L.facts.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul>' +
       '<h4 class="subh">Read a long sentence in this order</h4><ol class="olist">' + L.order.map(function (o) { return '<li>' + esc(o.replace(/^\d+\.\s*/, '')) + '</li>'; }).join('') + '</ol>' +
-      '<p class="row" style="margin-top:.9rem"><a class="btn sm" href="#drills" data-drill="core">Drill: Core first</a><a class="btn sm ghost" href="#long">Seven sentences taken apart</a></p></section>';
+      '<p class="row" style="margin-top:.9rem"><a class="btn sm" href="#drills" data-drill="core">Short exercise: Core first</a><a class="btn sm ghost" href="#long">Seven sentences taken apart</a></p></section>';
     var TR = P.traps;
     h += '<section class="sec" id="ptraps"><div class="sech"><h3 class="h2">How the wrong choices fail, by job</h3><p class="lede">' + esc(TR.intro) + '</p></div><div class="ctable">' +
       TR.rows.map(function (r) {
@@ -85,7 +85,7 @@
     h += '<section class="sec" id="pmyths"><div class="sech"><h3 class="h2">Shortcuts the full bank rules out</h3><p class="lede">Checked against College Board’s answer key. More in <a href="#myths">Shortcuts that do not work</a>.</p></div><ul class="plainlist">' +
       P.myths.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></section>';
     h += '<p class="fine" style="margin-top:2rem">' + esc(P.caveat) + '</p>';
-    h += '<div class="nextlinks"><a class="btn" href="#say">Step 3: Say</a><a class="btn ghost" href="#drills" data-drill="point">Drill: Find the Point</a><a class="btn ghost" href="#drills" data-drill="tag">Drill: Tag the sentence</a></div>';
+    h += nextHTML(['say', 'Go to step 3: Say', 'Say your own answer before you read the choices.'], ['drills', 'practice finding the main point with a short exercise', 'point']);
     return h;
   }
   function wirePara(host) {
@@ -111,7 +111,7 @@
     h += '<section class="sec" id="ntraps"><div class="sech"><h3 class="h2">How the wrong choices are built</h3></div><ul class="plainlist">' +
       P.traps.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></section>';
     h += '<p class="fine" style="margin-top:2rem">' + esc(P.caveat) + '</p>';
-    h += '<div class="nextlinks"><a class="btn" href="#drills" data-drill="notes">Drill: Notes, goal first (' + B.length + ')</a><a class="btn ghost" href="#practice">Practice all ' + B.length + ' against the clock</a></div>';
+    h += nextHTML(['drills', 'Practice notes questions with a short exercise', 'Read the goal first, then pick the choice that meets it.', 'notes'], ['practice', 'practice all ' + B.length + ' notes questions']);
     return h;
   }
   function wireNotes() {}

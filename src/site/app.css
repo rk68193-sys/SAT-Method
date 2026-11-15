@@ -1108,8 +1108,6 @@ details.ctx summary { cursor: pointer; font-weight: 700; }
 .stance.s-lean { background: var(--ok-soft); color: var(--ok); box-shadow: inset 0 0 0 1px var(--ok); }
 .stance.s-none { background: var(--sunk); color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--line-strong); }
 .stancekey { margin-top: .8rem; font-size: .92rem; color: var(--ink-2); line-height: 2; }
-#demo-q.idle .opt { pointer-events: none; opacity: .6; }
-#demo-q.idle::before { content: "Start the clock to answer."; display: block; font: 600 .78rem/1.4 var(--mono); color: var(--muted); margin-bottom: .4rem; }
 .sitex { display: grid; gap: .15rem; margin-top: .35rem; }
 .sitex .passage { font-family: var(--quote); }
 .whypick { margin-top: .5rem; }
@@ -1183,7 +1181,8 @@ body {
   min-height: 100vh;
 }
 ::selection { background: var(--hl); color: var(--hl-ink); }
-a:hover { background: var(--hl); color: var(--hl-ink); border-radius: 4px; }
+a:hover { background: var(--hl); color: var(--hl-ink); }
+a:not([class]):hover { border-radius: 4px; }   /* only plain text links: a button or card that is a link keeps its own shape */
 .vtitle { font: 700 clamp(1.9rem, 1.35rem + 2.1vw, 2.75rem)/1.08 var(--display); letter-spacing: -.012em; }
 .h2 { font: 700 clamp(1.45rem, 1.15rem + 1.1vw, 1.95rem)/1.15 var(--display); letter-spacing: -.01em; }
 .h3 { font-family: var(--display); font-weight: 600; letter-spacing: -.005em; }
@@ -1416,7 +1415,7 @@ header.mhead { display: block; max-width: 52rem; }
 @media (max-width: 1000px) { .mdoms { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mcards3 { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .mdoms { grid-template-columns: 1fr; } .mprog-row { grid-template-columns: 1fr; gap: .25rem; } }
 
-.mskills { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: .9rem; margin-top: 1.1rem; }
+.mskills { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr)); gap: .9rem; margin-top: 1.1rem; }
 .mskill { display: grid; gap: .45rem; align-content: start; padding: 1.1rem 1.2rem; border-radius: 18px; border: 1.5px solid var(--line); background: var(--card); text-decoration: none; box-shadow: var(--shadow); }
 .mskill b { font: 600 1.14rem/1.25 var(--display); }
 .mskill-idea { font-size: .97rem; color: var(--ink-2); }
@@ -1568,7 +1567,7 @@ header.mhead { display: block; max-width: 52rem; }
 .mreach .mix { margin-left: .35rem; }
 .mreach b { color: var(--ink); }
 .mnote { margin-top: 1.4rem; padding: 1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1.5px dashed var(--line-strong); max-width: 52rem; }
-.mpidxs { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: .6rem; margin-top: 1.6rem; }
+.mpidxs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(14rem, 100%), 1fr)); gap: .6rem; margin-top: 1.6rem; }
 .mpidx { display: grid; grid-template-columns: 2.2rem 1fr; gap: .1rem .6rem; align-items: center; padding: .7rem .8rem; border-radius: 16px; border: 1.5px solid var(--line); background: var(--card); text-decoration: none; }
 .mpidx b { font: 600 1rem/1.2 var(--display); }
 .mpidx span:last-child { grid-column: 2; font-size: .82rem; color: var(--muted); }
@@ -1648,7 +1647,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .mpset[data-mode="module"] .mp-learnonly { display: none; }
 .mcalc-btn svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .mcalc-btn[aria-pressed="true"] { background: var(--hl); border-color: var(--pencil); color: var(--hl-ink); }
-.mcalc { position: fixed; z-index: 25; right: 1rem; bottom: 1rem; top: calc(var(--top-h) + 1rem); width: min(30rem, calc(100vw - 2rem)); display: grid; grid-template-rows: auto minmax(0, 1fr); border-radius: 20px; overflow: hidden; background: var(--card); border: 1px solid var(--line-strong); box-shadow: var(--shadow-lg); }
+.mcalc { position: fixed; z-index: 29; right: 1rem; bottom: 1rem; top: calc(var(--panel-top, var(--top-h)) + 1rem); width: min(30rem, calc(100vw - 2rem)); display: grid; grid-template-rows: auto minmax(0, 1fr); border-radius: 20px; overflow: hidden; background: var(--card); border: 1px solid var(--line-strong); box-shadow: var(--shadow-lg); }
 .mcalc[hidden] { display: none; }
 .mcalc-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .8rem; padding: .55rem .6rem .55rem 1rem; border-bottom: 1px solid var(--line); }
 .mcalc-bar b { font: 600 1.02rem/1.2 var(--display); }
@@ -1721,7 +1720,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 
 /* ---------- Math: mastery map ---------- */
 .mm-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 52rem; }
-.mm-nexts { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+.mm-nexts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr)); gap: 1rem; margin-top: 1.2rem; }
 .mm-next-c { display: grid; gap: .55rem; align-content: start; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
 .mm-next-c .h3 { font-size: 1.12rem; }
 .mm-next-top { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .7rem; font-size: .9rem; }
@@ -1864,12 +1863,6 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .mpchoices.txt .mpch.wrong .mpch-l { background: var(--bad); border-color: var(--bad); color: var(--card); }
 @media (max-width: 520px) { .mpchoices.txt { grid-template-columns: minmax(0, 1fr); } .mpchoices.txt .mmch { grid-template-columns: minmax(0, 1fr); } .mtx { font-size: 1.02rem; } }
 
-/* ---------- section bar: four groups, and a second row for the pages of the group you are in ---------- */
-/* sized so the ten Math Learn pages fit one line at full width */
-.subnav { display: flex; flex-wrap: wrap; gap: .35rem; padding-top: .8rem; }
-.subnav[hidden] { display: none; }
-.subnav a { padding: .4rem .72rem; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--card); font: 500 .9rem/1.2 var(--body); color: var(--ink-2); text-decoration: none; white-space: nowrap; }
-.subnav a:hover { border-color: var(--ink); color: var(--ink); background: var(--card); }
 .subnav a[aria-current="page"] { background: var(--subj-soft); border-color: var(--subj); color: var(--ink); font-weight: 600; }
 @media (max-width: 820px) {
   .secin[data-n="4"] .secnav-l { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -1888,12 +1881,12 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .hub-res b { font: 600 1.02rem/1.3 var(--display); }
 .hub-res .mtag { justify-self: start; margin-right: 0; }
 .hub-s { grid-column: 2; font-size: .9rem; color: var(--muted); }
-.hub-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+.hub-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr)); gap: 1rem; margin-top: 1.2rem; }
 .hub-card { display: grid; gap: .4rem; align-content: start; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); text-decoration: none; transition: transform .12s ease, border-color .12s ease; }
 .hub-card:hover { border-color: var(--line-strong); background: var(--card); color: var(--ink); transform: translateY(-2px); }
 .hub-card b { font: 600 1.1rem/1.25 var(--display); }
 .hub-card span { font-size: .95rem; line-height: 1.45; color: var(--ink-2); }
-.hsteps.hub-order { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+.hsteps.hub-order { grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); }
 @media (max-width: 560px) { .hub-res a { grid-template-columns: minmax(0, 1fr); } .hub-s { grid-column: 1; } }
 
 /* ---------- Home: a real question in the hero, and the numbers in one strip ---------- */
@@ -1977,7 +1970,7 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .row:has(#bk-file:focus-visible) .bk-pick { outline: 2px solid var(--focus); outline-offset: 2px; }
 .bk-found { display: grid; gap: .7rem; margin-top: 1.1rem; max-width: 44rem; padding: 1.1rem 1.2rem; border-radius: 16px; background: var(--card); border: 1px solid var(--line-strong); box-shadow: var(--shadow); }
 .bk-found .plainlist { margin-top: 0; }
-.off-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; margin-top: 1.2rem; max-width: 60rem; }
+.off-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr)); gap: 1rem; margin-top: 1.2rem; max-width: 60rem; }
 .off-card { display: grid; gap: .7rem; align-content: start; padding: 1.1rem 1.2rem; border-radius: 18px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); }
 .off-card h4 { font: 600 1.08rem/1.3 var(--display); }
 .off-card progress { width: 100%; height: .7rem; accent-color: var(--pencil); }
@@ -2108,5 +2101,259 @@ details[open] > .mpat-sum .mpat-more::before { transform: translateY(2px) rotate
 .msheet-f sup { font-size: .7em; line-height: 0; }
 .msheet-f .fr { font-size: .8em; }
 .msheet-facts { display: grid; gap: .35rem; margin-top: .9rem; padding: .8rem 1rem .8rem 2rem; border-radius: 14px; background: var(--sunk); list-style: disc; font-size: .97rem; }
-#m-sheet .msheet-grid { grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); margin-top: 1.2rem; }
+#m-sheet .msheet-grid { grid-template-columns: repeat(auto-fill, minmax(min(10.5rem, 100%), 1fr)); margin-top: 1.2rem; }
 @media (max-width: 340px) { .msheet-c.wide { grid-column: auto; } }
+
+
+/* =================================================================
+   Guided layout: a step bar (1 Start here, 2 Learn, 3 Practice, 4 My progress), a guide bar that stays on screen with
+   Back, "You are here" and Home, one next step at the foot of each page, and a text size setting.
+   ================================================================= */
+/* text size: the site is measured in rem, so the page root scales every word */
+html[data-size="l"] { font-size: 112.5%; }
+html[data-size="xl"] { font-size: 125%; }
+
+/* small print stays readable: labels and notes are never smaller than about 14px, and darker */
+.eyebrow, .label, .seg legend { font-size: .84rem; letter-spacing: .05em; }
+.label { color: var(--ink-2); }
+.fine { font-size: .96rem; color: var(--ink-2); }
+.mtag { font-size: .8rem; }
+.hub-s { font-size: .96rem; color: var(--ink-2); }
+
+/* the top bar: on a phone, the name and the two tools share the first row, the subjects take the second */
+.toptools .tool { min-height: 2.6rem; }
+@media (max-width: 820px) {
+  .topin { gap: .5rem .5rem; }
+  .toptools { margin-left: auto; }
+  .subj a { min-height: 2.9rem; font-size: 1rem; }
+}
+@media (max-width: 480px) { .tool svg { display: inline-block; } .tool { padding-inline: .6rem; } .subj a { font-size: .95rem; padding-inline: .45rem; } }
+@media (max-width: 380px) { .tool svg { display: none; } .subj a { min-width: 0; white-space: normal; text-align: center; line-height: 1.15; } }
+
+/* the step bar: four numbered steps in one row */
+.secnav-l a { display: inline-flex; align-items: center; gap: .55rem; }
+.secn { display: inline-grid; place-items: center; flex: none; width: 1.6rem; height: 1.6rem; border-radius: 99px; background: var(--sunk); border: 1.5px solid var(--line-strong); font: 600 .85rem/1 var(--display); color: var(--ink-2); }
+.secnav-l a[aria-current="page"] .secn { background: var(--subj); border-color: var(--subj); color: #fff; }
+.secnav-l a { font-size: 1.02rem; }
+.strail { display: none; }
+@media (max-width: 820px) {
+  .secnav-t { display: none; }
+  .secin { padding-block: .6rem .5rem; }
+  .secnav-l, .secin[data-n] .secnav-l { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .35rem; }
+  .secnav-l a { display: grid; justify-items: center; align-content: center; gap: .25rem; min-height: 3.6rem; padding: .4rem .2rem; font-size: .9rem; line-height: 1.15; }
+  .secnav-l a:last-child { grid-column: auto; }
+  .secnav-l a[aria-current="page"] .secn { background: var(--act-ink); border-color: var(--act-ink); color: var(--act); }
+  .strail { display: block; padding: .1rem 0 .7rem; font-size: .95rem; color: var(--ink-2); line-height: 1.5; }
+}
+
+/* the guide bar: Back, "You are here" and (on a phone) Home stay on screen while you scroll */
+.guide { position: sticky; top: var(--head-h, 0px); z-index: 28; background: var(--glass); -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--line); }
+.guide[hidden] { display: none; }
+.guidein { display: flex; align-items: center; gap: .5rem 1rem; min-height: 3.3rem; padding-block: .35rem; }
+.gback, .ghome { display: inline-flex; align-items: center; gap: .45rem; flex: none; min-height: 2.6rem; padding: .45rem 1rem; border-radius: 999px; border: 1.5px solid var(--line-strong); background: var(--card); color: var(--ink); font: 600 1rem/1.1 var(--body); text-decoration: none; white-space: nowrap; }
+.gback:hover, .ghome:hover { border-color: var(--ink); background: var(--card); color: var(--ink); }
+.gback span[aria-hidden] { font-size: 1.15rem; line-height: 1; }
+.ghome svg { width: 1.15rem; height: 1.15rem; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.gtrail, .strail { min-width: 0; color: var(--ink-2); font-size: .98rem; line-height: 1.4; text-wrap: pretty; }
+.gtrail .gnw, .strail .gnw { white-space: nowrap; }
+.gyou { color: var(--muted); margin-right: .2rem; }
+.gsep { margin-inline: .4rem; color: var(--muted); }
+.gtrail a, .strail a { color: var(--ink-2); }
+.gtrail b, .strail b { color: var(--ink); font-weight: 600; }
+.ghome { display: none; margin-left: auto; }
+@media (max-width: 820px) {
+  .gtrail { display: none; }
+  .ghome { display: inline-flex; }
+  .guidein { min-height: 3.2rem; }
+  .gback { max-width: calc(100% - 7.5rem); overflow: hidden; text-overflow: ellipsis; }
+}
+@media (max-width: 420px) { .gback-to { display: none; } }
+.offnote { position: relative; z-index: 1; }
+
+/* the one next step at the foot of a page */
+.nextstep { display: grid; justify-items: start; gap: .7rem; margin: 3rem 0 1rem; padding: 1.4rem clamp(1.1rem, 3vw, 1.7rem); max-width: 46rem; border-radius: 22px; background: var(--subj-soft); border: 1.5px solid var(--subj-line); }
+.nextstep[hidden] { display: none; }
+#nextbox { margin-top: 2.5rem; margin-bottom: 0; }
+.nextstep-h { font: 600 .84rem/1.3 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--subj); }
+body[data-subj="home"] .nextstep-h { color: var(--ink-2); }
+.nextstep-go { font-size: 1.15rem; white-space: normal; text-align: left; }
+.nextstep-why, .nextstep-alt { color: var(--ink-2); font-size: 1.02rem; max-width: 40em; }
+
+/* Home: what it is, the two subjects, how it works */
+.hh.hh-simple { grid-template-columns: minmax(0, 1fr); max-width: 52rem; }
+.hq { margin-top: 2rem; font: 600 1.35rem/1.25 var(--display); }
+.hpicks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
+.hpick { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; gap: .6rem 1rem; align-items: center; padding: 1.3rem 1.4rem; border-radius: 22px; background: var(--card); border: 2px solid var(--line-strong); box-shadow: var(--shadow); text-decoration: none; color: var(--ink); }
+.hpick:hover { border-color: var(--ink); background: var(--card); color: var(--ink); }
+.hpick-ico { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 14px; }
+.hpick-ico svg { width: 1.7rem; height: 1.7rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.hpick-rw .hpick-ico { background: var(--rw-soft); color: var(--rw); }
+.hpick-math .hpick-ico { background: var(--math-soft); color: var(--math); }
+.hpick-t { display: grid; gap: .2rem; }
+.hpick-t b { font: 600 1.4rem/1.2 var(--display); }
+.hpick-t span { color: var(--ink-2); font-size: 1.02rem; }
+.hpick-go { grid-column: 1 / -1; justify-self: start; display: inline-flex; gap: .4rem; padding: .6rem 1.3rem; border-radius: 999px; background: var(--act); color: var(--act-ink); font: 600 1.05rem/1.1 var(--body); }
+.hnot { margin-top: 1.2rem; font-size: 1.06rem; color: var(--ink-2); }
+.hhow .hsteps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.hplanrow { display: grid; gap: .8rem; max-width: 40rem; }
+.hplanrow .hcont, .hplanrow .hcheck { margin-top: 0; }
+@media (max-width: 640px) { .hpicks, .hhow .hsteps { grid-template-columns: minmax(0, 1fr); } }
+/* the smallest phones: no icon, so each subject's name fits on one line and both subjects fit on the first screen */
+@media (max-width: 380px) { .hpick { grid-template-columns: minmax(0, 1fr); gap: .5rem; padding: 1rem 1.1rem; } .hpick-ico { display: none; } }
+
+/* Learn: the numbered pages to start with, then the extras */
+.hub-main { grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr)); }
+.hub-card.hub-big { grid-template-columns: auto minmax(0, 1fr); column-gap: .9rem; border: 2px solid var(--line-strong); }
+.hub-card.hub-big > b, .hub-card.hub-big > span:not(.hub-n) { grid-column: 2; }
+.hub-n { grid-row: 1 / span 2; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 99px; background: var(--subj); color: #fff; font: 600 1.05rem/1 var(--display); }
+.hub-card.hub-big .hub-n { color: #fff; font-size: 1.05rem; }
+
+/* the text size and colors box opens where you are, with a Done button */
+.theme-pop { position: fixed; top: calc(var(--head-h, 0px) + .4rem); right: max(1rem, calc((100vw - 74rem) / 2 + 1rem)); max-height: calc(100vh - var(--head-h, 0px) - 5.5rem); overflow-y: auto; width: min(22rem, calc(100vw - 2rem)); }
+@media (max-width: 820px) { .theme-pop { top: 4rem; } }
+.size-list { border: 0; padding: .2rem .2rem .5rem; }
+.size-list legend, .theme-list legend { padding: .45rem .6rem .4rem; font: 600 .84rem/1.3 var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.size-opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; padding-inline: .3rem; }
+.size-opt { position: relative; display: grid; justify-items: center; gap: .15rem; padding: .55rem .3rem; border-radius: 12px; border: 1.5px solid var(--line); cursor: pointer; }
+.size-opt input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.size-a { font: 600 1rem/1 var(--display); }
+.size-a1 { font-size: 1.3rem; }
+.size-a2 { font-size: 1.65rem; }
+.size-n { font-size: .9rem; color: var(--ink-2); }
+.size-opt:has(input:checked) { border-color: var(--ink); background: var(--sunk); box-shadow: inset 0 0 0 1px var(--ink); }
+.size-opt:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 1px; }
+.theme-foot { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .5rem .6rem .35rem; }
+.theme-foot .theme-note { padding: 0; }
+
+/* a feedback line scrolled to the top of the screen stays clear of the bars that stay on screen */
+.verdict, .mpfb, .mpverdict, .dfeed { scroll-margin-top: calc(var(--top-h) + 14px); }
+/* keyboard hints only where there is a keyboard */
+@media (pointer: coarse) { .kbd-only { display: none; } }
+
+/* Practice: start right away, or choose your own set */
+.mpquick { display: grid; gap: .7rem; margin-top: 1.6rem; padding: 1.3rem clamp(1.1rem, 3vw, 1.6rem); max-width: 46rem; border-radius: 22px; background: var(--subj-soft); border: 1.5px solid var(--subj-line); }
+.mpquick .row { gap: .7rem; }
+.mpquick .fine { margin: 0; }
+.mpown { margin-top: 2.2rem; }
+.mpnext { margin: 1rem 0; }
+
+/* Short exercises: bigger, darker small print; the button to go on right under the verdict */
+.dcard .dmeta, .dcard .dlast { font: 400 .95rem/1.5 var(--body); color: var(--ink-2); }
+.dcard .dlast { color: var(--ink); }
+.dopt .k { font-size: .85rem; color: var(--ink-2); }
+.dopt small { font-size: .95rem; color: var(--ink-2); }
+.dbar .dstat { font: 600 .98rem/1.4 var(--body); }
+.dbar .dwatch { font-size: 1rem; color: var(--ink-2); min-width: 3rem; }
+.dfeed .dnext { margin: .9rem 0 .4rem; }
+.dprog { max-width: 40rem; }
+.dprog li { grid-template-columns: minmax(0, 1fr) auto; }
+.dprog li .muted { grid-column: 1 / -1; }
+
+/* Ask or suggest: the two ways to send */
+.sg-how-h { margin-top: .6rem; }
+.sg-how { display: grid; gap: .45rem; max-width: 42rem; }
+/* Backup: the download is confirmed in a box that says where the file went */
+.note.ok { margin-top: 1rem; max-width: 44rem; background: var(--ok-soft); color: var(--ink); border-left: 4px solid var(--ok); border-radius: 0 12px 12px 0; padding: .8rem 1rem; font-size: 1.02rem; }
+/* My study plan: Delete sits apart from Save */
+.plan-del-row { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+
+/* ---------- a calmer page: one welcome, one path, and the rest folded under plain questions ---------- */
+.hero.hero-plain { grid-template-columns: minmax(0, 1fr); max-width: 48rem; }
+.hero.hero-plain h1 { font: 600 clamp(2rem, 1.4rem + 2.6vw, 3rem)/1.1 var(--display); letter-spacing: -.02em; }
+.hero.hero-plain .lede + .lede, .mhead .lede + .lede { margin-top: .8rem; }
+.mstart-go { margin-top: 1.4rem; flex-basis: 100%; }
+.mstart-prog:empty { display: none; }
+.mstart-prog { margin-top: 1.4rem; max-width: 46rem; }
+.path .ps { font: 500 .92rem/1.4 var(--body); color: var(--ok); }
+.path .pd p a { font-weight: 500; }
+.folds { display: grid; gap: .7rem; margin-top: 1.3rem; max-width: 56rem; }
+.fold { border: 1.5px solid var(--line); border-radius: 18px; background: var(--card); scroll-margin-top: calc(var(--top-h) + 14px); }
+.fold[open] { border-color: var(--line-strong); }
+.fold > summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .2rem 1rem; padding: 1rem 1.2rem; cursor: pointer; list-style: none; border-radius: 18px; }
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary:hover { background: var(--sunk); }
+.fold-t { font: 600 1.12rem/1.3 var(--display); }
+.fold-s { grid-column: 1; font-size: .95rem; color: var(--ink-2); }
+.fold-i { grid-column: 2; grid-row: 1; width: 2rem; height: 2rem; border-radius: 99px; background: var(--sunk); position: relative; }
+.fold-i::before, .fold-i::after { content: ""; position: absolute; left: 50%; top: 50%; width: .8rem; height: 2px; margin: -1px 0 0 -.4rem; border-radius: 2px; background: var(--ink); }
+.fold-i::after { transform: rotate(90deg); transition: transform .15s ease; }
+.fold[open] .fold-i::after { transform: rotate(0deg); }
+.fold-b { padding: .2rem 1.2rem 1.3rem; display: grid; gap: .9rem; }
+.fold-b > p { max-width: 46rem; }
+.fold-b .dials { max-width: 40rem; margin-top: .3rem; }
+.fold-b .jtable, .fold-b .mdoms, .fold-b .mcards3, .fold-b .mnotin, .fold-b .mroutine, .fold-b .mfacts { margin-top: .2rem; }
+@media (prefers-reduced-motion: reduce) { .fold-i::after { transition: none; } }
+
+/* a phone's top of page: the subjects, the four steps, then one slim bar with Back, the page's name and Home */
+.ghere { display: none; }
+@media (max-width: 820px) {
+  .strail { display: none; }
+  .secin { padding-block: .55rem .6rem; }
+  .ghere { display: block; flex: 1 1 auto; min-width: 0; text-align: center; font: 600 1rem/1.2 var(--body); color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .gback, .ghome { min-height: 2.4rem; padding: .4rem .85rem; }
+  .gback .gback-to { display: none; }
+  .gback { max-width: none; }
+  .ghome { margin-left: 0; }
+  .guidein { min-height: 3rem; gap: .5rem; }
+  .subj a { box-shadow: none; background: transparent; }
+  .subj a[aria-current="page"] { background: var(--sunk); box-shadow: inset 0 0 0 1px var(--line); }
+}
+
+/* Home: three steps in a row, then one line on saving */
+.hhow .hsteps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.hsave { margin-top: 1.1rem; max-width: 46rem; color: var(--ink-2); }
+.hplanrow .hask { margin-top: 0; }
+@media (max-width: 760px) { .hhow .hsteps { grid-template-columns: minmax(0, 1fr); } .hhow .hsteps li { grid-template-columns: 2rem minmax(0, 1fr); column-gap: .9rem; padding: 1rem 1.1rem; } .hhow .hsteps li::before { grid-row: 1 / span 2; margin: 0; } .hhow .hsteps li > * { grid-column: 2; } }
+
+/* the welcome tour */
+html.tour-open { overflow: hidden; }
+.tour { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 1rem; background: rgba(10, 10, 14, .55); overflow-y: auto; }
+.tour-card { display: grid; gap: .8rem; width: min(34rem, 100%); padding: clamp(1.3rem, 4vw, 2.1rem); border-radius: 26px; background: var(--paper); color: var(--ink); box-shadow: var(--shadow-lg); }
+.tour-n { font: 600 .82rem/1.3 var(--body); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.tour-pic { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .5rem; min-height: 6.5rem; padding: 1.1rem .8rem; border-radius: 18px; background: var(--sunk); }
+.tour-h { font: 600 clamp(1.5rem, 1.2rem + 1.4vw, 1.95rem)/1.15 var(--display); letter-spacing: -.015em; margin-top: .3rem; }
+.tour-h:focus { outline: none; }
+.tour-card > p:not(.tour-n) { font-size: 1.08rem; line-height: 1.55; color: var(--ink-2); }
+.tour-card > p.tour-q { font-weight: 600; color: var(--ink); margin-top: .3rem; }
+.tour-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .7rem 1rem; margin-top: .6rem; }
+.tour-end { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+.tour-end .btn { justify-content: center; text-align: center; }
+.tp-mark { display: grid; place-items: center; width: 3.2rem; height: 3.2rem; border-radius: 14px; background: var(--ink); }
+.tp-mark svg { width: 2rem; height: 2rem; fill: none; stroke: var(--paper); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.tp-pill, .tp-chip { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .95rem; border-radius: 999px; background: var(--card); border: 1.5px solid var(--line-strong); font: 600 .98rem/1.1 var(--body); color: var(--ink); }
+.tp-chip.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.tp-step { display: grid; justify-items: center; gap: .3rem; min-width: 4.6rem; padding: .55rem .5rem; border-radius: 12px; background: var(--card); border: 1.5px solid var(--line); font: 500 .88rem/1.15 var(--body); text-align: center; color: var(--ink-2); }
+.tp-step b { display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 99px; background: var(--sunk); border: 1.5px solid var(--line-strong); font: 600 .85rem/1 var(--display); color: var(--ink-2); }
+.tp-step.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.tp-step.on b { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+@media (max-width: 460px) { .tour-end { grid-template-columns: minmax(0, 1fr); } .tp-step { min-width: 4.1rem; font-size: .82rem; } }
+
+.foot .linkbtn { text-align: left; }
+@media (max-width: 460px) { .tour-pic3 { gap: .3rem; padding-inline: .4rem; } .tour-pic3 .tp-step { min-width: 0; flex: 1 1 0; padding-inline: .2rem; font-size: .78rem; } }
+
+/* Practice: the set-up form sits in a fold under the two quick buttons */
+.setfold { margin-top: 1.8rem; max-width: 60rem; }
+.setfold .fold-b > .tsetup, .setfold .fold-b > .mpset { margin-top: .4rem; }
+
+/* My progress before any practice: the full grid waits in a fold, so the page is one short screen */
+.mapfold { margin-top: 1.6rem; max-width: none; }
+.mapfold .fold-b { display: block; }
+.mapfold .fold-b > .sec.first { margin-top: .4rem; padding-top: 0; border-top: 0; }
+
+@media (max-width: 480px) { .hq { margin-top: 1.4rem; } }
+
+/* Home on a phone: each subject card is one row (name and what it covers, then Start), so both fit on the first screen */
+@media (min-width: 381px) and (max-width: 640px) {
+  .hpick { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto; padding: 1rem 1.1rem; gap: .5rem .8rem; }
+  .hpick-go { grid-column: auto; justify-self: end; padding: .6rem 1rem; }
+  .hpick-t span { font-size: .98rem; }
+}
+@media (min-width: 381px) and (max-width: 480px) { .hpick-ico { display: none; } .hpick { grid-template-columns: minmax(0, 1fr) auto; } }
+@media (max-width: 640px) { .hero.hhero, #v-home .hero { padding-top: .25rem; } }
+/* the smallest phones: just the subject name and Start, so both subjects still fit on the first screen */
+@media (max-width: 380px) {
+  .hpick { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto; align-items: center; }
+  .hpick-go { grid-column: auto; justify-self: end; padding: .6rem .9rem; }
+  .hpick-t > span { display: none; }
+  .hpick-t b { font-size: 1.25rem; }
+}

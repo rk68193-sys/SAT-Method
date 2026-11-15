@@ -17,7 +17,7 @@ const base = process.argv[2] || 'http://127.0.0.1:8000/';
   try {
     const page = await browser.newPage({ viewport: { width: 390, height: 900 } });
     const errors = []; page.on('pageerror', e => errors.push(e.message));
-    const go = async hash => { await page.goto(base + '#' + hash); await page.waitForTimeout(120); };
+    const go = async hash => { await page.goto(base + '#' + hash); await page.waitForTimeout(120); await page.evaluate(() => { const f = document.getElementById('tfold'); if (f) { f.open = true; } }); };
     await go('practice');
     await page.check('#tsrc-both', { force: true });
     assert.match(await page.locator('#tcount').innerText(), /1,?845 questions/);

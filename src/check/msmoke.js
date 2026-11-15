@@ -38,6 +38,7 @@ const { chromium } = require('playwright');
   // practice: 5 Hard questions on everything
   await p.evaluate(() => { location.hash = 'm-practice'; }); await p.waitForTimeout(150);
   await shot('psetup');
+  await p.evaluate(() => { document.getElementById('mp-fold').open = true; });   // the set-up form is folded away on a first visit
   await p.click('label:has(#mp-n-5)');
   await p.click('#mp-go'); await p.waitForTimeout(400);
   for (let i = 0; i < 5; i++) {

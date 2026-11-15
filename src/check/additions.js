@@ -32,8 +32,8 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   ok((await p.$$eval('#vout .vrow', r => r.length)) === 214, 'right answers filter');
   await p.check('#vshow-mine', { force: true }); await p.waitForTimeout(100);
   ok(/No words yet/.test(await p.textContent('#vout')), 'empty "from my misses" message');
-  const links = await p.$$eval('.nextlinks a', a => a.map(x => x.getAttribute('href') + (x.dataset.drill || '')));
-  ok(links.includes('#drillswmean') && links.includes('#drillswsecond'), 'drill links ' + links.join(' '));
+  const links = await p.$$eval('main > section:not([hidden]) a[data-drill]', a => a.map(x => x.getAttribute('href') + (x.dataset.drill || '')));
+  ok(links.includes('#drillswmean') && links.includes('#drillswsecond'), 'exercise links ' + [...new Set(links)].join(' '));
   /* the Learn search reaches a word, and opens the list on it */
   await go('rw-hub'); await p.fill('#rwhub-q', 'corroborate'); await p.waitForTimeout(150);
   const hl = await p.$$eval('#rwhub-res a', a => a.map(x => x.getAttribute('href')));
@@ -169,8 +169,8 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   const mcards = await p.$$eval('#v-mdrills [data-start]', b => b.map(x => x.getAttribute('data-start')));
   ok(['mskill', 'mcount', 'mform', 'mexp', 'mpct', 'mslope', 'mfrac'].every(k => mcards.includes(k)), 'Math drill cards: ' + mcards.join(' '));
   ok(!mcards.some(k => ['job', 'wmean', 'pattern'].includes(k)), 'no Reading and Writing drills on the Math page');
-  const subnav = await p.textContent('#subnav');
-  ok(/Practice/.test(subnav) && /Drills/.test(subnav), 'Math Practice tab lists Practice and Drills: ' + subnav);
+  const stepOn = await p.textContent('#tabs a[aria-current] .secw');
+  ok(stepOn === 'Practice' && /Short exercises/.test(await p.textContent('#gtrail')), 'the short exercises sit under step 3, Practice: ' + stepOn + ' / ' + (await p.textContent('#gtrail')));
   for (const k of mcards) {
     await go('math'); await go('m-drill-' + k); await p.waitForTimeout(250);
     const n = await p.$$eval('#v-mdrills #dhost .dopt', o => o.length);
@@ -209,10 +209,10 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   await go('m-traps'); await p.waitForTimeout(200);
   const mtr = await p.$$eval('#m-traps a', a => a.map(x => x.getAttribute('href')));
   ok(['#m-drill-mexp', '#m-drill-mpct', '#m-drill-mslope', '#m-drill-mfrac', '#m-drill-mskill'].every(h => mtr.includes(h)), 'trap report drill links: ' + mtr.filter(h => /drill/.test(h)).join(' '));
-  ok(mtr.includes('#m-found'), 'a slip in the trap report points to Algebra foundations');
+  ok(mtr.includes('#m-found'), 'a slip in the trap report points to Algebra basics');
   await wide('m-traps');
 
-  /* ---- Algebra foundations ---- */
+  /* ---- Algebra basics ---- */
   await go('m-found'); await p.waitForTimeout(150);
   const fsec = await p.$$eval('#v-mfound section.mfound', s => s.map(x => x.id));
   ok(fsec.join(' ') === 'm-found-frac m-found-iso m-found-expr m-found-dist m-found-like m-found-den', 'six sections: ' + fsec.join(' '));
@@ -223,14 +223,14 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   await wide('m-found');
   /* one section's drill: only its cards, and a miss leads back to that section */
   await p.click('#m-found-frac .mfound-go a'); await p.waitForTimeout(200);
-  ok(!(await p.$eval('#v-mdrills', v => v.hidden)) && /Algebra foundations/.test(await p.textContent('#dhost .dname')), 'a section drill opens on the Math drills page');
+  ok(!(await p.$eval('#v-mdrills', v => v.hidden)) && /Algebra basics/.test(await p.textContent('#dhost .dname')), 'a section drill opens on the Math drills page');
   ok((await p.textContent('#dhost .dbar')).includes('Card 1 of ' + fbtn[0][1]), 'and has just that section’s ' + fbtn[0][1] + ' cards: ' + (await p.textContent('#dhost .dbar')));
   ok(/Which is equal to it\?/.test(await p.textContent('#dprompt')), 'the question is printed on the card');
   await p.click('#dhost .dopt:not([data-k="a"])'); await p.waitForTimeout(120);
   ok(/Why not:/.test(await p.textContent('#dfeed')) && !!(await p.$('#dfeed a[href="#m-found-frac"]')), 'a wrong pick says why, and links to its section');
   await wide('m-found drill');
   await p.click('#dend'); await p.waitForTimeout(120);
-  ok(/Algebra foundations · Fractions/.test(await p.textContent('#dhost .missed')), 'the round lists the section to review');
+  ok(/Algebra basics · Fractions/.test(await p.textContent('#dhost .missed')), 'the round lists the section to review');
   await go('m-found-den'); await p.waitForTimeout(200);
   ok(await p.evaluate(() => { const r = document.getElementById('m-found-den').getBoundingClientRect(); return !document.getElementById('v-mfound').hidden && r.top >= 0 && r.top < 400; }), '#m-found-den opens on its section');
   /* the Easy Algebra practice link sets the practice up */
@@ -322,7 +322,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   const qid = async () => p.evaluate(() => { const t = document.querySelector('#v-mprac .mpq [data-mtx]'), i = document.querySelector('#v-mprac .mpq img'); return t ? t.getAttribute('data-mtx').split(':')[1] : (i ? i.getAttribute('src').replace(/^.*\/|\.webp$/g, '') : ''); });
   await go('mq-620abf36'); await p.waitForTimeout(300); await answerIt();
   const fb1 = await p.textContent('#mp-fb .mfirst-fb').catch(() => '');
-  ok(/^Shortcut first/.test(fb1) && fb1.includes('The same bracket twice.') && fb1.includes(F.qs['620abf36'].n) && (await p.getAttribute('#mp-fb .mfirst-fb a', 'href')) === '#m-first-block', 'a kind’s question gets its note after the answer');
+  ok(/^A shortcut works here/.test(fb1) && fb1.includes('The same bracket twice.') && fb1.includes(F.qs['620abf36'].n) && (await p.getAttribute('#mp-fb .mfirst-fb a', 'href')) === '#m-first-block', 'a kind’s question gets its note after the answer');
   await wide('shortcut note');
   await go('mq-ea8bd66f'); await p.waitForTimeout(300); await answerIt();
   ok(/^Looks like a shortcut, but isn’t/.test(await p.textContent('#mp-fb .mfirst-fb').catch(() => '')) && (await p.getAttribute('#mp-fb .mfirst-fb a', 'href')) === '#m-first-x-sub', 'a look-alike says so, and links to why');

@@ -100,8 +100,8 @@
   function buildLookup() {
     if (built.lookup) { return; }
     built.lookup = true;
-    viewEl.lookup.innerHTML = '<div class="wrap"><header class="read"><p class="eyebrow">Lookup</p><h2 class="vtitle">Quick answers while you study</h2>' +
-      '<p class="lede">Find the rule or job for any question ID, check whether a transition is ever right, see every verb form the choices use, and look up a term.</p>' +
+    viewEl.lookup.innerHTML = '<div class="wrap"><header class="read"><p class="eyebrow">Reading &amp; Writing · Look up a rule</p><h2 class="vtitle">Quick answers while you study</h2>' +
+      '<p class="lede">Find the rule behind any question from its ID, check whether a linking word such as “however” is ever the right answer, see every verb form the choices use, and look up a word you do not know.</p>' +
       '<nav class="subnav" aria-label="On this page"><a class="ulink" href="#find">Find a rule or ID</a><a class="ulink" href="#transitions">Transitions</a><a class="ulink" href="#verbforms">Verb forms</a>' +
       '<a class="ulink" href="#parts-of-speech">Parts of speech</a><a class="ulink" href="#glossary">Glossary</a><a class="ulink" href="#nottested">Not tested</a><a class="ulink" href="#about">About this guide</a></nav></header>' +
       '<section class="lsec" id="find"><div class="sech"><h3 class="h2">Find a rule or a question ID</h3></div><label class="field" for="fq" style="display:block;margin-top:1rem"><span class="label">Search every grammar rule and version, or any of the ' + (TOTAL.q + RTOTAL).toLocaleString('en-US') + ' question IDs</span>' +
@@ -117,7 +117,7 @@
       '<section class="lsec" id="nottested"><div class="sech"><h3 class="h2">Not tested in this bank</h3><p class="pretty" style="margin-top:.4rem">' + D.absent.intro + '</p></div><ul class="plainlist">' + D.absent.items.map(li).join('') + '</ul>' + (D.absent.more || []).map(function (t) { return '<p class="pretty" style="margin-top:.8rem">' + t + '</p>'; }).join('') + '</section>' +
       '<section class="lsec" id="about"><div class="sech"><h3 class="h2">About this guide</h3></div><h4 class="subh">Grammar and transitions</h4><ul class="plainlist">' + D.method.map(li).join('') + '</ul>' +
       '<h4 class="subh">Reading</h4><p class="pretty"><a href="#measured">How the reading routine was measured, and its limits</a></p>' +
-      (ANN.stats ? '<h4 class="subh">Drill items</h4><p class="pretty">The Tag the sentence, Core first, Find the Point and Follow the pointer cards come from a sentence-by-sentence reading of ' + ANN.stats.units + ' passages and sentences from the two guides, plus 280 more reading passages drawn evenly across the bank’s jobs and difficulty levels. Claude annotated each one twice, blind, and a third pass settled differences. Cards where the two blind passes disagreed were left out, and the 17 worked examples keep the routine’s own tags. Answers in Practice are College Board’s own key from the question bank export.</p>' : '') +
+      (ANN.stats ? '<h4 class="subh">Short exercise cards</h4><p class="pretty">The Tag the sentence, Core first, Find the Point and Follow the pointer cards come from a sentence-by-sentence reading of ' + ANN.stats.units + ' passages and sentences from the two guides, plus 280 more reading passages drawn evenly across the bank’s jobs and difficulty levels. Claude annotated each one twice, blind, and a third pass settled differences. Cards where the two blind passes disagreed were left out, and the 17 worked examples keep the routine’s own tags. Answers in Practice are College Board’s own key from the question bank export.</p>' : '') +
       '<p class="fine" style="margin-top:1rem">' + CREDIT + '</p></section></div>';
     var fq = document.getElementById('fq'), tq = document.getElementById('tq'), gq = document.getElementById('gq');
     function tmode() { var r = $('input[name="tsort"]:checked', viewEl.lookup); return r ? r.value : 'job'; }

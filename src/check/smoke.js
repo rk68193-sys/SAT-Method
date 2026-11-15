@@ -39,6 +39,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
     await p.click('#dend'); await p.waitForTimeout(80); await p.click('#dhome');
   }
   await p.evaluate(() => { location.hash = 'practice'; }); await p.waitForTimeout(100);
+  await p.evaluate(() => { document.getElementById('tfold').open = true; });   // the set-up form is folded away on a first visit
   await p.check('#tmode-set', { force: true }); await p.waitForTimeout(50);   // the token loop above opened #rw-module, which selects the timed module
   await p.check('#tsrc-both', { force: true }); await p.waitForTimeout(50);
   await p.click('#tstart'); await p.waitForTimeout(400);

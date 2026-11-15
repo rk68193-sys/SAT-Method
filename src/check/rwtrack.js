@@ -25,9 +25,12 @@ const { chromium } = require('playwright');
   ok(await p.isVisible('#v-rwmap'), 'map view opens');
   ok((await p.$$('#rwm-map .mm-t')).length === 126, '126 type squares (20 reading types, 106 rules)');
   ok((await p.$$('#rwm-map .mm-t.mm-tw')).length === 20, '20 reading types carry their names');
-  ok((await p.textContent('#v-rwmap .mnote')).includes('Nothing practiced yet'), 'empty state');
-  ok((await p.textContent('#tabs a[aria-current]')) === 'My map', 'tab is marked');
+  ok((await p.textContent('#v-rwmap .mnote')).includes('No practice questions answered yet'), 'empty state');
+  ok((await p.textContent('#tabs a[aria-current] .secw')) === 'My progress', 'step 4 is marked');
   await wide('map empty'); await shot('map-empty', true);
+  // before any practice the full grid waits in a fold
+  ok(await p.evaluate(() => { const f = document.getElementById('rwm-fold'); return !!f && !f.open; }), 'the full grid is folded away before any practice');
+  await p.click('#rwm-fold > summary'); await p.waitForTimeout(100); await wide('map empty, grid open');
   await p.click('#rwm-map .mm-t.mm-tw'); await p.waitForTimeout(100);
   ok((await p.textContent('#rwm-detail')).includes('What to look at first'), 'a reading type opens what to look at first');
   await p.click('#rwm-map .mm-t:not(.mm-tw)'); await p.waitForTimeout(100);
@@ -37,7 +40,7 @@ const { chromium } = require('playwright');
   // module setup
   await go('rw-module');
   ok(await p.isChecked('#tmode-module'), 'module mode preselected from #rw-module');
-  ok((await p.textContent('#tcount')).includes('27 questions, 32:00'), 'count line: ' + (await p.textContent('#tcount')));
+  ok((await p.textContent('#tcount')).includes('27 questions in 32:00'), 'count line: ' + (await p.textContent('#tcount')));
   ok(!(await p.isVisible('#ttier-std')), 'set-only options hidden');
   await shot('module-setup', true);
   await p.click('#tstart'); await p.waitForTimeout(500);

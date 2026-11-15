@@ -4,6 +4,7 @@ const path = require('path'); const { chromium } = require('playwright');
   for (const w of [390, 1280]) {
     const p = await (await b.newContext({ viewport: { width: w, height: 900 } })).newPage();
     await p.goto('file://' + path.resolve(process.argv[2]) + '#m-practice'); await p.waitForTimeout(500);
+    await p.evaluate(() => { document.getElementById('mp-fold').open = true; });   // the set-up form is folded away on a first visit
     await p.click('label:has(input[name="mp-kind"][value="k"])'); await p.waitForTimeout(150);
     await p.screenshot({ path: `shots/picker-${w}.png`, fullPage: true });
     await p.click('label:has(input[name="mp-sub"][value="cir"])'); await p.waitForTimeout(100);
