@@ -122,6 +122,19 @@ PRIZE = {
  'prize-lanterns': dict(COMMON_DARK, paper='#0E0B24', card='#181436', sunk='#221D48', ink='#FFF7EA', ink2='#F1DFC4', muted='#B5A7C9', line='#2C2556', line_strong='#453B7C',
    pencil='#FBBF24', pencil_text='#FDE68A', hl='#43300B', hl_ink='#FFF8DC', act='#FBBF24', act_ink='#1F1403', act_hover='#F59E0B', focus='#FDE68A',
    d1='#2C2556', d2='#B45309', d3='#FDE68A', grad='linear-gradient(120deg, #FDE68A 0%, #FDBA74 50%, #F9A8D4 100%)', on_grad='#1F1403', aura='rgba(251, 191, 36, .28)'),
+ # the emblem themes: a crest from cosmetics/ behind the page
+ 'prize-dawn': dict(COMMON_DARK, paper='#140E06', card='#1F160A', sunk='#2B1F0F', ink='#FFF8E8', ink2='#F5E3BF', muted='#C2AB82', line='#3A2A14', line_strong='#57401F',
+   pencil='#FBBF24', pencil_text='#FDE68A', hl='#4A340B', hl_ink='#FFF8DC', act='#FBBF24', act_ink='#1F1403', act_hover='#F59E0B', focus='#FDE68A',
+   d1='#3A2A14', d2='#B45309', d3='#FDE68A', grad='linear-gradient(120deg, #FDE68A 0%, #FBBF24 50%, #FDBA74 100%)', on_grad='#1F1403', aura='rgba(251, 191, 36, .3)'),
+ 'prize-eclipse': dict(COMMON_DARK, paper='#07050F', card='#100B1E', sunk='#18112C', ink='#F4F0FF', ink2='#DCD2F7', muted='#A398C7', line='#231A40', line_strong='#382A63',
+   pencil='#C084FC', pencil_text='#E9D5FF', hl='#32195A', hl_ink='#FAF5FF', act='#D8B4FE', act_ink='#170530', act_hover='#C084FC', focus='#E9D5FF',
+   d1='#231A40', d2='#7C3AED', d3='#E9D5FF', grad='linear-gradient(120deg, #E9D5FF 0%, #C4B5FD 50%, #A5B4FC 100%)', on_grad='#170530', aura='rgba(192, 132, 252, .32)'),
+ 'prize-boreal': dict(COMMON_DARK, paper='#04101A', card='#0A1B2A', sunk='#10273A', ink='#EAF8FF', ink2='#C4E6F7', muted='#8DB5CC', line='#15344D', line_strong='#204C6E',
+   pencil='#67E8F9', pencil_text='#A5F3FC', hl='#0F3D52', hl_ink='#ECFEFF', act='#7DD3FC', act_ink='#04202E', act_hover='#38BDF8', focus='#A5F3FC',
+   d1='#15344D', d2='#0E7490', d3='#A5F3FC', grad='linear-gradient(120deg, #E0F2FE 0%, #7DD3FC 50%, #A5B4FC 100%)', on_grad='#04202E', aura='rgba(125, 211, 252, .3)'),
+ 'prize-megastar': dict(COMMON_DARK, paper='#0B0A12', card='#14121F', sunk='#1D1A2C', ink='#F7F5FF', ink2='#DEDAF2', muted='#A7A2C2', line='#272340', line_strong='#3D3763',
+   pencil='#F0ABFC', pencil_text='#F5D0FE', hl='#3A1A4A', hl_ink='#FDF4FF', act='#F0ABFC', act_ink='#2A0A33', act_hover='#E879F9', focus='#F5D0FE',
+   d1='#272340', d2='#A855F7', d3='#F5D0FE', grad='linear-gradient(110deg, #F9A8D4 0%, #C4B5FD 35%, #67E8F9 70%, #FDE68A 100%)', on_grad='#1E1033', aura='rgba(240, 171, 252, .3)'),
 }
 def finish(d):
     """fill the shadow and glass tokens the prize palettes leave out, from the light or dark theme they build on"""

@@ -29,6 +29,10 @@
     ['haunt', 'Haunted', 'Friendly frights: ghosts, bats, cobwebs and eyes that open in the dark.'],
     ['unknown', 'The Unknown', 'Things from far away: portals, visitors, slime, and something that watches.'],
     ['dream', 'Dreamscape', 'Color and wonder: butterflies, paper cranes, a fox spirit and a whale made of stars.'],
+    ['astral', 'Astral Court', 'Emblems of suns, seraphs and the void: auras, effects, backgrounds, streak styles and themes.'],
+    ['storm', 'Storm & Flame', 'Emblems of thunder, dragons and the phoenix.'],
+    ['frost', 'Frost & Bloom', 'Emblems of ice, lotus and the world tree.'],
+    ['prism', 'Prism & Shade', 'Emblems of rainbow glass and black-and-white light.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value */
@@ -145,7 +149,65 @@
     ['cranes', 'Paper cranes', 'e', 'fx', 'dream', 'Folded paper cranes take off from your answer.'],
     ['kitsune', 'Kitsune', 'l', 'aura', 'dream', 'A fox spirit: nine tails of flame fan out behind your streak under a fox mask, with blue foxfire circling.'],
     ['prize-lanterns', 'Lantern festival', 'l', 'theme', 'dream', 'A living theme: glowing paper lanterns rise into a starry dusk.'],
-    ['whale', 'Star whale', 'm', 'paper', 'dream', 'Moving: a whale drawn in stars swims slowly across the page, trailing stardust.']
+    ['whale', 'Star whale', 'm', 'paper', 'dream', 'Moving: a whale drawn in stars swims slowly across the page, trailing stardust.'],
+    /* emblem auras: a picture from cosmetics/ with light moving around it (FX_EMB in fx.js) */
+    ['solar-emperor', 'Solar Emperor', 'l', 'aura', 'astral', 'An emblem aura: a winged sun wearing a crown of fire, with light rays, orbiting rings and a pulse of light.'],
+    ['celestial-orrery', 'Celestial Orrery', 'e', 'aura', 'astral', 'An emblem aura: golden rings carrying small planets around a star, with light rays and orbiting rings.'],
+    ['starborn-seraph', 'Starborn Seraph', 'm', 'aura', 'astral', 'An emblem aura: six wings of pearl light around a star, with a pillar of light, a ring of runes and orbiting comets.'],
+    ['void-lotus', 'Void Lotus', 'e', 'aura', 'astral', 'An emblem aura: a violet lotus opening around a dark star, with light rays and orbiting rings.'],
+    ['singularity-throne', 'Singularity Throne', 'l', 'aura', 'astral', 'An emblem aura: a cathedral of shadow built around a black hole, with light rays, orbiting rings and a pulse of light.'],
+    ['abyssal-leviathan', 'Abyssal Leviathan', 'm', 'aura', 'astral', 'An emblem aura: a dragon of the void coiled around a black sun, with a pillar of light, a ring of runes and orbiting comets.'],
+    ['thunder-archon', 'Thunder Archon', 'e', 'aura', 'storm', 'An emblem aura: golden wings around a storm core, with light rays and orbiting rings.'],
+    ['lightning-cathedral', 'Lightning Cathedral', 'l', 'aura', 'storm', 'An emblem aura: a cathedral of spires with lightning for a roof, with light rays, orbiting rings and a pulse of light.'],
+    ['plasma-leviathan', 'Plasma Leviathan', 'm', 'aura', 'storm', 'An emblem aura: a storm dragon crackling around a golden eye, with a pillar of light, a ring of runes and orbiting comets.'],
+    ['inferno-sovereign', 'Inferno Sovereign', 'e', 'aura', 'storm', 'An emblem aura: horned wings of flame around a burning heart, with light rays and orbiting rings.'],
+    ['ember-phoenix', 'Ember Phoenix', 'l', 'aura', 'storm', 'An emblem aura: a phoenix with its wings wide, shedding embers, with light rays, orbiting rings and a pulse of light.'],
+    ['prominence-dragon', 'Prominence Dragon', 'm', 'aura', 'storm', 'An emblem aura: a dragon of molten gold circling a small sun, with a pillar of light, a ring of runes and orbiting comets.'],
+    ['cryo-singularity', 'Cryo Singularity', 'e', 'aura', 'frost', 'An emblem aura: a frozen planet inside rings of ice, with light rays and orbiting rings.'],
+    ['glacial-eternity', 'Glacial Eternity', 'l', 'aura', 'frost', 'An emblem aura: wings of ice under three halos, with light rays, orbiting rings and a pulse of light.'],
+    ['absolute-zero-crown', 'Absolute Zero Crown', 'm', 'aura', 'frost', 'An emblem aura: a crown of ice at the coldest point there is, with a pillar of light, a ring of runes and orbiting comets.'],
+    ['lotus-eternity', 'Lotus Eternity', 'e', 'aura', 'frost', 'An emblem aura: a rose-gold lotus that never closes, with light rays and orbiting rings.'],
+    ['sakura-supernova', 'Sakura Supernova', 'l', 'aura', 'frost', 'An emblem aura: a cherry tree blooming around a spiral galaxy, with light rays, orbiting rings and a pulse of light.'],
+    ['worldtree-ascendant', 'Worldtree Ascendant', 'm', 'aura', 'frost', 'An emblem aura: a great tree on a floating island, ringed in gold, with a pillar of light, a ring of runes and orbiting comets.'],
+    ['neon-hypercube', 'Neon Hypercube', 'e', 'aura', 'prism', 'An emblem aura: glass cubes folding through each other in neon, with light rays and orbiting rings.'],
+    ['fractal-engine', 'Fractal Engine', 'l', 'aura', 'prism', 'An emblem aura: a jeweled mandala of triangles inside triangles, with light rays, orbiting rings and a pulse of light.'],
+    ['prism-overlord', 'Prism Overlord', 'm', 'aura', 'prism', 'An emblem aura: a four-pointed star of pure rainbow glass, with a pillar of light, a ring of runes and orbiting comets.'],
+    ['duality-cathedral', 'Duality Cathedral', 'e', 'aura', 'prism', 'An emblem aura: a cathedral half in light and half in shadow, with light rays and orbiting rings.'],
+    ['ivory-oblivion', 'Ivory Oblivion', 'l', 'aura', 'prism', 'An emblem aura: black wings and white wings on one silver blade, with light rays, orbiting rings and a pulse of light.'],
+    ['monolith-apotheosis', 'Monolith Apotheosis', 'm', 'aura', 'prism', 'An emblem aura: shattered standing stones around a pillar of white light, with a pillar of light, a ring of runes and orbiting comets.'],
+    ['quant-ascendant', 'Quant Ascendant', 'l', 'aura', 'test', 'An emblem aura: the Math signature: a crystal star in SAT Sprint blue, with light rays, orbiting rings and a pulse of light.'],
+    ['verbal-empyrean', 'Verbal Empyrean', 'l', 'aura', 'test', 'An emblem aura: the Reading and Writing signature: an open book on rose wings, with light rays, orbiting rings and a pulse of light.'],
+    ['sprint-infinity', 'Sprint Infinity', 'm', 'aura', 'test', 'An emblem aura: the streak signature: blades of violet and cyan around an endless loop, with a pillar of light, a ring of runes and orbiting comets.'],
+    ['perfect-zenith', 'Perfect Zenith', 'm', 'aura', 'test', 'An emblem aura: the perfect-score signature: a crowned pearl on wings of crystal, with a pillar of light, a ring of runes and orbiting comets.'],
+    /* the same artwork as effects, backgrounds, streak styles and themes (FX_SUM, FX_CREST, FX_SICON, FX_TCREST in fx.js) */
+    ['starlight-phoenix', 'Starlight Phoenix', 'l', 'fx', 'astral', 'Summons a phoenix of pink starlight over your answer in a burst of light while the page dims around it.'],
+    ['null-seraph', 'Null Seraph', 'm', 'fx', 'astral', 'Summons a seraph of the void over your answer in a pillar of light while the page goes dark around it.'],
+    ['volt-seraph', 'Volt Seraph', 'e', 'fx', 'storm', 'Summons a seraph of lightning over your answer in a burst of light.'],
+    ['solar-flare-requiem', 'Solar Flare Requiem', 'l', 'fx', 'storm', 'Summons a sun flaring to its end over your answer in a burst of light while the page dims around it.'],
+    ['diamond-blizzard', 'Diamond Blizzard', 'e', 'fx', 'frost', 'Summons a storm of diamonds and snow over your answer in a burst of light.'],
+    ['blooming-cosmos', 'Blooming Cosmos', 'e', 'fx', 'frost', 'Summons a garden growing among the stars over your answer in a burst of light.'],
+    ['spectrum-cataclysm', 'Spectrum Cataclysm', 'm', 'fx', 'prism', 'Summons every color breaking loose at once over your answer in a pillar of light while the page goes dark around it.'],
+    ['silent-supernova', 'Silent Supernova', 'l', 'fx', 'prism', 'Summons a star exploding without a sound over your answer in a burst of light while the page dims around it.'],
+    ['astral-throne', 'Astral Throne', 'e', 'paper', 'astral', 'Moving: a golden throne among the stars glows behind the page, with stars turning slowly.'],
+    ['dark-matter-halo', 'Dark Matter Halo', 'l', 'paper', 'astral', 'Moving: a halo of dark matter glows behind the page, with stardust spiraling in.'],
+    ['aurora-overdrive', 'Aurora Overdrive', 'e', 'paper', 'storm', 'Moving: an aurora turned all the way up glows behind the page, with sparks drifting up.'],
+    ['hellfire-orrery', 'Hellfire Orrery', 'r', 'paper', 'storm', 'Moving: rings of fire turning around a molten core glows behind the page, with sparks drifting up.'],
+    ['frozen-aurora', 'Frozen Aurora', 'e', 'paper', 'frost', 'Moving: an aurora frozen in the sky glows behind the page, with frost drifting down.'],
+    ['viridian-cathedral', 'Viridian Cathedral', 'r', 'paper', 'frost', 'Moving: a cathedral grown from living green glows behind the page, with sparks drifting up.'],
+    ['hologram-dominion', 'Hologram Dominion', 'l', 'paper', 'prism', 'Moving: a kingdom made of holograms glows behind the page, with stars turning slowly.'],
+    ['balance-eternal', 'Balance Eternal', 'r', 'paper', 'prism', 'Moving: light and shadow in perfect balance glows behind the page, with stars turning slowly.'],
+    ['comet-crown', 'Comet Crown', 'r', 'streak', 'astral', 'An emblem beside your streak number: a crown ringed by comets.'],
+    ['antimatter-crown', 'Antimatter Crown', 'e', 'streak', 'astral', 'An emblem beside your streak number: a crown of antimatter.'],
+    ['cyclone-crown', 'Cyclone Crown', 'r', 'streak', 'storm', 'An emblem beside your streak number: a crown inside a cyclone.'],
+    ['ashen-crown', 'Ashen Crown', 'r', 'streak', 'storm', 'An emblem beside your streak number: a crown of ash and embers.'],
+    ['crystal-solstice', 'Crystal Solstice', 'r', 'streak', 'frost', 'An emblem beside your streak number: a sun of clear crystal.'],
+    ['primal-starseed', 'Primal Starseed', 'e', 'streak', 'frost', 'An emblem beside your streak number: the seed a star grows from.'],
+    ['tesseract-crown', 'Tesseract Crown', 'e', 'streak', 'prism', 'An emblem beside your streak number: a crown folded through four dimensions.'],
+    ['pale-singularity', 'Pale Singularity', 'r', 'streak', 'prism', 'An emblem beside your streak number: a white black hole.'],
+    ['prize-dawn', 'Dawn Sovereign', 'l', 'theme', 'astral', 'A living theme: black and gold, with the Dawn Sovereign rising behind the page among drifting sparks.'],
+    ['prize-eclipse', 'Quantum Eclipse', 'm', 'theme', 'astral', 'A living theme: deep violet, with the Quantum Eclipse behind the page pulling stardust into it.'],
+    ['prize-boreal', 'Boreal Cathedral', 'l', 'theme', 'frost', 'A living theme: midnight blue and ice, with the Boreal Cathedral behind the page under falling frost.'],
+    ['prize-megastar', 'Iridescent Megastar', 'm', 'theme', 'prism', 'A living theme: near-black with every color, the Iridescent Megastar shining behind the page.']
   ].map(function (r) { return { id: r[3] + ':' + r[0], key: r[0], name: r[1], tier: r[2], kind: r[3], series: r[4], what: r[5] }; });
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });
@@ -173,6 +235,10 @@
     haunt: ['Night Owl', 'Ghost Writer', 'Bat Signal', 'Fearless', 'Midnight Oil', 'Boo-k Worm', 'No Tricks', 'Monster Score'],
     unknown: ['First Contact', 'Unknown Variable', 'Signal Found', 'Deep Thinker', 'Out of This World', 'Portal Hopper', 'Mind Reader', 'The Watcher Blinked'],
     dream: ['Daydreamer', 'Paper Crane', 'Color Theory', 'Lantern Lighter', 'Fox Wisdom', 'Whale Song', 'Butterfly Effect', 'Sweet Dreams'],
+    astral: ['Rising Star', 'Royal Decree', 'Orbit Keeper', 'Crown Jewel', 'Void Walker', 'Gravity Well', 'Starlit Path', 'Throne of Focus'],
+    storm: ['Storm Chaser', 'Thunder Clap', 'Ember Heart', 'Rising Phoenix', 'Lightning Round', 'Forge Master', 'Eye of the Storm', 'Fire Starter'],
+    frost: ['Cool Head', 'Snow Day Scholar', 'Ice Breaker', 'First Bloom', 'Deep Roots', 'Evergreen', 'Petal Power', 'Winter Wisdom'],
+    prism: ['Full Spectrum', 'Sharp Angle', 'Mirror Image', 'Black and White', 'Glitch Fixer', 'Shape Shifter', 'True Colors', 'Perfect Balance'],
     test: ['Test Day Ready', 'Pencils Down', 'Calm Breath', 'Full Tank', 'Perfect Score', 'Poem Decoder', 'Trap Spotter', 'Unit Circle Survivor']
   };
   var PZ_TITLES = [
@@ -389,7 +455,7 @@
     if (title) { html += '<p class="pz-title">' + esc(title) + '</p>'; }
     var n = Math.max(0, pzBalance()), free = pzGrants().length;
     html += '<a class="pz-homecoins" href="#crates">' + PZ_COIN + '<span><b>' + pzNum(n) + '</b> ' + (n === 1 ? 'coin' : 'coins') + (free ? ' · ' + plural(free, 'free crate') : '') + ' · Open crates</span></a>';
-    return aura ? '<div class="pz-plate"><canvas class="pz-aura" data-pz-aura="' + PZ_BY[aura].key + '" aria-hidden="true"></canvas>' + html + '</div>' : '<div class="pz-snum">' + html + '</div>';
+    return aura ? '<div class="pz-plate' + fxEmbCls(PZ_BY[aura].key) + '">' + fxEmbImg(PZ_BY[aura].key) + '<canvas class="pz-aura" data-pz-aura="' + PZ_BY[aura].key + '" aria-hidden="true"></canvas>' + html + '</div>' : '<div class="pz-snum">' + html + '</div>';
   }
 
   /* ---------- the coin count in the top bar ---------- */

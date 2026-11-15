@@ -5,7 +5,7 @@
   /* a picture of a prize: a theme in its own colors, an aura on its plate, the others drawn small */
   function pzPicture(it, big) {
     if (it.kind === 'theme') { return fxThemeMini(it.key); }
-    if (it.kind === 'aura') { return '<span class="pz-plate pz-plate-sm' + (big ? ' big' : '') + '"><canvas class="pz-aura" data-pz-aura="' + it.key + '" aria-hidden="true"></canvas><span class="pz-badge">' + PZ_FLAME + '12</span></span>'; }
+    if (it.kind === 'aura') { return '<span class="pz-plate pz-plate-sm' + (big ? ' big' : '') + fxEmbCls(it.key) + '">' + fxEmbImg(it.key) + '<canvas class="pz-aura" data-pz-aura="' + it.key + '" aria-hidden="true"></canvas><span class="pz-badge">' + PZ_FLAME + '12</span></span>'; }
     if (it.kind === 'streak') { return '<span class="pz-pic pz-pic-streak">' + fxStreakIcon(it.key, it.key === 'plant' ? 100 : 30) + '</span>'; }
     if (it.kind === 'paper') { return '<span class="pz-pic pz-pt pz-pt-' + it.key + '" aria-hidden="true"></span>'; }
     return '<span class="pz-pic pz-pic-fx pz-t-' + it.tier + '-soft" aria-hidden="true"><span class="pz-ans"><b>B</b>Correct</span></span>';
