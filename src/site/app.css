@@ -2493,3 +2493,24 @@ html.tour-open { overflow: hidden; }
 .tmore-l a:hover { border-color: var(--ink); background: var(--card); color: var(--ink); }
 .tmore-l b { font-weight: 600; }
 .tmore-l span { color: var(--ink-2); font-size: .92rem; }
+/* Practice: sets you have done */
+.psets-l { list-style: none; margin: 1rem 0 0; padding: 0; max-width: 52rem; border: 1px solid var(--line-strong); border-radius: 16px; background: var(--card); }
+.psets-l li { display: grid; grid-template-columns: 6rem minmax(0, 1fr) auto; gap: .5rem 1rem; align-items: center; padding: .8rem 1.1rem; border-top: 1px solid var(--line); }
+.psets-l li:first-child { border-top: 0; }
+.psets-d { color: var(--ink-2); font-size: .95rem; }
+.psets-h { display: grid; gap: .1rem; min-width: 0; }
+.psets-h b { font-weight: 600; }
+.psets-h span { color: var(--ink-2); font-size: .95rem; font-variant-numeric: tabular-nums; }
+.psets-ok { color: var(--ink-2); font-size: .95rem; }
+@media (max-width: 560px) { .psets-l li { grid-template-columns: minmax(0, 1fr); } .psets-l .btn { justify-self: start; } }
+/* Reading and Writing set-up: the optional choices sit behind one line */
+.tmoreopt { margin-block: 1rem; border-top: 1px solid var(--line); padding-top: .4rem; }
+.tmoreopt > summary { cursor: pointer; padding: .7rem 0; font-weight: 600; color: var(--ink); }
+.tmoreopt-b { display: grid; gap: .2rem; padding-top: .4rem; }
+/* Lessons: the extra-detail parts start closed */
+.lmore-h { margin-top: 2.2rem; }
+.lmore { margin-top: .7rem; max-width: 56rem; }
+.lmore .fold-b { padding: .2rem 1rem 1.2rem; }
+.lmore .fold-b > section { margin-top: 0; padding-top: 0; border-top: 0; min-width: 0; }
+.lmore .lmore-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.mlesson-more { margin-top: 2rem; }

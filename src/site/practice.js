@@ -1,6 +1,6 @@
   /* =================== Practice: learning and paced sets =================== */
   var TIERS = { learn: { g: null, r: null, label: 'No clock' }, std: { g: 60, r: 70, label: 'Test pace · 1:00 grammar, 1:10 reading' }, fast: { g: 45, r: 55, label: 'Faster · 0:45 and 0:55' }, easy: { g: 80, r: 90, label: 'Slower · 1:20 and 1:30' } };
-  var TS = null, tclock = null;
+  var TS = null, tclock = null, tOver = false;   /* tOver: a finished set's results are showing; coming back to Practice later shows the set-up again */
   var REVIEW_CAUSES = [['', 'Choose a cause'], ['meaning', 'Misread meaning, reference or viewpoint'], ['scope', 'Missed a qualification or comparison'], ['evidence', 'Used unsupported evidence or prior knowledge'], ['data', 'Misread data, units or direction'], ['goal', 'Missed the question’s goal or relationship'], ['grammar', 'Misidentified sentence structure or a grammar rule'], ['vocab', 'Did not know a word'], ['pace', 'Rushed or ran out of time'], ['slip', 'Selection slip'], ['other', 'Other / still investigating']];
   function causeLabel(key) {
     var cause = REVIEW_CAUSES.filter(function (c) { return c[0] === key; })[0];
@@ -92,7 +92,7 @@
     if (tclock) { tclock.halt(); }
     TS = null; tclock = null;
     rmDrop();
-    rdIntroOn = false;
+    rdIntroOn = false; tOver = false;
     var s = tset();
     if (rmModePreset) { s.mode = rmModePreset; rmModePreset = null; }
     var g = practiceRecord('t', EXLIST.map(function (e) { return e.q; })), r = practiceRecord('r', RLIST.map(function (x) { return x.qid; }));
@@ -115,14 +115,17 @@
       '<div class="folds setfold">' + foldHTML('tfold', 'Pick what to practice', '<div class="tsetup" id="tsetup" data-mode="' + s.mode + '">' +
       seg('tmode', 'How to practice', [['set', 'One at a time'], ['module', 'Timed test']], s.mode) +
       '<p class="mpmode-note" id="tmodenote"></p>' +
-      '<div class="t-setonly">' + seg('tsrc', '1 · What to practice', [['both', 'A mix of everything'], ['g', 'Grammar, from the lessons'], ['a', 'Grammar, more questions (' + BANK.grammarSources.length + ')'], ['r', 'Reading, from the lessons'], ['q', 'Reading, more questions (' + BANK.reading.length + ')'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'Notes (' + BANK.notes.length + ')'], ['x', 'Linking words (' + BANK.trans.length + ')']], s.src) + '</div>' +
-      '<div id="tpartwrap" class="t-setonly">' + seg('tpart', 'Grammar part', [['all', 'All parts'], ['A', 'A · ' + PART.A.title], ['B', 'B · ' + PART.B.title], ['C', 'C · ' + PART.C.title]], s.part) + '</div>' +
+      '<div class="t-setonly">' + seg('tsrc', '1 · What to practice', [['both', 'A mix of everything'], ['g', 'Grammar, from the lessons'], ['r', 'Reading, from the lessons'], ['v', 'Tables and graphs (' + BANK.figures.length + ')'], ['n', 'Notes (' + BANK.notes.length + ')'], ['x', 'Linking words (' + BANK.trans.length + ')']], s.src) + '</div>' +
       seg('tdiff', '2 · How hard', [['all', 'Any'], ['Easy', 'Easy'], ['Medium', 'Medium'], ['Hard', 'Hard']], s.diff) +
       '<div class="t-setonly">' + seg('tlen', '3 · How many', [[10, '10'], [20, '20'], [0, 'All that match']], s.len) + '</div>' +
-      seg('twhich', '4 · Which ones', [['all', 'Any'], ['new', 'Ones I have not tried (' + nNew + ')'], ['missed', 'Ones I got wrong (' + nMiss + ')'], ['uncertain', 'Ones I guessed (' + nUncertain + ')'], ['slow', 'Ones I was slow on (' + nSlow + ')']], s.which) +
+      '<details class="tmoreopt" id="tmoreopt"' + (s.which !== 'all' || s.tier !== 'learn' || s.part !== 'all' || s.hints || s.src === 'a' || s.src === 'q' ? ' open' : '') + '><summary>More choices, if you want them</summary><div class="tmoreopt-b">' +
+      '<div class="t-setonly">' + seg('tsrc', 'More questions on one topic', [['a', 'More grammar questions (' + BANK.grammarSources.length + ')'], ['q', 'More reading questions (' + BANK.reading.length + ')']], s.src) + '</div>' +
+      '<div id="tpartwrap" class="t-setonly">' + seg('tpart', 'Grammar part', [['all', 'All parts'], ['A', 'A · ' + PART.A.title], ['B', 'B · ' + PART.B.title], ['C', 'C · ' + PART.C.title]], s.part) + '</div>' +
+      seg('twhich', 'Which ones', [['all', 'Any'], ['new', 'Ones I have not tried (' + nNew + ')'], ['missed', 'Ones I got wrong (' + nMiss + ')'], ['uncertain', 'Ones I guessed (' + nUncertain + ')'], ['slow', 'Ones I was slow on (' + nSlow + ')']], s.which) +
       '<div class="t-setonly">' + seg('ttier', 'Clock, if you want one', Object.keys(TIERS).map(function (k) { return [k, TIERS[k].label]; }), s.tier) + '</div>' +
       '<p class="fine t-setonly">While you are still learning, it is best to practice without a clock. Once the questions feel comfortable, a clock on each question will help you build speed. The <b>Timed test</b> works like one part of the real SAT: 27 questions in 32 minutes. When you want a full practice test, College Board offers one for free in its <a href="https://satsuite.collegeboard.org/practice/practice-tests/bluebook" target="_blank" rel="noopener">Bluebook app</a>.</p>' +
       '<label class="checkline t-setonly" for="thints"><input type="checkbox" id="thints"' + (s.hints ? ' checked' : '') + '>Highlight what changes between the grammar choices</label>' +
+      '</div></details>' +
       '<p class="h3" id="tcount" role="status"></p>' +
       '<div class="row"><button type="button" class="btn" id="tstart">Start the set</button>' +
       '<button type="button" class="linkbtn" id="tforget"' + (nNew < all.length ? '' : ' hidden') + '>Clear my saved results</button></div>' +
@@ -130,6 +133,7 @@
       '<p class="fine">' + (triedAll ? 'So far you have answered ' + plural(triedAll, 'question') + ' here. ' : '') + (canStore ? 'Your answers are saved ' + savedIn() + '.' : 'Your answers last until you close this page.') + '<span class="kbd-only"> On a keyboard, press A, B, C or D to answer and Enter to go on.</span></p></div>' +
       '<p class="fine">After you answer a table, graph or extra grammar question, you will find a link to the question and to College Board’s explanation, exactly as they were printed. <a href="#data-patterns">More on tables and graphs</a>.</p>',
       'Choose the kind of question, how hard it is and how many you want. The timed test is here too.', s.mode === 'module' || !!prefix || triedAll > 0) + '</div>' +
+      (prefix ? '' : setsListHTML('rw')) +
       (reviews.length ? '<details class="ctx"><summary>My saved reviews (' + reviews.length + ')</summary><div class="ctxbody"><p class="fine">Latest review for each question. Showing the most recent ' + Math.min(20, reviews.length) + '.</p><ul class="plainlist">' + reviews.slice(0, 20).map(function (x) {
         return '<li><a href="#rq-' + x.it.id + '">Question ' + x.it.id + '</a>' + (x.r.cause ? '<p class="fine">' + esc(causeLabel(x.r.cause)) + '</p>' : '') + (x.r.evidence ? '<p class="fine">' + esc(x.r.evidence) + '</p>' : '') + '</li>';
       }).join('') + '</ul></div></details>' : '') +
@@ -184,7 +188,7 @@
   }
   function timedStart(list, st) {
     rmDrop();
-    rdIntroOn = false;
+    rdIntroOn = false; tOver = false;
     TS = { items: list, i: 0, res: [], tier: TIERS[st.tier] || TIERS.learn, settings: st, hints: st.hints, card: null, paused: false };
     document.getElementById('thost').innerHTML = '<div class="tplay"><div class="tbar"><span class="tpos" id="tpos"></span><div class="clockbox" id="tclock"></div>' +
       '<div class="row"><button type="button" class="btn sm" id="tnext2" hidden>Next</button><button type="button" class="linkbtn" id="tend">Stop practicing</button></div></div>' +
@@ -311,6 +315,12 @@
     var avg = paced.length ? paced.reduce(function (a, r) { return a + r.t; }, 0) / paced.length : 0;
     var slowRight = paced.filter(function (r) { return r.ok && r.t > r.l; });
     var summary = practiceSummary(R), review = summary.review;
+    if (!TS.noted) {
+      TS.noted = true;
+      var kinds = {}; R.forEach(function (r) { kinds[r.it.t === 'g' || r.it.t === 'a' ? 'Grammar' : r.it.t === 'x' ? 'Linking words' : r.it.t === 'n' ? 'Notes' : r.it.t === 'v' ? 'Tables and graphs' : 'Reading'] = 1; });
+      var kn = Object.keys(kinds);
+      setsNote('rw', kn.length === 1 ? kn[0] : 'A mix of topics', n, right, R.filter(function (r) { return !r.ok; }).map(function (r) { return r.it.id; }));
+    }
     var retry = review.map(function (r) { return r.it; }), st = TS.settings;
     var lineFor = function (r) {
       if (r.it.t === 'g') { var ex = r.it.ex, u = U[ex.u]; return '<a href="#' + u.id + '">' + u.num + ' ' + u.title + '</a>'; }
@@ -334,7 +344,7 @@
       }).join('') + '</ul>' : '') +
       '<div class="row" style="margin-top:1.4rem">' + (retry.length ? '<button type="button" class="btn" id="tretry">Revisit ' + plural(retry.length, 'question') + '</button>' : '') +
       '<button type="button" class="btn' + (retry.length ? ' ghost' : '') + '" id="tagain">Set up another</button>' + (planGet() ? '<a class="btn ghost" href="#plan">Back to my plan</a>' : '') + '</div>';
-    TS = null; tclock = null;
+    TS = null; tclock = null; tOver = true;
     var rb = document.getElementById('tretry');
     if (rb) { rb.addEventListener('click', function () { timedStart(shuffle(retry.slice()), st); }); }
     document.getElementById('tagain').addEventListener('click', function () { timedSetup(); toTop(); });

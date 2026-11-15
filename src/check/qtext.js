@@ -63,7 +63,7 @@ const { chromium } = require('playwright');
   // a lesson page: examples are filled only when opened
   await go('m-le1');
   const before = await p.$$eval('#v-mlearn .mtx[data-mtx-s="d"]', L => L.length);
-  await p.evaluate(() => { const d = document.querySelector('#v-mlearn details.mstrategy:has(.mtx)'); d.open = true; d.scrollIntoView(); });
+  await p.evaluate(() => { const d = document.querySelector('#v-mlearn details.mstrategy:has(.mtx)'); for (let x = d; x; x = x.parentElement) { if (x.tagName === 'DETAILS') { x.open = true; } } d.scrollIntoView(); });
   await p.waitForSelector('#v-mlearn details[open] .mtx[data-mtx-s="d"]', { timeout: 15000 });
   const opened = await p.$eval('#v-mlearn details[open] .mtx[data-mtx-s="d"]', e => [e.textContent.trim().length, e.querySelectorAll('svg.mx, img').length]);
   ok(before === 0 && opened[0] + opened[1] > 10, 'a lesson example fills in only when it is opened (' + opened.join(' characters, ') + ' drawings)');

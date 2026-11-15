@@ -385,7 +385,7 @@
       page.innerHTML = '';
       o.render(key, page);
       /* a page that is a lesson of the course ends with the bar that moves through it */
-      if (o.course) { var ce = null; o.items().forEach(function (g) { g.entries.forEach(function (x) { if (x.key === key) { ce = x; } }); }); if (ce) { page.insertAdjacentHTML('beforeend', courseBarHTML(o.course, ce.token)); } }
+      if (o.course) { var ce = null; o.items().forEach(function (g) { g.entries.forEach(function (x) { if (x.key === key) { ce = x; } }); }); if (ce) { courseFold(page, ce.token); page.insertAdjacentHTML('beforeend', courseBarHTML(o.course, ce.token)); } }
       mark();
       return true;
     }

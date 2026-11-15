@@ -203,8 +203,8 @@
         '<section class="msec"><h3 class="h3">Worked example</h3><div class="mex"><p class="mex-q">' + esc(ex.q) + '</p><ol class="mex-l">' + ex.lines.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol><p class="mex-c">' + esc(ex.check) + '</p></div><p class="fine">This example was written for this site; the practice questions are College Board’s.</p></section>' +
         '<section class="msec"><div class="mtrapbox"><p class="mtag bad">The trap</p><p>' + esc(S.trap) + '</p></div>' + (S.tip ? '<div class="mtipbox"><p class="mtag">Tip</p><p>' + esc(S.tip) + '</p></div>' : '') + '</section>' +
         '<p class="row" style="margin-top:1.4rem"><a class="btn" href="#mp-' + k + '">Practice all ' + S.n + ' ' + esc(S.short.toLowerCase()) + ' questions</a></p>' +
-        '<section class="sec" id="m-types-' + k + '"><h3 class="h2">The ' + S.types.length + ' question types in this skill</h3><p class="lede">Every question in this skill belongs to one of these. Learn to recognize each one from the words in the question.</p>' +
-          '<div class="mtypes">' + S.types.slice().sort(function (a, b) { return MTY[b].n - MTY[a].n; }).map(function (t) { return mTypeCard(t); }).join('') + '</div></section>' +
+        '<div class="folds mlesson-more">' + foldHTML('m-types-' + k, 'Go deeper: the ' + S.types.length + ' question types in this skill', '<p class="lede">Every question in this skill belongs to one of these. Learn to recognize each one from the words in the question.</p>' +
+          '<div class="mtypes">' + S.types.slice().sort(function (a, b) { return MTY[b].n - MTY[a].n; }).map(function (t) { return mTypeCard(t); }).join('') + '</div>', 'You can finish the lesson without this. Open it when you want to see every kind of question.') + '</div>' +
         courseBarHTML('m', 'm-' + k) +
         '</div><aside class="mlesson-side" aria-label="Skills in this area"><p class="label">' + esc(d.name) + '</p><ul>' + d.skills.map(function (x) { return '<li><a href="#m-' + x + '"' + (x === k ? ' aria-current="page"' : '') + '>' + esc(MSK[x].short) + '</a></li>'; }).join('') + '</ul></aside></div>' +
         '</div>';
@@ -431,6 +431,7 @@
         seg('mp-pick', '4 · Which ones', [['any', 'Any'], ['new', 'Ones I have not tried'], ['missed', 'Ones I got wrong']], s.pick) +
         '<label class="checkline mp-learnonly"><input type="checkbox" id="mp-timer"' + (s.timer ? ' checked' : '') + '> Show a clock (the real test allows about 95 seconds a question)</label>' +
       '</div><p class="mpset-n" id="mp-count" aria-live="polite"></p><p class="row"><button class="btn big" type="submit" id="mp-go">Start practicing</button></p></form>', 'Choose the topic, how hard it is and how many questions you want. The timed test is here too.', preset || s.mode === 'module' || mpAnyTried()) + '</div>' +
+      (preset ? '' : setsListHTML('m')) +
       '</div>';
     var form = $('#mp-form');
     function read() {
@@ -612,6 +613,12 @@
     var missedTypes = {};
     done.forEach(function (r) { if (!r.ok) { var t = MQBY[r.id].t; missedTypes[t] = (missedTypes[t] || 0) + 1; } });
     var mt = Object.keys(missedTypes);
+    if (!MP.noted && done.length) {
+      MP.noted = true;
+      var sk = {}; done.forEach(function (r) { sk[MQBY[r.id].k] = 1; });
+      var skn = Object.keys(sk);
+      setsNote('m', skn.length === 1 && MSK[skn[0]] ? MSK[skn[0]].name : 'A mix of topics', done.length, right, done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; }));
+    }
     viewEl.mprac.innerHTML = '<div class="wrap">' + mHead('Math · Practice', done.length ? 'You got ' + right + ' of ' + done.length + ' right' : 'Set ended', done.length ? 'Average time ' + avg + ' seconds a question (the real test allows about 95).' : '') +
       (mt.length ? '<section class="msec"><h3 class="h3">Question types to review</h3><div class="mtypes">' + mt.map(function (t) { return mTypeCard(t, { showSkill: true }); }).join('') + '</div></section>' : (done.length ? '<p class="mpraise">Every one right. Try a harder set.</p>' : '')) +
       '<section class="msec"><h3 class="h3">Your answers</h3><ol class="mpsum">' + done.map(function (r) {
