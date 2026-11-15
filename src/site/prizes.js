@@ -212,7 +212,7 @@
   /* ---------- free crates for long streaks and the test-day week ---------- */
   function pzMilestones() {
     var P = pz(), changed = false, s = habitStreak();
-    if (!P.g.welcome) { P.g.welcome = [Date.now(), 'pencil', 'c', 'Welcome: your first crate is free.']; changed = true; }
+    if (!P.g.welcome && s.days > 0) { P.g.welcome = [Date.now(), 'pencil', 'c', 'Welcome: your first crate is free.']; changed = true; }
     if (!s.n) { return changed; }
     var end = s.today ? dayStart(Date.now()) : dayBefore(dayStart(Date.now())), start = end;
     for (var i = 1; i < s.n; i++) { start = dayBefore(start); }
@@ -241,8 +241,8 @@
     if (pzBusy) { return; }
     pzBusy = true;
     try {
-      var P = pz(), today = dayKey(Date.now()), changed = false;
-      var earn = function (k, v) { if (!(P.e[k] >= v)) { P.e[k] = v; changed = true; } };
+      var P = pz(), today = dayKey(Date.now()), changed = false, got = 0, why = '', g0 = Object.keys(P.g).length;
+      var earn = function (k, v) { var was = P.e[k] || 0; if (!(was >= v)) { P.e[k] = v; changed = true; got += v - was; why = PZ_WHY[k.split('.')[0]] || why; } };
       try { if (qotdDone('m', qotd('m'))) { earn('qotd.m.' + today, PZ_EARN.qotd); } } catch (e) { /* no question of the day */ }
       try { if (qotdDone('rw', qotd('rw'))) { earn('qotd.rw.' + today, PZ_EARN.qotd); } } catch (e) { /* no question of the day */ }
       try { var pl = planGet(); if (pl) { var pr = planProgress(pl); if (pr.of && pr.done >= pr.of) { earn('plan.' + today, PZ_EARN.plan); } } } catch (e) { /* no plan */ }
@@ -251,6 +251,8 @@
       if (pzApplyFreeze()) { changed = true; }
       if (pzMilestones()) { changed = true; }
       if (changed) { save(); }
+      var fresh = Object.keys(P.g).length > g0;
+      if (got > 0) { pzToast('+' + got + ' coins', why + (fresh ? ' · and a free crate' : '')); } else if (fresh) { pzToast('A free crate', 'is waiting for you'); }
       pzChip();
     } finally { pzBusy = false; }
   }
@@ -288,18 +290,42 @@
     var aura = pzWorn('aura'), st = pzWorn('streak'), title = pzShownTitle(), icon = st ? fxStreakIcon(PZ_BY[st].key, s.n) : '';
     if (icon) { html = html.replace('<p class="hstreak-n">', '<p class="hstreak-n pz-styled">' + icon); }
     if (title) { html += '<p class="pz-title">' + esc(title) + '</p>'; }
-    return aura ? '<div class="pz-plate"><canvas class="pz-aura" data-pz-aura="' + PZ_BY[aura].key + '" aria-hidden="true"></canvas>' + html + '</div>' : html;
+    var n = Math.max(0, pzBalance()), free = pzGrants().length;
+    html += '<a class="pz-homecoins" href="#crates">' + PZ_COIN + '<span><b>' + n + '</b> ' + (n === 1 ? 'coin' : 'coins') + (free ? ' · ' + plural(free, 'free crate') : '') + ' · Open crates</span></a>';
+    return aura ? '<div class="pz-plate"><canvas class="pz-aura" data-pz-aura="' + PZ_BY[aura].key + '" aria-hidden="true"></canvas>' + html + '</div>' : '<div class="pz-snum">' + html + '</div>';
   }
 
   /* ---------- the coin count in the top bar ---------- */
   var PZ_FLAME = '<svg class="pz-flame" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FB923C" d="M12 2c2.5 3.5 6.5 6 6.5 11a6.5 6.5 0 0 1-13 0c0-2.6 1.4-4.7 3-6.4.1 2 1 3.4 2.4 3.9C10.6 7.6 10.6 4.6 12 2z"/></svg>';
   var PZ_COIN = '<svg class="pz-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="7" class="pz-coin-in"/><path d="M8.6 12.3l2.3 2.3 4.6-4.9" class="pz-coin-ck"/></svg>';
+  /* beside the Text size control, and only where it fits on the same line: a top bar that wraps to a second line would
+     push the page down and move the buttons under the boxes they open. On a phone the coins show on Home instead. */
   function pzChip() {
-    var tools = document.getElementById('theme-btn');
-    if (!tools || !tools.parentNode) { return; }
-    var a = document.getElementById('pz-chip');
-    if (!a) { a = document.createElement('a'); a.id = 'pz-chip'; a.className = 'tool pz-chip'; a.href = '#crates'; tools.parentNode.insertBefore(a, tools); }
-    var n = Math.max(0, pzBalance());
+    var tb = document.getElementById('theme-btn'), top = document.getElementById('top');
+    if (!tb || !top) { return; }
+    var wrap = tb.closest('.theme') || tb, a = document.getElementById('pz-chip'), n = Math.max(0, pzBalance());
+    if (!wrap.parentNode) { return; }
+    if (!a) { a = document.createElement('a'); a.id = 'pz-chip'; a.className = 'tool pz-chip'; a.href = '#crates'; wrap.parentNode.insertBefore(a, wrap); }
     a.innerHTML = PZ_COIN + '<span>' + n + '</span>';
     a.setAttribute('aria-label', plural(n, 'coin') + '. Open crates.');
+    a.hidden = true; var h0 = top.offsetHeight; a.hidden = false;
+    if (top.offsetHeight > h0 + 2) { a.hidden = true; }
   }
+  /* whatever changes the width of the bar's buttons asks again: the window, the fonts arriving, the text size */
+  var pzChipT = 0;
+  window.addEventListener('resize', function () { clearTimeout(pzChipT); pzChipT = setTimeout(pzChip, 200); });
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { pzChip(); }); }
+  if ('MutationObserver' in window) { new MutationObserver(function () { pzChip(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-size'] }); }
+
+  /* a short note at the bottom when coins come in or a free crate arrives; never during a timed module. It never takes a
+     tap, so a button under it still works while it shows. */
+  var pzToastT = 0;
+  function pzToast(head, why) {
+    if (document.querySelector('.view:not([hidden]) .mmwrap')) { return; }
+    var el = document.getElementById('pz-toast');
+    if (!el) { el = document.createElement('div'); el.id = 'pz-toast'; el.className = 'pz-toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+    el.innerHTML = '<p class="pz-toast-in">' + PZ_COIN + '<b>' + esc(head) + '</b>' + (why ? ' <span>' + esc(why) + '</span>' : '') + '</p>';
+    el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+    clearTimeout(pzToastT); pzToastT = setTimeout(function () { el.classList.remove('show'); }, 3500);
+  }
+  var PZ_WHY = { qotd: 'Question of the day', plan: 'Today’s plan is done', rev: 'For saying why you missed it' };

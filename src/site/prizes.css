@@ -15,6 +15,18 @@
 .pz-coin circle { fill: #F5B400; } .pz-coin .pz-coin-in { fill: none; stroke: #B7791F; stroke-width: 1.3; }
 .pz-coin-ck { fill: none; stroke: #6B3E00; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
+/* the coin count on Home, under the streak; the number, title and coins are one cell of the streak box */
+.pz-snum { display: grid; gap: .2rem; align-content: center; min-width: 0; }
+.pz-homecoins { display: inline-flex; align-items: center; gap: .4rem; justify-self: start; margin-top: .5rem; font-weight: 600; text-decoration: none; color: var(--ink); }
+.pz-homecoins svg { flex: none; }
+.pz-homecoins:hover span { text-decoration: underline; }
+.pz-plate .pz-homecoins { justify-self: center; margin-top: .6rem; background: rgba(12, 11, 24, .82); border-radius: 999px; padding: .35rem .85rem; color: #F5F3FF; text-align: center; }
+/* the note when coins come in */
+.pz-toast { position: fixed; left: 0; right: 0; bottom: 0; z-index: 75; display: flex; justify-content: center; pointer-events: none; padding: 0 max(16px, env(safe-area-inset-right, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); transform: translateY(140%); transition: transform .3s cubic-bezier(.3, .7, .2, 1); }
+.pz-toast.show { transform: none; }
+.pz-toast-in { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; margin: 0; padding: .65rem 1rem; border-radius: 16px; background: var(--ink); color: var(--paper); box-shadow: var(--shadow-lg, 0 8px 30px rgba(0, 0, 0, .25)); max-width: 30rem; }
+.pz-toast-in span { opacity: .85; font-size: .92rem; }
+
 /* the Crates page */
 .pz-page { padding-block: 1.5rem 3.5rem; display: grid; gap: 2rem; }
 .pz-head { display: grid; gap: .6rem; }
@@ -201,6 +213,6 @@ html.pz-plain .pz-bg { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .pz-t-m, .pz-r-m.show, .pz-shake, .pz-check path, .pz-star, .pz-stamp, .pz-swipe, .pz-neon::before, .pz-neon-run { animation: none !important; }
   .pz-prize.show { animation: none !important; transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  .pz-door, .pz-dial { transition: none !important; }
+  .pz-door, .pz-dial, .pz-toast { transition: none !important; }
   :root[data-theme^="prize-"] .btn:not(.ghost):not(:disabled) { animation: none !important; }
 }

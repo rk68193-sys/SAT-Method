@@ -2,8 +2,9 @@
 // Coins, crates and the looks inside them (prizes.js, fx.js, crates.js): earning from the question of the day, opening a crate
 // (skip, the prize, wearing it), the sure Epic every 10 crates, duplicates paying coins, study luck in the odds, free crates for
 // a long streak and the test-day week, a streak freeze covering a missed day, two devices' backups joining without losing a coin,
-// the effect on a right answer, a timed module staying plain, reduced motion, owned themes in Appearance, an aura on Home, and
-// the page at phone widths. Each part starts from its own saved progress in a fresh browser.
+// the effect on a right answer, a timed module staying plain, reduced motion, owned themes in Appearance, an aura on Home, the
+// coin count (top bar only where it fits on one line, always on Home), the note when coins come in, and the page at phone
+// widths. Each part starts from its own saved progress in a fresh browser.
 const { chromium } = require('playwright');
 const fs = require('fs'), os = require('os'), path = require('path');
 const file = 'file://' + path.resolve(process.argv[2] || 'index.html');
@@ -36,6 +37,13 @@ async function fresh(fn, arg, opt) {
   const done = async name => { ok(!errs.length, name + ': no script errors' + (errs.length ? ' (' + errs.join(' | ') + ')' : '')); await ctx.close(); };
   return { ctx, p, go, saved, done };
 }
+/* in the page: is the coin count in the top bar, and is the bar as tall as without it */
+const barFits = () => {
+  const a = document.getElementById('pz-chip'), top = document.getElementById('top');
+  if (!a || !top) { return { fits: !!top, shown: false }; }
+  const shown = !a.hidden, h1 = top.offsetHeight; a.hidden = true; const h0 = top.offsetHeight; a.hidden = !shown;
+  return { fits: h1 <= h0 + 2, shown, n: a.textContent.trim() };
+};
 const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values(pz.e || {}).forEach(v => { n += v; }); Object.values(pz.x || {}).forEach(v => { n -= v; }); return n; };
 
 (async () => {
@@ -49,7 +57,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok(await t.p.$eval('[data-pz-open="pencil"]', b => b.disabled), 'a crate cannot be opened without 50 coins');
     ok((await t.p.$$('#v-crates .pz-item')).length === 56, '56 prizes in the collection, ' + (await t.p.$$('#v-crates .pz-item.locked')).length + ' still to find');
     ok(!(await t.p.$('[data-pz-open="test"]')), 'the Test Day crate is closed without a test date this week');
-    ok(/Welcome: your first crate is free/.test(await t.p.textContent('#v-crates')), 'a new student gets one free welcome crate');
+    ok(!(await t.p.$('.pz-free')), 'no free crate before the first answer');
     /* Home shows the question of the day once a student has practiced; the Crates page always links to it */
     const href = await t.p.$eval('.pz-earn li:nth-child(2) a', a => a.getAttribute('href'));
     await t.p.click('.pz-earn li:nth-child(2) a'); await t.p.waitForTimeout(700);
@@ -59,9 +67,16 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     const st = await t.saved();
     const key = Object.keys(((st.s.pz || {}).e) || {}).find(k => k.indexOf('qotd.rw.') === 0);
     ok(!!key && st.s.pz.e[key] === 10, 'answering it earns 10 coins (' + key + ')');
-    ok((await t.p.textContent('#pz-chip')).trim() === '10', 'the coin count in the top bar shows 10');
+    const note = await t.p.evaluate(() => { const el = document.querySelector('#pz-toast.show'); return el ? el.textContent : ''; });
+    ok(/\+10 coins/.test(note) && /Question of the day/.test(note) && /free crate/.test(note), 'a note says what was earned: ' + note);
+    ok(await t.p.$eval('#pz-toast', el => getComputedStyle(el).pointerEvents === 'none' && getComputedStyle(el.firstChild).pointerEvents === 'none'), 'the note never takes a tap from the page under it');
+    const chip = await t.p.evaluate(barFits);
+    ok(chip.fits && (!chip.shown || chip.n === '10'), 'the coin count does not make the top bar taller at ' + width + ' px (' + (chip.shown ? 'shown: ' + chip.n : 'left to Home') + ')');
+    await t.go('home');
+    ok(/^10 coins · 1 free crate · Open crates$/.test((await t.p.textContent('.pz-homecoins')).trim()), 'Home shows the coins and the free crate: ' + (await t.p.textContent('.pz-homecoins')).trim());
     await t.go('crates');
     ok(await t.p.$eval('.pz-earn li:nth-child(2)', li => li.classList.contains('done')), 'Crates marks today\'s Reading and Writing question as earned');
+    ok(/Welcome: your first crate is free/.test(await t.p.textContent('#v-crates')), 'the first answer brings the free welcome crate');
     await t.done('earning');
   }
 
@@ -247,6 +262,23 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok(!!(await t.p.$('[data-pz-open="test"]')), 'the Test Day crate opens 3 days before the test');
     ok(await t.p.$$eval('.pz-free h4', hs => hs.some(h => /Epic or better/.test(h.textContent))) && /test is this week/.test(await t.p.textContent('#v-crates')), 'with a free Test Day crate');
     await t.done('looks');
+  }
+
+  /* ---------- the coin count in the top bar: shown where it fits, never making the bar taller ---------- */
+  for (const w of [320, width, 1280]) {
+    const t = await fresh((st, a, dk) => { st.s.pz = { e: { seed: 120 } }; st.s.days = {}; st.s.days[dk(Date.now())] = [1, 0]; }, null, { width: w });
+    await t.go('home');
+    const rows = [];
+    for (const z of ['', 'l', '']) {
+      await t.p.evaluate(z => { if (z) { document.documentElement.setAttribute('data-size', z); } else { document.documentElement.removeAttribute('data-size'); } }, z);
+      await t.p.waitForTimeout(120);
+      const r = await t.p.evaluate(barFits); rows.push((z || 'normal') + ':' + (r.shown ? r.n : 'off') + (r.fits ? '' : ' (wraps)'));
+      if (!r.fits) { break; }
+    }
+    ok(rows.every(r => !/wraps/.test(r)), 'at ' + w + ' px the coin count never makes the top bar taller, at either text size: ' + rows.join(', '));
+    if (w >= 1024) { ok(rows[0] === 'normal:120' && rows[2] === 'normal:120', 'on a computer the top bar shows the 120 coins'); }
+    ok((await t.p.textContent('.pz-homecoins b')).trim() === '120', 'Home shows the 120 coins at ' + w + ' px');
+    await t.done('top bar ' + w);
   }
 
   /* ---------- the page fits a phone ---------- */

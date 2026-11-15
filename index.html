@@ -3183,6 +3183,18 @@ html.tour-open { overflow: hidden; }
 .pz-coin circle { fill: #F5B400; } .pz-coin .pz-coin-in { fill: none; stroke: #B7791F; stroke-width: 1.3; }
 .pz-coin-ck { fill: none; stroke: #6B3E00; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
+/* the coin count on Home, under the streak; the number, title and coins are one cell of the streak box */
+.pz-snum { display: grid; gap: .2rem; align-content: center; min-width: 0; }
+.pz-homecoins { display: inline-flex; align-items: center; gap: .4rem; justify-self: start; margin-top: .5rem; font-weight: 600; text-decoration: none; color: var(--ink); }
+.pz-homecoins svg { flex: none; }
+.pz-homecoins:hover span { text-decoration: underline; }
+.pz-plate .pz-homecoins { justify-self: center; margin-top: .6rem; background: rgba(12, 11, 24, .82); border-radius: 999px; padding: .35rem .85rem; color: #F5F3FF; text-align: center; }
+/* the note when coins come in */
+.pz-toast { position: fixed; left: 0; right: 0; bottom: 0; z-index: 75; display: flex; justify-content: center; pointer-events: none; padding: 0 max(16px, env(safe-area-inset-right, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); transform: translateY(140%); transition: transform .3s cubic-bezier(.3, .7, .2, 1); }
+.pz-toast.show { transform: none; }
+.pz-toast-in { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; margin: 0; padding: .65rem 1rem; border-radius: 16px; background: var(--ink); color: var(--paper); box-shadow: var(--shadow-lg, 0 8px 30px rgba(0, 0, 0, .25)); max-width: 30rem; }
+.pz-toast-in span { opacity: .85; font-size: .92rem; }
+
 /* the Crates page */
 .pz-page { padding-block: 1.5rem 3.5rem; display: grid; gap: 2rem; }
 .pz-head { display: grid; gap: .6rem; }
@@ -3369,7 +3381,7 @@ html.pz-plain .pz-bg { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .pz-t-m, .pz-r-m.show, .pz-shake, .pz-check path, .pz-star, .pz-stamp, .pz-swipe, .pz-neon::before, .pz-neon-run { animation: none !important; }
   .pz-prize.show { animation: none !important; transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  .pz-door, .pz-dial { transition: none !important; }
+  .pz-door, .pz-dial, .pz-toast { transition: none !important; }
   :root[data-theme^="prize-"] .btn:not(.ghost):not(:disabled) { animation: none !important; }
 }
 
@@ -8998,7 +9010,7 @@ function rReasoningHTML() {
   /* ---------- free crates for long streaks and the test-day week ---------- */
   function pzMilestones() {
     var P = pz(), changed = false, s = habitStreak();
-    if (!P.g.welcome) { P.g.welcome = [Date.now(), 'pencil', 'c', 'Welcome: your first crate is free.']; changed = true; }
+    if (!P.g.welcome && s.days > 0) { P.g.welcome = [Date.now(), 'pencil', 'c', 'Welcome: your first crate is free.']; changed = true; }
     if (!s.n) { return changed; }
     var end = s.today ? dayStart(Date.now()) : dayBefore(dayStart(Date.now())), start = end;
     for (var i = 1; i < s.n; i++) { start = dayBefore(start); }
@@ -9027,8 +9039,8 @@ function rReasoningHTML() {
     if (pzBusy) { return; }
     pzBusy = true;
     try {
-      var P = pz(), today = dayKey(Date.now()), changed = false;
-      var earn = function (k, v) { if (!(P.e[k] >= v)) { P.e[k] = v; changed = true; } };
+      var P = pz(), today = dayKey(Date.now()), changed = false, got = 0, why = '', g0 = Object.keys(P.g).length;
+      var earn = function (k, v) { var was = P.e[k] || 0; if (!(was >= v)) { P.e[k] = v; changed = true; got += v - was; why = PZ_WHY[k.split('.')[0]] || why; } };
       try { if (qotdDone('m', qotd('m'))) { earn('qotd.m.' + today, PZ_EARN.qotd); } } catch (e) { /* no question of the day */ }
       try { if (qotdDone('rw', qotd('rw'))) { earn('qotd.rw.' + today, PZ_EARN.qotd); } } catch (e) { /* no question of the day */ }
       try { var pl = planGet(); if (pl) { var pr = planProgress(pl); if (pr.of && pr.done >= pr.of) { earn('plan.' + today, PZ_EARN.plan); } } } catch (e) { /* no plan */ }
@@ -9037,6 +9049,8 @@ function rReasoningHTML() {
       if (pzApplyFreeze()) { changed = true; }
       if (pzMilestones()) { changed = true; }
       if (changed) { save(); }
+      var fresh = Object.keys(P.g).length > g0;
+      if (got > 0) { pzToast('+' + got + ' coins', why + (fresh ? ' · and a free crate' : '')); } else if (fresh) { pzToast('A free crate', 'is waiting for you'); }
       pzChip();
     } finally { pzBusy = false; }
   }
@@ -9074,21 +9088,45 @@ function rReasoningHTML() {
     var aura = pzWorn('aura'), st = pzWorn('streak'), title = pzShownTitle(), icon = st ? fxStreakIcon(PZ_BY[st].key, s.n) : '';
     if (icon) { html = html.replace('<p class="hstreak-n">', '<p class="hstreak-n pz-styled">' + icon); }
     if (title) { html += '<p class="pz-title">' + esc(title) + '</p>'; }
-    return aura ? '<div class="pz-plate"><canvas class="pz-aura" data-pz-aura="' + PZ_BY[aura].key + '" aria-hidden="true"></canvas>' + html + '</div>' : html;
+    var n = Math.max(0, pzBalance()), free = pzGrants().length;
+    html += '<a class="pz-homecoins" href="#crates">' + PZ_COIN + '<span><b>' + n + '</b> ' + (n === 1 ? 'coin' : 'coins') + (free ? ' · ' + plural(free, 'free crate') : '') + ' · Open crates</span></a>';
+    return aura ? '<div class="pz-plate"><canvas class="pz-aura" data-pz-aura="' + PZ_BY[aura].key + '" aria-hidden="true"></canvas>' + html + '</div>' : '<div class="pz-snum">' + html + '</div>';
   }
 
   /* ---------- the coin count in the top bar ---------- */
   var PZ_FLAME = '<svg class="pz-flame" viewBox="0 0 24 24" aria-hidden="true"><path fill="#FB923C" d="M12 2c2.5 3.5 6.5 6 6.5 11a6.5 6.5 0 0 1-13 0c0-2.6 1.4-4.7 3-6.4.1 2 1 3.4 2.4 3.9C10.6 7.6 10.6 4.6 12 2z"/></svg>';
   var PZ_COIN = '<svg class="pz-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="7" class="pz-coin-in"/><path d="M8.6 12.3l2.3 2.3 4.6-4.9" class="pz-coin-ck"/></svg>';
+  /* beside the Text size control, and only where it fits on the same line: a top bar that wraps to a second line would
+     push the page down and move the buttons under the boxes they open. On a phone the coins show on Home instead. */
   function pzChip() {
-    var tools = document.getElementById('theme-btn');
-    if (!tools || !tools.parentNode) { return; }
-    var a = document.getElementById('pz-chip');
-    if (!a) { a = document.createElement('a'); a.id = 'pz-chip'; a.className = 'tool pz-chip'; a.href = '#crates'; tools.parentNode.insertBefore(a, tools); }
-    var n = Math.max(0, pzBalance());
+    var tb = document.getElementById('theme-btn'), top = document.getElementById('top');
+    if (!tb || !top) { return; }
+    var wrap = tb.closest('.theme') || tb, a = document.getElementById('pz-chip'), n = Math.max(0, pzBalance());
+    if (!wrap.parentNode) { return; }
+    if (!a) { a = document.createElement('a'); a.id = 'pz-chip'; a.className = 'tool pz-chip'; a.href = '#crates'; wrap.parentNode.insertBefore(a, wrap); }
     a.innerHTML = PZ_COIN + '<span>' + n + '</span>';
     a.setAttribute('aria-label', plural(n, 'coin') + '. Open crates.');
+    a.hidden = true; var h0 = top.offsetHeight; a.hidden = false;
+    if (top.offsetHeight > h0 + 2) { a.hidden = true; }
   }
+  /* whatever changes the width of the bar's buttons asks again: the window, the fonts arriving, the text size */
+  var pzChipT = 0;
+  window.addEventListener('resize', function () { clearTimeout(pzChipT); pzChipT = setTimeout(pzChip, 200); });
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { pzChip(); }); }
+  if ('MutationObserver' in window) { new MutationObserver(function () { pzChip(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-size'] }); }
+
+  /* a short note at the bottom when coins come in or a free crate arrives; never during a timed module. It never takes a
+     tap, so a button under it still works while it shows. */
+  var pzToastT = 0;
+  function pzToast(head, why) {
+    if (document.querySelector('.view:not([hidden]) .mmwrap')) { return; }
+    var el = document.getElementById('pz-toast');
+    if (!el) { el = document.createElement('div'); el.id = 'pz-toast'; el.className = 'pz-toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+    el.innerHTML = '<p class="pz-toast-in">' + PZ_COIN + '<b>' + esc(head) + '</b>' + (why ? ' <span>' + esc(why) + '</span>' : '') + '</p>';
+    el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+    clearTimeout(pzToastT); pzToastT = setTimeout(function () { el.classList.remove('show'); }, 3500);
+  }
+  var PZ_WHY = { qotd: 'Question of the day', plan: 'Today’s plan is done', rev: 'For saying why you missed it' };
   /* =================== Prize looks: auras, right-answer effects, reveals and moving backgrounds =================== */
   /* Every animation draws on a canvas that runs only while it is on screen (backgrounds at 30 frames a second), stops in a
      hidden tab, never runs inside a timed module, and holds one still frame on a device set to reduce motion. */
