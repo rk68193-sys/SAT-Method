@@ -45,6 +45,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [require('ch
   // skip link
   await p.keyboard.press('Tab'); console.log('first tab:', await p.evaluate(() => document.activeElement.textContent));
   await p.keyboard.press('Enter'); console.log('focus after skip:', await p.evaluate(() => document.activeElement.id), '| hash still', await p.evaluate(() => location.hash));
+  await p.keyboard.press('Escape');   // Tab from Text size now reaches Help, and Enter opens it: close it again
   // tabs nav in R&W
   await p.click('#subj a[data-subj="rw"]'); await p.waitForTimeout(150);
   console.log('rw tabs:', await p.$$eval('#secin a', a => a.map(x => x.textContent + (x.getAttribute('aria-current') ? '*' : '')).join(', ')));

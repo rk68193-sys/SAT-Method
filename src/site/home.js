@@ -271,7 +271,7 @@
     var mt = 0; Object.keys(store.m).forEach(function (k) { if (MQBY[k]) { mt++; } });
     function pick(key, what) {
       var S = SUBJ[key];
-      return '<a class="hpick hpick-' + key + '" href="#' + S.items[0][1] + '"><span class="hpick-ico">' + ICON[S.icon] + '</span><span class="hpick-t"><b>' + S.name + '</b><span>' + what + '</span></span><span class="hpick-go">Start <span aria-hidden="true">→</span></span></a>';
+      return '<a class="hpick hpick-' + key + '" href="#' + S.items[0][1] + '"><span class="hpick-ico">' + ICON[S.icon] + '</span><span class="hpick-t"><b>' + S.name + '</b><span>' + what + '</span></span><span class="hpick-go"><span>Start<span class="hpick-go-n"> ' + S.name + '</span></span> <span aria-hidden="true">→</span></span></a>';
     }
     viewEl.home.innerHTML = '<div class="wrap">' +
       '<section class="hh hh-simple"><div class="hh-text"><p class="hpill">Free · no sign-up needed</p><h1>Get ready for the SAT, one step at a time</h1>' +

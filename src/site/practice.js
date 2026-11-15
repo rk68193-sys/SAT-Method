@@ -107,7 +107,7 @@
     var triedAll = g.tried + r.tried + qb.tried + nb.tried + xb.tried, rightAll = g.right + r.right;
     var h = (prefix || '') + '<header class="read"><p class="eyebrow">Reading &amp; Writing · Practice</p><h2 class="vtitle">Practice real test questions</h2>' +
       '<p class="lede">Every one of these 1,845 questions was written by College Board, the people who make the SAT. After each answer you will see which choice is right and why, so every question teaches you something.</p></header>' +
-      '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#rw-easy">5 easy questions</a><a class="btn big ghost" href="#rw-mixed">10 questions of every level</a></p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>' +
+      '<section class="mpquick"><h3 class="h2">Start right away</h3><p class="row"><a class="btn big" href="#rw-easy">5 easy questions</a><a class="btn big ghost" href="#rw-mixed">10 questions of every level</a>' + (nMiss ? '<a class="btn big ghost" href="#rw-missed">Try again the ones I got wrong (' + nMiss + ')</a>' : '') + '</p><p class="fine">You will get one question at a time, with no clock. Take as long as you like.</p></section>' +
       '<div class="folds setfold">' + foldHTML('tfold', 'Build your own practice set', '<div class="tsetup" id="tsetup" data-mode="' + s.mode + '">' +
       seg('tmode', 'How to practice', [['set', 'One at a time'], ['module', 'Timed test']], s.mode) +
       '<p class="mpmode-note" id="tmodenote"></p>' +
@@ -171,6 +171,12 @@
   function rwQuick(n, diff) {
     var seen = {}, pool = itemsAll().filter(function (it) { if (seen[it.id]) { return false; } seen[it.id] = true; return !diff || it.d === diff; });
     timedStart(shuffle(pool).slice(0, n), { src: 'both', part: 'all', diff: diff || 'all', which: 'all', len: n, tier: 'learn', hints: false, mode: 'set', quick: true });
+  }
+  /* up to ten of the questions last answered wrong, one at a time with no clock */
+  function rwMissed() {
+    var seen = {}, pool = itemsAll().filter(function (it) { if (seen[it.id]) { return false; } seen[it.id] = true; var x = result(it); return !!x && x.c === 0; });
+    if (!pool.length) { timedSetup(); return; }
+    timedStart(shuffle(pool).slice(0, 10), { src: 'both', part: 'all', diff: 'all', which: 'missed', len: 10, tier: 'learn', hints: false, mode: 'set', quick: true });
   }
   function timedStart(list, st) {
     rmDrop();

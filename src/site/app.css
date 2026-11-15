@@ -2357,3 +2357,57 @@ html.tour-open { overflow: hidden; }
   .hpick-t > span { display: none; }
   .hpick-t b { font-size: 1.25rem; }
 }
+
+/* ---------- Round 3: checked against WCAG 2.2 and Nielsen Norman Group guidance ---------- */
+/* 1.4.4 Resize text: with the browser's own text size at 200% the header wraps instead of pushing the page sideways */
+.topin { flex-wrap: wrap; }
+/* 2.5.8 Target size: small text links get a taller tap area */
+.foot ul a, .foot .linkbtn { display: inline-block; padding-block: .32rem; min-height: 1.75rem; }
+.foot ul { gap: .1rem; }
+.gtrail a, .strail a { display: inline-block; padding-block: .2rem; }
+.nextstep-alt a, .startlink a { display: inline-block; padding-block: .2rem; }
+/* Back always says where it goes. On a phone the place sits on a second, smaller line */
+@media (max-width: 820px) {
+  .gback > span:last-child { display: grid; text-align: left; line-height: 1.1; }
+  .gback .gback-to { display: block; max-width: 7.2rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .74rem; font-weight: 500; color: var(--ink-2); }
+}
+/* Home: on a phone each subject keeps its picture; on a wider screen the button names the subject */
+.hpick-go-n { display: none; }
+@media (min-width: 641px) { .hpick-go-n { display: inline; } }
+@media (min-width: 381px) and (max-width: 480px) {
+  .hpick { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .hpick-ico { display: grid; width: 2.3rem; height: 2.3rem; border-radius: 11px; }
+  .hpick-ico svg { width: 1.35rem; height: 1.35rem; }
+  .hpick-t b { font-size: 1.2rem; }
+  .hpick-t span { font-size: .93rem; }
+  .hpick-go { padding: .6rem .8rem; }
+}
+/* the footer keeps the trademark line in view and folds the long note about sources */
+.foot-src { margin-bottom: .5rem; }
+.foot-src > summary { display: inline-block; padding-block: .3rem; cursor: pointer; font-weight: 500; text-decoration: underline; text-underline-offset: .2em; }
+.foot-src > summary::-webkit-details-marker { display: none; }
+.foot-src > summary { list-style: none; }
+.foot-src[open] > summary { margin-bottom: .3rem; }
+.noscript { margin: 1rem; padding: 1rem 1.2rem; border: 2px solid var(--line-strong); border-radius: 14px; font-size: 1.1rem; }
+/* Where is my progress saved? */
+.qa { display: grid; gap: .8rem; margin-top: 1rem; max-width: 46rem; }
+.qa > div { padding: .9rem 1.1rem; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card); }
+.qa dt { font: 600 1.08rem/1.3 var(--display); }
+.qa dd { margin: .25rem 0 0; color: var(--ink-2); }
+/* Help: one button in the header on every page, and a box of short answers about the page you are on */
+.help .help-card { gap: .55rem; max-height: calc(100vh - 2rem); overflow-y: auto; }
+.help-qa { padding: .7rem .9rem; border: 1.5px solid var(--line); border-radius: 14px; background: var(--card); }
+.help-qa h3 { font: 600 1.05rem/1.3 var(--display); }
+.help-qa p { margin-top: .2rem; color: var(--ink-2); font-size: 1rem; line-height: 1.5; }
+.help-also { margin-top: .5rem; font: 600 .78rem/1.2 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.help-more { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .4rem; }
+.help-more .btn { font-size: .95rem; padding: .55rem .95rem; }
+/* phone header: the three tools fit on one row beside the name */
+@media (max-width: 480px) {
+  .toptools .tool svg { display: none; }
+  .toptools .tool { padding-inline: .7rem; }
+}
+@media (max-width: 400px) { .toptools .tool { padding-inline: .55rem; font-size: .88rem; } .toptools { gap: .25rem; } }
+@media (max-width: 340px) { .ghere { display: none; } .ghome { margin-left: auto; } }
+.help-top { position: sticky; top: calc(-1 * clamp(1.3rem, 4vw, 2.1rem)); z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: calc(-1 * clamp(1.3rem, 4vw, 2.1rem)) calc(-1 * clamp(1.3rem, 4vw, 2.1rem)) 0; padding: .8rem clamp(1.3rem, 4vw, 2.1rem) .5rem; background: var(--paper); border-radius: 26px 26px 0 0; }
+.help-x { padding: .5rem 1rem; font-size: .95rem; }

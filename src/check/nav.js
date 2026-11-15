@@ -73,7 +73,7 @@ const { chromium } = require('playwright');
   await go('m-learn'); b = await bar();
   ok(b.steps === '1 Start here | 2 Learn* | 3 Practice | 4 My progress', 'Lessons is in step 2, Learn: ' + b.steps);
   ok(b.trail === 'Home › Math › Learn › Lessons', 'You are here: ' + b.trail);
-  ok(b.back === (phone && width <= 420 ? 'Back' : 'Back to Start here'), 'Back names the page you came from: ' + b.back);
+  ok(b.back === 'Back to Start here', 'Back names the page you came from: ' + b.back);
   await wide('math lessons'); await shot('math-lessons');
   for (const [t, name] of [['m-found', 'Algebra basics'], ['m-found-den', 'Algebra basics'], ['m-first', 'Look for a shortcut'], ['m-first-roots', 'Look for a shortcut'], ['m-patterns', 'Big ideas'], ['m-study', 'All question types'], ['m-types', 'Find a question type'], ['m-short', 'Shortcut list'], ['m-desmos', 'Calculator tips'], ['m-ref', 'Formula sheet'], ['m-nlf', 'Lessons › Nonlinear functions'], ['mt-sys-count', 'Lessons › Systems of two linear equations'], ['md-fit', 'Calculator tips']]) {
     await go(t); b = await bar();
@@ -91,7 +91,7 @@ const { chromium } = require('playwright');
 
   // Back: the page you came from, and Home, stay on screen while you scroll
   await go('m-learn'); await go('m-nlf'); b = await bar();
-  ok(b.back === (width <= 420 ? 'Back' : 'Back to Lessons'), 'from a lesson, Back says where it goes: ' + b.back);
+  ok(b.back === 'Back to Lessons', 'from a lesson, Back says where it goes: ' + b.back);
   await p.evaluate(() => window.scrollTo(0, 2500)); await p.waitForTimeout(200);
   ok(await inView('#gback'), 'Back is still on screen after scrolling down a long page');
   ok(phone ? await inView('.ghome') : await inView('#subj a[data-subj="home"]'), 'and so is Home');
@@ -173,6 +173,24 @@ const { chromium } = require('playwright');
   // the footer is short: the five main pages of each subject, and the tour
   ok((await p.$$('#footcols nav:nth-of-type(2) a')).length === 5 && (await text('#footcols')).includes('All lessons and topics'), 'the footer lists the five main Math pages');
   ok((await p.$$('.foot [data-tour]')).length === 1, 'the footer can open the tour again');
+  ok(await p.evaluate(() => { const d = document.querySelector('.foot-src'); return !!d && !d.open; }) && (await text('.foot-legal')).includes('does not endorse'), 'the long note on sources is folded; the trademark line stays in view');
+  // Help: one button in the header on every page, with answers about the page you are on
+  await go('home'); await p.click('#help-btn'); await p.waitForTimeout(150);
+  ok((await text('#help-h')) === 'Help with the Home page' && (await p.$$('#help .help-qa')).length >= 5, 'Help on Home answers “Where do I start?”');
+  await wide('help'); await shot('help');
+  await p.keyboard.press('Escape'); await p.waitForTimeout(100);
+  ok(!(await p.$('#help')) && (await p.evaluate(() => document.activeElement.id)) === 'help-btn', 'Escape closes Help and puts you back on the button');
+  await go('m-practice'); await p.click('#help-btn'); await p.waitForTimeout(150);
+  ok((await text('#help-h')) === 'Help with the Practice page', 'Help changes with the page');
+  await p.click('#help [data-help-close]'); await p.waitForTimeout(100);
+  ok(await p.isVisible('#help-btn'), 'the Help button is on inner pages too');
+  // Back always says where it goes, on a phone as well
+  await go('m-learn'); await go('m-nlf');
+  ok(await p.isVisible('#gback .gback-to') && (await text('#gback')).replace('←', '').trim() === 'Back to Lessons', 'Back names the page it goes to (' + (await text('#gback')) + ')');
+  // where progress is saved, in plain questions and answers
+  await go('my-data');
+  ok((await p.$$('#data-where dt')).length === 4 && (await text('#data-where')).includes('Do I have to sign in?'), 'the backup page answers where progress is saved');
+  ok((await p.evaluate(() => document.getElementById('offnote').textContent)) === '', 'the offline line has no words while online');
   // the welcome tour: opened by hand from Home, four cards, and the last one leads into a subject
   await go('home'); await p.click('#v-home [data-tour]'); await p.waitForTimeout(200);
   ok(await p.isVisible('#tour') && (await text('#tour h2')).includes('Welcome'), 'the tour opens from Home');
