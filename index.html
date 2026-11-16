@@ -4058,6 +4058,183 @@ html.pz-plain .pz-bg { display: none; }
   :root[data-theme^="prize-"] .btn:not(.ghost):not(:disabled) { animation: none !important; }
 }
 
+/* =================== My room (#room, room.js) =================== */
+/* The room is drawn in a 4:3 box; every size inside it is a share of the box (% and cqw), so it scales from a phone to a
+   laptop without moving anything. Its colors come from the theme on its walls, as --room-* on .room-room. */
+.room-page { padding-block: 1.5rem 3.5rem; display: grid; gap: 1.4rem; }
+.room-head { display: grid; gap: .6rem; }
+.room-head > * { max-width: 46rem; }
+.room-main { display: grid; gap: 1.2rem; align-items: start; }
+@media (min-width: 960px) {
+  .room-main { grid-template-columns: minmax(0, 1.6fr) minmax(19rem, 1fr); }
+  .room-stage { position: sticky; top: calc(var(--top-h, 0px) + 1rem); }
+}
+.room-stage { display: grid; gap: .8rem; min-width: 0; }
+.room-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+.room-said { color: var(--ok); font-weight: 700; }
+.room-foot { max-width: 46rem; }
+
+.room-room { position: relative; aspect-ratio: 4 / 3; container-type: inline-size; overflow: hidden; border-radius: 20px; border: 1px solid var(--line); box-shadow: var(--shadow); isolation: isolate; background: var(--room-wall); color: #1A1A1A; }
+.room-room > span, .room-room > svg { position: absolute; display: block; pointer-events: none; }
+.room-wallp { left: 0; right: 0; top: 0; height: 47%; background: linear-gradient(180deg, rgba(0, 0, 0, .06), transparent 35%), repeating-linear-gradient(90deg, var(--room-wall) 0 3.4cqw, var(--room-wall2) 3.4cqw 3.75cqw); }
+.room-wains { left: 0; right: 0; top: 47%; height: 14.6%; background: repeating-linear-gradient(90deg, transparent 0 1.4cqw, rgba(0, 0, 0, .07) 1.4cqw 1.6cqw, transparent 1.6cqw 11.6cqw), var(--room-trim2); border-top: .9cqw solid var(--room-trim); box-shadow: inset 0 .5cqw .6cqw -.3cqw rgba(0, 0, 0, .15); }
+.room-base { left: 0; right: 0; top: 61.6%; height: 2.6%; background: var(--room-trim); box-shadow: 0 .3cqw .5cqw rgba(0, 0, 0, .18); }
+.room-room > svg.room-floor { left: 0; right: 0; top: 64%; width: 100%; height: 36%; }
+.room-f1 { fill: var(--room-floor); }
+.room-f2 { stroke: var(--room-floor2); stroke-width: 1.2; fill: none; vector-effect: non-scaling-stroke; }
+.room-fj { opacity: .7; }
+.room-f3 { fill: rgba(0, 0, 0, .12); }
+.room-rug { left: 24%; width: 66%; top: 82%; height: 15%; border-radius: 50%; background: radial-gradient(closest-side, var(--room-acc) 0 62%, var(--room-acc2) 63% 70%, var(--room-acc) 71% 100%); opacity: .55; }
+.room-dark .room-rug { opacity: .45; }
+
+/* every spot is a button */
+.room-spot { position: absolute; display: block; margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; border-radius: 1.2cqw; -webkit-tap-highlight-color: transparent; }
+.room-spot > span, .room-spot > svg { position: absolute; display: block; }
+/* the focus ring follows the room, not the site: dark violet on light walls, pale yellow on dark ones */
+.room-spot:focus-visible { outline: 3px solid #4C1D95; outline-offset: 2px; }
+.room-dark .room-spot:focus-visible { outline-color: #FDE68A; }
+.room-walls { inset: 0; z-index: 1; border-radius: 0; }
+.room-walls:focus-visible { outline-offset: -4px; }
+.room-window, .room-plate, .room-board, .room-shelf, .room-desk { z-index: 2; }
+.room-stand { z-index: 3; }
+.room-me { z-index: 4; }
+.room-spot:not(.room-walls):hover { filter: brightness(1.07); }
+/* decorating: a dashed ring around each spot, and a solid one round the spot being changed */
+.room-edit .room-spot:not(.room-walls)::after { content: ""; position: absolute; inset: -.7cqw; border: .32cqw dashed rgba(255, 255, 255, .95); border-radius: 1.5cqw; box-shadow: 0 0 0 .32cqw rgba(15, 15, 25, .38); pointer-events: none; }
+.room-edit .room-spot.room-on::after { border-style: solid; border-width: .5cqw; box-shadow: 0 0 0 .4cqw rgba(15, 15, 25, .5), 0 0 2.4cqw rgba(255, 255, 255, .7); }
+.room-edit .room-walls.room-on::after { content: ""; position: absolute; inset: .6cqw; border: .5cqw solid rgba(255, 255, 255, .95); border-radius: 1.4cqw; box-shadow: 0 0 0 .4cqw rgba(15, 15, 25, .45); pointer-events: none; }
+.room-spot.room-on:not(.room-walls) { filter: brightness(1.08); }
+
+/* the window */
+.room-window { left: 5%; top: 8.5%; width: 27%; height: 35%; }
+.room-room .room-view { position: absolute; inset: 7% 9% 13%; overflow: hidden; border-radius: .4cqw; display: block; }
+.room-view canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.room-sky { background: radial-gradient(circle at 74% 30%, #FFF7D1 0 5%, rgba(255, 236, 160, .55) 6%, transparent 18%), radial-gradient(ellipse 30% 9% at 30% 62%, rgba(255, 255, 255, .9) 96%, transparent), radial-gradient(ellipse 22% 7% at 42% 56%, rgba(255, 255, 255, .85) 96%, transparent), linear-gradient(180deg, #8CC8FF 0%, #CDE9FF 72%, #EEF8FF 100%); }
+.room-sky.room-night { background: radial-gradient(circle at 72% 30%, #FEF9C3 0 6%, rgba(254, 249, 195, .25) 7%, transparent 16%), radial-gradient(#FFFFFF .25cqw, transparent .4cqw) 0 0 / 5cqw 4cqw, radial-gradient(rgba(255, 255, 255, .6) .2cqw, transparent .3cqw) 2.2cqw 1.6cqw / 3.4cqw 3cqw, linear-gradient(180deg, #070B24 0%, #1B2556 100%); }
+.room-panes { inset: 7% 9% 13%; border-radius: .4cqw; box-shadow: 0 0 0 1.1cqw var(--room-trim), 0 .9cqw 1.6cqw 1cqw rgba(0, 0, 0, .18), inset 0 0 0 .2cqw rgba(0, 0, 0, .12); background: linear-gradient(var(--room-trim), var(--room-trim)) 50% 0 / .75cqw 100% no-repeat, linear-gradient(var(--room-trim), var(--room-trim)) 0 48% / 100% .75cqw no-repeat, linear-gradient(125deg, rgba(255, 255, 255, .22) 0 18%, transparent 18% 32%, rgba(255, 255, 255, .1) 32% 36%, transparent 36%); }
+.room-curt { top: -3%; width: 25%; height: 104%; border-radius: 0 0 1cqw 1cqw; background: repeating-linear-gradient(90deg, var(--room-acc) 0 1.3cqw, var(--room-acc2) 1.3cqw 2.1cqw, var(--room-acc) 2.1cqw 2.6cqw); box-shadow: 0 .6cqw 1cqw rgba(0, 0, 0, .2); opacity: .96; }
+.room-curt.room-l { left: -4%; clip-path: polygon(0 0, 100% 0, 34% 52%, 62% 100%, 0 100%); }
+.room-curt.room-r { right: -4%; clip-path: polygon(0 0, 100% 0, 100% 100%, 38% 100%, 66% 52%); }
+.room-sill { left: -2%; right: -2%; bottom: 3%; height: 7%; border-radius: .5cqw; background: var(--room-trim); box-shadow: 0 .6cqw .8cqw rgba(0, 0, 0, .2); }
+
+/* the name plate and the sticker board */
+.room-plate { left: 37%; top: 3.6%; width: 26%; height: 10%; }
+.room-plate-in { inset: 0; display: grid !important; place-content: center; gap: .15cqw; padding: 0 1.2cqw; border-radius: .9cqw; background: linear-gradient(180deg, #F6DD9C, #D9A441 58%, #BF8A2D); color: #3B2A0B; text-align: center; line-height: 1.1; box-shadow: inset 0 0 0 .3cqw rgba(255, 255, 255, .4), 0 .5cqw 1cqw rgba(0, 0, 0, .25); }
+.room-plate-in b { font: 800 2.2cqw/1.1 var(--display); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.room-plate-in small { font: 700 1.25cqw/1.2 var(--body); letter-spacing: .08em; text-transform: uppercase; color: #5B3D0C; }
+.room-board { left: 37%; top: 16%; width: 26%; height: 24.5%; }
+.room-cork { inset: 0; display: grid !important; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: .9cqw; padding: 1.5cqw; border-radius: .8cqw; border: .9cqw solid var(--room-wood); background: radial-gradient(rgba(90, 55, 25, .28) .16cqw, transparent .26cqw) 0 0 / 1.3cqw 1.3cqw, radial-gradient(rgba(255, 240, 210, .3) .14cqw, transparent .24cqw) .6cqw .5cqw / 1.7cqw 1.7cqw, #C99A62; box-shadow: 0 .6cqw 1.2cqw rgba(0, 0, 0, .25); }
+.room-stk { position: relative; display: grid; place-items: center; min-width: 0; padding: .3cqw; border-radius: .7cqw; font: 800 1.05cqw/1.1 var(--display); text-align: center; overflow: hidden; box-shadow: 0 .25cqw .5cqw rgba(0, 0, 0, .3); }
+.room-stk::before { content: ""; position: absolute; top: .3cqw; left: 50%; width: .9cqw; height: .9cqw; margin-left: -.45cqw; border-radius: 50%; background: #E11D48; box-shadow: 0 .15cqw .25cqw rgba(0, 0, 0, .4); }
+.room-k0 { transform: rotate(-4deg); } .room-k1 { transform: rotate(3deg); } .room-k2 { transform: rotate(-2deg); } .room-k3 { transform: rotate(5deg); } .room-k4 { transform: rotate(-5deg); } .room-k5 { transform: rotate(2deg); }
+
+/* the shelf of trophies */
+.room-shelf { left: 67.5%; top: 12.5%; width: 27.5%; height: 22%; }
+.room-tros { left: 3%; right: 3%; top: 4%; bottom: 20%; display: grid !important; grid-template-columns: repeat(3, 1fr); align-items: end; justify-items: center; }
+.room-tro { display: grid; place-items: end center; width: 100%; height: 100%; }
+.room-tro .pz-si { display: block; width: auto; height: auto; max-width: 92%; max-height: 7.2cqw; filter: drop-shadow(0 .3cqw .3cqw rgba(0, 0, 0, .25)); }
+.room-tro .pz-si.pz-comet { max-width: 100%; max-height: 4cqw; }
+.room-edit .room-tro:empty::before { content: ""; width: 60%; height: 70%; border: .25cqw dashed rgba(127, 127, 127, .6); border-radius: .8cqw; }
+.room-plank { left: 0; right: 0; bottom: 8%; height: 12%; border-radius: .4cqw; background: linear-gradient(180deg, var(--room-wood3), var(--room-wood) 60%, var(--room-wood2)); box-shadow: 0 .7cqw .9cqw rgba(0, 0, 0, .25); }
+.room-plank::before, .room-plank::after { content: ""; position: absolute; top: 100%; width: 3cqw; height: 2.2cqw; background: var(--room-wood2); clip-path: polygon(0 0, 100% 0, 0 100%); }
+.room-plank::before { left: 10%; } .room-plank::after { right: 10%; transform: scaleX(-1); }
+
+/* the desk, with the streak on its calendar */
+.room-desk { left: 1.5%; top: 45%; width: 32%; height: 40%; }
+.room-desk-art { inset: 0; width: 100%; height: 100%; overflow: visible; }
+.room-wood { fill: var(--room-wood); } .room-wood2 { fill: var(--room-wood2); } .room-wood3 { fill: var(--room-wood3); }
+.room-acc { fill: var(--room-acc); }
+.room-lamp { fill: none; stroke: #3F3F46; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.room-glow { fill: #FDE68A; opacity: .5; }
+.room-bulb { fill: #FEF3C7; }
+.room-dark .room-glow { opacity: .3; }
+.room-b1 { fill: #2563EB; } .room-b2 { fill: #DC2626; } .room-b3 { fill: #059669; }
+.room-cup { fill: #475569; } .room-pen { stroke: #F59E0B; stroke-width: 3.5; stroke-linecap: round; }
+.room-cal { fill: #FFFFFF; stroke: rgba(0, 0, 0, .25); stroke-width: 1; }
+.room-ring { fill: #CBD5E1; stroke: #475569; stroke-width: 1.5; }
+.room-calnum { font: 800 26px var(--display); fill: #111827; }
+.room-callbl { font: 700 8px var(--body); letter-spacing: .12em; fill: #6B7280; }
+
+/* the three display stands: a glass case on a plinth */
+.room-stand { top: 40.5%; width: 18.6%; height: 52%; }
+.room-st0 { left: 36.5%; } .room-st1 { left: 56.6%; } .room-st2 { left: 76.7%; }
+.room-case { left: 7%; right: 7%; top: 0; height: 61%; overflow: hidden; border-radius: 2.2cqw 2.2cqw .5cqw .5cqw; background: radial-gradient(120% 90% at 50% 42%, #26214B 0%, #0B0A18 76%); border: .32cqw solid rgba(255, 255, 255, .6); box-shadow: inset 0 0 1.6cqw rgba(0, 0, 0, .65), 0 .8cqw 1.6cqw rgba(0, 0, 0, .3); }
+.room-case::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255, 255, 255, .24) 0 10%, transparent 10% 27%, rgba(255, 255, 255, .09) 27% 31%, transparent 31%); pointer-events: none; }
+.room-case canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.room-case .room-ans { position: absolute; left: 9%; right: 9%; width: auto; top: 50%; transform: translateY(-50%); display: flex; gap: .5cqw; padding: .55cqw .6cqw; border-radius: .8cqw; border-width: .2cqw; font: 700 1.3cqw/1.2 var(--body); }
+.room-case .room-ans b { width: 2cqw; height: 2cqw; flex: none; font-size: 1.1cqw; }
+.room-plus { inset: 0; display: grid !important; place-items: center; color: rgba(255, 255, 255, .8); font: 300 5cqw/1 var(--display); }
+.room-none .room-case { background: radial-gradient(120% 90% at 50% 42%, rgba(38, 33, 75, .35) 0%, rgba(11, 10, 24, .45) 76%); }
+.room-plinth { left: 3%; right: 3%; top: 61%; bottom: 0; border-radius: .3cqw .3cqw .6cqw .6cqw; background: linear-gradient(90deg, rgba(0, 0, 0, .14), transparent 28%, transparent 70%, rgba(0, 0, 0, .16)), var(--room-trim); box-shadow: 0 1cqw 1.5cqw rgba(0, 0, 0, .25), inset 0 -.6cqw 0 rgba(0, 0, 0, .08); }
+.room-plinth::before { content: ""; position: absolute; left: -4%; right: -4%; top: 0; height: 10%; border-radius: .4cqw; background: var(--room-trim); box-shadow: 0 .3cqw .4cqw rgba(0, 0, 0, .2), inset 0 .25cqw 0 rgba(255, 255, 255, .35); }
+.room-tag { position: absolute; left: 12%; right: 12%; top: 34%; display: flex; align-items: center; gap: .5cqw; padding: .45cqw .6cqw; border-radius: .4cqw; background: linear-gradient(180deg, #F6DD9C, #C9963A); color: #3B2A0B; font: 800 1.05cqw/1.15 var(--body); box-shadow: 0 .2cqw .3cqw rgba(0, 0, 0, .25); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.room-tag i { flex: none; width: 1.1cqw; height: 1.1cqw; border-radius: 50%; animation: none; }
+
+/* the student */
+.room-me { left: 27%; top: 70%; width: 9.5%; height: 26.5%; }
+.room-me .room-av { inset: 0; width: 100%; height: 100%; }
+
+/* the panel beside the room */
+.room-side { display: grid; gap: .85rem; min-width: 0; padding: 1.1rem; border-radius: 18px; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); }
+.room-side > * { margin: 0; }
+.room-side-k { font: 700 .78rem/1.3 var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.room-hello { display: grid; gap: .6rem; padding: .9rem 1rem; border-radius: 14px; background: var(--sunk); }
+.room-hello p { margin: 0; }
+.room-all { list-style: none; margin: 0; padding: 0; display: grid; gap: .1rem; }
+.room-allb { display: grid; gap: .1rem; width: 100%; padding: .5rem .6rem; border: 0; border-radius: 10px; background: none; color: var(--ink); font: inherit; text-align: left; cursor: pointer; min-height: 44px; }
+.room-allb:hover { background: var(--sunk); }
+.room-allb span { color: var(--muted); font-size: .92rem; }
+.room-card { display: grid; gap: .8rem; }
+.room-card-pic .pz-plate-sm.big { height: 150px; }
+.room-card-pic .pz-pic, .room-card-pic .pz-mini { height: 110px; }
+.room-card-pic .pz-pic-streak svg { height: 80px; }
+.room-card-t { display: grid; gap: .45rem; }
+.room-card-t > * { margin: 0; }
+.room-card-k { font: 700 .78rem/1.3 var(--body); color: var(--muted); }
+.room-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.room-list li { display: grid; grid-template-columns: 3.4rem 1fr; gap: .7rem; align-items: center; }
+.room-list li > span:last-child { display: grid; gap: .2rem; justify-items: start; }
+.room-li-pic { display: grid; place-items: center; height: 3.4rem; border-radius: 12px; background: var(--sunk); }
+.room-li-pic .pz-si { max-height: 2.6rem; max-width: 3rem; width: auto; height: auto; }
+.room-stks { display: flex; flex-wrap: wrap; gap: .7rem .6rem; }
+.room-stks .pz-stk { min-height: 2.6rem; padding: .35rem .6rem; }
+.room-stkb { border: 0; cursor: pointer; font: 700 .78rem/1.15 var(--display); }
+.room-stkb[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px var(--pencil); }
+.room-stkb[aria-pressed="false"] { opacity: .78; }
+.room-chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+@media (max-width: 959px) {
+  .room-spots { flex-wrap: nowrap; overflow-x: auto; margin: 0 -.3rem; padding: .1rem .3rem .5rem; overscroll-behavior-x: contain; }
+  .room-spots .room-chip { flex: none; }
+  /* while decorating on a phone the room stays in view above the choices */
+  .room-editing .room-stage { position: sticky; top: var(--top-h, 0px); z-index: 6; margin-top: -.5rem; padding-block: .5rem; background: var(--paper); box-shadow: 0 12px 12px -14px rgba(0, 0, 0, .45); }
+}
+.room-chip { min-height: 40px; padding: .4rem .8rem; border-radius: 999px; border: 1.5px solid var(--line-strong); background: var(--card); color: var(--ink); font: 600 .92rem/1.2 var(--body); cursor: pointer; }
+.room-chip[aria-pressed="true"] { border-color: var(--act); background: var(--act); color: var(--act-ink); }
+.room-sw { width: 44px; height: 44px; border-radius: 50%; border: 3px solid var(--card); box-shadow: 0 0 0 1.5px var(--line-strong); cursor: pointer; padding: 0; }
+.room-sw[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--pencil); }
+.room-tiles { display: grid; grid-auto-flow: column; grid-auto-columns: 7.4rem; gap: .6rem; overflow-x: auto; padding: .2rem .15rem .7rem; scroll-snap-type: x proximity; overscroll-behavior-x: contain; }
+@media (min-width: 960px) { .room-tiles { grid-auto-flow: row; grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)); overflow: visible; padding-bottom: .2rem; } }
+.room-tile { scroll-snap-align: start; display: grid; gap: .35rem; align-content: start; justify-items: start; min-width: 0; padding: .45rem; border-radius: 14px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+.room-tile:hover { border-color: var(--line-strong); }
+.room-tile[aria-pressed="true"] { border-color: var(--pencil); box-shadow: inset 0 0 0 1.5px var(--pencil); }
+.room-tile-pic { display: block; width: 100%; }
+.room-tile .pz-pic, .room-tile .pz-mini, .room-tile .pz-plate-sm { height: 64px; }
+.room-tile .pz-mini { padding: 6px; }
+.room-tile .pz-pic-streak svg { height: 44px; }
+.room-tile .pz-ans { padding: .3rem .4rem; font-size: .72rem; }
+.room-tile .pz-badge { display: none; }
+.room-tile b { font-size: .84rem; line-height: 1.2; overflow-wrap: anywhere; }
+.room-tile-note { font-size: .74rem; font-weight: 600; color: var(--muted); }
+.room-tile-empty { background: repeating-linear-gradient(135deg, var(--sunk) 0 8px, var(--card) 8px 16px); }
+.room-hats .room-tile-pic { display: grid; place-items: center; height: 64px; }
+.room-hats .room-av { height: 60px; width: auto; }
+.room-lbl { font-weight: 700; }
+.room-name { width: 100%; max-width: 22rem; padding: .6rem .75rem; border-radius: 10px; border: 1.5px solid var(--line-strong); background: var(--card); color: var(--ink); font: inherit; }
+.room-name:focus { outline: 3px solid var(--focus); outline-offset: 1px; }
+.room-none-msg { padding: .7rem .85rem; border-radius: 12px; background: var(--sunk); }
+.room-flash { padding: .6rem .8rem; border-radius: 12px; background: var(--sunk); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { .room-spot:not(.room-walls):hover { filter: none; } }
+
 </style>
 
 <script>try { var t0 = localStorage.getItem('sat-sprint-theme'); if (t0 && t0 !== 'auto') { document.documentElement.setAttribute('data-theme', t0); } var z0 = localStorage.getItem('sat-sprint-size'); if (z0 === 'l' || z0 === 'xl') { document.documentElement.setAttribute('data-size', z0); } } catch (e) {}</script>
@@ -4115,6 +4292,7 @@ html.pz-plain .pz-bg { display: none; }
   <section id="v-suggest" class="view" aria-label="Ask a question or suggest a change" hidden></section>
   <section id="v-crates" class="view" aria-label="Crates" hidden></section>
   <section id="v-challenge" class="view" aria-label="Challenge a friend" hidden></section>
+<section id="v-room" class="view" aria-label="My room" hidden></section>
 </main>
 <div class="wrap"><nav class="nextstep" id="nextbox" aria-label="Next step" hidden></nav></div>
 
@@ -13326,7 +13504,7 @@ function rReasoningHTML() {
   function pzLockerArt() { return '<span class="pz-lk"><span class="pz-lk-vents"></span><span class="pz-lk-dial"></span><span class="pz-lk-handle"></span></span>'; }
   function pzCollectionHTML() {
     var own = pzOwned();
-    return '<section class="pz-sec" id="pz-collection"><h3 class="h3">Your collection · ' + Object.keys(own).length + ' of ' + PZ_ITEMS.length + '</h3>' + PZ_SLOTS.map(function (sl) {
+    return '<section class="pz-sec" id="pz-collection"><h3 class="h3">Your collection · ' + Object.keys(own).length + ' of ' + PZ_ITEMS.length + '</h3><p class="fine">Put your favorites on show in <a href="#room">your room</a>.</p>' + PZ_SLOTS.map(function (sl) {
       var slot = sl[0], worn = pzWorn(slot), items = PZ_ITEMS.filter(function (it) { return it.kind === slot; }).sort(function (a, b) { return PZ_TIERS.indexOf(a.tier) - PZ_TIERS.indexOf(b.tier); });
       var off = slot === 'theme' ? '' : '<button class="linkbtn" type="button" data-pz-wear="' + slot + '" data-pz-id=""' + (worn ? '' : ' disabled') + '>' + (worn ? 'Take it off' : 'Nothing on') + '</button>';
       return '<div class="pz-slot"><div class="pz-slot-h"><h4>' + sl[1] + '</h4>' + off + '</div><div class="pz-items">' + items.map(function (it) {
@@ -13836,6 +14014,425 @@ function rReasoningHTML() {
     $$('.chal-name').forEach(function (x) { x.value = store.s.chn; });
     save();
   });
+  /* =================== My room (#room): a room in the clubhouse, decorated with the prizes a student has won =================== */
+  /* The first part of the clubhouse, kept on this device: nothing here is sent anywhere, and only the student sees the room.
+     Each spot takes one kind of prize, so looks added to the catalog later fit with no change here:
+       walls   a theme, which paints the walls and floor      window  a paper as the view outside (with no paper, a living
+       s0-s2   three display stands: an aura or an effect             theme's scene, or the sky)
+       shelf   up to 3 streak styles, as trophies              board   up to 6 stickers
+       plate   the student's name and a title                  me      their figure: a color and a hat
+       desk    a calendar with the streak, changed only by practice
+     store.s.room, once saved: { v: 1, t: when, w: theme id, win: paper id, st: [3 ids], sh: [ids], bd: [sticker ids], tl: title
+     id, av: [color, hat] }, with ids as in PZ_BY and '' for an empty spot. The name on the plate is store.s.chn, the name the
+     student signs challenges with. Until the first save the room is made from what the student has on and their rarest
+     prizes (roomStart), so it fills up as they win more. roomRoomHTML draws a room from the record alone, ready for rooms that
+     friends open later. */
+  var ROOM_STANDS = 3, ROOM_SHELF = 3, ROOM_BOARD = 6;
+  var ROOM_COLORS = [['violet', 'Violet', '#8B5CF6'], ['blue', 'Blue', '#3B82F6'], ['teal', 'Teal', '#14B8A6'], ['green', 'Green', '#22C55E'], ['yellow', 'Sunny', '#FACC15'], ['orange', 'Orange', '#F97316'], ['pink', 'Pink', '#EC4899'], ['gray', 'Silver', '#94A3B8']];
+  var ROOM_HATS = [['', 'No hat'], ['grad', 'Graduation cap'], ['beanie', 'Beanie'], ['phones', 'Headphones'], ['bow', 'Bow'], ['cap', 'Ball cap']];
+  var ROOM_SPOTS = [['walls', 'Walls'], ['window', 'Window'], ['s0', 'Stand 1'], ['s1', 'Stand 2'], ['s2', 'Stand 3'], ['shelf', 'Shelf'], ['board', 'Sticker board'], ['plate', 'Name plate'], ['me', 'You'], ['desk', 'Desk']];
+  /* papers drawn for a dark page: the window draws them that way whatever the site is wearing */
+  var ROOM_DARKP = { bpgrid: 1, stars: 1, 'const': 1, sky: 1, snow: 1, fireflies: 1, warp: 1, meteors: 1, ufo: 1, whale: 1, rain: 1, gears: 1, 'orbit-view': 1, gyre: 1 };
+  /* the walls with no prize theme on them */
+  var ROOM_CLASSIC = { paper: '#F3EEE4', card: '#FFFDF8', ink: '#2B2522', line: '#E2D8C6', act: '#6D28D9', act_ink: '#FFFFFF', ok: '#15803D', ok_soft: '#DCFCE7' };
+  var ROOM = { edit: false, draft: null, spot: '', said: '' };
+
+  function roomSpotName(id) { var s = ROOM_SPOTS.filter(function (x) { return x[0] === id; })[0]; return s ? s[1] : ''; }
+  function roomColor(id) { return ROOM_COLORS.filter(function (c) { return c[0] === id; })[0] || ROOM_COLORS[0]; }
+  function roomHat(id) { return ROOM_HATS.filter(function (h) { return h[0] === id; })[0] || ROOM_HATS[0]; }
+  function roomHex(h) { h = String(h || '').replace('#', ''); return h.length === 6 ? [0, 2, 4].map(function (i) { return parseInt(h.slice(i, i + 2), 16); }) : [128, 128, 128]; }
+  function roomMix(a, b, t) { var A = roomHex(a), B = roomHex(b); return '#' + A.map(function (v, i) { return ('0' + Math.round(v + (B[i] - v) * t).toString(16)).slice(-2); }).join(''); }
+  function roomRank(a, b) { return PZ_TIERS.indexOf(b.tier) - PZ_TIERS.indexOf(a.tier) || (a.name < b.name ? -1 : a.name > b.name ? 1 : 0); }
+  /* what the student owns of some kinds, the rarest first */
+  function roomOwn(kinds) { var own = pzOwned(); return PZ_ITEMS.filter(function (it) { return own[it.id] && kinds.indexOf(it.kind) >= 0; }).sort(roomRank); }
+  /* stickers found, the newest first */
+  function roomStickers() {
+    var P = pz(), seen = {}, out = [];
+    function add(k) { if (P.st[k] && !seen[k] && pzStickerName(k)) { seen[k] = 1; out.push(k); } }
+    pzOpened().slice().reverse().forEach(function (o) { if (o.sticker) { add(o.sticker); } });
+    Object.keys(P.st).forEach(add);
+    return out;
+  }
+  function roomTitles() { return pzTitles().filter(function (t) { return t.have; }); }
+  function roomTitleName(id) { var t = roomTitles().filter(function (x) { return x.id === id; })[0]; return t ? t.name : ''; }
+
+  /* ---------- the record ---------- */
+  function roomStart() {
+    var st = [], sh = [];
+    function add(list, n, id) { if (id && list.indexOf(id) < 0 && list.length < n) { list.push(id); } }
+    add(st, ROOM_STANDS, pzWorn('aura')); add(st, ROOM_STANDS, pzWorn('fx'));
+    roomOwn(['aura', 'fx']).forEach(function (it) { add(st, ROOM_STANDS, it.id); });
+    add(sh, ROOM_SHELF, pzWorn('streak'));
+    roomOwn(['streak']).forEach(function (it) { add(sh, ROOM_SHELF, it.id); });
+    while (st.length < ROOM_STANDS) { st.push(''); }
+    return { w: pzWorn('theme'), win: pzWorn('paper'), st: st, sh: sh, bd: roomStickers().slice(0, ROOM_BOARD), tl: pz().eq.title || '', av: ['violet', ''] };
+  }
+  /* only what this device owns: a saved room keeps working after a prize is gone, with that spot empty */
+  function roomClean(r) {
+    r = isObj(r) ? r : {};
+    var own = pzOwned(), P = pz(), st = [];
+    function item(id, kinds) { var it = typeof id === 'string' ? PZ_BY[id] : null; return it && own[id] && kinds.indexOf(it.kind) >= 0 ? id : ''; }
+    function list(a, n, f) { var out = []; (Array.isArray(a) ? a : []).forEach(function (x) { var v = f(x); if (v && out.indexOf(v) < 0 && out.length < n) { out.push(v); } }); return out; }
+    for (var i = 0; i < ROOM_STANDS; i++) { var id = item(Array.isArray(r.st) ? r.st[i] : '', ['aura', 'fx']); st.push(id && st.indexOf(id) < 0 ? id : ''); }
+    var av = Array.isArray(r.av) ? r.av : [];
+    return {
+      w: item(r.w, ['theme']), win: item(r.win, ['paper']), st: st,
+      sh: list(r.sh, ROOM_SHELF, function (x) { return item(x, ['streak']); }),
+      bd: list(r.bd, ROOM_BOARD, function (x) { return typeof x === 'string' && P.st[x] && pzStickerName(x) ? x : ''; }),
+      tl: typeof r.tl === 'string' && roomTitleName(r.tl) ? r.tl : '',
+      av: [roomColor(av[0])[0], roomHat(av[1])[0]],
+      nm: typeof r.nm === 'string' ? r.nm : chalMyName()
+    };
+  }
+  function roomSaved() { return isObj(store.s.room) && store.s.room.v === 1; }
+  function roomGet() { return roomClean(roomSaved() ? store.s.room : roomStart()); }
+  function roomCopy(R) { return { w: R.w, win: R.win, st: R.st.slice(), sh: R.sh.slice(), bd: R.bd.slice(), tl: R.tl, av: R.av.slice(), nm: R.nm }; }
+  function roomSave(R) {
+    store.s.room = { v: 1, t: Date.now(), w: R.w, win: R.win, st: R.st.slice(), sh: R.sh.slice(), bd: R.bd.slice(), tl: R.tl, av: R.av.slice() };
+    store.s.chn = chalName(R.nm);
+    save();
+  }
+  /* two devices' rooms joined (bkMerge): the one saved last */
+  function roomMerge(a, b) { if (!isObj(a)) { return b; } if (!isObj(b)) { return a; } return (b.t || 0) > (a.t || 0) ? b : a; }
+
+  /* ---------- drawing a room ---------- */
+  function roomPal(R) { var it = R.w ? PZ_BY[R.w] : null; return (it && FX_PAL[it.key]) || ROOM_CLASSIC; }
+  function roomVars(R) {
+    var p = roomPal(R), dark = fxLum(p.paper) < 0.2, floor = dark ? roomMix(p.card, '#000000', 0.25) : roomMix('#C79A6B', p.paper, 0.12);
+    var v = {
+      wall: p.paper, wall2: roomMix(p.paper, p.line, dark ? 0.55 : 0.8), trim: dark ? roomMix(p.card, p.line, 0.6) : p.card, trim2: roomMix(p.paper, p.line, dark ? 0.85 : 0.5),
+      acc: p.act, acc2: roomMix(p.act, '#000000', 0.28), floor: floor, floor2: roomMix(floor, dark ? '#FFFFFF' : '#000000', dark ? 0.08 : 0.13),
+      wood: dark ? '#5C4737' : '#9C6B43', wood2: dark ? '#3E3026' : '#7A5134', wood3: dark ? '#71584A' : '#B9875A'
+    };
+    return { dark: dark, style: Object.keys(v).map(function (k) { return '--room-' + k + ':' + v[k]; }).join(';') };
+  }
+  function roomName(nm) { nm = chalName(nm); return nm ? nm + '’s room' : 'My room'; }
+  function roomAvatar(av) {
+    var c = roomColor(av[0])[2], hat = av[1] || '', belly = roomMix(c, '#FFFFFF', 0.55), edge = roomMix(c, '#000000', 0.38);
+    var hats = {
+      grad: '<path d="M17 17v7c0 3 6 5 13 5s13-2 13-5v-7l-13 5z" fill="#111827"/><path d="M30 5l24 8-24 8-24-8z" fill="#1F2937"/><path d="M51 13.5v12" stroke="#FACC15" stroke-width="1.6"/><circle cx="51" cy="26.5" r="2.3" fill="#FACC15"/>',
+      beanie: '<path d="M10 31c0-13 9-21 20-21s20 8 20 21z" fill="#1E3A8A"/><rect x="8" y="26" width="44" height="7" rx="3.5" fill="#F8FAFC"/><circle cx="30" cy="9" r="4.6" fill="#F8FAFC"/>',
+      phones: '<path d="M9 44C9 24 18 13 30 13s21 11 21 31" fill="none" stroke="#111827" stroke-width="3.6" stroke-linecap="round"/><rect x="3" y="36" width="10" height="16" rx="4.5" fill="#F59E0B"/><rect x="47" y="36" width="10" height="16" rx="4.5" fill="#F59E0B"/>',
+      bow: '<path d="M39 17l-11-8v16zM39 17l11-8v16z" fill="#F43F5E"/><circle cx="39" cy="17" r="3.6" fill="#BE123C"/>',
+      cap: '<path d="M11 31c0-12 8-19 19-19s19 7 19 19z" fill="#DC2626"/><path d="M38 28h19c0 3.5-3 5.5-7 5.5H36z" fill="#B91C1C"/><circle cx="30" cy="12.5" r="2.2" fill="#B91C1C"/>'
+    };
+    return '<svg class="room-av" viewBox="0 0 60 100" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><ellipse cx="30" cy="95" rx="21" ry="3.6" fill="rgba(0,0,0,.2)"/>' +
+      '<ellipse cx="7.5" cy="62" rx="4.2" ry="7.5" fill="' + c + '" stroke="' + edge + '" stroke-width="1"/><ellipse cx="52.5" cy="62" rx="4.2" ry="7.5" fill="' + c + '" stroke="' + edge + '" stroke-width="1"/>' +
+      '<ellipse cx="20" cy="91" rx="7.5" ry="3.8" fill="' + edge + '"/><ellipse cx="40" cy="91" rx="7.5" ry="3.8" fill="' + edge + '"/>' +
+      '<path d="M30 16C45 16 52 28 52 46V82Q52 90 44 90H16Q8 90 8 82V46C8 28 15 16 30 16Z" fill="' + c + '" stroke="' + edge + '" stroke-width="1.2"/>' +
+      '<ellipse cx="30" cy="68" rx="14.5" ry="15" fill="' + belly + '"/>' +
+      '<ellipse cx="22" cy="42" rx="5.4" ry="6.2" fill="#FFFFFF" stroke="' + edge + '" stroke-width=".8"/><ellipse cx="38" cy="42" rx="5.4" ry="6.2" fill="#FFFFFF" stroke="' + edge + '" stroke-width=".8"/>' +
+      '<circle cx="23" cy="43.5" r="2.8" fill="#111827"/><circle cx="39" cy="43.5" r="2.8" fill="#111827"/><circle cx="24" cy="42.3" r=".9" fill="#FFFFFF"/><circle cx="40" cy="42.3" r=".9" fill="#FFFFFF"/>' +
+      '<ellipse cx="15.5" cy="52" rx="3.6" ry="2.1" fill="#F9A8D4" opacity=".75"/><ellipse cx="44.5" cy="52" rx="3.6" ry="2.1" fill="#F9A8D4" opacity=".75"/>' +
+      '<path d="M25.5 52.5Q30 57 34.5 52.5" fill="none" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>' + (hats[hat] || '') + '</svg>';
+  }
+  var ROOM_FLOOR = (function () {
+    var s = '<svg class="room-floor" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true"><rect width="400" height="100" class="room-f1"/>';
+    for (var i = -13; i <= 13; i++) { s += '<path class="room-f2" d="M' + (200 + i * 21) + ' 0L' + (200 + i * 21 * 2.15).toFixed(1) + ' 100"/>'; }
+    [17, 39, 66].forEach(function (y, k) { s += '<path class="room-f2 room-fj" d="M0 ' + y + 'H400" style="stroke-dasharray:' + (22 + k * 12) + ' ' + (3 + k * 2) + '"/>'; });
+    return s + '<rect width="400" height="16" class="room-f3"/></svg>';
+  }());
+  function roomDesk(n) {
+    return '<svg class="room-desk-art" viewBox="0 0 310 185" preserveAspectRatio="xMidYMax meet" aria-hidden="true">' +
+      '<ellipse class="room-glow" cx="104" cy="86" rx="46" ry="9"/>' +
+      '<path class="room-lamp" d="M50 85L62 42L93 29"/><ellipse class="room-wood2" cx="50" cy="87" rx="19" ry="4.5"/><circle class="room-bulb" cx="101" cy="48" r="5"/><path class="room-acc" d="M86 24L101 20L120 45Q100 55 80 50Z"/>' +
+      '<rect class="room-b1" x="122" y="72" width="62" height="15" rx="2.5"/><rect class="room-b2" x="128" y="58" width="52" height="14" rx="2.5"/><rect class="room-b3" x="120" y="46" width="58" height="12" rx="2.5"/>' +
+      '<rect class="room-cup" x="191" y="62" width="20" height="25" rx="3"/><path class="room-pen" d="M196 62l-4-20M202 62l1-22M207 62l6-18"/>' +
+      '<rect class="room-cal" x="226" y="30" width="64" height="57" rx="6"/><rect class="room-acc" x="226" y="30" width="64" height="15" rx="6"/><rect class="room-acc" x="226" y="38" width="64" height="7"/>' +
+      '<circle class="room-ring" cx="241" cy="30" r="3"/><circle class="room-ring" cx="275" cy="30" r="3"/>' +
+      '<text class="room-calnum" x="258" y="73" text-anchor="middle">' + n + '</text><text class="room-callbl" x="258" y="83" text-anchor="middle">' + (n === 1 ? 'DAY' : 'DAYS') + '</text>' +
+      '<rect class="room-wood3" x="8" y="87" width="294" height="13" rx="3"/><rect class="room-wood2" x="8" y="100" width="294" height="7"/>' +
+      '<rect class="room-wood2" x="22" y="107" width="13" height="76"/><rect class="room-wood" x="198" y="107" width="92" height="76" rx="3"/>' +
+      '<rect class="room-wood3" x="206" y="115" width="76" height="27" rx="2.5"/><rect class="room-wood3" x="206" y="148" width="76" height="27" rx="2.5"/>' +
+      '<circle class="room-wood2" cx="244" cy="128.5" r="3.2"/><circle class="room-wood2" cx="244" cy="161.5" r="3.2"/></svg>';
+  }
+  /* "a Rare", "an Epic" */
+  function roomTierA(x) { var t = PZ_TIER[x.tier]; return (/^[AEIOU]/.test(t) ? 'an ' : 'a ') + t; }
+  /* what is on a spot, in words: for the room's buttons and the list beside it */
+  function roomWhat(spot, R, o) {
+    var it = function (id) { return id ? PZ_BY[id] : null; }, x;
+    if (spot === 'walls') { x = it(R.w); return x ? x.name + ', ' + roomTierA(x) + ' theme' : 'Classic, the plain walls'; }
+    if (spot === 'window') { x = it(R.win); var w = it(R.w); return x ? x.name + ', ' + roomTierA(x) + ' paper' : w && FX_LIVING[w.key] ? 'The ' + w.name + ' view, from the walls' : 'The sky'; }
+    if (/^s\d$/.test(spot)) { x = it(R.st[+spot.slice(1)]); return x ? x.name + ', ' + roomTierA(x) + ' ' + (x.kind === 'aura' ? 'aura' : 'right-answer effect') : 'Empty'; }
+    if (spot === 'shelf') { return R.sh.length ? R.sh.map(function (id) { return PZ_BY[id].name; }).join(', ') : 'Empty'; }
+    if (spot === 'board') { return R.bd.length ? plural(R.bd.length, 'sticker') : 'No stickers yet'; }
+    if (spot === 'plate') { return roomName(R.nm) + (o.title ? ', ' + o.title : ''); }
+    if (spot === 'me') { var h = roomHat(R.av[1]); return roomColor(R.av[0])[1] + (h[0] ? ', with a ' + h[1].toLowerCase() : ''); }
+    if (spot === 'desk') { return 'A calendar: ' + plural(o.n, 'day') + ' in a row'; }
+    return '';
+  }
+  /* o: { edit, title, n (days in a row), best } */
+  function roomRoomHTML(R, o) {
+    var V = roomVars(R), it = function (id) { return id ? PZ_BY[id] : null; }, html = '', x, i;
+    function spot(id, cls, inner) {
+      var what = roomWhat(id, R, o), label = o.edit ? (id === 'desk' ? 'Desk: ' + what + '. It changes when you practice.' : 'Change the ' + roomSpotName(id).toLowerCase() + ': now ' + what) : roomSpotName(id) + ': ' + what;
+      if (id === 'me') { label = o.edit ? 'Change how you look: now ' + what : 'You: ' + what; }
+      return '<button type="button" class="room-spot ' + cls + (ROOM.spot === id ? ' room-on' : '') + '" data-room-spot="' + id + '" aria-label="' + esc(label) + '">' + inner + '</button>';
+    }
+    /* the window: a paper, or the walls' living scene, or the sky */
+    var paper = it(R.win), wl = it(R.w), view;
+    if (paper) { view = '<span class="room-view pz-pt-' + paper.key + '">' + (FX_PAPER[paper.key] ? '<canvas data-room-scene="paper:' + paper.key + '" aria-hidden="true"></canvas>' : '') + '</span>'; }
+    else if (wl && FX_LIVING[wl.key]) { view = '<span class="room-view" style="background:' + roomPal(R).paper + '"><canvas data-room-scene="living:' + wl.key + '" aria-hidden="true"></canvas></span>'; }
+    else { view = '<span class="room-view room-sky' + (V.dark ? ' room-night' : '') + '"></span>'; }
+    html += spot('walls', 'room-walls', '');
+    html += spot('window', 'room-window', view + '<span class="room-panes"></span><span class="room-curt room-l"></span><span class="room-curt room-r"></span><span class="room-sill"></span>');
+    html += spot('plate', 'room-plate', '<span class="room-plate-in"><b>' + esc(roomName(R.nm)) + '</b>' + (o.title ? '<small>' + esc(o.title) + '</small>' : '') + '</span>');
+    html += spot('board', 'room-board', '<span class="room-cork">' + R.bd.map(function (id, k) { return '<span class="room-stk pz-stk-' + (k % 4) + ' room-k' + k + '">' + esc(pzStickerName(id)) + '</span>'; }).join('') + '</span>');
+    var tro = '';
+    for (i = 0; i < ROOM_SHELF; i++) { x = it(R.sh[i]); tro += '<span class="room-tro">' + (x ? fxStreakIcon(x.key, Math.max(o.best, 1)) : '') + '</span>'; }
+    html += spot('shelf', 'room-shelf', '<span class="room-tros">' + tro + '</span><span class="room-plank"></span>');
+    html += spot('desk', 'room-desk', roomDesk(o.n));
+    for (i = 0; i < ROOM_STANDS; i++) {
+      x = it(R.st[i]);
+      var inside = !x ? (o.edit ? '<span class="room-plus" aria-hidden="true">+</span>' : '') : x.kind === 'aura' ? '<canvas data-room-aura="' + x.key + '" aria-hidden="true"></canvas>' : '<span class="pz-ans room-ans"><b>B</b>Correct</span>';
+      html += spot('s' + i, 'room-stand room-st' + i + (x ? '' : ' room-none'), '<span class="room-case">' + inside + '</span><span class="room-plinth">' + (x ? '<span class="room-tag"><i class="pz-t-' + x.tier + '"></i>' + esc(x.name) + '</span>' : '') + '</span>');
+    }
+    html += spot('me', 'room-me', roomAvatar(R.av));
+    return '<div class="room-room' + (V.dark ? ' room-dark' : '') + (o.edit ? ' room-edit' : '') + '" style="' + V.style + '" role="group" aria-label="' + esc(roomName(R.nm)) + '">' +
+      '<span class="room-wallp" aria-hidden="true"></span><span class="room-wains" aria-hidden="true"></span><span class="room-base" aria-hidden="true"></span>' + ROOM_FLOOR + '<span class="room-rug" aria-hidden="true"></span>' + html + '</div>';
+  }
+  /* the moving parts: the window's view, and each aura drawn small inside its case */
+  function roomScene(cv, make, ink) {
+    return fxScene(cv, function (s) {
+      var keep = FX_INK, draw; FX_INK = ink;
+      try { draw = make(s); } finally { FX_INK = keep; }
+      return function (t, dt) { var k = FX_INK; FX_INK = ink; try { draw(t, dt); } finally { FX_INK = k; } };
+    }, { fps: 30 });
+  }
+  function roomAura(cv, key) {
+    var A = FX_AURA[key];
+    if (!A) { return null; }
+    return fxScene(cv, function (s) {
+      var v = { ctx: s.ctx, c: s.c, w: 250, h: 190 }, draw = A(v);
+      return function (t, dt) {
+        var c = s.ctx, k = Math.min(s.w / v.w, s.h / v.h);
+        c.save(); c.translate((s.w - v.w * k) / 2, (s.h - v.h * k) / 2); c.scale(k, k);
+        try { draw(t, dt); } finally { c.restore(); }
+      };
+    }, { fps: 30 });
+  }
+  function roomScenes(root, R) {
+    var p = roomPal(R);
+    $$('canvas[data-room-scene]', root).forEach(function (cv) {
+      var m = /^(paper|living):(.+)$/.exec(cv.getAttribute('data-room-scene')), make = m ? (m[1] === 'paper' ? FX_PAPER[m[2]] : FX_LIVING[m[2]]) : null;
+      if (!make) { return; }
+      var dark = m[1] === 'paper' ? !!ROOM_DARKP[m[2]] : fxLum(p.paper) < 0.2;
+      roomScene(cv, make, { dark: dark, acc: p.act, muted: dark ? '#A5B4CB' : '#62626B' });
+    });
+    $$('canvas[data-room-aura]', root).forEach(function (cv) { roomAura(cv, cv.getAttribute('data-room-aura')); });
+  }
+
+  /* ---------- the panel beside the room: what a spot holds, or, while decorating, what can go there ---------- */
+  function roomHow(it) {
+    var n = pzOneIn(it).toLocaleString('en-US'), ser = PZ_SER[it.series];
+    if (it.series === 'any') { return 'Won in a crate. It can be in any crate, 1 in ' + n + '.'; }
+    if (it.series === 'test') { return 'Won in the Test Day crate, which opens in the last week before the test date in a study plan: 1 in ' + n + '.'; }
+    return ser ? 'Won in a crate. In the ' + ser.name + ' crate it is 1 in ' + n + '.' : 'Won in a crate.';
+  }
+  function roomCard(it, extra) {
+    return '<div class="room-card"><div class="room-card-pic">' + pzPicture(it, true) + '</div><div class="room-card-t"><p class="room-card-k">' + esc(PZ_KIND[it.kind]) + '</p><h3 class="h3">' + esc(it.name) + '</h3>' +
+      '<p class="room-card-m">' + pzTierChip(it.tier) + '</p><p>' + esc(it.what) + '</p><p class="fine">' + esc(roomHow(it)) + (extra || '') + '</p>' +
+      (it.kind === 'fx' ? '<p><button class="btn ghost sm" type="button" data-room-play="' + it.key + '">Play it</button></p>' : '') + '</div></div>';
+  }
+  function roomInfoHTML(spot, R, o) {
+    var it = function (id) { return id ? PZ_BY[id] : null; }, x, mine = !ROOM.edit, deco = mine ? ' Press Decorate to change it.' : '';
+    var h = '<p class="room-side-k">' + esc(roomSpotName(spot)) + '</p>';
+    if (spot === 'walls') { x = it(R.w); return h + (x ? roomCard(x, ' It paints the walls and the floor.') : '<p>Classic walls: cream paint and a wooden floor.</p><p class="fine">A theme you win in a crate paints the walls in its own colors.' + deco + '</p>'); }
+    if (spot === 'window') {
+      x = it(R.win); var w = it(R.w);
+      if (x) { return h + roomCard(x, ' In the window it is the view outside.'); }
+      return h + (w && FX_LIVING[w.key] ? '<p>The view comes from the ' + esc(w.name) + ' walls: a living theme shows its scene through the window.</p>' : '<p>Just the sky for now.</p>') + '<p class="fine">Any paper you win can be the view through the window.' + deco + '</p>';
+    }
+    if (/^s\d$/.test(spot)) {
+      x = it(R.st[+spot.slice(1)]);
+      return h + (x ? roomCard(x, x.kind === 'fx' ? ' On a stand it plays when someone taps it.' : ' On a stand it glows inside the case.') : '<p>This stand is empty.</p><p class="fine">A stand shows an aura or a right-answer effect you have won.' + deco + '</p>');
+    }
+    if (spot === 'shelf') {
+      if (!R.sh.length) { return h + '<p>The shelf is empty.</p><p class="fine">Streak styles you win stand here as trophies, up to three.' + deco + '</p>'; }
+      return h + '<ul class="room-list">' + R.sh.map(function (id) { var t = PZ_BY[id]; return '<li><span class="room-li-pic">' + fxStreakIcon(t.key, Math.max(o.best, 1)) + '</span><span><b>' + esc(t.name) + '</b> ' + pzTierChip(t.tier) + '<span class="fine">' + esc(t.what) + '</span></span></li>'; }).join('') + '</ul>' +
+        '<p class="fine">Each trophy shows your best streak, ' + plural(o.best, 'day') + '.</p>';
+    }
+    if (spot === 'board') {
+      if (!R.bd.length) { return h + '<p>No stickers on the board yet.</p><p class="fine">Every crate has a sticker in it. Up to six go on the board.' + deco + '</p>'; }
+      return h + '<div class="room-stks">' + R.bd.map(function (id, k) { return '<span class="pz-stk pz-stk-' + (k % 4) + '">' + esc(pzStickerName(id)) + '</span>'; }).join('') + '</div><p class="fine">Every crate has a sticker in it.</p>';
+    }
+    if (spot === 'plate') {
+      var t = roomTitles().filter(function (y) { return y.id === R.tl; })[0];
+      return h + '<p><b>' + esc(roomName(R.nm)) + '</b></p>' + (t ? '<p>Title: <b>' + esc(t.name) + '</b>. Earned for this: ' + esc(t.how.charAt(0).toLowerCase() + t.how.slice(1)) + '</p>' : '<p class="fine">Titles are earned by what you do, like practicing 7 days in a row.</p>') + (mine ? '<p class="fine">Press Decorate to change your name or title.</p>' : '');
+    }
+    if (spot === 'me') { return h + '<p>This is you.</p><p class="fine">' + (mine ? 'Press Decorate to pick a color and a hat.' : 'Pick a color and a hat below.') + '</p>'; }
+    if (spot === 'desk') { return h + '<p>The calendar shows your streak: <b>' + plural(o.n, 'day') + ' in a row</b>' + (o.best > o.n ? ', and ' + plural(o.best, 'day') + ' at your best' : '') + '.</p><p class="fine">' + (o.n ? 'Practice today to keep it going.' : 'Answer one question today to start a streak.') + ' <a href="#home">Open Today</a></p>'; }
+    return '';
+  }
+  function roomTile(val, name, pic, on, tier, note, attr) {
+    return '<button type="button" class="room-tile" ' + (attr || 'data-room-pick') + '="' + esc(val) + '" aria-pressed="' + (on ? 'true' : 'false') + '"><span class="room-tile-pic">' + pic + '</span><b>' + esc(name) + '</b>' + (tier ? pzTierChip(tier) : '') + (note ? '<span class="room-tile-note">' + esc(note) + '</span>' : '') + '</button>';
+  }
+  function roomClassicMini() {
+    var p = ROOM_CLASSIC;
+    return '<span class="pz-mini" style="background:' + p.paper + ';border-color:' + p.line + '" aria-hidden="true"><span class="pz-mini-card" style="background:' + p.card + ';border-color:' + p.line + '"><i style="background:' + p.ink + '"></i><i style="background:' + p.ink + ';width:60%"></i><b style="background:' + p.act + '"></b></span></span>';
+  }
+  function roomNone(kind) { return '<p class="room-none-msg">You have no ' + kind + ' yet. They come in crates, which you open with coins you earn by studying. <a href="#crates">Open crates</a></p>'; }
+  function roomPickHTML(spot, R) {
+    var h = '<p class="room-side-k">' + esc(roomSpotName(spot)) + '</p>', tiles = '', list;
+    if (spot === 'walls') {
+      list = roomOwn(['theme']);
+      tiles = roomTile('', 'Classic', roomClassicMini(), !R.w) + list.map(function (it) { return roomTile(it.id, it.name, fxThemeMini(it.key), R.w === it.id, it.tier); }).join('');
+      return h + '<p class="fine">A theme paints the walls and the floor.</p><div class="room-tiles">' + tiles + '</div>' + (list.length ? '' : roomNone('themes'));
+    }
+    if (spot === 'window') {
+      list = roomOwn(['paper']);
+      var w = R.w ? PZ_BY[R.w] : null, living = w && FX_LIVING[w.key];
+      tiles = roomTile('', living ? 'The ' + w.name + ' view' : 'The sky', '<span class="pz-pic ' + (living ? '" style="background:' + roomPal(R).paper : 'room-sky') + '"></span>', !R.win) + list.map(function (it) { return roomTile(it.id, it.name, pzPicture(it), R.win === it.id, it.tier); }).join('');
+      return h + '<p class="fine">A paper becomes the view outside.</p><div class="room-tiles">' + tiles + '</div>' + (list.length ? '' : roomNone('papers'));
+    }
+    if (/^s\d$/.test(spot)) {
+      var k = +spot.slice(1);
+      list = roomOwn(['aura', 'fx']);
+      tiles = roomTile('', 'Empty', '<span class="pz-pic room-tile-empty"></span>', !R.st[k]) + list.map(function (it) { var at = R.st.indexOf(it.id); return roomTile(it.id, it.name, pzPicture(it), at === k, it.tier, at >= 0 && at !== k ? 'On stand ' + (at + 1) : ''); }).join('');
+      return h + '<p class="fine">An aura glows in the case. An effect plays when someone taps the stand.</p><div class="room-tiles">' + tiles + '</div>' + (list.length ? '' : roomNone('auras or effects'));
+    }
+    if (spot === 'shelf') {
+      list = roomOwn(['streak']);
+      tiles = list.map(function (it) { var at = R.sh.indexOf(it.id); return roomTile(it.id, it.name, '<span class="pz-pic pz-pic-streak">' + fxStreakIcon(it.key, 30) + '</span>', at >= 0, it.tier, at >= 0 ? 'On the shelf' : ''); }).join('');
+      return h + '<p class="fine">Pick up to three trophies. Tap one again to take it off.</p>' + (list.length ? '<div class="room-tiles">' + tiles + '</div>' : roomNone('streak styles'));
+    }
+    if (spot === 'board') {
+      list = roomStickers();
+      return h + '<p class="fine">Pick up to six stickers. Tap one again to take it off.</p>' + (list.length ? '<div class="room-stks">' + list.map(function (id, i) { return '<button type="button" class="pz-stk pz-stk-' + (i % 4) + ' room-stkb" data-room-pick="' + esc(id) + '" aria-pressed="' + (R.bd.indexOf(id) >= 0 ? 'true' : 'false') + '">' + esc(pzStickerName(id)) + '</button>'; }).join('') + '</div>' : roomNone('stickers'));
+    }
+    if (spot === 'plate') {
+      var T = roomTitles();
+      return h + '<label class="room-lbl" for="room-name">Your name</label><input class="room-name" id="room-name" type="text" maxlength="' + CHAL_NAME_MAX + '" autocomplete="nickname" spellcheck="false" value="' + esc(R.nm) + '" placeholder="Leave it empty for “My room”">' +
+        '<p class="fine">Use a first name or a nickname. It is also the name on challenges you send.</p>' +
+        '<p class="room-lbl">Title</p>' + (T.length ? '<div class="room-chips">' + [{ id: '', name: 'No title' }].concat(T).map(function (t) { return '<button type="button" class="room-chip" data-room-title="' + t.id + '" aria-pressed="' + (R.tl === t.id ? 'true' : 'false') + '">' + esc(t.name) + '</button>'; }).join('') + '</div>' : '<p class="fine">You have no titles yet. Titles are earned by what you do, like practicing 7 days in a row.</p>');
+    }
+    if (spot === 'me') {
+      return h + '<p class="room-lbl">Color</p><div class="room-chips">' + ROOM_COLORS.map(function (c) { return '<button type="button" class="room-sw" data-room-color="' + c[0] + '" aria-pressed="' + (R.av[0] === c[0] ? 'true' : 'false') + '" aria-label="' + c[1] + '" style="background:' + c[2] + '"></button>'; }).join('') + '</div>' +
+        '<p class="room-lbl">Hat</p><div class="room-tiles room-hats">' + ROOM_HATS.map(function (x) { return roomTile(x[0], x[1], roomAvatar([R.av[0], x[0]]), R.av[1] === x[0], '', '', 'data-room-hat'); }).join('') + '</div>';
+    }
+    if (spot === 'desk') { return h + '<p>The calendar on the desk shows your streak. It changes when you practice, so there is nothing to pick here.</p>'; }
+    return '';
+  }
+  function roomModel(R) { var s = habitStreak(); return { edit: ROOM.edit, title: roomTitleName(R.tl), n: s.n, best: s.best }; }
+  function roomSideHTML(R, o) {
+    if (ROOM.edit) {
+      return '<div class="room-chips room-spots" role="group" aria-label="Spots in the room">' + ROOM_SPOTS.filter(function (s) { return s[0] !== 'desk'; }).map(function (s) { return '<button type="button" class="room-chip" data-room-spot="' + s[0] + '" aria-pressed="' + (ROOM.spot === s[0] ? 'true' : 'false') + '">' + s[1] + '</button>'; }).join('') + '</div>' +
+        (ROOM.spot ? roomPickHTML(ROOM.spot, R) : '<p>Tap a spot in your room, or pick one above. What you choose shows in the room straight away; nothing changes for good until you save.</p>');
+    }
+    if (ROOM.spot) { return roomInfoHTML(ROOM.spot, R, o) + '<p><button class="linkbtn" type="button" data-room-all>Everything in my room</button></p>'; }
+    var any = pzOpened().length > 0;
+    return (any ? '' : '<div class="room-hello"><p><b>Your room is ready for prizes.</b> You win them in crates, with coins you earn by studying. Your first crate is free once you have practiced on one day.</p><p><a class="btn sm" href="#crates">Open crates</a></p></div>') +
+      '<p class="room-side-k">In my room</p><ul class="room-all">' + ROOM_SPOTS.map(function (s) { return '<li><button type="button" class="room-allb" data-room-spot="' + s[0] + '"><b>' + s[1] + '</b><span>' + esc(roomWhat(s[0], R, o)) + '</span></button></li>'; }).join('') + '</ul>';
+  }
+  function roomBarHTML() {
+    if (ROOM.edit) { return '<button class="btn" type="button" id="room-save">Save my room</button><button class="btn ghost" type="button" id="room-cancel">Cancel</button>'; }
+    return '<button class="btn" type="button" id="room-edit">Decorate</button><a class="btn ghost" href="#crates">Win more prizes</a>' + (ROOM.said ? '<span class="room-said" role="status">' + esc(ROOM.said) + '</span>' : '');
+  }
+
+  /* ---------- the page ---------- */
+  function roomCur() { return ROOM.edit && ROOM.draft ? ROOM.draft : roomGet(); }
+  function roomDrawRoom() {
+    var box = $('#room-box', viewEl.room); if (!box) { return; }
+    var R = roomCur();
+    box.innerHTML = roomRoomHTML(R, roomModel(R));
+    roomScenes(box, R);
+  }
+  function roomDrawSide() { var el = $('#room-side', viewEl.room); if (el) { var R = roomCur(); el.innerHTML = roomSideHTML(R, roomModel(R)); } }
+  function roomDrawBar() { var el = $('#room-bar', viewEl.room); if (el) { el.innerHTML = roomBarHTML(); } }
+  function roomDrawAll() { var pg = $('.room-page', viewEl.room); if (pg) { pg.classList.toggle('room-editing', ROOM.edit); } roomDrawRoom(); roomDrawSide(); roomDrawBar(); }
+  /* on a phone the room stays at the top while decorating: bring the choices up under it, with the chosen spot's name in view */
+  function roomShowSide() {
+    var side = $('#room-side', viewEl.room), stage = $('.room-stage', viewEl.room), row = $('.room-spots', viewEl.room), chip = row ? $('[aria-pressed="true"]', row) : null;
+    if (chip) { var cr = chip.getBoundingClientRect(), rr = row.getBoundingClientRect(); if (cr.left < rr.left || cr.right > rr.right) { row.scrollLeft = Math.max(0, row.scrollLeft + cr.left - rr.left - 16); } }
+    if (!side || !stage || window.innerWidth >= 960) { return; }
+    var top = parseFloat(getComputedStyle(stage).top) || 0, y = window.scrollY + side.getBoundingClientRect().top - top - stage.getBoundingClientRect().height - 8;
+    if (Math.abs(y - window.scrollY) > 4) { try { window.scrollTo({ top: Math.max(0, y), behavior: FX_REDUCE ? 'auto' : 'smooth' }); } catch (e) { window.scrollTo(0, Math.max(0, y)); } }
+  }
+  function buildRoom() {
+    viewEl.room.innerHTML = '<div class="wrap room-page">' +
+      '<header class="room-head"><p class="eyebrow">Clubhouse</p><h2 class="vtitle">My room</h2><p class="lede">A room to show off the prizes you win by studying. Tap anything in it to see what it is, or press Decorate to change it.</p></header>' +
+      '<div class="room-main"><div class="room-stage"><div id="room-box"></div><div class="room-bar" id="room-bar"></div></div><div class="room-side" id="room-side" aria-live="polite"></div></div>' +
+      '<p class="fine room-foot">Only you can see your room for now. It is saved with the rest of your progress: on this device, in your backup file, and in your account if you sign in.</p></div>';
+    roomDrawAll();
+  }
+  /* a spot was tapped: while decorating, its choices; otherwise what it holds, and an effect plays */
+  function roomTap(spot) {
+    ROOM.spot = spot; ROOM.said = '';
+    $$('.room-spot', viewEl.room).forEach(function (b) { b.classList.toggle('room-on', b.getAttribute('data-room-spot') === spot); });
+    roomDrawSide();
+    if (ROOM.edit) { roomShowSide(); return; }
+    var m = /^s(\d)$/.exec(spot), R = roomCur(), it = m ? PZ_BY[R.st[+m[1]]] : null;
+    if (it && it.kind === 'fx') { fxRight(it.key, $('.room-st' + m[1] + ' .room-ans', viewEl.room)); }
+  }
+  function roomPick(val) {
+    var R = ROOM.draft, s = ROOM.spot, m = /^s(\d)$/.exec(s);
+    if (!R) { return; }
+    if (s === 'walls') { R.w = val; }
+    else if (s === 'window') { R.win = val; }
+    else if (m) { var k = +m[1], at = val ? R.st.indexOf(val) : -1; if (at >= 0 && at !== k) { R.st[at] = R.st[k]; } R.st[k] = val; }
+    else if (s === 'shelf' || s === 'board') {
+      var L = s === 'shelf' ? R.sh : R.bd, max = s === 'shelf' ? ROOM_SHELF : ROOM_BOARD, i = L.indexOf(val);
+      if (i >= 0) { L.splice(i, 1); } else if (L.length < max) { L.push(val); } else { roomFlash(s === 'shelf' ? 'The shelf holds three. Tap one that is on it to take it off first.' : 'The board holds six. Tap one that is on it to take it off first.'); return; }
+    }
+    roomDrawRoom(); roomRefresh();
+  }
+  /* the choices stay where they are, so a long row keeps its place; only what is picked changes */
+  function roomRefresh() {
+    var side = $('#room-side', viewEl.room), R = ROOM.draft, s = ROOM.spot, m = /^s(\d)$/.exec(s);
+    if (!side || !R) { return; }
+    $$('[data-room-pick]', side).forEach(function (b) {
+      var v = b.getAttribute('data-room-pick'), on = s === 'walls' ? R.w === v : s === 'window' ? R.win === v : m ? R.st[+m[1]] === v : s === 'shelf' ? R.sh.indexOf(v) >= 0 : R.bd.indexOf(v) >= 0;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      var note = $('.room-tile-note', b), txt = '';
+      if (m && v) { var at = R.st.indexOf(v); txt = at >= 0 && at !== +m[1] ? 'On stand ' + (at + 1) : ''; }
+      if (s === 'shelf') { txt = on ? 'On the shelf' : ''; }
+      if (txt && !note && b.classList.contains('room-tile')) { b.insertAdjacentHTML('beforeend', '<span class="room-tile-note"></span>'); note = $('.room-tile-note', b); }
+      if (note) { note.textContent = txt; note.hidden = !txt; }
+    });
+    $$('[data-room-title]', side).forEach(function (b) { b.setAttribute('aria-pressed', R.tl === b.getAttribute('data-room-title') ? 'true' : 'false'); });
+    $$('[data-room-color]', side).forEach(function (b) { b.setAttribute('aria-pressed', R.av[0] === b.getAttribute('data-room-color') ? 'true' : 'false'); });
+    $$('[data-room-hat]', side).forEach(function (b) { var h = b.getAttribute('data-room-hat'); b.setAttribute('aria-pressed', R.av[1] === h ? 'true' : 'false'); $('.room-tile-pic', b).innerHTML = roomAvatar([R.av[0], h]); });
+  }
+  var roomFlashT = 0;
+  function roomFlash(msg) {
+    var side = $('#room-side', viewEl.room), el = $('.room-flash', side);
+    if (!side) { return; }
+    if (!el) { el = document.createElement('p'); el.className = 'room-flash'; el.setAttribute('role', 'status'); side.appendChild(el); }
+    el.textContent = msg; clearTimeout(roomFlashT); roomFlashT = setTimeout(function () { if (el.isConnected) { el.remove(); } }, 4000);
+  }
+  function roomWire() {
+    if (roomWire.done) { return; } roomWire.done = true;
+    document.addEventListener('click', function (e) {
+      var t = e.target && e.target.closest ? e.target : null;
+      if (!t || !viewEl.room || !viewEl.room.contains(t)) { return; }
+      var b, R;
+      if (t.closest('#room-edit')) { ROOM.edit = true; ROOM.draft = roomCopy(roomGet()); ROOM.spot = ''; ROOM.said = ''; roomDrawAll(); focusQuiet($('#room-save', viewEl.room)); return; }
+      if (t.closest('#room-save')) { roomSave(ROOM.draft || roomGet()); ROOM.edit = false; ROOM.draft = null; ROOM.spot = ''; ROOM.said = 'Your room is saved.'; roomDrawAll(); focusQuiet($('#room-edit', viewEl.room)); return; }
+      if (t.closest('#room-cancel')) { ROOM.edit = false; ROOM.draft = null; ROOM.spot = ''; ROOM.said = ''; roomDrawAll(); focusQuiet($('#room-edit', viewEl.room)); return; }
+      if (t.closest('[data-room-all]')) { ROOM.spot = ''; $$('.room-spot.room-on', viewEl.room).forEach(function (x) { x.classList.remove('room-on'); }); roomDrawSide(); focusQuiet($('.room-allb', viewEl.room)); return; }
+      if ((b = t.closest('[data-room-play]'))) { var card = b.closest('.room-card'), ans = card ? $('.pz-ans', card) : null; if (ans) { fxRight(b.getAttribute('data-room-play'), ans); } return; }
+      if ((b = t.closest('[data-room-spot]'))) {
+        var from = b.closest('.room-side'), spot = b.getAttribute('data-room-spot');
+        roomTap(spot);
+        if (from) { focusQuiet($('#room-side [data-room-spot="' + spot + '"]', viewEl.room) || $('#room-side', viewEl.room)); }
+        return;
+      }
+      if (!ROOM.edit || !(R = ROOM.draft)) { return; }
+      if ((b = t.closest('[data-room-pick]'))) { roomPick(b.getAttribute('data-room-pick')); return; }
+      if ((b = t.closest('[data-room-title]'))) { R.tl = b.getAttribute('data-room-title'); roomDrawRoom(); roomRefresh(); return; }
+      if ((b = t.closest('[data-room-color]'))) { R.av[0] = b.getAttribute('data-room-color'); roomDrawRoom(); roomRefresh(); return; }
+      if ((b = t.closest('[data-room-hat]'))) { R.av[1] = b.getAttribute('data-room-hat'); roomDrawRoom(); roomRefresh(); }
+    });
+    /* the name shows on the plate as it is typed; the room itself is not drawn again, so nothing restarts */
+    document.addEventListener('input', function (e) {
+      var t = e.target;
+      if (!t || !t.classList || !t.classList.contains('room-name') || !ROOM.draft) { return; }
+      ROOM.draft.nm = t.value;
+      var b = $('.room-plate-in b', viewEl.room); if (b) { b.textContent = roomName(t.value); }
+      var room = $('.room-room', viewEl.room); if (room) { room.setAttribute('aria-label', roomName(t.value)); }
+    });
+  }
+  roomWire();
   /* =================== Both subjects: what is saved on this device, a backup file, and offline use =================== */
   /* A backup is one file: { app: 'sat-sprint', version, saved, theme, data: the whole store }. Nothing is sent anywhere. */
   var BK_APP = 'sat-sprint', BK_VER = 1, BK_MAX = 12 * 1024 * 1024;
@@ -13936,6 +14533,7 @@ function rReasoningHTML() {
     s.notes = !nb || na === nb || na.indexOf(nb) >= 0 ? na : !na ? nb : (na + '\n\n' + nb).slice(0, 10000);
     s.pz = pzMerge(cs.pz, is.pz);
     s.chal = chalMerge(cs.chal, is.chal);
+    if (isObj(cs.room) || isObj(is.room)) { s.room = roomMerge(cs.room, is.room); }
     out.s = s;
     return out;
   }
@@ -14929,10 +15527,15 @@ function rReasoningHTML() {
       ['Does my friend need an account?', 'No. The link holds the questions and your score, so it works for anyone, with nothing to sign up for. Nothing about a challenge is sent to SAT Sprint.'],
       ['Does a challenge count as practice?', 'Yes. Your answers are saved like any other practice and count toward your day. A challenge gives no extra coins.'],
       ['Can I play one again?', 'Yes, as often as you like. Your first try that answers every question is your score in the challenge.']]],
+    room: ['your room', [
+      ['What is my room?', 'A room in the clubhouse where the prizes you win go on show: a theme on the walls, a paper in the window, auras and effects on the stands, streak styles on the shelf and stickers on the board.'],
+      ['How do I change it?', 'Press <b>Decorate</b>, tap a spot in the room, then pick a prize for it. What you pick shows straight away. Press <b>Save my room</b> to keep it, or <b>Cancel</b> to leave it as it was.'],
+      ['Who can see my room?', 'Only you, for now. It is saved with the rest of your progress, in your backup file and in your account if you sign in.'],
+      ['How do I get more for my room?', 'Earn coins by studying and open crates. Every crate has a prize and a sticker in it.']]],
     other: ['this page', [
       ['Where do I start?', 'Press <b>Home</b> at the top, then press <b>Start</b> on Reading &amp; Writing or on Math.']]]
   };
-  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge' };
+  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge', room: 'room' };
   var helpEl = null, helpFrom = null;
   function helpKey() {
     var v = cur.view;
@@ -15014,7 +15617,7 @@ function rReasoningHTML() {
       ['mmap', 'm-map', 'My progress', 'See how you are doing on each kind of question, and what to practice next.', 'map']] }
   };
   function navList(subj) { return SUBJ[subj].items; }
-  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home', challenge: 'home' };
+  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home', challenge: 'home', room: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/></svg>',
@@ -15061,7 +15664,7 @@ function rReasoningHTML() {
   var lastPage = { v: 'home', subj: 'home' };
 
   /* ---------- the guide bar: where you are and the way back; and the next step at the foot of the page ---------- */
-  var GLOBAL_PAGE = { plan: ['My study plan', 'plan'], data: ['Backup and offline use', 'my-data'], account: ['My account', 'account'], suggest: ['Ask or suggest', 'suggest'], crates: ['Crates', 'crates'], challenge: ['Challenge a friend', 'challenge'] };
+  var GLOBAL_PAGE = { plan: ['My study plan', 'plan'], data: ['Backup and offline use', 'my-data'], account: ['My account', 'account'], suggest: ['Ask or suggest', 'suggest'], crates: ['Crates', 'crates'], challenge: ['Challenge a friend', 'challenge'], room: ['My room', 'room'] };
   function groupName(g) { return GROUPS.filter(function (x) { return x[0] === g; })[0][1]; }
   /* the page you are inside a page with its own contents: a lesson, a reading step, a worked example */
   function deepName(v, tok) {
@@ -15181,7 +15784,7 @@ function rReasoningHTML() {
     host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from College Board’s own practice questions.</p></div>' +
       col('Reading & Writing', footList('rw')) +
       col('Math', footList('math')) +
-      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline use</a>', '<a href="#crates">Crates</a>', '<a href="#challenge">Challenge a friend</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Ask a question or suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Text size and colors</button>', '<button class="linkbtn foot-tour" type="button" data-tour>Take the one-minute tour</button>']));
+      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline use</a>', '<a href="#crates">Crates</a>', '<a href="#room">My room</a>', '<a href="#challenge">Challenge a friend</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Ask a question or suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Text size and colors</button>', '<button class="linkbtn foot-tour" type="button" data-tour>Take the one-minute tour</button>']));
   }());
 
   /* ---------- appearance: saved in this browser under its own key ---------- */
@@ -15285,8 +15888,8 @@ function rReasoningHTML() {
 
   /* the pages that belong to no subject, one tap from Today */
   function moreRowHTML() {
-    var L = [['plan', 'My study plan', 'The week ahead, and your test date'], ['crates', 'Prizes', 'Coins, crates and the looks you have won'], ['challenge', 'Challenge a friend', 'Send five questions and see who gets more right'], ['my-data', 'Backup and offline use', 'Save a copy of your progress'], ['suggest-notes', 'My notes', 'A private scratchpad'], ['suggest', 'Ask or suggest', 'Send a question or an idea']];
-    if (acctOn) { L.splice(2, 0, ['account', acctIn() ? 'My account' : 'Sign in', 'Keep your progress on every device']); }
+    var L = [['plan', 'My study plan', 'The week ahead, and your test date'], ['crates', 'Prizes', 'Coins, crates and the looks you have won'], ['room', 'My room', 'A room to show off your prizes'], ['challenge', 'Challenge a friend', 'Send five questions and see who gets more right'], ['my-data', 'Backup and offline use', 'Save a copy of your progress'], ['suggest-notes', 'My notes', 'A private scratchpad'], ['suggest', 'Ask or suggest', 'Send a question or an idea']];
+    if (acctOn) { L.splice(3, 0, ['account', acctIn() ? 'My account' : 'Sign in', 'Keep your progress on every device']); }
     return '<section class="hsec tmore" id="tmore"><div class="hsec-h"><h2 class="h2">More</h2></div><ul class="tmore-l">' + L.map(function (x) { return '<li><a href="#' + x[0] + '"><b>' + x[1] + '</b><span>' + x[2] + '</span></a></li>'; }).join('') + '</ul></section>';
   }
   /* Today, with a plan: the day's list first, then the streak and the two subjects */
@@ -15432,7 +16035,7 @@ function rReasoningHTML() {
   }
 
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge', 'room'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -15563,6 +16166,7 @@ function rReasoningHTML() {
     if (token === 'crates') { showView('crates'); buildCrates(); toTop(); return; }
     if ((m = /^challenge(?:-(m|rw))?$/.exec(token))) { showView('challenge'); chalBuild(m[1] || ''); toTop(); return; }
     if (/^ch-/.test(token)) { showView('challenge'); chalOpen(token); toTop(); return; }
+    if (token === 'room') { showView('room'); buildRoom(); toTop(); return; }
     if (token === 'my-data' || token === 'my-data-offline') {
       showView('data'); buildData();
       if (token === 'my-data-offline') { scrollToEl(document.getElementById('my-data-offline')); } else { toTop(); }

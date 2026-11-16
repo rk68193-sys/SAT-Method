@@ -62,7 +62,7 @@
   function pzLockerArt() { return '<span class="pz-lk"><span class="pz-lk-vents"></span><span class="pz-lk-dial"></span><span class="pz-lk-handle"></span></span>'; }
   function pzCollectionHTML() {
     var own = pzOwned();
-    return '<section class="pz-sec" id="pz-collection"><h3 class="h3">Your collection · ' + Object.keys(own).length + ' of ' + PZ_ITEMS.length + '</h3>' + PZ_SLOTS.map(function (sl) {
+    return '<section class="pz-sec" id="pz-collection"><h3 class="h3">Your collection · ' + Object.keys(own).length + ' of ' + PZ_ITEMS.length + '</h3><p class="fine">Put your favorites on show in <a href="#room">your room</a>.</p>' + PZ_SLOTS.map(function (sl) {
       var slot = sl[0], worn = pzWorn(slot), items = PZ_ITEMS.filter(function (it) { return it.kind === slot; }).sort(function (a, b) { return PZ_TIERS.indexOf(a.tier) - PZ_TIERS.indexOf(b.tier); });
       var off = slot === 'theme' ? '' : '<button class="linkbtn" type="button" data-pz-wear="' + slot + '" data-pz-id=""' + (worn ? '' : ' disabled') + '>' + (worn ? 'Take it off' : 'Nothing on') + '</button>';
       return '<div class="pz-slot"><div class="pz-slot-h"><h4>' + sl[1] + '</h4>' + off + '</div><div class="pz-items">' + items.map(function (it) {

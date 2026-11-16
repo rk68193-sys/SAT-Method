@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge', 'room'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -130,6 +130,7 @@
     if (token === 'crates') { showView('crates'); buildCrates(); toTop(); return; }
     if ((m = /^challenge(?:-(m|rw))?$/.exec(token))) { showView('challenge'); chalBuild(m[1] || ''); toTop(); return; }
     if (/^ch-/.test(token)) { showView('challenge'); chalOpen(token); toTop(); return; }
+    if (token === 'room') { showView('room'); buildRoom(); toTop(); return; }
     if (token === 'my-data' || token === 'my-data-offline') {
       showView('data'); buildData();
       if (token === 'my-data-offline') { scrollToEl(document.getElementById('my-data-offline')); } else { toTop(); }

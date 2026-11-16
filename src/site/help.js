@@ -48,10 +48,15 @@
       ['Does my friend need an account?', 'No. The link holds the questions and your score, so it works for anyone, with nothing to sign up for. Nothing about a challenge is sent to SAT Sprint.'],
       ['Does a challenge count as practice?', 'Yes. Your answers are saved like any other practice and count toward your day. A challenge gives no extra coins.'],
       ['Can I play one again?', 'Yes, as often as you like. Your first try that answers every question is your score in the challenge.']]],
+    room: ['your room', [
+      ['What is my room?', 'A room in the clubhouse where the prizes you win go on show: a theme on the walls, a paper in the window, auras and effects on the stands, streak styles on the shelf and stickers on the board.'],
+      ['How do I change it?', 'Press <b>Decorate</b>, tap a spot in the room, then pick a prize for it. What you pick shows straight away. Press <b>Save my room</b> to keep it, or <b>Cancel</b> to leave it as it was.'],
+      ['Who can see my room?', 'Only you, for now. It is saved with the rest of your progress, in your backup file and in your account if you sign in.'],
+      ['How do I get more for my room?', 'Earn coins by studying and open crates. Every crate has a prize and a sticker in it.']]],
     other: ['this page', [
       ['Where do I start?', 'Press <b>Home</b> at the top, then press <b>Start</b> on Reading &amp; Writing or on Math.']]]
   };
-  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge' };
+  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge', room: 'room' };
   var helpEl = null, helpFrom = null;
   function helpKey() {
     var v = cur.view;

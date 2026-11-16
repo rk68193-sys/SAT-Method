@@ -98,6 +98,7 @@
     s.notes = !nb || na === nb || na.indexOf(nb) >= 0 ? na : !na ? nb : (na + '\n\n' + nb).slice(0, 10000);
     s.pz = pzMerge(cs.pz, is.pz);
     s.chal = chalMerge(cs.chal, is.chal);
+    if (isObj(cs.room) || isObj(is.room)) { s.room = roomMerge(cs.room, is.room); }
     out.s = s;
     return out;
   }

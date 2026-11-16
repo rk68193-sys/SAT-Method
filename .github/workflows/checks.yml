@@ -38,6 +38,8 @@ jobs:
           cmp -s "$RUNNER_TEMP/index.html" index.html || { echo "::error::index.html is not a fresh build of src/. Rebuild it (src/README.md) and commit it."; exit 1; }
       - name: The page's script parses
         run: node --check src/site/bundle.js
+      - name: Each name at the top of the page's script is declared once
+        run: node --expose-internals src/check/names.js
       - name: Theme colors are readable and their CSS is up to date
         run: |
           cp src/site/app.css "$RUNNER_TEMP/app.css"
@@ -72,8 +74,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - group: accounts, prizes, visits and challenges
-            checks: account prizes visits challenge
+          - group: accounts, prizes, rooms, visits and challenges
+            checks: account prizes room visits challenge
           - group: pages and practice
             checks: additions habit smoke nav msmoke
           - group: tracks, text and sources
