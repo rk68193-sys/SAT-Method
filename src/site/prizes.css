@@ -85,7 +85,7 @@
 .pz-pic, .pz-mini { position: relative; display: block; height: 86px; border-radius: 12px; border: 1px solid var(--line); overflow: hidden; }
 .pz-q { display: grid; place-items: center; font: 800 1.8rem var(--display); color: var(--muted); background: var(--card); border-style: dashed; }
 .pz-pic-streak { display: grid; place-items: center; background: var(--sunk); }
-.pz-pic-streak svg { height: 56px; width: auto; }
+.pz-pic-streak svg { height: 56px; width: auto; max-width: 92%; }
 .pz-pic-fx { display: grid; place-items: center; padding: 0 .8rem; }
 .pz-ans { position: relative; display: flex; align-items: center; gap: .5rem; width: 100%; padding: .5rem .7rem; border-radius: 10px; border: 1.5px solid var(--ok); background: var(--ok-soft); color: var(--ink); font: 600 .85rem var(--body); }
 .pz-ans b { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; background: var(--ok); color: var(--ok-soft); font-size: .72rem; }
@@ -128,6 +128,11 @@
 .pz-pt-gears { background: repeating-conic-gradient(from 0deg at 28% 50%, rgba(253, 224, 71, .6) 0 12deg, transparent 12deg 24deg), #1C1917; -webkit-mask: radial-gradient(circle at 28% 50%, #000 0 40%, rgba(0, 0, 0, .25) 41%); mask: radial-gradient(circle at 28% 50%, #000 0 40%, rgba(0, 0, 0, .25) 41%); }
 .pz-pt-orbit-view { background: radial-gradient(circle at 78% 26%, #FDBA74 0 9%, transparent 10%), radial-gradient(ellipse 140% 90% at 50% 150%, #030712 0 60%, #38BDF8 61% 62%, rgba(59, 130, 246, .25) 63% 70%, transparent 72%), #050816; }
 .pz-pt-gyre { background: radial-gradient(circle at 50% 45%, rgba(224, 242, 254, .95) 0 3%, rgba(45, 212, 191, .45) 9%, transparent 32%), repeating-conic-gradient(from 20deg at 50% 45%, rgba(45, 212, 191, .3) 0 9deg, transparent 9deg 40deg), radial-gradient(rgba(103, 232, 249, .75) 1px, transparent 1.5px) 0 0 / 15px 13px, linear-gradient(#062A3A, #020A12); }
+.pz-pt-honeycomb { background: radial-gradient(circle at 72% 30%, #FACC15 0 3.5px, #1C1917 3.6px 4.6px, transparent 5px), radial-gradient(circle at 30% 64%, rgba(245, 158, 11, .45) 0 12px, transparent 12.5px), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17.32' height='30'%3E%3Cpath d='M8.66 0L17.32 5V15L8.66 20L0 15V5ZM8.66 20V30' fill='none' stroke='%23B47814' stroke-opacity='.45'/%3E%3C/svg%3E") 0 0 / 17.32px 30px, #FFFBEB; }
+.pz-pt-kites { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 86' preserveAspectRatio='xMidYMid slice'%3E%3Cpath d='M60 70Q80 50 52 22' fill='none' stroke='%23475569' stroke-opacity='.4'/%3E%3Cpath d='M150 86Q150 60 138 30' fill='none' stroke='%23475569' stroke-opacity='.4'/%3E%3Cg transform='rotate(-12 52 18)'%3E%3Cpath d='M52 4L64 14L52 30L40 14Z' fill='%23F43F5E'/%3E%3Cpath d='M52 4L64 14L52 14ZM52 14L40 14L52 30Z' fill='%23FDE047'/%3E%3C/g%3E%3Cpath d='M52 30q-4 6 0 10q4 6 0 12' fill='none' stroke='%23475569' stroke-opacity='.5'/%3E%3Cpath d='M49 38l6 0M48 48l6 0' stroke='%23F43F5E' stroke-width='3'/%3E%3Cg transform='rotate(10 138 24)'%3E%3Cpath d='M138 8L154 32L138 28L122 32Z' fill='%2338BDF8'/%3E%3Cpath d='M138 8L143 30L138 28L133 30Z' fill='%23F472B6'/%3E%3C/g%3E%3C/svg%3E") center / cover no-repeat, linear-gradient(180deg, #E0F2FE, #F8FAFC); }
+.pz-pt-balloons { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 86' preserveAspectRatio='xMidYMid slice'%3E%3Cg%3E%3Cpath d='M60 58Q34 38 46 20Q60 4 74 20Q86 38 60 58Z' fill='%23EF4444'/%3E%3Cpath d='M60 58Q52 38 54 18Q60 6 66 18Q68 38 60 58Z' fill='%23FDE047'/%3E%3Crect x='56' y='62' width='8' height='6' fill='%2392400E'/%3E%3Cpath d='M55 57L57 62M65 57L63 62' stroke='%23475569'/%3E%3C/g%3E%3Cg transform='translate(88 -6) scale(.7)'%3E%3Cpath d='M60 58Q34 38 46 20Q60 4 74 20Q86 38 60 58Z' fill='%233B82F6'/%3E%3Cpath d='M60 58Q52 38 54 18Q60 6 66 18Q68 38 60 58Z' fill='%23F8FAFC'/%3E%3Crect x='56' y='62' width='8' height='6' fill='%2392400E'/%3E%3C/g%3E%3Cg transform='translate(118 34) scale(.5)'%3E%3Cpath d='M60 58Q34 38 46 20Q60 4 74 20Q86 38 60 58Z' fill='%23A855F7'/%3E%3Cpath d='M60 58Q52 38 54 18Q60 6 66 18Q68 38 60 58Z' fill='%23F472B6'/%3E%3Crect x='56' y='62' width='8' height='6' fill='%2392400E'/%3E%3C/g%3E%3C/svg%3E") center / cover no-repeat, linear-gradient(180deg, #FFF7ED, #F0F9FF); }
+.pz-pt-inkwash { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 86' preserveAspectRatio='xMidYMid slice'%3E%3Ccircle cx='150' cy='24' r='13' fill='%23DC2626' fill-opacity='.18'/%3E%3Cpath d='M0 70L30 42L52 58L84 26L120 60L150 44L200 66V86H0Z' fill='%231C1917' fill-opacity='.14'/%3E%3Cpath d='M0 80L40 60L70 74L110 52L150 72L200 62V86H0Z' fill='%231C1917' fill-opacity='.3'/%3E%3Cpath d='M96 79q10 3 22-1M107 79v-8l12-8' fill='none' stroke='%231C1917' stroke-opacity='.6' stroke-width='1.3'/%3E%3Crect x='178' y='64' width='12' height='12' fill='%23B91C1C' fill-opacity='.75'/%3E%3C/svg%3E") center / cover no-repeat, #FFFFFF; }
+.pz-pt-wanderers { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 86' preserveAspectRatio='xMidYMid slice'%3E%3Crect width='200' height='86' fill='%230B1026'/%3E%3Ccircle cx='70' cy='70' r='34' fill='%23FEF3C7' fill-opacity='.18'/%3E%3Cg fill='%23020617' stroke='%23020617' stroke-linecap='round'%3E%3Cellipse cx='120' cy='34' rx='18' ry='9'/%3E%3Cpath d='M132 32Q146 20 150 36' fill='none' stroke-width='4'/%3E%3Cpath d='M112 40L104 56L110 78M128 40L136 56L130 78M116 40L118 60L114 78M124 40L122 60L126 78' fill='none' stroke-width='2'/%3E%3C/g%3E%3Ccircle cx='151' cy='42' r='6' fill='%23FDBA74' fill-opacity='.5'/%3E%3Ccircle cx='151' cy='42' r='2' fill='%23FFFFFF'/%3E%3Cpath d='M0 78Q100 70 200 80V86H0Z' fill='%2394A3B8' fill-opacity='.25'/%3E%3C/svg%3E") center / cover no-repeat, #0B1026; }
 /* the Seasons crate: what is in season now */
 .pz-season { margin: .4rem 0 0; padding: .45rem .7rem; border-radius: 12px; font-size: .9rem; background: var(--sunk); color: var(--ink); }
 .pz-season-fall { border-left: 4px solid #C2410C; }
@@ -296,7 +301,9 @@ html.pz-plain .pz-bg { display: none; }
 :root[data-theme="prize-metropolis"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-summit"] .btn:not(.ghost):not(:disabled),
 :root[data-theme="prize-haunted"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-eldritch"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-lanterns"] .btn:not(.ghost):not(:disabled),
 :root[data-theme="prize-abyss"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-enchanted"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-terminal"] .btn:not(.ghost):not(:disabled),
-:root[data-theme="prize-beacon"] .btn:not(.ghost):not(:disabled) { background-size: 220% 100%; animation: pz-sheen 2.6s ease-in-out infinite alternate; }
+:root[data-theme="prize-beacon"] .btn:not(.ghost):not(:disabled),
+:root[data-theme="prize-clouds"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-pond"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-mycelium"] .btn:not(.ghost):not(:disabled),
+:root[data-theme="prize-dunes"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-glacier"] .btn:not(.ghost):not(:disabled) { background-size: 220% 100%; animation: pz-sheen 2.6s ease-in-out infinite alternate; }
 /* Terminal: headings and buttons in the typewriter face, with a faint phosphor glow */
 :root[data-theme="prize-terminal"] .vtitle, :root[data-theme="prize-terminal"] .h2, :root[data-theme="prize-terminal"] .h3, :root[data-theme="prize-terminal"] .btn { font-family: var(--mono); letter-spacing: 0; }
 :root[data-theme="prize-terminal"] .vtitle, :root[data-theme="prize-terminal"] .h2 { text-shadow: 0 0 10px rgba(74, 222, 128, .45); }
@@ -309,4 +316,47 @@ html.pz-plain .pz-bg { display: none; }
   .pz-prize.show { animation: none !important; transform: translate(-50%, -50%) scale(1); opacity: 1; }
   .pz-door, .pz-dial, .pz-toast { transition: none !important; }
   :root[data-theme^="prize-"] .btn:not(.ghost):not(:disabled) { animation: none !important; }
+}
+/* the streak styles from looks.js: tally marks, a paper chain, a marquee, a lotus and the ouroboros */
+.lk-spark { fill: #FDE68A; transform-box: fill-box; transform-origin: center; animation: zt-twinkle 2.6s ease-in-out infinite; } .lk-spark1 { animation-delay: -.9s; } .lk-spark2 { animation-delay: -1.7s; }
+.lk-tal { fill: none; stroke: var(--ink); stroke-width: 2.2; stroke-linecap: round; } .pz-plate .lk-tal { stroke: #F5F3FF; }
+.lk-tal.lk-new { stroke-dasharray: 24; animation: lk-draw 1.2s ease-out both; }
+.lk-dust { fill: var(--muted); opacity: 0; animation: lk-dust 3.2s ease-out infinite; } .lk-dust1 { animation-delay: -.8s; } .lk-dust2 { animation-delay: -1.6s; } .lk-dust3 { animation-delay: -2.4s; }
+.lk-tally.full .lk-tal { stroke: #F59E0B; filter: drop-shadow(0 0 2px rgba(245, 158, 11, .6)); animation: lk-shim 2.4s ease-in-out infinite; } .lk-tally.none { opacity: .35; }
+.lk-tstar { fill: #FBBF24; stroke: #B45309; stroke-width: .6; filter: drop-shadow(0 0 2px #FDE047); transform-box: fill-box; transform-origin: center; animation: zt-pulse 2s ease-in-out infinite; }
+@keyframes lk-draw { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+@keyframes lk-dust { 0% { opacity: .5; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-10px); } }
+@keyframes lk-shim { 0%, 100% { filter: drop-shadow(0 0 1px rgba(245, 158, 11, .5)); } 50% { filter: drop-shadow(0 0 4px rgba(253, 224, 71, .95)); } }
+.lk-ch { fill: none; stroke-width: 3.4; } .lk-chin { fill: none; stroke: rgba(255, 255, 255, .45); stroke-width: .8; }
+.lk-ch0 { stroke: #F43F5E; } .lk-ch1 { stroke: #38BDF8; } .lk-ch2 { stroke: #FACC15; } .lk-ch3 { stroke: #22C55E; } .lk-ch4 { stroke: #A78BFA; } .lk-ch5 { stroke: #FB923C; }
+.lk-link { animation: lk-swing 2.4s ease-in-out infinite; } .lk-chain.gold .lk-ch { filter: drop-shadow(0 0 1.5px #FBBF24); } .lk-chain.gold .lk-chin { stroke: #FDE68A; }
+@keyframes lk-swing { 0%, 100% { transform: translateY(-1.2px) rotate(-4deg); } 50% { transform: translateY(1.2px) rotate(4deg); } }
+.lk-mqf { fill: #1C1917; stroke: #78350F; stroke-width: 1.6; } .lk-mqin { fill: #0C0A09; stroke: rgba(251, 191, 36, .35); stroke-width: .6; }
+.lk-mqo { fill: #F97316; } .lk-mqi { fill: #FDE047; } .lk-mqfl { transform-box: fill-box; transform-origin: 50% 100%; animation: lk-flick 1.1s ease-in-out infinite; }
+.lk-mqb { fill: #57534E; } .lk-mqb.on { fill: #FDE68A; } .lk-mqh { fill: #FDE68A; opacity: .25; }
+.lk-marquee.chase .lk-mqb.on, .lk-marquee.chase .lk-mqh { animation: pz-chase .8s steps(1) infinite; } .lk-marquee.gold .lk-mqb.on { fill: #FBBF24; } .lk-marquee.gold .lk-mqh { fill: #FBBF24; opacity: .35; }
+.lk-marquee.gold .lk-mqo { filter: drop-shadow(0 0 2px #F97316); } .lk-marquee.rainbow { animation: pz-hue 4s linear infinite; }
+@keyframes lk-flick { 0%, 100% { transform: scale(1, 1); } 30% { transform: scale(.94, 1.06); } 60% { transform: scale(1.04, .95); } }
+@keyframes pz-chase { 0%, 74% { opacity: 1; } 75%, 100% { opacity: .25; } }
+@keyframes pz-hue { to { filter: hue-rotate(360deg); } }
+.lk-lw { fill: rgba(56, 189, 248, .25); } .lk-lpad { fill: #15803D; } .lk-lr { fill: none; stroke: rgba(56, 189, 248, .5); stroke-width: .8; transform-box: fill-box; transform-origin: center; animation: lk-ripple 3s ease-out infinite; } .lk-lr1 { animation-delay: -1.5s; }
+.lk-lp0 { fill: #F9A8D4; stroke: #DB2777; stroke-width: .7; } .lk-lp1 { fill: #FBCFE8; stroke: #DB2777; stroke-width: .7; } .lk-lp2 { fill: #FDF2F8; stroke: #EC4899; stroke-width: .7; }
+.lk-lbloom { transform-box: fill-box; transform-origin: 50% 100%; animation: lk-breathe 4s ease-in-out infinite; }
+.lk-lc { fill: #FBBF24; transform-box: fill-box; transform-origin: center; animation: zt-pulse 1.6s ease-in-out infinite; } .lk-lhalo { fill: #FDE047; opacity: .25; transform-box: fill-box; transform-origin: center; animation: zt-pulse 2.4s ease-in-out infinite; }
+.lk-lotus.glow .lk-lp0, .lk-lotus.glow .lk-lp1, .lk-lotus.glow .lk-lp2 { filter: drop-shadow(0 0 2px rgba(244, 114, 182, .8)); }
+.lk-lm { fill: #FEF3C7; animation: pz-mote 3s ease-in-out infinite; } .lk-lm1 { animation-delay: -1s; } .lk-lm2 { animation-delay: -2s; }
+@keyframes lk-ripple { 0% { transform: scale(.4); opacity: .9; } 100% { transform: scale(1.15); opacity: 0; } }
+@keyframes lk-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+@keyframes pz-mote { 0% { opacity: 0; transform: translateY(6px); } 50% { opacity: 1; } 100% { opacity: 0; transform: translateY(-6px); } }
+.lk-obody { fill: none; stroke-width: 6.5; stroke-linecap: round; } .lk-oscale { fill: none; stroke: rgba(6, 40, 30, .45); stroke-width: 6.5; stroke-dasharray: 1.2 2.6; animation: lk-slither 1.4s linear infinite; } .lk-obelly { fill: none; stroke: rgba(254, 249, 195, .45); stroke-width: 1.2; stroke-dasharray: .8 3; animation: lk-slither 1.4s linear infinite; }
+.lk-ohead { fill: #059669; stroke: #064E3B; stroke-width: .8; } .lk-oeye { fill: #FDE047; } .lk-oglint { fill: #FFFFFF; } .lk-otongue { fill: none; stroke: #E11D48; stroke-width: .8; stroke-linecap: round; animation: lk-flickt 2.2s steps(1) infinite; }
+.lk-ohalo { fill: none; stroke: rgba(52, 211, 153, .35); stroke-width: 9; animation: zt-flicker 2.6s ease-in-out infinite; }
+.lk-ouro.whole .lk-oeye { filter: drop-shadow(0 0 1.5px #FDE047); }
+.lk-ouro.shine { filter: drop-shadow(0 0 3px rgba(253, 224, 71, .7)); } .lk-ouro.shine .lk-ohead { fill: #F472B6; stroke: #831843; } .lk-ouro.shine .lk-ohalo { stroke: rgba(253, 224, 71, .35); } .lk-ouro.shine .lk-orot { transform-origin: 22px 22px; animation: pz-orot 9s linear infinite; }
+@keyframes lk-slither { to { stroke-dashoffset: -7.6; } }
+@keyframes lk-flickt { 0%, 80%, 100% { opacity: 0; } 82%, 90% { opacity: 1; } }
+@keyframes pz-orot { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .lk-spark, .lk-tal.lk-new, .lk-dust, .lk-tally.full .lk-tal, .lk-tstar, .lk-link, .lk-mqfl, .lk-marquee.chase .lk-mqb.on, .lk-marquee.chase .lk-mqh, .lk-marquee.rainbow, .lk-lr, .lk-lbloom, .lk-lc, .lk-lhalo, .lk-lm, .lk-oscale, .lk-obelly, .lk-otongue, .lk-ohalo, .lk-ouro.shine .lk-orot { animation: none !important; }
+  .lk-tal.lk-new { stroke-dashoffset: 0; } .lk-otongue { opacity: 1; }
 }

@@ -32,6 +32,8 @@
     ['dream', 'Dreamscape', 'Color and wonder: butterflies, paper cranes, a fox spirit and a whale made of stars.'],
     ['zenith', 'Zenith', 'Whole scenes: wings, an eclipse, a galaxy, a rocket launch, a dragon, mountains before dawn.'],
     ['paradox', 'Paradox', 'Scenes of black and white, clocks and gears, a theater, a city at night and a machine that is not quite working.'],
+    ['wilds', 'Wildlands', 'Wild places and weather: a campfire, a volcano, a storm that breaks, kites and balloons, a lily pond, dunes at night and a frozen cave.'],
+    ['curio', 'Curiosities', 'Strange and wonderful things: a snow globe, a chest with teeth, a slot machine, an anglerfish, a sealed door, giants on the horizon and two dying stars.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value. The Radiant prizes are in no series
@@ -188,7 +190,34 @@
     ['orrery', 'Orrery', 'z', 'aura', 'any', 'A brass model of the planets. Gears turn in the corners, a dial ticks, and the planets swing around a glowing sun, one with a ring and one with a moon.'],
     ['rose', 'Rose Window', 'z', 'aura', 'any', 'A round stained-glass window. Sunlight moves around it, lighting each pane in turn, and colored beams fall from it through glittering dust.'],
     ['gyre', 'Gyre', 'z', 'paper', 'any', 'Moving: a slow spiral current of tiny glowing sea life turns behind the page, and now and then a school of fish swims through it.'],
-    ['tree', 'Learning tree', 'z', 'streak', 'any', 'A glowing seed that sprouts at 7 days, becomes a tree with a golden heart at 30, and at 100 days a great tree with lanterns in its branches.']
+    ['tree', 'Learning tree', 'z', 'streak', 'any', 'A glowing seed that sprouts at 7 days, becomes a tree with a golden heart at 30, and at 100 days a great tree with lanterns in its branches.'],
+    /* Wildlands (looks.js) */
+    ['campfire', 'Campfire', 'c', 'aura', 'wilds', 'A stage aura: a fire under the Milky Way. Logs glow and pop, throwing up sparks, a marshmallow toasts on a stick, a lantern glows in the tent and an owl blinks in the pines.'],
+    ['caldera', 'Caldera', 'l', 'aura', 'wilds', 'A stage aura: a volcano with a churning lava lake, rivers of fire and lightning in its ash. It rumbles, then erupts in full: a flash, a ring of pressure, a fountain of fire and lava bombs.'],
+    ['stormbreak', 'After the storm', 'e', 'fx', 'wilds', 'Clouds roll in and rain splashes off your answer. Lightning strikes beside it three times and the page shakes. Then the clouds part, sunlight pours down and a double rainbow rises over it.'],
+    ['honeycomb', 'Honeycomb', 'c', 'paper', 'wilds', 'Moving: a honeycomb filling with honey, wax caps and drips. Bees land, crawl about and take off, one does its waggle dance, and a sunbeam drifts across with pollen in it.'],
+    ['kites', 'Kites', 'r', 'paper', 'wilds', 'Moving: a diamond, a delta, a turning box kite and a long dragon kite on the wind, tails fluttering, clouds drifting past, and every few seconds a gust that makes them all lurch.'],
+    ['balloons', 'Hot-air balloons', 'e', 'paper', 'wilds', 'Moving: striped balloons of every pattern rise past far mountains and clouds. Burners roar with blue and orange flames and people wave from the baskets. Dawn on a light page, night on a dark one.'],
+    ['inkwash', 'Ink wash', 'l', 'paper', 'wilds', 'Moving: an ink painting that paints itself. Mountains, a waterfall and a pagoda; mist, a boat and a line of cranes; plum blossom opening, drops of ink blooming, and a red seal pressed into the corner.'],
+    ['prize-clouds', 'Cloud nine', 'c', 'theme', 'wilds', 'A living theme: a warm sun with turning rays and a flare, soft clouds at three depths, dandelion seeds, a flock of birds, a plane’s trail spreading, and sometimes a faint rainbow.'],
+    ['prize-pond', 'Lily pond', 'r', 'theme', 'wilds', 'A living theme: koi glide under lily pads and lotus flowers, a frog leaps from pad to pad, water striders skate, a dragonfly darts, and now and then a shower sets rings spreading everywhere.'],
+    ['prize-dunes', 'Dunes', 'l', 'theme', 'wilds', 'A living theme: dunes under a huge moon and the Milky Way. Sand streams off the crests, a caravan with a swinging lantern crosses the far ridge, a fennec fox watches, and stars fall in showers.'],
+    ['prize-glacier', 'Glacier', 'm', 'theme', 'wilds', 'A living theme: an ice cave with faceted walls and things frozen in them. Icicles glint and drip, frost grows, cracks flash through the ice, and deep below, something opens a great eye.'],
+    ['lotus', 'Lotus', 'l', 'streak', 'wilds', 'A bud on the water that opens a pair of petals each week, rings spreading round it; in full bloom at 30 days with a beating golden heart, and glowing with rising light at 100.'],
+    /* Curiosities (looks.js) */
+    ['snowglobe', 'Snow globe', 'r', 'aura', 'curio', 'A stage aura: a winter village on a music box. A skater circles the pond, the key turns and notes float up, and every few seconds the globe rocks and the snow whirls up and settles.'],
+    ['mimic', 'Mimic', 'e', 'aura', 'curio', 'A stage aura: a chest on a hoard of gold in a torch-lit vault. It breathes, its keyhole becomes an eye, the lid creaks up on eyes in the dark, then gapes on teeth and a lashing tongue, and snaps shut.'],
+    ['kilonova', 'Kilonova', 'm', 'aura', 'curio', 'A stage aura: two dead stars spiral together over bent space, beams sweeping, faster and faster, and merge in a flash: jets, a shell of color, gold raining down, and a black hole where they were.'],
+    ['dominoes', 'Dominoes', 'c', 'fx', 'curio', 'Dominoes in every color stand in a ring around your answer and fall one after another, faster and faster, each with a click of light, until a wave of light runs round the ring.'],
+    ['jackpot', 'Jackpot', 'r', 'fx', 'curio', 'A slot machine pops up. A coin drops in, the lever comes down, the reels stop on 7, 7, 7, the siren spins, JACKPOT lights letter by letter, and confetti and coins burst out.'],
+    ['angler', 'Anglerfish', 'l', 'fx', 'curio', 'The page sinks into the deep. A small light bobs toward your answer with little fish round it, then two pale eyes open and the anglerfish shows itself, your answer in its jaws, before it sinks away.'],
+    ['threshold', 'Threshold', 'm', 'fx', 'curio', 'Carved doors slam shut around your answer. The seal’s runes light and arc, cracks of light spread, the chains snap, and the doors swing open on a hall of light with feathers drifting down.'],
+    ['wanderers', 'Wanderers', 'm', 'paper', 'curio', 'Moving: giants walk the far horizon under a huge moon, lanterns swinging from their necks and markings glowing, dust rising at each step. One calls and the others answer, and a small traveller walks below.'],
+    ['prize-mycelium', 'Mycelium', 'e', 'theme', 'curio', 'A living theme: glowing mushrooms and shelf fungi with a wave of light passing through them, roots dripping light from above, moths, a glowing snail, and clouds of spores.'],
+    ['tally', 'Tally marks', 'c', 'streak', 'curio', 'One chalk mark a day in bundles of five, the newest drawing itself in; past 20 days they turn gold and shimmer, and at 100 a gold star joins them.'],
+    ['chain', 'Paper chain', 'r', 'streak', 'curio', 'A folded paper link for every week, up to eight, swinging in a wave; it glitters at 30 days and is edged in gold at 100.'],
+    ['marquee', 'Marquee', 'e', 'streak', 'curio', 'A little theater sign with a flickering flame, ringed by bulbs, one lit each day; when all are lit they chase, gold at 30 days, every color at 100.'],
+    ['ouroboros', 'Ouroboros', 'm', 'streak', 'curio', 'A serpent that curls further round each day, slithering, tongue flicking; it holds its own tail and glows at 30 days, and at 100 turns, shining in every color.']
   ].map(function (r) { return { id: r[3] + ':' + r[0], key: r[0], name: r[1], tier: r[2], kind: r[3], series: r[4], what: r[5] }; });
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });
@@ -218,6 +247,8 @@
     dream: ['Daydreamer', 'Paper Crane', 'Color Theory', 'Lantern Lighter', 'Fox Wisdom', 'Whale Song', 'Butterfly Effect', 'Sweet Dreams'],
     zenith: ['Rising Star', 'First Light', 'Orbit Keeper', 'Deep Roots', 'Perfect Pitch', 'Wings of Focus', 'Clear Skies', 'High Noon'],
     paradox: ['Both Sides', 'Clock Watcher', 'Fourth Dimension', 'Bug Fixer', 'Standing Stone', 'Black and White', 'Extra Time', 'Unsolved'],
+    wilds: ['Trailblazer', 'Campfire Scholar', 'Storm Chaser', 'Head in the Clouds', 'Still Waters', 'Lava Brain', 'Ice Cold Focus', 'Desert Bloom'],
+    curio: ['Lucky Seven', 'Chain Reaction', 'Odd One Out', 'Treasure Hunter', 'Curious Mind', 'Plot Twist', 'Open Sesame', 'Tally Ho'],
     test: ['Test Day Ready', 'Pencils Down', 'Calm Breath', 'Full Tank', 'Perfect Score', 'Poem Decoder', 'Trap Spotter', 'Unit Circle Survivor']
   };
   var PZ_TITLES = [

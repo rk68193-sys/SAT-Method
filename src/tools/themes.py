@@ -133,6 +133,23 @@ PRIZE = {
  'prize-beacon': dict(COMMON_DARK, paper='#06121F', card='#0B1B2D', sunk='#10243A', ink='#EEF4FB', ink2='#CCD9E8', muted='#93A8BF', line='#1B324B', line_strong='#2A4766',
    pencil='#F5B547', pencil_text='#FCD9A0', hl='#3A2A0E', hl_ink='#FFF6E0', act='#F5B547', act_ink='#1C1204', act_hover='#E89F2A', focus='#FCD9A0',
    d1='#1B324B', d2='#B7791F', d3='#FDE3A7', grad='linear-gradient(120deg, #FDE3A7 0%, #F5B547 50%, #93C5FD 100%)', on_grad='#1C1204', aura='rgba(245, 181, 71, .26)'),
+ # Wildlands: a pale sky with drifting clouds, a lily pond, dunes at night and an ice cave
+ 'prize-clouds': dict(COMMON_LIGHT, paper='#EEF6FD', card='#FFFFFF', sunk='#E2EEF9', ink='#0C1E33', ink2='#2B415C', muted='#4F6580', line='#D5E4F2', line_strong='#AAC4DF',
+   pencil='#0284C7', pencil_text='#075985', hl='#DCEEFB', hl_ink='#0C2E4A', act='#0369A1', act_ink='#FFFFFF', act_hover='#075985', focus='#0284C7',
+   d1='#D5E8F8', d2='#7DB9E8', d3='#0C4A6E', grad='linear-gradient(135deg, #075985 0%, #0369A1 55%, #4338CA 100%)', on_grad='#FFFFFF', aura='rgba(125, 211, 252, .28)'),
+ 'prize-pond': dict(COMMON_LIGHT, paper='#EEF7F1', card='#FFFFFF', sunk='#E1F0E6', ink='#0D2419', ink2='#2A4537', muted='#4C665A', line='#D3E8DA', line_strong='#A6CFB4',
+   pencil='#DB2777', pencil_text='#9D174D', hl='#FCE7F3', hl_ink='#500724', act='#0F766E', act_ink='#FFFFFF', act_hover='#115E59', focus='#DB2777',
+   d1='#CFEADB', d2='#5DB58A', d3='#14532D', grad='linear-gradient(135deg, #115E59 0%, #0F766E 55%, #BE185D 100%)', on_grad='#FFFFFF', aura='rgba(244, 114, 182, .2)'),
+ 'prize-dunes': dict(COMMON_DARK, paper='#110C1C', card='#1A1328', sunk='#241A36', ink='#FFF6EA', ink2='#F2DFC6', muted='#BBA8B4', line='#2E2242', line_strong='#47365F',
+   pencil='#FDBA74', pencil_text='#FED7AA', hl='#43260F', hl_ink='#FFF4E6', act='#FB923C', act_ink='#1F0A02', act_hover='#F97316', focus='#FED7AA',
+   d1='#2E2242', d2='#C2410C', d3='#FED7AA', grad='linear-gradient(120deg, #FED7AA 0%, #FB923C 50%, #C084FC 100%)', on_grad='#1F0A02', aura='rgba(251, 146, 60, .26)'),
+ 'prize-glacier': dict(COMMON_DARK, paper='#04111C', card='#0A1B2A', sunk='#102538', ink='#EAF6FF', ink2='#C6E2F5', muted='#8FB2C9', line='#16314A', line_strong='#244A6B',
+   pencil='#7DD3FC', pencil_text='#BAE6FD', hl='#0F3550', hl_ink='#F0F9FF', act='#7DD3FC', act_ink='#03141F', act_hover='#38BDF8', focus='#BAE6FD',
+   d1='#16314A', d2='#0369A1', d3='#BAE6FD', grad='linear-gradient(120deg, #E0F2FE 0%, #7DD3FC 45%, #A7F3D0 100%)', on_grad='#03141F', aura='rgba(125, 211, 252, .28)'),
+ # Curiosities: glowing mushrooms in the dark
+ 'prize-mycelium': dict(COMMON_DARK, paper='#07080F', card='#0F1220', sunk='#161A2C', ink='#ECFDF5', ink2='#C7E9DD', muted='#93B3A8', line='#1C2236', line_strong='#2D3550',
+   pencil='#5EEAD4', pencil_text='#99F6E4', hl='#13323A', hl_ink='#E6FFFA', act='#F0ABFC', act_ink='#2A0730', act_hover='#E879F9', focus='#99F6E4',
+   d1='#1C2236', d2='#0F766E', d3='#99F6E4', grad='linear-gradient(120deg, #99F6E4 0%, #A5F3FC 40%, #F0ABFC 100%)', on_grad='#2A0730', aura='rgba(94, 234, 212, .26)'),
 }
 def finish(d):
     """fill the shadow and glass tokens the prize palettes leave out, from the light or dark theme they build on"""
