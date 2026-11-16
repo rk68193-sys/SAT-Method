@@ -51,6 +51,10 @@ async function fresh(fn, arg, opt) {
   const done = async name => { ok(!errs.length, name + ': no script errors' + (errs.length ? ' (' + errs.join(' | ') + ')' : '')); await ctx.close(); };
   return { ctx, p, go, saved, done };
 }
+/* another page from inside this one, the way a student moves around. After a save, use this and not go(): in this test browser
+   (file:// pages) a reload can read the saved progress from before the save, even a second later, in about one try in ten. The
+   reloaded page then shows, and saves again, the older copy. */
+async function inPage(t, hash, wait) { await t.p.evaluate(h => { location.hash = h; }, hash); await t.p.waitForTimeout(wait || 700); }
 /* in the page: is the coin count in the top bar, and is the bar as tall as without it */
 const barFits = () => {
   const a = document.getElementById('pz-chip'), top = document.getElementById('top');
@@ -86,9 +90,10 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok(await t.p.$eval('#pz-toast', el => getComputedStyle(el).pointerEvents === 'none' && getComputedStyle(el.firstChild).pointerEvents === 'none'), 'the note never takes a tap from the page under it');
     const chip = await t.p.evaluate(barFits);
     ok(chip.fits && (!chip.shown || chip.n === '10'), 'the coin count does not make the top bar taller at ' + width + ' px (' + (chip.shown ? 'shown: ' + chip.n : 'left to Home') + ')');
-    await t.go('home');
+    /* Home and Crates from inside the page (see inPage) */
+    await inPage(t, 'home');
     ok(/^10 coins · 1 free crate · Open crates$/.test((await t.p.textContent('.pz-homecoins')).trim()), 'Home shows the coins and the free crate: ' + (await t.p.textContent('.pz-homecoins')).trim());
-    await t.go('crates');
+    await inPage(t, 'crates');
     ok(await t.p.$eval('.pz-earn li:nth-child(2)', li => li.classList.contains('done')), 'Crates marks today\'s Reading and Writing question as earned');
     ok(/Welcome: your first crate is free/.test(await t.p.textContent('#v-crates')), 'the first answer brings the free welcome crate');
     await t.done('earning');
@@ -222,9 +227,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     /* the Learning tree beside the streak on Home: at 120 days, the great tree with lanterns */
     await t.p.click('#pz-collection [data-pz-wear="streak"][data-pz-id="streak:tree"]'); await t.p.waitForTimeout(150);
     ok((await t.saved()).s.pz.eq.streak === 'streak:tree', 'Wear puts the Learning tree on');
-    /* Home from inside the page, the way a student goes there: in this test browser a reload straight after a save can read the
-       saved progress from before it (one run in ten here, wearing nothing) */
-    await t.p.evaluate(() => { location.hash = 'home'; }); await t.p.waitForTimeout(900);
+    await inPage(t, 'home', 900);
     ok(!!(await t.p.$('.hstreak-n.pz-styled svg.zt.zt-great')), 'the Learning tree shows beside a 120-day streak, with lanterns');
     await t.done('radiant');
   }
@@ -259,10 +262,10 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     const st = await t.saved(), y = await t.p.evaluate(() => { const x = new Date(Date.now() - 864e5); return x.getFullYear() + '-' + ('0' + (x.getMonth() + 1)).slice(-2) + '-' + ('0' + x.getDate()).slice(-2); });
     ok(Object.keys(st.s.pz.x).some(k => k.indexOf('freeze.') === 0) && bal(st) === 70, 'a freeze costs 30 coins');
     ok(st.s.pz.fz && st.s.pz.fz[y] === 1, 'it covers yesterday on its own (' + y + ')');
-    await t.p.waitForTimeout(800);   /* let the save land before the reload */
-    await t.go('home');
+    /* Home and Crates from inside the page (see inPage): a wait before a reload did not help */
+    await inPage(t, 'home');
     ok((await t.p.textContent('.hstreak-n b')).trim() === '10', 'the streak carries on: ' + (await t.p.textContent('.hstreak-n b')).trim() + ' days');
-    await t.go('crates');
+    await inPage(t, 'crates');
     ok(/Streak freezes: 0 of 2/.test(await t.p.textContent('.pz-freeze')), 'the freeze is used up');
     await t.done('freeze');
   }
