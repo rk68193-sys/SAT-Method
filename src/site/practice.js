@@ -111,7 +111,7 @@
         '<a class="pway" href="#rw-easy"><b>Quick set</b><span>5 easy questions, one at a time, with no clock. A good first try.</span><span class="pway-go">Start now <span aria-hidden="true">→</span></span></a>' +
         '<a class="pway" href="#tfold" data-scroll><b>Pick what to practice</b><span>Choose the topic, how hard it is and how many questions you want.</span><span class="pway-go">Choose <span aria-hidden="true">→</span></span></a>' +
         '<a class="pway" href="#rw-module"><b>Timed test</b><span>27 questions on one 32-minute clock, like one part of the real test.</span><span class="pway-go">Set it up <span aria-hidden="true">→</span></span></a>' +
-      '</div><p class="row pway-more"><a class="btn ghost" href="#rw-mixed">10 questions of every level</a>' + (nMiss ? '<a class="btn ghost" href="#rw-missed">Try again the ones I got wrong (' + nMiss + ')</a>' : '') + '</p><p class="fine">A quick set has no clock, so take as long as you like.</p></section>' +
+      '</div><p class="row pway-more"><a class="btn ghost" href="#rw-mixed">10 questions of every level</a>' + (nMiss ? '<a class="btn ghost" href="#rw-missed">Try again the ones I got wrong (' + nMiss + ')</a>' : '') + '<a class="btn ghost" href="#challenge-rw">Challenge a friend</a></p><p class="fine">A quick set has no clock, so take as long as you like.</p></section>' +
       '<div class="folds setfold">' + foldHTML('tfold', 'Pick what to practice', '<div class="tsetup" id="tsetup" data-mode="' + s.mode + '">' +
       seg('tmode', 'How to practice', [['set', 'One at a time'], ['module', 'Timed test']], s.mode) +
       '<p class="mpmode-note" id="tmodenote"></p>' +
@@ -314,12 +314,13 @@
     var under = paced.filter(function (r) { return r.t <= r.l; }).length;
     var avg = paced.length ? paced.reduce(function (a, r) { return a + r.t; }, 0) / paced.length : 0;
     var slowRight = paced.filter(function (r) { return r.ok && r.t > r.l; });
-    var summary = practiceSummary(R), review = summary.review;
+    var summary = practiceSummary(R), review = summary.review, chal = TS.chal || null;
+    var rows = R.map(function (r) { return { id: r.it.id, ok: r.ok }; });
     if (!TS.noted) {
       TS.noted = true;
       var kinds = {}; R.forEach(function (r) { kinds[r.it.t === 'g' || r.it.t === 'a' ? 'Grammar' : r.it.t === 'x' ? 'Linking words' : r.it.t === 'n' ? 'Notes' : r.it.t === 'v' ? 'Tables and graphs' : 'Reading'] = 1; });
       var kn = Object.keys(kinds);
-      setsNote('rw', kn.length === 1 ? kn[0] : 'A mix of topics', n, right, R.filter(function (r) { return !r.ok; }).map(function (r) { return r.it.id; }));
+      setsNote('rw', chal ? chalSetName(chal) : kn.length === 1 ? kn[0] : 'A mix of topics', n, right, R.filter(function (r) { return !r.ok; }).map(function (r) { return r.it.id; }));
     }
     var retry = review.map(function (r) { return r.it; }), st = TS.settings;
     var lineFor = function (r) {
@@ -331,8 +332,9 @@
       if (r.it.t === 'q') { var jq = RD.jobs.filter(function (j) { return j.name === r.it.b.jn; })[0]; return jq ? '<a href="#' + jq.id + '">' + esc(r.it.b.jn) + '</a>' : esc(r.it.b.jn); }
       return '<a href="#ex-' + r.it.x.n + '">Example ' + r.it.x.n + ' · ' + esc(r.it.x.title) + '</a>';
     };
-    document.getElementById('thost').innerHTML = '<p class="eyebrow">Set finished · ' + (paced.length ? 'paced practice' : 'untimed learning') + '</p><p class="dresult">' + right + ' of ' + n + ' right' + (paced.length ? ' · ' + under + ' inside the practice target' : '') + '</p>' +
-      '<p class="lede">' + (paced.length ? 'Average ' + clock(avg) + ' a question.' : 'No speed rating in untimed learning.') + (n < total ? ' You answered ' + n + ' of ' + total + '.' : '') + '</p>' +
+    document.getElementById('thost').innerHTML = '<p class="eyebrow">' + (chal ? 'Challenge finished' : 'Set finished · ' + (paced.length ? 'paced practice' : 'untimed learning')) + '</p><p class="dresult">' + right + ' of ' + n + ' right' + (paced.length ? ' · ' + under + ' inside the practice target' : '') + '</p>' +
+      (paced.length || !chal || n < total ? '<p class="lede">' + (paced.length ? 'Average ' + clock(avg) + ' a question.' : chal ? '' : 'No speed rating in untimed learning.') + (n < total ? ' You answered ' + n + ' of ' + total + '.' : '') + '</p>' : '') +
+      (chal ? chalEndHTML(chal, rows) : '') +
       '<p class="pretty"><b>First recorded answers:</b> ' + summary.firstRight + ' of ' + summary.first + ' right. <b>Repeat answers:</b> ' + summary.repeatRight + ' of ' + summary.repeat + ' right.</p>' +
       '<p class="fine">A first recorded answer may still be familiar from a lesson. Repeats help learning; check transfer on unfamiliar questions. This set does not predict an SAT score.</p>' + (paced.length ? chartHTML(paced) : '') +
       (review.length ? '<h3 class="subh">Review misses and uncertain answers</h3><ul class="missed">' + review.map(function (r) {
@@ -342,6 +344,7 @@
       (slowRight.length ? '<h3 class="subh">Right, but over the clock</h3><ul class="missed">' + slowRight.map(function (r) {
         return '<li>' + lineFor(r) + ' <span class="muted">· ' + clock(r.t) + ' of ' + clock(r.l) + '</span></li>';
       }).join('') + '</ul>' : '') +
+      (chal ? '' : chalOfferHTML('rw', rows)) +
       '<div class="row" style="margin-top:1.4rem">' + (retry.length ? '<button type="button" class="btn" id="tretry">Revisit ' + plural(retry.length, 'question') + '</button>' : '') +
       '<button type="button" class="btn' + (retry.length ? ' ghost' : '') + '" id="tagain">Set up another</button>' + (planGet() ? '<a class="btn ghost" href="#plan">Back to my plan</a>' : '') + '</div>';
     TS = null; tclock = null; tOver = true;

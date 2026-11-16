@@ -421,7 +421,7 @@
         '<a class="pway" href="#m-easy"><b>Quick set</b><span>5 easy questions, one at a time, with no clock. A good first try.</span><span class="pway-go">Start now <span aria-hidden="true">→</span></span></a>' +
         '<a class="pway" href="#mp-fold" data-scroll><b>Pick what to practice</b><span>Choose the topic, how hard it is and how many questions you want.</span><span class="pway-go">Choose <span aria-hidden="true">→</span></span></a>' +
         '<a class="pway" href="#m-module"><b>Timed test</b><span>22 questions on one 35-minute clock, like one part of the real test.</span><span class="pway-go">Set it up <span aria-hidden="true">→</span></span></a>' +
-      '</div><p class="row pway-more"><a class="btn ghost" href="#m-mixed">10 questions of every level</a>' + (mStillMissed().length ? '<a class="btn ghost" href="#m-missed">Try again the ones I got wrong (' + mStillMissed().length + ')</a>' : '') + '</p><p class="fine">A quick set has no clock, so take as long as you like.</p></section>') +
+      '</div><p class="row pway-more"><a class="btn ghost" href="#m-mixed">10 questions of every level</a>' + (mStillMissed().length ? '<a class="btn ghost" href="#m-missed">Try again the ones I got wrong (' + mStillMissed().length + ')</a>' : '') + '<a class="btn ghost" href="#challenge-m">Challenge a friend</a></p><p class="fine">A quick set has no clock, so take as long as you like.</p></section>') +
       '<div class="folds setfold">' + foldHTML('mp-fold', 'Pick what to practice', '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
         seg('mp-mode', 'How to practice', [['learn', 'One at a time'], ['module', 'Timed test']], s.mode) +
         '<p class="mpmode-note" id="mp-mode-note"></p>' +
@@ -617,15 +617,18 @@
       MP.noted = true;
       var sk = {}; done.forEach(function (r) { sk[MQBY[r.id].k] = 1; });
       var skn = Object.keys(sk);
-      setsNote('m', skn.length === 1 && MSK[skn[0]] ? MSK[skn[0]].name : 'A mix of topics', done.length, right, done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; }));
+      setsNote('m', MP.chal ? chalSetName(MP.chal) : skn.length === 1 && MSK[skn[0]] ? MSK[skn[0]].name : 'A mix of topics', done.length, right, done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; }));
     }
-    viewEl.mprac.innerHTML = '<div class="wrap">' + mHead('Math · Practice', done.length ? 'You got ' + right + ' of ' + done.length + ' right' : 'Set ended', done.length ? 'Average time ' + avg + ' seconds a question (the real test allows about 95).' : '') +
+    var rows = done.map(function (r) { return { id: r.id, ok: r.ok }; });
+    viewEl.mprac.innerHTML = '<div class="wrap">' + mHead(MP.chal ? 'Math · Challenge' : 'Math · Practice', done.length ? 'You got ' + right + ' of ' + done.length + ' right' : 'Set ended', done.length ? 'Average time ' + avg + ' seconds a question (the real test allows about 95).' : '') +
+      (MP.chal ? chalEndHTML(MP.chal, rows) : '') +
       (mt.length ? '<section class="msec"><h3 class="h3">Question types to review</h3><div class="mtypes">' + mt.map(function (t) { return mTypeCard(t, { showSkill: true }); }).join('') + '</div></section>' : (done.length ? '<p class="mpraise">Every one right. Try a harder set.</p>' : '')) +
       '<section class="msec"><h3 class="h3">Your answers</h3><ol class="mpsum">' + done.map(function (r) {
         var q = MQBY[r.id];
         return '<li class="' + (r.ok ? 'ok' : 'no') + '"><span class="mpsum-v">' + (r.ok ? '✓' : '✗') + '</span><span>' + esc(MTY[q.t].name) + ' <span class="muted">· ' + MDIFF[q.d] + ' · ' + r.secs + ' s</span></span><a class="linkbtn" href="#mt-' + q.t + '">How to solve</a></li>';
       }).join('') + '</ol></section>' +
       mWhySetHTML(done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; })) +
+      (MP.chal ? '' : chalOfferHTML('m', rows)) +
       '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '<a class="btn ghost" href="#m-map">See my progress</a>' + (planGet() ? '<a class="btn ghost" href="#plan">Back to my plan</a>' : '') + '</p></div>';
     $('#mp-again').addEventListener('click', mpSetup);
     var mm = $('#mp-miss');

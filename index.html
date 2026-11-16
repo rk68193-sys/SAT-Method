@@ -2544,6 +2544,56 @@ html.tour-open { overflow: hidden; }
 .lmore .fold-b > section { margin-top: 0; padding-top: 0; border-top: 0; min-width: 0; }
 .lmore .lmore-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .mlesson-more { margin-top: 2rem; }
+
+/* ---------- Challenge a friend (challenge.js): making one, a friend's link, the score side by side ---------- */
+.chal-page > * { max-width: 46rem; }
+.chal-card { display: grid; gap: 1rem; margin-top: 1.4rem; padding: clamp(1rem, 3vw, 1.5rem); border: 1.5px solid var(--line-strong); border-radius: 18px; background: var(--card); }
+.chal-card > * { min-width: 0; }
+.chal-card p { margin: 0; }
+.chal-card .eyebrow + .h2 { margin-top: -.6rem; }
+.chal-count { font-weight: 600; }
+.chal-count:empty { display: none; }
+.chal-how { list-style: none; margin: 1.6rem 0 0; padding: 0; display: grid; gap: .6rem; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); counter-reset: chal; }
+.chal-how li { position: relative; padding: .8rem 1rem .8rem 3rem; border-radius: 14px; background: var(--sunk); color: var(--ink-2); line-height: 1.45; counter-increment: chal; }
+.chal-how li::before { content: counter(chal); position: absolute; left: .9rem; top: .8rem; width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--ink); color: var(--paper); font: 700 .85rem/1.5rem var(--body); text-align: center; }
+.chal-how b { color: var(--ink); }
+.chal-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: .9rem 1.2rem; margin: 0; }
+.chal-facts dt { font: 600 .72rem/1.35 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.chal-facts dd { margin: .2rem 0 0; font-weight: 600; }
+.chal-beat { display: flex; flex-wrap: wrap; align-items: baseline; gap: .3rem 1rem; padding: .9rem 1.1rem; border-radius: 14px; background: var(--hl); color: var(--hl-ink); }
+.chal-beat .label { color: inherit; }
+.chal-beat b { font: 800 clamp(1.8rem, 1.4rem + 1.6vw, 2.4rem)/1 var(--display); }
+.chal-vs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; gap: .6rem; }
+.chal-side { display: grid; gap: .2rem; align-content: center; justify-items: center; text-align: center; padding: 1rem .6rem; border: 1.5px solid var(--line-strong); border-radius: 16px; background: var(--paper); }
+.chal-side b { font: 800 clamp(1.7rem, 1.3rem + 1.6vw, 2.3rem)/1.05 var(--display); }
+.chal-who { font-weight: 700; overflow-wrap: anywhere; }
+.chal-side.win { border-color: var(--ok); background: var(--ok-soft); }
+.chal-tag { font: 600 .72rem/1.35 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ok); }
+.chal-mid { align-self: center; font: 700 .85rem/1 var(--mono); text-transform: uppercase; color: var(--muted); }
+.chal-verdict { font: 600 1.15rem/1.4 var(--display); }
+.chal-verdict.me { color: var(--ok); }
+.chal-share { display: grid; gap: .6rem; }
+.chal-share .field { max-width: 22rem; }
+.chal-share .chal-urlf { max-width: none; }
+.chal-share .chal-url { font: .9rem/1.4 var(--mono); }
+.chal-msg { font-weight: 600; color: var(--ok); }
+.chal-msg:empty { display: none; }
+.chal-back { display: grid; gap: .4rem; }
+.chal-friends { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; }
+.chal-friends li { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .8rem; padding: .55rem .9rem; border-radius: 12px; background: var(--sunk); }
+.chal-friends span { font-weight: 700; overflow-wrap: anywhere; }
+.chal-friends i { font-style: normal; color: var(--ink-2); }
+.chal-end { margin: 1.4rem 0 .6rem; max-width: 46rem; }
+.chal-offer { margin-top: 1.8rem; max-width: 46rem; }
+.chal-row { margin-top: 1.4rem; }
+.chal-about { margin-top: 1.6rem; color: var(--ink-2); max-width: 38em; }
+.chal-hist { margin-top: 2.2rem; }
+.chal-list { list-style: none; margin: .7rem 0 0; padding: 0; display: grid; gap: .5rem; }
+.chal-list a { display: grid; gap: .15rem; padding: .75rem 1rem; border: 1px solid var(--line-strong); border-radius: 14px; background: var(--card); color: var(--ink); text-decoration: none; }
+.chal-list a:hover { border-color: var(--ink); background: var(--card); color: var(--ink); }
+.chal-list span { color: var(--ink-2); font-size: .92rem; }
+.chal-note { margin-top: 1.6rem; }
+@media (max-width: 420px) { .chal-vs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .chal-mid { display: none; } }
 /* ---------- prize themes (written by src/tools/themes.py --prizes; do not edit by hand) ---------- */
 :root[data-theme="prize-graphite"] {
   --paper: #F5F5F2;
@@ -4064,6 +4114,7 @@ html.pz-plain .pz-bg { display: none; }
   <section id="v-account" class="view" aria-label="My account" hidden></section>
   <section id="v-suggest" class="view" aria-label="Ask a question or suggest a change" hidden></section>
   <section id="v-crates" class="view" aria-label="Crates" hidden></section>
+  <section id="v-challenge" class="view" aria-label="Challenge a friend" hidden></section>
 </main>
 <div class="wrap"><nav class="nextstep" id="nextbox" aria-label="Next step" hidden></nav></div>
 
@@ -6126,7 +6177,7 @@ function rReasoningHTML() {
         '<a class="pway" href="#rw-easy"><b>Quick set</b><span>5 easy questions, one at a time, with no clock. A good first try.</span><span class="pway-go">Start now <span aria-hidden="true">→</span></span></a>' +
         '<a class="pway" href="#tfold" data-scroll><b>Pick what to practice</b><span>Choose the topic, how hard it is and how many questions you want.</span><span class="pway-go">Choose <span aria-hidden="true">→</span></span></a>' +
         '<a class="pway" href="#rw-module"><b>Timed test</b><span>27 questions on one 32-minute clock, like one part of the real test.</span><span class="pway-go">Set it up <span aria-hidden="true">→</span></span></a>' +
-      '</div><p class="row pway-more"><a class="btn ghost" href="#rw-mixed">10 questions of every level</a>' + (nMiss ? '<a class="btn ghost" href="#rw-missed">Try again the ones I got wrong (' + nMiss + ')</a>' : '') + '</p><p class="fine">A quick set has no clock, so take as long as you like.</p></section>' +
+      '</div><p class="row pway-more"><a class="btn ghost" href="#rw-mixed">10 questions of every level</a>' + (nMiss ? '<a class="btn ghost" href="#rw-missed">Try again the ones I got wrong (' + nMiss + ')</a>' : '') + '<a class="btn ghost" href="#challenge-rw">Challenge a friend</a></p><p class="fine">A quick set has no clock, so take as long as you like.</p></section>' +
       '<div class="folds setfold">' + foldHTML('tfold', 'Pick what to practice', '<div class="tsetup" id="tsetup" data-mode="' + s.mode + '">' +
       seg('tmode', 'How to practice', [['set', 'One at a time'], ['module', 'Timed test']], s.mode) +
       '<p class="mpmode-note" id="tmodenote"></p>' +
@@ -6329,12 +6380,13 @@ function rReasoningHTML() {
     var under = paced.filter(function (r) { return r.t <= r.l; }).length;
     var avg = paced.length ? paced.reduce(function (a, r) { return a + r.t; }, 0) / paced.length : 0;
     var slowRight = paced.filter(function (r) { return r.ok && r.t > r.l; });
-    var summary = practiceSummary(R), review = summary.review;
+    var summary = practiceSummary(R), review = summary.review, chal = TS.chal || null;
+    var rows = R.map(function (r) { return { id: r.it.id, ok: r.ok }; });
     if (!TS.noted) {
       TS.noted = true;
       var kinds = {}; R.forEach(function (r) { kinds[r.it.t === 'g' || r.it.t === 'a' ? 'Grammar' : r.it.t === 'x' ? 'Linking words' : r.it.t === 'n' ? 'Notes' : r.it.t === 'v' ? 'Tables and graphs' : 'Reading'] = 1; });
       var kn = Object.keys(kinds);
-      setsNote('rw', kn.length === 1 ? kn[0] : 'A mix of topics', n, right, R.filter(function (r) { return !r.ok; }).map(function (r) { return r.it.id; }));
+      setsNote('rw', chal ? chalSetName(chal) : kn.length === 1 ? kn[0] : 'A mix of topics', n, right, R.filter(function (r) { return !r.ok; }).map(function (r) { return r.it.id; }));
     }
     var retry = review.map(function (r) { return r.it; }), st = TS.settings;
     var lineFor = function (r) {
@@ -6346,8 +6398,9 @@ function rReasoningHTML() {
       if (r.it.t === 'q') { var jq = RD.jobs.filter(function (j) { return j.name === r.it.b.jn; })[0]; return jq ? '<a href="#' + jq.id + '">' + esc(r.it.b.jn) + '</a>' : esc(r.it.b.jn); }
       return '<a href="#ex-' + r.it.x.n + '">Example ' + r.it.x.n + ' · ' + esc(r.it.x.title) + '</a>';
     };
-    document.getElementById('thost').innerHTML = '<p class="eyebrow">Set finished · ' + (paced.length ? 'paced practice' : 'untimed learning') + '</p><p class="dresult">' + right + ' of ' + n + ' right' + (paced.length ? ' · ' + under + ' inside the practice target' : '') + '</p>' +
-      '<p class="lede">' + (paced.length ? 'Average ' + clock(avg) + ' a question.' : 'No speed rating in untimed learning.') + (n < total ? ' You answered ' + n + ' of ' + total + '.' : '') + '</p>' +
+    document.getElementById('thost').innerHTML = '<p class="eyebrow">' + (chal ? 'Challenge finished' : 'Set finished · ' + (paced.length ? 'paced practice' : 'untimed learning')) + '</p><p class="dresult">' + right + ' of ' + n + ' right' + (paced.length ? ' · ' + under + ' inside the practice target' : '') + '</p>' +
+      (paced.length || !chal || n < total ? '<p class="lede">' + (paced.length ? 'Average ' + clock(avg) + ' a question.' : chal ? '' : 'No speed rating in untimed learning.') + (n < total ? ' You answered ' + n + ' of ' + total + '.' : '') + '</p>' : '') +
+      (chal ? chalEndHTML(chal, rows) : '') +
       '<p class="pretty"><b>First recorded answers:</b> ' + summary.firstRight + ' of ' + summary.first + ' right. <b>Repeat answers:</b> ' + summary.repeatRight + ' of ' + summary.repeat + ' right.</p>' +
       '<p class="fine">A first recorded answer may still be familiar from a lesson. Repeats help learning; check transfer on unfamiliar questions. This set does not predict an SAT score.</p>' + (paced.length ? chartHTML(paced) : '') +
       (review.length ? '<h3 class="subh">Review misses and uncertain answers</h3><ul class="missed">' + review.map(function (r) {
@@ -6357,6 +6410,7 @@ function rReasoningHTML() {
       (slowRight.length ? '<h3 class="subh">Right, but over the clock</h3><ul class="missed">' + slowRight.map(function (r) {
         return '<li>' + lineFor(r) + ' <span class="muted">· ' + clock(r.t) + ' of ' + clock(r.l) + '</span></li>';
       }).join('') + '</ul>' : '') +
+      (chal ? '' : chalOfferHTML('rw', rows)) +
       '<div class="row" style="margin-top:1.4rem">' + (retry.length ? '<button type="button" class="btn" id="tretry">Revisit ' + plural(retry.length, 'question') + '</button>' : '') +
       '<button type="button" class="btn' + (retry.length ? ' ghost' : '') + '" id="tagain">Set up another</button>' + (planGet() ? '<a class="btn ghost" href="#plan">Back to my plan</a>' : '') + '</div>';
     TS = null; tclock = null; tOver = true;
@@ -7088,7 +7142,7 @@ function rReasoningHTML() {
         '<a class="pway" href="#m-easy"><b>Quick set</b><span>5 easy questions, one at a time, with no clock. A good first try.</span><span class="pway-go">Start now <span aria-hidden="true">→</span></span></a>' +
         '<a class="pway" href="#mp-fold" data-scroll><b>Pick what to practice</b><span>Choose the topic, how hard it is and how many questions you want.</span><span class="pway-go">Choose <span aria-hidden="true">→</span></span></a>' +
         '<a class="pway" href="#m-module"><b>Timed test</b><span>22 questions on one 35-minute clock, like one part of the real test.</span><span class="pway-go">Set it up <span aria-hidden="true">→</span></span></a>' +
-      '</div><p class="row pway-more"><a class="btn ghost" href="#m-mixed">10 questions of every level</a>' + (mStillMissed().length ? '<a class="btn ghost" href="#m-missed">Try again the ones I got wrong (' + mStillMissed().length + ')</a>' : '') + '</p><p class="fine">A quick set has no clock, so take as long as you like.</p></section>') +
+      '</div><p class="row pway-more"><a class="btn ghost" href="#m-mixed">10 questions of every level</a>' + (mStillMissed().length ? '<a class="btn ghost" href="#m-missed">Try again the ones I got wrong (' + mStillMissed().length + ')</a>' : '') + '<a class="btn ghost" href="#challenge-m">Challenge a friend</a></p><p class="fine">A quick set has no clock, so take as long as you like.</p></section>') +
       '<div class="folds setfold">' + foldHTML('mp-fold', 'Pick what to practice', '<form class="mpset" id="mp-form" data-mode="' + s.mode + '"><div class="mpset-grid">' +
         seg('mp-mode', 'How to practice', [['learn', 'One at a time'], ['module', 'Timed test']], s.mode) +
         '<p class="mpmode-note" id="mp-mode-note"></p>' +
@@ -7284,15 +7338,18 @@ function rReasoningHTML() {
       MP.noted = true;
       var sk = {}; done.forEach(function (r) { sk[MQBY[r.id].k] = 1; });
       var skn = Object.keys(sk);
-      setsNote('m', skn.length === 1 && MSK[skn[0]] ? MSK[skn[0]].name : 'A mix of topics', done.length, right, done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; }));
+      setsNote('m', MP.chal ? chalSetName(MP.chal) : skn.length === 1 && MSK[skn[0]] ? MSK[skn[0]].name : 'A mix of topics', done.length, right, done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; }));
     }
-    viewEl.mprac.innerHTML = '<div class="wrap">' + mHead('Math · Practice', done.length ? 'You got ' + right + ' of ' + done.length + ' right' : 'Set ended', done.length ? 'Average time ' + avg + ' seconds a question (the real test allows about 95).' : '') +
+    var rows = done.map(function (r) { return { id: r.id, ok: r.ok }; });
+    viewEl.mprac.innerHTML = '<div class="wrap">' + mHead(MP.chal ? 'Math · Challenge' : 'Math · Practice', done.length ? 'You got ' + right + ' of ' + done.length + ' right' : 'Set ended', done.length ? 'Average time ' + avg + ' seconds a question (the real test allows about 95).' : '') +
+      (MP.chal ? chalEndHTML(MP.chal, rows) : '') +
       (mt.length ? '<section class="msec"><h3 class="h3">Question types to review</h3><div class="mtypes">' + mt.map(function (t) { return mTypeCard(t, { showSkill: true }); }).join('') + '</div></section>' : (done.length ? '<p class="mpraise">Every one right. Try a harder set.</p>' : '')) +
       '<section class="msec"><h3 class="h3">Your answers</h3><ol class="mpsum">' + done.map(function (r) {
         var q = MQBY[r.id];
         return '<li class="' + (r.ok ? 'ok' : 'no') + '"><span class="mpsum-v">' + (r.ok ? '✓' : '✗') + '</span><span>' + esc(MTY[q.t].name) + ' <span class="muted">· ' + MDIFF[q.d] + ' · ' + r.secs + ' s</span></span><a class="linkbtn" href="#mt-' + q.t + '">How to solve</a></li>';
       }).join('') + '</ol></section>' +
       mWhySetHTML(done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; })) +
+      (MP.chal ? '' : chalOfferHTML('m', rows)) +
       '<p class="row" style="margin-top:1.5rem"><button class="btn big" type="button" id="mp-again">Practice again</button>' + (mt.length ? '<button class="btn ghost" type="button" id="mp-miss">Retry the ones I missed</button>' : '') + '<a class="btn ghost" href="#m-map">See my progress</a>' + (planGet() ? '<a class="btn ghost" href="#plan">Back to my plan</a>' : '') + '</p></div>';
     $('#mp-again').addEventListener('click', mpSetup);
     var mm = $('#mp-miss');
@@ -13374,6 +13431,411 @@ function rReasoningHTML() {
   window.addEventListener('hashchange', pzGiftLink);
   /* start once the rest of the page has run: count today's coins, put on the backgrounds, show the coin count */
   setTimeout(function () { try { pzTick(); fxApply(); pzChip(); fxScan(); } catch (e) { /* prizes never stop the page */ } }, 0);
+  /* =================== Challenge a friend: a few real questions in a link, with no server =================== */
+  /* A challenge is its questions, written into a link: #ch-<m|rw>-<score>-<question ids, 3 to 10 of them>[-<name>].
+     The sender answers first, so the link carries a score to beat. The friend answers the same questions in the same order
+     and can send their own score back in a link of the same kind. Nothing is sent anywhere: the link travels in whatever app
+     the student uses, and each device keeps its own results (store.s.chal, the last 20, and store.s.chn, the name it signs
+     with; both only hold characters a backup may hold). Answers count as ordinary practice (saved, spaced repeats, the
+     day's count) and earn nothing extra. A first try that answers every question is the score that counts. */
+  var CHAL_N = 5, CHAL_KEEP = 20, CHAL_NAME_MAX = 20;
+  var CHAL_RE = /^ch-(m|rw)-(\d{1,2})-((?:[0-9a-f]{8}){3,10})(?:-(.{1,120}))?$/;
+  var chalNow = null, chalSet = { s: 'm', t: 'all', d: 'mix' };
+
+  /* ---------- the challenge itself ---------- */
+  function chalHash(str) {
+    var h = 0x811c9dc5;
+    for (var i = 0; i < str.length; i += 1) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+    return ('0000000' + h.toString(16)).slice(-8);
+  }
+  function chalMake(s, ids, score, by) {
+    var q = ids.join('');
+    return { s: s, ids: ids.slice(), n: ids.length, q: q, key: s + '.' + chalHash(s + q), score: score, by: by || '', mine: false };
+  }
+  /* a name as it may appear in a link and on the page: letters and digits, spaces, dots and dashes, at most 20 */
+  function chalName(v) {
+    var s = String(v == null ? '' : v);
+    try { s = s.normalize('NFD').replace(/[̀-ͯ]/g, ''); } catch (e) {}
+    return s.replace(/_/g, ' ').replace(/[^A-Za-z0-9 .\-]/g, '').replace(/\s+/g, ' ').replace(/^[ .\-]+/, '').slice(0, CHAL_NAME_MAX).replace(/[ .\-]+$/, '');
+  }
+  function chalMyName() { return chalName(store.s.chn); }
+  function chalParse(token) {
+    var m = CHAL_RE.exec(String(token || '').replace(/^#/, ''));
+    if (!m || !PSUB[m[1]]) { return null; }
+    var ids = m[3].match(/.{8}/g), score = Number(m[2]), seen = {}, by = '';
+    if (score > ids.length) { return null; }
+    for (var i = 0; i < ids.length; i += 1) {
+      if (seen[ids[i]] || !PSUB[m[1]].valid(ids[i])) { return null; }
+      seen[ids[i]] = 1;
+    }
+    if (m[4]) { try { by = decodeURIComponent(m[4]); } catch (e) { by = m[4]; } }
+    return chalMake(m[1], ids, score, chalName(by));
+  }
+  /* links point at the address this page came from, or at the site when it is a saved copy */
+  function chalBase() {
+    var l = window.location;
+    return /^https?:$/.test(l.protocol) ? l.origin + l.pathname : 'https://satsprint.org/';
+  }
+  function chalLink(s, q, score, name) {
+    var nm = chalName(name).replace(/ /g, '_');
+    return chalBase() + '#ch-' + s + '-' + score + '-' + q + (nm ? '-' + nm : '');
+  }
+  function chalSubj(s) { return s === 'm' ? 'Math' : 'Reading &amp; Writing'; }
+  function chalSetName(C) { return 'Challenge' + (C.by && !C.mine ? ' from ' + C.by : ''); }
+  function chalOf(n, of) { return n + ' of ' + of; }
+  /* the topic, and how many questions at each level */
+  function chalInfo(C) {
+    var doms = {}, lv = { E: 0, M: 0, H: 0 };
+    C.ids.forEach(function (id) {
+      var d = '', dn = '';
+      if (C.s === 'm') { var q = MQBY[id]; d = q.d; dn = MDOM[q.k] ? MDOM[q.k].name : ''; }
+      else { rwItems(); var it = RWIT[id], k = rwDomain(it); d = String(it.d || '').charAt(0); dn = (RW_DOMS.filter(function (x) { return x[0] === k; })[0] || ['', ''])[1]; }
+      if (dn) { doms[dn] = 1; }
+      if (has(lv, d)) { lv[d] += 1; }
+    });
+    var dk = Object.keys(doms);
+    return {
+      topic: dk.length === 1 ? dk[0] : 'A mix of topics',
+      levels: ['E', 'M', 'H'].filter(function (k) { return lv[k]; }).map(function (k) { return lv[k] + ' ' + MDIFF[k].toLowerCase(); }).join(', ')
+    };
+  }
+
+  /* ---------- what this device remembers: the first full try at each challenge, and the scores friends sent ---------- */
+  function chalAll() { if (!isObj(store.s.chal)) { store.s.chal = {}; } return store.s.chal; }
+  function chalRec(C) { var r = chalAll()[C.key]; return isObj(r) && r.q === C.q && typeof r.r === 'number' && r.r >= 0 && r.r <= C.n ? r : null; }
+  function chalTrim(A) {
+    Object.keys(A).filter(function (k) { return !isObj(A[k]); }).forEach(function (k) { delete A[k]; });
+    Object.keys(A).sort(function (a, b) { return (A[b].lt || 0) - (A[a].lt || 0); }).slice(CHAL_KEEP).forEach(function (k) { delete A[k]; });
+  }
+  function chalFriend(r, C) {
+    if (C.mine || typeof C.score !== 'number') { return; }
+    var f = (Array.isArray(r.f) ? r.f : []).filter(function (x) { return Array.isArray(x) && x[0] !== C.by; });
+    f.unshift([C.by, C.score]);
+    r.f = f.slice(0, 6);
+  }
+  function chalKeep(C, right) {
+    var A = chalAll(), r = chalRec(C), t = Date.now();
+    if (!r) { r = A[C.key] = { s: C.s, q: C.q, n: C.n, r: right, t: t, f: [] }; }
+    if (C.mine) { r.mine = 1; }
+    r.lr = right; r.lt = t;
+    chalFriend(r, C);
+    chalTrim(A);
+    save();
+    return r;
+  }
+  /* two devices joined (bkMerge): every challenge from both, the earlier first try, the later try, and every friend's
+     score. Every record comes out in one shape, so joining the same backup twice changes nothing. */
+  function chalMerge(a, b) {
+    var all = {}, out = {};
+    [a, b].forEach(function (side) {
+      if (!isObj(side)) { return; }
+      Object.keys(side).forEach(function (k) {
+        var x = side[k];
+        if (isObj(x) && typeof x.r === 'number' && typeof x.q === 'string') { (all[k] = all[k] || []).push(x); }
+      });
+    });
+    Object.keys(all).forEach(function (k) {
+      var L = all[k], first = L[0], last = L[0], f = [], seen = {};
+      L.forEach(function (x) { if ((x.t || 0) < (first.t || 0)) { first = x; } if ((x.lt || 0) > (last.lt || 0)) { last = x; } });
+      [last].concat(L).forEach(function (x) {
+        (Array.isArray(x.f) ? x.f : []).forEach(function (p) { if (Array.isArray(p) && typeof p[1] === 'number' && !seen[p[0]]) { seen[p[0]] = 1; f.push([String(p[0] == null ? '' : p[0]), p[1]]); } });
+      });
+      out[k] = { s: first.s, q: first.q, n: Math.floor(first.q.length / 8), r: first.r, t: first.t || 0, lr: typeof last.lr === 'number' ? last.lr : first.r, lt: last.lt || first.t || 0, f: f.slice(0, 6) };
+      if (L.some(function (x) { return x.mine; })) { out[k].mine = 1; }
+    });
+    chalTrim(out);
+    return out;
+  }
+  /* the challenge a saved record stands for, with the score and name its link should carry */
+  function chalFromRec(r) {
+    if (!isObj(r) || !PSUB[r.s] || typeof r.q !== 'string') { return null; }
+    var ids = r.q.match(/.{8}/g) || [];
+    if (ids.length < 3 || ids.some(function (id) { return !PSUB[r.s].valid(id); })) { return null; }
+    var C = chalMake(r.s, ids, r.r, chalMyName());
+    C.mine = !!r.mine;
+    return C;
+  }
+
+  /* ---------- playing: the ordinary practice screens, with the challenge attached ---------- */
+  function chalPlay(C) {
+    chalNow = C; C.kept = null;
+    if (C.s === 'm') {
+      var qs = C.ids.map(function (id) { return MQBY[id]; }).filter(Boolean);
+      if (MP && !MP.over) { clearInterval(mpInterval); }
+      MP = { qs: qs, i: 0, res: [], timer: false, over: false, chal: C, settings: { mode: 'learn', topic: 'all', diff: 'all', n: qs.length, pick: 'any', timer: false } };
+      try { history.pushState(null, '', '#m-practice'); } catch (e) {}
+      lastToken = 'm-practice';
+      showView('mprac'); mpShow();
+    } else {
+      rwItems();
+      var list = C.ids.map(function (id) { return RWIT[id]; }).filter(Boolean);
+      try { history.pushState(null, '', '#practice'); } catch (e) {}
+      lastToken = 'practice';
+      showView('practice'); buildPractice();
+      timedStart(list, { src: 'both', part: 'all', diff: 'all', which: 'all', len: list.length, tier: 'learn', hints: false, mode: 'set', quick: true });
+      TS.chal = C;
+    }
+    viewTok[cur.view] = lastToken; guide(); visitCount(lastToken);
+  }
+
+  /* ---------- the parts of the page ---------- */
+  function chalCanShare() { try { return typeof navigator.share === 'function'; } catch (e) { return false; } }
+  /* to: '' or a name when this answers a friend's challenge; null when it is the student's own */
+  function chalShareHTML(C, score, to) {
+    var reply = to != null, share = chalCanShare();
+    return '<div class="chal-share" data-chal-s="' + C.s + '" data-chal-q="' + C.q + '" data-chal-r="' + score + '" data-chal-n="' + C.n + '"' + (reply ? ' data-chal-to="' + esc(to) + '"' : '') + '>' +
+      '<label class="field"><span class="label">Your name in the link</span><input type="text" class="chal-name" maxlength="' + CHAL_NAME_MAX + '" autocomplete="nickname" spellcheck="false" placeholder="First name or nickname" value="' + esc(chalMyName()) + '"></label>' +
+      '<p class="fine">Optional. Your friend sees it, so a first name or a nickname is best.</p>' +
+      '<p class="row chal-acts">' + (share ? '<button class="btn" type="button" data-chal-send>' + (reply ? 'Send it to ' + esc(to || 'your friend') : 'Send to a friend') + '</button>' : '') +
+        '<button class="btn' + (share ? ' ghost' : '') + '" type="button" data-chal-copy>Copy the link</button></p>' +
+      '<p class="chal-msg" role="status" aria-live="polite"></p>' +
+      '<label class="field chal-urlf" hidden><span class="label">The link</span><input type="text" class="chal-url" readonly value="' + esc(chalLink(C.s, C.q, score, chalMyName())) + '"></label>' +
+    '</div>';
+  }
+  function chalVsHTML(me, them, n, name) {
+    var w = me > them ? 'me' : me < them ? 'them' : 'tie', who = esc(name || 'Your friend');
+    function side(label, sc, won) { return '<div class="chal-side' + (won ? ' win' : '') + '"><span class="chal-who">' + label + '</span><b>' + chalOf(sc, n) + '</b>' + (won ? '<span class="chal-tag">Winner</span>' : '') + '</div>'; }
+    return '<div class="chal-vs">' + side('You', me, w === 'me') + '<span class="chal-mid" aria-hidden="true">vs</span>' + side(who, them, w === 'them') + '</div>' +
+      '<p class="chal-verdict ' + w + '">' + (w === 'me' ? 'You win! You got more right than ' + esc(name || 'your friend') + '.'
+        : w === 'tie' ? 'It’s a tie: you both got ' + chalOf(me, n) + '.'
+        : who + ' wins this one. Want a rematch? Make a new challenge and send it back.') + '</p>';
+  }
+  function chalFriendsHTML(r, n) {
+    var f = (Array.isArray(r.f) ? r.f : []).filter(function (x) { return Array.isArray(x) && typeof x[1] === 'number'; });
+    if (!f.length) { return '<p class="fine">When a friend sends their score back, open their link to see who won.</p>'; }
+    return '<div class="chal-back"><p class="label">Scores sent back</p><ul class="chal-friends">' + f.map(function (x) {
+      return '<li><span>' + esc(chalName(x[0]) || 'A friend') + '</span><b>' + chalOf(x[1], n) + '</b>' + (x[1] > r.r ? '<i>beat you</i>' : x[1] === r.r ? '<i>tie</i>' : '<i>you win</i>') + '</li>';
+    }).join('') + '</ul></div>';
+  }
+  function chalPage(html) { viewEl.challenge.innerHTML = '<div class="wrap chal-page">' + html + '</div>'; }
+
+  /* ---------- #challenge: make one ---------- */
+  function chalTopics(s) {
+    return [['all', 'Any topic']].concat(s === 'm' ? MD.domains.map(function (d) { return [d.id, esc(d.name)]; }) : RW_DOMS.map(function (d) { return [d[0], d[1]]; }));
+  }
+  function chalPool(s, t, d) {
+    var out = [];
+    if (s === 'm') {
+      MQ.forEach(function (q) {
+        if ((t !== 'all' && (!MDOM[q.k] || MDOM[q.k].id !== t)) || (d !== 'mix' && q.d !== d)) { return; }
+        out.push({ id: q.id, d: q.d, fresh: !mDone(q.id) });
+      });
+    } else {
+      rwItems().forEach(function (it) {
+        var lv = String(it.d || '').charAt(0);
+        if ((t !== 'all' && rwDomain(it) !== t) || (d !== 'mix' && lv !== d)) { return; }
+        out.push({ id: it.id, d: lv, fresh: !result(it) });
+      });
+    }
+    return out;
+  }
+  /* five questions: ones this student has not tried first; for a mix, two easy, two medium and one hard; easier ones first */
+  function chalPick(pool, d) {
+    var want = d === 'mix' ? ['E', 'E', 'M', 'M', 'H'] : [d, d, d, d, d], by = { E: [], M: [], H: [] }, out = [];
+    var L = shuffle(pool.slice()).sort(function (a, b) { return (b.fresh ? 1 : 0) - (a.fresh ? 1 : 0); });
+    L.forEach(function (x) { if (by[x.d]) { by[x.d].push(x); } });
+    want.forEach(function (lv) { var x = by[lv] ? by[lv].shift() : null; if (x) { out.push(x); } });
+    L.forEach(function (x) { if (out.length < CHAL_N && out.indexOf(x) === -1) { out.push(x); } });
+    var rank = { E: 0, M: 1, H: 2 };
+    return out.sort(function (a, b) { return (rank[a.d] || 0) - (rank[b.d] || 0); }).map(function (x) { return x.id; });
+  }
+  function chalHistHTML() {
+    var A = chalAll(), keys = Object.keys(A).filter(function (k) { return isObj(A[k]) && typeof A[k].r === 'number'; }).sort(function (a, b) { return (A[b].lt || 0) - (A[a].lt || 0); }).slice(0, 5);
+    var rows = keys.map(function (k) {
+      var r = A[k], C = chalFromRec(r);
+      if (!C) { return ''; }
+      var f = Array.isArray(r.f) && Array.isArray(r.f[0]) && typeof r.f[0][1] === 'number' && r.f[0][1] <= C.n ? r.f[0] : null;
+      var href = !r.mine && f ? chalLink(C.s, C.q, f[1], f[0]) : chalLink(C.s, C.q, r.r, chalMyName());
+      return '<li><a href="' + esc(href.slice(href.indexOf('#'))) + '"><b>' + chalSubj(C.s) + ' · ' + plural(C.n, 'question') + (r.mine ? ', made by you' : f && f[0] ? ', from ' + esc(chalName(f[0])) : '') + '</b>' +
+        '<span>You ' + chalOf(r.r, C.n) + (f && typeof f[1] === 'number' ? ' · ' + esc(chalName(f[0]) || 'A friend') + ' ' + chalOf(f[1], C.n) : '') + ' · ' + setsDay(Number(r.lt || r.t) || Date.now()) + '</span></a></li>';
+    }).join('');
+    return rows ? '<section class="chal-hist"><h3 class="h3">Your challenges</h3><ul class="chal-list">' + rows + '</ul></section>' : '';
+  }
+  function chalBuild(pre) {
+    if (pre && PSUB[pre]) { chalSet.s = pre; chalSet.t = 'all'; }
+    chalNow = null;
+    chalPage('<header class="chal-head"><p class="eyebrow">Practice with friends</p><h2 class="vtitle">Challenge a friend</h2>' +
+        '<p class="lede">Answer five real SAT questions, then send them to a friend. They answer the same five, and you both see who got more right.</p></header>' +
+      '<form class="chal-card chal-form" id="chal-form">' +
+        seg('chal-s', '1 · Subject', [['m', 'Math'], ['rw', 'Reading &amp; Writing']], chalSet.s) +
+        '<div id="chal-tbox">' + seg('chal-t', '2 · Topic', chalTopics(chalSet.s), chalSet.t) + '</div>' +
+        seg('chal-d', '3 · How hard', [['mix', 'A mix'], ['E', 'Easy'], ['M', 'Medium'], ['H', 'Hard']], chalSet.d) +
+        '<p class="chal-count" id="chal-count" aria-live="polite"></p>' +
+        '<p class="row"><button class="btn big" type="submit" id="chal-start">Pick 5 questions and start</button></p>' +
+        '<p class="fine">There is no clock. You go first, so your friend has a score to beat.</p>' +
+      '</form>' +
+      '<ol class="chal-how"><li><b>You answer</b> five real SAT questions.</li><li><b>You send the link</b> to a friend, in any app.</li><li><b>They answer the same five</b> and see who won. They can send their score back.</li></ol>' +
+      chalHistHTML() +
+      '<p class="fine chal-note">No account is needed, for you or your friend. The link holds the questions and your score, and nothing about a challenge is sent to SAT Sprint.</p>');
+    var form = $('#chal-form');
+    function read() {
+      var r = function (n) { var el = $('input[name="' + n + '"]:checked', form); return el ? el.value : ''; };
+      return { s: r('chal-s') === 'rw' ? 'rw' : 'm', t: r('chal-t') || 'all', d: r('chal-d') || 'mix' };
+    }
+    function count() {
+      var st = read(), n = chalPool(st.s, st.t, st.d).length, msg = $('#chal-count');
+      msg.textContent = n < 3 ? 'Not enough questions match. Choose another topic or level.' : n < CHAL_N ? 'Only ' + n + ' questions match, so this challenge will have ' + n + '.' : '';
+      $('#chal-start').disabled = n < 3;
+    }
+    form.addEventListener('change', function (e) {
+      if (e.target && e.target.name === 'chal-s') { $('#chal-tbox').innerHTML = seg('chal-t', '2 · Topic', chalTopics(read().s), 'all'); }
+      chalSet = read();
+      count();
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var st = read(), ids = chalPick(chalPool(st.s, st.t, st.d), st.d);
+      chalSet = st;
+      if (ids.length < 3) { return; }
+      var C = chalMake(st.s, ids, null, '');
+      C.mine = true;
+      chalPlay(C);
+    });
+    count();
+  }
+
+  /* ---------- #ch-…: a challenge link ---------- */
+  function chalOpen(token) {
+    var C = chalParse(token);
+    if (!C) {
+      chalNow = null;
+      chalPage('<header class="chal-head"><p class="eyebrow">Challenge a friend</p><h2 class="vtitle">This link doesn’t work</h2>' +
+        '<p class="lede">Part of it may have been cut off when it was copied. Ask your friend to send it again, or make a challenge of your own.</p></header>' +
+        '<p class="row chal-row"><a class="btn big" href="#challenge">Make a challenge</a><a class="btn ghost" href="#home">Go to Home</a></p>');
+      return;
+    }
+    var r = chalRec(C), I = chalInfo(C), me = chalMyName().toLowerCase();
+    chalNow = C;
+    /* the student's own link, opened again */
+    if (r && r.mine && C.score === r.r && C.by.toLowerCase() === me) {
+      C.mine = true;
+      chalPage('<header class="chal-head"><p class="eyebrow">Your challenge · ' + chalSubj(C.s) + '</p><h2 class="vtitle">You got ' + chalOf(r.r, C.n) + '</h2>' +
+          '<p class="lede">' + esc(I.topic) + ' · ' + I.levels + '. Send it to a friend and see if they can beat you.</p></header>' +
+        '<div class="chal-card">' + chalFriendsHTML(r, C.n) + chalShareHTML(C, r.r, null) + '</div>' +
+        '<p class="row chal-row"><button class="btn ghost" type="button" data-chal-go>Play it again</button><a class="btn ghost" href="#challenge-' + C.s + '">Make a new challenge</a></p>');
+      return;
+    }
+    /* a friend's challenge or a friend's score, on a challenge this device has played */
+    if (r) {
+      chalFriend(r, C); save();
+      chalPage('<header class="chal-head"><p class="eyebrow">Challenge · ' + chalSubj(C.s) + '</p><h2 class="vtitle">You vs ' + esc(C.by || 'your friend') + '</h2>' +
+          '<p class="lede">' + esc(I.topic) + ' · ' + I.levels + '. Your first try is your score.</p></header>' +
+        '<div class="chal-card">' + chalVsHTML(r.r, C.score, C.n, C.by) +
+          (r.mine ? '' : '<h3 class="h3">Send your score back</h3>' + chalShareHTML(C, r.r, C.by)) + '</div>' +
+        '<p class="row chal-row"><a class="btn' + (r.mine ? '' : ' ghost') + '" href="#challenge-' + C.s + '">Make a new challenge</a>' +
+          (r.mine ? '<a class="btn ghost" href="' + esc(chalLink(C.s, C.q, r.r, chalMyName()).replace(/^[^#]*/, '')) + '">Send it to another friend</a>' : '') + '<button class="btn ghost" type="button" data-chal-go>Play it again</button></p>');
+      /* playing again from here is playing one's own challenge again */
+      if (r.mine) { C.mine = true; C.score = r.r; C.by = chalMyName(); }
+      return;
+    }
+    var who = esc(C.by || 'A friend'), they = esc(C.by || 'Your friend');
+    chalPage('<header class="chal-head"><p class="eyebrow">A challenge for you</p><h2 class="vtitle">' + who + ' challenged you</h2>' +
+        '<p class="lede">' + plural(C.n, 'real SAT ' + chalSubj(C.s) + ' question') + '. ' + they + ' got ' + chalOf(C.score, C.n) + ' right. ' + (C.score === C.n ? 'Can you match it?' : 'Can you beat it?') + '</p></header>' +
+      '<div class="chal-card chal-start">' +
+        '<dl class="chal-facts"><div><dt>Subject</dt><dd>' + chalSubj(C.s) + '</dd></div><div><dt>Topic</dt><dd>' + esc(I.topic) + '</dd></div><div><dt>Questions</dt><dd>' + I.levels + '</dd></div><div><dt>Clock</dt><dd>None. Take your time.</dd></div></dl>' +
+        '<div class="chal-beat"><span class="label">Score to beat</span><b>' + chalOf(C.score, C.n) + '</b></div>' +
+        '<p class="row"><button class="btn big" type="button" data-chal-go>Start the challenge</button></p>' +
+        '<p class="fine">After each question you see the right answer and how to solve it.</p>' +
+      '</div>' +
+      '<p class="chal-about">New to SAT Sprint? It is a free place to get ready for the SAT, with nothing to buy and no sign-up. Your answers stay on this device.</p>' +
+      '<p class="row chal-row"><a class="btn ghost" href="#challenge">Make my own challenge</a><a class="btn ghost" href="#home">See the whole site</a></p>');
+  }
+
+  /* ---------- the end of a set: the score, who won, and the link to send ---------- */
+  /* rows: the answered questions, [{ id, ok }]. Called from mpSummary (math.js) and timedFinish (practice.js). */
+  function chalEndHTML(C, rows) {
+    chalNow = C;
+    var n = rows.length, right = rows.filter(function (x) { return x.ok; }).length;
+    if (n < C.n) {
+      return '<section class="chal-card chal-end"><h3 class="h3">The challenge isn’t finished</h3><p>You answered ' + chalOf(n, C.n) + '. A challenge counts once every question is answered.</p>' +
+        '<p class="row"><button class="btn" type="button" data-chal-go>Start the challenge again</button></p></section>';
+    }
+    if (!C.kept) { C.kept = { had: !!chalRec(C) }; C.kept.r = chalKeep(C, right); }
+    var r = C.kept.r, again = C.kept.had ? '<p class="fine">This time you got ' + chalOf(right, C.n) + '. Your first try, ' + chalOf(r.r, C.n) + ', is your score in this challenge.</p>' : '';
+    if (C.mine) {
+      return '<section class="chal-card chal-end"><p class="eyebrow">Your challenge is ready</p><h3 class="h2">Now send it to a friend</h3>' +
+        '<p>You got <b>' + chalOf(r.r, C.n) + '</b>. Your friend answers the same ' + C.n + ' questions and sees if they can beat you.</p>' + again + chalShareHTML(C, r.r, null) + '</section>';
+    }
+    return '<section class="chal-card chal-end">' + chalVsHTML(r.r, C.score, C.n, C.by) + again +
+      '<h3 class="h3">Send your score back</h3>' + chalShareHTML(C, r.r, C.by) +
+      '<p><a class="linkbtn" href="#challenge-' + C.s + '">Make a new challenge</a></p></section>';
+  }
+  /* after an ordinary set of 3 to 10 questions: send the same questions to a friend */
+  function chalOfferHTML(s, rows) {
+    if (rows.length < 3 || rows.length > 10) { return ''; }
+    var seen = {}, ok = rows.every(function (x) { if (seen[x.id] || !PSUB[s].valid(x.id)) { return false; } seen[x.id] = 1; return true; });
+    if (!ok) { return ''; }
+    var right = rows.filter(function (x) { return x.ok; }).length;
+    return '<section class="chal-card chal-offer" data-chal-s="' + s + '" data-chal-q="' + rows.map(function (x) { return x.id; }).join('') + '" data-chal-r="' + right + '">' +
+      '<h3 class="h3">Challenge a friend with these</h3><p>Send these ' + rows.length + ' questions to a friend and see who gets more right. You got ' + chalOf(right, rows.length) + '.</p>' +
+      '<p class="row"><button class="btn ghost" type="button" data-chal-from>Challenge a friend</button></p></section>';
+  }
+
+  /* ---------- sending ---------- */
+  function chalPanelLink(p) { return chalLink(p.getAttribute('data-chal-s'), p.getAttribute('data-chal-q'), p.getAttribute('data-chal-r'), chalMyName()); }
+  function chalPanelText(p) {
+    var s = p.getAttribute('data-chal-s') === 'm' ? 'Math' : 'Reading and Writing', sc = chalOf(p.getAttribute('data-chal-r'), p.getAttribute('data-chal-n'));
+    return p.hasAttribute('data-chal-to') ? 'I got ' + sc + ' on your SAT ' + s + ' challenge. Open it to see who won.' : 'I got ' + sc + ' on these SAT ' + s + ' questions. Can you beat me?';
+  }
+  function chalCopyOld(inp) {
+    var ok = false;
+    try { inp.focus(); inp.select(); ok = document.execCommand('copy'); } catch (e) {}
+    return ok;
+  }
+  function chalCopy(p) {
+    var msg = $('.chal-msg', p), box = $('.chal-urlf', p), inp = $('.chal-url', p), url = chalPanelLink(p);
+    inp.value = url;
+    function done(ok) {
+      if (ok) { box.hidden = true; msg.textContent = 'Copied. Paste it into a message to your friend.'; return; }
+      box.hidden = false; focusQuiet(inp); try { inp.select(); } catch (e) {}
+      msg.textContent = 'Copy the link below, then paste it into a message to your friend.';
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { done(true); }, function () { box.hidden = false; done(chalCopyOld(inp)); });
+        return;
+      }
+    } catch (e) {}
+    box.hidden = false; done(chalCopyOld(inp));
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target && e.target.closest ? e.target.closest('[data-chal-go],[data-chal-from],[data-chal-send],[data-chal-copy]') : null;
+    if (!b) { return; }
+    if (b.hasAttribute('data-chal-go')) { if (chalNow) { chalPlay(chalNow); } return; }
+    if (b.hasAttribute('data-chal-from')) {
+      var o = b.closest('.chal-offer'), s = o.getAttribute('data-chal-s'), C = chalMake(s, o.getAttribute('data-chal-q').match(/.{8}/g), null, '');
+      C.mine = true;
+      var r = chalRec(C) || chalKeep(C, Number(o.getAttribute('data-chal-r')) || 0);
+      chalNow = C;
+      o.classList.remove('chal-offer');
+      o.innerHTML = '<p class="eyebrow">Your challenge is ready</p><h3 class="h2">Now send it to a friend</h3><p>You got <b>' + chalOf(r.r, C.n) + '</b>. Your friend answers the same ' + C.n + ' questions and sees if they can beat you.</p>' + chalShareHTML(C, r.r, null);
+      focusQuiet($('.chal-name', o));
+      return;
+    }
+    var p = b.closest('.chal-share');
+    if (!p) { return; }
+    save();
+    if (b.hasAttribute('data-chal-copy')) { chalCopy(p); return; }
+    try {
+      navigator.share({ title: 'SAT Sprint challenge', text: chalPanelText(p), url: chalPanelLink(p) }).then(function () {
+        $('.chal-msg', p).textContent = p.hasAttribute('data-chal-to') ? 'Sent. ' + (p.getAttribute('data-chal-to') || 'Your friend') + ' will see who won.' : 'Sent. Now wait for their score.';
+      }, function (err) { if (!err || err.name !== 'AbortError') { chalCopy(p); } });
+    } catch (err) { chalCopy(p); }
+  });
+  /* the name goes into every link on the page as it is typed, and is kept when the box is left */
+  document.addEventListener('input', function (e) {
+    var t = e.target;
+    if (!t || !t.classList || !t.classList.contains('chal-name')) { return; }
+    store.s.chn = chalName(t.value);
+    $$('.chal-share').forEach(function (p) { var u = $('.chal-url', p); if (u) { u.value = chalPanelLink(p); } $('.chal-msg', p).textContent = ''; });
+  });
+  document.addEventListener('change', function (e) {
+    var t = e.target;
+    if (!t || !t.classList || !t.classList.contains('chal-name')) { return; }
+    store.s.chn = chalName(t.value);
+    $$('.chal-name').forEach(function (x) { x.value = store.s.chn; });
+    save();
+  });
   /* =================== Both subjects: what is saved on this device, a backup file, and offline use =================== */
   /* A backup is one file: { app: 'sat-sprint', version, saved, theme, data: the whole store }. Nothing is sent anywhere. */
   var BK_APP = 'sat-sprint', BK_VER = 1, BK_MAX = 12 * 1024 * 1024;
@@ -13473,6 +13935,7 @@ function rReasoningHTML() {
     var na = typeof cs.notes === 'string' ? cs.notes.trim() : '', nb = typeof is.notes === 'string' ? is.notes.trim() : '';
     s.notes = !nb || na === nb || na.indexOf(nb) >= 0 ? na : !na ? nb : (na + '\n\n' + nb).slice(0, 10000);
     s.pz = pzMerge(cs.pz, is.pz);
+    s.chal = chalMerge(cs.chal, is.chal);
     out.s = s;
     return out;
   }
@@ -14158,6 +14621,8 @@ function rReasoningHTML() {
     } catch (e) { return false; }
   }
   function visitName(token) {
+    /* a challenge link holds a friend's name: it counts as "ch", with nothing from the link */
+    if (/^#?ch-/i.test(String(token || ''))) { return 'ch'; }
     return String(token || 'home').toLowerCase().replace(/^#/, '').replace(/-[0-9a-f]{6,}$/, '').replace(/[^a-z0-9-]/g, '').slice(0, 40) || 'home';
   }
   function visitCount(token) {
@@ -14459,10 +14924,15 @@ function rReasoningHTML() {
       ['What is in a crate?', 'A new look for the site: colors, a paper background, an effect when you get a question right, a glow around your streak, or a streak picture. Nothing in a crate opens a lesson or a question; those are all free already.'],
       ['How do I use what I won?', 'Press <b>Wear</b> on it under “Your collection”. Colors you win also show up when you press <b>Text size</b> at the top.'],
       ['Can I buy coins?', 'No. Coins only come from studying, and nothing on this site costs money.']]],
+    challenge: ['challenges', [
+      ['How does a challenge work?', 'You answer five real SAT questions, then send the link to a friend. They answer the same five, in the same order, and you both see who got more right. They can send their score back the same way.'],
+      ['Does my friend need an account?', 'No. The link holds the questions and your score, so it works for anyone, with nothing to sign up for. Nothing about a challenge is sent to SAT Sprint.'],
+      ['Does a challenge count as practice?', 'Yes. Your answers are saved like any other practice and count toward your day. A challenge gives no extra coins.'],
+      ['Can I play one again?', 'Yes, as often as you like. Your first try that answers every question is your score in the challenge.']]],
     other: ['this page', [
       ['Where do I start?', 'Press <b>Home</b> at the top, then press <b>Start</b> on Reading &amp; Writing or on Math.']]]
   };
-  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates' };
+  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge' };
   var helpEl = null, helpFrom = null;
   function helpKey() {
     var v = cur.view;
@@ -14544,7 +15014,7 @@ function rReasoningHTML() {
       ['mmap', 'm-map', 'My progress', 'See how you are doing on each kind of question, and what to practice next.', 'map']] }
   };
   function navList(subj) { return SUBJ[subj].items; }
-  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home' };
+  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home', challenge: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/></svg>',
@@ -14591,7 +15061,7 @@ function rReasoningHTML() {
   var lastPage = { v: 'home', subj: 'home' };
 
   /* ---------- the guide bar: where you are and the way back; and the next step at the foot of the page ---------- */
-  var GLOBAL_PAGE = { plan: ['My study plan', 'plan'], data: ['Backup and offline use', 'my-data'], account: ['My account', 'account'], suggest: ['Ask or suggest', 'suggest'], crates: ['Crates', 'crates'] };
+  var GLOBAL_PAGE = { plan: ['My study plan', 'plan'], data: ['Backup and offline use', 'my-data'], account: ['My account', 'account'], suggest: ['Ask or suggest', 'suggest'], crates: ['Crates', 'crates'], challenge: ['Challenge a friend', 'challenge'] };
   function groupName(g) { return GROUPS.filter(function (x) { return x[0] === g; })[0][1]; }
   /* the page you are inside a page with its own contents: a lesson, a reading step, a worked example */
   function deepName(v, tok) {
@@ -14711,7 +15181,7 @@ function rReasoningHTML() {
     host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from College Board’s own practice questions.</p></div>' +
       col('Reading & Writing', footList('rw')) +
       col('Math', footList('math')) +
-      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline use</a>', '<a href="#crates">Crates</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Ask a question or suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Text size and colors</button>', '<button class="linkbtn foot-tour" type="button" data-tour>Take the one-minute tour</button>']));
+      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline use</a>', '<a href="#crates">Crates</a>', '<a href="#challenge">Challenge a friend</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Ask a question or suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Text size and colors</button>', '<button class="linkbtn foot-tour" type="button" data-tour>Take the one-minute tour</button>']));
   }());
 
   /* ---------- appearance: saved in this browser under its own key ---------- */
@@ -14815,7 +15285,7 @@ function rReasoningHTML() {
 
   /* the pages that belong to no subject, one tap from Today */
   function moreRowHTML() {
-    var L = [['plan', 'My study plan', 'The week ahead, and your test date'], ['crates', 'Prizes', 'Coins, crates and the looks you have won'], ['my-data', 'Backup and offline use', 'Save a copy of your progress'], ['suggest-notes', 'My notes', 'A private scratchpad'], ['suggest', 'Ask or suggest', 'Send a question or an idea']];
+    var L = [['plan', 'My study plan', 'The week ahead, and your test date'], ['crates', 'Prizes', 'Coins, crates and the looks you have won'], ['challenge', 'Challenge a friend', 'Send five questions and see who gets more right'], ['my-data', 'Backup and offline use', 'Save a copy of your progress'], ['suggest-notes', 'My notes', 'A private scratchpad'], ['suggest', 'Ask or suggest', 'Send a question or an idea']];
     if (acctOn) { L.splice(2, 0, ['account', acctIn() ? 'My account' : 'Sign in', 'Keep your progress on every device']); }
     return '<section class="hsec tmore" id="tmore"><div class="hsec-h"><h2 class="h2">More</h2></div><ul class="tmore-l">' + L.map(function (x) { return '<li><a href="#' + x[0] + '"><b>' + x[1] + '</b><span>' + x[2] + '</span></a></li>'; }).join('') + '</ul></section>';
   }
@@ -14962,7 +15432,7 @@ function rReasoningHTML() {
   }
 
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -15091,6 +15561,8 @@ function rReasoningHTML() {
     }
     if (token === 'plan') { showView('plan'); buildPlan(); toTop(); return; }
     if (token === 'crates') { showView('crates'); buildCrates(); toTop(); return; }
+    if ((m = /^challenge(?:-(m|rw))?$/.exec(token))) { showView('challenge'); chalBuild(m[1] || ''); toTop(); return; }
+    if (/^ch-/.test(token)) { showView('challenge'); chalOpen(token); toTop(); return; }
     if (token === 'my-data' || token === 'my-data-offline') {
       showView('data'); buildData();
       if (token === 'my-data-offline') { scrollToEl(document.getElementById('my-data-offline')); } else { toTop(); }
