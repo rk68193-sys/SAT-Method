@@ -468,13 +468,16 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     }
     ok(auras.length === CATALOG.filter(it => it.id.indexOf('aura:') === 0).length && !dark.length, 'all ' + auras.length + ' auras draw on their tiles' + (dark.length ? '; blank: ' + dark.join(', ') : ''));
     const bare = [];
-    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'paper:cobweb', 'paper:meteors', 'paper:ufo', 'paper:lava', 'paper:kaleido', 'paper:whale', 'paper:planes', 'paper:rain', 'paper:gears', 'paper:orbit-view', 'paper:gyre', 'theme:prize-beacon', 'theme:prize-metropolis', 'theme:prize-summit', 'theme:prize-haunted', 'theme:prize-eldritch', 'theme:prize-lanterns', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal']) {
+    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'paper:cobweb', 'paper:meteors', 'paper:ufo', 'paper:lava', 'paper:kaleido', 'paper:whale', 'paper:planes', 'paper:rain', 'paper:gears', 'paper:orbit-view', 'paper:gyre', 'theme:prize-beacon', 'theme:prize-metropolis', 'theme:prize-summit', 'theme:prize-haunted', 'theme:prize-eldritch', 'theme:prize-lanterns', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal', 'paper:cumulus', 'paper:agate', 'paper:kites', 'paper:wxmap', 'paper:cgarden', 'paper:cloudsea', 'theme:prize-opal', 'theme:prize-thunderhead', 'theme:prize-cavern']) {
       const slot = id.split(':')[0], b = await t.p.$('[data-pz-wear="' + slot + '"][data-pz-id="' + id + '"]');
       if (!b) { bare.push(id + ' (no Wear)'); continue; }
       await b.evaluate(el => el.scrollIntoView({ block: 'center' })); await b.click(); await t.p.waitForTimeout(900);
       if ((await inked('canvas.pz-bg')) < 20) { bare.push(id); }
     }
     ok(!bare.length, 'the newer moving backgrounds and living themes draw behind the page' + (bare.length ? '; blank: ' + bare.join(', ') : ''));
+    const tz = await t.p.$('[data-pz-wear="paper"][data-pz-id="paper:terrazzo"]');
+    if (tz) { await tz.evaluate(el => el.scrollIntoView({ block: 'center' })); await tz.click(); await t.p.waitForTimeout(300); }
+    ok(!!tz && await t.p.evaluate(() => document.documentElement.classList.contains('pz-p-terrazzo') && getComputedStyle(document.documentElement).backgroundImage.indexOf('url(') >= 0), 'Terrazzo puts its stone chips behind the page');
     await t.done('every look');
   }
 
