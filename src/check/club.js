@@ -363,11 +363,21 @@ const KEY = 'sat-grammar-sprint.v1', CKEY = 'sat-sprint-club';
   ok(await V.until(() => /not shared right now/.test(document.querySelector('#v-visit').textContent)), 'the old link no longer opens the room');
 
   /* ---------- the owner's link, signed in: the server checks the code and keeps everything ---------- */
+  /* The page opens with the record it kept and asks for it again (club_state) while the gift is on its way. Here the gift
+     is held back, so the server answers that question from before the gift, and the answer is held longer, so it arrives
+     last. The page asks one thing at a time, so an old answer never lands after a newer one and undoes the gift. */
+  let asked = 0;
+  const wait = ms => new Promise(x => setTimeout(x, ms));
+  await F.p.route(/\/rest\/v1\/rpc\/club_gift/, async r => { await wait(1200); await r.continue(); });
+  await F.p.route(/\/rest\/v1\/rpc\/club_state/, async r => { asked++; const res = await r.fetch(); await wait(2000); await r.fulfill({ response: res }); });
   await F.open('gift-' + CODE);
   ok(await F.until(() => /Everything is unlocked/.test((document.querySelector('#pz-toast.show') || { textContent: '' }).textContent)), 'the owner’s link while signed in: ' + await F.toast());
   ok(owned(FR) === ITEMS && balance(FR) >= 10000, 'the account has all ' + ITEMS + ' prizes and 10,000 coins');
+  await F.p.waitForTimeout(3500);
+  await F.p.unroute(/\/rest\/v1\/rpc\/club_gift/); await F.p.unroute(/\/rest\/v1\/rpc\/club_state/);
   await F.go('crates');
-  ok((await F.coll()) === ITEMS, 'and the Crates page shows them all');
+  const shown = await F.coll();
+  ok(shown === ITEMS && asked > 0, 'and the Crates page shows them all, after the record was asked for meanwhile (' + shown + ' shown; asked ' + asked + ' times)');
 
   /* ---------- erasing everything empties the clubhouse record too ---------- */
   await A.p.route(/\/rest\/v1\/rpc\/club_erase/, r => r.abort());
@@ -386,7 +396,8 @@ const KEY = 'sat-grammar-sprint.v1', CKEY = 'sat-sprint-club';
   ok(await F.until(() => /account is deleted/.test(document.querySelector('#v-account').textContent)), 'the friend deletes their account');
   ok(sql('select count(*) from public.club_profiles where user_id = ' + lit(FRID)) === '0' && sql('select count(*) from public.club_crates where user_id = ' + lit(FRID)) === '0', 'nothing of theirs is left in the clubhouse');
   await F.go('crates');
-  ok((await F.coll()) === ITEMS && !(await F.club()), 'the device keeps the prizes, as its own record again');
+  const kept = await F.coll();
+  ok(kept === ITEMS && !(await F.club()), 'the device keeps the prizes, as its own record again (' + kept + ')');
 
   /* ---------- signing out ---------- */
   await B.go('account'); await B.p.click('#acct-out');

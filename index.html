@@ -15285,7 +15285,8 @@ function rReasoningHTML() {
      device that has not heard from the server yet earns and opens nothing on its own meanwhile (clubWait). */
   var CLUB_LS = 'sat-sprint-club';
   var CLUB = { on: false, uid: '', st: null, P: null, none: false, wait: null, trying: false, next: 0, at: 0, erasing: false, joined: false,
-    pend: {}, sent: {}, flushing: false, flushT: 0, opening: false, room: null, roomAgain: false, nickEdit: false, said: '', visit: null };
+    pend: {}, sent: {}, flushing: false, flushT: 0, opening: false, room: null, roomAgain: false, nickEdit: false, said: '', visit: null,
+    line: Promise.resolve() };
 
   /* the record shown is the account's: this device's person, signed in now or until their session ran out */
   function clubShow() { return typeof CLUB === 'object' && !!CLUB && CLUB.on && !!CLUB.P && !!A && A.uid === CLUB.uid; }
@@ -15304,8 +15305,16 @@ function rReasoningHTML() {
     CLUB.next = 0; clubSynced();
     return true;
   }
-  /* one of club.sql's functions, as the signed-in student, or with anon true as anyone (a shared room) */
+  /* one of club.sql's functions, as the signed-in student, or with anon true as anyone (a shared room). The student's calls
+     go one at a time (CLUB.line): a question about the record sent while a crate or the owner's link is on its way would be
+     answered from before it and could arrive after it, putting the old record back on the page. */
   function clubCall(fn, args, anon) {
+    if (anon) { return clubSend(fn, args, true); }
+    var go = function () { return clubSend(fn, args, false); }, p = CLUB.line.then(go, go);
+    CLUB.line = p.then(function () {}, function () {});
+    return p;
+  }
+  function clubSend(fn, args, anon) {
     return (anon ? Promise.resolve('') : acctToken()).then(function (tok) {
       if (!anon && !tok) { return { ok: false, status: 0, body: null, missing: false, msg: 'Sign in again, then try once more.' }; }
       return acctReq('POST', '/rest/v1/rpc/' + fn, args || {}, tok || null).then(function (r) {
