@@ -119,6 +119,10 @@
 .pz-pt-lava { background: radial-gradient(circle at 25% 60%, rgba(249, 115, 22, .7), transparent 40%), radial-gradient(circle at 70% 35%, rgba(236, 72, 153, .7), transparent 40%), radial-gradient(circle at 55% 90%, rgba(168, 85, 247, .6), transparent 35%), #FFF7ED; }
 .pz-pt-kaleido { background: repeating-conic-gradient(from 0deg at 50% 50%, #F472B6 0 15deg, #A78BFA 15deg 30deg, #38BDF8 30deg 45deg, #FDE047 45deg 60deg); }
 .pz-pt-whale { background: radial-gradient(ellipse 34% 20% at 55% 50%, rgba(147, 197, 253, .55) 96%, transparent), radial-gradient(#FFFFFF 1px, transparent 1.4px) 0 0 / 23px 19px, #0B1026; }
+.pz-pt-planes { background: linear-gradient(168deg, transparent 49%, rgba(71, 85, 105, .35) 49.5% 50.5%, transparent 51%) 0 0 / 14px 100%, conic-gradient(from 100deg at 68% 46%, rgba(71, 85, 105, .7) 0 40deg, transparent 40deg) no-repeat, #F8FAFC; }
+.pz-pt-rain { background: radial-gradient(circle at 25% 40%, rgba(251, 191, 36, .5), transparent 30%), radial-gradient(circle at 72% 60%, rgba(244, 114, 182, .45), transparent 28%), repeating-linear-gradient(90deg, transparent 0 17px, rgba(191, 219, 254, .5) 17px 18px), #0B1226; }
+.pz-pt-gears { background: repeating-conic-gradient(from 0deg at 28% 50%, rgba(253, 224, 71, .6) 0 12deg, transparent 12deg 24deg), #1C1917; -webkit-mask: radial-gradient(circle at 28% 50%, #000 0 40%, rgba(0, 0, 0, .25) 41%); mask: radial-gradient(circle at 28% 50%, #000 0 40%, rgba(0, 0, 0, .25) 41%); }
+.pz-pt-orbit-view { background: radial-gradient(circle at 78% 26%, #FDBA74 0 9%, transparent 10%), radial-gradient(ellipse 140% 90% at 50% 150%, #030712 0 60%, #38BDF8 61% 62%, rgba(59, 130, 246, .25) 63% 70%, transparent 72%), #050816; }
 /* the Seasons crate: what is in season now */
 .pz-season { margin: .4rem 0 0; padding: .45rem .7rem; border-radius: 12px; font-size: .9rem; background: var(--sunk); color: var(--ink); }
 .pz-season-fall { border-left: 4px solid #C2410C; }
@@ -170,6 +174,15 @@
 @keyframes pz-flicker { 0%, 100% { opacity: 1; } 42% { opacity: .75; } 48% { opacity: 1; } 71% { opacity: .6; } 76% { opacity: 1; } }
 .pz-i-mdark { fill: #334155; } .pz-i-mlit { fill: #FDE68A; } .pz-i-mcr { fill: rgba(120, 90, 20, .22); }
 .pz-moon.full .pz-i-mlit { filter: drop-shadow(0 0 4px #FDE68A); }
+/* the hourglass, the crown and the comet */
+.pz-i-hglass { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; } .pz-i-hsand { fill: #F59E0B; } .pz-i-hfall { stroke: #F59E0B; stroke-width: 1.4; stroke-dasharray: 2 3; animation: pz-sand .5s linear infinite; }
+.pz-hourglass.done .pz-i-hfall { display: none; } .pz-plate .pz-i-hglass { stroke: #F5F3FF; }
+@keyframes pz-sand { to { stroke-dashoffset: -5; } }
+.pz-i-crown { fill: #FBBF24; stroke: #92400E; stroke-width: 1.5; stroke-linejoin: round; } .pz-i-cband { fill: #D97706; } .pz-i-jewel { fill: rgba(146, 64, 14, .25); stroke: #92400E; stroke-width: .8; }
+.pz-crown.full { filter: drop-shadow(0 0 4px #FDE047); animation: pz-embglow 2.4s ease-in-out infinite; }
+@keyframes pz-embglow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+.pz-i-chead { fill: #F0F9FF; filter: drop-shadow(0 0 4px #38BDF8); } .pz-i-ctail { animation: pz-flicker 1.3s infinite; } .pz-i-ctail2 { opacity: .7; animation: pz-flicker 0.9s infinite; }
+.hstreak-n.pz-styled .pz-si.pz-comet { height: 22px; }
 /* the battery: a bolt pulses while it charges; full, the bars glow */
 .pz-i-bat { fill: none; stroke: var(--ink); stroke-width: 2.2; } .pz-i-nub { fill: var(--ink); } .pz-i-bar { fill: var(--line); } .pz-i-bar.on { fill: #22C55E; }
 .pz-i-bolt { fill: #FDE047; stroke: #713F12; stroke-width: 1; stroke-linejoin: round; animation: pz-charge 1.6s ease-in-out infinite; }
@@ -261,6 +274,7 @@ html.pz-plain .pz-bg { display: none; }
 /* living themes: the main buttons shimmer */
 :root[data-theme="prize-synthwave"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-inferno"] .btn:not(.ghost):not(:disabled),
 :root[data-theme="prize-nebula"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-holo"] .btn:not(.ghost):not(:disabled),
+:root[data-theme="prize-metropolis"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-summit"] .btn:not(.ghost):not(:disabled),
 :root[data-theme="prize-haunted"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-eldritch"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-lanterns"] .btn:not(.ghost):not(:disabled),
 :root[data-theme="prize-abyss"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-enchanted"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-terminal"] .btn:not(.ghost):not(:disabled) { background-size: 220% 100%; animation: pz-sheen 2.6s ease-in-out infinite alternate; }
 /* Terminal: headings and buttons in the typewriter face, with a faint phosphor glow */
@@ -270,6 +284,7 @@ html.pz-plain .pz-bg { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .pz-t-m, .pz-r-m.show, .pz-shake, .pz-check path, .pz-star, .pz-stamp, .pz-swipe, .pz-neon::before, .pz-neon-run { animation: none !important; }
+  .pz-i-hfall, .pz-crown.full, .pz-i-ctail, .pz-i-ctail2 { animation: none !important; }
   .pz-egg, .pz-egg .pz-i-eye, .pz-i-wing, .pz-i-bolt, .pz-pumpkin.lit .pz-i-pface { animation: none !important; }
   .pz-prize.show { animation: none !important; transform: translate(-50%, -50%) scale(1); opacity: 1; }
   .pz-door, .pz-dial, .pz-toast { transition: none !important; }
