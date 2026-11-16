@@ -6,7 +6,7 @@
   function pzPicture(it, big) {
     if (it.kind === 'theme') { return fxThemeMini(it.key); }
     if (it.kind === 'aura') { return '<span class="pz-plate pz-plate-sm' + (big ? ' big' : '') + fxStageCls(it.key) + '"><canvas class="pz-aura" data-pz-aura="' + it.key + '" aria-hidden="true"></canvas><span class="pz-badge">' + PZ_FLAME + '12</span></span>'; }
-    if (it.kind === 'streak') { return '<span class="pz-pic pz-pic-streak">' + fxStreakIcon(it.key, it.key === 'plant' || it.key === 'tree' ? 100 : 30) + '</span>'; }
+    if (it.kind === 'streak') { return '<span class="pz-pic pz-pic-streak">' + fxStreakIcon(it.key, it.key === 'plant' || it.key === 'tree' || it.key === 'rainbow' ? 100 : 30) + '</span>'; }
     if (it.kind === 'paper') { return '<span class="pz-pic pz-pt pz-pt-' + it.key + '" aria-hidden="true"></span>'; }
     return '<span class="pz-pic pz-pic-fx pz-t-' + it.tier + '-soft" aria-hidden="true"><span class="pz-ans"><b>B</b>Correct</span></span>';
   }
