@@ -1,6 +1,6 @@
-  /* =================== Geode and Forecast: rocks, gems and weather in every kind of look (prizes.js) =================== */
+  /* =================== Rocks & Gems and Forecast: rocks, gems and weather in every kind of look (prizes.js) =================== */
   /* Thirty-five looks in two series, with an Epic, a Legendary and a Mythic of every kind and two Commons and two Rares of each.
-     Geode is rocks and gems; Forecast is weather. They join the registries in fx.js (FX_AURA and FX_STG, FX_DRAW and FX_DUR,
+     Rocks & Gems is rocks and gems; Forecast is weather. They join the registries in fx.js (FX_AURA and FX_STG, FX_DRAW and FX_DUR,
      FX_PAPER, FX_LIVING and FX_LIVE_THEMES, FX_STREAK) and draw with its helpers. Backgrounds and effects read FX_INK, so each
      one works on a light page and on a dark one. */
 
@@ -522,4 +522,353 @@
       if (n > 0 && t < 3.5) { c.globalCompositeOperation = 'source-over'; c.globalAlpha = e; c.fillStyle = '#FDE68A'; c.font = '600 ' + Math.max(16, Math.min(24, s.w * 0.05)) + 'px ' + FX_MONO; c.textAlign = 'center'; c.fillText(W.slice(0, n) + (n < W.length && Math.floor(t * 6) % 2 ? '_' : ''), k.cx, ty); c.textAlign = 'left'; c.globalAlpha = 1; gwLit(c); }
       if (t > 2.2) { fxRainbow(c, k, t, fxEnv(t, 2.2, 2.5, 3.3, 3.8)); } else { fxCardGlow(c, k, '251,191,36', e * g); }
     };
+  };
+
+  /* ---------- papers: moving backgrounds behind the page at 30 frames a second. On a light page they are soft ink,
+     on a dark page soft light, and they stay pale enough that the words on the page read as clearly as before ---------- */
+  /* Cumulus (Common): fair-weather clouds drift slowly across the page, the far ones smaller, paler and slower */
+  FX_PAPER.cumulus = function (s) {
+    var C = [], i;
+    for (i = 0; i < 7; i++) { C.push({ x: Math.random(), y: fxR(0.05, 0.95), z: 0.45 + i / 6 * 0.55, sd: 11 + i * 17, w: fxR(160, 260), h: fxR(44, 62) }); }
+    return function (t) {
+      var c = s.ctx, D = FX_INK.dark;
+      C.forEach(function (q) {
+        var w = q.w * q.z, h = q.h * q.z, span = s.w + w * 1.6, x = ((q.x * span + t * 7 * q.z) % span) - w * 0.8 + w / 2, y = q.y * s.h, g = c.createLinearGradient(0, y - h * 1.7, 0, y);
+        if (D) { g.addColorStop(0, 'rgba(224,231,255,' + (0.13 * q.z).toFixed(3) + ')'); g.addColorStop(1, 'rgba(129,140,248,' + (0.06 * q.z).toFixed(3) + ')'); }
+        else { g.addColorStop(0, 'rgba(191,205,225,' + (0.22 * q.z).toFixed(3) + ')'); g.addColorStop(1, 'rgba(148,163,184,' + (0.32 * q.z).toFixed(3) + ')'); }
+        c.fillStyle = g; gwCloud(c, x, y, w, h, q.sd, t); c.fill();
+      });
+    };
+  };
+  /* Agate (Rare): banded agate fills two corners of the page, and every few seconds a gleam of light slides across the stone */
+  FX_PAPER.agate = function (s) {
+    var off = null, key = '', Out = [];
+    var PL = ['#94A3B8', '#F8FAFC', '#CBD5E1', '#FFFFFF', '#C4B5FD', '#F1F5F9', '#7DD3FC', '#FFFFFF', '#FBCFE8', '#E2E8F0', '#FDBA74', '#F8FAFC', '#A5B4FC'], PD = ['#475569', '#CBD5E1', '#334155', '#E2E8F0', '#7C3AED', '#64748B', '#0284C7', '#F1F5F9', '#DB2777', '#1E293B', '#EA580C', '#CBD5E1', '#6366F1'];
+    function stone(c, cx, cy, R, seed, P) {
+      var rg = gwRng(seed), W = [], i, j, edge = [], r0 = R, n = 0;
+      for (i = 0; i < 5; i++) { W.push([rg() * 6, 2 + Math.floor(rg() * 5), 0.03 + rg() * 0.05]); }
+      while (r0 > R * 0.16) {
+        c.beginPath();
+        for (j = 0; j <= 100; j++) { var a = j / 100 * FX_TAU, rr = r0; W.forEach(function (w) { rr += Math.sin(a * w[1] + w[0] + n * 0.11) * w[2] * r0; }); var x = cx + Math.cos(a) * rr, y = cy + Math.sin(a) * rr * 0.86; if (j) { c.lineTo(x, y); } else { c.moveTo(x, y); } if (!n) { edge.push([x, y]); } }
+        c.closePath(); c.fillStyle = P[(n + seed) % P.length]; c.fill(); c.strokeStyle = 'rgba(71,85,105,.35)'; c.lineWidth = 0.6; c.stroke();
+        r0 -= R * (0.012 + rg() * rg() * 0.07); n++;
+      }
+      for (i = 0; i < 40; i++) { var a2 = rg() * FX_TAU, d2 = Math.sqrt(rg()) * r0 * 0.9, x2 = cx + Math.cos(a2) * d2, y2 = cy + Math.sin(a2) * d2 * 0.86, z2 = 2 + rg() * 4; c.fillStyle = i % 2 ? '#FFFFFF' : '#E2E8F0'; c.beginPath(); c.moveTo(x2, y2 - z2); c.lineTo(x2 + z2 * 0.6, y2 + z2 * 0.5); c.lineTo(x2 - z2 * 0.6, y2 + z2 * 0.5); c.closePath(); c.fill(); }
+      return edge;
+    }
+    return function (t) {
+      var c = s.ctx, D = FX_INK.dark, d = s.c.width / Math.max(1, s.w), k2 = s.w + 'x' + s.h + ':' + D + ':' + d;
+      if (k2 !== key) {
+        key = k2; off = document.createElement('canvas'); off.width = Math.max(1, Math.round(s.w * d)); off.height = Math.max(1, Math.round(s.h * d));
+        var o = off.getContext('2d'), R = Math.max(150, Math.min(Math.max(s.w, s.h) * 0.34, 420)); o.scale(d, d);
+        Out = [stone(o, s.w + R * 0.12, -R * 0.1, R, 3, D ? PD : PL), stone(o, -R * 0.15, s.h + R * 0.05, R * 0.9, 8, D ? PD : PL)];
+      }
+      c.globalAlpha = D ? 0.2 : 0.34; c.drawImage(off, 0, 0, s.w, s.h); c.globalAlpha = 1;
+      var u = (t % 8) / 2.2; if (u < 1) {
+        c.save(); c.beginPath(); Out.forEach(function (E) { c.moveTo(E[0][0], E[0][1]); for (var j = 1; j < E.length; j++) { c.lineTo(E[j][0], E[j][1]); } c.closePath(); }); c.clip();
+        var gx = -90 - 0.8 * s.h + u * (s.w + 180 + 0.8 * s.h), g = c.createLinearGradient(gx - 90, 0, gx + 90, 0); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(0.5, 'rgba(255,255,255,' + (D ? 0.12 : 0.55) + ')'); g.addColorStop(1, 'rgba(255,255,255,0)');
+        c.globalCompositeOperation = D ? 'lighter' : 'source-over'; c.fillStyle = g; c.transform(1, 0, -0.8, 1, 0.8 * s.h, 0); c.fillRect(gx - 90, 0, 180, s.h);
+        c.restore();
+      }
+    };
+  };
+  /* Kites (Rare): three kites ride the breeze across the page, tugging at their strings, their tails rippling behind */
+  FX_PAPER.kites = function (s) {
+    var K = [{ x: 0.12, y: 0.2, z: 1, c1: '#EF4444', c2: '#FACC15', ph: 0 }, { x: 0.62, y: 0.12, z: 0.78, c1: '#2563EB', c2: '#22D3EE', ph: 2.1 }, { x: 0.4, y: 0.5, z: 0.62, c1: '#16A34A', c2: '#A855F7', ph: 4.2 }];
+    return function (t) {
+      var c = s.ctx, D = FX_INK.dark, al = D ? 0.55 : 0.5, ink = D ? 'rgba(226,232,240,' : 'rgba(71,85,105,', sc = Math.min(1.25, Math.max(0.75, s.w / 640));
+      K.forEach(function (k) {
+        var z = k.z * sc, W = 30 * z, H = 42 * z, x = (((k.x + t * 0.006 * k.z) % 1.25) - 0.12) * s.w + Math.sin(t * 0.7 + k.ph) * 16 * z, y = k.y * s.h + Math.sin(t * 0.9 + k.ph * 1.3) * 14 * z, rot = Math.sin(t * 1.1 + k.ph) * 0.16 - 0.12, j;
+        var bx = x + Math.sin(rot) * H * 0.45, by = y + Math.cos(rot) * H * 0.45;
+        c.strokeStyle = ink + '.3)'; c.lineWidth = 1; c.beginPath(); c.moveTo(x - Math.sin(rot) * H * 0.05, y + H * 0.05); c.quadraticCurveTo(x - s.w * 0.12, y + s.h * 0.45, x - s.w * 0.3, s.h + 30); c.stroke();
+        /* the tail, rippling, with little bows */
+        c.strokeStyle = ink + '.45)'; c.lineWidth = 1.2; c.beginPath(); c.moveTo(bx, by);
+        var T = []; for (j = 1; j <= 14; j++) { var tx = bx - j * 5.5 * z, ty = by + j * 4.2 * z + Math.sin(t * 5 - j * 0.7 + k.ph) * 5 * z * (j / 14 + 0.3); c.lineTo(tx, ty); if (j % 3 === 0) { T.push([tx, ty, j]); } } c.stroke();
+        c.globalAlpha = al; T.forEach(function (q) { c.fillStyle = q[2] % 2 ? k.c1 : k.c2; c.beginPath(); c.moveTo(q[0], q[1]); c.lineTo(q[0] - 4 * z, q[1] - 3 * z); c.lineTo(q[0] - 4 * z, q[1] + 3 * z); c.closePath(); c.moveTo(q[0], q[1]); c.lineTo(q[0] + 4 * z, q[1] - 3 * z); c.lineTo(q[0] + 4 * z, q[1] + 3 * z); c.closePath(); c.fill(); });
+        /* the kite: four panels in two colors, with a cross of spars */
+        c.save(); c.translate(x, y); c.rotate(rot);
+        [[1, 0, k.c1], [-1, 0, k.c2], [1, 1, k.c2], [-1, 1, k.c1]].forEach(function (p) { c.fillStyle = p[2]; c.beginPath(); c.moveTo(0, p[1] ? H * 0.45 : -H * 0.55); c.lineTo(p[0] * W * 0.5, -H * 0.12); c.lineTo(0, -H * 0.12); c.closePath(); c.fill(); });
+        c.globalAlpha = 1; c.strokeStyle = ink + '.55)'; c.lineWidth = 1.1; c.beginPath(); c.moveTo(0, -H * 0.55); c.lineTo(W * 0.5, -H * 0.12); c.lineTo(0, H * 0.45); c.lineTo(-W * 0.5, -H * 0.12); c.closePath(); c.moveTo(0, -H * 0.55); c.lineTo(0, H * 0.45); c.moveTo(-W * 0.5, -H * 0.12); c.lineTo(W * 0.5, -H * 0.12); c.stroke();
+        c.restore();
+      });
+    };
+  };
+  /* Weather map (Epic): isobars ring a high and a low that drift slowly, a cold front and a warm front slide out from the low,
+     and patches of rain pass along the front the way they do on radar */
+  FX_PAPER.wxmap = function (s) {
+    var Rd = [], i; for (i = 0; i < 9; i++) { Rd.push({ u: Math.random(), sp: fxR(0.01, 0.02), r: fxR(18, 40), ph: fxR(0, 6) }); }
+    function front(u, Lx, Ly, cold) { return cold ? [Lx - u * s.w * 0.5, Ly + Math.sin(u * 2.4) * s.h * 0.16 + u * s.h * 0.12] : [Lx - u * s.w * 0.42, Ly - u * s.h * 0.3 - Math.sin(u * 3) * s.h * 0.05]; }
+    return function (t) {
+      var c = s.ctx, D = FX_INK.dark, Hx = s.w * (0.22 + 0.04 * Math.sin(t * 0.05)), Hy = s.h * (0.28 + 0.04 * Math.cos(t * 0.04)), Lx = s.w * (0.78 + 0.03 * Math.cos(t * 0.045)), Ly = s.h * (0.6 + 0.04 * Math.sin(t * 0.055)), R0 = Math.max(46, Math.min(s.w, s.h) * 0.11), j, n;
+      var blue = D ? '147,197,253' : '37,99,235', red = D ? '252,165,165' : '220,38,38';
+      /* radar rain along the cold front */
+      if (D) { c.globalCompositeOperation = 'lighter'; }
+      Rd.forEach(function (q) { var u = (q.u + t * q.sp) % 1, p = front(u, Lx, Ly, true), a = Math.sin(u * Math.PI) * (D ? 0.22 : 0.3); fxGlow(c, '74,222,128', p[0] + 18, p[1] + 10, q.r * 1.4, a); fxGlow(c, '250,204,21', p[0] + 16, p[1] + 8, q.r * 0.7, a * 0.9); if (q.r > 32) { fxGlow(c, '248,113,113', p[0] + 14, p[1] + 7, q.r * 0.3, a); } });
+      c.globalCompositeOperation = 'source-over';
+      /* isobars */
+      c.lineWidth = 1.2; c.strokeStyle = D ? 'rgba(203,213,225,.17)' : 'rgba(71,85,105,.22)';
+      [[Hx, Hy], [Lx, Ly]].forEach(function (P, m) { for (n = 1; n <= 5; n++) { c.beginPath(); for (j = 0; j <= 64; j++) { var a = j / 64 * FX_TAU, r = R0 * n * 0.9 * (1 + 0.12 * Math.sin(a * 2 + n + t * 0.1 + m) + 0.06 * Math.sin(a * 3 - t * 0.07)), x = P[0] + Math.cos(a) * r * 1.3, y = P[1] + Math.sin(a) * r; if (j) { c.lineTo(x, y); } else { c.moveTo(x, y); } } c.stroke(); } });
+      c.font = '800 ' + Math.round(R0 * 0.6) + 'px ' + FX_MONO; c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.fillStyle = 'rgba(' + blue + ',.4)'; c.fillText('H', Hx, Hy); c.fillStyle = 'rgba(' + red + ',.4)'; c.fillText('L', Lx, Ly); c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+      /* the fronts, with their marks sliding along */
+      [[true, blue], [false, red]].forEach(function (F) {
+        var cold = F[0], P = [], L = 0, k;
+        for (j = 0; j <= 50; j++) { P.push(front(0.07 + j / 50 * 0.93, Lx, Ly, cold)); if (j) { L += Math.hypot(P[j][0] - P[j - 1][0], P[j][1] - P[j - 1][1]); } }
+        c.strokeStyle = 'rgba(' + F[1] + ',.5)'; c.lineWidth = 2.2; c.beginPath(); P.forEach(function (p, m) { if (m) { c.lineTo(p[0], p[1]); } else { c.moveTo(p[0], p[1]); } }); c.stroke();
+        c.fillStyle = 'rgba(' + F[1] + ',.5)';
+        for (k = (t * 9) % 34 + 14; k < L - 8; k += 34) {
+          var acc = 0; for (j = 1; j < P.length; j++) { var sl = Math.hypot(P[j][0] - P[j - 1][0], P[j][1] - P[j - 1][1]); if (acc + sl >= k) { break; } acc += sl; }
+          if (j >= P.length) { break; }
+          var f = (k - acc) / Math.max(0.01, Math.hypot(P[j][0] - P[j - 1][0], P[j][1] - P[j - 1][1])), x = P[j - 1][0] + (P[j][0] - P[j - 1][0]) * f, y = P[j - 1][1] + (P[j][1] - P[j - 1][1]) * f, an = Math.atan2(P[j][1] - P[j - 1][1], P[j][0] - P[j - 1][0]), nx = Math.sin(an), ny = -Math.cos(an);
+          if (cold) { nx = -nx; ny = -ny; }
+          c.beginPath();
+          if (cold) { c.moveTo(x - Math.cos(an) * 7, y - Math.sin(an) * 7); c.lineTo(x + nx * 9, y + ny * 9); c.lineTo(x + Math.cos(an) * 7, y + Math.sin(an) * 7); }
+          else { c.arc(x, y, 7, an + Math.PI, an + FX_TAU, ny > 0); }
+          c.closePath(); c.fill();
+        }
+      });
+    };
+  };
+  /* Crystal garden (Legendary): clusters of crystals grow from the corners of the page; light runs up them one at a time,
+     their tips flash, and sparkles drift up out of them */
+  FX_PAPER.cgarden = function (s) {
+    var Cl = [], key = '', off = null, Mo = [], run = null, i;
+    var HU = [[268, 70, 62], [199, 80, 56], [330, 70, 66], [174, 62, 48], [250, 75, 70], [45, 85, 58]];
+    for (i = 0; i < 24; i++) { Mo.push({ c: i % 3, u: Math.random(), sp: fxR(0.03, 0.07), dx: fxR(-1, 1), ph: fxR(0, 6) }); }
+    function layout() {
+      var R = gwRng(5), z = Math.max(0.95, Math.min(1.45, Math.min(s.w, s.h) / 420)), out = [];
+      [[0, s.h, -Math.PI / 4, 11, 1], [s.w, s.h, -Math.PI * 3 / 4, 10, 0.9], [s.w, 0, Math.PI * 3 / 4, 6, 0.62]].forEach(function (g, gi) {
+        for (var j = 0; j < g[3]; j++) { var spread = (j / (g[3] - 1) - 0.5) * 1.5, h = HU[(j + gi * 2) % HU.length], len = (80 + R() * 120) * g[4] * z * (1 - Math.abs(spread) * 0.4); out.push({ g: gi, bx: g[0] + Math.cos(g[2] + spread + Math.PI / 2) * (R() - 0.5) * 40 * z, by: g[1] + Math.sin(g[2] + spread + Math.PI / 2) * (R() - 0.5) * 40 * z, an: g[2] + spread + (R() - 0.5) * 0.2, len: len, wid: (14 + R() * 14) * z * g[4], h: h, at: R() * 0.8 }); }
+      });
+      out.sort(function (a, b) { return b.len - a.len; });
+      return out;
+    }
+    function draw(c, grow, D) { Cl.forEach(function (q) { var u = fxEase(Math.min(1, Math.max(0, (grow - q.at) / 1.2))); if (u > 0) { gwPrism(c, q.bx, q.by, q.an, q.len * u, q.wid, q.h[0], q.h[1], q.h[2], 0, D ? 0.6 : 0.5); } }); }
+    return function (t, dt) {
+      var c = s.ctx, D = FX_INK.dark, d = s.c.width / Math.max(1, s.w), k2 = s.w + 'x' + s.h + ':' + D + ':' + d, g = Math.min(2.1, t);
+      if (k2 !== key) { key = k2; Cl = layout(); off = null; }
+      if (g < 2.1) { draw(c, g, D); }
+      else {
+        if (!off) { off = document.createElement('canvas'); off.width = Math.max(1, Math.round(s.w * d)); off.height = Math.max(1, Math.round(s.h * d)); var o = off.getContext('2d'); o.scale(d, d); draw(o, 3, D); }
+        c.drawImage(off, 0, 0, s.w, s.h);
+      }
+      /* light running up one crystal, then a flash at its tip */
+      if (!run || t - run.t0 > 1.6) { run = { t0: t, q: Cl[Math.floor(Math.random() * Cl.length)] }; }
+      var q = run.q, u = (t - run.t0) / 1.1, rgb = gwRgb(q.h[0], q.h[1], 74);
+      c.globalCompositeOperation = D ? 'lighter' : 'source-over';
+      if (u < 1 && g >= 2.1) { var x = q.bx + Math.cos(q.an) * q.len * u, y = q.by + Math.sin(q.an) * q.len * u; fxGlow(c, D ? rgb : '255,255,255', x, y, q.wid * 1.1, D ? 0.55 : 0.75); }
+      if (u > 0.95 && u < 1.45 && g >= 2.1) { var f = Math.sin((u - 0.95) / 0.5 * Math.PI); fxStar4(c, q.bx + Math.cos(q.an) * q.len, q.by + Math.sin(q.an) * q.len, 16 * f, f, D ? '#FFFFFF' : gwHsl(q.h[0], q.h[1], 50)); }
+      /* sparkles drifting up out of the clusters */
+      Mo.forEach(function (m) {
+        m.u += dt * m.sp; if (m.u > 1) { m.u -= 1; m.dx = fxR(-1, 1); }
+        var base = m.c === 0 ? [s.w * 0.08, s.h] : m.c === 1 ? [s.w * 0.92, s.h] : [s.w * 0.9, s.h * 0.08], x = base[0] + m.dx * 70 + Math.sin(t + m.ph) * 8, y = m.c === 2 ? base[1] + m.u * 160 : base[1] - m.u * 240, a = Math.sin(m.u * Math.PI) * (0.5 + 0.5 * Math.sin(t * 3 + m.ph));
+        if (D) { fxGlow(c, '233,213,255', x, y, 3, a * 0.8); } else { fxStar4(c, x, y, 3.2, a * 0.7, '#8B5CF6'); }
+      });
+      c.globalCompositeOperation = 'source-over';
+    };
+  };
+  /* Sea of clouds (Mythic): the page floats high above a sea of clouds at sunrise. The cloud tops roll slowly by in layers,
+     the sun climbs out of them and colors them gold and pink, rays reach up past the page, and now and then birds glide across */
+  FX_PAPER.cloudsea = function (s) {
+    var L = [], Bd = [], nextB = 4, i;
+    for (i = 0; i < 4; i++) { L.push({ y: 0.64 + i * 0.085, sp: 5 + i * 6, gap: 70 + i * 26, sd: 50 + i * 13 }); }
+    function hash(n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+    return function (t, dt) {
+      var c = s.ctx, D = FX_INK.dark, cyc = ((t + 20) % 160) / 160, up = Math.sin(cyc * Math.PI), sx = s.w * (0.25 + 0.5 * cyc), hz = s.h * 0.66, sy = hz + 40 - up * s.h * 0.34, k;
+      var g = c.createLinearGradient(0, 0, 0, s.h);
+      if (D) { g.addColorStop(0, 'rgba(30,27,75,0)'); g.addColorStop(0.45, 'rgba(76,29,149,.1)'); g.addColorStop(0.66, 'rgba(244,114,182,.12)'); g.addColorStop(1, 'rgba(251,146,60,.06)'); }
+      else { g.addColorStop(0, 'rgba(186,230,253,.18)'); g.addColorStop(0.45, 'rgba(254,215,170,.16)'); g.addColorStop(0.66, 'rgba(253,164,175,.2)'); g.addColorStop(1, 'rgba(254,215,170,.1)'); }
+      c.fillStyle = g; c.fillRect(0, 0, s.w, s.h);
+      /* the sun and its rays */
+      c.globalCompositeOperation = D ? 'lighter' : 'source-over';
+      for (k = 0; k < 9; k++) { fxBeam(c, sx, sy, -Math.PI / 2 + (k - 4) * 0.2 + Math.sin(t * 0.13 + k) * 0.03, s.h * 0.9, 0.035, D ? 'rgba(253,186,116,' + (0.07 * up).toFixed(3) + ')' : 'rgba(251,146,60,' + (0.06 * up).toFixed(3) + ')'); }
+      fxGlow(c, '253,186,116', sx, sy, 190, (D ? 0.35 : 0.4) * (0.4 + 0.6 * up)); fxGlow(c, '254,215,170', sx, sy, 70, (D ? 0.6 : 0.65) * (0.4 + 0.6 * up)); fxGlow(c, '255,247,237', sx, sy, 30, 0.8 * (0.4 + 0.6 * up));
+      c.globalCompositeOperation = 'source-over';
+      /* birds, now and then */
+      if (t > nextB && !Bd.length) { var by = s.h * fxR(0.15, 0.4), dir = Math.random() < 0.5 ? 1 : -1; for (k = 0; k < 5; k++) { Bd.push({ x: dir > 0 ? -40 - k * 22 : s.w + 40 + k * 22, y: by + Math.abs(k - 2) * 10 + fxR(-3, 3), d: dir, ph: fxR(0, 6) }); } nextB = t + fxR(18, 30); }
+      c.strokeStyle = D ? 'rgba(226,232,240,.45)' : 'rgba(51,65,85,.4)'; c.lineWidth = 1.4; c.lineCap = 'round';
+      for (k = Bd.length - 1; k >= 0; k--) { var b = Bd[k]; b.x += b.d * 34 * dt; if (b.x < -80 || b.x > s.w + 80) { if ((b.d > 0 && b.x > s.w + 80) || (b.d < 0 && b.x < -80)) { Bd.splice(k, 1); continue; } } var fl = Math.sin(t * 6 + b.ph) * 4; c.beginPath(); c.moveTo(b.x - 8, b.y - fl); c.quadraticCurveTo(b.x - 3, b.y - 3, b.x, b.y); c.quadraticCurveTo(b.x + 3, b.y - 3, b.x + 8, b.y - fl); c.stroke(); }
+      /* the layers of cloud, far to near */
+      L.forEach(function (l, n) {
+        var y = l.y * s.h, off = (t * l.sp) % l.gap, base = Math.floor(t * l.sp / l.gap), cnt = Math.ceil(s.w / l.gap) + 3, j, cg = c.createLinearGradient(0, y - l.gap * 0.7, 0, y + l.gap * 0.6), lit = 0.5 + 0.5 * up;
+        if (D) { cg.addColorStop(0, 'rgba(253,186,116,' + ((0.13 + 0.04 * n) * lit).toFixed(3) + ')'); cg.addColorStop(0.45, 'rgba(167,139,250,' + (0.1 + 0.03 * n).toFixed(3) + ')'); cg.addColorStop(1, 'rgba(49,46,129,' + (0.16 + 0.05 * n).toFixed(3) + ')'); }
+        else { cg.addColorStop(0, 'rgba(253,186,116,' + ((0.15 + 0.05 * n) * lit).toFixed(3) + ')'); cg.addColorStop(0.45, 'rgba(244,182,200,' + (0.14 + 0.04 * n).toFixed(3) + ')'); cg.addColorStop(1, 'rgba(196,181,253,' + (0.15 + 0.05 * n).toFixed(3) + ')'); }
+        c.fillStyle = cg; c.beginPath();
+        for (j = 0; j < cnt; j++) { var idx = base + j, x = j * l.gap - off - l.gap + hash(idx + n * 97) * l.gap * 0.3, r = l.gap * (0.34 + 0.3 * hash(idx * 3 + n)) * (1 + 0.04 * Math.sin(t * 0.6 + idx)), cy = y - r * 0.25 + hash(idx * 7 + n) * 10, r2 = r * (0.45 + 0.2 * hash(idx * 11 + n)); c.moveTo(x + r, cy); c.ellipse(x, cy, r, r * 0.72, 0, 0, FX_TAU); c.moveTo(x + r * 0.55 + r2, cy - r * 0.42); c.ellipse(x + r * 0.55, cy - r * 0.42, r2, r2 * 0.8, 0, 0, FX_TAU); }
+        c.rect(-10, y, s.w + 20, s.h - y + 10); c.fill();
+      });
+    };
+  };
+
+  /* ---------- living themes: a dark page with a scene behind it ---------- */
+  /* Black opal (Epic): a dark stone full of fire. Patches of color flash and fade as the light moves over it, and they shift
+     when you scroll, the way an opal changes when you tilt it */
+  FX_LIVING['prize-opal'] = function (s) {
+    var C = [], W0 = 0, H0 = 0, HUE = [150, 168, 186, 200, 214, 262, 292, 330, 12, 42], GL = HUE.map(function (h) { return gwRgb(h, 88, 60); }), R = gwRng(17);
+    function build() {
+      C = []; W0 = s.w; H0 = s.h; var z = 38, dx = z * 1.5, dy = z * Math.sqrt(3), i, j;
+      for (i = 0; i * dx < s.w + z * 2; i++) { for (j = 0; j * dy < s.h + z * 2; j++) { var cx = i * dx, cy = j * dy + (i % 2 ? dy / 2 : 0), P = []; for (var k = 0; k < 6; k++) { var a = k / 6 * FX_TAU + (R() - 0.5) * 0.3, jit = 0.98 + R() * 0.22; P.push([cx + Math.cos(a) * z * jit, cy + Math.sin(a) * z * jit]); } var hi = Math.floor(R() * HUE.length); C.push({ P: P, x: cx, y: cy, z: z, h: HUE[hi], g: GL[hi], a: R() * FX_TAU, ph: R() * 6, sh: 0.6 + R() * 0.5 }); } }
+    }
+    return function (t) {
+      if (s.w !== W0 || s.h !== H0) { build(); }
+      var c = s.ctx, sy = 0; try { sy = window.scrollY || 0; } catch (e) { sy = 0; }
+      var la = t * 0.22 + sy * 0.004;
+      c.globalCompositeOperation = 'lighter';
+      fxGlow(c, '165,243,252', s.w * (0.3 + 0.2 * Math.sin(t * 0.07)), s.h * 0.3, s.w * 0.7, 0.06); fxGlow(c, '244,114,182', s.w * (0.7 - 0.2 * Math.sin(t * 0.05)), s.h * 0.75, s.w * 0.6, 0.05);
+      C.forEach(function (q) {
+        var f = Math.cos(la * q.sh + q.a), I = f > 0.55 ? Math.pow((f - 0.55) / 0.45, 2) * (0.6 + 0.4 * Math.sin(t * 0.9 + q.ph)) : 0;
+        if (I < 0.03) { return; }
+        fxGlow(c, q.g, q.x, q.y, q.z * 1.9, 0.22 * I); c.fillStyle = gwHsl((q.h + 18 * Math.sin(la + q.ph)) % 360, 88, 58, 0.16 * I); gwPoly(c, q.P); c.fill();
+      });
+      c.globalCompositeOperation = 'source-over';
+    };
+  };
+  FX_LIVE_THEMES['prize-opal'] = 1;
+  /* Thunderhead (Legendary): storm clouds roll along the top of the page, lightning flickers inside them and now and then
+     strikes down the edge of the page, and soft rain falls */
+  FX_LIVING['prize-thunderhead'] = function (s) {
+    var Dr = [], ev = null, next = 2, i;
+    for (i = 0; i < 90; i++) { Dr.push({ x: Math.random(), y: Math.random(), v: fxR(0.5, 0.8), l: fxR(8, 16) }); }
+    function bank(c, t, y, hgt, sp, seed, gap) { var off = (t * sp) % gap, base = Math.floor(t * sp / gap), j, P = []; c.beginPath(); for (j = 0; j < Math.ceil(s.w / gap) + 3; j++) { var idx = base + j, r = gap * (0.35 + 0.55 * fxRnd(idx * 7 + seed)), x = j * gap - off - gap + fxRnd(idx + seed) * gap * 0.7, cy = y + (fxRnd(idx * 3 + seed) - 0.3) * hgt * 0.5; c.moveTo(x + r, cy); c.arc(x, cy, r, 0, FX_TAU); P.push([x, cy, r]); } c.rect(-10, -10, s.w + 20, y + 10); return P; }
+    return function (t, dt) {
+      var c = s.ctx, top = Math.min(250, s.h * 0.26), fl = 0, k;
+      if (!ev && t > next) { var ty = Math.random(), side = Math.random() < 0.5 ? fxR(0.03, 0.14) : fxR(0.86, 0.97); ev = { t0: t, bolt: ty < 0.55, x: (ty < 0.55 ? side : fxR(0.1, 0.9)) * s.w }; if (ev.bolt) { ev.P = fxJag(ev.x, top * 0.85, ev.x + fxR(-40, 40), s.h * fxR(0.55, 0.9), 0.4, 6); var b = ev.P[20]; ev.B = fxJag(b[0], b[1], b[0] + fxR(-60, 60), b[1] + fxR(40, 120), 0.5, 4); } }
+      if (ev) { var e = t - ev.t0; fl = [1, 0.15, 0.85, 0.05, 0.6, 0.25, 0][Math.min(6, Math.floor(e / 0.07))]; if (e > 0.5) { ev = null; next = t + fxR(2.5, 6.5); } }
+      /* rain */
+      c.strokeStyle = 'rgba(148,163,184,.16)'; c.lineWidth = 1; c.beginPath();
+      Dr.forEach(function (d) { d.y += dt * d.v; if (d.y > 1.05) { d.y -= 1.1; d.x = Math.random(); } var x = d.x * s.w - d.y * 40, y = top * 0.6 + d.y * (s.h - top * 0.6); c.moveTo(x, y); c.lineTo(x - 3, y + d.l); }); c.stroke();
+      c.globalCompositeOperation = 'lighter'; fxGlow(c, '99,102,241', s.w * 0.5, top * 0.7, s.w * 0.8, 0.08); if (fl > 0) { fxGlow(c, '165,180,252', s.w / 2, s.h / 2, s.w, 0.05 * fl); }
+      c.globalCompositeOperation = 'source-over';
+      /* the cloud ceiling: three rows of bulging cloud, lit from inside when the lightning flickers */
+      c.fillStyle = '#131827'; bank(c, t, top * 0.42, top * 0.4, 4, 9, 86); c.fill();
+      c.fillStyle = '#1A2133'; bank(c, t, top * 0.66, top * 0.45, 7, 3, 70); c.fill();
+      c.fillStyle = 'rgba(34,42,62,.92)'; var FR = bank(c, t, top * 0.86, top * 0.3, 11, 17, 52); c.fill();
+      c.lineWidth = 1.4; c.strokeStyle = 'rgba(165,180,252,' + (0.1 + 0.45 * fl).toFixed(3) + ')'; c.beginPath(); FR.forEach(function (p) { c.moveTo(p[0] + Math.cos(0.5) * p[2], p[1] + Math.sin(0.5) * p[2]); c.arc(p[0], p[1], p[2], 0.5, Math.PI - 0.5); }); c.stroke();
+      if (fl > 0) {
+        c.save(); bank(c, t, top * 0.86, top * 0.3, 11, 17, 52); c.clip(); c.globalCompositeOperation = 'lighter'; fxGlow(c, '165,180,252', ev.x, top * 0.55, Math.min(380, s.w * 0.85), 0.55 * fl); fxGlow(c, '224,231,255', ev.x, top * 0.65, 150, 0.32 * fl); c.restore();
+        c.globalCompositeOperation = 'lighter'; if (ev.bolt) { fxBolt(c, ev.P, fl * 0.9, '165,180,252'); fxBolt(c, ev.B, fl * 0.6, '165,180,252'); }
+      }
+      c.globalCompositeOperation = 'source-over';
+    };
+  };
+  FX_LIVE_THEMES['prize-thunderhead'] = 1;
+  /* Crystal cavern (Mythic): the page is a cave lined with giant crystals that glow from within. Shafts of light fall from an
+     opening above, water drips from the crystal tips and rings as it lands, and every so often a chime runs through the cave
+     and every crystal lights up as it passes */
+  FX_LIVING['prize-cavern'] = function (s) {
+    var Cr = [], key = '', off = null, Dp = [], Rp = [], Mo = [], i;
+    var HU = [[268, 70, 58], [190, 80, 52], [300, 62, 62], [174, 64, 44], [248, 72, 66]];
+    for (i = 0; i < 30; i++) { Mo.push({ x: Math.random(), y: Math.random(), sp: fxR(0.006, 0.016), ph: fxR(0, 6) }); }
+    function layout() {
+      var R = gwRng(23), z = Math.max(0.85, Math.min(1.4, Math.min(s.w, s.h) / 480)), out = [], j;
+      for (j = 0; j < 12; j++) { var side = j % 2 ? 1 : -1, y = (0.12 + (j >> 1) / 6 * 0.86 + R() * 0.05) * s.h, len = (50 + R() * 90) * z; out.push({ bx: side < 0 ? -6 : s.w + 6, by: y, an: side < 0 ? -0.25 - R() * 0.65 : Math.PI + 0.25 + R() * 0.65, len: len, wid: (14 + R() * 16) * z, h: HU[j % HU.length] }); }
+      for (j = 0; j < 7; j++) { var x = (0.06 + j / 6 * 0.88 + (R() - 0.5) * 0.06) * s.w; out.push({ bx: x, by: -6, an: Math.PI / 2 + (R() - 0.5) * 0.5, len: (36 + R() * 60) * z, wid: (12 + R() * 12) * z, h: HU[(j + 2) % HU.length], top: 1 }); }
+      for (j = 0; j < 8; j++) { var x2 = (0.04 + j / 7 * 0.92 + (R() - 0.5) * 0.05) * s.w; out.push({ bx: x2, by: s.h + 6, an: -Math.PI / 2 + (R() - 0.5) * 0.6, len: (30 + R() * 70) * z, wid: (14 + R() * 14) * z, h: HU[(j + 1) % HU.length] }); }
+      out.forEach(function (q) { q.tx = q.bx + Math.cos(q.an) * q.len; q.ty = q.by + Math.sin(q.an) * q.len; q.mx = (q.bx + q.tx) / 2; q.my = (q.by + q.ty) / 2; q.rgb = gwRgb(q.h[0], q.h[1], 66); });
+      return out;
+    }
+    return function (t, dt) {
+      var c = s.ctx, d = s.c.width / Math.max(1, s.w), k2 = s.w + 'x' + s.h + ':' + d, cyc = t % 11, wave = cyc < 2.4 ? cyc / 2.4 : -1, k;
+      if (k2 !== key) { key = k2; Cr = layout(); off = document.createElement('canvas'); off.width = Math.max(1, Math.round(s.w * d)); off.height = Math.max(1, Math.round(s.h * d)); var o = off.getContext('2d'); o.scale(d, d); Cr.forEach(function (q) { gwPrism(o, q.bx, q.by, q.an, q.len, q.wid, q.h[0], q.h[1], q.h[2] - 8, 0, 0.85); }); }
+      c.globalCompositeOperation = 'lighter';
+      /* light falling from an opening above */
+      for (k = 0; k < 4; k++) { fxBeam(c, s.w * (0.42 + k * 0.05), -40, Math.PI / 2 + (k - 1.5) * 0.09 + Math.sin(t * 0.2 + k) * 0.02, s.h * 0.95, 0.05, 'rgba(196,181,253,' + (0.05 + 0.02 * Math.sin(t * 0.5 + k)).toFixed(3) + ')'); }
+      Mo.forEach(function (m) { m.y -= dt * m.sp; if (m.y < -0.05) { m.y = 1.05; m.x = Math.random(); } fxGlow(c, '233,213,255', (m.x + Math.sin(t * 0.3 + m.ph) * 0.02) * s.w, m.y * s.h, 2, 0.3 + 0.25 * Math.sin(t * 2 + m.ph)); });
+      /* the crystals, each glowing from within; the chime lights them as it passes */
+      Cr.forEach(function (q, n) { var g = 0.16 + 0.06 * Math.sin(t * 0.8 + n); if (wave >= 0) { var dd = Math.hypot(q.mx - s.w / 2, q.my - s.h / 2) / Math.hypot(s.w / 2, s.h / 2), hit = Math.max(0, 1 - Math.abs(dd - wave) / 0.12); g += 0.5 * hit; } fxGlow(c, q.rgb, q.mx, q.my, q.len * 0.75, g); });
+      c.globalCompositeOperation = 'source-over'; c.drawImage(off, 0, 0, s.w, s.h); c.globalCompositeOperation = 'lighter';
+      if (wave >= 0) { var wr = wave * Math.hypot(s.w / 2, s.h / 2); fxRing(c, s.w / 2, s.h / 2, wr, wr * 0.85, '233,213,255', (1 - wave) * 0.22, 2); Cr.forEach(function (q) { var dd2 = Math.hypot(q.tx - s.w / 2, q.ty - s.h / 2) / Math.hypot(s.w / 2, s.h / 2), f = Math.max(0, 1 - Math.abs(dd2 - wave) / 0.08); if (f > 0) { fxStar4(c, q.tx, q.ty, 10 * f, f, '#FFFFFF'); } }); }
+      /* drips from the crystals overhead, and rings where they land */
+      if (Math.random() < dt * 0.9) { var src = Cr.filter(function (q) { return q.top; }); if (src.length) { var q0 = src[Math.floor(Math.random() * src.length)]; Dp.push({ x: q0.tx, y: q0.ty, v: 0, rgb: q0.rgb }); } }
+      for (k = Dp.length - 1; k >= 0; k--) { var p = Dp[k]; p.v += 900 * dt; p.y += p.v * dt; if (p.y > s.h - 14) { Rp.push({ x: p.x, l: 0, rgb: p.rgb }); Dp.splice(k, 1); continue; } fxGlow(c, p.rgb, p.x, p.y, 3.5, 0.8); }
+      for (k = Rp.length - 1; k >= 0; k--) { var r = Rp[k]; r.l += dt; if (r.l > 1.1) { Rp.splice(k, 1); continue; } var u = r.l / 1.1; fxRing(c, r.x, s.h - 14, 4 + u * 40, 1.5 + u * 8, r.rgb, (1 - u) * 0.5, 1.2); }
+      c.globalCompositeOperation = 'source-over';
+    };
+  };
+  FX_LIVE_THEMES['prize-cavern'] = 1;
+
+  /* ---------- streak styles: small drawings beside the streak number on Home that change as the streak grows (styled in prizes.css) ---------- */
+  function gwSvg(cls, vb, body) { return '<svg class="pz-si ' + cls + '" viewBox="' + vb + '" aria-hidden="true">' + body + '</svg>'; }
+  function gwDiamond(x, y, r, cls) { return '<path class="' + cls + '" d="M' + (x - r) + ' ' + y + 'l' + r * 0.5 + ' ' + (-r * 0.6) + 'h' + r + 'l' + r * 0.5 + ' ' + r * 0.6 + 'l' + (-r) + ' ' + r * 1.1 + 'z"/><path class="gw-facet" d="M' + (x - r * 0.5) + ' ' + (y - r * 0.6) + 'l' + r * 0.5 + ' ' + r * 0.6 + 'l' + r * 0.5 + ' ' + (-r * 0.6) + 'M' + (x - r) + ' ' + y + 'h' + 2 * r + '"/>'; }
+  /* Cairn (Common): balanced stones, one more each week up to six; at 100 days a gem sits on top */
+  FX_STREAK.cairn = function (n) {
+    var k = Math.min(6, 2 + Math.floor(n / 7)), S = [[24, 50, 16, 5.5], [23, 40.5, 13, 4.8], [25, 32, 10.5, 4.2], [23.5, 24.5, 8.5, 3.6], [24.5, 18, 6.5, 3], [24, 12.6, 4.8, 2.4]], out = '<path class="gw-ground" d="M3 55.5h42"/>', i;
+    for (i = 0; i < k; i++) { var q = S[i]; out += '<ellipse class="gw-st' + (i % 3) + '" cx="' + q[0] + '" cy="' + q[1] + '" rx="' + q[2] + '" ry="' + q[3] + '"/><path class="gw-sthi" d="M' + (q[0] - q[2] * 0.55) + ' ' + (q[1] - q[3] * 0.35) + 'q' + q[2] * 0.4 + ' ' + (-q[3] * 0.55) + ' ' + q[2] * 0.8 + ' ' + (-q[3] * 0.5) + '"/>'; }
+    if (n >= 100) { out += '<g class="gw-cgem">' + gwDiamond(24, 5.4, 4.6, 'gw-gem') + '</g>'; }
+    var top = n >= 100 ? 0 : Math.min(24, S[k - 1][1] - S[k - 1][3] - 3);
+    return gwSvg('gw-cairn' + (n >= 100 ? ' gw-top' : ''), '0 ' + top.toFixed(1) + ' 48 ' + (58 - top).toFixed(1), out);
+  };
+  /* Thermometer (Common): the red line climbs with the streak and reaches the top at 30 days; at 100 days the heat shimmers off it */
+  FX_STREAK.thermo = function (n) {
+    var f = Math.min(1, n / 30), top = 33 - f * 25;
+    return gwSvg('gw-thermo' + (n >= 30 ? ' gw-full' : '') + (n >= 100 ? ' gw-hot' : ''), '0 0 34 52',
+      (n >= 100 ? '<path class="gw-heat" d="M6 20c-2-2.5 2-4 0-6.5s2-4 0-6.5M28 20c-2-2.5 2-4 0-6.5s2-4 0-6.5"/>' : '') +
+      '<path class="gw-tglass" d="M12.5 8a4.5 4.5 0 0 1 9 0v26a8.5 8.5 0 1 1-9 0z"/><rect class="gw-tmerc" x="15" y="' + top.toFixed(1) + '" width="4" height="' + (40 - top).toFixed(1) + '" rx="2"/><circle class="gw-tbulb" cx="17" cy="41" r="5.6"/><path class="gw-ttick" d="M24 10h3M24 16h2M24 22h3M24 28h2"/>');
+  };
+  /* Treasure chest (Rare): shut at first; at 7 days the lid lifts and light spills out; at 30 days it opens on gold and gems,
+     and at 100 days it overflows */
+  FX_STREAK.chest = function (n) {
+    var body = '<rect class="gw-wood" x="6" y="26" width="40" height="18" rx="2"/><path class="gw-band" d="M13 26v18M39 26v18"/><rect class="gw-lock" x="22.5" y="27" width="7" height="8" rx="1.5"/>', out;
+    if (n < 7) { out = body + '<path class="gw-wood" d="M6 26v-5a9 8 0 0 1 9-8h22a9 8 0 0 1 9 8v5z"/><path class="gw-band" d="M13 14v12M39 14v12"/>'; }
+    else if (n < 30) { out = '<path class="gw-glowline" d="M8 25.5h36"/>' + body + '<g transform="rotate(-14 6 26)"><path class="gw-wood" d="M6 25v-5a9 8 0 0 1 9-8h22a9 8 0 0 1 9 8v5z"/><path class="gw-band" d="M13 13v12M39 13v12"/></g>'; }
+    else {
+      var heap = '<path class="gw-gold" d="M8 27c3-6 8-8 18-8s15 2 18 8z"/><circle class="gw-coin" cx="15" cy="23" r="3"/><circle class="gw-coin" cx="35" cy="22.5" r="3"/><circle class="gw-coin" cx="25" cy="20" r="3"/>' + gwDiamond(20, 21, 3.2, 'gw-gem gw-g1') + gwDiamond(30, 19.5, 3, 'gw-gem gw-g2');
+      if (n >= 100) { heap += '<circle class="gw-coin" cx="9" cy="42" r="2.6"/><circle class="gw-coin" cx="44.5" cy="43" r="2.4"/>' + gwDiamond(25, 13.5, 3.6, 'gw-gem gw-g3') + '<path class="gw-spark" d="M10 13l1 2 2 1-2 1-1 2-1-2-2-1 2-1zM42 9l1 2 2 1-2 1-1 2-1-2-2-1 2-1z"/>'; }
+      out = '<path class="gw-lidin" d="M7 26l3-15h32l3 15z"/>' + heap + body;
+    }
+    return gwSvg('gw-chest' + (n >= 7 && n < 30 ? ' gw-ajar' : '') + (n >= 100 ? ' gw-over' : ''), '0 0 52 48', out);
+  };
+  /* Skies (Rare): the weather clears as the streak grows: rain, then cloud, then the sun breaking through, then a clear sky,
+     and at 100 days a rainbow */
+  FX_STREAK.skies = function (n) {
+    var st = n < 3 ? 0 : n < 7 ? 1 : n < 14 ? 2 : n < 30 ? 3 : n < 100 ? 4 : 5, out = '', i, rays = '';
+    for (i = 0; i < 8; i++) { var a = i / 8 * Math.PI * 2; rays += 'M' + (30 + Math.cos(a) * 11).toFixed(1) + ' ' + (18 + Math.sin(a) * 11).toFixed(1) + 'L' + (30 + Math.cos(a) * 14.5).toFixed(1) + ' ' + (18 + Math.sin(a) * 14.5).toFixed(1); }
+    if (st === 5) { ['#EF4444', '#F59E0B', '#22C55E', '#3B82F6', '#8B5CF6'].forEach(function (col, j) { out += '<path class="gw-rb" stroke="' + col + '" d="M' + (4 + j * 2.6) + ' 44a' + (22 - j * 2.6) + ' ' + (22 - j * 2.6) + ' 0 0 1 ' + (44 - j * 5.2) + ' 0"/>'; }); }
+    if (st >= 2) { out += '<g class="gw-sun' + (st >= 4 ? ' gw-clear' : '') + '"><path class="gw-ray" d="' + rays + '"/><circle class="gw-sunc" cx="30" cy="18" r="8"/></g>'; }
+    if (st <= 3) { var big = st <= 1, cx = big ? 0 : st === 2 ? 0 : 8; out += '<path class="gw-cloud' + (st === 0 ? ' gw-rainc' : '') + '" transform="translate(' + cx + ' 0)' + (st === 3 ? ' scale(.8) translate(-2 10)' : '') + '" d="M10 36h26a7 7 0 0 0 0-14 9.5 9.5 0 0 0-18-2.5A7.5 7.5 0 0 0 10 36z"/>'; }
+    if (st === 0) { out += '<path class="gw-drop gw-d1" d="M15 40l-2 5"/><path class="gw-drop gw-d2" d="M23 40l-2 5"/><path class="gw-drop gw-d3" d="M31 40l-2 5"/>'; }
+    return gwSvg('gw-skies', '0 0 52 48', out);
+  };
+  /* Rainbow (Epic): one band for every week, red first, until all seven shine at 49 days; at 100 days it shimmers */
+  FX_STREAK.rainbow = function (n) {
+    var k = Math.min(7, Math.floor(n / 7)), C = ['#EF4444', '#F97316', '#FACC15', '#22C55E', '#3B82F6', '#6366F1', '#A855F7'], out = '', i;
+    out += '<path class="gw-rbghost" d="M5 36a23 23 0 0 1 46 0"/>';
+    for (i = 0; i < k; i++) { var r = 23 - i * 2.7; out += '<path class="gw-rb" stroke="' + C[i] + '" d="M' + (28 - r).toFixed(1) + ' 36a' + r.toFixed(1) + ' ' + r.toFixed(1) + ' 0 0 1 ' + (2 * r).toFixed(1) + ' 0"/>'; }
+    out += '<path class="gw-cloud gw-rbcl" d="M0 38h11a4 4 0 0 0 0-8 5 5 0 0 0-9-1 4 4 0 0 0-2 9z"/><path class="gw-cloud gw-rbcl" d="M44 38h11a4 4 0 0 0 0-8 5 5 0 0 0-9-1 4 4 0 0 0-2 9z"/>';
+    if (n >= 100) { out += '<path class="gw-spark" d="M28 3l1 2.2 2.2 1-2.2 1-1 2.2-1-2.2-2.2-1 2.2-1zM9 12l.8 1.6 1.6.8-1.6.8-.8 1.6-.8-1.6-1.6-.8 1.6-.8zM47 12l.8 1.6 1.6.8-1.6.8-.8 1.6-.8-1.6-1.6-.8 1.6-.8z"/>'; }
+    return gwSvg('gw-rainbow' + (k >= 7 ? ' gw-full' : '') + (n >= 100 ? ' gw-shine' : ''), '-3 0 64 42', out);
+  };
+  /* Hidden gem (Legendary): a plain rock that cracks at 7 days and glows through its cracks at 14; at 30 days it splits open
+     on a geode of crystals, and at 100 days a cut gem rises out of it and shines */
+  FX_STREAK.hiddengem = function (n) {
+    var out = '';
+    if (n < 30) {
+      out = '<path class="gw-rock" d="M8 40l2.5-13 8.5-9 12 .5 9 8.5 2.5 12-5.5 6H13z"/><path class="gw-rockhi" d="M12 27l7-7"/>';
+      if (n >= 7) { out += '<path class="gw-crack' + (n >= 14 ? ' gw-lit' : '') + '" d="M25 18.5l-2 7 3 5-2 6 1 7"/>'; }
+      if (n >= 14) { out += '<path class="gw-crack gw-lit" d="M26 30.5l6 3 2 5"/>'; }
+      return gwSvg('gw-hgem' + (n >= 14 ? ' gw-warm' : ''), '2 13 46 37', out);
+    }
+    var rock = '', teeth = '', i, W = [0.06, -0.04, 0.08, 0, -0.06, 0.05, -0.02, 0.07, -0.05, 0.03, -0.07, 0.04, 0.02, -0.03];
+    for (i = 0; i < 14; i++) { var ra = i / 14 * Math.PI * 2; rock += (i ? 'L' : 'M') + (25 + Math.cos(ra) * 20 * (1 + W[i])).toFixed(1) + ' ' + (33 + Math.sin(ra) * 15.5 * (1 + W[i])).toFixed(1); }
+    for (i = 0; i < 12; i++) {
+      var a = i / 12 * Math.PI * 2 + 0.2, b = 0.24, L = i % 2 ? 0.42 : 0.3;
+      teeth += 'M' + (25 + Math.cos(a - b) * 11).toFixed(1) + ' ' + (33 + Math.sin(a - b) * 8.4).toFixed(1) + 'L' + (25 + Math.cos(a) * 11 * L).toFixed(1) + ' ' + (33 + Math.sin(a) * 8.4 * L).toFixed(1) + 'L' + (25 + Math.cos(a + b) * 11).toFixed(1) + ' ' + (33 + Math.sin(a + b) * 8.4).toFixed(1) + 'z';
+    }
+    out = '<ellipse class="gw-geoglow" cx="25" cy="33" rx="20" ry="15"/><path class="gw-rock" d="' + rock + 'z"/><ellipse class="gw-band2" cx="25" cy="33" rx="15.5" ry="12"/><ellipse class="gw-band3" cx="25" cy="33" rx="13.2" ry="10.2"/><ellipse class="gw-geo" cx="25" cy="33" rx="11" ry="8.4"/><path class="gw-xtal" d="' + teeth + '"/><ellipse class="gw-heart" cx="25" cy="33" rx="3" ry="2.2"/><path class="gw-rockhi" d="M9 27l4-6"/>';
+    if (n >= 100) { out += '<g class="gw-float">' + gwDiamond(25, 8.5, 6.5, 'gw-gem gw-g3') + '</g><path class="gw-spark" d="M10 7l.8 1.6 1.6.8-1.6.8-.8 1.6-.8-1.6-1.6-.8 1.6-.8zM40 5l.8 1.6 1.6.8-1.6.8-.8 1.6-.8-1.6-1.6-.8 1.6-.8z"/>'; }
+    return gwSvg('gw-hgem gw-open' + (n >= 100 ? ' gw-risen' : ''), n >= 100 ? '0 0 50 52' : '0 15 50 37', out);
+  };
+  /* Lightning in a bottle (Mythic): a corked bottle with a storm inside. It starts as a spark; at 7 days a cloud forms and
+     a bolt flickers; at 30 days the storm fills it; at 100 days the glass glows and bolts leap to the cork */
+  FX_STREAK.bottle = function (n) {
+    var out = '<path class="gw-glass" d="M15 6h10v6c0 2 2 3 4 5 3 3 5 6 5 11v17c0 4-3 6-6 6H12c-3 0-6-2-6-6V28c0-5 2-8 5-11 2-2 4-3 4-5z"/><rect class="gw-cork" x="14" y="1.5" width="12" height="6" rx="1.6"/>';
+    if (n < 7) { out += '<path class="gw-zap gw-z1" d="M20 33l1.2 2.6 2.6 1.2-2.6 1.2L20 40.6l-1.2-2.6-2.6-1.2 2.6-1.2z"/>'; }
+    else {
+      var big = n >= 30;
+      out += '<path class="gw-scloud" d="M' + (big ? '9 30h22a5 5 0 0 0 0-10 7 7 0 0 0-12.5-2A5.5 5.5 0 0 0 9 30z' : '12 30h16a4 4 0 0 0 0-8 5.5 5.5 0 0 0-10-1.5A4.5 4.5 0 0 0 12 30z') + '"/>';
+      out += '<path class="gw-zap gw-z1" d="M20 30l-3 6h3.5l-2.5 7 6-8.5h-3.5l2-4.5z"/>';
+      if (big) { out += '<path class="gw-zap gw-z2" d="M27 30l-2 4h2.5l-2 5 4.5-6h-2.5l1.5-3z"/><path class="gw-zap gw-z3" d="M13 30l-1.5 3.5h2l-1.5 4 3.5-5h-2l1-2.5z"/>'; }
+      if (n >= 100) { out += '<path class="gw-arc" d="M18.5 17l-1.5-3 2-2.5-1.5-3.5M22 17l1.5-3-2-2.5 1.5-3.5"/>'; }
+    }
+    return gwSvg('gw-bottle' + (n >= 30 ? ' gw-storm' : '') + (n >= 100 ? ' gw-charged' : ''), '0 0 40 54', out);
   };
