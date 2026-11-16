@@ -97,6 +97,7 @@
     var na = typeof cs.notes === 'string' ? cs.notes.trim() : '', nb = typeof is.notes === 'string' ? is.notes.trim() : '';
     s.notes = !nb || na === nb || na.indexOf(nb) >= 0 ? na : !na ? nb : (na + '\n\n' + nb).slice(0, 10000);
     s.pz = pzMerge(cs.pz, is.pz);
+    s.chal = chalMerge(cs.chal, is.chal);
     out.s = s;
     return out;
   }

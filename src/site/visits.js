@@ -12,6 +12,8 @@
     } catch (e) { return false; }
   }
   function visitName(token) {
+    /* a challenge link holds a friend's name: it counts as "ch", with nothing from the link */
+    if (/^#?ch-/i.test(String(token || ''))) { return 'ch'; }
     return String(token || 'home').toLowerCase().replace(/^#/, '').replace(/-[0-9a-f]{6,}$/, '').replace(/[^a-z0-9-]/g, '').slice(0, 40) || 'home';
   }
   function visitCount(token) {
