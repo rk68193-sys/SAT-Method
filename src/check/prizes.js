@@ -379,7 +379,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     }
     ok(auras.length === CATALOG.filter(it => it.id.indexOf('aura:') === 0).length && !dark.length, 'all ' + auras.length + ' auras draw on their tiles' + (dark.length ? '; blank: ' + dark.join(', ') : ''));
     const bare = [];
-    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'paper:cobweb', 'paper:meteors', 'paper:ufo', 'paper:lava', 'paper:kaleido', 'paper:whale', 'theme:prize-haunted', 'theme:prize-eldritch', 'theme:prize-lanterns', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal']) {
+    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'paper:cobweb', 'paper:meteors', 'paper:ufo', 'paper:lava', 'paper:kaleido', 'paper:whale', 'paper:planes', 'paper:rain', 'paper:gears', 'paper:orbit-view', 'theme:prize-metropolis', 'theme:prize-summit', 'theme:prize-haunted', 'theme:prize-eldritch', 'theme:prize-lanterns', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal']) {
       const slot = id.split(':')[0], b = await t.p.$('[data-pz-wear="' + slot + '"][data-pz-id="' + id + '"]');
       if (!b) { bare.push(id + ' (no Wear)'); continue; }
       await b.evaluate(el => el.scrollIntoView({ block: 'center' })); await b.click(); await t.p.waitForTimeout(900);

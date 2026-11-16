@@ -29,8 +29,8 @@
     ['haunt', 'Haunted', 'Friendly frights: ghosts, bats, cobwebs and eyes that open in the dark.'],
     ['unknown', 'The Unknown', 'Things from far away: portals, visitors, slime, and something that watches.'],
     ['dream', 'Dreamscape', 'Color and wonder: butterflies, paper cranes, a fox spirit and a whale made of stars.'],
-    ['zenith', 'Zenith', 'Stage auras: a whole scene above your streak. Wings, an eclipse, a galaxy, a tree with a heart of light.'],
-    ['paradox', 'Paradox', 'Stage auras of black and white, clocks, a cube from the fourth dimension and a machine that is not quite working.'],
+    ['zenith', 'Zenith', 'Whole scenes: wings, an eclipse, a galaxy, a rocket launch, a dragon, mountains before dawn.'],
+    ['paradox', 'Paradox', 'Scenes of black and white, clocks and gears, a theater, a city at night and a machine that is not quite working.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value */
@@ -159,7 +159,24 @@
     ['overtime', 'Overtime', 'l', 'aura', 'paradox', 'A stage aura: three clocks running at different speeds over turning rings of Roman numerals, with bits of math drifting past.'],
     ['tesseract', 'Tesseract', 'l', 'aura', 'paradox', 'A stage aura: a cube from the fourth dimension turns itself inside out over a glowing grid, and bursts every few seconds.'],
     ['equilibrium', 'Equilibrium', 'l', 'aura', 'paradox', 'A stage aura: a black sphere and a white sphere circle each other, and every few seconds black and white trade places.'],
-    ['monolith', 'Monolith', 'm', 'aura', 'paradox', 'A stage aura: five broken standing stones, the tallest split by a line of light, glass rising from the ground, quiet words, and a moment when everything turns to white.']
+    ['monolith', 'Monolith', 'm', 'aura', 'paradox', 'A stage aura: five broken standing stones, the tallest split by a line of light, glass rising from the ground, quiet words, and a moment when everything turns to white.'],
+    /* scenes in the other kinds of look */
+    ['spotlight', 'Spotlight', 'c', 'fx', 'paradox', 'A stage light swings across the dark and settles on your answer.'],
+    ['constellation', 'Starlit check', 'r', 'fx', 'zenith', 'Stars come out around your answer and join up into a check mark.'],
+    ['curtain', 'Curtain call', 'e', 'fx', 'paradox', 'Red curtains sweep shut, then open on your answer in the spotlight while roses land around it.'],
+    ['liftoff', 'Liftoff', 'l', 'fx', 'zenith', 'Three, two, one: a rocket launches from your answer through smoke and streaking stars.'],
+    ['hightide', 'High tide', 'l', 'fx', 'zenith', 'The sea rises over the page, fish swim past your answer, and the water drains away.'],
+    ['epiphany', 'Epiphany', 'm', 'fx', 'paradox', 'The screen goes black and three words type themselves out. Stones rise behind your answer, everything turns white for a moment, and glass drifts up.'],
+    ['dragonflight', 'Dragonflight', 'm', 'fx', 'zenith', 'A dragon the width of the screen flies behind your answer and breathes fire over it.'],
+    ['planes', 'Paper planes', 'c', 'paper', 'zenith', 'Moving: paper planes glide across the page on dotted trails.'],
+    ['rain', 'Rainy window', 'r', 'paper', 'paradox', 'Moving: rain runs down the glass in front of soft city lights.'],
+    ['gears', 'Clockwork', 'l', 'paper', 'paradox', 'Moving: great gears turn against each other behind the page while a pendulum swings.'],
+    ['orbit-view', 'Low orbit', 'l', 'paper', 'zenith', 'Moving: the curve of a planet glows along the bottom of the page under a ringed world, while satellites cross.'],
+    ['prize-metropolis', 'Metropolis', 'e', 'theme', 'paradox', 'A living theme: a city skyline at night, windows switching on and off, a moon and a plane crossing.'],
+    ['prize-summit', 'Summit', 'l', 'theme', 'zenith', 'A living theme: mountain ridges before dawn, mist drifting between them, birds crossing a rose sky.'],
+    ['hourglass', 'Hourglass', 'r', 'streak', 'paradox', 'Sand runs through as your streak grows, and it is all through at 30 days.'],
+    ['crown', 'Crown', 'e', 'streak', 'zenith', 'A crown that gains a jewel for each week of your streak, up to five.'],
+    ['comet-tail', 'Comet tail', 'l', 'streak', 'zenith', 'A comet whose tail grows a little longer every day.']
   ].map(function (r) { return { id: r[3] + ':' + r[0], key: r[0], name: r[1], tier: r[2], kind: r[3], series: r[4], what: r[5] }; });
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });

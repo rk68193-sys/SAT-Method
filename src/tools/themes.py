@@ -122,6 +122,13 @@ PRIZE = {
  'prize-lanterns': dict(COMMON_DARK, paper='#0E0B24', card='#181436', sunk='#221D48', ink='#FFF7EA', ink2='#F1DFC4', muted='#B5A7C9', line='#2C2556', line_strong='#453B7C',
    pencil='#FBBF24', pencil_text='#FDE68A', hl='#43300B', hl_ink='#FFF8DC', act='#FBBF24', act_ink='#1F1403', act_hover='#F59E0B', focus='#FDE68A',
    d1='#2C2556', d2='#B45309', d3='#FDE68A', grad='linear-gradient(120deg, #FDE68A 0%, #FDBA74 50%, #F9A8D4 100%)', on_grad='#1F1403', aura='rgba(251, 191, 36, .28)'),
+ # a city at night, and mountains before dawn
+ 'prize-metropolis': dict(COMMON_DARK, paper='#070B18', card='#0E1426', sunk='#151D36', ink='#F2F5FF', ink2='#D3DAF2', muted='#98A3C7', line='#1C2747', line_strong='#2C3B69',
+   pencil='#FBBF24', pencil_text='#FDE68A', hl='#3F2F0A', hl_ink='#FFF8DC', act='#FBBF24', act_ink='#1F1403', act_hover='#F59E0B', focus='#FDE68A',
+   d1='#1C2747', d2='#B45309', d3='#FDE68A', grad='linear-gradient(120deg, #FDE68A 0%, #F9A8D4 55%, #A5B4FC 100%)', on_grad='#1F1403', aura='rgba(251, 191, 36, .26)'),
+ 'prize-summit': dict(COMMON_DARK, paper='#120E1E', card='#1B162C', sunk='#251E3B', ink='#FFF4F1', ink2='#F3D9D6', muted='#B9A4B8', line='#2F2748', line_strong='#473B6B',
+   pencil='#FDA4AF', pencil_text='#FECDD3', hl='#4A1D2B', hl_ink='#FFF1F2', act='#FDA4AF', act_ink='#2A0A12', act_hover='#FB7185', focus='#FECDD3',
+   d1='#2F2748', d2='#BE123C', d3='#FECDD3', grad='linear-gradient(120deg, #FECDD3 0%, #FDBA74 50%, #C4B5FD 100%)', on_grad='#2A0A12', aura='rgba(253, 164, 175, .28)'),
 }
 def finish(d):
     """fill the shadow and glass tokens the prize palettes leave out, from the light or dark theme they build on"""
