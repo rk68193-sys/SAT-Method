@@ -72,8 +72,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - group: accounts, prizes and visits
-            checks: account prizes visits
+          - group: accounts, prizes, visits and challenges
+            checks: account prizes visits challenge
           - group: pages and practice
             checks: additions habit smoke nav msmoke
           - group: tracks, text and sources
