@@ -29,6 +29,8 @@
     ['haunt', 'Haunted', 'Friendly frights: ghosts, bats, cobwebs and eyes that open in the dark.'],
     ['unknown', 'The Unknown', 'Things from far away: portals, visitors, slime, and something that watches.'],
     ['dream', 'Dreamscape', 'Color and wonder: butterflies, paper cranes, a fox spirit and a whale made of stars.'],
+    ['zenith', 'Zenith', 'Stage auras: a whole scene above your streak. Wings, an eclipse, a galaxy, a tree with a heart of light.'],
+    ['paradox', 'Paradox', 'Stage auras of black and white, clocks, a cube from the fourth dimension and a machine that is not quite working.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value */
@@ -145,7 +147,19 @@
     ['cranes', 'Paper cranes', 'e', 'fx', 'dream', 'Folded paper cranes take off from your answer.'],
     ['kitsune', 'Kitsune', 'l', 'aura', 'dream', 'A fox spirit: nine tails of flame fan out behind your streak under a fox mask, with blue foxfire circling.'],
     ['prize-lanterns', 'Lantern festival', 'l', 'theme', 'dream', 'A living theme: glowing paper lanterns rise into a starry dusk.'],
-    ['whale', 'Star whale', 'm', 'paper', 'dream', 'Moving: a whale drawn in stars swims slowly across the page, trailing stardust.']
+    ['whale', 'Star whale', 'm', 'paper', 'dream', 'Moving: a whale drawn in stars swims slowly across the page, trailing stardust.'],
+    /* stage auras: a scene drawn above the streak (FX_STG in fx.js) */
+    ['veil', 'Polar veil', 'r', 'aura', 'zenith', 'A stage aura: curtains of pink and teal light, with stars hanging from them on threads over a ring of mist.'],
+    ['galaxy', 'Spiral arm', 'e', 'aura', 'zenith', 'A stage aura: a spiral galaxy turns under your streak, a halo floats above, and constellations draw themselves and fade.'],
+    ['totality', 'Totality', 'e', 'aura', 'zenith', 'A stage aura: a total eclipse with a living corona hangs over a dark gate that throws sparks upward.'],
+    ['crescendo', 'Crescendo', 'e', 'aura', 'zenith', 'A stage aura: a ring of sound bars beats under a crown of blue shards while notes ride five flowing lines.'],
+    ['hearthwood', 'Hearthwood', 'l', 'aura', 'zenith', 'A stage aura: a tree on a floating island with a heart of green light, a little house, string lights, falling leaves and fireflies.'],
+    ['seraph', 'Seraph', 'm', 'aura', 'zenith', 'A stage aura: six wings of light covered in eyes that blink, a halo above, runes circling below, and blades of light falling around it.'],
+    ['segfault', 'Segfault', 'e', 'aura', 'paradox', 'A stage aura: a warning sign that will not hold still, numbers that flicker, and a picture that keeps slipping.'],
+    ['overtime', 'Overtime', 'l', 'aura', 'paradox', 'A stage aura: three clocks running at different speeds over turning rings of Roman numerals, with bits of math drifting past.'],
+    ['tesseract', 'Tesseract', 'l', 'aura', 'paradox', 'A stage aura: a cube from the fourth dimension turns itself inside out over a glowing grid, and bursts every few seconds.'],
+    ['equilibrium', 'Equilibrium', 'l', 'aura', 'paradox', 'A stage aura: a black sphere and a white sphere circle each other, and every few seconds black and white trade places.'],
+    ['monolith', 'Monolith', 'm', 'aura', 'paradox', 'A stage aura: five broken standing stones, the tallest split by a line of light, glass rising from the ground, quiet words, and a moment when everything turns to white.']
   ].map(function (r) { return { id: r[3] + ':' + r[0], key: r[0], name: r[1], tier: r[2], kind: r[3], series: r[4], what: r[5] }; });
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });
@@ -173,6 +187,8 @@
     haunt: ['Night Owl', 'Ghost Writer', 'Bat Signal', 'Fearless', 'Midnight Oil', 'Boo-k Worm', 'No Tricks', 'Monster Score'],
     unknown: ['First Contact', 'Unknown Variable', 'Signal Found', 'Deep Thinker', 'Out of This World', 'Portal Hopper', 'Mind Reader', 'The Watcher Blinked'],
     dream: ['Daydreamer', 'Paper Crane', 'Color Theory', 'Lantern Lighter', 'Fox Wisdom', 'Whale Song', 'Butterfly Effect', 'Sweet Dreams'],
+    zenith: ['Rising Star', 'First Light', 'Orbit Keeper', 'Deep Roots', 'Perfect Pitch', 'Wings of Focus', 'Clear Skies', 'High Noon'],
+    paradox: ['Both Sides', 'Clock Watcher', 'Fourth Dimension', 'Bug Fixer', 'Standing Stone', 'Black and White', 'Extra Time', 'Unsolved'],
     test: ['Test Day Ready', 'Pencils Down', 'Calm Breath', 'Full Tank', 'Perfect Score', 'Poem Decoder', 'Trap Spotter', 'Unit Circle Survivor']
   };
   var PZ_TITLES = [
@@ -390,7 +406,7 @@
     if (title) { html += '<p class="pz-title">' + esc(title) + '</p>'; }
     var n = Math.max(0, pzBalance()), free = pzGrants().length;
     html += '<a class="pz-homecoins" href="#crates">' + PZ_COIN + '<span><b>' + pzNum(n) + '</b> ' + (n === 1 ? 'coin' : 'coins') + (free ? ' · ' + plural(free, 'free crate') : '') + ' · Open crates</span></a>';
-    return aura ? '<div class="pz-plate"><canvas class="pz-aura" data-pz-aura="' + PZ_BY[aura].key + '" aria-hidden="true"></canvas>' + html + '</div>' : '<div class="pz-snum">' + html + '</div>';
+    return aura ? '<div class="pz-plate' + fxStageCls(PZ_BY[aura].key) + '"><canvas class="pz-aura" data-pz-aura="' + PZ_BY[aura].key + '" aria-hidden="true"></canvas>' + html + '</div>' : '<div class="pz-snum">' + html + '</div>';
   }
 
   /* ---------- the coin count in the top bar ---------- */
