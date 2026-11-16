@@ -1,4 +1,4 @@
-import sys
+import importlib.util, os, sys
 src, dest = sys.argv[1], sys.argv[2]
 pre = '''<!doctype html>
 <html lang="en">
@@ -27,3 +27,9 @@ pre = '''<!doctype html>
 <meta name="apple-mobile-web-app-title" content="SAT Sprint">
 '''
 open(dest, 'w', encoding='utf-8').write(pre + open(src, encoding='utf-8').read())
+# the prize list for the clubhouse's database (catalog.py), published beside the page as catalog.json
+here = os.path.dirname(os.path.abspath(__file__))
+spec = importlib.util.spec_from_file_location('catalog', os.path.join(here, 'catalog.py'))
+cat = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(cat)
+open(os.path.join(os.path.dirname(os.path.abspath(dest)), 'catalog.json'), 'w', encoding='utf-8').write(cat.text(open(os.path.join(here, 'prizes.js'), encoding='utf-8').read()))

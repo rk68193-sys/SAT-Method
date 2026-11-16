@@ -156,6 +156,8 @@
       else { acctSet('err', res || 'Could not reach your account. Your answers are safe on this device and will be sent when the connection is back.'); }
       if (acctAgain || (res === true && A.dirty)) { acctAgain = false; acctTimer = setTimeout(acctSync, 1500); }
       else if (res !== true) { acctTimer = setTimeout(acctSync, 60000); }
+      /* the clubhouse record (club.js) is fetched or refreshed alongside */
+      clubSynced();
       return res === true;
     });
     return acctRun;
@@ -206,6 +208,7 @@
       acctAdopt({});
     }
     var same = !!prev && prev.uid === uid;
+    if (!same) { clubStop(); }
     A = { uid: uid, email: String(u.email || ''), at: String(sess.access_token), rt: String(sess.refresh_token), exp: Date.now() + (Number(sess.expires_in) || 3600) * 1000,
       rev: same && typeof prev.rev === 'number' ? prev.rev : null, dirty: same ? !!prev.dirty : acctAny(store), last: 0 };
     acctPut();
@@ -230,6 +233,7 @@
     });
   }
   function acctForget() {
+    clubStop();
     A = null; acctPut(); clearTimeout(acctTimer); acctRun = null; acctAgain = false; acctNewPw = false;
     acctAdopt({});
     acctSet('', '');
@@ -372,7 +376,7 @@
       '<section class="sec"><h3 class="h2">Delete my account</h3><p class="lede">Erases the account and everything saved in it. The progress on this device stays here, in this browser. It cannot be undone.</p>' +
         '<p class="row"><button class="btn ghost danger" type="button" id="acct-del">Delete my account</button></p><p class="sg-msg" id="acct-delmsg" role="status" aria-live="polite"></p></section>' +
       '</div>';
-    $('#acct-sync', host).addEventListener('click', function () { acctSync().then(function () { if (cur.view === 'account' && acctIn()) { acctDraw(); } }); });
+    $('#acct-sync', host).addEventListener('click', function () { clubAgain(); acctSync().then(function () { if (cur.view === 'account' && acctIn()) { acctDraw(); } }); });
     $('#acct-out', host).addEventListener('click', function () { acctSignOut(); });
     $('#acct-pwform', host).addEventListener('submit', function (e) {
       e.preventDefault();
@@ -390,7 +394,9 @@
       m.className = 'sg-msg ok'; m.textContent = 'Deleting…';
       acctToken().then(function (tok) { return tok ? acctReq('POST', '/rest/v1/rpc/delete_account', {}, tok) : { ok: false, status: 0, body: null }; }).then(function (r) {
         if (!r.ok) { m.className = 'sg-msg bad'; m.textContent = acctErr(r); return; }
+        clubHandBack();
         A = null; acctPut(); clearTimeout(acctTimer); acctNewPw = false; acctSet('', '');
+        save();
         acctNote = 'Your account is deleted. The progress on this device is still here, in this browser only.';
         buildAccount(); toTop();
       });
@@ -409,8 +415,9 @@
     window.addEventListener('storage', function (e) {
       if (e.key !== ACCT_LS) { return; }
       var was = acctIn(), o = acctRead();
+      if (was && (!o || !A || o.uid !== A.uid)) { clubStop(); }
       A = o; acctLast = JSON.stringify(acctBody());
-      if (was !== acctIn()) { acctSet('', ''); if (cur.view === 'account') { buildAccount(); } } else { acctDraw(); }
+      if (was !== acctIn()) { acctSet('', ''); pzChip(); if (cur.view === 'account') { buildAccount(); } } else { acctDraw(); }
     });
     document.addEventListener('visibilitychange', function () {
       if (!acctIn()) { return; }
@@ -418,5 +425,5 @@
       else if (A.dirty || Date.now() - (A.last || 0) > 30000) { acctSync(); }
     });
     window.addEventListener('pagehide', function () { if (acctIn() && A.dirty) { acctSync(); } });
-    window.addEventListener('online', function () { if (acctIn()) { acctSync(); } });
+    window.addEventListener('online', function () { if (acctIn()) { clubAgain(); acctSync(); } });
   }

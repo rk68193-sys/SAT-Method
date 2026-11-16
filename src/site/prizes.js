@@ -9,7 +9,9 @@
        st stickers found: <sticker> 1
        eq what this device has on: { fx, aura, paper, streak, title }   (the theme is the Appearance setting)
      Keys use only letters, digits, '.', '-' and '_', the names a backup file may hold (BK_KEY in data.js).
-     e, x and st join by the larger value; o, g and fz by union; eq keeps this device's. The balance is e minus x, never stored. */
+     e, x and st join by the larger value; o, g and fz by union; eq keeps this device's. The balance is e minus x, never stored.
+     Signed in to an account in the clubhouse (club.js), the server keeps e, x, o, g, fz and st instead, in the same shape:
+     pz() returns its record, and coins, crates and freezes are asked of the server rather than changed here. */
   var PZ_TIERS = ['c', 'r', 'e', 'l', 'm', 'z'];
   var PZ_TIER = { c: 'Common', r: 'Rare', e: 'Epic', l: 'Legendary', m: 'Mythic', z: 'Radiant' };
   /* Radiant's 0.1% comes out of Common's share, so every other tier keeps the odds it had before Radiant was added */
@@ -270,7 +272,9 @@
     ['century', 'Century', 'Practice 100 days in a row.', function (c) { return c.best >= 100; }]
   ];
 
+  /* signed in to an account in the clubhouse (club.js), the record is the server's, and only eq is this device's */
   function pz() {
+    if (clubShow()) { return clubPz(); }
     var p = store.s.pz;
     if (!isObj(p)) { p = store.s.pz = {}; }
     ['e', 'x', 'o', 'g', 'fz', 'st', 'eq'].forEach(function (k) { if (!isObj(p[k])) { p[k] = {}; } });
@@ -342,6 +346,7 @@
   function pzGrants() { var P = pz(); return Object.keys(P.g).filter(function (k) { return Array.isArray(P.g[k]) && !P.o['g.' + k] && (!P.g[k][1] || !!PZ_SER[P.g[k][1]]); }).map(function (k) { var g = P.g[k]; return { key: k, t: g[0] || 0, series: g[1] || '', min: g[2] || 'c', why: g[3] || '' }; }).sort(function (a, b) { return a.t - b.t; }); }
   function pzCanBuy(series) { return !!PZ_SER[series] && pzBalance() >= PZ_PRICE && (series !== 'test' || pzTestOpen()); }
   function pzOpen(series, grantKey) {
+    if (clubKeeps()) { return null; }
     var P = pz(), id, minTier = series === 'test' ? 'e' : 'c';
     if (grantKey) {
       var g = P.g[grantKey];
@@ -367,9 +372,9 @@
 
   /* ---------- streak freezes: bought ahead, used on their own when a missed day would end a streak ---------- */
   function pzFreezes() { var P = pz(), bought = Object.keys(P.x).filter(function (k) { return k.indexOf('freeze.') === 0; }).length; return Math.max(0, bought - Object.keys(P.fz).length); }
-  function pzBuyFreeze() { var P = pz(); if (pzBalance() < PZ_FREEZE || pzFreezes() >= PZ_FREEZE_MAX) { return false; } P.x['freeze.' + pzId()] = PZ_FREEZE; save(); pzChip(); return true; }
-  function pzFrozen(t) { var P = store.s.pz; return isObj(P) && isObj(P.fz) && !!P.fz[dayKey(t)]; }
-  function pzFrozenKeys() { var P = store.s.pz; return isObj(P) && isObj(P.fz) ? Object.keys(P.fz) : []; }
+  function pzBuyFreeze() { var P = pz(); if (clubKeeps() || pzBalance() < PZ_FREEZE || pzFreezes() >= PZ_FREEZE_MAX) { return false; } P.x['freeze.' + pzId()] = PZ_FREEZE; save(); pzChip(); return true; }
+  function pzFrozen(t) { var P = clubShow() ? CLUB.P : store.s.pz; return isObj(P) && isObj(P.fz) && !!P.fz[dayKey(t)]; }
+  function pzFrozenKeys() { var P = clubShow() ? CLUB.P : store.s.pz; return isObj(P) && isObj(P.fz) ? Object.keys(P.fz) : []; }
   function pzApplyFreeze() {
     var did = function (t) { var c = dayCount(t); return c[0] + c[1] > 0 || pzFrozen(t); }, today = dayStart(Date.now()), t = dayBefore(today), gap = [];
     if (did(t)) { return false; }
@@ -409,6 +414,8 @@
   function pzSoon() { if (pzBusy) { return; } clearTimeout(pzTimer); pzTimer = setTimeout(pzTick, 60); }
   function pzTick() {
     if (pzBusy) { return; }
+    /* in the clubhouse the server counts the coins; until its record arrives, nothing is counted here */
+    if (clubKeeps()) { clubTick(); pzChip(); return; }
     pzBusy = true;
     try {
       var P = pz(), today = dayKey(Date.now()), changed = false, got = 0, why = '', g0 = Object.keys(P.g).length;
@@ -447,6 +454,7 @@
      crate's prizes (records under gift.*, joined by pzMerge), so it reaches every device signed in to the same account. */
   var PZ_GIFT = 'b1c461100aa6812c8cae2b37a2e3da01083e6f2a862e8b022fd1ee53890b6e3a', PZ_GIFT_COINS = 10000;
   function pzGiftAll() {
+    if (clubKeeps()) { return; }
     var P = pz(), t = Date.now();
     /* lowest tier first, so the last record is a Radiant and the promise of an Epic starts again at 10 */
     PZ_ITEMS.slice().sort(function (a, b) { return PZ_TIERS.indexOf(a.tier) - PZ_TIERS.indexOf(b.tier); }).forEach(function (it, i) {

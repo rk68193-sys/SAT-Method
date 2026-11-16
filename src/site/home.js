@@ -30,7 +30,7 @@
       ['mmap', 'm-map', 'My progress', 'See how you are doing on each kind of question, and what to practice next.', 'map']] }
   };
   function navList(subj) { return SUBJ[subj].items; }
-  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home', challenge: 'home' };
+  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home', challenge: 'home', room: 'home', visit: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/></svg>',
@@ -77,7 +77,7 @@
   var lastPage = { v: 'home', subj: 'home' };
 
   /* ---------- the guide bar: where you are and the way back; and the next step at the foot of the page ---------- */
-  var GLOBAL_PAGE = { plan: ['My study plan', 'plan'], data: ['Backup and offline use', 'my-data'], account: ['My account', 'account'], suggest: ['Ask or suggest', 'suggest'], crates: ['Crates', 'crates'], challenge: ['Challenge a friend', 'challenge'] };
+  var GLOBAL_PAGE = { plan: ['My study plan', 'plan'], data: ['Backup and offline use', 'my-data'], account: ['My account', 'account'], suggest: ['Ask or suggest', 'suggest'], crates: ['Crates', 'crates'], challenge: ['Challenge a friend', 'challenge'], room: ['My room', 'room'], visit: ['A shared room', 'room'] };
   function groupName(g) { return GROUPS.filter(function (x) { return x[0] === g; })[0][1]; }
   /* the page you are inside a page with its own contents: a lesson, a reading step, a worked example */
   function deepName(v, tok) {
@@ -197,7 +197,7 @@
     host.innerHTML = '<div class="foot-brand"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.5 12.5l3.8 3.8 7.2-8.3"/></svg></span><span class="brand-w">SAT Sprint</span></a><p>A free study guide for the digital SAT, built from College Board’s own practice questions.</p></div>' +
       col('Reading & Writing', footList('rw')) +
       col('Math', footList('math')) +
-      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline use</a>', '<a href="#crates">Crates</a>', '<a href="#challenge">Challenge a friend</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Ask a question or suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Text size and colors</button>', '<button class="linkbtn foot-tour" type="button" data-tour>Take the one-minute tour</button>']));
+      col('This site', ['<a href="#home">Home</a>', '<a href="#plan">My study plan</a>', '<a href="#my-data">Backup and offline use</a>', '<a href="#crates">Crates</a>', '<a href="#room">My room</a>', '<a href="#challenge">Challenge a friend</a>'].concat(acctOn ? ['<a href="#account">My account</a>'] : []).concat(['<a href="#suggest">Ask a question or suggest a change</a>', '<a href="#suggest-notes">My notes</a>', '<button class="linkbtn foot-theme" type="button">Text size and colors</button>', '<button class="linkbtn foot-tour" type="button" data-tour>Take the one-minute tour</button>']));
   }());
 
   /* ---------- appearance: saved in this browser under its own key ---------- */
@@ -301,8 +301,8 @@
 
   /* the pages that belong to no subject, one tap from Today */
   function moreRowHTML() {
-    var L = [['plan', 'My study plan', 'The week ahead, and your test date'], ['crates', 'Prizes', 'Coins, crates and the looks you have won'], ['challenge', 'Challenge a friend', 'Send five questions and see who gets more right'], ['my-data', 'Backup and offline use', 'Save a copy of your progress'], ['suggest-notes', 'My notes', 'A private scratchpad'], ['suggest', 'Ask or suggest', 'Send a question or an idea']];
-    if (acctOn) { L.splice(2, 0, ['account', acctIn() ? 'My account' : 'Sign in', 'Keep your progress on every device']); }
+    var L = [['plan', 'My study plan', 'The week ahead, and your test date'], ['crates', 'Prizes', 'Coins, crates and the looks you have won'], ['room', 'My room', 'A room to show off your prizes'], ['challenge', 'Challenge a friend', 'Send five questions and see who gets more right'], ['my-data', 'Backup and offline use', 'Save a copy of your progress'], ['suggest-notes', 'My notes', 'A private scratchpad'], ['suggest', 'Ask or suggest', 'Send a question or an idea']];
+    if (acctOn) { L.splice(3, 0, ['account', acctIn() ? 'My account' : 'Sign in', 'Keep your progress on every device']); }
     return '<section class="hsec tmore" id="tmore"><div class="hsec-h"><h2 class="h2">More</h2></div><ul class="tmore-l">' + L.map(function (x) { return '<li><a href="#' + x[0] + '"><b>' + x[1] + '</b><span>' + x[2] + '</span></a></li>'; }).join('') + '</ul></section>';
   }
   /* Today, with a plan: the day's list first, then the streak and the two subjects */

@@ -98,6 +98,7 @@
     s.notes = !nb || na === nb || na.indexOf(nb) >= 0 ? na : !na ? nb : (na + '\n\n' + nb).slice(0, 10000);
     s.pz = pzMerge(cs.pz, is.pz);
     s.chal = chalMerge(cs.chal, is.chal);
+    if (isObj(cs.room) || isObj(is.room)) { s.room = roomMerge(cs.room, is.room); }
     out.s = s;
     return out;
   }
@@ -342,6 +343,8 @@
     });
     $('#bk-erase', host).addEventListener('click', function () {
       if (!window.confirm(acctIn() ? 'Erase every answer, your plan, notes and settings on this device AND in your account? This cannot be undone.' : 'Erase every answer, your plan, notes and settings on this device? This cannot be undone.')) { return; }
+      /* coins, prizes and a shared room kept by the account go too (club.js) */
+      clubErase();
       bkApply({}, '');
       buildData('<b>Erased.</b> This device is back to a fresh start. Your appearance setting and any questions saved for offline use were kept.'); focusQuiet(document.getElementById('data-msg')); toTop();
     });
