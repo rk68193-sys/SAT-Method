@@ -220,8 +220,11 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok(!(await t.p.$('canvas.pz-rv')), 'nothing is left on screen after the last one');
     ok((await t.p.$$eval('.pz-titles li.have', li => li.map(x => x.textContent))).some(x => /Mythic Finder/.test(x)), 'a Radiant earns the Mythic Finder title');
     /* the Learning tree beside the streak on Home: at 120 days, the great tree with lanterns */
-    await t.p.click('[data-pz-wear="streak"][data-pz-id="streak:tree"]'); await t.p.waitForTimeout(300);
-    await t.go('home', 900);
+    await t.p.click('#pz-collection [data-pz-wear="streak"][data-pz-id="streak:tree"]'); await t.p.waitForTimeout(150);
+    ok((await t.saved()).s.pz.eq.streak === 'streak:tree', 'Wear puts the Learning tree on');
+    /* Home from inside the page, the way a student goes there: in this test browser a reload straight after a save can read the
+       saved progress from before it (one run in ten here, wearing nothing) */
+    await t.p.evaluate(() => { location.hash = 'home'; }); await t.p.waitForTimeout(900);
     ok(!!(await t.p.$('.hstreak-n.pz-styled svg.zt.zt-great')), 'the Learning tree shows beside a 120-day streak, with lanterns');
     await t.done('radiant');
   }
