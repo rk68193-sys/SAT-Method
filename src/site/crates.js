@@ -6,7 +6,7 @@
   function pzPicture(it, big) {
     if (it.kind === 'theme') { return fxThemeMini(it.key); }
     if (it.kind === 'aura') { return '<span class="pz-plate pz-plate-sm' + (big ? ' big' : '') + fxStageCls(it.key) + '"><canvas class="pz-aura" data-pz-aura="' + it.key + '" aria-hidden="true"></canvas><span class="pz-badge">' + PZ_FLAME + '12</span></span>'; }
-    if (it.kind === 'streak') { return '<span class="pz-pic pz-pic-streak">' + fxStreakIcon(it.key, it.key === 'plant' ? 100 : 30) + '</span>'; }
+    if (it.kind === 'streak') { return '<span class="pz-pic pz-pic-streak">' + fxStreakIcon(it.key, it.key === 'plant' || it.key === 'tree' ? 100 : 30) + '</span>'; }
     if (it.kind === 'paper') { return '<span class="pz-pic pz-pt pz-pt-' + it.key + '" aria-hidden="true"></span>'; }
     return '<span class="pz-pic pz-pic-fx pz-t-' + it.tier + '-soft" aria-hidden="true"><span class="pz-ans"><b>B</b>Correct</span></span>';
   }
@@ -25,8 +25,8 @@
   }
   function pzWalletHTML() {
     var n = Math.max(0, pzBalance()), L = pzLuck(), s = habitStreak(), fz = pzFreezes(), pity = pzPityLeft();
-    var luck = L > 1 ? '<b>Study luck ×' + L + '</b> from your ' + plural(s.n, 'day') + ' in a row: Legendary and Mythic prizes are ' + (L === 2 ? 'twice' : '1.5 times') + ' as likely.' + (L < 2 ? ' At 30 days they are twice as likely.' : '')
-      : 'Practice 7 days in a row for <b>study luck</b>: Legendary and Mythic prizes 1.5 times as likely, and twice as likely at 30 days.';
+    var luck = L > 1 ? '<b>Study luck ×' + L + '</b> from your ' + plural(s.n, 'day') + ' in a row: Legendary, Mythic and Radiant prizes are ' + (L === 2 ? 'twice' : '1.5 times') + ' as likely.' + (L < 2 ? ' At 30 days they are twice as likely.' : '')
+      : 'Practice 7 days in a row for <b>study luck</b>: Legendary, Mythic and Radiant prizes 1.5 times as likely, and twice as likely at 30 days.';
     return '<section class="pz-wallet" aria-label="Your coins">' +
       '<p class="pz-bal">' + PZ_COIN + '<b>' + pzNum(n) + '</b><span>' + (n === 1 ? 'coin' : 'coins') + '</span></p>' +
       '<p class="pz-luck">' + luck + '</p>' +
@@ -68,7 +68,7 @@
       return '<div class="pz-slot"><div class="pz-slot-h"><h4>' + sl[1] + '</h4>' + off + '</div><div class="pz-items">' + items.map(function (it) {
         var have = !!own[it.id], on = worn === it.id;
         var season = pzInSeason(it.id) ? ' <span class="pz-inseason">In season</span>' : '';
-        if (!have) { return '<div class="pz-item locked"><span class="pz-pic pz-q" aria-hidden="true">?</span><span class="pz-nm">' + pzTierChip(it.tier) + pzOdd(it) + '</span><span class="fine">In ' + esc(PZ_SER[it.series].name) + season + '</span></div>'; }
+        if (!have) { return '<div class="pz-item locked"><span class="pz-pic pz-q" aria-hidden="true">?</span><span class="pz-nm">' + pzTierChip(it.tier) + pzOdd(it) + '</span><span class="fine">' + (PZ_SER[it.series] ? 'In ' + esc(PZ_SER[it.series].name) : 'In any crate') + season + '</span></div>'; }
         var act = slot === 'fx' ? '<button class="btn ghost sm" type="button" data-pz-try="' + it.key + '">Try</button>' : '';
         return '<div class="pz-item' + (on ? ' on' : '') + '">' + pzPicture(it) + '<span class="pz-nm"><b>' + esc(it.name) + '</b>' + pzTierChip(it.tier) + '</span><span class="fine">' + esc(it.what) + '</span>' +
           '<span class="pz-acts">' + act + '<button class="btn sm' + (on ? ' ghost' : '') + '" type="button" data-pz-wear="' + slot + '" data-pz-id="' + it.id + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + (on ? 'Wearing' : 'Wear') + '</button></span></div>';
@@ -126,7 +126,7 @@
     var dial = $('.pz-dial', host), steps = [540, 160, 430], at = 0;
     steps.forEach(function (deg) { at += 640; timers.push(setTimeout(function () { dial.style.transform = 'rotate(' + deg + 'deg)'; }, at - 640)); });
     timers.push(setTimeout(function () { $('#pz-locker', host).classList.add('open'); }, at));
-    timers.push(setTimeout(function () { if (!skipped) { fxReveal(stage, it.tier, it.tier === 'l' || it.tier === 'm' ? odds : '', show); } }, at + 650));
+    timers.push(setTimeout(function () { if (!skipped) { fxReveal(stage, it.tier, PZ_TIERS.indexOf(it.tier) >= 3 ? odds : '', show, it); } }, at + 650));
   }
   function pzDialTicks() {
     var t = '<circle class="pz-dl-face" cx="26" cy="26" r="25"/><g class="pz-dl-ticks">';

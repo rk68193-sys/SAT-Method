@@ -4,8 +4,9 @@
 // a long streak and the test-day week, a streak freeze covering a missed day, two devices' backups joining without losing a coin,
 // the effect on a right answer, a timed module staying plain, reduced motion, owned themes in Appearance, an aura on Home, the
 // coin count (top bar only where it fits on one line, always on Home), the note when coins come in, the owner's link that
-// unlocks everything (tested on a copy of the page holding the hash of a throwaway code, never the real one), and the page at
-// phone widths. Each part starts from its own saved progress in a fresh browser.
+// unlocks everything (tested on a copy of the page holding the hash of a throwaway code, never the real one), the Radiant tier
+// (every one of its nine arrivals, the 100-day crate, and the promised Epic never bringing one), and the page at phone widths.
+// Each part starts from its own saved progress in a fresh browser.
 const { chromium } = require('playwright');
 const fs = require('fs'), os = require('os'), path = require('path');
 const file = 'file://' + path.resolve(process.argv[2] || 'index.html');
@@ -15,7 +16,7 @@ let fails = 0, passes = 0;
 /* the catalog, read from the source (PZ_ITEMS in site/prizes.js): { id: kind:key, tier, series } */
 const CATALOG = (() => {
   const src = fs.readFileSync(path.join(__dirname, '..', 'site', 'prizes.js'), 'utf8'), a = src.indexOf('var PZ_ITEMS = [');
-  return [...src.slice(a, src.indexOf('].map(function (r)', a)).matchAll(/\['([^']+)', '(?:[^'\\]|\\.)*', '([crelm])', '(theme|paper|fx|streak|aura)', '([a-z]+)'/g)].map(m => ({ id: m[3] + ':' + m[1], tier: m[2], series: m[4] }));
+  return [...src.slice(a, src.indexOf('].map(function (r)', a)).matchAll(/\['([^']+)', '(?:[^'\\]|\\.)*', '([crelmz])', '(theme|paper|fx|streak|aura)', '([a-z]+)'/g)].map(m => ({ id: m[3] + ':' + m[1], tier: m[2], series: m[4] }));
 })();
 const TOTAL = CATALOG.length;
 /* the sticker pages (PZ_STK): one per series, eight stickers each */
@@ -50,6 +51,10 @@ async function fresh(fn, arg, opt) {
   const done = async name => { ok(!errs.length, name + ': no script errors' + (errs.length ? ' (' + errs.join(' | ') + ')' : '')); await ctx.close(); };
   return { ctx, p, go, saved, done };
 }
+/* another page from inside this one, the way a student moves around. After a save, use this and not go(): in this test browser
+   (file:// pages) a reload can read the saved progress from before the save, even a second later, in about one try in ten. The
+   reloaded page then shows, and saves again, the older copy. */
+async function inPage(t, hash, wait) { await t.p.evaluate(h => { location.hash = h; }, hash); await t.p.waitForTimeout(wait || 700); }
 /* in the page: is the coin count in the top bar, and is the bar as tall as without it */
 const barFits = () => {
   const a = document.getElementById('pz-chip'), top = document.getElementById('top');
@@ -85,9 +90,10 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok(await t.p.$eval('#pz-toast', el => getComputedStyle(el).pointerEvents === 'none' && getComputedStyle(el.firstChild).pointerEvents === 'none'), 'the note never takes a tap from the page under it');
     const chip = await t.p.evaluate(barFits);
     ok(chip.fits && (!chip.shown || chip.n === '10'), 'the coin count does not make the top bar taller at ' + width + ' px (' + (chip.shown ? 'shown: ' + chip.n : 'left to Home') + ')');
-    await t.go('home');
+    /* Home and Crates from inside the page (see inPage) */
+    await inPage(t, 'home');
     ok(/^10 coins · 1 free crate · Open crates$/.test((await t.p.textContent('.pz-homecoins')).trim()), 'Home shows the coins and the free crate: ' + (await t.p.textContent('.pz-homecoins')).trim());
-    await t.go('crates');
+    await inPage(t, 'crates');
     ok(await t.p.$eval('.pz-earn li:nth-child(2)', li => li.classList.contains('done')), 'Crates marks today\'s Reading and Writing question as earned');
     ok(/Welcome: your first crate is free/.test(await t.p.textContent('#v-crates')), 'the first answer brings the free welcome crate');
     await t.done('earning');
@@ -152,15 +158,98 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     const w = await t.p.textContent('.pz-wallet');
     ok(/Study luck ×2/.test(w) && /31 days in a row/.test(w), 'a 31-day streak gives study luck ×2');
     const odds = await t.p.textContent('.pz-ser-pencil .pz-odds');
-    ok(/4\.9%/.test(odds) && /0\.97%/.test(odds), 'Legendary and Mythic odds doubled: ' + odds.replace(/\s+/g, ' '));
+    ok(/4\.8%/.test(odds) && /0\.97%/.test(odds) && /0\.19%/.test(odds), 'Legendary, Mythic and Radiant odds doubled: ' + odds.replace(/\s+/g, ' '));
     const free = await t.p.$$eval('.pz-free h4', hs => hs.map(h => h.textContent));
     ok(free.length === 3 && free.some(h => /^Free crate$/.test(h)) && free.some(h => /Rare or better/.test(h)) && free.some(h => /Epic or better/.test(h)), 'the welcome crate and two streak crates: ' + free.join(' · '));
     const epic = await t.p.$('.pz-free:has(h4:text("Epic or better")) [data-pz-series="night"]');
     await epic.click(); await t.p.waitForSelector('.pz-modal'); await t.p.click('#pz-skip');
     const st = await t.saved(), g = Object.entries(st.s.pz.o).find(([id]) => /^g\.ms30\./.test(id));
-    ok(!!g && ['e', 'l', 'm'].indexOf(g[1][3]) >= 0, 'the 30-day crate is Epic or better (' + (g && g[1][3]) + ') and cost nothing');
+    ok(!!g && ['e', 'l', 'm', 'z'].indexOf(g[1][3]) >= 0, 'the 30-day crate is Epic or better (' + (g && g[1][3]) + ') and cost nothing');
     ok(bal(st) === 200, 'balance unchanged at 200');
     await t.done('luck');
+  }
+
+  /* ---------- Radiant: 0.1% of every crate, its own arrival for each of the nine, the 100-day crate, and the promise never brings one ---------- */
+  {
+    const RAD = CATALOG.filter(it => it.tier === 'z');
+    ok(RAD.length === 9 && new Set(RAD.map(it => it.id.split(':')[0])).size === 5, RAD.length + ' Radiant prizes, covering all five kinds');
+    const t = await fresh((st, a, dk) => { st.s.pz = { e: { seed: 1000 } }; st.s.days = {}; for (let i = 0; i < 120; i++) { st.s.days[dk(Date.now() - i * 864e5)] = [1, 0]; } });
+    await t.go('crates');
+    const odds = (await t.p.textContent('.pz-ser-pencil .pz-odds')).replace(/\s+/g, ' ');
+    ok(/Radiant\s*0\.19%/.test(odds) && /Mythic\s*0\.97%/.test(odds), 'every crate can give a Radiant, and study luck doubles it: ' + odds);
+    const locked = await t.p.$$eval('#pz-collection .pz-item.locked', els => els.filter(e => e.querySelector('.pz-t-z')).map(e => e.textContent.replace(/\s+/g, ' ')));
+    ok(locked.length === 9 && locked.every(x => /1 in 9,000/.test(x) && /In any crate/.test(x)), 'each Radiant still to find says 1 in 9,000, in any crate: ' + (locked[0] || 'none'));
+    /* the 100-day crate is Mythic or better */
+    const free = await t.p.$$eval('.pz-free h4', hs => hs.map(h => h.textContent));
+    ok(free.some(h => /Mythic or better/.test(h)), 'the 100-day streak crate is Mythic or better: ' + free.join(' · '));
+    const top = await t.p.$('.pz-free:has(h4:text("Mythic or better")) [data-pz-series="night"]');
+    await top.click(); await t.p.waitForSelector('.pz-modal'); await t.p.click('#pz-skip');
+    const g = Object.entries((await t.saved()).s.pz.o).find(([id]) => /^g\.ms100\./.test(id));
+    ok(!!g && ['m', 'z'].indexOf(g[1][3]) >= 0, 'and opening it gives a Mythic or a Radiant (' + (g && g[1][3]) + ')');
+    await t.p.click('#pz-close'); await t.p.waitForTimeout(200);
+    /* the draw takes four random numbers in turn: the crate's id, the tier, the prize and the sticker. These make the next crate a
+       Radiant, and pick the prize: in the Pencil Case crate each Radiant is as likely as the next, so (j + 0.5) / 9 picks the j-th. */
+    const force = q => t.p.evaluate(q => {
+      const real = Math.random;
+      document.addEventListener('click', function once(e) {
+        if (!e.target.closest('[data-pz-open]')) { return; }
+        document.removeEventListener('click', once, true);
+        const seq = [0.5, 0.9995, q, 0.25]; let i = 0;
+        Math.random = () => (i < seq.length ? seq[i++] : real());
+        setTimeout(() => { Math.random = real; }, 0);
+      }, true);
+    }, q);
+    /* how many sampled points of the arrival are lit: more than the dark it opens with */
+    const lit = () => t.p.evaluate(() => { const cv = document.querySelector('canvas.pz-rv'); if (!cv || !cv.width) { return 0; } const d = cv.getContext('2d').getImageData(0, 0, cv.width, cv.height).data; let n = 0; for (let i = 0; i < d.length; i += 64) { if (d[i + 3] > 0 && d[i] + d[i + 1] + d[i + 2] > 150) { n++; } } return n; });
+    const got = [], wrong = [], slow = [], dark = [];
+    for (let j = 0; j < RAD.length; j++) {
+      await force((j + 0.5) / RAD.length);
+      const t0 = Date.now();
+      await t.p.click('[data-pz-open="pencil"]'); await t.p.waitForSelector('.pz-modal');
+      const rec = Object.values((await t.saved()).s.pz.o).sort((a, b) => b[0] - a[0])[0];
+      if (rec[2] !== RAD[j].id || rec[3] !== 'z') { wrong.push(RAD[j].id + ' gave ' + rec[2]); }
+      /* two seconds into the arrival: the scene is drawing and the card is still hidden */
+      await t.p.waitForTimeout(Math.max(0, 4600 - (Date.now() - t0)));
+      if ((await lit()) < 20 || (await t.p.isVisible('#pz-prize.show'))) { dark.push(RAD[j].id); }
+      await t.p.waitForSelector('#pz-prize.show', { timeout: 12000 });
+      const ms = Date.now() - t0, card = (await t.p.textContent('#pz-prize')).replace(/\s+/g, ' ');
+      if (ms < 7400 || ms > 9800) { slow.push(RAD[j].id + ' ' + ms + ' ms'); }
+      got.push(RAD[j].id.split(':')[1] + ' ' + (ms / 1000).toFixed(1) + ' s');
+      if (!/Radiant/.test(card) || !/1 in 9,000/.test(card)) { wrong.push(RAD[j].id + ' card: ' + card); }
+      await t.p.waitForTimeout(1300);
+      await t.p.click('#pz-close'); await t.p.waitForTimeout(250);
+    }
+    ok(!wrong.length, 'all nine can be won, and each card names its tier and odds' + (wrong.length ? ': ' + wrong.join('; ') : ''));
+    ok(!dark.length, 'each plays its own arrival, with the card hidden until it ends' + (dark.length ? '; not drawing: ' + dark.join(', ') : ''));
+    ok(!slow.length, 'and the card shows once the arrival ends, about 8 seconds after opening: ' + got.join(', ') + (slow.length ? '; off: ' + slow.join(', ') : ''));
+    ok(!(await t.p.$('canvas.pz-rv')), 'nothing is left on screen after the last one');
+    ok((await t.p.$$eval('.pz-titles li.have', li => li.map(x => x.textContent))).some(x => /Mythic Finder/.test(x)), 'a Radiant earns the Mythic Finder title');
+    /* the Learning tree beside the streak on Home: at 120 days, the great tree with lanterns */
+    await t.p.click('#pz-collection [data-pz-wear="streak"][data-pz-id="streak:tree"]'); await t.p.waitForTimeout(150);
+    ok((await t.saved()).s.pz.eq.streak === 'streak:tree', 'Wear puts the Learning tree on');
+    await inPage(t, 'home', 900);
+    ok(!!(await t.p.$('.hstreak-n.pz-styled svg.zt.zt-great')), 'the Learning tree shows beside a 120-day streak, with lanterns');
+    await t.done('radiant');
+  }
+
+  /* ---------- the promised Epic never brings a Radiant ---------- */
+  {
+    const t = await fresh(st => { st.s.pz = { e: { seed: 500 }, o: {} }; for (let i = 0; i < 9; i++) { st.s.pz.o['old' + i] = [Date.now() - 1e6 + i, 'pencil', 'theme:prize-graphite', 'c', i ? 1 : 0, '']; } });
+    await t.go('crates');
+    await t.p.evaluate(() => {
+      const real = Math.random;
+      document.addEventListener('click', function once(e) {
+        if (!e.target.closest('[data-pz-open]')) { return; }
+        document.removeEventListener('click', once, true);
+        const seq = [0.5, 0.9995]; let i = 0;
+        Math.random = () => (i < seq.length ? seq[i++] : real());
+        setTimeout(() => { Math.random = real; }, 0);
+      }, true);
+    });
+    await t.p.click('[data-pz-open="pencil"]'); await t.p.waitForSelector('.pz-modal'); await t.p.click('#pz-skip');
+    const last = Object.entries((await t.saved()).s.pz.o).filter(([id]) => id.indexOf('old') !== 0)[0][1];
+    ok(last[3] === 'm', 'a draw at the very top of the odds gives the 10th crate a Mythic, not a Radiant (' + last[3] + ')');
+    await t.done('promise');
   }
 
   /* ---------- a streak freeze covers a missed day ---------- */
@@ -173,10 +262,10 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     const st = await t.saved(), y = await t.p.evaluate(() => { const x = new Date(Date.now() - 864e5); return x.getFullYear() + '-' + ('0' + (x.getMonth() + 1)).slice(-2) + '-' + ('0' + x.getDate()).slice(-2); });
     ok(Object.keys(st.s.pz.x).some(k => k.indexOf('freeze.') === 0) && bal(st) === 70, 'a freeze costs 30 coins');
     ok(st.s.pz.fz && st.s.pz.fz[y] === 1, 'it covers yesterday on its own (' + y + ')');
-    await t.p.waitForTimeout(800);   /* let the save land before the reload */
-    await t.go('home');
+    /* Home and Crates from inside the page (see inPage): a wait before a reload did not help */
+    await inPage(t, 'home');
     ok((await t.p.textContent('.hstreak-n b')).trim() === '10', 'the streak carries on: ' + (await t.p.textContent('.hstreak-n b')).trim() + ' days');
-    await t.go('crates');
+    await inPage(t, 'crates');
     ok(/Streak freezes: 0 of 2/.test(await t.p.textContent('.pz-freeze')), 'the freeze is used up');
     await t.done('freeze');
   }
@@ -379,7 +468,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     }
     ok(auras.length === CATALOG.filter(it => it.id.indexOf('aura:') === 0).length && !dark.length, 'all ' + auras.length + ' auras draw on their tiles' + (dark.length ? '; blank: ' + dark.join(', ') : ''));
     const bare = [];
-    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'paper:cobweb', 'paper:meteors', 'paper:ufo', 'paper:lava', 'paper:kaleido', 'paper:whale', 'paper:planes', 'paper:rain', 'paper:gears', 'paper:orbit-view', 'theme:prize-metropolis', 'theme:prize-summit', 'theme:prize-haunted', 'theme:prize-eldritch', 'theme:prize-lanterns', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal']) {
+    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'paper:cobweb', 'paper:meteors', 'paper:ufo', 'paper:lava', 'paper:kaleido', 'paper:whale', 'paper:planes', 'paper:rain', 'paper:gears', 'paper:orbit-view', 'paper:gyre', 'theme:prize-beacon', 'theme:prize-metropolis', 'theme:prize-summit', 'theme:prize-haunted', 'theme:prize-eldritch', 'theme:prize-lanterns', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal']) {
       const slot = id.split(':')[0], b = await t.p.$('[data-pz-wear="' + slot + '"][data-pz-id="' + id + '"]');
       if (!b) { bare.push(id + ' (no Wear)'); continue; }
       await b.evaluate(el => el.scrollIntoView({ block: 'center' })); await b.click(); await t.p.waitForTimeout(900);
