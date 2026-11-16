@@ -129,6 +129,10 @@ PRIZE = {
  'prize-summit': dict(COMMON_DARK, paper='#120E1E', card='#1B162C', sunk='#251E3B', ink='#FFF4F1', ink2='#F3D9D6', muted='#B9A4B8', line='#2F2748', line_strong='#473B6B',
    pencil='#FDA4AF', pencil_text='#FECDD3', hl='#4A1D2B', hl_ink='#FFF1F2', act='#FDA4AF', act_ink='#2A0A12', act_hover='#FB7185', focus='#FECDD3',
    d1='#2F2748', d2='#BE123C', d3='#FECDD3', grad='linear-gradient(120deg, #FECDD3 0%, #FDBA74 50%, #C4B5FD 100%)', on_grad='#2A0A12', aura='rgba(253, 164, 175, .28)'),
+ # Radiant: a lighthouse over a dark sea, with lamp-gold buttons
+ 'prize-beacon': dict(COMMON_DARK, paper='#06121F', card='#0B1B2D', sunk='#10243A', ink='#EEF4FB', ink2='#CCD9E8', muted='#93A8BF', line='#1B324B', line_strong='#2A4766',
+   pencil='#F5B547', pencil_text='#FCD9A0', hl='#3A2A0E', hl_ink='#FFF6E0', act='#F5B547', act_ink='#1C1204', act_hover='#E89F2A', focus='#FCD9A0',
+   d1='#1B324B', d2='#B7791F', d3='#FDE3A7', grad='linear-gradient(120deg, #FDE3A7 0%, #F5B547 50%, #93C5FD 100%)', on_grad='#1C1204', aura='rgba(245, 181, 71, .26)'),
 }
 def finish(d):
     """fill the shadow and glass tokens the prize palettes leave out, from the light or dark theme they build on"""

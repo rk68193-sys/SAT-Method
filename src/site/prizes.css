@@ -5,6 +5,10 @@
 .pz-t-m { background: linear-gradient(90deg, #FBCFE8, #C7D2FE, #A5F3FC, #BBF7D0, #FDE68A, #FBCFE8); background-size: 200% 100%; color: #2E1065; animation: pz-tm 4s linear infinite; }
 .pz-t-c-soft { background: rgba(82, 82, 91, .16); } .pz-t-r-soft { background: rgba(29, 78, 216, .16); } .pz-t-e-soft { background: rgba(126, 34, 206, .18); } .pz-t-l-soft { background: rgba(180, 83, 9, .2); }
 .pz-t-m-soft { background: linear-gradient(120deg, rgba(251, 207, 232, .5), rgba(199, 210, 254, .5), rgba(165, 243, 252, .5), rgba(253, 230, 138, .5)); }
+/* Radiant (radiant.js): white gold with a moving shine, a gold edge so it shows on a white page, and a star read by no screen reader */
+.pz-t-z { background: linear-gradient(90deg, #FFF7D6, #FDE68A, #FFFFFF, #FDE68A, #FFF7D6); background-size: 200% 100%; color: #3B2300; box-shadow: inset 0 0 0 1px rgba(180, 83, 9, .55), 0 0 10px rgba(253, 224, 71, .55); animation: pz-tm 3s linear infinite; }
+.pz-t-z::before { content: "✦" / ""; margin-right: .3em; }
+.pz-t-z-soft { background: radial-gradient(circle at 50% 40%, rgba(255, 247, 214, .75), rgba(253, 224, 71, .35) 45%, rgba(245, 158, 11, .14)); }
 .pz-one { font: 600 .74rem/1.5 var(--mono); color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
 @keyframes pz-tm { to { background-position: -200% 0; } }
 
@@ -123,6 +127,7 @@
 .pz-pt-rain { background: radial-gradient(circle at 25% 40%, rgba(251, 191, 36, .5), transparent 30%), radial-gradient(circle at 72% 60%, rgba(244, 114, 182, .45), transparent 28%), repeating-linear-gradient(90deg, transparent 0 17px, rgba(191, 219, 254, .5) 17px 18px), #0B1226; }
 .pz-pt-gears { background: repeating-conic-gradient(from 0deg at 28% 50%, rgba(253, 224, 71, .6) 0 12deg, transparent 12deg 24deg), #1C1917; -webkit-mask: radial-gradient(circle at 28% 50%, #000 0 40%, rgba(0, 0, 0, .25) 41%); mask: radial-gradient(circle at 28% 50%, #000 0 40%, rgba(0, 0, 0, .25) 41%); }
 .pz-pt-orbit-view { background: radial-gradient(circle at 78% 26%, #FDBA74 0 9%, transparent 10%), radial-gradient(ellipse 140% 90% at 50% 150%, #030712 0 60%, #38BDF8 61% 62%, rgba(59, 130, 246, .25) 63% 70%, transparent 72%), #050816; }
+.pz-pt-gyre { background: radial-gradient(circle at 50% 45%, rgba(224, 242, 254, .95) 0 3%, rgba(45, 212, 191, .45) 9%, transparent 32%), repeating-conic-gradient(from 20deg at 50% 45%, rgba(45, 212, 191, .3) 0 9deg, transparent 9deg 40deg), radial-gradient(rgba(103, 232, 249, .75) 1px, transparent 1.5px) 0 0 / 15px 13px, linear-gradient(#062A3A, #020A12); }
 /* the Seasons crate: what is in season now */
 .pz-season { margin: .4rem 0 0; padding: .45rem .7rem; border-radius: 12px; font-size: .9rem; background: var(--sunk); color: var(--ink); }
 .pz-season-fall { border-left: 4px solid #C2410C; }
@@ -189,6 +194,18 @@
 .pz-battery.full .pz-i-bar.on { fill: #4ADE80; filter: drop-shadow(0 0 2px #4ADE80); } .pz-battery.full .pz-i-bolt { animation: none; opacity: 0; }
 .pz-plate .pz-i-bat { stroke: #F5F3FF; } .pz-plate .pz-i-nub { fill: #F5F3FF; } .pz-plate .pz-i-bar { fill: #2A2850; } .pz-plate .pz-i-bar.on { fill: #22C55E; }
 @keyframes pz-charge { 0%, 100% { opacity: .15; } 50% { opacity: 1; } }
+/* the Learning tree (Radiant): a glowing seed, a sapling at 7 days, a tree with a golden heart at 30, lanterns in its branches at 100 */
+.zt .zt-soil { stroke: #8B6B4A; stroke-width: 2; stroke-linecap: round; fill: none; opacity: .75; } .zt .zt-trunk { stroke: #8B5A2B; stroke-linecap: round; fill: none; }
+.zt .zt-leaf, .zt .zt-leaf1 { fill: #22C55E; } .zt .zt-leaf2 { fill: #4ADE80; } .zt .zt-leaf3 { fill: #86EFAC; } .zt .zt-seed { fill: #B45309; } .zt .zt-glowc { fill: #86EFAC; opacity: .1; }
+.zt .zt-halo { fill: #FBBF24; opacity: .3; transform-box: fill-box; transform-origin: center; animation: zt-pulse 2.4s ease-in-out infinite; }
+.zt .zt-heart { fill: #FBBF24; transform-box: fill-box; transform-origin: center; animation: zt-pulse 1.6s ease-in-out infinite; }
+.zt .zt-string { stroke: #A16207; stroke-width: .8; fill: none; } .zt .zt-lanhalo { fill: #FCD34D; opacity: .14; } .zt .zt-lanhalo.zt-in { opacity: .24; } .zt .zt-lancore { fill: #FFFBEB; }
+.zt .zt-lan { fill: #F59E0B; animation: zt-flicker 2.2s ease-in-out infinite; } .zt .zt-lan1 { animation-delay: -1.1s; } .zt .zt-crown { animation: zt-sway 5s ease-in-out infinite; }
+.zt .zt-spark { fill: #FDE68A; transform-box: fill-box; transform-origin: center; animation: zt-twinkle 2.6s ease-in-out infinite; } .zt .zt-spark1 { animation-delay: -.9s; } .zt .zt-spark2 { animation-delay: -1.7s; }
+@keyframes zt-pulse { 0%, 100% { opacity: .55; transform: scale(.85); } 50% { opacity: 1; transform: scale(1.15); } }
+@keyframes zt-flicker { 0%, 100% { opacity: 1; } 45% { opacity: .65; } 55% { opacity: .95; } }
+@keyframes zt-sway { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
+@keyframes zt-twinkle { 0%, 100% { opacity: 0; transform: scale(.4); } 50% { opacity: 1; transform: scale(1); } }
 
 /* sticker book and titles */
 .pz-pages { display: grid; gap: .9rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
@@ -234,6 +251,8 @@
 .pz-r-l { border-color: #FACC15; box-shadow: 0 0 34px -2px rgba(250, 204, 21, .75); }
 .pz-r-m { border: 2px solid transparent; background: linear-gradient(#0E0D1C, #0E0D1C) padding-box, linear-gradient(90deg, #F472B6, #FDE047, #4ADE80, #22D3EE, #A78BFA, #F472B6) border-box; background-size: 100% 100%, 200% 100%; box-shadow: 0 0 40px rgba(217, 70, 239, .55); }
 .pz-r-m.show { animation: pz-pop .5s cubic-bezier(.2, 1.5, .4, 1) forwards, pz-rb 2.5s linear infinite; }
+.pz-r-z { border: 2px solid transparent; background: linear-gradient(#0E0D1C, #0E0D1C) padding-box, linear-gradient(90deg, #FDE68A, #FFFFFF, #F59E0B, #FFF7D6, #FDE68A) border-box; background-size: 100% 100%, 200% 100%; box-shadow: 0 0 46px rgba(253, 224, 71, .55), 0 0 110px rgba(255, 247, 214, .22); }
+.pz-r-z.show { animation: pz-pop .5s cubic-bezier(.2, 1.5, .4, 1) forwards, pz-rb 2.5s linear infinite; }
 .pz-skip { position: absolute; right: 14px; bottom: 12px; z-index: 3; color: #E9D5FF; }
 .pz-shake { animation: pz-shake .45s linear; }
 @keyframes pz-pop { to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
@@ -276,14 +295,15 @@ html.pz-plain .pz-bg { display: none; }
 :root[data-theme="prize-nebula"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-holo"] .btn:not(.ghost):not(:disabled),
 :root[data-theme="prize-metropolis"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-summit"] .btn:not(.ghost):not(:disabled),
 :root[data-theme="prize-haunted"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-eldritch"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-lanterns"] .btn:not(.ghost):not(:disabled),
-:root[data-theme="prize-abyss"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-enchanted"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-terminal"] .btn:not(.ghost):not(:disabled) { background-size: 220% 100%; animation: pz-sheen 2.6s ease-in-out infinite alternate; }
+:root[data-theme="prize-abyss"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-enchanted"] .btn:not(.ghost):not(:disabled), :root[data-theme="prize-terminal"] .btn:not(.ghost):not(:disabled),
+:root[data-theme="prize-beacon"] .btn:not(.ghost):not(:disabled) { background-size: 220% 100%; animation: pz-sheen 2.6s ease-in-out infinite alternate; }
 /* Terminal: headings and buttons in the typewriter face, with a faint phosphor glow */
 :root[data-theme="prize-terminal"] .vtitle, :root[data-theme="prize-terminal"] .h2, :root[data-theme="prize-terminal"] .h3, :root[data-theme="prize-terminal"] .btn { font-family: var(--mono); letter-spacing: 0; }
 :root[data-theme="prize-terminal"] .vtitle, :root[data-theme="prize-terminal"] .h2 { text-shadow: 0 0 10px rgba(74, 222, 128, .45); }
 @keyframes pz-sheen { from { background-position: 0 0; } to { background-position: 100% 0; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .pz-t-m, .pz-r-m.show, .pz-shake, .pz-check path, .pz-star, .pz-stamp, .pz-swipe, .pz-neon::before, .pz-neon-run { animation: none !important; }
+  .pz-t-m, .pz-t-z, .pz-r-m.show, .pz-r-z.show, .zt *, .pz-shake, .pz-check path, .pz-star, .pz-stamp, .pz-swipe, .pz-neon::before, .pz-neon-run { animation: none !important; }
   .pz-i-hfall, .pz-crown.full, .pz-i-ctail, .pz-i-ctail2 { animation: none !important; }
   .pz-egg, .pz-egg .pz-i-eye, .pz-i-wing, .pz-i-bolt, .pz-pumpkin.lit .pz-i-pface { animation: none !important; }
   .pz-prize.show { animation: none !important; transform: translate(-50%, -50%) scale(1); opacity: 1; }

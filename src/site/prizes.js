@@ -10,9 +10,10 @@
        eq what this device has on: { fx, aura, paper, streak, title }   (the theme is the Appearance setting)
      Keys use only letters, digits, '.', '-' and '_', the names a backup file may hold (BK_KEY in data.js).
      e, x and st join by the larger value; o, g and fz by union; eq keeps this device's. The balance is e minus x, never stored. */
-  var PZ_TIERS = ['c', 'r', 'e', 'l', 'm'];
-  var PZ_TIER = { c: 'Common', r: 'Rare', e: 'Epic', l: 'Legendary', m: 'Mythic' };
-  var PZ_ODDS = { c: 60, r: 27, e: 10, l: 2.5, m: 0.5 };
+  var PZ_TIERS = ['c', 'r', 'e', 'l', 'm', 'z'];
+  var PZ_TIER = { c: 'Common', r: 'Rare', e: 'Epic', l: 'Legendary', m: 'Mythic', z: 'Radiant' };
+  /* Radiant's 0.1% comes out of Common's share, so every other tier keeps the odds it had before Radiant was added */
+  var PZ_ODDS = { c: 59.9, r: 27, e: 10, l: 2.5, m: 0.5, z: 0.1 };
   var PZ_PRICE = 50, PZ_FREEZE = 30, PZ_FREEZE_MAX = 2, PZ_DUPE = 20, PZ_PITY = 10, PZ_HOME = 3;
   var PZ_EARN = { qotd: 10, plan: 20, rev: 5, revMax: 4 };
   var PZ_KIND = { theme: 'Theme', fx: 'Right-answer effect', aura: 'Aura', paper: 'Paper', streak: 'Streak style' };
@@ -33,7 +34,8 @@
     ['paradox', 'Paradox', 'Scenes of black and white, clocks and gears, a theater, a city at night and a machine that is not quite working.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
-  /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value */
+  /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value. The Radiant prizes are in no series
+     ('any'): no crate is their own, so every crate holds each of them at the same chance. */
   var PZ_ITEMS = [
     ['prize-graphite', 'Graphite', 'c', 'theme', 'pencil', 'Warm gray paper and charcoal, like a pencil sketch.'],
     ['prize-highlighter', 'Highlighter', 'c', 'theme', 'pencil', 'Bright yellow buttons and highlights on cream.'],
@@ -176,7 +178,17 @@
     ['prize-summit', 'Summit', 'l', 'theme', 'zenith', 'A living theme: mountain ridges before dawn, mist drifting between them, birds crossing a rose sky.'],
     ['hourglass', 'Hourglass', 'r', 'streak', 'paradox', 'Sand runs through as your streak grows, and it is all through at 30 days.'],
     ['crown', 'Crown', 'e', 'streak', 'zenith', 'A crown that gains a jewel for each week of your streak, up to five.'],
-    ['comet-tail', 'Comet tail', 'l', 'streak', 'zenith', 'A comet whose tail grows a little longer every day.']
+    ['comet-tail', 'Comet tail', 'l', 'streak', 'zenith', 'A comet whose tail grows a little longer every day.'],
+    /* Radiant (radiant.js): one look or more of every kind, each with its own arrival when it is won */
+    ['prize-beacon', 'Beacon', 'z', 'theme', 'any', 'A living theme: a lighthouse keeps watch over a dark sea. Its beam turns slowly, the rain and fog shine only where the light passes, and now and then the beam swings toward you in a great flash.'],
+    ['diamond', 'Diamond ring', 'z', 'fx', 'any', 'The page darkens as the moon’s shadow slides across your answer. A crown of light opens around it, stars come out, and the sun returns in one brilliant flash.'],
+    ['fortissimo', 'Fortissimo', 'z', 'fx', 'any', 'Five beats, each one quicker and brighter, with light bars jumping on every beat. Then the drop: a burst of color, rainbow rings and PERFECT! in pixel letters.'],
+    ['starforge', 'Starforge', 'z', 'fx', 'any', 'The page goes dark like a forge. A hammer of light strikes your answer three times, sparks fly with every blow, and the answer cools into gold.'],
+    ['kintsugi', 'Kintsugi', 'z', 'aura', 'any', 'Cracks spread across dark glaze and fill with molten gold, the way broken pottery is mended in Japan. A new crack opens every few seconds while an old one heals.'],
+    ['orrery', 'Orrery', 'z', 'aura', 'any', 'A brass model of the planets. Gears turn in the corners, a dial ticks, and the planets swing around a glowing sun, one with a ring and one with a moon.'],
+    ['rose', 'Rose Window', 'z', 'aura', 'any', 'A round stained-glass window. Sunlight moves around it, lighting each pane in turn, and colored beams fall from it through glittering dust.'],
+    ['gyre', 'Gyre', 'z', 'paper', 'any', 'Moving: a slow spiral current of tiny glowing sea life turns behind the page, and now and then a school of fish swims through it.'],
+    ['tree', 'Learning tree', 'z', 'streak', 'any', 'A glowing seed that sprouts at 7 days, becomes a tree with a golden heart at 30, and at 100 days a great tree with lanterns in its branches.']
   ].map(function (r) { return { id: r[3] + ':' + r[0], key: r[0], name: r[1], tier: r[2], kind: r[3], series: r[4], what: r[5] }; });
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });
@@ -214,7 +226,7 @@
     ['traps', 'Trap Spotter', 'Say why you missed 50 questions.', function (c) { return c.reasons >= 50; }],
     ['module', 'Full Module', 'Finish a timed module in both subjects.', function (c) { return c.mods; }],
     ['collector', 'Collector', 'Win 25 different prizes.', function (c) { return c.owned >= 25; }],
-    ['mythic', 'Mythic Finder', 'Win a Mythic prize.', function (c) { return c.mythic; }],
+    ['mythic', 'Mythic Finder', 'Win a Mythic or Radiant prize.', function (c) { return c.mythic; }],
     ['century', 'Century', 'Practice 100 days in a row.', function (c) { return c.best >= 100; }]
   ];
 
@@ -246,11 +258,12 @@
     return out;
   }
 
-  /* ---------- odds: each series' own prizes are 3 times as likely in its crate; luck lifts Legendary and Mythic ---------- */
+  /* ---------- odds: each series' own prizes are 3 times as likely in its crate; luck lifts Legendary, Mythic and Radiant ---------- */
   function pzLuck() { var n = 0; try { n = habitStreak().n; } catch (e) { n = 0; } return n >= 30 ? 2 : n >= 7 ? 1.5 : 1; }
-  function pzOdds(minTier, luck) {
-    var L = luck || 1, lo = PZ_TIERS.indexOf(minTier || 'c'), o = {}, tot = 0;
-    PZ_TIERS.forEach(function (t, i) { var v = i < lo ? 0 : PZ_ODDS[t] * (t === 'l' || t === 'm' ? L : 1); o[t] = v; tot += v; });
+  /* the tiers from minTier up to maxTier (the top one when left out), as percentages that add up to 100 */
+  function pzOdds(minTier, luck, maxTier) {
+    var L = luck || 1, lo = PZ_TIERS.indexOf(minTier || 'c'), hi = maxTier ? PZ_TIERS.indexOf(maxTier) : PZ_TIERS.length - 1, o = {}, tot = 0;
+    PZ_TIERS.forEach(function (t, i) { var v = i < lo || i > hi ? 0 : PZ_ODDS[t] * (t === 'l' || t === 'm' || t === 'z' ? L : 1); o[t] = v; tot += v; });
     PZ_TIERS.forEach(function (t) { o[t] = tot ? o[t] / tot * 100 : 0; });
     return o;
   }
@@ -262,16 +275,18 @@
   }
   /* "1 in N" for a prize, in its own series' crate at plain luck */
   function pzOneIn(it) { var p = pzChance(it, it.series, it.series === 'test' ? 'e' : 'c', 1); return p > 0 ? Math.max(1, Math.round(1 / p)) : 0; }
-  function pzDraw(series, minTier, luck) {
-    var o = pzOdds(minTier, luck), r = Math.random() * 100, acc = 0, tier = PZ_TIERS[PZ_TIERS.length - 1];
+  function pzDraw(series, minTier, luck, maxTier) {
+    var o = pzOdds(minTier, luck, maxTier), r = Math.random() * 100, acc = 0, tier = '';
     for (var i = 0; i < PZ_TIERS.length; i++) { acc += o[PZ_TIERS[i]]; if (r < acc && o[PZ_TIERS[i]] > 0) { tier = PZ_TIERS[i]; break; } }
+    /* a draw that rounding leaves past the last sum takes the top tier allowed */
+    if (!tier) { tier = PZ_TIERS.filter(function (t) { return o[t] > 0; }).pop(); }
     var pool = PZ_ITEMS.filter(function (x) { return x.tier === tier; }), w = 0;
     pool.forEach(function (x) { w += pzWeight(x, series); });
     var q = Math.random() * w;
     for (var j = 0; j < pool.length; j++) { q -= pzWeight(pool[j], series); if (q < 0) { return pool[j]; } }
     return pool[pool.length - 1];
   }
-  /* an Epic or better at least once in every 10 crates */
+  /* an Epic or better at least once in every 10 crates; the promise itself never brings a Radiant, so a Radiant is always pure luck */
   function pzPityLeft() {
     var list = pzOpened(), n = 0;
     for (var i = list.length - 1; i >= 0; i--) { if (PZ_TIERS.indexOf(list[i].item.tier) >= 2) { break; } n += 1; }
@@ -297,8 +312,9 @@
       id = pzId(); P.x['crate.' + id] = PZ_PRICE;
     }
     if (!PZ_SER[series]) { return null; }
-    if (pzPityLeft() <= 1 && PZ_TIERS.indexOf(minTier) < 2) { minTier = 'e'; }
-    var it = pzDraw(series, minTier, pzLuck()), dupe = pzOwns(it.id) ? 1 : 0, page = PZ_STK[series] || [], stk = page.length ? series + '-' + Math.floor(Math.random() * page.length) : '';
+    var maxTier = '';
+    if (pzPityLeft() <= 1 && PZ_TIERS.indexOf(minTier) < 2) { minTier = 'e'; maxTier = 'm'; }
+    var it = pzDraw(series, minTier, pzLuck(), maxTier), dupe = pzOwns(it.id) ? 1 : 0, page = PZ_STK[series] || [], stk = page.length ? series + '-' + Math.floor(Math.random() * page.length) : '';
     P.o[id] = [Date.now(), series, it.id, it.tier, dupe, stk];
     if (dupe) { P.e['dupe.' + id] = PZ_DUPE; }
     if (stk) { P.st[stk] = 1; pzPageCheck(series); }
@@ -323,14 +339,14 @@
     return true;
   }
 
-  /* ---------- free crates for long streaks and the test-day week ---------- */
+  /* ---------- free crates for long streaks and the test-day week (the 100-day crate is Mythic or better, about 1 in 6 Radiant) ---------- */
   function pzMilestones() {
     var P = pz(), changed = false, s = habitStreak();
     if (!P.g.welcome && s.days > 0) { P.g.welcome = [Date.now(), 'pencil', 'c', 'Welcome: your first crate is free.']; changed = true; }
     if (!s.n) { return changed; }
     var end = s.today ? dayStart(Date.now()) : dayBefore(dayStart(Date.now())), start = end;
     for (var i = 1; i < s.n; i++) { start = dayBefore(start); }
-    [[7, 'r', 'A 7-day streak.'], [30, 'e', 'A 30-day streak.'], [100, 'l', 'A 100-day streak.']].forEach(function (m) {
+    [[7, 'r', 'A 7-day streak.'], [30, 'e', 'A 30-day streak.'], [100, 'm', 'A 100-day streak.']].forEach(function (m) {
       var k = 'ms' + m[0] + '.' + dayKey(start);
       if (s.n >= m[0] && !P.g[k]) { P.g[k] = [Date.now(), '', m[1], m[2]]; changed = true; }
     });
@@ -374,7 +390,7 @@
   /* ---------- titles, earned on purpose and never in crates ---------- */
   function pzTitleCounts() {
     var s = habitStreak(), P = pz(), own = pzOwned(), mythic = false;
-    Object.keys(own).forEach(function (id) { if (PZ_BY[id].tier === 'm') { mythic = true; } });
+    Object.keys(own).forEach(function (id) { if (PZ_BY[id].tier === 'm' || PZ_BY[id].tier === 'z') { mythic = true; } });
     var rw = 0; ['t', 'r', 'b'].forEach(function (b) { Object.keys(isObj(store[b]) ? store[b] : {}).forEach(function (id) { var x = store[b][id]; if (isObj(x) && x.cause) { rw += 1; } }); });
     var mx = Object.keys(isObj(store.x) ? store.x : {}).filter(function (id) { return Array.isArray(store.x[id]) && store.x[id][0]; }).length;
     return {
@@ -392,7 +408,7 @@
   var PZ_GIFT = 'b1c461100aa6812c8cae2b37a2e3da01083e6f2a862e8b022fd1ee53890b6e3a', PZ_GIFT_COINS = 10000;
   function pzGiftAll() {
     var P = pz(), t = Date.now();
-    /* lowest tier first, so the last record is a Mythic and the promise of an Epic starts again at 10 */
+    /* lowest tier first, so the last record is a Radiant and the promise of an Epic starts again at 10 */
     PZ_ITEMS.slice().sort(function (a, b) { return PZ_TIERS.indexOf(a.tier) - PZ_TIERS.indexOf(b.tier); }).forEach(function (it, i) {
       var k = 'gift.' + it.id.replace(':', '.');
       if (!P.o[k]) { P.o[k] = [t + i, it.series, it.id, it.tier, 0, '']; }
