@@ -530,11 +530,14 @@ select count(*) filter (where c.tier = 'c') * 1.0 / count(*) as f_c, count(*) fi
        count(*) filter (where c.tier = 'c' and k.series = 'pencil') * 1.0 / nullif(count(*) filter (where c.tier = 'c'), 0) as f_own
 from public.club_crates c join public.club_catalog k on k.id = c.item where c.user_id = :'F' \gset
 select count(*) filter (where c.tier in ('l', 'm', 'z')) * 1.0 / count(*) as l_l from public.club_crates c where c.user_id = :'L' \gset
--- with plain luck: Common 59.9%, Epic or better 13.1% (more with the promise), Legendary or better 3.1%, own series 30 of 44 weights
+-- what share of a pencil crate's commons should be pencil prizes, from the prize list: each of its own counts 3, the rest 1
+select 3.0 * count(*) filter (where series = 'pencil') / (3.0 * count(*) filter (where series = 'pencil') + count(*) filter (where series <> 'pencil')) as e_own
+from public.club_catalog where active and tier = 'c' \gset
+-- with plain luck: Common 59.9%, Epic or better 13.1% (more with the promise), Legendary or better 3.1%, own series as above
 select t.ok(:f_c between 0.45 and 0.65, 'about 55 to 60% Common: ' || :f_c);
 select t.ok(:f_e between 0.12 and 0.26, 'about 16% Epic or better, the promise included: ' || :f_e);
 select t.ok(:f_l between 0.01 and 0.07, 'about 3 to 4% Legendary or better: ' || :f_l);
 select t.ok(:f_z <= 12, 'Radiant about 1 in 1,000 crates: ' || :f_z || ' in 1,500');
-select t.ok(:f_own between 0.58 and 0.78, 'a pencil crate''s commons mostly pencil prizes (3 times as likely each): ' || :f_own);
+select t.ok(abs(:f_own - :e_own) <= 0.1, 'a pencil crate''s commons are its own prizes 3 times as often each: ' || round(:f_own, 3) || ', expected ' || round(:e_own, 3));
 select t.ok(:l_l > :f_l * 1.2, 'a 30-day streak lifts Legendary and up (twice the odds): ' || :l_l || ' against ' || :f_l);
 \echo '    all club database checks passed'
