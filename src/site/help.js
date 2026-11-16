@@ -51,12 +51,18 @@
     room: ['your room', [
       ['What is my room?', 'A room in the clubhouse where the prizes you win go on show: a theme on the walls, a paper in the window, auras and effects on the stands, streak styles on the shelf and stickers on the board.'],
       ['How do I change it?', 'Press <b>Decorate</b>, tap a spot in the room, then pick a prize for it. What you pick shows straight away. Press <b>Save my room</b> to keep it, or <b>Cancel</b> to leave it as it was.'],
-      ['Who can see my room?', 'Only you, for now. It is saved with the rest of your progress, in your backup file and in your account if you sign in.'],
+      ['Who can see my room?', 'Only you, unless you share it. When you are signed in, <b>Share my room</b> makes a link: anyone you send it to sees your room, your nickname and your streak, and nothing else. <b>Stop sharing</b> switches the link off.'],
+      ['What are stickers from visitors?', 'A friend who opens your link while signed in can leave one of their stickers on your board, one a day. You can take any of them off.'],
       ['How do I get more for my room?', 'Earn coins by studying and open crates. Every crate has a prize and a sticker in it.']]],
+    visit: ['a shared room', [
+      ['Whose room is this?', 'A student who studies for the SAT on this site decorated it with prizes they won, and sent you the link.'],
+      ['How do I leave a sticker?', 'Sign in, choose a nickname, then pick one of your stickers under <b>Leave a sticker</b>. You can leave one a day in each room.'],
+      ['What does the owner see about me?', 'Your nickname and the sticker you leave. Nothing else.'],
+      ['Can I have a room too?', 'Yes. Every lesson and question here is free. Studying earns coins, coins open crates, and the prizes in them decorate your own room.']]],
     other: ['this page', [
       ['Where do I start?', 'Press <b>Home</b> at the top, then press <b>Start</b> on Reading &amp; Writing or on Math.']]]
   };
-  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge', room: 'room' };
+  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge', room: 'room', visit: 'visit' };
   var helpEl = null, helpFrom = null;
   function helpKey() {
     var v = cur.view;

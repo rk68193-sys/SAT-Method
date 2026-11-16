@@ -229,6 +229,14 @@ begin
   end if;
 end $$;
 
+-- the stickers on a room's board, newest first, with who left them
+create or replace function public.club_board_of(room uuid) returns jsonb
+language sql stable set search_path = '' as $$
+  select coalesce(jsonb_agg(jsonb_build_array(b.id, b.sticker, coalesce(p.nickname, ''), to_char(b.day, 'YYYY-MM-DD')) order by b.at desc), '[]'::jsonb)
+  from (select * from public.club_board where room_id = room order by at desc limit 30) b
+  left join public.club_profiles p on p.user_id = b.from_id
+$$;
+
 -- everything the page shows about a student's coins and prizes, in the shapes the page keeps them (store.s.pz)
 create or replace function public.club_state_of(u uuid) returns jsonb
 language sql stable set search_path = '' as $$
@@ -248,7 +256,8 @@ language sql stable set search_path = '' as $$
     'st', coalesce((select jsonb_object_agg(sticker, 1) from public.club_stickers where user_id = u), '{}'::jsonb),
     'fz', coalesce((select jsonb_object_agg(to_char(day, 'YYYY-MM-DD'), 1) from public.club_days where user_id = u and frozen), '{}'::jsonb),
     'streak', (select jsonb_build_object('n', s.n, 'best', s.best) from public.club_streak(u) s),
-    'room', (select jsonb_build_object('layout', r.layout, 'link', r.link, 'at', public.club_ms(r.saved_at)) from public.club_rooms r where r.user_id = u)
+    'room', (select jsonb_build_object('layout', r.layout, 'link', r.link, 'at', public.club_ms(r.saved_at)) from public.club_rooms r where r.user_id = u),
+    'board', public.club_board_of(u)
   )
   from (select u as uid) q left join public.club_profiles p on p.user_id = q.uid
 $$;
@@ -606,7 +615,7 @@ language plpgsql security definer set search_path = '' as $$
 declare me public.club_profiles := public.club_me(true); n text := regexp_replace(btrim(coalesce(p_name, '')), '\s+', ' ', 'g');
   bare text := regexp_replace(lower(n), '[^a-z]', '', 'g');
 begin
-  if n !~ '^[A-Za-z0-9][A-Za-z0-9 ._-]{1,18}[A-Za-z0-9]$' or length(regexp_replace(n, '[^0-9]', '', 'g')) >= 7 then
+  if n !~ '^[A-Za-z0-9][A-Za-z0-9 .-]{1,18}[A-Za-z0-9]$' or length(regexp_replace(n, '[^0-9]', '', 'g')) >= 7 then
     return jsonb_build_object('ok', false, 'why', 'form');
   end if;
   if exists (select 1 from public.club_words w where position(w.word in bare) > 0) then return jsonb_build_object('ok', false, 'why', 'words'); end if;
@@ -680,14 +689,6 @@ begin
   end if;
   return public.club_state_of(me.user_id) -> 'room';
 end $$;
-
--- the stickers on a room's board, newest first, with who left them
-create or replace function public.club_board_of(room uuid) returns jsonb
-language sql stable set search_path = '' as $$
-  select coalesce(jsonb_agg(jsonb_build_array(b.id, b.sticker, coalesce(p.nickname, ''), to_char(b.day, 'YYYY-MM-DD')) order by b.at desc), '[]'::jsonb)
-  from (select * from public.club_board where room_id = room order by at desc limit 30) b
-  left join public.club_profiles p on p.user_id = b.from_id
-$$;
 
 -- anyone with the link: the room, its owner's nickname and streak, and its board; nothing else about them
 create or replace function public.club_room_view(p_link text) returns jsonb

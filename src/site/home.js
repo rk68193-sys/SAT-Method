@@ -30,7 +30,7 @@
       ['mmap', 'm-map', 'My progress', 'See how you are doing on each kind of question, and what to practice next.', 'map']] }
   };
   function navList(subj) { return SUBJ[subj].items; }
-  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home', challenge: 'home', room: 'home' };
+  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home', challenge: 'home', room: 'home', visit: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/></svg>',
@@ -77,7 +77,7 @@
   var lastPage = { v: 'home', subj: 'home' };
 
   /* ---------- the guide bar: where you are and the way back; and the next step at the foot of the page ---------- */
-  var GLOBAL_PAGE = { plan: ['My study plan', 'plan'], data: ['Backup and offline use', 'my-data'], account: ['My account', 'account'], suggest: ['Ask or suggest', 'suggest'], crates: ['Crates', 'crates'], challenge: ['Challenge a friend', 'challenge'], room: ['My room', 'room'] };
+  var GLOBAL_PAGE = { plan: ['My study plan', 'plan'], data: ['Backup and offline use', 'my-data'], account: ['My account', 'account'], suggest: ['Ask or suggest', 'suggest'], crates: ['Crates', 'crates'], challenge: ['Challenge a friend', 'challenge'], room: ['My room', 'room'], visit: ['A shared room', 'room'] };
   function groupName(g) { return GROUPS.filter(function (x) { return x[0] === g; })[0][1]; }
   /* the page you are inside a page with its own contents: a lesson, a reading step, a worked example */
   function deepName(v, tok) {

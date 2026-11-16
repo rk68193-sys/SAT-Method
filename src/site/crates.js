@@ -95,7 +95,8 @@
     viewEl.crates.innerHTML = '<div class="wrap pz-page">' +
       '<header class="pz-head"><p class="eyebrow">Prizes</p><h2 class="vtitle">Crates</h2><p class="lede">Earn coins by studying, then open crates of looks for the site. Prizes only change how the site looks: every lesson and question stays free and open.</p></header>' +
       '<div class="pz-top">' + pzWalletHTML() + pzEarnHTML() + '</div>' + pzFreeHTML() + pzSeriesHTML() + pzCollectionHTML() + pzStickersHTML() + pzTitlesHTML() +
-      '<p class="fine pz-rules">Coins can’t be bought, and no money ever touches a crate. Effects, auras and moving backgrounds never play in a timed module, and stay still on a device set to reduce motion. Coins, prizes and stickers are saved with the rest of your progress, in your backup file and your account.</p>' +
+      '<p class="fine pz-rules">Coins can’t be bought, and no money ever touches a crate. Effects, auras and moving backgrounds never play in a timed module, and stay still on a device set to reduce motion. ' +
+      (clubShow() ? 'Coins, prizes and stickers are kept in your account, the same on every device you sign in to.' : 'Coins, prizes and stickers are saved with the rest of your progress, in your backup file and your account.') + '</p>' +
       '</div>';
     fxScan();
   }
@@ -138,17 +139,27 @@
     document.addEventListener('click', function (e) {
       var t = e.target && e.target.closest ? e.target : null; if (!t || !viewEl.crates || !viewEl.crates.contains(t)) { return; }
       var b;
-      if ((b = t.closest('[data-pz-open]'))) { var r = pzOpen(b.getAttribute('data-pz-open')); if (r) { pzShowOpen(r); } return; }
-      if ((b = t.closest('[data-pz-grant]'))) { var g = pzOpen(b.getAttribute('data-pz-series'), b.getAttribute('data-pz-grant')); if (g) { pzShowOpen(g); } return; }
+      /* signed in to an account in the clubhouse, the server opens the crate (club.js) */
+      if ((b = t.closest('[data-pz-open]'))) {
+        if (clubHold()) { return; }
+        if (clubOn()) { clubOpen(b, b.getAttribute('data-pz-open'), ''); return; }
+        var r = pzOpen(b.getAttribute('data-pz-open')); if (r) { pzShowOpen(r); } return;
+      }
+      if ((b = t.closest('[data-pz-grant]'))) {
+        if (clubHold()) { return; }
+        if (clubOn()) { clubOpen(b, b.getAttribute('data-pz-series'), b.getAttribute('data-pz-grant')); return; }
+        var g = pzOpen(b.getAttribute('data-pz-series'), b.getAttribute('data-pz-grant')); if (g) { pzShowOpen(g); } return;
+      }
       if ((b = t.closest('[data-pz-wear]'))) { var slot = b.getAttribute('data-pz-wear'), id = b.getAttribute('data-pz-id'); pzEquip(slot, b.getAttribute('aria-pressed') === 'true' ? '' : id); buildCrates(); var back = $('[data-pz-wear="' + slot + '"][data-pz-id="' + id + '"]', viewEl.crates); if (back) { focusQuiet(back); } return; }
       if ((b = t.closest('[data-pz-try]'))) { var tile = b.closest('.pz-item'), ans = tile ? $('.pz-ans', tile) : null; if (ans) { fxRight(b.getAttribute('data-pz-try'), ans); } return; }
       if ((b = t.closest('[data-pz-title]'))) { var tid = b.getAttribute('data-pz-title'); pzEquip('title', b.getAttribute('aria-pressed') === 'true' ? '' : tid); buildCrates(); return; }
-      if (t.closest('#pz-buy-freeze')) { pzBuyFreeze(); buildCrates(); }
+      if ((b = t.closest('#pz-buy-freeze'))) { if (clubHold()) { return; } if (clubOn()) { clubFreeze(b); return; } pzBuyFreeze(); buildCrates(); }
     });
   }
   pzWire();
   /* the owner's link, #gift-<code>: it leaves the address bar and the history at once, before the router reads it; the code is
-     then checked against PZ_GIFT. This runs before boot.js, so its hashchange listener goes first too. */
+     then checked against PZ_GIFT. This runs before boot.js, so its hashchange listener goes first too. Signed in to an account
+     in the clubhouse, the server checks the code again and keeps the prizes (clubGift). */
   function pzGiftLink() {
     var m = /^#gift-([\w-]{16,64})$/.exec(location.hash);
     if (!m) { return; }
@@ -158,9 +169,13 @@
     subtle.digest('SHA-256', new TextEncoder().encode(m[1])).then(function (buf) {
       var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
       if (hex !== PZ_GIFT) { pzToast('That link does not unlock anything', ''); return; }
-      pzGiftAll();
-      if (viewEl.crates && !viewEl.crates.hidden) { buildCrates(); }
-      pzToast('Everything is unlocked', 'All ' + PZ_ITEMS.length + ' prizes, every sticker and title, and ' + pzNum(PZ_GIFT_COINS) + ' coins' + (acctIn() ? '.' : '. Sign in to keep them on every device.'), 8000);
+      (acctIn() ? clubGift(m[1]) : Promise.resolve(false)).then(function (done) {
+        if (done) { return; }
+        if (clubKeeps()) { pzToast('Nothing was unlocked yet', acctIn() ? 'Your account did not answer. Open the link again in a moment.' : 'Sign in again, then open the link again.', 8000); return; }
+        pzGiftAll();
+        if (viewEl.crates && !viewEl.crates.hidden) { buildCrates(); }
+        pzToast('Everything is unlocked', 'All ' + PZ_ITEMS.length + ' prizes, every sticker and title, and ' + pzNum(PZ_GIFT_COINS) + ' coins' + (acctIn() ? '.' : '. Sign in to keep them on every device.'), 8000);
+      });
     }).catch(function () {});
   }
   pzGiftLink();

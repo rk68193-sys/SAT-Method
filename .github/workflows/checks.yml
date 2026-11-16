@@ -1,6 +1,7 @@
 # Runs the site's checks (src/README.md, "Checks") on every push and pull request, and on demand from the Actions tab.
 # "Build and data" rebuilds index.html from src/ and compares it with the one committed, then runs the checks that need no
-# browser. "Clubhouse database" tests src/account/club.sql on PostgreSQL. The browser checks run in three groups at once.
+# browser. "Clubhouse database" tests src/account/club.sql on PostgreSQL, then the page against it. The browser checks run in
+# three groups at once.
 # A red run means a change broke something the checks cover; the failing step's log names the check. Nothing here
 # deploys: GitHub Pages still publishes main as it is.
 name: Checks
@@ -71,7 +72,7 @@ jobs:
   database:
     name: Clubhouse database
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     services:
       postgres:
         image: postgres:15  # the oldest PostgreSQL a Supabase project still runs
@@ -89,6 +90,19 @@ jobs:
           PGUSER: postgres
           PGPASSWORD: postgres
         run: sh src/check/club-db.sh
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Playwright and Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - name: the page with club.sql
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+        run: node src/check/club.js index.html 390
 
   browser:
     name: Browser checks (${{ matrix.group }})

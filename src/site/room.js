@@ -1,5 +1,6 @@
   /* =================== My room (#room): a room in the clubhouse, decorated with the prizes a student has won =================== */
-  /* The first part of the clubhouse, kept on this device: nothing here is sent anywhere, and only the student sees the room.
+  /* The first part of the clubhouse. On its own it is kept on this device and only the student sees it; signed in to an account
+     in the clubhouse, each save is also sent to the account, so it can be shared with a link (club.js: Share my room, #r-).
      Each spot takes one kind of prize, so looks added to the catalog later fit with no change here:
        walls   a theme, which paints the walls and floor      window  a paper as the view outside (with no paper, a living
        s0-s2   three display stands: an aura or an effect             theme's scene, or the sky)
@@ -9,8 +10,8 @@
      store.s.room, once saved: { v: 1, t: when, w: theme id, win: paper id, st: [3 ids], sh: [ids], bd: [sticker ids], tl: title
      id, av: [color, hat] }, with ids as in PZ_BY and '' for an empty spot. The name on the plate is store.s.chn, the name the
      student signs challenges with. Until the first save the room is made from what the student has on and their rarest
-     prizes (roomStart), so it fills up as they win more. roomRoomHTML draws a room from the record alone, ready for rooms that
-     friends open later. */
+     prizes (roomStart), so it fills up as they win more. roomRoomHTML draws a room from the record alone, so a friend's shared
+     room is drawn the same way (clubVisit). */
   var ROOM_STANDS = 3, ROOM_SHELF = 3, ROOM_BOARD = 6;
   var ROOM_COLORS = [['violet', 'Violet', '#8B5CF6'], ['blue', 'Blue', '#3B82F6'], ['teal', 'Teal', '#14B8A6'], ['green', 'Green', '#22C55E'], ['yellow', 'Sunny', '#FACC15'], ['orange', 'Orange', '#F97316'], ['pink', 'Pink', '#EC4899'], ['gray', 'Silver', '#94A3B8']];
   var ROOM_HATS = [['', 'No hat'], ['grad', 'Graduation cap'], ['beanie', 'Beanie'], ['phones', 'Headphones'], ['bow', 'Bow'], ['cap', 'Ball cap']];
@@ -75,6 +76,7 @@
     store.s.room = { v: 1, t: Date.now(), w: R.w, win: R.win, st: R.st.slice(), sh: R.sh.slice(), bd: R.bd.slice(), tl: R.tl, av: R.av.slice() };
     store.s.chn = chalName(R.nm);
     save();
+    if (clubOn()) { clubRoomPush(); }
   }
   /* two devices' rooms joined (bkMerge): the one saved last */
   function roomMerge(a, b) { if (!isObj(a)) { return b; } if (!isObj(b)) { return a; } return (b.t || 0) > (a.t || 0) ? b : a; }
@@ -145,13 +147,13 @@
     if (spot === 'desk') { return 'A calendar: ' + plural(o.n, 'day') + ' in a row'; }
     return '';
   }
-  /* o: { edit, title, n (days in a row), best } */
+  /* o: { edit, title, n (days in a row), best, on (the spot tapped) } */
   function roomRoomHTML(R, o) {
     var V = roomVars(R), it = function (id) { return id ? PZ_BY[id] : null; }, html = '', x, i;
     function spot(id, cls, inner) {
       var what = roomWhat(id, R, o), label = o.edit ? (id === 'desk' ? 'Desk: ' + what + '. It changes when you practice.' : 'Change the ' + roomSpotName(id).toLowerCase() + ': now ' + what) : roomSpotName(id) + ': ' + what;
       if (id === 'me') { label = o.edit ? 'Change how you look: now ' + what : 'You: ' + what; }
-      return '<button type="button" class="room-spot ' + cls + (ROOM.spot === id ? ' room-on' : '') + '" data-room-spot="' + id + '" aria-label="' + esc(label) + '">' + inner + '</button>';
+      return '<button type="button" class="room-spot ' + cls + (o.on === id ? ' room-on' : '') + '" data-room-spot="' + id + '" aria-label="' + esc(label) + '">' + inner + '</button>';
     }
     /* the window: a paper, or the walls' living scene, or the sky */
     var paper = it(R.win), wl = it(R.w), view;
@@ -297,7 +299,7 @@
     if (spot === 'desk') { return h + '<p>The calendar on the desk shows your streak. It changes when you practice, so there is nothing to pick here.</p>'; }
     return '';
   }
-  function roomModel(R) { var s = habitStreak(); return { edit: ROOM.edit, title: roomTitleName(R.tl), n: s.n, best: s.best }; }
+  function roomModel(R) { var s = habitStreak(); return { edit: ROOM.edit, title: roomTitleName(R.tl), n: s.n, best: s.best, on: ROOM.spot }; }
   function roomSideHTML(R, o) {
     if (ROOM.edit) {
       return '<div class="room-chips room-spots" role="group" aria-label="Spots in the room">' + ROOM_SPOTS.filter(function (s) { return s[0] !== 'desk'; }).map(function (s) { return '<button type="button" class="room-chip" data-room-spot="' + s[0] + '" aria-pressed="' + (ROOM.spot === s[0] ? 'true' : 'false') + '">' + s[1] + '</button>'; }).join('') + '</div>' +
@@ -336,8 +338,13 @@
     viewEl.room.innerHTML = '<div class="wrap room-page">' +
       '<header class="room-head"><p class="eyebrow">Clubhouse</p><h2 class="vtitle">My room</h2><p class="lede">A room to show off the prizes you win by studying. Tap anything in it to see what it is, or press Decorate to change it.</p></header>' +
       '<div class="room-main"><div class="room-stage"><div id="room-box"></div><div class="room-bar" id="room-bar"></div></div><div class="room-side" id="room-side" aria-live="polite"></div></div>' +
-      '<p class="fine room-foot">Only you can see your room for now. It is saved with the rest of your progress: on this device, in your backup file, and in your account if you sign in.</p></div>';
+      '<div id="room-share-box"></div><p class="fine room-foot" id="room-foot">' + esc(roomFoot()) + '</p></div>';
     roomDrawAll();
+    clubShareDraw();
+  }
+  function roomFoot() {
+    return clubShow() ? 'Your room is saved in your account. Only people you send its link to can see it, and only while it is shared.'
+      : 'Only you can see your room for now. It is saved with the rest of your progress: on this device, in your backup file, and in your account if you sign in.';
   }
   /* a spot was tapped: while decorating, its choices; otherwise what it holds, and an effect plays */
   function roomTap(spot) {

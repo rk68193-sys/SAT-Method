@@ -4235,6 +4235,32 @@ html.pz-plain .pz-bg { display: none; }
 .room-flash { padding: .6rem .8rem; border-radius: 12px; background: var(--sunk); font-weight: 600; }
 @media (prefers-reduced-motion: reduce) { .room-spot:not(.room-walls):hover { filter: none; } }
 
+/* ---------- sharing the room, and a friend's shared room (#r-, club.js) ---------- */
+.room-share { display: grid; gap: .8rem; max-width: 46rem; padding: 1.1rem 1.2rem; border-radius: 18px; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); }
+.room-share > *, .room-share p { margin: 0; }
+.room-share .row { display: flex; flex-wrap: wrap; gap: .6rem; }
+.room-nick b { overflow-wrap: anywhere; }
+.room-nick .linkbtn { margin-left: .4rem; }
+.room-nickf { display: grid; gap: .55rem; }
+.room-nickin { max-width: 22rem; }
+.room-link { display: flex; }
+.room-url { width: 100%; padding: .65rem .8rem; border-radius: 12px; border: 1.5px solid var(--line-strong); background: var(--sunk); color: var(--ink); font: 600 .95rem/1.3 var(--body); }
+.room-url:focus { outline: 3px solid var(--focus); outline-offset: 1px; }
+.room-msg { font-weight: 600; }
+.room-msg:empty { display: none; }
+.room-h4 { margin: 0; font: 700 1rem/1.3 var(--body); }
+.room-guests, .room-leave { display: grid; gap: .6rem; padding-top: .9rem; border-top: 1px solid var(--line); }
+.room-share > .room-guests:first-child { padding-top: 0; border-top: 0; }
+.room-gb { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.room-gb li { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .8rem; }
+.room-gb .pz-stk { min-height: 2.6rem; min-width: 6.5rem; padding: .35rem .6rem; }
+.room-gb .linkbtn { min-height: 44px; }
+.room-leave-pick { display: flex; flex-wrap: wrap; gap: .7rem .6rem; }
+.room-leave-pick .room-stkb { padding: 0; background: none; border-radius: 12px; }
+.room-leave-pick .pz-stk { min-height: 2.8rem; min-width: 6.5rem; padding: .35rem .6rem; }
+.room-leave-pick .room-stkb:disabled { opacity: .55; cursor: default; }
+.room-leave-pick .room-stkb:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
 </style>
 
 <script>try { var t0 = localStorage.getItem('sat-sprint-theme'); if (t0 && t0 !== 'auto') { document.documentElement.setAttribute('data-theme', t0); } var z0 = localStorage.getItem('sat-sprint-size'); if (z0 === 'l' || z0 === 'xl') { document.documentElement.setAttribute('data-size', z0); } } catch (e) {}</script>
@@ -4293,6 +4319,7 @@ html.pz-plain .pz-bg { display: none; }
   <section id="v-crates" class="view" aria-label="Crates" hidden></section>
   <section id="v-challenge" class="view" aria-label="Challenge a friend" hidden></section>
 <section id="v-room" class="view" aria-label="My room" hidden></section>
+<section id="v-visit" class="view" aria-label="A shared room" hidden></section>
 </main>
 <div class="wrap"><nav class="nextstep" id="nextbox" aria-label="Next step" hidden></nav></div>
 
@@ -9850,7 +9877,9 @@ function rReasoningHTML() {
        st stickers found: <sticker> 1
        eq what this device has on: { fx, aura, paper, streak, title }   (the theme is the Appearance setting)
      Keys use only letters, digits, '.', '-' and '_', the names a backup file may hold (BK_KEY in data.js).
-     e, x and st join by the larger value; o, g and fz by union; eq keeps this device's. The balance is e minus x, never stored. */
+     e, x and st join by the larger value; o, g and fz by union; eq keeps this device's. The balance is e minus x, never stored.
+     Signed in to an account in the clubhouse (club.js), the server keeps e, x, o, g, fz and st instead, in the same shape:
+     pz() returns its record, and coins, crates and freezes are asked of the server rather than changed here. */
   var PZ_TIERS = ['c', 'r', 'e', 'l', 'm', 'z'];
   var PZ_TIER = { c: 'Common', r: 'Rare', e: 'Epic', l: 'Legendary', m: 'Mythic', z: 'Radiant' };
   /* Radiant's 0.1% comes out of Common's share, so every other tier keeps the odds it had before Radiant was added */
@@ -10071,7 +10100,9 @@ function rReasoningHTML() {
     ['century', 'Century', 'Practice 100 days in a row.', function (c) { return c.best >= 100; }]
   ];
 
+  /* signed in to an account in the clubhouse (club.js), the record is the server's, and only eq is this device's */
   function pz() {
+    if (clubShow()) { return clubPz(); }
     var p = store.s.pz;
     if (!isObj(p)) { p = store.s.pz = {}; }
     ['e', 'x', 'o', 'g', 'fz', 'st', 'eq'].forEach(function (k) { if (!isObj(p[k])) { p[k] = {}; } });
@@ -10143,6 +10174,7 @@ function rReasoningHTML() {
   function pzGrants() { var P = pz(); return Object.keys(P.g).filter(function (k) { return Array.isArray(P.g[k]) && !P.o['g.' + k] && (!P.g[k][1] || !!PZ_SER[P.g[k][1]]); }).map(function (k) { var g = P.g[k]; return { key: k, t: g[0] || 0, series: g[1] || '', min: g[2] || 'c', why: g[3] || '' }; }).sort(function (a, b) { return a.t - b.t; }); }
   function pzCanBuy(series) { return !!PZ_SER[series] && pzBalance() >= PZ_PRICE && (series !== 'test' || pzTestOpen()); }
   function pzOpen(series, grantKey) {
+    if (clubKeeps()) { return null; }
     var P = pz(), id, minTier = series === 'test' ? 'e' : 'c';
     if (grantKey) {
       var g = P.g[grantKey];
@@ -10168,9 +10200,9 @@ function rReasoningHTML() {
 
   /* ---------- streak freezes: bought ahead, used on their own when a missed day would end a streak ---------- */
   function pzFreezes() { var P = pz(), bought = Object.keys(P.x).filter(function (k) { return k.indexOf('freeze.') === 0; }).length; return Math.max(0, bought - Object.keys(P.fz).length); }
-  function pzBuyFreeze() { var P = pz(); if (pzBalance() < PZ_FREEZE || pzFreezes() >= PZ_FREEZE_MAX) { return false; } P.x['freeze.' + pzId()] = PZ_FREEZE; save(); pzChip(); return true; }
-  function pzFrozen(t) { var P = store.s.pz; return isObj(P) && isObj(P.fz) && !!P.fz[dayKey(t)]; }
-  function pzFrozenKeys() { var P = store.s.pz; return isObj(P) && isObj(P.fz) ? Object.keys(P.fz) : []; }
+  function pzBuyFreeze() { var P = pz(); if (clubKeeps() || pzBalance() < PZ_FREEZE || pzFreezes() >= PZ_FREEZE_MAX) { return false; } P.x['freeze.' + pzId()] = PZ_FREEZE; save(); pzChip(); return true; }
+  function pzFrozen(t) { var P = clubShow() ? CLUB.P : store.s.pz; return isObj(P) && isObj(P.fz) && !!P.fz[dayKey(t)]; }
+  function pzFrozenKeys() { var P = clubShow() ? CLUB.P : store.s.pz; return isObj(P) && isObj(P.fz) ? Object.keys(P.fz) : []; }
   function pzApplyFreeze() {
     var did = function (t) { var c = dayCount(t); return c[0] + c[1] > 0 || pzFrozen(t); }, today = dayStart(Date.now()), t = dayBefore(today), gap = [];
     if (did(t)) { return false; }
@@ -10210,6 +10242,8 @@ function rReasoningHTML() {
   function pzSoon() { if (pzBusy) { return; } clearTimeout(pzTimer); pzTimer = setTimeout(pzTick, 60); }
   function pzTick() {
     if (pzBusy) { return; }
+    /* in the clubhouse the server counts the coins; until its record arrives, nothing is counted here */
+    if (clubKeeps()) { clubTick(); pzChip(); return; }
     pzBusy = true;
     try {
       var P = pz(), today = dayKey(Date.now()), changed = false, got = 0, why = '', g0 = Object.keys(P.g).length;
@@ -10248,6 +10282,7 @@ function rReasoningHTML() {
      crate's prizes (records under gift.*, joined by pzMerge), so it reaches every device signed in to the same account. */
   var PZ_GIFT = 'b1c461100aa6812c8cae2b37a2e3da01083e6f2a862e8b022fd1ee53890b6e3a', PZ_GIFT_COINS = 10000;
   function pzGiftAll() {
+    if (clubKeeps()) { return; }
     var P = pz(), t = Date.now();
     /* lowest tier first, so the last record is a Radiant and the promise of an Epic starts again at 10 */
     PZ_ITEMS.slice().sort(function (a, b) { return PZ_TIERS.indexOf(a.tier) - PZ_TIERS.indexOf(b.tier); }).forEach(function (it, i) {
@@ -13537,7 +13572,8 @@ function rReasoningHTML() {
     viewEl.crates.innerHTML = '<div class="wrap pz-page">' +
       '<header class="pz-head"><p class="eyebrow">Prizes</p><h2 class="vtitle">Crates</h2><p class="lede">Earn coins by studying, then open crates of looks for the site. Prizes only change how the site looks: every lesson and question stays free and open.</p></header>' +
       '<div class="pz-top">' + pzWalletHTML() + pzEarnHTML() + '</div>' + pzFreeHTML() + pzSeriesHTML() + pzCollectionHTML() + pzStickersHTML() + pzTitlesHTML() +
-      '<p class="fine pz-rules">Coins can’t be bought, and no money ever touches a crate. Effects, auras and moving backgrounds never play in a timed module, and stay still on a device set to reduce motion. Coins, prizes and stickers are saved with the rest of your progress, in your backup file and your account.</p>' +
+      '<p class="fine pz-rules">Coins can’t be bought, and no money ever touches a crate. Effects, auras and moving backgrounds never play in a timed module, and stay still on a device set to reduce motion. ' +
+      (clubShow() ? 'Coins, prizes and stickers are kept in your account, the same on every device you sign in to.' : 'Coins, prizes and stickers are saved with the rest of your progress, in your backup file and your account.') + '</p>' +
       '</div>';
     fxScan();
   }
@@ -13580,17 +13616,27 @@ function rReasoningHTML() {
     document.addEventListener('click', function (e) {
       var t = e.target && e.target.closest ? e.target : null; if (!t || !viewEl.crates || !viewEl.crates.contains(t)) { return; }
       var b;
-      if ((b = t.closest('[data-pz-open]'))) { var r = pzOpen(b.getAttribute('data-pz-open')); if (r) { pzShowOpen(r); } return; }
-      if ((b = t.closest('[data-pz-grant]'))) { var g = pzOpen(b.getAttribute('data-pz-series'), b.getAttribute('data-pz-grant')); if (g) { pzShowOpen(g); } return; }
+      /* signed in to an account in the clubhouse, the server opens the crate (club.js) */
+      if ((b = t.closest('[data-pz-open]'))) {
+        if (clubHold()) { return; }
+        if (clubOn()) { clubOpen(b, b.getAttribute('data-pz-open'), ''); return; }
+        var r = pzOpen(b.getAttribute('data-pz-open')); if (r) { pzShowOpen(r); } return;
+      }
+      if ((b = t.closest('[data-pz-grant]'))) {
+        if (clubHold()) { return; }
+        if (clubOn()) { clubOpen(b, b.getAttribute('data-pz-series'), b.getAttribute('data-pz-grant')); return; }
+        var g = pzOpen(b.getAttribute('data-pz-series'), b.getAttribute('data-pz-grant')); if (g) { pzShowOpen(g); } return;
+      }
       if ((b = t.closest('[data-pz-wear]'))) { var slot = b.getAttribute('data-pz-wear'), id = b.getAttribute('data-pz-id'); pzEquip(slot, b.getAttribute('aria-pressed') === 'true' ? '' : id); buildCrates(); var back = $('[data-pz-wear="' + slot + '"][data-pz-id="' + id + '"]', viewEl.crates); if (back) { focusQuiet(back); } return; }
       if ((b = t.closest('[data-pz-try]'))) { var tile = b.closest('.pz-item'), ans = tile ? $('.pz-ans', tile) : null; if (ans) { fxRight(b.getAttribute('data-pz-try'), ans); } return; }
       if ((b = t.closest('[data-pz-title]'))) { var tid = b.getAttribute('data-pz-title'); pzEquip('title', b.getAttribute('aria-pressed') === 'true' ? '' : tid); buildCrates(); return; }
-      if (t.closest('#pz-buy-freeze')) { pzBuyFreeze(); buildCrates(); }
+      if ((b = t.closest('#pz-buy-freeze'))) { if (clubHold()) { return; } if (clubOn()) { clubFreeze(b); return; } pzBuyFreeze(); buildCrates(); }
     });
   }
   pzWire();
   /* the owner's link, #gift-<code>: it leaves the address bar and the history at once, before the router reads it; the code is
-     then checked against PZ_GIFT. This runs before boot.js, so its hashchange listener goes first too. */
+     then checked against PZ_GIFT. This runs before boot.js, so its hashchange listener goes first too. Signed in to an account
+     in the clubhouse, the server checks the code again and keeps the prizes (clubGift). */
   function pzGiftLink() {
     var m = /^#gift-([\w-]{16,64})$/.exec(location.hash);
     if (!m) { return; }
@@ -13600,9 +13646,13 @@ function rReasoningHTML() {
     subtle.digest('SHA-256', new TextEncoder().encode(m[1])).then(function (buf) {
       var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
       if (hex !== PZ_GIFT) { pzToast('That link does not unlock anything', ''); return; }
-      pzGiftAll();
-      if (viewEl.crates && !viewEl.crates.hidden) { buildCrates(); }
-      pzToast('Everything is unlocked', 'All ' + PZ_ITEMS.length + ' prizes, every sticker and title, and ' + pzNum(PZ_GIFT_COINS) + ' coins' + (acctIn() ? '.' : '. Sign in to keep them on every device.'), 8000);
+      (acctIn() ? clubGift(m[1]) : Promise.resolve(false)).then(function (done) {
+        if (done) { return; }
+        if (clubKeeps()) { pzToast('Nothing was unlocked yet', acctIn() ? 'Your account did not answer. Open the link again in a moment.' : 'Sign in again, then open the link again.', 8000); return; }
+        pzGiftAll();
+        if (viewEl.crates && !viewEl.crates.hidden) { buildCrates(); }
+        pzToast('Everything is unlocked', 'All ' + PZ_ITEMS.length + ' prizes, every sticker and title, and ' + pzNum(PZ_GIFT_COINS) + ' coins' + (acctIn() ? '.' : '. Sign in to keep them on every device.'), 8000);
+      });
     }).catch(function () {});
   }
   pzGiftLink();
@@ -14015,7 +14065,8 @@ function rReasoningHTML() {
     save();
   });
   /* =================== My room (#room): a room in the clubhouse, decorated with the prizes a student has won =================== */
-  /* The first part of the clubhouse, kept on this device: nothing here is sent anywhere, and only the student sees the room.
+  /* The first part of the clubhouse. On its own it is kept on this device and only the student sees it; signed in to an account
+     in the clubhouse, each save is also sent to the account, so it can be shared with a link (club.js: Share my room, #r-).
      Each spot takes one kind of prize, so looks added to the catalog later fit with no change here:
        walls   a theme, which paints the walls and floor      window  a paper as the view outside (with no paper, a living
        s0-s2   three display stands: an aura or an effect             theme's scene, or the sky)
@@ -14025,8 +14076,8 @@ function rReasoningHTML() {
      store.s.room, once saved: { v: 1, t: when, w: theme id, win: paper id, st: [3 ids], sh: [ids], bd: [sticker ids], tl: title
      id, av: [color, hat] }, with ids as in PZ_BY and '' for an empty spot. The name on the plate is store.s.chn, the name the
      student signs challenges with. Until the first save the room is made from what the student has on and their rarest
-     prizes (roomStart), so it fills up as they win more. roomRoomHTML draws a room from the record alone, ready for rooms that
-     friends open later. */
+     prizes (roomStart), so it fills up as they win more. roomRoomHTML draws a room from the record alone, so a friend's shared
+     room is drawn the same way (clubVisit). */
   var ROOM_STANDS = 3, ROOM_SHELF = 3, ROOM_BOARD = 6;
   var ROOM_COLORS = [['violet', 'Violet', '#8B5CF6'], ['blue', 'Blue', '#3B82F6'], ['teal', 'Teal', '#14B8A6'], ['green', 'Green', '#22C55E'], ['yellow', 'Sunny', '#FACC15'], ['orange', 'Orange', '#F97316'], ['pink', 'Pink', '#EC4899'], ['gray', 'Silver', '#94A3B8']];
   var ROOM_HATS = [['', 'No hat'], ['grad', 'Graduation cap'], ['beanie', 'Beanie'], ['phones', 'Headphones'], ['bow', 'Bow'], ['cap', 'Ball cap']];
@@ -14091,6 +14142,7 @@ function rReasoningHTML() {
     store.s.room = { v: 1, t: Date.now(), w: R.w, win: R.win, st: R.st.slice(), sh: R.sh.slice(), bd: R.bd.slice(), tl: R.tl, av: R.av.slice() };
     store.s.chn = chalName(R.nm);
     save();
+    if (clubOn()) { clubRoomPush(); }
   }
   /* two devices' rooms joined (bkMerge): the one saved last */
   function roomMerge(a, b) { if (!isObj(a)) { return b; } if (!isObj(b)) { return a; } return (b.t || 0) > (a.t || 0) ? b : a; }
@@ -14161,13 +14213,13 @@ function rReasoningHTML() {
     if (spot === 'desk') { return 'A calendar: ' + plural(o.n, 'day') + ' in a row'; }
     return '';
   }
-  /* o: { edit, title, n (days in a row), best } */
+  /* o: { edit, title, n (days in a row), best, on (the spot tapped) } */
   function roomRoomHTML(R, o) {
     var V = roomVars(R), it = function (id) { return id ? PZ_BY[id] : null; }, html = '', x, i;
     function spot(id, cls, inner) {
       var what = roomWhat(id, R, o), label = o.edit ? (id === 'desk' ? 'Desk: ' + what + '. It changes when you practice.' : 'Change the ' + roomSpotName(id).toLowerCase() + ': now ' + what) : roomSpotName(id) + ': ' + what;
       if (id === 'me') { label = o.edit ? 'Change how you look: now ' + what : 'You: ' + what; }
-      return '<button type="button" class="room-spot ' + cls + (ROOM.spot === id ? ' room-on' : '') + '" data-room-spot="' + id + '" aria-label="' + esc(label) + '">' + inner + '</button>';
+      return '<button type="button" class="room-spot ' + cls + (o.on === id ? ' room-on' : '') + '" data-room-spot="' + id + '" aria-label="' + esc(label) + '">' + inner + '</button>';
     }
     /* the window: a paper, or the walls' living scene, or the sky */
     var paper = it(R.win), wl = it(R.w), view;
@@ -14313,7 +14365,7 @@ function rReasoningHTML() {
     if (spot === 'desk') { return h + '<p>The calendar on the desk shows your streak. It changes when you practice, so there is nothing to pick here.</p>'; }
     return '';
   }
-  function roomModel(R) { var s = habitStreak(); return { edit: ROOM.edit, title: roomTitleName(R.tl), n: s.n, best: s.best }; }
+  function roomModel(R) { var s = habitStreak(); return { edit: ROOM.edit, title: roomTitleName(R.tl), n: s.n, best: s.best, on: ROOM.spot }; }
   function roomSideHTML(R, o) {
     if (ROOM.edit) {
       return '<div class="room-chips room-spots" role="group" aria-label="Spots in the room">' + ROOM_SPOTS.filter(function (s) { return s[0] !== 'desk'; }).map(function (s) { return '<button type="button" class="room-chip" data-room-spot="' + s[0] + '" aria-pressed="' + (ROOM.spot === s[0] ? 'true' : 'false') + '">' + s[1] + '</button>'; }).join('') + '</div>' +
@@ -14352,8 +14404,13 @@ function rReasoningHTML() {
     viewEl.room.innerHTML = '<div class="wrap room-page">' +
       '<header class="room-head"><p class="eyebrow">Clubhouse</p><h2 class="vtitle">My room</h2><p class="lede">A room to show off the prizes you win by studying. Tap anything in it to see what it is, or press Decorate to change it.</p></header>' +
       '<div class="room-main"><div class="room-stage"><div id="room-box"></div><div class="room-bar" id="room-bar"></div></div><div class="room-side" id="room-side" aria-live="polite"></div></div>' +
-      '<p class="fine room-foot">Only you can see your room for now. It is saved with the rest of your progress: on this device, in your backup file, and in your account if you sign in.</p></div>';
+      '<div id="room-share-box"></div><p class="fine room-foot" id="room-foot">' + esc(roomFoot()) + '</p></div>';
     roomDrawAll();
+    clubShareDraw();
+  }
+  function roomFoot() {
+    return clubShow() ? 'Your room is saved in your account. Only people you send its link to can see it, and only while it is shared.'
+      : 'Only you can see your room for now. It is saved with the rest of your progress: on this device, in your backup file, and in your account if you sign in.';
   }
   /* a spot was tapped: while decorating, its choices; otherwise what it holds, and an effect plays */
   function roomTap(spot) {
@@ -14778,6 +14835,8 @@ function rReasoningHTML() {
     });
     $('#bk-erase', host).addEventListener('click', function () {
       if (!window.confirm(acctIn() ? 'Erase every answer, your plan, notes and settings on this device AND in your account? This cannot be undone.' : 'Erase every answer, your plan, notes and settings on this device? This cannot be undone.')) { return; }
+      /* coins, prizes and a shared room kept by the account go too (club.js) */
+      clubErase();
       bkApply({}, '');
       buildData('<b>Erased.</b> This device is back to a fresh start. Your appearance setting and any questions saved for offline use were kept.'); focusQuiet(document.getElementById('data-msg')); toTop();
     });
@@ -14941,6 +15000,8 @@ function rReasoningHTML() {
       else { acctSet('err', res || 'Could not reach your account. Your answers are safe on this device and will be sent when the connection is back.'); }
       if (acctAgain || (res === true && A.dirty)) { acctAgain = false; acctTimer = setTimeout(acctSync, 1500); }
       else if (res !== true) { acctTimer = setTimeout(acctSync, 60000); }
+      /* the clubhouse record (club.js) is fetched or refreshed alongside */
+      clubSynced();
       return res === true;
     });
     return acctRun;
@@ -14991,6 +15052,7 @@ function rReasoningHTML() {
       acctAdopt({});
     }
     var same = !!prev && prev.uid === uid;
+    if (!same) { clubStop(); }
     A = { uid: uid, email: String(u.email || ''), at: String(sess.access_token), rt: String(sess.refresh_token), exp: Date.now() + (Number(sess.expires_in) || 3600) * 1000,
       rev: same && typeof prev.rev === 'number' ? prev.rev : null, dirty: same ? !!prev.dirty : acctAny(store), last: 0 };
     acctPut();
@@ -15015,6 +15077,7 @@ function rReasoningHTML() {
     });
   }
   function acctForget() {
+    clubStop();
     A = null; acctPut(); clearTimeout(acctTimer); acctRun = null; acctAgain = false; acctNewPw = false;
     acctAdopt({});
     acctSet('', '');
@@ -15157,7 +15220,7 @@ function rReasoningHTML() {
       '<section class="sec"><h3 class="h2">Delete my account</h3><p class="lede">Erases the account and everything saved in it. The progress on this device stays here, in this browser. It cannot be undone.</p>' +
         '<p class="row"><button class="btn ghost danger" type="button" id="acct-del">Delete my account</button></p><p class="sg-msg" id="acct-delmsg" role="status" aria-live="polite"></p></section>' +
       '</div>';
-    $('#acct-sync', host).addEventListener('click', function () { acctSync().then(function () { if (cur.view === 'account' && acctIn()) { acctDraw(); } }); });
+    $('#acct-sync', host).addEventListener('click', function () { clubAgain(); acctSync().then(function () { if (cur.view === 'account' && acctIn()) { acctDraw(); } }); });
     $('#acct-out', host).addEventListener('click', function () { acctSignOut(); });
     $('#acct-pwform', host).addEventListener('submit', function (e) {
       e.preventDefault();
@@ -15175,7 +15238,9 @@ function rReasoningHTML() {
       m.className = 'sg-msg ok'; m.textContent = 'Deleting…';
       acctToken().then(function (tok) { return tok ? acctReq('POST', '/rest/v1/rpc/delete_account', {}, tok) : { ok: false, status: 0, body: null }; }).then(function (r) {
         if (!r.ok) { m.className = 'sg-msg bad'; m.textContent = acctErr(r); return; }
+        clubHandBack();
         A = null; acctPut(); clearTimeout(acctTimer); acctNewPw = false; acctSet('', '');
+        save();
         acctNote = 'Your account is deleted. The progress on this device is still here, in this browser only.';
         buildAccount(); toTop();
       });
@@ -15194,8 +15259,9 @@ function rReasoningHTML() {
     window.addEventListener('storage', function (e) {
       if (e.key !== ACCT_LS) { return; }
       var was = acctIn(), o = acctRead();
+      if (was && (!o || !A || o.uid !== A.uid)) { clubStop(); }
       A = o; acctLast = JSON.stringify(acctBody());
-      if (was !== acctIn()) { acctSet('', ''); if (cur.view === 'account') { buildAccount(); } } else { acctDraw(); }
+      if (was !== acctIn()) { acctSet('', ''); pzChip(); if (cur.view === 'account') { buildAccount(); } } else { acctDraw(); }
     });
     document.addEventListener('visibilitychange', function () {
       if (!acctIn()) { return; }
@@ -15203,8 +15269,533 @@ function rReasoningHTML() {
       else if (A.dirty || Date.now() - (A.last || 0) > 30000) { acctSync(); }
     });
     window.addEventListener('pagehide', function () { if (acctIn() && A.dirty) { acctSync(); } });
-    window.addEventListener('online', function () { if (acctIn()) { acctSync(); } });
+    window.addEventListener('online', function () { if (acctIn()) { clubAgain(); acctSync(); } });
   }
+  /* =================== The clubhouse on the account (src/account/club.sql): coins, crates and shared rooms =================== */
+  /* Signed in, once club.sql has been run in the account's project, a student's coins, crates, prizes, stickers, free crates
+     and streak freezes are kept by the server instead of in the saved progress. The page shows what the server answers (CLUB.P,
+     in the shape of store.s.pz; pz() returns it instead) and asks the server to count the day's coins (club_claim), open a crate
+     (club_open), buy a freeze (club_freeze) or take the owner's link (club_gift); it changes nothing itself. The first time, the
+     device's own record is carried over (club_join), checked by the server. What the student has on (store.s.pz.eq) stays in the
+     saved progress. Guests, and a project where club.sql has not been run, keep everything on the device as before.
+     A room saved while signed in is sent too (club_room_save), so it can be shared: its link (#r-<32 hex digits>, clubVisit)
+     shows anyone the room, the nickname and the streak, and a signed-in visitor can leave one sticker a day on its board.
+     Kept on the device under CLUB_LS, for the account signed in: { uid, st (the server's last answer, so the page shows it at
+     once), pend (coins and days not yet counted by the server) }. store.s.club = 1 marks an account in the clubhouse, so a
+     device that has not heard from the server yet earns and opens nothing on its own meanwhile (clubWait). */
+  var CLUB_LS = 'sat-sprint-club';
+  var CLUB = { on: false, uid: '', st: null, P: null, none: false, wait: null, trying: false, next: 0, at: 0, erasing: false, joined: false,
+    pend: {}, sent: {}, flushing: false, flushT: 0, opening: false, room: null, roomAgain: false, nickEdit: false, said: '', visit: null };
+
+  /* the record shown is the account's: this device's person, signed in now or until their session ran out */
+  function clubShow() { return typeof CLUB === 'object' && !!CLUB && CLUB.on && !!CLUB.P && !!A && A.uid === CLUB.uid; }
+  /* and the server can be asked */
+  function clubOn() { return clubShow() && acctIn(); }
+  /* an account in the clubhouse that cannot be asked yet (its record has not arrived, or the session ran out): nothing is
+     earned or opened on the device meanwhile */
+  function clubWait() { return typeof CLUB === 'object' && !!CLUB && !clubOn() && !CLUB.none && !!A && !!A.uid && isObj(store.s) && store.s.club === 1; }
+  /* the account keeps the record, not the device: nothing is earned, opened or bought here on the device's own */
+  function clubKeeps() { return clubShow() || clubWait(); }
+  /* a tap on a crate or a freeze while the account cannot be asked: nothing happens, and the account is asked again */
+  function clubHold() {
+    if (clubOn() || !clubKeeps()) { return false; }
+    if (!acctIn()) { pzToast('Your coins are kept in your account', 'Sign in again to use them.', 6000); return true; }
+    pzToast('Your coins are kept in your account', 'It has not answered yet. Try again in a moment.', 5000);
+    CLUB.next = 0; clubSynced();
+    return true;
+  }
+  /* one of club.sql's functions, as the signed-in student, or with anon true as anyone (a shared room) */
+  function clubCall(fn, args, anon) {
+    return (anon ? Promise.resolve('') : acctToken()).then(function (tok) {
+      if (!anon && !tok) { return { ok: false, status: 0, body: null, missing: false, msg: 'Sign in again, then try once more.' }; }
+      return acctReq('POST', '/rest/v1/rpc/' + fn, args || {}, tok || null).then(function (r) {
+        var b = isObj(r.body) ? r.body : {};
+        r.missing = r.status === 404 && (b.code === 'PGRST202' || /could not find the function/i.test(String(b.message || '')));
+        r.msg = r.ok ? '' : clubSay(r);
+        return r;
+      });
+    });
+  }
+  /* what went wrong, in words; the server's own refusals are already plain ("not enough coins") */
+  function clubSay(r) {
+    var b = isObj(r.body) ? r.body : {}, m = String(b.message || '');
+    if (!r.status) { return 'No connection to your account. Try again when you are online.'; }
+    if (b.code === 'P0001' && m) {
+      if (m === 'not enough coins') { return 'You need more coins for that.'; }
+      if (m === 'join first' || m === 'sign in first') { return 'Sign in again, then try once more.'; }
+      if (m === 'the clubhouse is not ready yet') { return 'The clubhouse is still being set up. Try again in a few minutes.'; }
+      return m.charAt(0).toUpperCase() + m.slice(1) + '.';
+    }
+    if (r.status === 429) { return 'Too many tries just now. Wait a minute, then try again.'; }
+    return 'That did not work. Try again in a moment.';
+  }
+
+  /* ---------- the record: the server's answer, in the shapes the prize code reads ---------- */
+  function clubWhy(k) {
+    var m;
+    if (k === 'welcome') { return 'Welcome: your first crate is free.'; }
+    if ((m = /^ms(\d+)\./.exec(k))) { return 'A ' + m[1] + '-day streak.'; }
+    if ((m = /^page\.([a-z]+)$/.exec(k)) && PZ_SER[m[1]]) { return 'You finished the ' + PZ_SER[m[1]].name + ' sticker page.'; }
+    if (/^test\./.test(k)) { return 'Your test is this week.'; }
+    return '';
+  }
+  function clubTake(st) {
+    if (!isObj(st) || !st.joined) { return false; }
+    var obj = function (o) { return isObj(o) ? o : {}; }, g = {}, G = obj(st.g);
+    Object.keys(G).forEach(function (k) { var v = G[k]; if (Array.isArray(v)) { g[k] = [v[0] || 0, v[1] || '', v[2] || 'c', clubWhy(k)]; } });
+    CLUB.st = st; CLUB.at = Date.now(); CLUB.uid = A.uid;
+    CLUB.P = { e: obj(st.e), x: obj(st.x), o: obj(st.o), g: g, fz: obj(st.fz), st: obj(st.st), eq: {} };
+    CLUB.on = true;
+    clubSave();
+    return true;
+  }
+  /* pz() in club mode: the server's record, with what this device has on */
+  function clubPz() {
+    var L = store.s.pz;
+    if (!isObj(L)) { L = store.s.pz = {}; }
+    if (!isObj(L.eq)) { L.eq = {}; }
+    CLUB.P.eq = L.eq;
+    return CLUB.P;
+  }
+  /* the device's own record, carried over once: the prize record and the days practiced */
+  function clubRecord() {
+    var L = isObj(store.s.pz) ? store.s.pz : {}, out = {}, D = daysAll();
+    ['e', 'x', 'o', 'g', 'fz', 'st'].forEach(function (k) { out[k] = isObj(L[k]) ? L[k] : {}; });
+    out.days = Object.keys(D).filter(function (k) { return Array.isArray(D[k]) && (D[k][0] || 0) + (D[k][1] || 0) > 0; });
+    return out;
+  }
+
+  /* ---------- finding the clubhouse: after each sync with the account ---------- */
+  function clubSynced() {
+    if (!acctIn() || CLUB.erasing) { return; }
+    if (!CLUB.on && clubLoad(A.uid).erase) { if (Date.now() >= CLUB.next) { clubEraseNow(A.uid); } return; }
+    if (CLUB.on) { if (Date.now() - CLUB.at > 30000) { clubRefresh(); } return; }
+    if (CLUB.none || CLUB.trying || Date.now() < CLUB.next) { return; }
+    CLUB.wait = clubStart();
+  }
+  /* the student asked to check now, or the connection is back: no waiting for the next try */
+  function clubAgain() { CLUB.next = 0; }
+  function clubStart() {
+    var uid = A.uid;
+    CLUB.trying = true;
+    if (!CLUB.on) { var o = clubLoad(uid); CLUB.pend = isObj(o.pend) ? o.pend : {}; }
+    return clubCall('club_state').then(function (r) {
+      if (r.missing) { CLUB.none = true; return null; }
+      if (!r.ok || !isObj(r.body) || !r.body.ready) { return null; }
+      if (r.body.joined) { return r.body; }
+      return clubCall('club_join', { p: clubRecord() }).then(function (j) { if (j.ok && isObj(j.body)) { CLUB.joined = true; return j.body; } return null; });
+    }).then(function (st) {
+      CLUB.trying = false;
+      if (!st || !acctIn() || A.uid !== uid || !clubTake(st)) { CLUB.next = Date.now() + 60000; clubRedraw(); return false; }
+      clubAfter();
+      return true;
+    }, function () { CLUB.trying = false; CLUB.next = Date.now() + 60000; return false; });
+  }
+  /* the record again; an account whose clubhouse record is gone (erased on another device) joins again, and a project
+     without club.sql any more goes back to keeping prizes on the device */
+  function clubRefresh() {
+    var uid = A.uid;
+    CLUB.at = Date.now();
+    return clubCall('club_state').then(function (r) {
+      if (!clubOn() || A.uid !== uid) { return; }
+      if (r.missing || (r.ok && isObj(r.body) && r.body.ready && !r.body.joined)) {
+        var none = r.missing;
+        clubStop(); CLUB.none = none;
+        pzChip(); clubRedraw(); clubSynced();
+        return;
+      }
+      var before = JSON.stringify(CLUB.st);
+      if (r.ok && clubTake(r.body)) { clubAfter(JSON.stringify(CLUB.st) === before); }
+    });
+  }
+  /* after each answer from the server about the whole record; same: nothing in it changed, so nothing is drawn again */
+  function clubAfter(same) {
+    if (store.s.club !== 1) { store.s.club = 1; save(); }
+    if (CLUB.joined) {
+      /* said only when something came over from the device */
+      var c = isObj(CLUB.st.carried) ? CLUB.st.carried : {};
+      CLUB.joined = false;
+      if ((Number(c.prizes) || 0) + (Number(c.coins) || 0) > 0) { pzToast('Your coins and prizes are in your account', 'They are kept there now, the same on every device you sign in to.', 7000); }
+    }
+    clubRoomCheck();
+    clubTick();
+    if (!same) { pzChip(); clubRedraw(); }
+  }
+  /* when the account resolves: true in club mode (the gift link waits for this) */
+  function clubReady() {
+    if (!acctIn()) { return Promise.resolve(false); }
+    if (CLUB.on) { return Promise.resolve(true); }
+    if (CLUB.wait) { return CLUB.wait; }
+    return acctSync().then(function () { return CLUB.wait || false; });
+  }
+  /* signed out, the account deleted, or another tab signed out */
+  function clubStop() {
+    clearTimeout(CLUB.flushT);
+    CLUB.on = false; CLUB.uid = ''; CLUB.st = null; CLUB.P = null; CLUB.none = false; CLUB.wait = null; CLUB.trying = false; CLUB.next = 0; CLUB.at = 0;
+    CLUB.pend = {}; CLUB.sent = {}; CLUB.nickEdit = false; CLUB.said = '';
+    try { window.localStorage.removeItem(CLUB_LS); } catch (e) {}
+  }
+  /* the account was deleted: this device keeps the prizes it was showing, as its own record again */
+  function clubHandBack() {
+    if (clubOn()) {
+      var P = CLUB.P, L = isObj(store.s.pz) ? store.s.pz : {};
+      store.s.pz = { e: P.e, x: P.x, o: P.o, g: P.g, fz: P.fz, st: P.st, eq: isObj(L.eq) ? L.eq : {} };
+    }
+    delete store.s.club;
+    clubStop();
+  }
+  /* pages that show prizes are drawn again when the record changes, unless the student is typing or opening a crate */
+  function clubRedraw() {
+    if (pzModalOpen) { return; }
+    var f = document.activeElement;
+    if (f && /^(INPUT|TEXTAREA|SELECT)$/.test(f.tagName)) { return; }
+    var y = window.scrollY;
+    if (cur.view === 'crates') { buildCrates(); window.scrollTo(0, y); }
+    else if (cur.view === 'room') { if (!ROOM.edit) { roomDrawAll(); } clubShareDraw(); }
+    else if (cur.view === 'visit') { clubVisitDraw(); window.scrollTo(0, y); }
+    else if (cur.view === 'home') { acctRedraw(); }
+  }
+
+  /* ---------- what this device keeps for the account signed in ---------- */
+  function clubLoad(uid) {
+    try { var o = JSON.parse(window.localStorage.getItem(CLUB_LS) || 'null'); return isObj(o) && o.uid === uid ? o : {}; } catch (e) { return {}; }
+  }
+  function clubSave() {
+    try { if (A && A.uid && CLUB.st) { window.localStorage.setItem(CLUB_LS, JSON.stringify({ uid: A.uid, st: CLUB.st, pend: CLUB.pend })); } } catch (e) {}
+  }
+
+  /* ---------- coins for the day: what the page would have counted, sent to the server to count ---------- */
+  /* each reason is sent once per page load at most (CLUB.sent), even if the server does not count it */
+  function clubTick() {
+    if (!clubOn() || !CLUB.at) { return; }
+    var P = clubPz(), now = Date.now(), today = dayKey(now), want = CLUB.pend, was = JSON.stringify(want), t = dayStart(now), i, pl = null;
+    var add = function (k, v) { if (!((P.e[k] || 0) >= v) && !((want[k] || 0) >= v) && !((CLUB.sent[k] || 0) >= v)) { want[k] = v; } };
+    try { if (qotdDone('m', qotd('m'))) { add('qotd.m.' + today, PZ_EARN.qotd); } } catch (e) { /* no question of the day */ }
+    try { if (qotdDone('rw', qotd('rw'))) { add('qotd.rw.' + today, PZ_EARN.qotd); } } catch (e) { /* no question of the day */ }
+    try { pl = planGet(); if (pl) { var pr = planProgress(pl); if (pr.of && pr.done >= pr.of) { add('plan.' + today, PZ_EARN.plan); } } } catch (e) { /* no plan */ }
+    var rv = Math.min(PZ_EARN.revMax, pzReasonsSince(t));
+    if (rv) { add('rev.' + today, rv * PZ_EARN.rev); }
+    /* the days practiced, for the server's streak: today and the two before, once each */
+    for (i = 0; i < 3; i++, t = dayBefore(t)) { var c = dayCount(t); if (c[0] + c[1] > 0) { add('day.' + dayKey(t), 1); } }
+    if (pl && pzTestOpen() && CLUB.st.test !== pl.date) { add('test.' + pl.date, 1); }
+    if (JSON.stringify(want) !== was) { clubSave(); }
+    if (Object.keys(want).length) { clearTimeout(CLUB.flushT); CLUB.flushT = setTimeout(clubFlush, 300); }
+  }
+  function clubFlush() {
+    if (!clubOn() || CLUB.flushing) { return; }
+    var send = {}, keys = Object.keys(CLUB.pend).slice(0, 20);
+    if (!keys.length) { return; }
+    keys.forEach(function (k) { send[k] = CLUB.pend[k]; });
+    CLUB.flushing = true;
+    var was = {}, g0 = pzGrants().length;
+    keys.forEach(function (k) { was[k] = CLUB.P.e[k] || 0; });
+    clubCall('club_claim', { p: send }).then(function (r) {
+      CLUB.flushing = false;
+      if (!clubOn()) { return; }
+      if (!r.ok) {
+        /* refused outright: those reasons will never count, so they are dropped; otherwise tried again in a minute */
+        if (r.status >= 400 && r.status < 500 && [401, 408, 429].indexOf(r.status) < 0) { keys.forEach(function (k) { delete CLUB.pend[k]; CLUB.sent[k] = send[k]; }); clubSave(); }
+        else { clearTimeout(CLUB.flushT); CLUB.flushT = setTimeout(clubFlush, 60000); }
+        return;
+      }
+      keys.forEach(function (k) { if (CLUB.pend[k] === send[k]) { delete CLUB.pend[k]; } CLUB.sent[k] = Math.max(CLUB.sent[k] || 0, send[k]); });
+      if (!clubTake(r.body)) { return; }
+      /* only what this claim added: coins another device counted first are not news */
+      var got = 0, fresh = pzGrants().length > g0, why = '';
+      keys.forEach(function (k) { var d = (CLUB.P.e[k] || 0) - was[k], w = PZ_WHY[k.split('.')[0]]; if (d > 0 && w) { got += d; why = w; } });
+      if (got > 0) { pzToast('+' + got + ' coins', why + (fresh ? ' · and a free crate' : '')); } else if (fresh) { pzToast('A free crate', 'is waiting for you'); }
+      pzChip(); clubRedraw();
+      if (Object.keys(CLUB.pend).length) { CLUB.flushT = setTimeout(clubFlush, 300); }
+    });
+  }
+
+  /* ---------- crates, freezes and the owner's link, opened by the server ---------- */
+  function clubOpen(btn, series, grant) {
+    if (CLUB.opening) { return; }
+    CLUB.opening = true;
+    var was = btn.innerHTML;
+    btn.disabled = true; btn.textContent = 'Opening…';
+    clubCall('club_open', { p_series: series, p_grant: grant || null }).then(function (r) {
+      CLUB.opening = false;
+      var res = isObj(r.body) ? r.body : null;
+      if (!r.ok || !res) { if (btn.isConnected) { btn.disabled = false; btn.innerHTML = was; } pzToast('The crate did not open', r.msg, 7000); return; }
+      clubTake(res.state); pzChip();
+      var it = PZ_BY[res.item];
+      if (!it) { buildCrates(); pzToast('You won a prize', 'It is newer than this page. Reload the page to see it.', 8000); return; }
+      pzShowOpen({ id: res.id, item: it, dupe: res.dupe ? 1 : 0, sticker: res.sticker || '', series: res.series });
+    });
+  }
+  function clubFreeze(btn) {
+    if (btn) { btn.disabled = true; }
+    clubCall('club_freeze').then(function (r) {
+      if (r.ok && clubTake(r.body)) { pzChip(); if (cur.view === 'crates') { buildCrates(); } pzToast('A streak freeze is ready', 'It covers a day you miss, on its own.'); return; }
+      if (btn && btn.isConnected) { btn.disabled = false; }
+      pzToast('No freeze was bought', r.msg, 7000);
+    });
+  }
+  /* the owner's link while signed in: the server checks the code too, and gives everything to the account. false: not in club mode */
+  function clubGift(code) {
+    return clubReady().then(function () {
+      if (!clubOn()) { return false; }
+      return clubCall('club_gift', { p_code: code }).then(function (r) {
+        if (r.ok && clubTake(r.body)) {
+          pzChip(); if (cur.view === 'crates') { buildCrates(); }
+          pzToast('Everything is unlocked', 'All ' + PZ_ITEMS.length + ' prizes, every sticker and title, and ' + pzNum(PZ_GIFT_COINS) + ' coins, kept in your account.', 8000);
+        } else { pzToast('Nothing was unlocked', r.msg, 8000); }
+        return true;
+      });
+    });
+  }
+  /* "Erase my progress everywhere" empties the clubhouse record too; the next sync joins again with what is left (nothing).
+     Until the server has done it, the device remembers to ask again ({ uid, erase: 1 } under CLUB_LS). */
+  function clubErase() {
+    if (!acctIn() || CLUB.none) { return; }
+    var uid = A.uid;
+    clubStop();
+    try { window.localStorage.setItem(CLUB_LS, JSON.stringify({ uid: uid, erase: 1 })); } catch (e) {}
+    clubEraseNow(uid);
+  }
+  function clubEraseNow(uid) {
+    CLUB.erasing = true;
+    clubCall('club_erase').then(function (r) {
+      CLUB.erasing = false;
+      if (!A || A.uid !== uid) { return; }
+      if (r.ok || r.missing) { try { window.localStorage.removeItem(CLUB_LS); } catch (e) {} CLUB.none = r.missing; clubSynced(); }
+      else { CLUB.next = Date.now() + 60000; }
+    });
+  }
+
+  /* ---------- my room on the server, for sharing ---------- */
+  function clubRoomLayout() { var r = store.s.room; return { w: r.w || '', win: r.win || '', st: r.st || [], sh: r.sh || [], bd: r.bd || [], tl: r.tl || '', av: r.av || [] }; }
+  /* this device's room goes to the server when it is newer than the one there */
+  function clubRoomCheck() {
+    if (!clubOn() || !roomSaved()) { return; }
+    var srv = CLUB.st.room;
+    if (!isObj(srv) || (store.s.room.t || 0) > (srv.at || 0)) { clubRoomPush(); }
+  }
+  function clubRoomPush() {
+    if (!clubOn() || !roomSaved()) { return Promise.resolve(false); }
+    if (CLUB.room) { CLUB.roomAgain = true; return CLUB.room; }
+    CLUB.room = clubCall('club_room_save', { p: clubRoomLayout() }).then(function (r) {
+      CLUB.room = null;
+      if (r.ok && isObj(r.body) && clubOn()) { CLUB.st.room = r.body; }
+      if (CLUB.roomAgain) { CLUB.roomAgain = false; return clubRoomPush(); }
+      return r.ok;
+    });
+    return CLUB.room;
+  }
+  /* the server has this device's room: a save on its way is waited for, an older one is sent again */
+  function clubRoomSent() {
+    if (CLUB.room) { return CLUB.room; }
+    var srv = CLUB.st.room;
+    return isObj(srv) && (srv.at || 0) >= (store.s.room.t || 0) ? Promise.resolve(true) : clubRoomPush();
+  }
+  function clubRoomUrl(link) { return chalBase() + '#r-' + link; }
+  function clubDay(k) { var t = parseDay(k); return isNaN(t) ? '' : new Date(t).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); }
+  /* stickers visitors left: [id, sticker, nickname, day], newest first */
+  function clubBoardHTML(board, mine) {
+    var B = (Array.isArray(board) ? board : []).filter(function (b) { return Array.isArray(b) && pzStickerName(b[1]); });
+    var h = '<div class="room-guests"><h4 class="room-h4">Stickers from visitors</h4>';
+    if (!B.length) { return h + '<p class="fine">' + (mine ? 'None yet. A friend who opens your link and is signed in can leave one a day.' : 'None yet. Be the first!') + '</p></div>'; }
+    return h + '<ul class="room-gb">' + B.map(function (b, i) {
+      return '<li><span class="pz-stk pz-stk-' + (i % 4) + '">' + esc(pzStickerName(b[1])) + '</span><span class="fine">from ' + esc(b[2] || 'a visitor') + (clubDay(b[3]) ? ', ' + esc(clubDay(b[3])) : '') + '</span>' +
+        (mine ? '<button class="linkbtn" type="button" data-club-unstick="' + Number(b[0]) + '">Take it off</button>' : '') + '</li>';
+    }).join('') + '</ul></div>';
+  }
+  function clubNickHTML(nick) {
+    return '<form class="room-nickf" data-club-nickform novalidate><label class="field"><span class="label">Nickname</span><input type="text" class="room-nickin" maxlength="20" autocomplete="nickname" spellcheck="false" value="' + esc(nick || chalMyName()) + '"></label>' +
+      '<p class="fine">3 to 20 letters or numbers, with spaces, dots or dashes between them if you like.</p>' +
+      '<p class="row"><button class="btn sm" type="submit">Save nickname</button>' + (nick ? '<button class="btn ghost sm" type="button" data-club-nickcancel>Cancel</button>' : '') + '</p><p class="room-msg" role="status" aria-live="polite"></p></form>';
+  }
+  /* the Share my room part of #room */
+  function clubShareHTML() {
+    if (!acctOn) { return ''; }
+    var h = '<section class="room-share" aria-labelledby="room-share-h"><h3 class="h3" id="room-share-h">Share my room</h3>';
+    if (!acctIn()) { return h + '<p>Sign in to get a link your friends can open to see your room, and to leave stickers in theirs.</p><p><a class="btn ghost sm" href="#account">Sign in</a></p></section>'; }
+    if (!clubOn()) { return CLUB.trying ? h + '<p class="muted">Checking your account…</p></section>' : ''; }
+    var st = CLUB.st, nick = st.nick || '', link = isObj(st.room) && st.room.link ? clubRoomUrl(st.room.link) : '', share = chalCanShare();
+    if (st.blocked) { return h + '<p>Sharing is switched off for this account.</p></section>'; }
+    if (!nick || CLUB.nickEdit) {
+      return h + (nick ? '' : '<p>First, choose a nickname. It shows on your shared room and on stickers you leave for friends. A first name or a made-up name is best, never your full name.</p>') + clubNickHTML(nick) + '</section>';
+    }
+    h += '<p class="room-nick">Your nickname: <b>' + esc(nick) + '</b> <button class="linkbtn" type="button" data-club-nickedit>Change it</button></p>';
+    if (!link) {
+      h += '<p>Make a link to your room. Anyone you send it to sees your room, your nickname and your streak, and nothing else. You can switch it off at any time.</p>' +
+        '<p class="row"><button class="btn" type="button" data-club-share>Make a link</button></p>';
+    } else {
+      h += '<p><b>Your room is shared.</b> Anyone with this link can see it:</p><p class="room-link"><input type="text" class="room-url" readonly value="' + esc(link) + '" aria-label="The link to your room"></p>' +
+        '<p class="row">' + (share ? '<button class="btn" type="button" data-club-send>Send to a friend</button>' : '') + '<button class="btn' + (share ? ' ghost' : '') + '" type="button" data-club-copy>Copy the link</button>' +
+        '<button class="btn ghost" type="button" data-club-unshare>Stop sharing</button></p>';
+    }
+    h += '<p class="room-msg" role="status" aria-live="polite">' + esc(CLUB.said) + '</p>';
+    if (link || (Array.isArray(st.board) && st.board.length)) { h += clubBoardHTML(st.board, true); }
+    return h + '</section>';
+  }
+  function clubShareDraw() {
+    var box = viewEl.room ? $('#room-share-box', viewEl.room) : null, foot = viewEl.room ? $('#room-foot', viewEl.room) : null;
+    if (box) { box.innerHTML = clubShareHTML(); }
+    if (foot) { foot.textContent = roomFoot(); }
+  }
+  function clubShareSay(msg) { CLUB.said = msg; clubShareDraw(); var m = viewEl.room ? $('.room-share .room-msg', viewEl.room) : null; if (m) { focusQuiet(m); } }
+  function clubCopy(url, msg, box) {
+    var inp = box ? $('.room-url', box) : null;
+    function done(ok) { msg.textContent = ok ? 'Copied. Paste it into a message to a friend.' : 'Copy the link above, then paste it into a message to a friend.'; if (!ok && inp) { focusQuiet(inp); try { inp.select(); } catch (e) {} } }
+    try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(inp ? chalCopyOld(inp) : false); }); return; } } catch (e) {}
+    done(inp ? chalCopyOld(inp) : false);
+  }
+
+  /* ---------- #r-<link>: someone's shared room ---------- */
+  function clubTitleName(id) { var t = PZ_TITLES.filter(function (x) { return x[0] === id; })[0]; return t ? t[1] : ''; }
+  /* a shared room's record, kept to what this page knows how to draw (the server already checked the owner has it all) */
+  function clubRoomFrom(L, nick) {
+    L = isObj(L) ? L : {};
+    var item = function (id, kinds) { var it = typeof id === 'string' ? PZ_BY[id] : null; return it && kinds.indexOf(it.kind) >= 0 ? id : ''; };
+    var list = function (a, n, f) { var out = []; (Array.isArray(a) ? a : []).forEach(function (x) { var v = f(x); if (v && out.indexOf(v) < 0 && out.length < n) { out.push(v); } }); return out; };
+    var st = [], av = Array.isArray(L.av) ? L.av : [];
+    for (var i = 0; i < ROOM_STANDS; i++) { st.push(item(Array.isArray(L.st) ? L.st[i] : '', ['aura', 'fx'])); }
+    return { w: item(L.w, ['theme']), win: item(L.win, ['paper']), st: st, sh: list(L.sh, ROOM_SHELF, function (x) { return item(x, ['streak']); }),
+      bd: list(L.bd, ROOM_BOARD, function (x) { return typeof x === 'string' && pzStickerName(x) ? x : ''; }), tl: typeof L.tl === 'string' ? L.tl : '',
+      av: [roomColor(av[0])[0], roomHat(av[1])[0]], nm: nick || '' };
+  }
+  function clubVisitPage(head, body) {
+    viewEl.visit.innerHTML = '<div class="wrap room-page room-visit"><header class="room-head"><p class="eyebrow">Clubhouse</p><h2 class="vtitle">' + head + '</h2>' + body + '</header></div>';
+  }
+  function clubVisit(link) {
+    CLUB.visit = { link: link, v: null, spot: '', said: '' };
+    clubVisitPage('A shared room', '<p class="lede" role="status">Opening the room…</p>');
+    if (!acctOn) { clubVisitPage('A shared room', '<p class="lede">Shared rooms are not switched on for this copy of the site.</p>'); return; }
+    clubCall('club_room_view', { p_link: link }, !acctIn()).then(function (r) {
+      if (cur.view !== 'visit' || !CLUB.visit || CLUB.visit.link !== link) { return; }
+      if (r.ok && isObj(r.body)) { CLUB.visit.v = r.body; clubVisitDraw(); return; }
+      clubVisitPage('This room is not shared right now', '<p class="lede">' + (r.ok || r.missing ? 'Its owner may have switched the link off, or it was copied wrong.' : esc(r.msg)) + '</p>' +
+        '<p class="row"><a class="btn" href="#room">See my own room</a><a class="btn ghost" href="#home">Go to Today</a></p>');
+    });
+  }
+  function clubVisitModel(v) { var R = clubRoomFrom(v.layout, v.nick); return { R: R, o: { edit: false, title: clubTitleName(R.tl), n: Number(v.n) || 0, best: Number(v.best) || 0, on: CLUB.visit.spot } }; }
+  function clubVisitSideHTML(R, o) {
+    var sp = CLUB.visit.spot;
+    return (sp ? '<div class="room-card"><p class="room-side-k">' + esc(roomSpotName(sp)) + '</p><p>' + esc(roomWhat(sp, R, o)) + '</p></div>' : '') +
+      '<p class="room-side-k">In this room</p><ul class="room-all">' + ROOM_SPOTS.map(function (s) {
+        return '<li><button type="button" class="room-allb" data-visit-spot="' + s[0] + '"><b>' + s[1] + '</b><span>' + esc(roomWhat(s[0], R, o)) + '</span></button></li>';
+      }).join('') + '</ul>';
+  }
+  function clubLeaveHTML(v) {
+    var h = '<div class="room-leave"><h4 class="room-h4">Leave a sticker</h4>', nick = esc(v.nick || 'them');
+    if (v.mine) { return h + '<p>This is your room. Friends you send the link to can leave stickers here.</p><p><a class="btn ghost sm" href="#room">Go to my room</a></p></div>'; }
+    if (!acctIn()) { return h + '<p>Sign in to leave one of your stickers on ' + nick + '’s board.</p><p><a class="btn ghost sm" href="#account">Sign in</a></p></div>'; }
+    if (!clubOn()) { return CLUB.trying ? h + '<p class="muted">Checking your account…</p></div>' : ''; }
+    if (CLUB.st.blocked) { return h + '<p>Leaving stickers is switched off for this account.</p></div>'; }
+    if (!CLUB.st.nick || CLUB.nickEdit) { return h + '<p>Choose a nickname first, so ' + nick + ' knows who it is from. A first name or a made-up name is best.</p>' + clubNickHTML(CLUB.st.nick) + '</div>'; }
+    var mine = Object.keys(clubPz().st).filter(function (s) { return pzStickerName(s); }).sort();
+    if (!mine.length) { return h + '<p>You have no stickers yet. Every crate holds one. <a href="#crates">Open crates</a></p></div>'; }
+    return h + '<p>Pick one of yours. You can leave one a day here; a second one that day takes the first one’s place.</p><div class="room-leave-pick">' + mine.map(function (s, i) {
+      return '<button type="button" class="room-stkb" data-club-stick="' + esc(s) + '" aria-label="Leave the ' + esc(pzStickerName(s)) + ' sticker"><span class="pz-stk pz-stk-' + (i % 4) + '">' + esc(pzStickerName(s)) + '</span></button>';
+    }).join('') + '</div><p class="room-msg" role="status" aria-live="polite">' + esc(CLUB.visit.said) + '</p></div>';
+  }
+  function clubVisitDraw() {
+    var V = CLUB.visit, v = V && V.v;
+    if (!v || !viewEl.visit) { return; }
+    var M = clubVisitModel(v), nm = esc(v.nick || 'A friend');
+    viewEl.visit.innerHTML = '<div class="wrap room-page room-visit">' +
+      '<header class="room-head"><p class="eyebrow">Clubhouse</p><h2 class="vtitle">' + esc(roomName(v.nick)) + '</h2><p class="lede">' + nm + ' decorated this room with prizes won by studying for the SAT. Tap anything in it to see what it is.</p></header>' +
+      '<div class="room-main"><div class="room-stage"><div id="visit-box">' + roomRoomHTML(M.R, M.o) + '</div></div><div class="room-side" id="visit-side" aria-live="polite">' + clubVisitSideHTML(M.R, M.o) + '</div></div>' +
+      '<section class="room-share" aria-label="Stickers">' + clubBoardHTML(v.board, false) + clubLeaveHTML(v) + '</section>' +
+      (acctIn() ? '' : '<p class="fine room-foot">Want a room of your own? Every lesson and question on this site is free, and studying earns the prizes. <a href="#home">Start here</a></p>') + '</div>';
+    roomScenes($('#visit-box', viewEl.visit), M.R);
+  }
+  function clubVisitTap(spot) {
+    var V = CLUB.visit;
+    if (!V || !V.v) { return; }
+    V.spot = spot;
+    var M = clubVisitModel(V.v), side = $('#visit-side', viewEl.visit), m = /^s(\d)$/.exec(spot), it = m ? PZ_BY[M.R.st[+m[1]]] : null;
+    $$('#visit-box .room-spot', viewEl.visit).forEach(function (b) { b.classList.toggle('room-on', b.getAttribute('data-room-spot') === spot); });
+    if (side) { side.innerHTML = clubVisitSideHTML(M.R, M.o); }
+    if (it && it.kind === 'fx') { fxRight(it.key, $('#visit-box .room-st' + m[1] + ' .room-ans', viewEl.visit)); }
+  }
+
+  /* ---------- taps and forms ---------- */
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target : null, b;
+    if (!t) { return; }
+    if (viewEl.visit && viewEl.visit.contains(t)) {
+      if ((b = t.closest('[data-room-spot],[data-visit-spot]'))) { clubVisitTap(b.getAttribute('data-room-spot') || b.getAttribute('data-visit-spot')); return; }
+      if ((b = t.closest('[data-club-stick]')) && clubOn() && CLUB.visit && CLUB.visit.v) {
+        var V = CLUB.visit, sticker = b.getAttribute('data-club-stick');
+        b.disabled = true;
+        clubCall('club_board_add', { p_link: V.link, p_sticker: sticker }).then(function (r) {
+          if (CLUB.visit !== V) { return; }
+          if (r.ok && Array.isArray(r.body)) { V.v.board = r.body; V.said = 'Your ' + pzStickerName(sticker) + ' sticker is on ' + (V.v.nick || 'their') + '’s board.'; }
+          else { V.said = r.msg; }
+          clubVisitDraw();
+          var m = $('.room-leave .room-msg', viewEl.visit); if (m) { focusQuiet(m); }
+        });
+        return;
+      }
+    }
+    if (!clubOn() || !t.closest('.room-share')) { return; }
+    var box = t.closest('.room-share');
+    if (t.closest('[data-club-nickedit]')) { CLUB.nickEdit = true; CLUB.said = ''; clubShareDraw(); clubVisitDraw(); var inp = $('.room-nickin'); if (inp) { focusQuiet(inp); } return; }
+    if (t.closest('[data-club-nickcancel]')) { CLUB.nickEdit = false; clubShareDraw(); clubVisitDraw(); return; }
+    if ((b = t.closest('[data-club-share]'))) {
+      b.disabled = true;
+      if (!roomSaved()) { roomSave(roomGet()); }
+      clubRoomSent().then(function () { return clubCall('club_room_link', { p_on: true }); }).then(function (r) {
+        if (r.ok && isObj(r.body)) { CLUB.st.room = r.body; clubShareSay('Your link is ready. Send it to a friend.'); } else { clubShareSay(r.msg); }
+      });
+      return;
+    }
+    if ((b = t.closest('[data-club-unshare]'))) {
+      b.disabled = true;
+      clubCall('club_room_link', { p_on: false }).then(function (r) {
+        if (r.ok && isObj(r.body)) { CLUB.st.room = r.body; clubShareSay('Sharing is off. The old link no longer opens your room.'); } else { clubShareSay(r.msg); }
+      });
+      return;
+    }
+    var url = $('.room-url', box), msg = $('.room-msg', box);
+    if (t.closest('[data-club-copy]') && url) { clubCopy(url.value, msg, box); return; }
+    if (t.closest('[data-club-send]') && url) {
+      try {
+        navigator.share({ title: 'My room on SAT Sprint', text: 'Come and see my room.', url: url.value }).then(function () { msg.textContent = 'Sent.'; }, function (err) { if (!err || err.name !== 'AbortError') { clubCopy(url.value, msg, box); } });
+      } catch (err) { clubCopy(url.value, msg, box); }
+      return;
+    }
+    if ((b = t.closest('[data-club-unstick]'))) {
+      b.disabled = true;
+      clubCall('club_board_remove', { p_id: Number(b.getAttribute('data-club-unstick')) }).then(function (r) {
+        if (r.ok && Array.isArray(r.body)) { CLUB.st.board = r.body; clubShareSay('The sticker is off your board.'); } else { clubShareSay(r.msg); }
+      });
+    }
+  });
+  document.addEventListener('submit', function (e) {
+    var f = e.target && e.target.closest ? e.target.closest('[data-club-nickform]') : null;
+    if (!f) { return; }
+    e.preventDefault();
+    var inp = $('.room-nickin', f), msg = $('.room-msg', f), btn = $('button[type="submit"]', f);
+    if (!clubOn() || !inp) { return; }
+    msg.textContent = 'Saving…'; btn.disabled = true;
+    clubCall('club_nick', { p_name: inp.value }).then(function (r) {
+      var b = isObj(r.body) ? r.body : null;
+      btn.disabled = false;
+      if (r.ok && b && b.ok) {
+        CLUB.st.nick = b.nick; CLUB.nickEdit = false; CLUB.said = 'Your nickname is saved.';
+        if (cur.view === 'visit') { clubVisitDraw(); } else { clubShareDraw(); var m = $('.room-share .room-msg', viewEl.room); if (m) { focusQuiet(m); } }
+        return;
+      }
+      msg.textContent = !r.ok ? r.msg : b && b.why === 'taken' ? 'Someone already has that nickname. Try another.'
+        : b && b.why === 'words' ? 'That nickname has a word that is not allowed here. Try another.'
+        : 'Use 3 to 20 letters or numbers, with spaces, dots or dashes between them if you like (not a phone number).';
+      focusQuiet(inp);
+    });
+  });
+
+  /* ---------- start: the page opens with the account's last record, so it does not change when the server says the same ---------- */
+  (function () {
+    if (!acctOn || !A || !A.uid) { return; }
+    var o = clubLoad(A.uid);
+    if (!isObj(o.st)) { return; }
+    CLUB.pend = isObj(o.pend) ? o.pend : {};
+    if (clubTake(o.st)) { CLUB.at = 0; }
+  }());
   /* =================== Visit counts: how often each page is shown, per day, and nothing about who =================== */
   /* No cookie, no ID and nothing kept on the device: each page shown adds one to that day's count for its name in the visits
      table (public.count_visit in src/account/extras.sql), and each page load also adds one to "visit". Only on satsprint.org,
@@ -15530,12 +16121,18 @@ function rReasoningHTML() {
     room: ['your room', [
       ['What is my room?', 'A room in the clubhouse where the prizes you win go on show: a theme on the walls, a paper in the window, auras and effects on the stands, streak styles on the shelf and stickers on the board.'],
       ['How do I change it?', 'Press <b>Decorate</b>, tap a spot in the room, then pick a prize for it. What you pick shows straight away. Press <b>Save my room</b> to keep it, or <b>Cancel</b> to leave it as it was.'],
-      ['Who can see my room?', 'Only you, for now. It is saved with the rest of your progress, in your backup file and in your account if you sign in.'],
+      ['Who can see my room?', 'Only you, unless you share it. When you are signed in, <b>Share my room</b> makes a link: anyone you send it to sees your room, your nickname and your streak, and nothing else. <b>Stop sharing</b> switches the link off.'],
+      ['What are stickers from visitors?', 'A friend who opens your link while signed in can leave one of their stickers on your board, one a day. You can take any of them off.'],
       ['How do I get more for my room?', 'Earn coins by studying and open crates. Every crate has a prize and a sticker in it.']]],
+    visit: ['a shared room', [
+      ['Whose room is this?', 'A student who studies for the SAT on this site decorated it with prizes they won, and sent you the link.'],
+      ['How do I leave a sticker?', 'Sign in, choose a nickname, then pick one of your stickers under <b>Leave a sticker</b>. You can leave one a day in each room.'],
+      ['What does the owner see about me?', 'Your nickname and the sticker you leave. Nothing else.'],
+      ['Can I have a room too?', 'Yes. Every lesson and question here is free. Studying earns coins, coins open crates, and the prizes in them decorate your own room.']]],
     other: ['this page', [
       ['Where do I start?', 'Press <b>Home</b> at the top, then press <b>Start</b> on Reading &amp; Writing or on Math.']]]
   };
-  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge', room: 'room' };
+  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge', room: 'room', visit: 'visit' };
   var helpEl = null, helpFrom = null;
   function helpKey() {
     var v = cur.view;
@@ -15617,7 +16214,7 @@ function rReasoningHTML() {
       ['mmap', 'm-map', 'My progress', 'See how you are doing on each kind of question, and what to practice next.', 'map']] }
   };
   function navList(subj) { return SUBJ[subj].items; }
-  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home', challenge: 'home', room: 'home' };
+  var VIEW_SUBJ = { home: 'home', suggest: 'home', plan: 'home', data: 'home', account: 'home', crates: 'home', challenge: 'home', room: 'home', visit: 'home' };
   Object.keys(SUBJ).forEach(function (s) { SUBJ[s].items.forEach(function (it) { VIEW_SUBJ[it[0]] = s; }); });
   var ICON = {
     book: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z"/></svg>',
@@ -15664,7 +16261,7 @@ function rReasoningHTML() {
   var lastPage = { v: 'home', subj: 'home' };
 
   /* ---------- the guide bar: where you are and the way back; and the next step at the foot of the page ---------- */
-  var GLOBAL_PAGE = { plan: ['My study plan', 'plan'], data: ['Backup and offline use', 'my-data'], account: ['My account', 'account'], suggest: ['Ask or suggest', 'suggest'], crates: ['Crates', 'crates'], challenge: ['Challenge a friend', 'challenge'], room: ['My room', 'room'] };
+  var GLOBAL_PAGE = { plan: ['My study plan', 'plan'], data: ['Backup and offline use', 'my-data'], account: ['My account', 'account'], suggest: ['Ask or suggest', 'suggest'], crates: ['Crates', 'crates'], challenge: ['Challenge a friend', 'challenge'], room: ['My room', 'room'], visit: ['A shared room', 'room'] };
   function groupName(g) { return GROUPS.filter(function (x) { return x[0] === g; })[0][1]; }
   /* the page you are inside a page with its own contents: a lesson, a reading step, a worked example */
   function deepName(v, tok) {
@@ -16035,7 +16632,7 @@ function rReasoningHTML() {
   }
 
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge', 'room'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge', 'room', 'visit'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -16167,6 +16764,8 @@ function rReasoningHTML() {
     if ((m = /^challenge(?:-(m|rw))?$/.exec(token))) { showView('challenge'); chalBuild(m[1] || ''); toTop(); return; }
     if (/^ch-/.test(token)) { showView('challenge'); chalOpen(token); toTop(); return; }
     if (token === 'room') { showView('room'); buildRoom(); toTop(); return; }
+    /* a friend's shared room (club.js) */
+    if ((m = /^r-([0-9a-f]{32})$/.exec(token))) { showView('visit'); clubVisit(m[1]); toTop(); return; }
     if (token === 'my-data' || token === 'my-data-offline') {
       showView('data'); buildData();
       if (token === 'my-data-offline') { scrollToEl(document.getElementById('my-data-offline')); } else { toTop(); }

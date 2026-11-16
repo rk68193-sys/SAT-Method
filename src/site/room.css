@@ -175,3 +175,29 @@
 .room-none-msg { padding: .7rem .85rem; border-radius: 12px; background: var(--sunk); }
 .room-flash { padding: .6rem .8rem; border-radius: 12px; background: var(--sunk); font-weight: 600; }
 @media (prefers-reduced-motion: reduce) { .room-spot:not(.room-walls):hover { filter: none; } }
+
+/* ---------- sharing the room, and a friend's shared room (#r-, club.js) ---------- */
+.room-share { display: grid; gap: .8rem; max-width: 46rem; padding: 1.1rem 1.2rem; border-radius: 18px; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); }
+.room-share > *, .room-share p { margin: 0; }
+.room-share .row { display: flex; flex-wrap: wrap; gap: .6rem; }
+.room-nick b { overflow-wrap: anywhere; }
+.room-nick .linkbtn { margin-left: .4rem; }
+.room-nickf { display: grid; gap: .55rem; }
+.room-nickin { max-width: 22rem; }
+.room-link { display: flex; }
+.room-url { width: 100%; padding: .65rem .8rem; border-radius: 12px; border: 1.5px solid var(--line-strong); background: var(--sunk); color: var(--ink); font: 600 .95rem/1.3 var(--body); }
+.room-url:focus { outline: 3px solid var(--focus); outline-offset: 1px; }
+.room-msg { font-weight: 600; }
+.room-msg:empty { display: none; }
+.room-h4 { margin: 0; font: 700 1rem/1.3 var(--body); }
+.room-guests, .room-leave { display: grid; gap: .6rem; padding-top: .9rem; border-top: 1px solid var(--line); }
+.room-share > .room-guests:first-child { padding-top: 0; border-top: 0; }
+.room-gb { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.room-gb li { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .8rem; }
+.room-gb .pz-stk { min-height: 2.6rem; min-width: 6.5rem; padding: .35rem .6rem; }
+.room-gb .linkbtn { min-height: 44px; }
+.room-leave-pick { display: flex; flex-wrap: wrap; gap: .7rem .6rem; }
+.room-leave-pick .room-stkb { padding: 0; background: none; border-radius: 12px; }
+.room-leave-pick .pz-stk { min-height: 2.8rem; min-width: 6.5rem; padding: .35rem .6rem; }
+.room-leave-pick .room-stkb:disabled { opacity: .55; cursor: default; }
+.room-leave-pick .room-stkb:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }

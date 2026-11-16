@@ -384,9 +384,9 @@ select t.ok(public.club_nick('maya r') ->> 'why' = 'taken', 'a nickname someone 
 select t.ok(public.club_nick('ab') ->> 'why' = 'form', 'too short');
 select t.ok(public.club_nick(repeat('a', 21)) ->> 'why' = 'form', 'too long');
 select t.ok(public.club_nick('Call 5551234567') ->> 'why' = 'form', 'not a phone number');
-select t.ok(public.club_nick('Hi <b>') ->> 'why' = 'form', 'letters, digits, spaces, dots, dashes and underscores only');
+select t.ok(public.club_nick('Hi <b>') ->> 'why' = 'form' and public.club_nick('Sam_2') ->> 'why' = 'form', 'letters, digits, spaces, dots and dashes only');
 select t.ok(public.club_nick('S.h.i.t') ->> 'why' = 'words', 'no rude words, even spelled out');
-select t.ok(public.club_nick('Sam_2') ->> 'ok' = 'true', 'a fine name');
+select t.ok(public.club_nick('Sam-2') ->> 'ok' = 'true', 'a fine name');
 select t.as_user(:'A');
 select t.ok(public.club_nick('MAYA R') ->> 'ok' = 'true', 'a student can change the capitals of their own name');
 reset role;
@@ -459,6 +459,7 @@ select t.fails(format('select public.club_board_add(%L, %L)', :'link2', 'pencil-
 select t.ok(jsonb_array_length(public.club_room_view(:'link2') -> 'board') = 1, 'a visitor cannot take stickers off someone else''s board');
 select public.club_board_remove(:b_id);
 select t.ok(public.club_room_view(:'link2') -> 'board' = '[]', 'the owner can');
+select t.ok(public.club_state() -> 'board' = '[]', 'and sees the board in their own record');
 select t.as_user(null);
 select t.fails(format('select public.club_board_add(%L, %L)', :'link2', 'night-2'), 'permission denied');
 reset role;

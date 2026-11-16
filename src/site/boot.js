@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge', 'room'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge', 'room', 'visit'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -131,6 +131,8 @@
     if ((m = /^challenge(?:-(m|rw))?$/.exec(token))) { showView('challenge'); chalBuild(m[1] || ''); toTop(); return; }
     if (/^ch-/.test(token)) { showView('challenge'); chalOpen(token); toTop(); return; }
     if (token === 'room') { showView('room'); buildRoom(); toTop(); return; }
+    /* a friend's shared room (club.js) */
+    if ((m = /^r-([0-9a-f]{32})$/.exec(token))) { showView('visit'); clubVisit(m[1]); toTop(); return; }
     if (token === 'my-data' || token === 'my-data-offline') {
       showView('data'); buildData();
       if (token === 'my-data-offline') { scrollToEl(document.getElementById('my-data-offline')); } else { toTop(); }
