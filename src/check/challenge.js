@@ -6,7 +6,7 @@
    ordinary set; Reading and Writing too; what is saved (only what a backup may hold, joined from a second device without
    losing a challenge, and the same file twice changing nothing); the visit counter seeing "ch" and nothing from the link;
    and no sideways scrolling at 320 px.
-   node src/check/challenge.js index.html [width] [shots-folder] */
+   node src/check/challenge.js index.html [width] [shots-folder]   (pictures are taken at twice the pixels, to be read by people) */
 const fs = require('fs'), os = require('os'), path = require('path');
 const { chromium } = require('playwright');
 const page = path.resolve(process.argv[2] || 'index.html'), file = 'file://' + page, root = path.dirname(page);
@@ -19,7 +19,7 @@ const KEY = 'sat-grammar-sprint.v1';
 
 async function student(b, opt) {
   opt = opt || {};
-  const ctx = await b.newContext({ viewport: { width: opt.width || width, height: 860 }, serviceWorkers: 'block' });
+  const ctx = await b.newContext({ viewport: { width: opt.width || width, height: 860 }, deviceScaleFactor: dir ? 2 : 1, serviceWorkers: 'block' });
   /* sending and copying are recorded instead of reaching the phone's share sheet or the clipboard */
   await ctx.addInitScript(o => {
     if (o.noShare) { try { delete Navigator.prototype.share; } catch (e) {} } else { navigator.share = d => { window.__shared = d; return Promise.resolve(); }; }
