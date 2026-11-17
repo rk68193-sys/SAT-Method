@@ -38,6 +38,8 @@
     ['forecast', 'Forecast', 'Every kind of weather: drizzle and gusts, a sun shower, a twister and a towering storm cloud.'],
     ['wilds', 'Wildlands', 'Wild places: a campfire, a volcano, a murmuration of starlings, a summer meadow and balloons, a lily pond, dunes at night and a frozen lake.'],
     ['curio', 'Curiosities', 'Strange and wonderful things: a fortune teller’s crystal ball, a chest with teeth, a slot machine, an anglerfish, a sealed door, giants on the horizon and two dying stars.'],
+    ['bit', '8-Bit', 'An old game, drawn in chunky pixels: a save point, a boss fight, a side-scroller, a dogfight in space, a dungeon, a world map and the last castle in a storm.'],
+    ['court', 'Royal Court', 'Kings, queens and knights: a game of chess, a great bell, banners and trumpets, a castle on a hill, a cathedral at evening, a sword in a stone and an empty throne.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value. The Radiant prizes are in no series
@@ -257,7 +259,40 @@
     ['tally', 'Tally marks', 'c', 'streak', 'curio', 'One chalk mark a day in bundles of five, the newest drawing itself in; past 20 days they turn gold and shimmer, and at 100 a gold star joins them.'],
     ['chain', 'Paper chain', 'r', 'streak', 'curio', 'A folded paper link for every week, up to eight, swinging in a wave; it glitters at 30 days and is edged in gold at 100.'],
     ['marquee', 'Marquee', 'e', 'streak', 'curio', 'A little theater sign with a flickering flame, ringed by bulbs, one lit each day; when all are lit they chase, gold at 30 days, every color at 100.'],
-    ['ouroboros', 'Ouroboros', 'm', 'streak', 'curio', 'A serpent that curls further round each day, slithering, tongue flicking; it holds its own tail and glows at 30 days, and at 100 turns, shining in every color.']
+    ['ouroboros', 'Ouroboros', 'm', 'streak', 'curio', 'A serpent that curls further round each day, slithering, tongue flicking; it holds its own tail and glows at 30 days, and at 100 turns, shining in every color.'],
+    /* 8-Bit (pixel-court.js) */
+    ['savepoint', 'Save point', 'c', 'aura', 'bit', 'A stage aura: a crystal turns over a pedestal in a torch-lit pixel dungeon. Every few seconds the game saves: sparks are drawn in, the runes on the floor light, the hearts refill, and it flashes GAME SAVED.'],
+    ['bossfight', 'Boss fight', 'l', 'aura', 'bit', 'A stage aura: a pixel knight fights a pixel dragon over lava. Fire, shield, sword, numbers flying and bars draining; then the knight charges up, strikes for 999, the dragon breaks apart and coins rain down under VICTORY.'],
+    ['levelup', 'Level up', 'c', 'fx', 'bit', 'A pixel bar under your answer fills with experience and flashes, LEVEL UP! bounces in above it in every color, pillars of pixels rise and three stats tick up.'],
+    ['crit', 'Critical hit', 'e', 'fx', 'bit', 'Speed lines race in, three pixel cuts cross behind your answer, the screen flashes, 9999 jumps out in gold, CRITICAL! shakes, and shards of light fly off the frame.'],
+    ['scroller', 'Side-scroller', 'r', 'paper', 'bit', 'Moving: a pixel level scrolls along the foot of the page, with mountains, hills, a path of blocks, coins and flags. A little runner jumps the gaps and takes the coins.'],
+    ['dogfight', 'Dogfight', 'e', 'paper', 'bit', 'Moving: pixel stars fall past a ringed planet. A fighter weaves and fires, raiders sway down and burst into pixels when hit, a saucer crosses, and the score counts up.'],
+    ['overworld', 'Overworld', 'm', 'paper', 'bit', 'Moving: the map of a pixel world slides under the page: seas, beaches, forest and snowy mountains. Waves glint, towns blink, cloud shadows cross, an airship flies over and a sea serpent surfaces.'],
+    ['prize-pocket', 'Pocket', 'r', 'theme', 'bit', 'A living theme: the green screen of an old handheld. Pixel hills and a brick path scroll along the foot, a blob hops along it, clouds drift, and now and then the screen refreshes in a band of light.'],
+    ['prize-dungeon', 'Dungeon', 'e', 'theme', 'bit', 'A living theme: pixel brick walls with torches burning, chains swaying, water dripping, eyes blinking in the dark, bats, a spider on its thread, a bouncing slime, and a chest that opens and throws out coins.'],
+    ['prize-stormkeep', 'Storm keep', 'm', 'theme', 'bit', 'A living theme: the last level. A pixel fortress over a moat of lava in driving rain, windows blinking; lightning stairs down and whitens the screen, bats wheel, and a dragon crosses the sky breathing fire.'],
+    ['hearts', 'Hearts', 'c', 'streak', 'bit', 'Pixel hearts that beat. One fills for each week, with a half heart on the way; they turn gold at 30 days and every color at 100.'],
+    ['xp', 'XP bar', 'e', 'streak', 'bit', 'A pixel badge with your level, one for each week, over a bar that fills a seventh a day. It grows wings at 30 days and wears a crown at 100.'],
+    /* Royal Court (pixel-court.js) */
+    ['checkmate', 'Checkmate', 'r', 'aura', 'court', 'A stage aura: a chessboard in a moonlit hall. The white queen runs the length of the board on a trail of gold, the black king shakes and falls, a beam finds the queen and her side hops for joy.'],
+    ['belfry', 'Belfry', 'e', 'aura', 'court', 'A stage aura: a great bronze bell swings in a stone arch in front of the moon. Each toll sends out rings of sound, shakes down dust and lights a numeral; doves scatter; at the twelfth the bell blazes gold.'],
+    ['throne', 'Empty throne', 'm', 'aura', 'court', 'A stage aura: a black throne on a cracked floor leaking violet light, six swords before it and a crown hanging above. Dark lightning walks the swords; then a king of shadow sits, the crown comes down, and every crack blazes.'],
+    ['seal', 'Royal seal', 'r', 'fx', 'court', 'Red wax drips and pools under the corner of your answer, a brass seal presses it and lifts to show a crown, ribbons unroll, and a gold rule draws itself above.'],
+    ['coronation', 'Coronation', 'l', 'fx', 'court', 'Two banners drop above your answer, heralds’ trumpets slide in from both sides and sound, and a crown comes down a beam of light to rest on it while gold leaf falls.'],
+    ['kingmaker', 'Kingmaker', 'm', 'fx', 'court', 'Storm cloud gathers and a sword of light plants itself in your answer as if in a stone. Cracks of light run round the frame, lightning comes down to the pommel, and the blade becomes a pillar of light as gold feathers fall.'],
+    ['heraldry', 'Heraldry', 'c', 'paper', 'court', 'Moving: a field of small shields. A sheen crosses it, and every so often a ripple runs out from the middle and each shield turns over. Strings of pennants sway along the top.'],
+    ['castle', 'Castle on the hill', 'l', 'paper', 'court', 'Moving: a castle on a crag at the foot of the page, windows lit and flags flying under a big moon. Birds circle the tower, a rider with a torch crosses the bridge, and fireworks go up over the keep.'],
+    ['prize-vellum', 'Illuminated', 'c', 'theme', 'court', 'A living theme: the margins of an old manuscript. Vines climb both edges putting out leaves, flowers and gold dots, a painted capital sits in the corner, and along the foot a small knight forever chases a snail.'],
+    ['prize-vespers', 'Vespers', 'l', 'theme', 'court', 'A living theme: a cathedral at evening. Arches recede down both sides, three shafts of colored light drift, a wheel of glass glows, candles burn along the foot, incense curls up, and the whole place brightens when a bell tolls.'],
+    ['banner', 'Banner', 'r', 'streak', 'court', 'A pennant on a pole that flies longer each week and gains a stripe. At 30 days it carries a gold crown, and at 100 it has two tails and a shining finial.'],
+    ['tower', 'Tower', 'l', 'streak', 'court', 'A stone tower that gains a storey each week, each with a lit window. A flag flies from the top at 30 days, and at 100 a beacon burns there.'],
+    ['sword', 'Sword in the stone', 'm', 'streak', 'court', 'A sword sunk in a rock, a little further out every day. At 30 days it comes free and hangs in a ring of light, and at 100 rays turn behind it.'],
+    /* five more Radiant looks (pixel-court.js), one of each kind, each with its own arrival */
+    ['carousel', 'Carousel', 'z', 'aura', 'any', 'A stage aura: a golden carousel at a night fair. Eight horses rise and fall round a mirrored column under a turning striped canopy; then the lights go down, every bulb fires, the ride spins up throwing sparks, and fireworks open overhead.'],
+    ['bloom', 'In full bloom', 'z', 'fx', 'any', 'The page turns to a garden at night. Two vines climb round your answer putting out leaves, buds open one after another into flowers, butterflies lift off, and a warm dawn rises underneath and gilds the frame.'],
+    ['shadowplay', 'Shadow play', 'z', 'paper', 'any', 'Moving: the page becomes the lit screen of a shadow-puppet theater. Paper figures on rods act three scenes in turn: a deer in a forest, a ship on sliding waves, and a town where a cat walks the roofs and lanterns float up.'],
+    ['prize-stacks', 'Midnight library', 'z', 'theme', 'any', 'A living theme: shelves of old books down both sides, lamps swaying, a moonbeam full of dust. Books fly through like birds, a globe turns on the desk, and now and then a book opens and a spiral of glowing letters climbs out.'],
+    ['owl', 'Star owl', 'z', 'streak', 'any', 'An owl drawn in stars, one more every few days. At 30 days the figure is whole and its eyes burn gold and blink; at 100 its wings beat and a star falls past.']
   ].map(function (r) { return { id: r[3] + ':' + r[0], key: r[0], name: r[1], tier: r[2], kind: r[3], series: r[4], what: r[5] }; });
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });
@@ -291,6 +326,8 @@
     forecast: ['Brainstorm', 'Rain or Shine', 'Silver Lining', 'Weather the Storm', 'Cloud Nine', 'Hot Streak', 'Sunny Outlook', 'Eye of the Storm'],
     wilds: ['Trailblazer', 'Campfire Scholar', 'Storm Chaser', 'Head in the Clouds', 'Still Waters', 'Lava Brain', 'Ice Cold Focus', 'Desert Bloom'],
     curio: ['Lucky Seven', 'Chain Reaction', 'Odd One Out', 'Treasure Hunter', 'Curious Mind', 'Plot Twist', 'Open Sesame', 'Tally Ho'],
+    bit: ['Press Any Key', 'One More Try', 'High Roller', 'Boss Beater', 'Secret Level', 'Full Hearts', 'No Continues', 'Final Form'],
+    court: ['Knight Move', 'Queen’s Gambit', 'Checkmate', 'Bell Ringer', 'Round Table', 'Crown Jewel', 'Royal Decree', 'Worthy'],
     test: ['Test Day Ready', 'Pencils Down', 'Calm Breath', 'Full Tank', 'Perfect Score', 'Poem Decoder', 'Trap Spotter', 'Unit Circle Survivor']
   };
   var PZ_TITLES = [
