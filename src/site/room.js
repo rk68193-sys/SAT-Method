@@ -368,7 +368,7 @@
     viewEl.room.innerHTML = '<div class="wrap room-page">' +
       '<header class="room-head"><p class="eyebrow">Clubhouse</p><h2 class="vtitle">My room</h2><p class="lede">A room to show off the prizes you win by studying. Tap anything in it to see what it is, or press Decorate to change it.</p></header>' +
       '<div class="room-main"><div class="room-stage"><div id="room-box"></div><div class="room-bar" id="room-bar"></div></div><div class="room-side" id="room-side" aria-live="polite"></div></div>' +
-      '<div id="room-share-box"></div><p class="fine room-foot" id="room-foot">' + esc(roomFoot()) + '</p></div>';
+      '<div id="room-share-box"></div>' + crewCardHTML() + '<p class="fine room-foot" id="room-foot">' + esc(roomFoot()) + '</p></div>';
     roomDrawAll();
     clubShareDraw();
   }

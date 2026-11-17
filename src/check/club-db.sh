@@ -60,8 +60,8 @@ wait $held
 one=$(grep '^{' "$first")
 rm -f "$first"
 run -o /dev/null -v one="$one" -v two="$second" <<'SQL'
-select t.ok(:'one'::jsonb = '{"ok": true, "step": 2, "n": 0, "goal": 40, "built": 2, "today": 1}', 'the first set builds the aquarium corner');
-select t.ok(:'two'::jsonb = '{"ok": true, "step": 2, "n": 1, "goal": 40, "built": null, "today": 1}', 'the second, finished at the same moment, waits and counts after it');
+select t.ok(:'one'::jsonb = '{"ok": true, "name": "Race Crew", "step": 2, "n": 0, "goal": 40, "built": 2, "today": 1}', 'the first set builds the aquarium corner');
+select t.ok(:'two'::jsonb = '{"ok": true, "name": "Race Crew", "step": 2, "n": 1, "goal": 40, "built": null, "today": 1}', 'the second, finished at the same moment, waits and counts after it');
 select t.ok((select row(c.step, c.n, c.total)::text from public.club_crews c where c.name = 'Race Crew') = '(2,1,51)'
   and (select array_agg(b.step order by b.step) from public.club_crew_built b join public.club_crews c on c.id = b.crew_id where c.name = 'Race Crew') = '{1,2}',
   'both sessions are saved, and the corner is built once');

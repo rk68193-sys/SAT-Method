@@ -116,20 +116,20 @@ select t.ok(t.crew(t.cm(1), 'public.club_crew_state()') -> 'crew' = 'null', 'whi
 
 \echo '    crews: study sessions'
 select t.as_user(:'K3');
-select t.ok(public.club_crew_add(t.set(1, 10)) = '{"ok": false, "why": "solo"}', 'a crew of one cannot build yet');
+select t.ok(public.club_crew_add(t.set(1, 10)) = '{"ok": false, "why": "solo", "name": "Moss Crew"}', 'a crew of one cannot build yet');
 select t.as_user(:'K4');
 select t.ok(public.club_crew_add(t.set(1, 10)) = '{"ok": false, "why": "crew"}', 'a student with no crew adds nothing');
 select t.as_user(:'K1');
-select t.ok(public.club_crew_add(t.set(1, 4)) = '{"ok": false, "why": "few", "fresh": 4}', 'a set needs 5 questions or more');
+select t.ok(public.club_crew_add(t.set(1, 4)) = '{"ok": false, "why": "few", "min": 5, "fresh": 4, "name": "Night Owls"}', 'a set needs 5 questions or more');
 select t.ok(public.club_crew_add('{"q": "m:q1"}') ->> 'fresh' = '0' and public.club_crew_add('null') ->> 'fresh' = '0', 'anything else is no set');
 select t.ok(public.club_crew_add(jsonb_build_array('m:q1', 'm:q1', 'm:q1', 'm:q1', 'm:q1', 'm q2', repeat('x', 41), null)) ->> 'fresh' = '0'
   and public.club_crew_add(jsonb_build_object('q', jsonb_build_array('m:q1', 'm:q1', 'm:q1', 'm:q1', 'm:q1', 'm q2', repeat('x', 41), null))) ->> 'fresh' = '1',
   'a question counts once, and only a question''s id counts');
-select t.ok(public.club_crew_add(t.set(1, 5)) = '{"ok": true, "step": 0, "n": 1, "goal": 20, "built": null, "today": 1}', 'a set of 5 new questions adds a study session');
-select t.ok(public.club_crew_add(t.set(1, 5)) = '{"ok": false, "why": "few", "fresh": 0}', 'sending it again adds nothing');
-select t.ok(public.club_crew_add(t.set(3, 6)) = '{"ok": false, "why": "few", "fresh": 3}', 'a question counts once for each student');
+select t.ok(public.club_crew_add(t.set(1, 5)) = '{"ok": true, "name": "Night Owls", "step": 0, "n": 1, "goal": 20, "built": null, "today": 1}', 'a set of 5 new questions adds a study session');
+select t.ok(public.club_crew_add(t.set(1, 5)) = '{"ok": false, "why": "few", "min": 5, "fresh": 0, "name": "Night Owls"}', 'sending it again adds nothing');
+select t.ok(public.club_crew_add(t.set(3, 6)) = '{"ok": false, "why": "few", "min": 5, "fresh": 3, "name": "Night Owls"}', 'a question counts once for each student');
 select t.ok(public.club_crew_add(t.set(6, 5)) ->> 'n' = '2', 'a second set adds another');
-select t.ok(public.club_crew_add(t.set(11, 5)) = '{"ok": false, "why": "day", "today": 2}', 'and 2 a day is the most');
+select t.ok(public.club_crew_add(t.set(11, 5)) = '{"ok": false, "why": "day", "cap": 2, "today": 2, "name": "Night Owls"}', 'and 2 a day is the most');
 select t.ok(public.club_crew_state() ->> 'today' = '2', 'the crew page counts them');
 select t.as_user(:'K2');
 select t.ok(public.club_crew_add(t.set(1, 5)) ->> 'n' = '3', 'another member''s questions count for them');
@@ -141,7 +141,7 @@ select t.ok((select count(*) from public.club_crew_qs where user_id = :'K1') = 1
 \echo '    crews: upgrades'
 update public.club_crew_config set day_cap = 100;
 select t.add(:'K1', 100 + 5 * i, 5) from generate_series(1, 16) i;
-select t.ok(t.add(:'K2', 100, 5) = '{"ok": true, "step": 1, "n": 0, "goal": 30, "built": 1, "today": 2}', 'the 20th session builds the study corner');
+select t.ok(t.add(:'K2', 100, 5) = '{"ok": true, "name": "Night Owls", "step": 1, "n": 0, "goal": 30, "built": 1, "today": 2}', 'the 20th session builds the study corner');
 select t.ok((select array_agg(row(b.step, b.sessions)::text) from public.club_crew_built b join public.club_crews c on c.id = b.crew_id where c.link = :'link1') = '{"(1,20)"}',
   'once');
 select t.as_user(:'K1');
@@ -161,11 +161,11 @@ select t.ok(public.club_crew_join(:'link1') -> 'crew' ->> 'seen' = '1', 'a stude
 reset role;
 select t.add(:'K1', 300 + 5 * i, 5) from generate_series(1, 5) i;
 update public.club_crew_config set goals = '{20, 3, 40}';
-select t.ok(t.add(:'K4', 300, 5) = '{"ok": true, "step": 2, "n": 3, "goal": 40, "built": 2, "today": 1}', 'sessions past a goal count toward the next upgrade');
+select t.ok(t.add(:'K4', 300, 5) = '{"ok": true, "name": "Night Owls", "step": 2, "n": 3, "goal": 40, "built": 2, "today": 1}', 'sessions past a goal count toward the next upgrade');
 update public.club_crew_config set goals = '{20, 30, 40}';
 select t.add(:'K1', 1000 + 5 * i, 5) from generate_series(1, 36) i;
-select t.ok(t.add(:'K2', 1000, 5) = '{"ok": true, "step": 3, "n": 0, "goal": null, "built": 3, "today": 3}', '40 more turn the room Deep Sea');
-select t.ok(t.add(:'K2', 1005, 5) = '{"ok": true, "step": 3, "n": 1, "goal": null, "built": null, "today": 4}', 'and sessions after that still count');
+select t.ok(t.add(:'K2', 1000, 5) = '{"ok": true, "name": "Night Owls", "step": 3, "n": 0, "goal": null, "built": 3, "today": 3}', '40 more turn the room Deep Sea');
+select t.ok(t.add(:'K2', 1005, 5) = '{"ok": true, "name": "Night Owls", "step": 3, "n": 1, "goal": null, "built": null, "today": 4}', 'and sessions after that still count');
 select t.as_user(:'K1');
 select public.club_crew_state() -> 'crew' as v \gset
 select t.ok((select jsonb_agg(jsonb_build_array(b -> 0, b -> 2, b -> 3) order by b -> 0) from jsonb_array_elements(:'v'::jsonb -> 'built') b)

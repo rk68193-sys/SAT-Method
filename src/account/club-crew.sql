@@ -331,9 +331,10 @@ end $$;
 
 -- ---------- a finished practice set (p: { s: 'm' or 'rw', q: [the ids of the questions answered] }) ----------
 -- Adds a session when the set has 5 or more questions the student has not counted for a crew before, they have added
--- fewer than 2 today, and their crew has 2 members or more; those questions are then counted. Answers { ok: true, step
--- (upgrades built), n, goal, built (the upgrade this session built, or null), today } or { ok: false, why }: off, join,
--- locked, nick, crew (not in one), solo (the only member), day (2 today already, with today), few (with fresh).
+-- fewer than 2 today, and their crew has 2 members or more; those questions are then counted. Answers { ok: true, name
+-- (the crew's), step (upgrades built), n, goal, built (the upgrade this session built, or null), today } or { ok: false,
+-- why }: off, join, locked, nick, crew (not in one), solo (the only member), day (2 today already, with today and the cap),
+-- few (with fresh, and min: the questions a set needs); solo, day and few with the crew's name too.
 create or replace function public.club_crew_add(p jsonb) returns jsonb
 language plpgsql security definer set search_path = '' as $$
 declare u uuid := auth.uid(); why text; g public.club_crew_config; c public.club_crews; ids text[]; fresh int; today int; goal int; built int;
@@ -349,11 +350,11 @@ begin
   if c.id is null or not exists (select 1 from public.club_crew_members where user_id = u and crew_id = c.id) then
     return jsonb_build_object('ok', false, 'why', 'crew');
   end if;
-  if (select count(*) from public.club_crew_members where crew_id = c.id) < 2 then return jsonb_build_object('ok', false, 'why', 'solo'); end if;
+  if (select count(*) from public.club_crew_members where crew_id = c.id) < 2 then return jsonb_build_object('ok', false, 'why', 'solo', 'name', c.name); end if;
   today := (select count(*) from public.club_crew_adds where user_id = u and day = public.club_day());
-  if today >= g.day_cap then return jsonb_build_object('ok', false, 'why', 'day', 'today', today); end if;
+  if today >= g.day_cap then return jsonb_build_object('ok', false, 'why', 'day', 'today', today, 'cap', g.day_cap, 'name', c.name); end if;
   fresh := (select count(*) from unnest(ids) x where not exists (select 1 from public.club_crew_qs q where q.user_id = u and q.qid = x));
-  if fresh < g.min_qs then return jsonb_build_object('ok', false, 'why', 'few', 'fresh', fresh); end if;
+  if fresh < g.min_qs then return jsonb_build_object('ok', false, 'why', 'few', 'fresh', fresh, 'min', g.min_qs, 'name', c.name); end if;
   insert into public.club_crew_qs (user_id, qid) select u, x from unnest(ids) x on conflict do nothing;
   insert into public.club_crew_adds (crew_id, user_id, step, day) values (c.id, u, c.step, public.club_day());
   c.n := c.n + 1; c.total := c.total + 1;
@@ -363,7 +364,7 @@ begin
     c.step := c.step + 1; c.n := c.n - goal; built := c.step;
   end if;
   update public.club_crews set step = c.step, n = c.n, total = c.total where id = c.id;
-  return jsonb_build_object('ok', true, 'step', c.step, 'n', c.n, 'goal', public.club_crew_goal(c.step), 'built', built, 'today', today + 1);
+  return jsonb_build_object('ok', true, 'name', c.name, 'step', c.step, 'n', c.n, 'goal', public.club_crew_goal(c.step), 'built', built, 'today', today + 1);
 end $$;
 
 -- ---------- a member has seen the reveal of the upgrades up to p_step ----------

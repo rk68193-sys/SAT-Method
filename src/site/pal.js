@@ -23,7 +23,7 @@
   /* a timed module is plain, like the real test, and a room already has the student's character in it */
   function palCheck() {
     if (!PAL.el) { return; }
-    var away = !!document.querySelector('.view:not([hidden]) .mmwrap') || cur.view === 'room' || cur.view === 'visit';
+    var away = !!document.querySelector('.view:not([hidden]) .mmwrap') || cur.view === 'room' || cur.view === 'visit' || cur.view === 'crew';
     if (PAL.el.hidden !== away) { PAL.el.hidden = away; palPlace(); }
   }
 

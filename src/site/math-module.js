@@ -163,6 +163,7 @@
       store.s.modules = hist.slice(-20);
     }
     save();
+    crewSet('m', MP.res.filter(function (r) { return r.ok !== null; }).map(function (r) { return r.id; }));
     mmResults();
   }
   function mmResults() {
@@ -180,7 +181,7 @@
     var notRight = res.filter(function (r) { return r.ok !== true; });
     viewEl.mprac.innerHTML = '<div class="wrap">' +
       mHead(MP.diag ? 'Math · Starting check' : 'Math · Timed test', 'You got ' + right + ' of ' + n + ' right', (MP.timeUp ? 'Time ran out. ' : '') + 'You used ' + clock(MP.used) + ' of ' + clock(MP.limit) + (answered ? ', about ' + avg + ' seconds for each question you answered. The real test allows about 95.' : '.')) +
-      (MP.diag ? diagPanelHTML('m') : '') +
+      (MP.diag ? diagPanelHTML('m') : '') + crewNoteHTML() +
       '<div class="mst-stats mm-stats"><div><b>' + right + '</b><span>right</span></div><div><b>' + wrong + '</b><span>wrong</span></div><div><b>' + blank + '</b><span>no answer</span></div><div><b>' + clock(MP.used) + '</b><span>of ' + clock(MP.limit) + ' used</span></div></div>' +
       '<section class="msec"><h3 class="h3">By area</h3><div class="mprog">' + areas + '</div></section>' +
       (review.length ? '<section class="msec"><h3 class="h3">Question types to review</h3><div class="mm-nexts">' + review.slice(0, 6).map(function (m) { return mmCardHTML(m, mTypeStat(m)); }).join('') + '</div>' + (review.length > 6 ? '<p class="fine" style="margin-top:.8rem">And ' + (review.length - 6) + ' more. They are all on <a href="#m-map">your map</a>.</p>' : '') + '</section>' : '<p class="mpraise">Every one right. Try a module of Hard questions.</p>') +

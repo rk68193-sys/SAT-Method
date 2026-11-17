@@ -161,6 +161,7 @@
       store.s.rwmodules = hist.slice(-20);
     }
     save();
+    crewSet('rw', RM.res.filter(function (r) { return r.ok !== null; }).map(function (r) { return r.it.id; }));
     rmResults();
   }
   function rmResults() {
@@ -177,7 +178,7 @@
     var notRight = res.filter(function (r) { return r.ok !== true; });
     document.getElementById('thost').innerHTML =
       '<header class="read"><p class="eyebrow">' + (RM.diag ? 'Starting check finished' : 'Timed test finished') + '</p><h2 class="vtitle">You got ' + right + ' of ' + n + ' right</h2><p class="lede">' + (RM.timeUp ? 'Time ran out. ' : '') + 'You used ' + clock(RM.used) + ' of ' + clock(RM.limit) + (answered ? ', about ' + avg + ' seconds for each question you answered. The real test allows about 71.' : '.') + '</p></header>' +
-      (RM.diag ? diagPanelHTML('rw') : '') +
+      (RM.diag ? diagPanelHTML('rw') : '') + crewNoteHTML() +
       '<div class="mst-stats mm-stats rw"><div><b>' + right + '</b><span>right</span></div><div><b>' + wrong + '</b><span>wrong</span></div><div><b>' + blank + '</b><span>no answer</span></div><div><b>' + clock(RM.used) + '</b><span>of ' + clock(RM.limit) + ' used</span></div></div>' +
       '<h3 class="subh">By area</h3><div class="mprog">' + areas + '</div>' +
       (review.length ? '<h3 class="subh">Types to review</h3><div class="mm-nexts">' + review.slice(0, 6).map(function (t) { return rwCardHTML(t, rwStat(t)); }).join('') + '</div>' + (review.length > 6 ? '<p class="fine" style="margin-top:.8rem">And ' + (review.length - 6) + ' more. They are all on <a href="#rw-map">your map</a>.</p>' : '') : '<p class="subh">Every answer right.</p>') +
