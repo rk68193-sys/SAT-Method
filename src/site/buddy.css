@@ -437,3 +437,7 @@ body.pal-pad { padding-bottom: 48px; }
   .bud .bud-fx { display: none !important; }
   .pal, .pal-say { animation: none !important; transition: none !important; }
 }
+/* the skins from cipher-pop.js: Storyteller's pop-up castle folds up and down out of the book */
+.bud .cp-pop { animation: cp-pop 4.4s ease-in-out infinite; }
+@keyframes cp-pop { 0%, 8% { transform: scaleY(.05); opacity: .4; } 24%, 76% { transform: scaleY(1); opacity: 1; } 92%, 100% { transform: scaleY(.05); opacity: .4; } }
+@media (prefers-reduced-motion: reduce) { .bud .cp-pop { animation: none !important; } }

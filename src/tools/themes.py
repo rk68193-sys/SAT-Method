@@ -195,6 +195,27 @@ PRIZE = {
  'prize-stacks': dict(COMMON_DARK, paper='#0F0A07', card='#1A120C', sunk='#241910', ink='#FBF4E6', ink2='#E8D9BF', muted='#B8A283', line='#30210F', line_strong='#4D371C',
    pencil='#5EEAD4', pencil_text='#99F6E4', hl='#123A36', hl_ink='#E6FFFA', act='#F5B547', act_ink='#1C1204', act_hover='#E89F2A', focus='#99F6E4',
    d1='#30210F', d2='#B7791F', d3='#FDE3A7', grad='linear-gradient(120deg, #FDE3A7 0%, #F5B547 50%, #5EEAD4 100%)', on_grad='#1C1204', aura='rgba(245, 181, 71, .26)'),
+ # Cipher: newsprint with a red pencil, a darkroom under the safelight, a puzzle box of inlaid wood
+ 'prize-crossword': dict(COMMON_LIGHT, paper='#F5F2E9', card='#FFFEFA', sunk='#ECE7DA', ink='#1A1A18', ink2='#3A3935', muted='#5C5950', line='#E0DACB', line_strong='#C2B9A3',
+   pencil='#B91C1C', pencil_text='#991B1B', hl='#FBE7C6', hl_ink='#3B2A06', act='#1A1A18', act_ink='#FFFFFF', act_hover='#34332E', focus='#B91C1C',
+   d1='#E7E1D2', d2='#A8A08A', d3='#2A2A26', grad='linear-gradient(135deg, #1A1A18 0%, #3A3935 60%, #7F1D1D 100%)', on_grad='#FFFFFF', aura='rgba(185, 28, 28, .14)', ok='#166534'),
+ 'prize-darkroom': dict(COMMON_DARK, paper='#120808', card='#1C0E0E', sunk='#261313', ink='#FDF0EC', ink2='#EBD4CC', muted='#C2A096', line='#331A18', line_strong='#4D2724',
+   pencil='#F87171', pencil_text='#FCA5A5', hl='#3F1414', hl_ink='#FFF1F2', act='#FB923C', act_ink='#1C0A02', act_hover='#F97316', focus='#FCA5A5',
+   d1='#331A18', d2='#B91C1C', d3='#FECACA', grad='linear-gradient(120deg, #FECACA 0%, #FCA5A5 45%, #FDBA74 100%)', on_grad='#2A0A06', aura='rgba(248, 113, 113, .26)'),
+ 'prize-puzzlebox': dict(COMMON_DARK, paper='#120C08', card='#1C140E', sunk='#261B12', ink='#FBF2E6', ink2='#E9DAC4', muted='#BBA386', line='#33251A', line_strong='#4E3826',
+   pencil='#5EEAD4', pencil_text='#99F6E4', hl='#123A36', hl_ink='#E6FFFA', act='#E8B04B', act_ink='#1C1204', act_hover='#D69A2E', focus='#99F6E4',
+   d1='#33251A', d2='#B7791F', d3='#FDE3A7', grad='linear-gradient(120deg, #FDE3A7 0%, #E8B04B 50%, #5EEAD4 100%)', on_grad='#1C1204', aura='rgba(232, 176, 75, .26)'),
+ # Pop-Up: construction paper, a circus tent at night
+ 'prize-cutpaper': dict(COMMON_LIGHT, paper='#FFF8EE', card='#FFFFFF', sunk='#FBEEDC', ink='#2B1D12', ink2='#4A3527', muted='#6E5644', line='#F1E2CE', line_strong='#E0C6A6',
+   pencil='#C2410C', pencil_text='#9A3412', hl='#FFE3D2', hl_ink='#4A1A08', act='#2E7D4F', act_ink='#FFFFFF', act_hover='#24653F', focus='#C2410C',
+   d1='#F6E3CB', d2='#E9A86F', d3='#7A3410', grad='linear-gradient(135deg, #2E7D4F 0%, #24653F 55%, #1E5A6E 100%)', on_grad='#FFFFFF', aura='rgba(228, 87, 46, .18)'),
+ 'prize-bigtop': dict(COMMON_DARK, paper='#0D0A1A', card='#171229', sunk='#201A38', ink='#FFF7ED', ink2='#F1DCC8', muted='#BFA9B4', line='#2A2244', line_strong='#433868',
+   pencil='#F87171', pencil_text='#FCA5A5', hl='#3A1420', hl_ink='#FFF1F2', act='#FACC15', act_ink='#1A1203', act_hover='#EAB308', focus='#FCA5A5',
+   d1='#2A2244', d2='#DC2626', d3='#FDE68A', grad='linear-gradient(120deg, #FDE68A 0%, #FCA5A5 50%, #F87171 100%)', on_grad='#1A0A06', aura='rgba(250, 204, 21, .26)'),
+ # Radiant: an astronomical clock, gold on deep blue
+ 'prize-astro': dict(COMMON_DARK, paper='#070B1C', card='#0F1530', sunk='#161E40', ink='#F2F4FF', ink2='#D3D9F5', muted='#9EA8D6', line='#1C2550', line_strong='#2E3A72',
+   pencil='#FCD34D', pencil_text='#FDE68A', hl='#3A300E', hl_ink='#FFF7D6', act='#FCD34D', act_ink='#141005', act_hover='#FBBF24', focus='#FDE68A',
+   d1='#1C2550', d2='#B7791F', d3='#FDE68A', grad='linear-gradient(120deg, #FDE68A 0%, #FCD34D 45%, #93C5FD 100%)', on_grad='#141005', aura='rgba(252, 211, 77, .26)'),
 }
 def finish(d):
     """fill the shadow and glass tokens the prize palettes leave out, from the light or dark theme they build on"""
