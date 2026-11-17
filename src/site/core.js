@@ -263,6 +263,8 @@
 
   /* ---------- a grammar question card ---------- */
   function passageHTML(ex, filled) {
+    var restored = explanationSourceHTML('rw', ex.q, ex.a, filled ? ex.fill : null);
+    if (restored) { return restored; }
     return put(esc(ex.text), '{{BLANK}}', filled ? '<mark class="fill">' + esc(ex.fill) + '</mark>' : BLANK);
   }
   function checkHTML(u, c) {
@@ -276,6 +278,7 @@
     return '<div class="fstep"><span class="n">' + n + '</span><div class="fb"><h4>' + title + '</h4>' + body + '</div></div>';
   }
   function fastHTML(ex, picked) {
+    var authored = explanationHTML('rw', ex.q, ex.a, true);
     var u = U[ex.u], c = CBY[u.c], p = PAT[ex.pat], f = FAM[c.fam];
     var no = '';
     ['A', 'B', 'C', 'D'].forEach(function (k) {
@@ -286,7 +289,7 @@
     return '<div class="fast"><h3 class="fasth">The fast path</h3>' +
       fstep(1, 'Look at the choices', '<p><b>' + (ex.look || p.pat) + '</b> So it is a ' + f.noun + ' question.' + (ex.tie ? ' ' + ex.tie : '') + '</p>' + miniHTML(ex, true, true)) +
       fstep(2, 'Run the check', checkHTML(u, c) + '<p class="rule"><span class="rl">Rule ' + u.num + '</span>' + u.rule + '</p>') +
-      fstep(3, 'Why ' + ex.a, '<p class="why">' + ex.why + '</p>' + (no ? '<ul class="whynot">' + no + '</ul>' : '') + notes) +
+      fstep(3, 'Why ' + ex.a, authored ? authored + explanationReference('Previous guided explanation', '<p class="why">' + ex.why + '</p>' + (no ? '<ul class="whynot">' + no + '</ul>' : '') + notes) : '<p class="why">' + ex.why + '</p>' + (no ? '<ul class="whynot">' + no + '</ul>' : '') + notes) +
       '<p class="fmore">' + (ver ? '<b>Version:</b> ' + endDot(quoteIfOdd(ver.label)) + ' ' : '') + '<a href="#' + u.id + '">Study rule ' + u.num + '</a></p></div>';
   }
   function verdictHTML(ok, ans, res) {

@@ -141,7 +141,7 @@
         fb.hidden = false;
         fb.className = 'htry-fb ' + (ok ? 'ok' : 'no');
         fb.innerHTML = '<p class="mpverdict">' + (ok ? 'Correct.' : 'Not this time. The answer is ' + it.a + '.') + '</p>' +
-          '<p class="mtag">This is a “' + esc(T.name) + '” question</p>' +
+          explanationHTML('m', it.id, it.a) + '<p class="mtag">This is a “' + esc(T.name) + '” question</p>' +
           '<p class="mspot"><b>How to spot it:</b> ' + esc(T.spot) + '</p>' + mStepList(T.steps) +
           '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' +
           '<p class="row htry-more"><a class="btn sm" href="#mp-' + it.t + '">Practice more like this</a><button class="linkbtn" type="button" data-htry-next="math">Try another</button></p>';
