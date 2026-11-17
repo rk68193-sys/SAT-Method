@@ -9,7 +9,9 @@
        st stickers found: <sticker> 1
        eq what this device has on: { fx, aura, paper, streak, title }   (the theme is the Appearance setting)
      Keys use only letters, digits, '.', '-' and '_', the names a backup file may hold (BK_KEY in data.js).
-     e, x and st join by the larger value; o, g and fz by union; eq keeps this device's. The balance is e minus x, never stored. */
+     e, x and st join by the larger value; o, g and fz by union; eq keeps this device's. The balance is e minus x, never stored.
+     Signed in to an account in the clubhouse (club.js), the server keeps e, x, o, g, fz and st instead, in the same shape:
+     pz() returns its record, and coins, crates and freezes are asked of the server rather than changed here. */
   var PZ_TIERS = ['c', 'r', 'e', 'l', 'm', 'z'];
   var PZ_TIER = { c: 'Common', r: 'Rare', e: 'Epic', l: 'Legendary', m: 'Mythic', z: 'Radiant' };
   /* Radiant's 0.1% comes out of Common's share, so every other tier keeps the odds it had before Radiant was added */
@@ -32,8 +34,10 @@
     ['dream', 'Dreamscape', 'Color and wonder: butterflies, paper cranes, a fox spirit and a whale made of stars.'],
     ['zenith', 'Zenith', 'Whole scenes: wings, an eclipse, a galaxy, a rocket launch, a dragon, mountains before dawn.'],
     ['paradox', 'Paradox', 'Scenes of black and white, clocks and gears, a theater, a city at night and a machine that is not quite working.'],
-    ['wilds', 'Wildlands', 'Wild places and weather: a campfire, a volcano, a storm that breaks, kites and balloons, a lily pond, dunes at night and a frozen cave.'],
-    ['curio', 'Curiosities', 'Strange and wonderful things: a snow globe, a chest with teeth, a slot machine, an anglerfish, a sealed door, giants on the horizon and two dying stars.'],
+    ['gems', 'Rocks & Gems', 'Rocks and gems: a stone that cracks open, opal fire, birthstones and a cavern of giant crystals.'],
+    ['forecast', 'Forecast', 'Every kind of weather: drizzle and gusts, a sun shower, a twister and a towering storm cloud.'],
+    ['wilds', 'Wildlands', 'Wild places: a campfire, a volcano, a murmuration of starlings, a summer meadow and balloons, a lily pond, dunes at night and a frozen lake.'],
+    ['curio', 'Curiosities', 'Strange and wonderful things: a fortune teller’s crystal ball, a chest with teeth, a slot machine, an anglerfish, a sealed door, giants on the horizon and two dying stars.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value. The Radiant prizes are in no series
@@ -181,6 +185,42 @@
     ['hourglass', 'Hourglass', 'r', 'streak', 'paradox', 'Sand runs through as your streak grows, and it is all through at 30 days.'],
     ['crown', 'Crown', 'e', 'streak', 'zenith', 'A crown that gains a jewel for each week of your streak, up to five.'],
     ['comet-tail', 'Comet tail', 'l', 'streak', 'zenith', 'A comet whose tail grows a little longer every day.'],
+    /* Rocks & Gems and Forecast (gems-weather.js) */
+    ['prize-sandstone', 'Sandstone', 'c', 'theme', 'gems', 'Warm sand and red rock, with turquoise buttons.'],
+    ['prize-overcast', 'Overcast', 'c', 'theme', 'forecast', 'A soft gray sky with slate-blue buttons.'],
+    ['prize-lapis', 'Lapis', 'r', 'theme', 'gems', 'Deep blue stone with flecks of gold.'],
+    ['prize-snowday', 'Snow day', 'r', 'theme', 'forecast', 'Bright, icy white with winter blues.'],
+    ['prize-opal', 'Black opal', 'e', 'theme', 'gems', 'A living theme: a dark stone full of fire. Patches of color flash and fade behind the page and shift as you scroll, the way an opal changes when you tilt it.'],
+    ['prize-thunderhead', 'Thunderhead', 'l', 'theme', 'forecast', 'A living theme: storm clouds roll along the top of the page, lightning flickers inside them and now and then strikes down the edge, and soft rain falls.'],
+    ['prize-cavern', 'Crystal cavern', 'm', 'theme', 'gems', 'A living theme: a cave lined with giant glowing crystals. Light falls from an opening above, water drips from the crystal tips, and every so often a chime runs through the cave and lights each crystal as it passes.'],
+    ['terrazzo', 'Terrazzo', 'c', 'paper', 'gems', 'Chips of colored stone scattered behind the page, like a terrazzo floor.'],
+    ['cumulus', 'Cumulus', 'c', 'paper', 'forecast', 'Moving: fair-weather clouds drift slowly across the page.'],
+    ['agate', 'Agate', 'r', 'paper', 'gems', 'Moving: banded agate fills two corners of the page, and now and then a gleam of light slides across it.'],
+    ['kites', 'Kites', 'r', 'paper', 'forecast', 'Moving: three kites ride the breeze across the page, tugging at their strings.'],
+    ['wxmap', 'Weather map', 'e', 'paper', 'forecast', 'Moving: a high and a low drift across a weather map while fronts slide out and rain passes along them.'],
+    ['cgarden', 'Crystal garden', 'l', 'paper', 'gems', 'Moving: crystals grow from the corners of the page, light runs up them one at a time, and sparkles drift up.'],
+    ['cloudsea', 'Sea of clouds', 'm', 'paper', 'forecast', 'Moving: the page floats above a sea of clouds at sunrise. The sun climbs out of them and turns them gold and pink, and now and then birds glide across.'],
+    ['glint', 'Glint', 'c', 'fx', 'gems', 'A sheen sweeps across your answer and a gem flashes at its corner.'],
+    ['raindrop', 'Raindrop', 'c', 'fx', 'forecast', 'One fat raindrop lands on your answer and sends rings across it.'],
+    ['geode', 'Geode', 'r', 'fx', 'gems', 'A plain stone drops onto your answer, cracks, and falls open to show the crystals inside.'],
+    ['gust', 'Gust', 'r', 'fx', 'forecast', 'A gust of wind loops around your answer and carries three leaves away.'],
+    ['sunshower', 'Sun shower', 'e', 'fx', 'forecast', 'Rain falls, the sun breaks through over your answer, the drops turn gold, and a rainbow arches over it.'],
+    ['twister', 'Twister', 'l', 'fx', 'forecast', 'The sky turns green-gray and a twister drops from the clouds, crosses your answer picking up sparks, then lifts away and lets them fall.'],
+    ['motherlode', 'Motherlode', 'm', 'fx', 'gems', 'The page goes dark as a cave. Gold seams crack out from your answer, crystals burst up around it, cut gems fly up and rain down, and “a rare find.” types itself above it.'],
+    ['gemdust', 'Gem dust', 'c', 'aura', 'gems', 'Flakes of colored stone rise around your streak, flashing as they turn.'],
+    ['drizzle', 'Drizzle', 'c', 'aura', 'forecast', 'A small cloud rains softly over your streak, and the drops ring where they land.'],
+    ['birthstones', 'Birthstones', 'r', 'aura', 'gems', 'The twelve stones of the months circle your streak on a gold chain, and this month’s stone shines brightest.'],
+    ['snowglobe', 'Snow globe', 'r', 'aura', 'forecast', 'Your streak sits in a snow globe. Every few seconds it is shaken and the snow swirls, then settles.'],
+    ['choir', 'Crystal choir', 'e', 'aura', 'gems', 'Crystals on either side of your streak glow one after another like the notes of a chord, and every few seconds they all sing together.'],
+    ['sundog', 'Sundog', 'l', 'aura', 'forecast', 'Your streak is a low winter sun in a halo of ice light, with a bright mock sun on each side and diamond dust glittering in the cold air.'],
+    ['supercell', 'Supercell', 'm', 'aura', 'forecast', 'A stage aura: a giant storm at sunset. Its anvil streams across the sky, lightning flickers inside and strikes the ground, and a rainbow shows in the rain while a windmill turns on the farm below.'],
+    ['cairn', 'Cairn', 'c', 'streak', 'gems', 'A stack of balanced stones that gains one each week, up to six; at 100 days a gem sits on top.'],
+    ['thermo', 'Thermometer', 'c', 'streak', 'forecast', 'The red line climbs with your streak and reaches the top at 30 days; at 100 the heat shimmers off it.'],
+    ['chest', 'Treasure chest', 'r', 'streak', 'gems', 'The lid lifts at 7 days; at 30 the chest opens on gold and gems, and at 100 it overflows.'],
+    ['skies', 'Skies', 'r', 'streak', 'forecast', 'The weather clears as your streak grows, from rain to sunshine, with a rainbow at 100 days.'],
+    ['rainbow', 'Rainbow', 'e', 'streak', 'forecast', 'A rainbow that gains a band each week until all seven shine; at 100 days it shimmers.'],
+    ['hiddengem', 'Hidden gem', 'l', 'streak', 'gems', 'A plain rock that cracks at 7 days and glows inside at 14; at 30 days it opens on crystals, and at 100 a gem rises out of it.'],
+    ['bottle', 'Lightning in a bottle', 'm', 'streak', 'forecast', 'A storm in a corked bottle: a spark at first, a cloud and a bolt at 7 days, a full storm at 30, and at 100 the glass glows.'],
     /* Radiant (radiant.js): one look or more of every kind, each with its own arrival when it is won */
     ['prize-beacon', 'Beacon', 'z', 'theme', 'any', 'A living theme: a lighthouse keeps watch over a dark sea. Its beam turns slowly, the rain and fog shine only where the light passes, and now and then the beam swings toward you in a great flash.'],
     ['diamond', 'Diamond ring', 'z', 'fx', 'any', 'The page darkens as the moon’s shadow slides across your answer. A crown of light opens around it, stars come out, and the sun returns in one brilliant flash.'],
@@ -194,18 +234,18 @@
     /* Wildlands (looks.js) */
     ['campfire', 'Campfire', 'c', 'aura', 'wilds', 'A stage aura: a fire under the Milky Way. Logs glow and pop, throwing up sparks, a marshmallow toasts on a stick, a lantern glows in the tent and an owl blinks in the pines.'],
     ['caldera', 'Caldera', 'l', 'aura', 'wilds', 'A stage aura: a volcano with a churning lava lake, rivers of fire and lightning in its ash. It rumbles, then erupts in full: a flash, a ring of pressure, a fountain of fire and lava bombs.'],
-    ['stormbreak', 'After the storm', 'e', 'fx', 'wilds', 'Clouds roll in and rain splashes off your answer. Lightning strikes beside it three times and the page shakes. Then the clouds part, sunlight pours down and a double rainbow rises over it.'],
+    ['murmuration', 'Murmuration', 'e', 'fx', 'wilds', 'The page turns to a dusk sky over a reed bed. A ribbon of starlings pours in and swirls into one great rippling cloud, wheels round your answer in a ring, then dives into the reeds.'],
     ['honeycomb', 'Honeycomb', 'c', 'paper', 'wilds', 'Moving: a honeycomb filling with honey, wax caps and drips. Bees land, crawl about and take off, one does its waggle dance, and a sunbeam drifts across with pollen in it.'],
-    ['kites', 'Kites', 'r', 'paper', 'wilds', 'Moving: a diamond, a delta, a turning box kite and a long dragon kite on the wind, tails fluttering, clouds drifting past, and every few seconds a gust that makes them all lurch.'],
+    ['meadow', 'Meadow', 'r', 'paper', 'wilds', 'Moving: a summer meadow along the bottom of the page. Gusts roll through the grass, poppies and lupins nod, butterflies and bees visit the flowers and dandelion seeds float away. At night, moths and glow-worms.'],
     ['balloons', 'Hot-air balloons', 'e', 'paper', 'wilds', 'Moving: striped balloons of every pattern rise past far mountains and clouds. Burners roar with blue and orange flames and people wave from the baskets. Dawn on a light page, night on a dark one.'],
     ['inkwash', 'Ink wash', 'l', 'paper', 'wilds', 'Moving: an ink painting that paints itself. Mountains, a waterfall and a pagoda; mist, a boat and a line of cranes; plum blossom opening, drops of ink blooming, and a red seal pressed into the corner.'],
-    ['prize-clouds', 'Cloud nine', 'c', 'theme', 'wilds', 'A living theme: a warm sun with turning rays and a flare, soft clouds at three depths, dandelion seeds, a flock of birds, a plane’s trail spreading, and sometimes a faint rainbow.'],
+    ['prize-clouds', 'Halcyon', 'c', 'theme', 'wilds', 'A living theme: a warm sun with turning rays and a flare, soft clouds at three depths, dandelion seeds, a flock of birds, a plane’s trail spreading, and sometimes a faint rainbow.'],
     ['prize-pond', 'Lily pond', 'r', 'theme', 'wilds', 'A living theme: koi glide under lily pads and lotus flowers, a frog leaps from pad to pad, water striders skate, a dragonfly darts, and now and then a shower sets rings spreading everywhere.'],
     ['prize-dunes', 'Dunes', 'l', 'theme', 'wilds', 'A living theme: dunes under a huge moon and the Milky Way. Sand streams off the crests, a caravan with a swinging lantern crosses the far ridge, a fennec fox watches, and stars fall in showers.'],
-    ['prize-glacier', 'Glacier', 'm', 'theme', 'wilds', 'A living theme: an ice cave with faceted walls and things frozen in them. Icicles glint and drip, frost grows, cracks flash through the ice, and deep below, something opens a great eye.'],
+    ['prize-thinice', 'Thin ice', 'm', 'theme', 'wilds', 'A living theme: the black ice of a frozen lake at night. Bubbles hang frozen in it, cracks sing across it, frost flowers grow, an unseen skater carves curves, and far below something vast swims past and looks up.'],
     ['lotus', 'Lotus', 'l', 'streak', 'wilds', 'A bud on the water that opens a pair of petals each week, rings spreading round it; in full bloom at 30 days with a beating golden heart, and glowing with rising light at 100.'],
     /* Curiosities (looks.js) */
-    ['snowglobe', 'Snow globe', 'r', 'aura', 'curio', 'A stage aura: a winter village on a music box. A skater circles the pond, the key turns and notes float up, and every few seconds the globe rocks and the snow whirls up and settles.'],
+    ['fortune', 'Fortune teller', 'r', 'aura', 'curio', 'A stage aura: a crystal ball between candles on a velvet table, a black cat beside it. Visions rise in the mist, a moon, an eye, a key and a star, and a tarot card turns over to match each one.'],
     ['mimic', 'Mimic', 'e', 'aura', 'curio', 'A stage aura: a chest on a hoard of gold in a torch-lit vault. It breathes, its keyhole becomes an eye, the lid creaks up on eyes in the dark, then gapes on teeth and a lashing tongue, and snaps shut.'],
     ['kilonova', 'Kilonova', 'm', 'aura', 'curio', 'A stage aura: two dead stars spiral together over bent space, beams sweeping, faster and faster, and merge in a flash: jets, a shell of color, gold raining down, and a black hole where they were.'],
     ['dominoes', 'Dominoes', 'c', 'fx', 'curio', 'Dominoes in every color stand in a ring around your answer and fall one after another, faster and faster, each with a click of light, until a wave of light runs round the ring.'],
@@ -247,6 +287,8 @@
     dream: ['Daydreamer', 'Paper Crane', 'Color Theory', 'Lantern Lighter', 'Fox Wisdom', 'Whale Song', 'Butterfly Effect', 'Sweet Dreams'],
     zenith: ['Rising Star', 'First Light', 'Orbit Keeper', 'Deep Roots', 'Perfect Pitch', 'Wings of Focus', 'Clear Skies', 'High Noon'],
     paradox: ['Both Sides', 'Clock Watcher', 'Fourth Dimension', 'Bug Fixer', 'Standing Stone', 'Black and White', 'Extra Time', 'Unsolved'],
+    gems: ['Rock Solid', 'Diamond in the Rough', 'Polished Essay', 'Gem of a Proof', 'Facet Finder', 'Dig Deeper', 'Under Pressure', 'Bedrock Basics'],
+    forecast: ['Brainstorm', 'Rain or Shine', 'Silver Lining', 'Weather the Storm', 'Cloud Nine', 'Hot Streak', 'Sunny Outlook', 'Eye of the Storm'],
     wilds: ['Trailblazer', 'Campfire Scholar', 'Storm Chaser', 'Head in the Clouds', 'Still Waters', 'Lava Brain', 'Ice Cold Focus', 'Desert Bloom'],
     curio: ['Lucky Seven', 'Chain Reaction', 'Odd One Out', 'Treasure Hunter', 'Curious Mind', 'Plot Twist', 'Open Sesame', 'Tally Ho'],
     test: ['Test Day Ready', 'Pencils Down', 'Calm Breath', 'Full Tank', 'Perfect Score', 'Poem Decoder', 'Trap Spotter', 'Unit Circle Survivor']
@@ -261,7 +303,9 @@
     ['century', 'Century', 'Practice 100 days in a row.', function (c) { return c.best >= 100; }]
   ];
 
+  /* signed in to an account in the clubhouse (club.js), the record is the server's, and only eq is this device's */
   function pz() {
+    if (clubShow()) { return clubPz(); }
     var p = store.s.pz;
     if (!isObj(p)) { p = store.s.pz = {}; }
     ['e', 'x', 'o', 'g', 'fz', 'st', 'eq'].forEach(function (k) { if (!isObj(p[k])) { p[k] = {}; } });
@@ -333,6 +377,7 @@
   function pzGrants() { var P = pz(); return Object.keys(P.g).filter(function (k) { return Array.isArray(P.g[k]) && !P.o['g.' + k] && (!P.g[k][1] || !!PZ_SER[P.g[k][1]]); }).map(function (k) { var g = P.g[k]; return { key: k, t: g[0] || 0, series: g[1] || '', min: g[2] || 'c', why: g[3] || '' }; }).sort(function (a, b) { return a.t - b.t; }); }
   function pzCanBuy(series) { return !!PZ_SER[series] && pzBalance() >= PZ_PRICE && (series !== 'test' || pzTestOpen()); }
   function pzOpen(series, grantKey) {
+    if (clubKeeps()) { return null; }
     var P = pz(), id, minTier = series === 'test' ? 'e' : 'c';
     if (grantKey) {
       var g = P.g[grantKey];
@@ -358,9 +403,9 @@
 
   /* ---------- streak freezes: bought ahead, used on their own when a missed day would end a streak ---------- */
   function pzFreezes() { var P = pz(), bought = Object.keys(P.x).filter(function (k) { return k.indexOf('freeze.') === 0; }).length; return Math.max(0, bought - Object.keys(P.fz).length); }
-  function pzBuyFreeze() { var P = pz(); if (pzBalance() < PZ_FREEZE || pzFreezes() >= PZ_FREEZE_MAX) { return false; } P.x['freeze.' + pzId()] = PZ_FREEZE; save(); pzChip(); return true; }
-  function pzFrozen(t) { var P = store.s.pz; return isObj(P) && isObj(P.fz) && !!P.fz[dayKey(t)]; }
-  function pzFrozenKeys() { var P = store.s.pz; return isObj(P) && isObj(P.fz) ? Object.keys(P.fz) : []; }
+  function pzBuyFreeze() { var P = pz(); if (clubKeeps() || pzBalance() < PZ_FREEZE || pzFreezes() >= PZ_FREEZE_MAX) { return false; } P.x['freeze.' + pzId()] = PZ_FREEZE; save(); pzChip(); return true; }
+  function pzFrozen(t) { var P = clubShow() ? CLUB.P : store.s.pz; return isObj(P) && isObj(P.fz) && !!P.fz[dayKey(t)]; }
+  function pzFrozenKeys() { var P = clubShow() ? CLUB.P : store.s.pz; return isObj(P) && isObj(P.fz) ? Object.keys(P.fz) : []; }
   function pzApplyFreeze() {
     var did = function (t) { var c = dayCount(t); return c[0] + c[1] > 0 || pzFrozen(t); }, today = dayStart(Date.now()), t = dayBefore(today), gap = [];
     if (did(t)) { return false; }
@@ -400,6 +445,8 @@
   function pzSoon() { if (pzBusy) { return; } clearTimeout(pzTimer); pzTimer = setTimeout(pzTick, 60); }
   function pzTick() {
     if (pzBusy) { return; }
+    /* in the clubhouse the server counts the coins; until its record arrives, nothing is counted here */
+    if (clubKeeps()) { clubTick(); pzChip(); return; }
     pzBusy = true;
     try {
       var P = pz(), today = dayKey(Date.now()), changed = false, got = 0, why = '', g0 = Object.keys(P.g).length;
@@ -438,6 +485,7 @@
      crate's prizes (records under gift.*, joined by pzMerge), so it reaches every device signed in to the same account. */
   var PZ_GIFT = 'b1c461100aa6812c8cae2b37a2e3da01083e6f2a862e8b022fd1ee53890b6e3a', PZ_GIFT_COINS = 10000;
   function pzGiftAll() {
+    if (clubKeeps()) { return; }
     var P = pz(), t = Date.now();
     /* lowest tier first, so the last record is a Radiant and the promise of an Epic starts again at 10 */
     PZ_ITEMS.slice().sort(function (a, b) { return PZ_TIERS.indexOf(a.tier) - PZ_TIERS.indexOf(b.tier); }).forEach(function (it, i) {

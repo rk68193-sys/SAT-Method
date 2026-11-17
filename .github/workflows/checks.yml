@@ -1,7 +1,9 @@
 # Runs the site's checks (src/README.md, "Checks") on every push and pull request, and on demand from the Actions tab.
 # "Build and data" rebuilds index.html from src/ and compares it with the one committed, then runs the checks that need no
-# browser. The browser checks run in three groups at once. A red run means a change broke something the checks cover; the
-# failing step's log names the check. Nothing here deploys: GitHub Pages still publishes main as it is.
+# browser. "Clubhouse database" tests src/account/club.sql on PostgreSQL, then the page against it. The browser checks run in
+# three groups at once.
+# A red run means a change broke something the checks cover; the failing step's log names the check. Nothing here
+# deploys: GitHub Pages still publishes main as it is.
 name: Checks
 
 on:
@@ -36,8 +38,11 @@ jobs:
           python3 -I src/site/assemble.py "$RUNNER_TEMP/page.html"
           python3 -I src/site/make_index.py "$RUNNER_TEMP/page.html" "$RUNNER_TEMP/index.html"
           cmp -s "$RUNNER_TEMP/index.html" index.html || { echo "::error::index.html is not a fresh build of src/. Rebuild it (src/README.md) and commit it."; exit 1; }
+          cmp -s "$RUNNER_TEMP/catalog.json" catalog.json || { echo "::error::catalog.json is not a fresh build of src/site/prizes.js. Rebuild index.html (src/README.md), which writes it too, and commit both."; exit 1; }
       - name: The page's script parses
         run: node --check src/site/bundle.js
+      - name: Each name at the top of the page's script is declared once
+        run: node --expose-internals src/check/names.js
       - name: Theme colors are readable and their CSS is up to date
         run: |
           cp src/site/app.css "$RUNNER_TEMP/app.css"
@@ -64,6 +69,41 @@ jobs:
       - name: Link previews
         run: python3 -I src/check/head.py index.html
 
+  database:
+    name: Clubhouse database
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:15  # the oldest PostgreSQL a Supabase project still runs
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 12
+    steps:
+      - uses: actions/checkout@v5
+      - name: club.sql does what the page counts on
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+        run: sh src/check/club-db.sh
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Playwright and Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.63.0
+          npx playwright install --with-deps chromium
+      - name: the page with club.sql
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+        run: node src/check/club.js index.html 390
+
   browser:
     name: Browser checks (${{ matrix.group }})
     runs-on: ubuntu-latest
@@ -72,8 +112,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - group: accounts, prizes and visits
-            checks: account prizes visits
+          - group: accounts, prizes, rooms, visits and challenges
+            checks: account prizes room visits challenge
           - group: pages and practice
             checks: additions habit smoke nav msmoke
           - group: tracks, text and sources

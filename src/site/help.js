@@ -43,10 +43,26 @@
       ['What is in a crate?', 'A new look for the site: colors, a paper background, an effect when you get a question right, a glow around your streak, or a streak picture. Nothing in a crate opens a lesson or a question; those are all free already.'],
       ['How do I use what I won?', 'Press <b>Wear</b> on it under “Your collection”. Colors you win also show up when you press <b>Text size</b> at the top.'],
       ['Can I buy coins?', 'No. Coins only come from studying, and nothing on this site costs money.']]],
+    challenge: ['challenges', [
+      ['How does a challenge work?', 'You answer five real SAT questions, then send the link to a friend. They answer the same five, in the same order, and you both see who got more right. They can send their score back the same way.'],
+      ['Does my friend need an account?', 'No. The link holds the questions and your score, so it works for anyone, with nothing to sign up for. Nothing about a challenge is sent to SAT Sprint.'],
+      ['Does a challenge count as practice?', 'Yes. Your answers are saved like any other practice and count toward your day. A challenge gives no extra coins.'],
+      ['Can I play one again?', 'Yes, as often as you like. Your first try that answers every question is your score in the challenge.']]],
+    room: ['your room', [
+      ['What is my room?', 'A room in the clubhouse where the prizes you win go on show: a theme on the walls, a paper in the window, auras and effects on the stands, streak styles on the shelf and stickers on the board.'],
+      ['How do I change it?', 'Press <b>Decorate</b>, tap a spot in the room, then pick a prize for it. What you pick shows straight away. Press <b>Save my room</b> to keep it, or <b>Cancel</b> to leave it as it was.'],
+      ['Who can see my room?', 'Only you, unless you share it. When you are signed in, <b>Share my room</b> makes a link: anyone you send it to sees your room, your nickname and your streak, and nothing else. <b>Stop sharing</b> switches the link off.'],
+      ['What are stickers from visitors?', 'A friend who opens your link while signed in can leave one of their stickers on your board, one a day. You can take any of them off.'],
+      ['How do I get more for my room?', 'Earn coins by studying and open crates. Every crate has a prize and a sticker in it.']]],
+    visit: ['a shared room', [
+      ['Whose room is this?', 'A student who studies for the SAT on this site decorated it with prizes they won, and sent you the link.'],
+      ['How do I leave a sticker?', 'Sign in, choose a nickname, then pick one of your stickers under <b>Leave a sticker</b>. You can leave one a day in each room.'],
+      ['What does the owner see about me?', 'Your nickname and the sticker you leave. Nothing else.'],
+      ['Can I have a room too?', 'Yes. Every lesson and question here is free. Studying earns coins, coins open crates, and the prizes in them decorate your own room.']]],
     other: ['this page', [
       ['Where do I start?', 'Press <b>Home</b> at the top, then press <b>Start</b> on Reading &amp; Writing or on Math.']]]
   };
-  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates' };
+  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge', room: 'room', visit: 'visit' };
   var helpEl = null, helpFrom = null;
   function helpKey() {
     var v = cur.view;
