@@ -2564,3 +2564,16 @@ html.tour-open { overflow: hidden; }
 .chal-list span { color: var(--ink-2); font-size: .92rem; }
 .chal-note { margin-top: 1.6rem; }
 @media (max-width: 420px) { .chal-vs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .chal-mid { display: none; } }
+
+/* The authored solution uses the existing theme tokens and native disclosures. */
+.authored-explanation { margin: 1rem 0; padding: .85rem 1rem; border: 1px solid var(--line-strong); border-radius: .65rem; overflow-wrap: anywhere; }
+.authored-explanation > p { margin: .65rem 0; }
+.authored-explanation > :first-child { margin-top: 0; }
+.authored-explanation > :last-child { margin-bottom: 0; }
+.ex-reference, .ex-variation { margin: .85rem 0; }
+.ex-variation details { margin: .6rem 0 0; }
+.ex-source { display:block; }
+.ex-source-label { display:block; font-size:.82em; font-weight:700; color:var(--muted); margin-bottom:.5em; }
+.ex-source-note { display:block; padding:.7em; border-left:3px solid currentColor; font-size:.88em; margin-bottom:.8em; }
+.ex-source-block { display:block; margin:.65em 0; }
+.ex-source u { text-decoration-thickness: .08em; text-underline-offset: .15em; }

@@ -66,6 +66,8 @@ jobs:
         run: python3 -I src/check/mdrills_check.py
       - name: Reading and Writing practice records
         run: node src/check/rw-practice.js
+      - name: Authored explanation guards
+        run: node src/check/explanations.js
       - name: Link previews
         run: python3 -I src/check/head.py index.html
 
@@ -123,7 +125,7 @@ jobs:
           - group: pages and practice
             checks: additions habit smoke nav msmoke
           - group: tracks, text and sources
-            checks: rwtrack text plan symbols mtrack suggest qtext skip source-review
+            checks: rwtrack text plan symbols mtrack suggest qtext skip source-review explanations-browser explanation-duplicates explanations-release
     steps:
       - uses: actions/checkout@v5
         with:
@@ -149,11 +151,11 @@ jobs:
               *) args="index.html 390" ;;
             esac
             echo "::group::$c"
-            if [ "$c" = source-review ]; then
+            if [ "$c" = source-review ] || [ "$c" = explanations-browser ] || [ "$c" = explanation-duplicates ] || [ "$c" = explanations-release ]; then
               python3 -m http.server 8000 --bind 127.0.0.1 > /dev/null 2>&1 &
               srv=$!
               sleep 1
-              CHROMIUM_EXECUTABLE="$(node -e "console.log(require('playwright').chromium.executablePath())")" node src/check/source-review.js http://127.0.0.1:8000/ || failed="$failed $c"
+              CHROMIUM_EXECUTABLE="$(node -e "console.log(require('playwright').chromium.executablePath())")" node "src/check/$c.js" http://127.0.0.1:8000/ || failed="$failed $c"
               kill "$srv"
             else
               node "src/check/$c.js" $args || failed="$failed $c"

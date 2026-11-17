@@ -227,8 +227,12 @@ select t.ok(public.club_balance(:'C') = :c_left and (select count(*) from public
   'coins only for days since crates came, and crates only while they pay for them');
 select t.ok((select count(*) from public.club_days where user_id = :'C') = :c_days, 'no days before the site opened, or after tomorrow');
 select t.ok(t.same((select array_agg(key) from public.club_grants where user_id = :'C'),
-  array['ms7.2026-10-07', 'ms30.2026-10-07', 'test.' || :'p7', 'welcome'] || case when :c_days >= 100 then array['ms100.2026-10-07'] else '{}' end),
-  'free crates only for the streak the days really make, and one Test Day crate');
+  array['ms7.2026-10-07', 'ms30.2026-10-07', 'test.' || :'p7', 'welcome'] || case when :c_days >= 100 then array['ms100.2026-10-07'] else '{}' end
+  -- As the date advances, the honest coin budget can fund eight crates, completing the eight-sticker night page.
+  || case when :c_bought >= 8 then array['page.night'] else '{}' end),
+  'free crates only for earned streaks, a completed sticker page, and one Test Day crate');
+select t.ok((select count(*) from public.club_stickers where user_id = :'C' and sticker like 'night-%') = least(:c_bought, 8),
+  'the carried night stickers are distinct and the page grant needs all eight');
 select t.ok((select gifted_at is null from public.club_profiles where user_id = :'C'), 'the owner''s link does not come over from a device');
 
 \echo '    coins for the day'

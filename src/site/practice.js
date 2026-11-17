@@ -382,10 +382,12 @@
       var tip = kind === 'n'
         ? '<p class="fine"><a href="#notesfirst">How to answer notes questions from the goal</a></p>'
         : (u ? '<p class="fine">Rule <a href="#' + u.id + '">' + u.num + '</a>: ' + u.title + '</p>' : '');
+      var authored = explanationHTML('rw', b.id, b.ans);
+      var original = (b.why[b.ans] ? '<p class="fine"><b>Why ' + b.ans + '.</b> ' + b.why[b.ans] + '</p>' : '') +
+        (!ok && b.why[k] ? '<p class="fine"><b>Why not ' + k + '.</b> ' + b.why[k] + '</p>' : '');
+      var credit = '<p class="fine muted">Explanations: College Board’s answer rationale, shortened.</p>';
       $('.qfeed', el).innerHTML = verdictHTML(ok, b.ans, res) +
-        (b.why[b.ans] ? '<p class="fine"><b>Why ' + b.ans + '.</b> ' + b.why[b.ans] + '</p>' : '') +
-        (!ok && b.why[k] ? '<p class="fine"><b>Why not ' + k + '.</b> ' + b.why[k] + '</p>' : '') + tip +
-        '<p class="fine muted">Explanations: College Board’s answer rationale, shortened.</p>';
+        (authored ? authored + explanationReference('College Board rationale, shortened', original + credit) + tip : original + tip + credit);
       if (o.after) { o.after(ok); }
       showFeedback($('.verdict', el));
     }
@@ -400,6 +402,8 @@
     var el = document.createElement('div');
     el.className = 'rcard bcard';
     function passage(walk) {
+      var restored = explanationSourceHTML('rw', b.id, b.ans);
+      if (restored) { return '<div class="passage">' + restored + '</div>'; }
       var h = b.intro ? '<p class="qintro">' + b.intro + '</p>' : '', lab = null;
       b.s.forEach(function (s, i) {
         if (b.tx && b.tx[i] && b.tx[i] !== lab) { lab = b.tx[i]; h += '<p class="label" style="margin-top:.6rem">' + esc(lab) + '</p>'; }
@@ -424,9 +428,11 @@
         else if (bk === k) { bt.classList.add('wrong'); $('.otag', bt).textContent = 'Your answer'; }
       });
       var tr = b.tr || {};
-      $('.qfeed', el).innerHTML = verdictHTML(ok, b.ans, res) +
-        (b.why[b.ans] ? '<p class="fine"><b>Why ' + b.ans + '.</b> ' + b.why[b.ans] + '</p>' : '') +
+      var authored = explanationHTML('rw', b.id, b.ans);
+      var original = (b.why[b.ans] ? '<p class="fine"><b>Why ' + b.ans + '.</b> ' + b.why[b.ans] + '</p>' : '') +
         (!ok && b.why[k] ? '<p class="fine"><b>Why not ' + k + '.</b> ' + b.why[k] + (tr[k] ? ' <span class="wn">' + esc(tr[k]) + '</span>' : '') + '</p>' : '');
+      $('.qfeed', el).innerHTML = verdictHTML(ok, b.ans, res) +
+        (authored ? authored + explanationReference(b.txt ? 'Original College Board explanation' : 'Previous answer notes', original) : original);
       var job = RD.jobs.filter(function (j) { return j.name === b.jn; })[0];
       $('.rwalk', el).innerHTML = (b.tg ? '<h3 class="fasth">The passage, tagged</h3><p class="fine">' + (b.pt >= 0 ? 'The boxed line is the Point. ' : 'This passage has no single Point. ') +
         (b.rs.length ? 'The shaded ' + (b.rs.length === 1 ? 'line is the one' : 'lines are the ones') + ' the answer rests on.' : '') + '</p>' + passage(true) +
@@ -435,6 +441,10 @@
         (job ? '<p class="fine"><a href="#' + job.id + '">The ' + esc(b.jn) + ' job: what to look at first</a></p>' : '') +
         (b.qsrc ? '<p class="fine asprinted">As printed: <a href="' + esc(b.qsrc) + '" target="_blank" rel="noopener">the question</a> · <a href="' + esc(b.rsrc) + '" target="_blank" rel="noopener">the explanation</a></p>' : '') +
         '<p class="fine muted">Answer: College Board’s key. Explanations: College Board’s rationale' + (b.txt ? ', in full.' : '; source-image cards retain the full explanation.') + (b.tg ? ' Tags and wrong-choice labels: Claude’s annotation, done twice blind and settled by a third pass.' : '') + '</p>';
+      if (authored) {
+        var walk = $('.rwalk', el);
+        walk.innerHTML = explanationReference('Passage guidance and source references', walk.innerHTML);
+      }
       if (o.after) { o.after(ok); }
       showFeedback($('.verdict', el));
     }

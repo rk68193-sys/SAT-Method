@@ -44,7 +44,13 @@ const base = process.argv[2] || 'http://127.0.0.1:8000/';
         await page.locator('#tcard .opt[data-k="' + chosen + '"]').click();
         assert.match(await page.locator('#tcard .verdict').innerText(), i === 0 ? /not|incorrect/i : /right|correct/i);
         if (q.txt) {
-          assert.match(await page.locator('#tcard .qfeed').innerText(), /Choice [A-D] is/);
+          const authored = page.locator('#tcard .qfeed [data-explanation]');
+          if (await authored.count()) {
+            assert.ok((await authored.innerText()).length > 50);
+            assert.match(await page.locator('#tcard .qfeed .ex-reference').textContent(), /Choice [A-D] is/);
+          } else {
+            assert.match(await page.locator('#tcard .qfeed').innerText(), /Choice [A-D] is/);
+          }
           assert.equal(await page.locator('#tcard .asprinted a').count(), 2);
         } else {
           const sol = page.locator('#tcard .qfeed img[src^="rw/r/"]'); await sol.waitFor(); await sol.evaluate(im => im.decode());
