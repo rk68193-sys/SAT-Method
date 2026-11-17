@@ -92,7 +92,7 @@
       '<p class="row"><a class="btn sm" href="#mq-'+id+'">Try this question</a><a class="linkbtn" href="'+mstLink(m)+'">Full method</a></p>'+mstCalculator(id)+
       (q.hand?'<details><summary>Short hand solution</summary><p>'+esc(q.hand)+'</p></details>':'')+
       '<details><summary>Original question and choices</summary><div class="mpq">'+mImg('q',source)+'</div></details>'+
-      '<details><summary>Official source solution</summary><div class="mpq">'+mImg('r',source)+'</div></details>'+
+      explanationHTML('m', id, source.a) + '<details><summary>Official source solution</summary><div class="mpq">'+mImg('r',source)+'</div></details>'+
       (id==='841ef26c'?'<details><summary>See the actual Desmos graph</summary><p>g(x)=f(x+5) shifts the vertex left five units, from (-8,6) to (-13,6). The question asks for the input -13.</p><img class="mst-graph" loading="lazy" src="'+esc(MST.evidence.graph_image)+'" alt="Desmos graph of f and g, with the shifted vertex at (-13,6)"></details>':'')+
       '<h4 class="h3">Close variants</h4>'+(f?'<p class="fine">Suggested similar wording and structure; each question has its own answer.</p>'+mstQuestionLinks(f.ids.filter(function (other) {return other!==id;})):'<p>No close variant was confidently grouped. The question remains in its broader method group.</p>')+'</article>';
   }

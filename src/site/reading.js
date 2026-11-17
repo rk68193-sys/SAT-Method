@@ -207,6 +207,8 @@
 
   /* ---------- a reading question card ---------- */
   function rPassageHTML(x) {
+    var restored = explanationSourceHTML('rw', x.qid, x.ans);
+    if (restored) { return '<div class="passage">' + restored + '</div>'; }
     var chunks = x.chunks, h = '';
     if (x.table) { h += '<figure class="dtable"><figcaption class="tcap">' + esc(x.table.caption) + '</figcaption>' + tableHTML({ head: x.table.head, rows: x.table.rows }, 'datatab') + '</figure>'; }
     if (x.tagset === 'notes') {
@@ -225,6 +227,7 @@
     return c.html.replace(/<mark class="turn">([\s\S]*?)<\/mark>/g, '$1').replace(/<span class="xtra">([\s\S]*?)<\/span>/g, '$1').replace(/_{3,}/g, BLANK);
   }
   function walkHTML(x, picked) {
+    var authored = explanationHTML('rw', x.qid, x.ans, true);
     var chunks = x.chunks.map(function (c) {
       return '<li class="chunk">' + (c.head ? '<p class="thead">' + esc(c.head) + '</p>' : '') + '<div class="cgrid"><p class="ctext">' + c.html.replace(/_{3,}/g, '______') + '</p>' +
         '<div class="gloss">' + tagHTML(c.tag) + '<span class="pl">' + c.plain + '</span>' + (c.apart ? '<a class="aplink" href="#' + c.apart + '">Long sentence: see it taken apart</a>' : '') + '</div></div></li>';
@@ -237,7 +240,7 @@
       fstep(1, 'Job', '<p class="qstem">' + x.question + '</p><p>' + (x.jobtag ? tagHTML(x.jobtag) + ' ' : '') + x.jobans + '</p>') +
       fstep(2, 'Chunk', '<p class="fine">This guided example shows sentence tags and plain-language paraphrases. Use them to learn the structure; you need not write every tag during practice. Turn words are highlighted. Revisit dimmed details when the question or a choice needs them.</p><ol class="chunks">' + chunks + '</ol>') +
       fstep(3, 'Say', '<p class="sayline">' + x.say + '</p>') +
-      fstep(4, 'Check', '<ol class="rchoices">' + choices + '</ol>') +
+      fstep(4, 'Check', authored ? authored + explanationReference('Previous choice-by-choice notes', '<ol class="rchoices">' + choices + '</ol>') : '<ol class="rchoices">' + choices + '</ol>') +
       (x.lesson ? '<p class="note">' + x.lesson + '</p>' : '') + '</div>';
   }
   function RCard(x, o) {
@@ -262,7 +265,7 @@
         else if (bk === k) { b.classList.add('wrong'); $('.otag', b).textContent = 'Your answer'; }
       });
       var mine = x.choices.filter(function (c) { return c.k === k; })[0];
-      $('.qfeed', el).innerHTML = verdictHTML(ok, x.ans, res) + (!ok && mine ? '<p class="fine">Your choice: <b>' + esc(mine.kind) + '.</b> ' + mine.why + '</p>' : '');
+      $('.qfeed', el).innerHTML = verdictHTML(ok, x.ans, res) + (!explanationFor('rw', x.qid, x.ans) && !ok && mine ? '<p class="fine">Your choice: <b>' + esc(mine.kind) + '.</b> ' + mine.why + '</p>' : '');
       $('.rwalk', el).innerHTML = '<h3 class="fasth">The walkthrough</h3>' + walkHTML(x, k);
       if (o.after) { o.after(ok); }
       showFeedback($('.verdict', el));
