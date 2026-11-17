@@ -117,6 +117,8 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     await t.p.click('#pz-wear-now'); await t.p.waitForTimeout(150);
     const st2 = await t.saved();
     if (kind === 'theme') { ok((await t.p.evaluate(() => document.documentElement.getAttribute('data-theme'))) === rec[2].split(':')[1], 'Wear it puts the theme on'); }
+    /* any crate can hold a prize from another series, a skin too, and a skin is worn by the character, in the room's record */
+    else if (kind === 'skin') { ok(!!st2.s.room && st2.s.room.av[2] === rec[2], 'Wear it puts the skin on the character: ' + JSON.stringify(st2.s.room)); }
     else { ok(st2.s.pz.eq[kind] === rec[2], 'Wear it puts the ' + kind + ' on'); }
     await t.p.click('#pz-close'); await t.p.waitForTimeout(200);
     ok(!(await t.p.$('.pz-modal')), 'Close returns to the page');
