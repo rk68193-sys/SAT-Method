@@ -33,7 +33,7 @@ const APIKEY = 'test-public-key-0123456789';
   const sql = q => psql(['-A', '-t', '-d', DB, '-c', q]).trim();
   try { psql(['-d', 'postgres', '-c', 'drop database if exists ' + DB, '-c', 'create database ' + DB]); } catch (e) { console.log('FAIL no PostgreSQL to test with (set PGHOST, PGUSER and PGPASSWORD): ' + String(e.stderr || e.message).trim()); process.exit(1); }
   psql(['-d', DB, '-f', path.join(__dirname, 'club-shim.sql')]);
-  psql(['-d', DB, '-o', '/dev/null', '-f', '-'], fs.readFileSync(path.join(src, 'account', 'club.sql'), 'utf8').split('\n').filter(l => !/^create extension/.test(l)).join('\n'));
+  psql(['-d', DB, '-o', '/dev/null', '-f', path.join(src, 'account', 'club.sql')]);
   psql(['-d', DB, '-o', '/dev/null', '-f', '-'], "insert into net._http_response (id, status_code, content) select asked, 200, " + lit(fs.readFileSync(path.join(root, 'catalog.json'), 'utf8')) + " from public.club_rules;\nselect public.club_catalog_sync();\n");
   psql(['-d', DB, '-o', '/dev/null', '-f', path.join(src, 'account', 'club-live.sql')]);
   /* as a signed-in student, in one transaction (the way PostgREST calls a function) */

@@ -11,7 +11,7 @@ root=$(cd "$here/../.." && pwd)
 db=${CLUB_DB:-club_check}
 psql -X -q -v ON_ERROR_STOP=1 -d postgres -c "drop database if exists $db" -c "create database $db"
 run() { psql -X -q -v ON_ERROR_STOP=1 -d "$db" "$@"; }
-club() { grep -v '^create extension' "$root/src/account/club.sql" | run -o /dev/null -f -; }
+club() { run -o /dev/null -f "$root/src/account/club.sql"; }
 live() { run -o /dev/null -f "$root/src/account/club-live.sql"; }
 run -f "$here/club-shim.sql"
 run -f "$root/src/account/setup.sql" 2>/dev/null

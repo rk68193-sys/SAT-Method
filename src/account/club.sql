@@ -18,10 +18,13 @@
 -- its board, from the stickers they own (club_board_add); the owner can take any off (club_board_remove).
 
 -- ---------- the two extensions: a scheduler, and web requests from the database ----------
-create extension if not exists pg_cron with schema pg_catalog;
-grant usage on schema cron to postgres;
-grant all privileges on all tables in schema cron to postgres;
-create extension if not exists pg_net with schema extensions;
+-- Each is added only when it is missing. On Supabase, asking for pg_cron again (even "if not exists") runs its setup again,
+-- and that stops with "dependent privileges exist" in a project where an older copy of this file granted cron's tables to
+-- postgres. The setup itself gives postgres what this file needs.
+do $$ begin
+  if to_regnamespace('cron') is null then create extension pg_cron with schema pg_catalog; end if;
+  if to_regnamespace('net') is null then create extension pg_net with schema extensions; end if;
+end $$;
 
 -- ---------- the prize list and its rules, copied from satsprint.org/catalog.json ----------
 create table if not exists public.club_catalog (
