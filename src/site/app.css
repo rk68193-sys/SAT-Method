@@ -1194,6 +1194,11 @@ a:not([class]):hover { border-radius: 4px; }   /* only plain text links: a butto
 .btn { background: var(--act); border-color: var(--act); border-radius: 999px; padding: .7rem 1.35rem; box-shadow: var(--btn-shadow); transition: transform .12s ease, box-shadow .12s ease, background .12s ease; }
 .btn:not(.ghost):not(:disabled) { background: var(--grad); border-color: transparent; color: var(--on-grad); }
 .btn:not(.ghost):not(:disabled):hover { transform: translateY(-1px); box-shadow: var(--btn-shadow); color: var(--on-grad); background: var(--grad); filter: brightness(1.08); }
+/* A button or card that lifts under the pointer keeps the strip it rose from. Without it, a pointer resting on the bottom
+   edge makes it shake: lifted off the pointer, it drops back under it and lifts again, and a click there may never land.
+   The lift itself makes the button the box this strip is placed in. */
+.btn:not(.ghost):not(:disabled):hover::after, .hfeat:hover::after, .mdom:hover::after, .mskill:hover::after, .mpch:hover:not(:disabled)::after,
+.mm-t:hover::after, .hub-card:hover::after, .hqotd:hover::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 3px; }
 .btn.ghost { background: var(--card); border-color: var(--line-strong); box-shadow: none; }
 .btn.ghost:hover { background: var(--hl); border-color: var(--pencil); }
 .btn.big { font-size: 1.12rem; padding: .85rem 1.7rem; }

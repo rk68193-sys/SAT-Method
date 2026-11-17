@@ -41,7 +41,7 @@ const KEY = 'sat-grammar-sprint.v1', CKEY = 'sat-sprint-club';
   /* each prize's name, from the source (PZ_ITEMS in site/prizes.js) */
   const NAMES = (() => {
     const s = fs.readFileSync(path.join(src, 'site', 'prizes.js'), 'utf8'), a = s.indexOf('var PZ_ITEMS = ['), o = {};
-    for (const m of s.slice(a, s.indexOf('].map(function (r)', a)).matchAll(/\['([^']+)', '((?:[^'\\]|\\.)*)', '[crelmz]', '(theme|paper|fx|streak|aura)'/g)) { o[m[3] + ':' + m[1]] = m[2].replace(/\\(.)/g, '$1'); }
+    for (const m of s.slice(a, s.indexOf('].map(function (r)', a)).matchAll(/\['([^']+)', '((?:[^'\\]|\\.)*)', '[crelmz]', '(theme|paper|fx|streak|aura|skin)'/g)) { o[m[3] + ':' + m[1]] = m[2].replace(/\\(.)/g, '$1'); }
     return o;
   })();
 
