@@ -5379,6 +5379,8 @@ html.pz-plain .pz-bg { display: none; }
 .pal-hide:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .pal-say::after { content: ""; position: absolute; left: 26px; top: 100%; width: 12px; height: 12px; margin-top: -6px; background: var(--card); border-right: 1.5px solid var(--line-strong); border-bottom: 1.5px solid var(--line-strong); transform: rotate(45deg); }
 .pal-say[hidden] { display: none; }
+/* beside the page, the bubble keeps to the margin (74rem is the page's width), so it covers none of the page's words */
+.pal-stand .pal-say { max-width: min(15rem, max(9rem, calc(50vw - 37rem - 20px))); }
 @keyframes pal-say { from { opacity: 0; transform: translateY(6px) scale(.96); } to { opacity: 1; transform: none; } }
 .pal-x { position: absolute; top: -10px; right: -14px; display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1.5px solid var(--line-strong); background: var(--card); color: var(--ink); box-shadow: var(--shadow); font: 700 1.15rem/1 var(--body); cursor: pointer; pointer-events: auto; visibility: hidden; opacity: 0; transition: opacity .2s, visibility 0s .2s; }
 /* the × is for a mouse or a keyboard; on a touch screen the bubble's Hide me button does its job, out of the way of the page */
