@@ -43,7 +43,7 @@ if [ "$before" != "$after" ]; then echo "FAILED: running club.sql again changed 
 echo "    running club.sql again changes nothing"
 calls=$(run -t -A -c "select count(*) from pg_proc where pronamespace = 'public'::regnamespace and proname like 'club\_live\_%'
   and has_function_privilege('authenticated', oid, 'execute')")
-if [ "$calls" != "11" ]; then echo "FAILED: after club.sql ran again, students can call $calls of the 11 live room functions"; exit 1; fi
+if [ "$calls" != "13" ]; then echo "FAILED: after club.sql ran again, students can call $calls of the 13 live room functions"; exit 1; fi
 live
 echo "    and leaves live rooms working"
 psql -X -q -d postgres -c "drop database $db"

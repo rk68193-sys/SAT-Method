@@ -5,6 +5,9 @@
      with the student's sign-in, keeps the connection alive, hands over a fresh sign-in, and never sends on the channel.
      Everything the student does goes through club_live_say: a move (a tap in the room, and their figure walks there), a
      reaction or a quick phrase from the lists below. The server sends it to every page in the room, this one included.
+     Typed chat goes through club_live_chat, which checks each line first (words, links, phone numbers and the like) and
+     tells this page why when it holds one back. A student types once they have said when they were born (only whether
+     they are 13 or older is kept) and agreed to the chat rules; until then, or under 13, typed lines are not shown.
      Who is in the room comes only from the server (join and ping), and only they are drawn: a message from anyone else is
      ignored, and "hi" (someone came in) asks the server again. That is how a block hides two students from each other. Mute
      is kept on this page; block, report and the owner's "ask to leave" go to the server. The page leaves (club_live_leave)
@@ -25,7 +28,7 @@
     blocked: 'You can’t join this room live.',
     full: 'This room is full: 8 people are in it. Try again in a little while.',
     busy: 'Live rooms are full right now: 20 people are in them across the site. Try again in a little while.',
-    day: 'You have used today’s 400 live moves, reactions and phrases. They come back tomorrow.',
+    day: 'You have used today’s 400 live moves, reactions, phrases and messages. They come back tomorrow.',
     idle: 'You left the live room after 5 quiet minutes.',
     away: 'You left the live room while this page was in the background.',
     expired: 'The connection dropped, so you left the live room.',
@@ -35,9 +38,21 @@
   };
   /* reasons after which Join live is offered again */
   var LIVE_AGAIN = { join: 1, full: 1, busy: 1, idle: 1, away: 1, expired: 1, left: 1, net: 1, out: 1, blocked: 1 };
-  var LIVE_PING = 30000, LIVE_IDLE = 5 * 60000, LIVE_AWAY = 60000, LIVE_WALK = 2050, LIVE_COOL = 3000;
+  /* why a typed line was not sent (club_live_chat) */
+  var LIVE_HELD = {
+    contact: 'That line wasn’t sent. To keep everyone safe, the chat doesn’t pass on phone numbers, emails, @handles or social apps, or questions about where someone lives or goes to school.',
+    link: 'That line wasn’t sent, because the chat doesn’t pass on links.',
+    words: 'That line wasn’t sent, because it has a word this chat doesn’t allow.',
+    same: 'You just sent that line.',
+    long: 'A line can be up to 160 characters.',
+    pause: 'Typing is resting for a few minutes, because several lines in a row weren’t sent. You can still send reactions and phrases.',
+    form: ''
+  };
+  var LIVE_MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var LIVE_PING = 30000, LIVE_IDLE = 5 * 60000, LIVE_AWAY = 60000, LIVE_WALK = 2050, LIVE_COOL = 3000, LIVE_LINES = 50;
   var LIVE = { link: '', known: false, none: false, on: false, n: 0, countT: 0, st: '', why: '', msg: '', seq: 0,
     me: '', mine: false, topic: '', ppl: {}, order: [], hide: {}, mute: {}, byeAt: {}, left: 400,
+    chatOn: false, chat: '', lines: [], chatEl: null, chatShown: '', chatBusy: false, chatT: 0, draft: '',
     ws: null, chan: '', ref: 0, joinRef: '', joined: false, tok: '', hbT: 0, pingT: 0, retryT: 0, tries: 0, soonT: 0, soonAt: 0, autoAt: 0,
     lastIn: 0, inSince: false, awayT: 0, walkWant: null, walkAt: 0, walkBusy: false, walkT: 0, sayAt: 0, coolT: 0,
     open: '', ask: '', blocks: null, showBlocks: false, news: null };
@@ -60,7 +75,7 @@
   /* ---------- the page of a shared room: how many are live in it, and Join ---------- */
   /* called by clubVisit when a shared room has loaded, and by showView when the student leaves that page */
   function liveEnter(link) {
-    if (LIVE.link !== link) { liveAway(); LIVE.link = link; LIVE.mute = {}; LIVE.why = ''; LIVE.msg = ''; LIVE.known = false; LIVE.none = false; LIVE.on = false; LIVE.n = 0; }
+    if (LIVE.link !== link) { liveAway(); LIVE.link = link; LIVE.mute = {}; LIVE.why = ''; LIVE.msg = ''; LIVE.known = false; LIVE.none = false; LIVE.on = false; LIVE.n = 0; LIVE.draft = ''; }
     liveCount();
   }
   function liveAway() {
@@ -76,7 +91,7 @@
       if (LIVE.link !== link || cur.view !== 'visit' || LIVE.st) { return; }
       var was = liveNickHere();
       if (r.missing) { LIVE.known = true; LIVE.none = true; liveRedraw(was); return; }
-      if (r.ok && isObj(r.body)) { LIVE.known = true; LIVE.none = false; LIVE.on = !!r.body.on; LIVE.n = Number(r.body.n) || 0; liveRedraw(was); }
+      if (r.ok && isObj(r.body)) { LIVE.known = true; LIVE.none = false; LIVE.on = !!r.body.on; LIVE.chatOn = r.body.chat === true; LIVE.n = Number(r.body.n) || 0; liveRedraw(was); }
       LIVE.countT = setTimeout(liveCount, 60000);
     });
   }
@@ -117,6 +132,7 @@
     var topic = String(v.topic || '');
     if (topic !== LIVE.topic) { var old = LIVE.chan; LIVE.topic = topic; if (!first) { liveRechan(old); } }
     LIVE.me = String(v.me || ''); LIVE.mine = !!v.mine; LIVE.left = Number(v.left) || 0;
+    LIVE.chat = { ok: 1, ask: 1, no: 1 }[v.chat] ? v.chat : 'off'; LIVE.chatOn = LIVE.chat !== 'off';
     LIVE.hide = {};
     (Array.isArray(v.hide) ? v.hide : []).forEach(function (p) { LIVE.hide[String(p)] = 1; });
     var had = LIVE.ppl, now = {}, order = [], walking = LIVE.walkWant || LIVE.walkBusy || Date.now() - LIVE.walkAt < 3000;
@@ -185,7 +201,8 @@
   function liveStop() {
     LIVE.seq++;
     LIVE.st = ''; LIVE.joined = false; LIVE.topic = ''; LIVE.chan = ''; LIVE.joinRef = ''; LIVE.ppl = {}; LIVE.order = []; LIVE.byeAt = {}; LIVE.open = ''; LIVE.ask = '';
-    LIVE.walkWant = null; LIVE.walkBusy = false; LIVE.showBlocks = false;
+    LIVE.walkWant = null; LIVE.walkBusy = false; LIVE.showBlocks = false; LIVE.chat = ''; LIVE.lines = []; LIVE.chatBusy = false;
+    clearTimeout(LIVE.chatT); LIVE.chatT = 0;
     clearInterval(LIVE.pingT); clearInterval(LIVE.hbT); clearTimeout(LIVE.retryT); clearTimeout(LIVE.walkT); clearTimeout(LIVE.soonT); clearTimeout(LIVE.awayT); clearTimeout(LIVE.coolT);
     LIVE.pingT = LIVE.hbT = LIVE.retryT = LIVE.walkT = LIVE.soonT = LIVE.awayT = LIVE.coolT = 0;
     var ws = LIVE.ws;
@@ -279,7 +296,8 @@
     }
     if (m.event === 'broadcast') { liveHear(String(p.event || ''), isObj(p.payload) ? p.payload : {}); }
   }
-  /* what the room heard: w (a move), r (a reaction), s (a phrase), hi, bye, moved (someone was asked to leave), closed */
+  /* what the room heard: w (a move), r (a reaction), s (a phrase), c (a typed line), hi, bye, moved (someone was asked to
+     leave), closed */
   function liveHear(ev, p) {
     var pid = String(p.p || ''), who = LIVE.ppl[pid], x;
     if (ev === 'closed') { livePing(); return; }
@@ -295,7 +313,8 @@
     if (ev === 'w') { who.x = liveNum(p.x, 5, 95, who.x); who.y = liveNum(p.y, 78, 98, who.y); who.wAt = Date.now(); liveFigPos(who); return; }
     if (LIVE.mute[pid]) { return; }
     if (ev === 'r' && (x = liveReactOf(p.k))) { liveBubble(who, x[1], true); liveAnnounce(who.nick + ' sent ' + x[2].toLowerCase() + '.'); return; }
-    if (ev === 's' && (x = liveSayOf(p.k))) { liveBubble(who, x[1], false); liveAnnounce(who.nick + ': ' + x[1]); }
+    if (ev === 's' && (x = liveSayOf(p.k))) { liveBubble(who, x[1], false); liveAnnounce(who.nick + ': ' + x[1]); return; }
+    if (ev === 'c' && LIVE.chat === 'ok' && typeof p.t === 'string' && (x = p.t.slice(0, 200))) { liveLine(pid, who.nick, x); liveBubble(who, liveShort(x), false, 6000); }
   }
 
   /* ---------- what the student does ---------- */
@@ -412,19 +431,21 @@
   function livePanelHTML() {
     if (!acctOn || !LIVE.known || LIVE.none) { return ''; }
     var v = CLUB.visit && CLUB.visit.v, mine = !!(v && v.mine), h = '<section class="live-panel" aria-labelledby="live-h">';
-    if (LIVE.st === 'on') { return h + liveOnHTML() + '</section>'; }
+    /* live: the chat sits between the two parts, and stays put while they are drawn again (liveDraw) */
+    if (LIVE.st === 'on') { return h.replace('class="live-panel"', 'class="live-panel live-on"') + '<div class="live-a">' + liveOnHTML() + '</div><div class="live-chat-spot"></div><div class="live-b">' + liveWhoHTML() + '</div></section>'; }
     h += '<h3 class="room-h4" id="live-h">' + (LIVE.on && LIVE.n ? '<span class="live-dot" aria-hidden="true"></span>' + liveHere(LIVE.n) : 'Hang out here live') + '</h3>';
     if (!LIVE.on) { return h + '<p>' + LIVE_WHY.rest.replace(' for a few days', ' right now') + '</p></section>'; }
     if (!acctIn()) {
-      return h + '<p>Sign in to join this room live: see who else is here, walk around, and send a wave or a quick hello. There is no typing.</p><p><a class="btn ghost sm" href="#account">Sign in</a></p></section>';
+      return h + '<p>Sign in to join this room live: see who else is here, walk around, and send a wave or a quick hello' + (LIVE.chatOn ? ', or chat' : '. There is no typing') + '.</p><p><a class="btn ghost sm" href="#account">Sign in</a></p></section>';
     }
     if (!clubOn()) { return CLUB.trying ? h + '<p class="muted">Checking your account…</p></section>' : ''; }
     if (CLUB.st.blocked) { return h + '<p>' + LIVE_WHY.locked + '</p></section>'; }
     if (!CLUB.st.nick) {
       return h + '<p>Choose a nickname first, so the others in the room know who you are. A first name or a made-up name is best, never your full name.</p>' + clubNickHTML('') + '</section>';
     }
-    h += '<p>' + (mine ? 'This is your room. Join live to hang out with friends who open your link: everyone here sees the others walk around, and can send reactions and quick phrases. There is no typing.'
-      : 'Join live to walk around this room with anyone else who is here right now, and send reactions and quick phrases. There is no typing.') + '</p>';
+    var can = LIVE.chatOn ? 'reactions, quick phrases and typed messages.' : 'reactions and quick phrases. There is no typing.';
+    h += '<p>' + (mine ? 'This is your room. Join live to hang out with friends who open your link: everyone here sees the others walk around, and can send ' + can
+      : 'Join live to walk around this room with anyone else who is here right now, and send ' + can) + '</p>';
     if (LIVE.why) { h += '<p class="live-msg">' + esc(LIVE.msg || LIVE_WHY[LIVE.why] || '') + '</p>'; }
     else if (LIVE.msg) { h += '<p class="live-msg">' + esc(LIVE.msg) + '</p>'; }
     if (LIVE.st === 'joining') { return h + '<p class="row"><button class="btn" type="button" disabled>Joining…</button></p></section>'; }
@@ -433,7 +454,7 @@
     return h + '</section>';
   }
   function liveOnHTML() {
-    var n = LIVE.order.length, rest = Date.now() < LIVE.sayAt + LIVE_COOL || LIVE.left <= 0, dis = rest ? ' aria-disabled="true"' : '';
+    var rest = Date.now() < LIVE.sayAt + LIVE_COOL || LIVE.left <= 0, dis = rest ? ' aria-disabled="true"' : '';
     var h = '<div class="live-top"><h3 class="room-h4" id="live-h"><span class="live-dot" aria-hidden="true"></span>You’re here live</h3>' +
       '<button class="btn ghost sm" type="button" data-live-leave>Leave</button></div>' +
       '<p class="fine">Tap anywhere in the room to walk there. Everyone here sees you move.</p>' +
@@ -444,10 +465,11 @@
         return '<button type="button" class="live-sb" data-live-say="' + s[0] + '"' + dis + '>' + esc(s[1]) + '</button>';
       }).join('') + '</div>';
     if (LIVE.left <= 0) { h += '<p class="live-msg">' + LIVE_WHY.day + '</p>'; }
-    else if (LIVE.left < 50) { h += '<p class="fine">' + LIVE.left + ' moves, reactions and phrases left today.</p>'; }
-    h += '<p class="live-msg" role="status" aria-live="polite">' + esc(LIVE.msg) + '</p>';
-    h += '<h4 class="room-h4">Here now (' + n + ')</h4><ul class="live-who">' + LIVE.order.map(liveRowHTML).join('') + '</ul>';
-    return h + liveBlocksHTML();
+    else if (LIVE.left < 50) { h += '<p class="fine">' + LIVE.left + ' moves, reactions, phrases and messages left today.</p>'; }
+    return h + '<p class="live-msg" role="status" aria-live="polite">' + esc(LIVE.msg) + '</p>';
+  }
+  function liveWhoHTML() {
+    return '<h4 class="room-h4">Here now (' + LIVE.order.length + ')</h4><ul class="live-who">' + LIVE.order.map(liveRowHTML).join('') + '</ul>' + liveBlocksHTML();
   }
   function liveRowHTML(pid) {
     var p = LIVE.ppl[pid], me = pid === LIVE.me, open = LIVE.open === pid;
@@ -463,8 +485,9 @@
         '<p class="row"><button class="btn sm" type="button" data-live-do="block:' + pid + '">Block ' + nm + '</button>' + no + '</p></div>';
     }
     if (a[1] === pid && a[0] === 'report') {
-      return '<div class="live-ask"><p>What happened? Your report goes to the site’s owner, with what ' + nm + ' did in this room in the last 30 minutes. They won’t know it was you.</p>' +
+      return '<div class="live-ask"><p>What happened? Your report goes to the site’s owner, with what ' + nm + ' did in this room in the last 30 minutes' + (LIVE.chat === 'ok' ? ', and the room’s chat' : '') + '. They won’t know it was you.</p>' +
         '<p class="row"><button class="btn sm" type="button" data-live-do="report:' + pid + ':spam">Too many messages</button><button class="btn sm" type="button" data-live-do="report:' + pid + ':unkind">Unkind or rude</button>' +
+        (LIVE.chat === 'ok' ? '<button class="btn sm" type="button" data-live-do="report:' + pid + ':personal">Asked for or shared personal details</button>' : '') +
         '<button class="btn sm" type="button" data-live-do="report:' + pid + ':other">Something else</button>' + no + '</p></div>';
     }
     if (a[1] === pid && a[0] === 'remove' && LIVE.mine) {
@@ -474,7 +497,7 @@
     return '<div class="live-opts"><button class="btn ghost sm" type="button" data-live-mute="' + pid + '">' + (LIVE.mute[pid] ? 'Unmute' : 'Mute') + '</button>' +
       '<button class="btn ghost sm" type="button" data-live-ask="block:' + pid + '">Block</button><button class="btn ghost sm" type="button" data-live-ask="report:' + pid + '">Report</button>' +
       (LIVE.mine ? '<button class="btn ghost sm" type="button" data-live-ask="remove:' + pid + '">Ask to leave</button>' : '') + '</div>' +
-      '<p class="fine">Mute hides ' + nm + '’s reactions and phrases on your screen only, until you leave. They can’t tell.</p>';
+      '<p class="fine">Mute hides ' + nm + '’s reactions, phrases' + (LIVE.chat === 'ok' ? ' and messages' : '') + ' on your screen only, until you leave. They can’t tell.</p>';
   }
   function liveBlocksHTML() {
     var h = '<p><button type="button" class="linkbtn" data-live-blocks aria-expanded="' + LIVE.showBlocks + '">People you blocked</button></p>';
@@ -490,10 +513,168 @@
     if (cur.view !== 'visit' || !viewEl.visit) { return; }
     var slot = $('#live-slot', viewEl.visit);
     if (!slot) { return; }
-    var key = fk === undefined ? liveFocusKey() : fk;
-    slot.innerHTML = livePanelHTML();
+    var key = fk === undefined ? liveFocusKey() : fk, a = $('.live-a', slot), b = $('.live-b', slot), ce = LIVE.chatEl;
+    if (LIVE.st === 'on' && a && b && ce && ce.parentNode && slot.contains(ce)) {
+      /* the chat between the two parts is left as it is, so a line being typed keeps its text, and the keyboard stays open */
+      a.innerHTML = liveOnHTML(); b.innerHTML = liveWhoHTML();
+    } else {
+      var f = ce && ce.contains(document.activeElement) ? document.activeElement : null, sel = f && f.selectionStart !== undefined ? [f.selectionStart, f.selectionEnd] : null;
+      slot.innerHTML = livePanelHTML();
+      var spot = $('.live-chat-spot', slot);
+      if (spot) {
+        spot.parentNode.replaceChild(liveChatEl(), spot);
+        if (f && LIVE.chatEl.contains(f)) { focusQuiet(f); if (sel) { try { f.setSelectionRange(sel[0], sel[1]); } catch (e) {} } }
+      }
+    }
+    liveChatFill();
     liveFloor($('#visit-box .room-room', viewEl.visit));
     if (key) { var el = $('#live-slot ' + key, viewEl.visit); if (el) { focusQuiet(el); } }
+  }
+
+  /* ---------- typed chat ---------- */
+  function liveChatEl() {
+    if (!LIVE.chatEl) { LIVE.chatEl = document.createElement('div'); LIVE.chatEl.className = 'live-chat'; LIVE.chatEl.hidden = true; LIVE.chatShown = ''; }
+    return LIVE.chatEl;
+  }
+  /* the chat part of the panel is drawn again only when what it shows changes: ok (the lines, and a box to type in), ask
+     (the birth question and the rules), no (not on this account); nothing when chat is off or the student is not live */
+  function liveChatFill() {
+    var el = LIVE.chatEl, st = LIVE.st === 'on' && { ok: 1, ask: 1, no: 1 }[LIVE.chat] ? LIVE.chat : '';
+    if (!el || st === LIVE.chatShown) { return; }
+    var inp = $('.live-text', el), had = !!inp && document.activeElement === inp;
+    if (inp) { LIVE.draft = inp.value; }
+    LIVE.chatShown = st;
+    el.hidden = !st;
+    el.innerHTML = st === 'ok' ? liveChatOkHTML() : st === 'ask' ? liveChatAskHTML() : st === 'no' ? liveChatNoHTML() : '';
+    if (st !== 'ok') { return; }
+    inp = $('.live-text', el);
+    inp.value = LIVE.draft;
+    liveChatCount();
+    liveLinesDraw();
+    if (had) { focusQuiet(inp); }
+  }
+  function liveChatOkHTML() {
+    return '<h4 class="room-h4" id="live-chat-h">Chat</h4>' +
+      '<ol class="live-lines" role="log" aria-labelledby="live-chat-h" tabindex="0"></ol><p class="fine live-none">No messages yet. Say hi!</p>' +
+      '<form class="live-type" data-live-type novalidate><label class="sr" for="live-text">Your message</label>' +
+      '<input type="text" id="live-text" class="live-text" maxlength="160" autocomplete="off" enterkeyhint="send" aria-describedby="live-chat-help">' +
+      '<button class="btn sm" type="submit">Send</button></form>' +
+      '<p class="fine" id="live-chat-help"><span class="live-n">0</span> of 160 characters. Be kind, and keep personal details to yourself.</p>' +
+      '<p class="live-cmsg" role="status" aria-live="polite"></p>';
+  }
+  /* asked once: a neutral question (nothing says what age it looks for), then the rules */
+  function liveChatAskHTML() {
+    var y = new Date().getFullYear(), ys = '';
+    for (var i = y; i >= y - 100; i--) { ys += '<option value="' + i + '">' + i + '</option>'; }
+    return '<h4 class="room-h4" id="live-chat-h">Chat</h4>' +
+      '<form class="live-age" data-live-age novalidate><p>To read and send typed messages, answer one question and agree to the chat rules. You only do this once, and your birthday isn’t saved.</p>' +
+      '<fieldset class="live-born"><legend>When were you born?</legend>' +
+      '<label class="field"><span class="label">Month</span><select name="m"><option value="">Month</option>' + LIVE_MONTHS.map(function (m, j) { return '<option value="' + (j + 1) + '">' + m + '</option>'; }).join('') + '</select></label>' +
+      '<label class="field"><span class="label">Year</span><select name="y"><option value="">Year</option>' + ys + '</select></label></fieldset>' +
+      '<div class="live-rules-box"><p><b>The chat rules</b></p><ul class="live-rules">' +
+      '<li>Be kind. No insults, swearing or teasing.</li>' +
+      '<li>Keep personal details to yourself: your full name, phone number, email, address, school and social apps.</li>' +
+      '<li>Never agree to meet someone from here, or to move the chat to another app.</li>' +
+      '<li>If something feels wrong, leave the room, then block or report. Telling an adult you trust helps too.</li></ul></div>' +
+      '<p class="row"><button class="btn sm" type="submit">I agree, start chatting</button></p><p class="live-cmsg" role="status" aria-live="polite"></p></form>';
+  }
+  function liveChatNoHTML() {
+    return '<h4 class="room-h4" id="live-chat-h">Chat</h4><p>Typed chat isn’t available on your account. You can still walk around, and send reactions and quick phrases.</p>';
+  }
+  function liveChatMsg(text) { var m = LIVE.chatEl && $('.live-cmsg', LIVE.chatEl); if (m) { m.textContent = text || ''; } }
+  function liveChatCount() {
+    var inp = LIVE.chatEl && $('.live-text', LIVE.chatEl), n = LIVE.chatEl && $('.live-n', LIVE.chatEl);
+    if (inp && n) { n.textContent = String(inp.value.length); }
+  }
+  function liveShort(t) { return t.length > 80 ? t.slice(0, 78) + '…' : t; }
+  /* the lines: the last 50 are kept on the page while the student is live; a muted student's lines are hidden */
+  function liveLineEl(x) {
+    var li = document.createElement('li');
+    li.setAttribute('data-live-line', x.pid);
+    if (x.pid === LIVE.me) { li.className = 'live-mine'; }
+    li.hidden = !!LIVE.mute[x.pid];
+    li.innerHTML = '<b>' + esc(x.nick) + ':</b> ' + esc(x.t);
+    return li;
+  }
+  function liveLinesDraw() {
+    var ol = LIVE.chatEl && $('.live-lines', LIVE.chatEl);
+    if (!ol) { return; }
+    ol.innerHTML = '';
+    LIVE.lines.forEach(function (x) { ol.appendChild(liveLineEl(x)); });
+    liveLinesSeen(ol);
+    ol.scrollTop = ol.scrollHeight;
+  }
+  function liveLinesSeen(ol) {
+    $$('[data-live-line]', ol).forEach(function (li) { li.hidden = !!LIVE.mute[li.getAttribute('data-live-line')]; });
+    var none = $('.live-none', LIVE.chatEl);
+    if (none) { none.hidden = !!$('[data-live-line]:not([hidden])', ol); }
+  }
+  function liveLine(pid, nick, text) {
+    var x = { pid: pid, nick: nick, t: text }, ol = LIVE.chatEl && $('.live-lines', LIVE.chatEl);
+    LIVE.lines.push(x);
+    if (LIVE.lines.length > LIVE_LINES) { LIVE.lines.shift(); }
+    if (!ol) { return; }
+    var near = ol.scrollHeight - ol.scrollTop - ol.clientHeight < 48;
+    ol.appendChild(liveLineEl(x));
+    while (ol.children.length > LIVE_LINES) { ol.removeChild(ol.firstChild); }
+    liveLinesSeen(ol);
+    if (near || pid === LIVE.me) { ol.scrollTop = ol.scrollHeight; }
+  }
+  /* the birth question: the server keeps only whether the student may type */
+  function liveChatStart(f) {
+    var m = Number(f.elements.m.value), y = Number(f.elements.y.value), btn = $('button[type="submit"]', f), seq = LIVE.seq;
+    if (!m || !y) { liveChatMsg('Choose the month and the year you were born.'); return; }
+    if (btn) { btn.disabled = true; }
+    liveCall('club_live_chat_start', { p_month: m, p_year: y }).then(function (r) {
+      if (seq !== LIVE.seq || LIVE.chat !== 'ask') { return; }
+      var b = r.ok && isObj(r.body) ? r.body : null;
+      if (b && b.ok) {
+        LIVE.chat = b.chat === 'ok' ? 'ok' : 'no';
+        liveChatFill();
+        var t = LIVE.chat === 'ok' ? $('.live-text', LIVE.chatEl) : $('#live-chat-h', LIVE.chatEl);
+        if (t) { if (LIVE.chat !== 'ok') { t.setAttribute('tabindex', '-1'); } focusQuiet(t); }
+        liveAnnounce(LIVE.chat === 'ok' ? 'Chat is on. Type a message and press Enter to send it.' : 'Typed chat isn’t available on your account.');
+        return;
+      }
+      if (r.missing) { LIVE.chat = 'off'; liveChatFill(); return; }
+      if (btn) { btn.disabled = false; }
+      liveChatMsg(b ? 'Choose the month and the year you were born.' : r.msg);
+    });
+  }
+  /* a typed line: sent when the 3-second wait after the last reaction, phrase or line is over, and shown once the server
+     has sent it (as it sent it). A line held back stays in the box, with why. */
+  function liveChatSend() {
+    var inp = LIVE.chatEl && $('.live-text', LIVE.chatEl), seq = LIVE.seq;
+    clearTimeout(LIVE.chatT); LIVE.chatT = 0;
+    if (!inp || LIVE.st !== 'on' || LIVE.chat !== 'ok' || LIVE.chatBusy) { return; }
+    var text = inp.value.replace(/\s+/g, ' ').trim();
+    if (!text) { return; }
+    if (LIVE.left <= 0) { liveChatMsg(LIVE_WHY.day); return; }
+    var wait = LIVE.sayAt + LIVE_COOL - Date.now();
+    if (wait > 0) { LIVE.chatT = setTimeout(liveChatSend, wait + 30); return; }
+    LIVE.chatBusy = true; LIVE.sayAt = Date.now();
+    liveChatMsg('');
+    liveCool();
+    liveCall('club_live_chat', { p_text: text }).then(function (r) {
+      if (seq !== LIVE.seq) { return; }
+      LIVE.chatBusy = false;
+      var b = r.ok && isObj(r.body) ? r.body : null, el = LIVE.chatEl && $('.live-text', LIVE.chatEl), me = LIVE.ppl[LIVE.me];
+      if (b && b.ok) {
+        var line = typeof b.t === 'string' && b.t ? b.t : text;
+        LIVE.left = Number(b.left) || 0;
+        if (el && el.value.replace(/\s+/g, ' ').trim() === text) { el.value = ''; LIVE.draft = ''; liveChatCount(); }
+        liveLine(LIVE.me, 'You', line);
+        if (me) { liveBubble(me, liveShort(line), false, 6000); }
+        if (LIVE.left < 50) { liveDraw(); }
+        return;
+      }
+      if (b && b.why === 'wait') { var ms = Number(b.ms) || 500; LIVE.sayAt = Date.now() + ms - LIVE_COOL; LIVE.chatT = setTimeout(liveChatSend, ms + 30); return; }
+      if (b && LIVE_HELD.hasOwnProperty(b.why)) { liveChatMsg(LIVE_HELD[b.why]); return; }
+      if (b && b.why === 'chat') { livePing(); return; }
+      if (b) { liveNo(String(b.why || '')); return; }
+      if (r.missing) { LIVE.chat = 'off'; liveChatFill(); return; }
+      liveChatMsg(r.msg || 'That line wasn’t sent. Try again in a moment.');
+    });
   }
   var LIVE_KEYS = ['data-live-join', 'data-live-leave', 'data-live-react', 'data-live-say', 'data-live-open', 'data-live-mute', 'data-live-ask', 'data-live-do', 'data-live-cancel', 'data-live-blocks', 'data-live-unblock'];
   function liveFocusKey() {
@@ -533,8 +714,8 @@
     p.el.style.left = p.x + '%'; p.el.style.top = p.y + '%'; p.el.style.zIndex = String(10 + p.y);
     if (moved && svg && !FX_REDUCE) { budPlay(svg, 'walk'); clearTimeout(p.walkT); p.walkT = setTimeout(function () { budRest(svg); }, 1000); }
   }
-  /* a phrase in a bubble for 4.5 seconds; a reaction floats up and fades */
-  function liveBubble(p, text, pop) {
+  /* a phrase in a bubble for 4.5 seconds (a typed line for `ms`); a reaction floats up and fades */
+  function liveBubble(p, text, pop, ms) {
     if (!p || !p.el) { return; }
     if (pop) {
       var svg = $('.room-av', p.el);
@@ -549,7 +730,7 @@
     if (!b) { return; }
     b.textContent = text; b.hidden = false;
     clearTimeout(p.bubT);
-    p.bubT = setTimeout(function () { b.hidden = true; }, 4500);
+    p.bubT = setTimeout(function () { b.hidden = true; }, ms || 4500);
   }
 
   /* ---------- taps, keys, and the page coming and going ---------- */
@@ -570,6 +751,8 @@
       if (LIVE.mute[a]) { delete LIVE.mute[a]; } else { LIVE.mute[a] = 1; }
       LIVE.msg = who ? (LIVE.mute[a] ? who.nick + ' is muted on your screen.' : who.nick + ' is no longer muted.') : '';
       liveDraw();
+      var ol = LIVE.chatEl && $('.live-lines', LIVE.chatEl);
+      if (ol) { liveLinesSeen(ol); }
       return;
     }
     if ((b = t.closest('[data-live-ask]'))) {
@@ -582,6 +765,13 @@
     if (t.closest('[data-live-blocks]')) { LIVE.showBlocks = !LIVE.showBlocks; if (LIVE.showBlocks) { LIVE.blocks = null; liveBlocksLoad(); } liveDraw(); return; }
     if ((b = t.closest('[data-live-unblock]'))) { b.disabled = true; liveUnblock(b.getAttribute('data-live-unblock')); }
   });
+  document.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (!f || !f.closest || !f.closest('#live-slot')) { return; }
+    if (f.hasAttribute('data-live-type')) { e.preventDefault(); liveTouch(); liveChatSend(); }
+    else if (f.hasAttribute('data-live-age')) { e.preventDefault(); liveChatStart(f); }
+  });
+  document.addEventListener('input', function (e) { if (e.target && e.target.id === 'live-text') { liveChatCount(); } });
   ['pointerdown', 'keydown'].forEach(function (k) { document.addEventListener(k, function () { if (LIVE.st) { liveTouch(); } }, true); });
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
