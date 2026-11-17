@@ -164,8 +164,12 @@ async function student(b, opt) {
     ok(!(await K.pal()).shown, 'it is never there in a timed module');
     await p.goto(file + '#home'); await p.waitForTimeout(900);
     ok((await K.pal()).shown, 'and comes back after it');
-    /* a right answer in a practice set */
-    const start = async () => { await p.evaluate(() => { location.hash = 'rw-mixed'; }); await p.waitForTimeout(900); };
+    /* a right answer in a practice set; a set of ten can end before one (about 1 time in 18, always answering A), and
+       setting the address the page already has starts nothing, so a new set is started by way of Home */
+    const start = async () => {
+      await p.evaluate(() => { location.hash = 'home'; }); await p.waitForTimeout(250);
+      await p.evaluate(() => { location.hash = 'rw-mixed'; }); await p.waitForTimeout(900);
+    };
     await start();
     let right = 0;
     for (let i = 0; i < 48 && !right; i++) {
