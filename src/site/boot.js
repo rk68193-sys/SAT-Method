@@ -38,6 +38,7 @@
     if (cur.view === 'grammar') { demoPause(); }
     if (cur.view === 'drills' || cur.view === 'mdrills') { drillAway(); }
     if (cur.view === 'mprac') { mpPause(); mCalcShow(false); mSheetShow(false); }
+    if (cur.view === 'visit') { liveAway(); }
     VIEWS.forEach(function (k) { viewEl[k].hidden = k !== v; });
     markNav(v);
     cur.view = v;

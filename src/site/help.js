@@ -53,11 +53,14 @@
       ['How do I change it?', 'Press <b>Decorate</b>, tap a spot in the room, then pick a prize for it. What you pick shows straight away. Press <b>Save my room</b> to keep it, or <b>Cancel</b> to leave it as it was.'],
       ['Who can see my room?', 'Only you, unless you share it. When you are signed in, <b>Share my room</b> makes a link: anyone you send it to sees your room, your nickname and your streak, and nothing else. <b>Stop sharing</b> switches the link off.'],
       ['What are stickers from visitors?', 'A friend who opens your link while signed in can leave one of their stickers on your board, one a day. You can take any of them off.'],
+      ['Can friends visit at the same time?', 'Yes. Open your own link and press <b>Join live</b>. Friends who open it and join too appear in your room, and you can all walk around and send reactions and quick phrases. As the owner you can ask anyone to leave, and <b>Stop sharing</b> ends every visit.'],
       ['How do I get more for my room?', 'Earn coins by studying and open crates. Every crate has a prize and a sticker in it.']]],
     visit: ['a shared room', [
       ['Whose room is this?', 'A student who studies for the SAT on this site decorated it with prizes they won, and sent you the link.'],
       ['How do I leave a sticker?', 'Sign in, choose a nickname, then pick one of your stickers under <b>Leave a sticker</b>. You can leave one a day in each room.'],
-      ['What does the owner see about me?', 'Your nickname and the sticker you leave. Nothing else.'],
+      ['What does “Join live” do?', 'When you are signed in, you are in the room at the same time as anyone else who joined it: you see each other walk around, and you can send reactions and quick phrases like “Nice room!”. There is no typing. Up to 8 people fit in a room.'],
+      ['What if someone is unkind?', 'Press <b>Options</b> next to their name. <b>Mute</b> hides what they send on your screen, <b>Block</b> keeps them out of your room and out of sight in every room, and <b>Report</b> tells the site’s owner. The room’s owner can also ask someone to leave.'],
+      ['What does the owner see about me?', 'Your nickname and the sticker you leave, and when you join live, your figure and what you send. Nothing else.'],
       ['Can I have a room too?', 'Yes. Every lesson and question here is free. Studying earns coins, coins open crates, and the prizes in them decorate your own room.']]],
     other: ['this page', [
       ['Where do I start?', 'Press <b>Home</b> at the top, then press <b>Start</b> on Reading &amp; Writing or on Math.']]]

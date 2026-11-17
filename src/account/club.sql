@@ -750,7 +750,7 @@ end $$;
 -- ---------- who may call what ----------
 do $$ declare f text; begin
   for f in select p.oid::regprocedure::text from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-           where n.nspname = 'public' and p.proname like 'club\_%' loop
+           where n.nspname = 'public' and p.proname like 'club\_%' and p.proname not like 'club\_live\_%' loop   -- club-live.sql has its own
     execute 'revoke all on function ' || f || ' from public, anon, authenticated';
   end loop;
 end $$;
