@@ -397,12 +397,13 @@
     viewEl.visit.innerHTML = '<div class="wrap room-page room-visit"><header class="room-head"><p class="eyebrow">Clubhouse</p><h2 class="vtitle">' + head + '</h2>' + body + '</header></div>';
   }
   function clubVisit(link) {
+    if (LIVE.link && LIVE.link !== link) { liveAway(); }
     CLUB.visit = { link: link, v: null, spot: '', said: '' };
     clubVisitPage('A shared room', '<p class="lede" role="status">Opening the room…</p>');
     if (!acctOn) { clubVisitPage('A shared room', '<p class="lede">Shared rooms are not switched on for this copy of the site.</p>'); return; }
     clubCall('club_room_view', { p_link: link }, !acctIn()).then(function (r) {
       if (cur.view !== 'visit' || !CLUB.visit || CLUB.visit.link !== link) { return; }
-      if (r.ok && isObj(r.body)) { CLUB.visit.v = r.body; clubVisitDraw(); return; }
+      if (r.ok && isObj(r.body)) { CLUB.visit.v = r.body; clubVisitDraw(); liveEnter(link); return; }
       clubVisitPage('This room is not shared right now', '<p class="lede">' + (r.ok || r.missing ? 'Its owner may have switched the link off, or it was copied wrong.' : esc(r.msg)) + '</p>' +
         '<p class="row"><a class="btn" href="#room">See my own room</a><a class="btn ghost" href="#home">Go to Today</a></p>');
     });
@@ -421,6 +422,7 @@
     if (!acctIn()) { return h + '<p>Sign in to leave one of your stickers on ' + nick + '’s board.</p><p><a class="btn ghost sm" href="#account">Sign in</a></p></div>'; }
     if (!clubOn()) { return CLUB.trying ? h + '<p class="muted">Checking your account…</p></div>' : ''; }
     if (CLUB.st.blocked) { return h + '<p>Leaving stickers is switched off for this account.</p></div>'; }
+    if (liveNickHere()) { return h + '<p>Choose a nickname under the room first, so ' + nick + ' knows who it is from.</p></div>'; }
     if (!CLUB.st.nick || CLUB.nickEdit) { return h + '<p>Choose a nickname first, so ' + nick + ' knows who it is from. A first name or a made-up name is best.</p>' + clubNickHTML(CLUB.st.nick) + '</div>'; }
     var mine = Object.keys(clubPz().st).filter(function (s) { return pzStickerName(s); }).sort();
     if (!mine.length) { return h + '<p>You have no stickers yet. Every crate holds one. <a href="#crates">Open crates</a></p></div>'; }
@@ -431,13 +433,14 @@
   function clubVisitDraw() {
     var V = CLUB.visit, v = V && V.v;
     if (!v || !viewEl.visit) { return; }
-    var M = clubVisitModel(v), nm = esc(v.nick || 'A friend');
+    var M = clubVisitModel(v), nm = esc(v.nick || 'A friend'), fk = liveFocusKey();
     viewEl.visit.innerHTML = '<div class="wrap room-page room-visit">' +
       '<header class="room-head"><p class="eyebrow">Clubhouse</p><h2 class="vtitle">' + esc(roomName(v.nick)) + '</h2><p class="lede">' + nm + ' decorated this room with prizes won by studying for the SAT. Tap anything in it to see what it is.</p></header>' +
-      '<div class="room-main"><div class="room-stage"><div id="visit-box">' + roomRoomHTML(M.R, M.o) + '</div></div><div class="room-side" id="visit-side" aria-live="polite">' + clubVisitSideHTML(M.R, M.o) + '</div></div>' +
+      '<div class="room-main"><div class="room-stage"><div id="visit-box">' + roomRoomHTML(M.R, M.o) + '</div><div id="live-slot"></div></div><div class="room-side" id="visit-side" aria-live="polite">' + clubVisitSideHTML(M.R, M.o) + '</div></div>' +
       '<section class="room-share" aria-label="Stickers">' + clubBoardHTML(v.board, false) + clubLeaveHTML(v) + '</section>' +
       (acctIn() ? '' : '<p class="fine room-foot">Want a room of your own? Every lesson and question on this site is free, and studying earns the prizes. <a href="#home">Start here</a></p>') + '</div>';
     roomScenes($('#visit-box', viewEl.visit), M.R);
+    liveDraw(fk);
   }
   function clubVisitTap(spot) {
     var V = CLUB.visit;

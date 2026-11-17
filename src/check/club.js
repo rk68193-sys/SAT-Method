@@ -230,7 +230,9 @@ const KEY = 'sat-grammar-sprint.v1', CKEY = 'sat-sprint-club';
   const today = await A.p.evaluate(() => { const d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); });
   await A.until(() => !!document.querySelector('#pz-toast.show'));
   ok(sql('select amount from public.club_ledger where user_id = ' + lit(uidOf(ME)) + " and key = 'qotd.m." + today + "'") === '10', 'answering the Math question of the day: the server counts 10 coins');
-  ok(/\+10 coins/.test(await A.toast()) && /Question of the day/.test(await A.toast()), 'and the note says so: ' + await A.toast());
+  /* the note for these coins, which may follow another note still showing */
+  const qotdNote = await A.until(() => { const el = document.querySelector('#pz-toast.show'), t = el ? el.textContent.replace(/\s+/g, ' ').trim() : ''; return /\+10 coins/.test(t) && /Question of the day/.test(t) ? t : ''; });
+  ok(!!qotdNote, 'and the note says so: ' + (qotdNote || await A.toast()));
   ok(sql('select count(*) from public.club_days where user_id = ' + lit(uidOf(ME)) + " and day = '" + today + "'") === '1', 'the server knows today was practiced');
   ok(calls('club_claim', ME) >= 1 && JSON.stringify((await A.store()).s.pz.o) === local0, 'the device’s own record is left as it was');
 
