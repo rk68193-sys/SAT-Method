@@ -90,7 +90,8 @@ const APIKEY = 'test-public-key-0123456789';
     if (/^club_/.test(fn)) {
       if (noLive && /^club_live_/.test(fn)) { return send(res, ...missing(fn)); }
       if (bearer && !me) { return send(res, 401, { code: 'PGRST301', message: 'JWT expired' }); }
-      return rpc(fn, body, me ? me.id : '').then(([code, b]) => send(res, code, b));
+      const n = log.length - 1;
+      return rpc(fn, body, me ? me.id : '').then(([code, b]) => { log[n] += ' (answered @' + ((Date.now() - T0) / 1000).toFixed(2) + ')'; send(res, code, b); });
     }
     if (fn === 'count_visit') { return send(res, 204); }
     if (p === '/auth/v1/token' && m === 'POST' && q.get('grant_type') === 'refresh_token') {
@@ -136,7 +137,8 @@ const APIKEY = 'test-public-key-0123456789';
   });
 
   /* ---------- the stand-in for Realtime: Phoenix over a WebSocket, written out by hand ---------- */
-  const conns = new Set(), rt = { joins: 0, refused: 0, open: 0, notPrivate: 0, sent: [], tokens: 0, delivered: 0 };
+  const conns = new Set(), rt = { joins: 0, refused: 0, open: 0, notPrivate: 0, sent: [], tokens: 0, delivered: 0, log: [] };
+  const nameOf = uid => (Object.values(users).find(u => u.id === uid) || {}).name || '?';
   const wsFrame = b => {
     if (b.length < 2) { return null; }
     const op = b[0] & 15, masked = b[1] & 128;
@@ -207,14 +209,17 @@ const APIKEY = 'test-public-key-0123456789';
     sock.on('close', () => conns.delete(c));
     sock.on('error', () => conns.delete(c));
   });
-  /* every message the database sends (realtime.send), passed on to the pages listening to its topic */
+  /* every message the database sends (realtime.send), passed on to the pages listening to its topic. Realtime passes them
+     on in the order they were committed, and ids are handed out before that, so the stand-in does not go by ids alone: it
+     looks again at the last 30 seconds and remembers which messages it has passed on. */
   let lastId = 0, polling = true, pollBusy = false;
+  const passed = new Set();
   const poller = spawn('psql', ['-X', '-q', '-A', '-t', '-d', DB], { env });
   let pbuf = '', pwait = null;
   poller.stdout.on('data', d => { pbuf += d; const i = pbuf.indexOf('@@END@@'); if (i >= 0 && pwait) { const out = pbuf.slice(0, i); pbuf = ''; const w = pwait; pwait = null; w(out); } });
   const poll = () => new Promise(done => {
     pwait = done;
-    poller.stdin.write("select coalesce(json_agg(json_build_object('id', id, 'topic', topic, 'event', event, 'payload', payload, 'private', private) order by id), '[]') from realtime.messages where id > " + lastId + " and event <> 'probe';\n\\echo @@END@@\n");
+    poller.stdin.write("select coalesce(json_agg(json_build_object('id', id, 'topic', topic, 'event', event, 'payload', payload, 'private', private) order by id), '[]') from realtime.messages where (id > " + lastId + " or inserted_at > now() - interval '30 seconds') and event <> 'probe';\n\\echo @@END@@\n");
   });
   const pump = async () => {
     while (polling) {
@@ -225,14 +230,19 @@ const APIKEY = 'test-public-key-0123456789';
         let list = [];
         try { list = JSON.parse(out.trim() || '[]'); } catch (e) {}
         list.forEach(r => {
+          if (passed.has(r.id)) { return; }
+          passed.add(r.id);
+          const late = r.id < lastId;
           lastId = Math.max(lastId, r.id);
+          const to = [];
           conns.forEach(c => {
             const t = 'realtime:' + r.topic;
             if (r.private && c.subs[t]) {
-              rt.delivered++;
+              rt.delivered++; to.push(nameOf(c.subs[t].uid));
               wsSend(c, JSON.stringify({ event: 'broadcast', topic: t, payload: { event: r.event, payload: r.payload, type: 'broadcast', meta: { id: String(r.id) } }, ref: null }));
             }
           });
+          rt.log.push(((Date.now() - T0) / 1000).toFixed(2) + ' #' + r.id + (late ? ' (committed after #' + lastId + ')' : '') + ' ' + r.event + ' on …' + String(r.topic).slice(-6) + ' to ' + (to.join(',') || 'no one'));
         });
       }
       await new Promise(r => setTimeout(r, 100));
@@ -252,7 +262,15 @@ const APIKEY = 'test-public-key-0123456789';
       await ctx.addInitScript(([k, v]) => { try { if (!localStorage.getItem(k)) { localStorage.setItem(k, v); } } catch (e) {} },
         ['sat-sprint-account', JSON.stringify({ uid: who.id, email: who.email, at: s.at, rt: s.rt, exp: Date.now() + 3600e3, rev: null, dirty: false })]);
     }
-    const p = await ctx.newPage(), d = { p, name, ctx };
+    const p = await ctx.newPage(), d = { p, name, ctx, frames: [] };
+    /* what this page's Realtime socket received and sent (not heartbeats), to explain a failed step */
+    const at = () => ((Date.now() - T0) / 1000).toFixed(2);
+    p.on('websocket', ws => {
+      d.frames.push(at() + ' open');
+      ws.on('framereceived', f => { const t = String(f.payload); if (!/"topic":"phoenix"/.test(t)) { d.frames.push(at() + ' in  ' + t.slice(0, 150)); } });
+      ws.on('framesent', f => { const t = String(f.payload); if (!/"topic":"phoenix"/.test(t)) { d.frames.push(at() + ' out ' + t.replace(/"access_token":"[^"]*"/, '"access_token":"…"').slice(0, 150)); } });
+      ws.on('close', () => d.frames.push(at() + ' close'));
+    });
     if (opts && opts.clock) { await p.clock.install(); }
     p.on('console', m => { if (m.type() === 'error' && !/ERR_|fonts\.g|Failed to load resource/i.test(m.text())) { errors.push(name + ' console: ' + m.text()); } });
     p.on('pageerror', e => errors.push(name + ' pageerror: ' + e.message));
@@ -266,7 +284,7 @@ const APIKEY = 'test-public-key-0123456789';
     d.here = () => p.evaluate(() => Array.from(document.querySelectorAll('.live-who .live-row b')).map(b => b.textContent.replace(' (you)', '')).sort().join(','));
     d.figs = () => p.evaluate(() => document.querySelectorAll('#visit-box .live-fig').length);
     /* open the options for someone in the room (unless they are open already) */
-    d.opts = async nick => { const b = await p.$('#live-slot [data-live-open][aria-label$=" ' + nick + '"]'); if (b && (await b.getAttribute('aria-expanded')) !== 'true') { await b.click(); } };
+    d.opts = async nick => { const b = p.locator('#live-slot [data-live-open][aria-label$=" ' + nick + '"]'); if ((await b.count()) && (await b.getAttribute('aria-expanded')) !== 'true') { await b.click(); } };
     d.pidOf = nick => p.evaluate(n => { const b = document.querySelector('#live-slot [data-live-open][aria-label$=" ' + n + '"]'); return b ? b.getAttribute('data-live-open') : ''; }, nick);
     d.fig = pid => p.evaluate(id => { const f = document.querySelector('#visit-box .live-fig[data-live-pid="' + id + '"]'); return f ? { x: parseFloat(f.style.left), y: parseFloat(f.style.top), bub: (f.querySelector('.live-bub:not([hidden])') || {}).textContent || '', pop: (f.querySelector('.live-pop') || {}).textContent || '' } : null; }, pid);
     d.news = () => p.evaluate(() => (document.querySelector('.live-news') || {}).textContent || '');
@@ -420,35 +438,44 @@ const APIKEY = 'test-public-key-0123456789';
   ok(await D.until(() => !!document.querySelector('#live-slot [data-live-join]')), 'once it is saved, Join live is there');
 
   /* ---------- five quiet minutes, and a hidden tab (a device whose clock the check can move) ---------- */
+  /* the server's side of what a page did: its call may still be on its way when the page already shows it */
+  const soon = async (fn, ms) => { const end = Date.now() + (ms || 8000); for (;;) { const v = fn(); if (v || Date.now() > end) { return v; } await new Promise(r => setTimeout(r, 150)); } };
+  const reedIn = () => inRoom().split(',').includes('Reed');
   const E = await device(reed, { clock: true });
   await E.open('r-' + link);
   ok(await E.join(), 'Reed joins on another device');
   await E.p.clock.fastForward('05:40');
   ok(await E.until(() => /You left the live room after 5 quiet minutes/.test(document.querySelector('#live-slot').textContent), null, 8000), 'after 5 quiet minutes the page leaves the room by itself');
-  ok(!inRoom().includes('Reed'), 'and the server has Reed out of the room');
+  ok(await soon(() => !reedIn()), 'and the server has Reed out of the room');
   ok(await E.until(() => !!document.querySelector('#live-slot [data-live-join]')), 'Join again is offered');
+  const reedBack = (Date.now() - T0) / 1000;
   ok(await E.join(), 'Reed joins again');
   await E.p.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => true }); document.dispatchEvent(new Event('visibilitychange')); });
   await E.p.clock.fastForward('01:05');
-  ok(await new Promise(r => setTimeout(r, 1500, true)) && !inRoom().includes('Reed'), 'a tab hidden for a minute leaves the room');
+  ok(await soon(() => !reedIn()), 'a tab hidden for a minute leaves the room');
   await E.p.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => false }); document.dispatchEvent(new Event('visibilitychange')); });
-  ok(await E.until(() => !!document.querySelector('#live-slot [data-live-leave]'), null, 8000) && inRoom().includes('Reed'), 'and comes back in by itself when the tab is shown again');
+  ok(await E.until(() => !!document.querySelector('#live-slot [data-live-leave]'), null, 8000) && reedIn(), 'and comes back in by itself when the tab is shown again');
+  /* Pine's page hears that someone came in, and asks the server who it is */
+  ok(await B.until(() => /Reed/.test((document.querySelector('.live-who') || {}).textContent || ''), null, 8000), 'Pine sees Reed come back');
   const calls = () => log.filter(l => /club_live_(leave|ping|join)/.test(l)).slice(-8).join(' | ');
   /* give the tab its real hidden flag back: closing it makes it hidden, as in a browser */
   await E.p.evaluate(() => { delete document.hidden; });
   const closedAt = ((Date.now() - T0) / 1000).toFixed(2), msgs0 = Number(sql('select coalesce(max(id), 0) from realtime.messages'));
   await E.p.close({ runBeforeUnload: true });
-  const reedGone = await B.until(() => !/Reed/.test(document.querySelector('.live-who').textContent), null, 8000), pineList = await B.text('.live-who');
-  ok(reedGone && !inRoom().includes('Reed'),
-    'closing the tab leaves the room at once, and the others see Reed go', () => 'closed @' + closedAt + '; in the room: ' + inRoom() + '; Pine’s list: ' + pineList + '; last calls: ' + calls() +
-      '; sent since: ' + sql("select string_agg(event || ' ' || payload::text, '; ' order by id) from realtime.messages where id > " + msgs0 + " and event <> 'probe'"));
+  const reedGone = await B.until(() => { const w = document.querySelector('.live-who'); return !!w && !/Reed/.test(w.textContent); }, null, 8000);
+  const outOfRoom = await soon(() => !reedIn());
+  const pineNow = await B.p.evaluate(() => { const w = document.querySelector('.live-who'); return w ? 'the list: ' + w.textContent : 'no list, the panel: ' + ((document.querySelector('#live-slot') || {}).textContent || '').slice(0, 120); });
+  ok(reedGone && outOfRoom,
+    'closing the tab leaves the room at once, and the others see Reed go', () => 'closed @' + closedAt + ', now @' + ((Date.now() - T0) / 1000).toFixed(2) + '; in the room: ' + inRoom() + '; Pine’s page shows ' + pineNow + '; last calls: ' + calls() +
+      '; sent since: ' + sql("select string_agg(event || ' ' || payload::text || ' (#' || id || ', its call began @' || to_char(extract(epoch from inserted_at) - " + (T0 / 1000) + ", 'FM990.00') || ')', '; ' order by id) from realtime.messages where id > " + msgs0 + " and event <> 'probe'") +
+      '\n       Pine’s socket since Reed joined again:\n         ' + B.frames.filter(f => parseFloat(f) >= reedBack).join('\n         ') +
+      '\n       what the stand-in passed on since then:\n         ' + rt.log.filter(f => parseFloat(f) >= reedBack).join('\n         '));
 
   /* ---------- the monthly limit ---------- */
   sql('insert into public.club_live_budget (day, sent) values (public.club_day() - 1, 1000000) on conflict (day) do update set sent = excluded.sent');
   const before = Number(sql('select coalesce(max(id), 0) from realtime.messages'));
   /* Pine's last phrase was long ago, so the buttons are awake; if Pine's page checked in with the server just now, the button is gone already */
-  const study = await B.p.$('#live-slot [data-live-say="study"]');
-  if (study) { await study.click({ force: true }); }
+  const study = await B.p.locator('#live-slot [data-live-say="study"]').click({ force: true, timeout: 3000 }).then(() => true, () => false);
   ok(await B.until(() => /Live rooms are resting/.test(document.querySelector('#live-slot').textContent)), 'past the monthly limit the page says live rooms are resting');
   ok(Number(sql("select count(*) from realtime.messages where id > " + before + " and event not in ('probe', 'bye', 'moved', 'closed')")) === 0,
     'and nothing more is sent but word that someone left' + (study ? ' (Pine’s phrase was refused)' : ''),

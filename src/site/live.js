@@ -74,13 +74,16 @@
     var link = LIVE.link;
     clubSend('club_live_count', { p_link: link }, !acctIn()).then(function (r) {
       if (LIVE.link !== link || cur.view !== 'visit' || LIVE.st) { return; }
-      if (r.missing) { LIVE.known = true; LIVE.none = true; liveDraw(); return; }
-      if (r.ok && isObj(r.body)) { LIVE.known = true; LIVE.none = false; LIVE.on = !!r.body.on; LIVE.n = Number(r.body.n) || 0; liveDraw(); }
+      var was = liveNickHere();
+      if (r.missing) { LIVE.known = true; LIVE.none = true; liveRedraw(was); return; }
+      if (r.ok && isObj(r.body)) { LIVE.known = true; LIVE.none = false; LIVE.on = !!r.body.on; LIVE.n = Number(r.body.n) || 0; liveRedraw(was); }
       LIVE.countT = setTimeout(liveCount, 60000);
     });
   }
   /* the live panel shows the nickname form, so the sticker part of the page does not show a second one */
   function liveNickHere() { return LIVE.known && !LIVE.none && LIVE.on && !LIVE.st && clubOn() && !CLUB.st.blocked && !CLUB.st.nick; }
+  /* when that changes, the sticker part is drawn again too (with the whole shared room); otherwise only the live panel */
+  function liveRedraw(was) { if (liveNickHere() !== was) { clubVisitDraw(); } else { liveDraw(); } }
 
   function liveJoin(auto) {
     if (LIVE.st || !clubOn() || !LIVE.link || cur.view !== 'visit') { return; }
