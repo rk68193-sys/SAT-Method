@@ -14,6 +14,13 @@
   function mpc(a, b) { return b ? Math.round(100 * a / b) : 0; }
   function mmix(o) { return mixHTML({ Easy: o.E, Medium: o.M, Hard: o.H }); }
   function mImg(kind, q, buttons) {
+    var restored = kind === 'q' ? explanationSourceHTML('m', q.id, q.a) : '';
+    if (restored) {
+      var source = explanationFor('m', q.id, q.a).source;
+      return '<div class="ex-source-question">' + restored + '<ol class="mtx-ch">' + ['A', 'B', 'C', 'D'].map(function (k) {
+        return '<li><b>' + k + '.</b><div>' + esc(source.choices[k]) + '</div></li>';
+      }).join('') + '</ol></div>' + explanationReference('Original question as printed', mPic('q', q));
+    }
     /* The question as text when its rebuild passed the checks (math-text.js fills it in); otherwise the picture.
        buttons: the card has answer buttons, so the choices go into them. */
     if (!mtxHas(q.id)) { return mPic(kind, q); }
@@ -55,8 +62,8 @@
     if (worked.length && typeof worked[0] === 'string') { worked = [worked]; }
     var h = s ? '<details class="mstrategy"><summary>Tool choice, example and assumptions</summary><p><b>Choose:</b> ' + esc(s.choose) + '</p><p><b>Try:</b> ' + esc(s.entry) + '</p><p><b>Check:</b> ' + esc(s.check) + '</p><p class="fine">Authored teaching example; not a measured timing claim. Live SAT Desmos validation remains unavailable.</p></details>' : '';
     h += cases.map(function (c) { return '<details class="mstrategy source-case"><summary>' + esc(c.title) + '</summary><p><b>Recognize:</b> ' + esc(c.spot) + '</p><p><b>By hand:</b> ' + esc(c.hand) + '</p><p><b>Desmos:</b> ' + esc(c.calculator) + '</p><p class="mtrap"><b>Check the assumption:</b> ' + esc(c.check) + '</p><ul class="plainlist">' + c.ids.map(function (id) { return '<li>' + esc(id) + ' · <a href="m/q/' + id + '.webp" target="_blank" rel="noopener">Question</a> · <a href="m/r/' + id + '.webp" target="_blank" rel="noopener">Official solution</a></li>'; }).join('') + '</ul></details>'; }).join('');
-    h += worked.map(function (w) { return MQBY[w[0]] ? '<details class="mstrategy"><summary>Worked bank example · ' + esc(w[0]) + '</summary><p>' + esc(w[1]) + '</p>' + mImg('q', MQBY[w[0]]) + mSourceNoteHTML(w[0]) + '<details><summary>Read the original solution</summary>' + mImg('r', MQBY[w[0]]) + '</details></details>' : ''; }).join('');
-    if (!worked.length && qs.length) { h += '<details class="mstrategy"><summary>A bank example · ' + esc(qs[0].id) + '</summary>' + mImg('q', qs[0]) + mSourceNoteHTML(qs[0].id) + '<details><summary>Read the official solution</summary>' + mImg('r', qs[0]) + '</details></details>'; }
+    h += worked.map(function (w) { return MQBY[w[0]] ? '<details class="mstrategy"><summary>Worked bank example · ' + esc(w[0]) + '</summary><p>' + esc(w[1]) + '</p>' + mImg('q', MQBY[w[0]]) + mSourceNoteHTML(w[0]) + explanationHTML('m', w[0], MQBY[w[0]].a) + '<details><summary>Read the original solution</summary>' + mImg('r', MQBY[w[0]]) + '</details></details>' : ''; }).join('');
+    if (!worked.length && qs.length) { h += '<details class="mstrategy"><summary>A bank example · ' + esc(qs[0].id) + '</summary>' + mImg('q', qs[0]) + mSourceNoteHTML(qs[0].id) + explanationHTML('m', qs[0].id, qs[0].a) + '<details><summary>Read the official solution</summary>' + mImg('r', qs[0]) + '</details></details>'; }
     h += '<details class="mstrategy msourcegroup"><summary>Compare all ' + qs.length + ' source questions and solutions</summary><ul class="plainlist">' + qs.map(function (q) { return '<li>' + esc(q.id) + ' · <a href="m/q/' + q.id + '.webp" target="_blank" rel="noopener">Question</a> · <a href="m/r/' + q.id + '.webp" target="_blank" rel="noopener">Official solution</a>' + mSourceNoteHTML(q.id) + '</li>'; }).join('') + '</ul></details>';
     return mStudyRelatedHTML(t) + h;
   }
@@ -593,12 +600,14 @@
      ok is true, false, or null when no answer was given. */
   function mFeedbackHTML(q, ok, secs) {
     var T = MTY[q.t], right = q.mc ? q.a : q.a.join(' or ');
+    var authored = explanationHTML('m', q.id, q.a);
     return '<p class="mpverdict">' + (ok ? 'Correct.' : (ok === null ? 'No answer.' : 'Not this time.')) + ' <span>College Board’s answer: <b>' + esc(right) + '</b>' + (q.mc ? '' : (q.a.length > 1 ? ' (any of these is accepted)' : '')) + '</span>' + (secs != null ? ' <span class="muted">· ' + secs + ' s</span>' : '') + '</p>' +
-      (ok === false ? mWhyHTML(q.id) : '') + mFirstFeedbackHTML(q.id) +
-      '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + mDesLine(T) + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' +
+      authored + (ok === false ? mWhyHTML(q.id) : '') + mFirstFeedbackHTML(q.id) +
+      (authored ? '<details class="mstrategy ex-method"><summary>Method for this question type</summary>' : '') +
+      '<div class="mpstrat"><p class="mtag">This is a “' + esc(T.name) + '” question</p>' + mStepList(T.steps) + '<p class="mtrap"><span class="mtag bad">Watch out</span> ' + esc(T.trap) + '</p>' + mDesLine(T) + '<a class="linkbtn" href="#mt-' + q.t + '">More on this type</a></div>' + (authored ? '</details>' : '') +
       mSourceNoteHTML(q.id) +
       mPracticeMethodHTML(q) + mStudyFeedbackHTML(q.id) +
-      '<details class="mprat"' + (ok ? '' : ' open') + '><summary>College Board’s explanation</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>';
+      '<details class="mprat"' + (authored || ok ? '' : ' open') + '><summary>' + (authored ? 'Original College Board explanation' : 'College Board’s explanation') + '</summary><div class="mpq">' + mImg('r', q) + '</div><p class="mpzoom"><button class="linkbtn" type="button" data-zoom="r">See the explanation larger</button></p></details>';
   }
   function mpNextQ() {
     if (!MP) { return; }

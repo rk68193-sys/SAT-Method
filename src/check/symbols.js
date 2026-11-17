@@ -105,13 +105,13 @@ const words = html => html.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/<img[^>
 
     // before the rebuild: the v1 service worker keeps the symbol library of that time
     await p.goto(base); await p.waitForTimeout(800);
-    await p.evaluate(() => navigator.serviceWorker.ready); await p.reload(); await p.waitForTimeout(800);
+    await p.evaluate(() => navigator.serviceWorker.ready); await p.reload({ waitUntil: 'domcontentloaded' }); await p.waitForTimeout(800);
     ok(await p.evaluate(() => !!navigator.serviceWorker.controller), 'before the rebuild (' + BEFORE + '): the v1 service worker is in charge');
     await go('mq-ac472881'); await p.waitForSelector('#v-mprac .mpq .mtx[data-mtx-s="d"]', { timeout: 20000 });
 
     // after the rebuild, as the live site was: the old library is still the one the device answers with
     serve = path.join(tmp, AFTER);
-    await p.reload(); await p.waitForTimeout(1200);
+    await p.reload({ waitUntil: 'domcontentloaded' }); await p.waitForTimeout(1200);
     const libAfter = library(path.join(serve, 'm/t/_glyphs.js'));
     const piId = uses(body(path.join(serve, 'm/t', PI + '.js')).c.A).pop();
     let seen = await drawn(PI);
@@ -122,8 +122,14 @@ const words = html => html.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/<img[^>
     // this folder: stamped files, new caches
     serve = root;
     asked.length = 0;
-    await p.reload(); await p.waitForTimeout(1500);
-    await p.evaluate(() => navigator.serviceWorker.ready); await p.reload(); await p.waitForTimeout(1200);
+    // Registration checks can be throttled after a recent install. Force the update and wait for activation.
+    await p.evaluate(async () => { const r = await navigator.serviceWorker.getRegistration(); if (r) { await r.update(); } });
+    await p.waitForFunction(async () => {
+      const keys = await caches.keys();
+      return keys.includes('sat-sprint-q-v2') && !keys.includes('sat-sprint-q-v1');
+    }, null, { timeout: 20000 });
+    await p.reload({ waitUntil: 'domcontentloaded' }); await p.waitForTimeout(1500);
+    await p.evaluate(() => navigator.serviceWorker.ready); await p.reload({ waitUntil: 'domcontentloaded' }); await p.waitForTimeout(1200);
     const libNow = library(path.join(mt, '_glyphs.js'));
     const stamp = await p.evaluate(() => JSON.parse(document.getElementById('sprint-data').textContent).mathText.v);
     seen = await drawn(PI);
@@ -138,11 +144,16 @@ const words = html => html.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/<img[^>
     ok(mtAsked.length >= 3 && mtAsked.every(u => u.endsWith('.js?v=' + stamp)), 'now: the page asks for question files and the library with the stamp ' + stamp + ' (' + mtAsked.length + ' asked)');
     const keys = await p.evaluate(() => caches.keys());
     ok(!keys.some(k => /-v1$/.test(k) && !/fonts/.test(k)) && keys.includes('sat-sprint-q-v2'), 'now: the v1 caches are gone: ' + keys.join(', '));
+    // Fetch completion precedes the service worker's asynchronous cache write.
+    await p.waitForFunction(async ({id, stamp}) => {
+      const c = await caches.open('sat-sprint-q-v2');
+      return !!(await c.match('/m/t/' + id + '.js?v=' + stamp)) && !!(await c.match('/m/t/_glyphs.js?v=' + stamp));
+    }, {id: PI, stamp}, {timeout: 10000});
     const kept = await p.evaluate(() => caches.open('sat-sprint-q-v2').then(c => c.keys()).then(k => k.map(r => r.url.replace(/^https?:\/\/[^/]+/, ''))));
     ok(kept.some(u => u === '/m/t/' + PI + '.js?v=' + stamp) && kept.some(u => u === '/m/t/_glyphs.js?v=' + stamp), 'now: the device keeps the stamped files it opened');
     // a library kept from another rebuild (another stamp) is never used, and fetching this one replaces it
     await p.evaluate(v => caches.open('sat-sprint-q-v2').then(c => c.delete('/m/t/_glyphs.js?v=' + v).then(() => c.put('/m/t/_glyphs.js?v=0000000000', new Response('SATG("");')))), stamp);
-    await p.reload(); await p.waitForTimeout(1200);
+    await p.reload({ waitUntil: 'domcontentloaded' }); await p.waitForTimeout(1200);
     seen = await drawn(PI);
     ok(right(seen, libNow) === seen.length, 'a library kept under another stamp is never used');
     const copies = await p.evaluate(() => caches.open('sat-sprint-q-v2').then(c => c.keys()).then(k => k.filter(r => /_glyphs\.js/.test(r.url)).map(r => r.url.split('?')[1])));
