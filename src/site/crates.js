@@ -8,7 +8,7 @@
     if (it.kind === 'theme') { return fxThemeMini(it.key); }
     if (it.kind === 'skin') { var av = roomGet().av.slice(); av[2] = it.id; return '<span class="pz-pic pz-pic-skin pz-t-' + it.tier + '-soft' + (big ? ' big' : '') + '" aria-hidden="true">' + budSVG(roomLook(av), { still: !big, cls: big ? 'bud-live' : 'bud-pic' }) + '</span>'; }
     if (it.kind === 'aura') { return '<span class="pz-plate pz-plate-sm' + (big ? ' big' : '') + fxStageCls(it.key) + '"><canvas class="pz-aura" data-pz-aura="' + it.key + '" aria-hidden="true"></canvas><span class="pz-badge">' + PZ_FLAME + '12</span></span>'; }
-    if (it.kind === 'streak') { return '<span class="pz-pic pz-pic-streak">' + fxStreakIcon(it.key, { plant: 1, tree: 1, rainbow: 1, lotus: 1, ouroboros: 1, marquee: 1 }[it.key] ? 100 : 30) + '</span>'; }
+    if (it.kind === 'streak') { return '<span class="pz-pic pz-pic-streak">' + fxStreakIcon(it.key, { plant: 1, tree: 1, rainbow: 1, lotus: 1, ouroboros: 1, marquee: 1, hearts: 1, xp: 1, banner: 1, tower: 1, sword: 1, owl: 1 }[it.key] ? 100 : 30) + '</span>'; }
     if (it.kind === 'paper') { return '<span class="pz-pic pz-pt pz-pt-' + it.key + '" aria-hidden="true"></span>'; }
     return '<span class="pz-pic pz-pic-fx pz-t-' + it.tier + '-soft" aria-hidden="true"><span class="pz-ans"><b>B</b>Correct</span></span>';
   }

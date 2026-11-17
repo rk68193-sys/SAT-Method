@@ -174,6 +174,27 @@ PRIZE = {
  'prize-mycelium': dict(COMMON_DARK, paper='#07080F', card='#0F1220', sunk='#161A2C', ink='#ECFDF5', ink2='#C7E9DD', muted='#93B3A8', line='#1C2236', line_strong='#2D3550',
    pencil='#5EEAD4', pencil_text='#99F6E4', hl='#13323A', hl_ink='#E6FFFA', act='#F0ABFC', act_ink='#2A0730', act_hover='#E879F9', focus='#99F6E4',
    d1='#1C2236', d2='#0F766E', d3='#99F6E4', grad='linear-gradient(120deg, #99F6E4 0%, #A5F3FC 40%, #F0ABFC 100%)', on_grad='#2A0730', aura='rgba(94, 234, 212, .26)'),
+ # Royal Court: a manuscript page, a cathedral at evening
+ 'prize-vellum': dict(COMMON_LIGHT, paper='#FBF5E6', card='#FFFDF7', sunk='#F3EAD3', ink='#2A1B0E', ink2='#4A3724', muted='#6B5640', line='#E8DCC0', line_strong='#CDB98D',
+   pencil='#B91C1C', pencil_text='#991B1B', hl='#FBE3D0', hl_ink='#431407', act='#1E3A8A', act_ink='#FFFFFF', act_hover='#1E40AF', focus='#B91C1C',
+   d1='#EADFC4', d2='#C9A85C', d3='#7C2D12', grad='linear-gradient(135deg, #7F1D1D 0%, #991B1B 50%, #1E3A8A 100%)', on_grad='#FFFFFF', aura='rgba(217, 119, 6, .2)'),
+ 'prize-vespers': dict(COMMON_DARK, paper='#0E0A0C', card='#191215', sunk='#231A1E', ink='#FBF3EA', ink2='#E6D5C8', muted='#B49C90', line='#2E2126', line_strong='#4A353D',
+   pencil='#FCA5A5', pencil_text='#FECACA', hl='#3F1420', hl_ink='#FFF1F2', act='#FCD34D', act_ink='#1C1303', act_hover='#FBBF24', focus='#FECACA',
+   d1='#2E2126', d2='#9F1239', d3='#FDE68A', grad='linear-gradient(120deg, #FDE68A 0%, #FCA5A5 50%, #93C5FD 100%)', on_grad='#1C1303', aura='rgba(252, 211, 77, .24)'),
+ # 8-Bit: a handheld's green screen, a dungeon, the last castle in a storm
+ 'prize-pocket': dict(COMMON_LIGHT, paper='#DCE8B8', card='#EEF5D2', sunk='#CADBA0', ink='#12260F', ink2='#27401F', muted='#3B5229', line='#BFD193', line_strong='#93AD62',
+   pencil='#2F5D1E', pencil_text='#1F4514', hl='#C2D98A', hl_ink='#0F2A0A', act='#1F4514', act_ink='#EEF5D2', act_hover='#17360E', focus='#2F5D1E',
+   d1='#C6D99A', d2='#7FA04A', d3='#1F4514', grad='linear-gradient(135deg, #17360E 0%, #1F4514 55%, #2F5D1E 100%)', on_grad='#EEF5D2', aura='rgba(47, 93, 30, .2)', ok='#166534'),
+ 'prize-dungeon': dict(COMMON_DARK, paper='#0C0A14', card='#151226', sunk='#1D1934', ink='#F1EEFF', ink2='#D5CFF0', muted='#A198C4', line='#272145', line_strong='#3D3468',
+   pencil='#FB923C', pencil_text='#FDBA74', hl='#3D2410', hl_ink='#FFF1E0', act='#FBBF24', act_ink='#1A1203', act_hover='#F59E0B', focus='#FDBA74',
+   d1='#272145', d2='#B45309', d3='#FDE68A', grad='linear-gradient(120deg, #FDE68A 0%, #FB923C 50%, #A78BFA 100%)', on_grad='#1A1203', aura='rgba(251, 146, 60, .26)'),
+ 'prize-stormkeep': dict(COMMON_DARK, paper='#080A16', card='#101428', sunk='#171C38', ink='#EEF2FF', ink2='#CBD3F0', muted='#96A0C8', line='#1E2548', line_strong='#313B6C',
+   pencil='#F87171', pencil_text='#FCA5A5', hl='#3B1220', hl_ink='#FFF1F2', act='#A5B4FC', act_ink='#0B0E24', act_hover='#818CF8', focus='#FCA5A5',
+   d1='#1E2548', d2='#B91C1C', d3='#C7D2FE', grad='linear-gradient(120deg, #C7D2FE 0%, #A5B4FC 45%, #F87171 100%)', on_grad='#0B0E24', aura='rgba(165, 180, 252, .26)'),
+ # Radiant: a library at midnight, lamp-gold on old wood
+ 'prize-stacks': dict(COMMON_DARK, paper='#0F0A07', card='#1A120C', sunk='#241910', ink='#FBF4E6', ink2='#E8D9BF', muted='#B8A283', line='#30210F', line_strong='#4D371C',
+   pencil='#5EEAD4', pencil_text='#99F6E4', hl='#123A36', hl_ink='#E6FFFA', act='#F5B547', act_ink='#1C1204', act_hover='#E89F2A', focus='#99F6E4',
+   d1='#30210F', d2='#B7791F', d3='#FDE3A7', grad='linear-gradient(120deg, #FDE3A7 0%, #F5B547 50%, #5EEAD4 100%)', on_grad='#1C1204', aura='rgba(245, 181, 71, .26)'),
 }
 def finish(d):
     """fill the shadow and glass tokens the prize palettes leave out, from the light or dark theme they build on"""
