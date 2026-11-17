@@ -123,6 +123,9 @@ const norm=s=>s.replace(/\*\*/g,'').replace(/\s+/g,' ').trim();
     const review=m.locator(subject==='rw'?'#rm-revcard':'#v-mprac');
     await review.locator('[data-explanation]').waitFor();
     assert.ok((await review.innerText()).includes('MODULE TEST EXPLANATION'),'finished-module review');
+    // Finishing the first module also queues the welcome reward. Let that
+    // save complete before measuring selection-only behavior in the next module.
+    await m.waitForFunction(key=>{const s=JSON.parse(localStorage.getItem(key));return !!(s&&s.s&&s.s.pz&&s.s.pz.g&&s.s.pz.g.welcome);},KEY);
   }
   await mc.close();
   // Two widths beyond the main pass, then large text with the dark theme.
