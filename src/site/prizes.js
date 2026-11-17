@@ -7,7 +7,8 @@
        g  free crates: <key> -> [time, series or '' for any, lowest tier, why]   ('welcome', 'ms7.<day>', 'ms30.<day>', 'ms100.<day>', 'page.<series>', 'test.<date>')
        fz days a streak freeze covered: '2026-11-14' 1
        st stickers found: <sticker> 1
-       eq what this device has on: { fx, aura, paper, streak, title }   (the theme is the Appearance setting)
+       eq what this device has on: { fx, aura, paper, streak, title }   (the theme is the Appearance setting; the skin is the
+          character's, kept with the room in store.s.room.av, so every device and the study buddy wear the same one)
      Keys use only letters, digits, '.', '-' and '_', the names a backup file may hold (BK_KEY in data.js).
      e, x and st join by the larger value; o, g and fz by union; eq keeps this device's. The balance is e minus x, never stored.
      Signed in to an account in the clubhouse (club.js), the server keeps e, x, o, g, fz and st instead, in the same shape:
@@ -18,8 +19,8 @@
   var PZ_ODDS = { c: 59.9, r: 27, e: 10, l: 2.5, m: 0.5, z: 0.1 };
   var PZ_PRICE = 50, PZ_FREEZE = 30, PZ_FREEZE_MAX = 2, PZ_DUPE = 20, PZ_PITY = 10, PZ_HOME = 3;
   var PZ_EARN = { qotd: 10, plan: 20, rev: 5, revMax: 4 };
-  var PZ_KIND = { theme: 'Theme', fx: 'Right-answer effect', aura: 'Aura', paper: 'Paper', streak: 'Streak style' };
-  var PZ_SLOTS = [['theme', 'Themes'], ['fx', 'Right-answer effects'], ['aura', 'Auras'], ['paper', 'Paper'], ['streak', 'Streak styles']];
+  var PZ_KIND = { theme: 'Theme', fx: 'Right-answer effect', aura: 'Aura', paper: 'Paper', streak: 'Streak style', skin: 'Character skin' };
+  var PZ_SLOTS = [['skin', 'Character skins'], ['theme', 'Themes'], ['fx', 'Right-answer effects'], ['aura', 'Auras'], ['paper', 'Paper'], ['streak', 'Streak styles']];
   var PZ_SERIES = [
     ['pencil', 'Pencil Case', 'Always in stock. Stationery basics.'],
     ['varsity', 'Varsity Locker', 'School spirit, classrooms and math on the board.'],
@@ -38,6 +39,7 @@
     ['forecast', 'Forecast', 'Every kind of weather: drizzle and gusts, a sun shower, a twister and a towering storm cloud.'],
     ['wilds', 'Wildlands', 'Wild places: a campfire, a volcano, a murmuration of starlings, a summer meadow and balloons, a lily pond, dunes at night and a frozen lake.'],
     ['curio', 'Curiosities', 'Strange and wonderful things: a fortune teller’s crystal ball, a chest with teeth, a slot machine, an anglerfish, a sealed door, giants on the horizon and two dying stars.'],
+    ['dress', 'Dress-Up', 'Skins for your character and your study buddy: cozy pajamas, a frog hood, a knight, a ninja, a wizard, a dragon and some that glow.'],
     ['test', 'Test Day', 'Opens in the last week before the test date in your plan. Epic or better.']
   ];
   /* [id, name, tier, kind, series, what it does]; a theme's id is its Appearance value. The Radiant prizes are in no series
@@ -257,7 +259,24 @@
     ['tally', 'Tally marks', 'c', 'streak', 'curio', 'One chalk mark a day in bundles of five, the newest drawing itself in; past 20 days they turn gold and shimmer, and at 100 a gold star joins them.'],
     ['chain', 'Paper chain', 'r', 'streak', 'curio', 'A folded paper link for every week, up to eight, swinging in a wave; it glitters at 30 days and is edged in gold at 100.'],
     ['marquee', 'Marquee', 'e', 'streak', 'curio', 'A little theater sign with a flickering flame, ringed by bulbs, one lit each day; when all are lit they chase, gold at 30 days, every color at 100.'],
-    ['ouroboros', 'Ouroboros', 'm', 'streak', 'curio', 'A serpent that curls further round each day, slithering, tongue flicking; it holds its own tail and glows at 30 days, and at 100 turns, shining in every color.']
+    ['ouroboros', 'Ouroboros', 'm', 'streak', 'curio', 'A serpent that curls further round each day, slithering, tongue flicking; it holds its own tail and glows at 30 days, and at 100 turns, shining in every color.'],
+    /* Dress-Up: skins for the student's character in My room and for the study buddy (buddy.js draws them, pal.js walks along) */
+    ['pjs', 'Sleepyhead', 'c', 'skin', 'dress', 'Starry pajamas, a long nightcap and slippers, in a glow of moonlight with sleepy Zs floating up. Dozes off when things get quiet, then wakes with a start.'],
+    ['doodle', 'Doodle', 'c', 'skin', 'dress', 'A notebook-paper hoodie, a folded paper hat and a big pencil, with doodles that draw themselves and a paper plane looping overhead. Silly, and always drawing.'],
+    ['rain', 'Raincoat', 'c', 'skin', 'dress', 'A shiny raincoat, a rain hat and rubber boots, under a little cloud that drizzles, with a rainbow behind and a puddle that ripples. Sunny in any weather.'],
+    ['sprout', 'Sprout', 'c', 'skin', 'dress', 'A leafy hood with a sprout on top that sways, flowers at your feet and leaves drifting down in warm sunlight. Gentle, and grows a little every day.'],
+    ['ghost', 'Ghostie', 'r', 'skin', 'dress', 'A hooded spirit cloak that floats instead of walking, with little ghost flames for friends. Fades away when you tap it, then pops back with a giggle.'],
+    ['bits', 'Pixel Pal', 'r', 'skin', 'dress', 'Pixel headphones and shades, a pixel heart, a glowing grid to stand on, and hearts, coins and +1s floating up. Competitive and goofy.'],
+    ['frog', 'Froggy', 'r', 'skin', 'dress', 'A frog hood with big eyes that blink and webbed feet, on a lily pad with a lotus, bubbles and a fly buzzing round. Bouncy and easily excited.'],
+    ['knight', 'Knight', 'r', 'skin', 'dress', 'Shining armor, a helmet with a plume, a shield, a cape and a banner that waves. Brave, loyal and here to guard your streak.'],
+    ['robo', 'Robo', 'e', 'skin', 'dress', 'A robot suit with a visor helmet, a glowing core and jet boots, inside a turning hologram. Scans you, beeps hello and does the robot dance.'],
+    ['gloop', 'Gloop', 'e', 'skin', 'dress', 'A suit of shiny jelly with bubbles rising inside, a drippy hood with a little slime friend on top, and two more slimes bouncing in a puddle. Wobbles all over when you tap it.'],
+    ['ninja', 'Ninja', 'e', 'skin', 'dress', 'A dark outfit with a scarf, sash and headband in your color, a sword on the back, bamboo, a full moon and leaves whirling round. Vanishes in a puff of smoke.'],
+    ['dragon', 'Dragon', 'l', 'skin', 'dress', 'A dragon-head hood, scale armor, wings and a tail, standing in a fire that never goes out. Breathes a blast of fire and keeps trying to fly.'],
+    ['wizard', 'Wizard', 'l', 'skin', 'dress', 'A tall hat with a floppy tip, a starry robe, a staff with a glowing orb and a spellbook that turns its own pages, between two magic circles. Casts a spell when you tap it.'],
+    ['cosmo', 'Starborn', 'm', 'skin', 'dress', 'Hair like a galaxy, a robe and cape of night sky, star rings, constellations that draw themselves and a little planet in orbit. Spins up a galaxy when it is happy.'],
+    ['frost', 'Frostfall', 'm', 'skin', 'dress', 'Snow-white hair and a crown of ice, a crystal breastplate and a fur-trimmed cape, under northern lights, with a giant snowflake turning behind and ice circling round. Freezes the air when it is proud of you.'],
+    ['dawn', 'Daybreak', 'z', 'skin', 'any', 'White-gold armor with a sun on the chest, a winged crown and wings of light, in turning rays and rings of gold. Its light bursts out when it is proud of you.']
   ].map(function (r) { return { id: r[3] + ':' + r[0], key: r[0], name: r[1], tier: r[2], kind: r[3], series: r[4], what: r[5] }; });
   var PZ_BY = {}, PZ_SER = {};
   PZ_ITEMS.forEach(function (it) { PZ_BY[it.id] = it; });
@@ -291,6 +310,7 @@
     forecast: ['Brainstorm', 'Rain or Shine', 'Silver Lining', 'Weather the Storm', 'Cloud Nine', 'Hot Streak', 'Sunny Outlook', 'Eye of the Storm'],
     wilds: ['Trailblazer', 'Campfire Scholar', 'Storm Chaser', 'Head in the Clouds', 'Still Waters', 'Lava Brain', 'Ice Cold Focus', 'Desert Bloom'],
     curio: ['Lucky Seven', 'Chain Reaction', 'Odd One Out', 'Treasure Hunter', 'Curious Mind', 'Plot Twist', 'Open Sesame', 'Tally Ho'],
+    dress: ['Suit Up', 'Quick Change', 'Best Dressed', 'Style Points', 'Mirror Check', 'New Look', 'Costume Party', 'Dress Rehearsal'],
     test: ['Test Day Ready', 'Pencils Down', 'Calm Breath', 'Full Tank', 'Perfect Score', 'Poem Decoder', 'Trap Spotter', 'Unit Circle Survivor']
   };
   var PZ_TITLES = [
@@ -502,15 +522,21 @@
   function pzEquip(slot, id) {
     var P = pz();
     if (id && slot !== 'title' && !pzOwns(id)) { return; }
+    /* a skin is the character's, so it goes on in the room's record (room.js), which the study buddy wears too */
+    if (slot === 'skin') { roomWear(id || ''); return; }
     if (slot === 'theme') { setTheme(id ? PZ_BY[id].key : 'auto'); }
     else { if (id) { P.eq[slot] = id; } else { delete P.eq[slot]; } save(); }
     fxApply();
   }
-  function pzWorn(slot) { if (slot === 'theme') { var t = getTheme(), it = PZ_BY['theme:' + t]; return it ? it.id : ''; } var id = pz().eq[slot]; return id && pzOwns(id) ? id : ''; }
+  function pzWorn(slot) {
+    if (slot === 'theme') { var t = getTheme(), it = PZ_BY['theme:' + t]; return it ? it.id : ''; }
+    if (slot === 'skin') { return roomGet().av[2]; }
+    var id = pz().eq[slot]; return id && pzOwns(id) ? id : '';
+  }
   /* owned prize themes, for the Appearance menu (home.js) */
   function pzThemeRows() { var own = pzOwned(); return PZ_ITEMS.filter(function (it) { return it.kind === 'theme' && own[it.id]; }).map(function (it) { var p = fxThemeSwatch(it.key); return [it.key, it.name, PZ_TIER[it.tier] + ' prize', p]; }); }
-  /* the right answer was just shown: play the effect the student has on */
-  function pzRight(el) { if (!el) { return; } var id = pzWorn('fx'); if (id) { fxRight(PZ_BY[id].key, el); } }
+  /* the right answer was just shown: play the effect the student has on, and the study buddy cheers (pal.js) */
+  function pzRight(el) { if (!el) { return; } var id = pzWorn('fx'); if (id) { fxRight(PZ_BY[id].key, el); } palSaw(true); }
   /* Home's streak number, on its aura plate, with the streak style and the title on show */
   function pzStreakNum(html, s) {
     var aura = pzWorn('aura'), st = pzWorn('streak'), title = pzShownTitle(), icon = st ? fxStreakIcon(PZ_BY[st].key, s.n) : '';

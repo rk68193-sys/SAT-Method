@@ -18,6 +18,8 @@
   /* every place that saves an answer calls this: the question's repeat is scheduled and the day is counted */
   function noteAnswer(subj, id, ok) {
     srNote(subj, id, ok);
+    /* a right answer is cheered where it is shown (pzRight); a miss here */
+    if (!ok) { palSaw(false); }
     /* the answer is already saved, so a day log that is built just now has counted it */
     var built = isObj(store.s.days), d = daysAll();
     if (built) { dayBump(d, Date.now(), subj === 'm' ? 0 : 1); }

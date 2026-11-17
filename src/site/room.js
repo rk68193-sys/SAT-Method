@@ -5,10 +5,11 @@
        walls   a theme, which paints the walls and floor      window  a paper as the view outside (with no paper, a living
        s0-s2   three display stands: an aura or an effect             theme's scene, or the sky)
        shelf   up to 3 streak styles, as trophies              board   up to 6 stickers
-       plate   the student's name and a title                  me      their figure: a color and a hat
-       desk    a calendar with the streak, changed only by practice
+       plate   the student's name and a title                  me      their character (buddy.js): a boy or a girl, a skin tone,
+       desk    a calendar with the streak, changed only by practice    a hair color, a color, and a hat or a skin
      store.s.room, once saved: { v: 1, t: when, w: theme id, win: paper id, st: [3 ids], sh: [ids], bd: [sticker ids], tl: title
-     id, av: [color, hat] }, with ids as in PZ_BY and '' for an empty spot. The name on the plate is store.s.chn, the name the
+     id, av: [color, hat, skin id, 'b' or 'g', skin tone, hair color] }, with ids as in PZ_BY and '' for an empty spot. A record
+     with a: 1 holds only av (a skin put on from the Crates page): the rest of that room still fills itself as an unsaved one does. The name on the plate is store.s.chn, the name the
      student signs challenges with. Until the first save the room is made from what the student has on and their rarest
      prizes (roomStart), so it fills up as they win more. roomRoomHTML draws a room from the record alone, so a friend's shared
      room is drawn the same way (clubVisit). */
@@ -21,6 +22,8 @@
   /* the walls with no prize theme on them */
   var ROOM_CLASSIC = { paper: '#F3EEE4', card: '#FFFDF8', ink: '#2B2522', line: '#E2D8C6', act: '#6D28D9', act_ink: '#FFFFFF', ok: '#15803D', ok_soft: '#DCFCE7' };
   var ROOM = { edit: false, draft: null, spot: '', said: '' };
+  /* the character before anything is picked: violet, no hat, no skin, a boy, the second skin tone, dark brown hair */
+  var ROOM_AV = ['violet', '', '', 'b', 't2', 'dark'];
 
   function roomSpotName(id) { var s = ROOM_SPOTS.filter(function (x) { return x[0] === id; })[0]; return s ? s[1] : ''; }
   function roomColor(id) { return ROOM_COLORS.filter(function (c) { return c[0] === id; })[0] || ROOM_COLORS[0]; }
@@ -50,8 +53,20 @@
     add(sh, ROOM_SHELF, pzWorn('streak'));
     roomOwn(['streak']).forEach(function (it) { add(sh, ROOM_SHELF, it.id); });
     while (st.length < ROOM_STANDS) { st.push(''); }
-    return { w: pzWorn('theme'), win: pzWorn('paper'), st: st, sh: sh, bd: roomStickers().slice(0, ROOM_BOARD), tl: pz().eq.title || '', av: ['violet', ''] };
+    return { w: pzWorn('theme'), win: pzWorn('paper'), st: st, sh: sh, bd: roomStickers().slice(0, ROOM_BOARD), tl: pz().eq.title || '', av: ROOM_AV.slice() };
   }
+  /* a look kept to what can be drawn; own (this student's prizes) keeps a skin they do not have off. A friend's look comes from
+     the server, which has already checked theirs. */
+  function roomAvClean(av, own) {
+    av = Array.isArray(av) ? av : [];
+    var sk = typeof av[2] === 'string' ? PZ_BY[av[2]] : null;
+    function one(list, id, d) { return list.some(function (x) { return x[0] === id; }) ? id : d; }
+    return [roomColor(av[0])[0], roomHat(av[1])[0], sk && sk.kind === 'skin' && (!own || own[sk.id]) ? sk.id : '', av[3] === 'g' ? 'g' : 'b', one(BUD_TONES, av[4], ROOM_AV[4]), one(BUD_HAIRS, av[5], ROOM_AV[5])];
+  }
+  /* the same look with no skin and the given hat: the pictures on the hat tiles */
+  function roomPlain(av, hat) { return [av[0], hat, '', av[3], av[4], av[5]]; }
+  /* the look as buddy.js takes it */
+  function roomLook(av) { var sk = av[2] ? PZ_BY[av[2]] : null; return { c: roomColor(av[0])[2], h: av[1], s: sk ? sk.key : '', g: av[3], t: av[4], r: av[5] }; }
   /* only what this device owns: a saved room keeps working after a prize is gone, with that spot empty */
   function roomClean(r) {
     r = isObj(r) ? r : {};
@@ -59,24 +74,36 @@
     function item(id, kinds) { var it = typeof id === 'string' ? PZ_BY[id] : null; return it && own[id] && kinds.indexOf(it.kind) >= 0 ? id : ''; }
     function list(a, n, f) { var out = []; (Array.isArray(a) ? a : []).forEach(function (x) { var v = f(x); if (v && out.indexOf(v) < 0 && out.length < n) { out.push(v); } }); return out; }
     for (var i = 0; i < ROOM_STANDS; i++) { var id = item(Array.isArray(r.st) ? r.st[i] : '', ['aura', 'fx']); st.push(id && st.indexOf(id) < 0 ? id : ''); }
-    var av = Array.isArray(r.av) ? r.av : [];
     return {
       w: item(r.w, ['theme']), win: item(r.win, ['paper']), st: st,
       sh: list(r.sh, ROOM_SHELF, function (x) { return item(x, ['streak']); }),
       bd: list(r.bd, ROOM_BOARD, function (x) { return typeof x === 'string' && P.st[x] && pzStickerName(x) ? x : ''; }),
       tl: typeof r.tl === 'string' && roomTitleName(r.tl) ? r.tl : '',
-      av: [roomColor(av[0])[0], roomHat(av[1])[0]],
+      av: roomAvClean(r.av, own),
       nm: typeof r.nm === 'string' ? r.nm : chalMyName()
     };
   }
   function roomSaved() { return isObj(store.s.room) && store.s.room.v === 1; }
-  function roomGet() { return roomClean(roomSaved() ? store.s.room : roomStart()); }
+  function roomGet() {
+    var r = roomSaved() ? store.s.room : null, s;
+    if (r && r.a) { s = roomStart(); s.av = r.av; return roomClean(s); }
+    return roomClean(r || roomStart());
+  }
   function roomCopy(R) { return { w: R.w, win: R.win, st: R.st.slice(), sh: R.sh.slice(), bd: R.bd.slice(), tl: R.tl, av: R.av.slice(), nm: R.nm }; }
   function roomSave(R) {
     store.s.room = { v: 1, t: Date.now(), w: R.w, win: R.win, st: R.st.slice(), sh: R.sh.slice(), bd: R.bd.slice(), tl: R.tl, av: R.av.slice() };
     store.s.chn = chalName(R.nm);
     save();
     if (clubOn()) { clubRoomPush(); }
+  }
+  /* a skin put on (or taken off) from the Crates page: a saved room keeps everything else; an unsaved one keeps filling itself */
+  function roomWear(id) {
+    var R = roomGet();
+    R.av[2] = id && PZ_BY[id] && PZ_BY[id].kind === 'skin' ? id : '';
+    if (roomSaved() && !store.s.room.a) { roomSave(R); }
+    else { store.s.room = { v: 1, t: Date.now(), a: 1, av: R.av.slice() }; save(); if (clubOn()) { clubRoomPush(); } }
+    if (ROOM.draft) { ROOM.draft.av[2] = R.av[2]; }
+    palDraw();
   }
   /* two devices' rooms joined (bkMerge): the one saved last */
   function roomMerge(a, b) { if (!isObj(a)) { return b; } if (!isObj(b)) { return a; } return (b.t || 0) > (a.t || 0) ? b : a; }
@@ -93,24 +120,15 @@
     return { dark: dark, style: Object.keys(v).map(function (k) { return '--room-' + k + ':' + v[k]; }).join(';') };
   }
   function roomName(nm) { nm = chalName(nm); return nm ? nm + '’s room' : 'My room'; }
-  function roomAvatar(av) {
-    var c = roomColor(av[0])[2], hat = av[1] || '', belly = roomMix(c, '#FFFFFF', 0.55), edge = roomMix(c, '#000000', 0.38);
-    var hats = {
-      grad: '<path d="M17 17v7c0 3 6 5 13 5s13-2 13-5v-7l-13 5z" fill="#111827"/><path d="M30 5l24 8-24 8-24-8z" fill="#1F2937"/><path d="M51 13.5v12" stroke="#FACC15" stroke-width="1.6"/><circle cx="51" cy="26.5" r="2.3" fill="#FACC15"/>',
-      beanie: '<path d="M10 31c0-13 9-21 20-21s20 8 20 21z" fill="#1E3A8A"/><rect x="8" y="26" width="44" height="7" rx="3.5" fill="#F8FAFC"/><circle cx="30" cy="9" r="4.6" fill="#F8FAFC"/>',
-      phones: '<path d="M9 44C9 24 18 13 30 13s21 11 21 31" fill="none" stroke="#111827" stroke-width="3.6" stroke-linecap="round"/><rect x="3" y="36" width="10" height="16" rx="4.5" fill="#F59E0B"/><rect x="47" y="36" width="10" height="16" rx="4.5" fill="#F59E0B"/>',
-      bow: '<path d="M39 17l-11-8v16zM39 17l11-8v16z" fill="#F43F5E"/><circle cx="39" cy="17" r="3.6" fill="#BE123C"/>',
-      cap: '<path d="M11 31c0-12 8-19 19-19s19 7 19 19z" fill="#DC2626"/><path d="M38 28h19c0 3.5-3 5.5-7 5.5H36z" fill="#B91C1C"/><circle cx="30" cy="12.5" r="2.2" fill="#B91C1C"/>'
-    };
-    return '<svg class="room-av" viewBox="0 0 60 100" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><ellipse cx="30" cy="95" rx="21" ry="3.6" fill="rgba(0,0,0,.2)"/>' +
-      '<ellipse cx="7.5" cy="62" rx="4.2" ry="7.5" fill="' + c + '" stroke="' + edge + '" stroke-width="1"/><ellipse cx="52.5" cy="62" rx="4.2" ry="7.5" fill="' + c + '" stroke="' + edge + '" stroke-width="1"/>' +
-      '<ellipse cx="20" cy="91" rx="7.5" ry="3.8" fill="' + edge + '"/><ellipse cx="40" cy="91" rx="7.5" ry="3.8" fill="' + edge + '"/>' +
-      '<path d="M30 16C45 16 52 28 52 46V82Q52 90 44 90H16Q8 90 8 82V46C8 28 15 16 30 16Z" fill="' + c + '" stroke="' + edge + '" stroke-width="1.2"/>' +
-      '<ellipse cx="30" cy="68" rx="14.5" ry="15" fill="' + belly + '"/>' +
-      '<ellipse cx="22" cy="42" rx="5.4" ry="6.2" fill="#FFFFFF" stroke="' + edge + '" stroke-width=".8"/><ellipse cx="38" cy="42" rx="5.4" ry="6.2" fill="#FFFFFF" stroke="' + edge + '" stroke-width=".8"/>' +
-      '<circle cx="23" cy="43.5" r="2.8" fill="#111827"/><circle cx="39" cy="43.5" r="2.8" fill="#111827"/><circle cx="24" cy="42.3" r=".9" fill="#FFFFFF"/><circle cx="40" cy="42.3" r=".9" fill="#FFFFFF"/>' +
-      '<ellipse cx="15.5" cy="52" rx="3.6" ry="2.1" fill="#F9A8D4" opacity=".75"/><ellipse cx="44.5" cy="52" rx="3.6" ry="2.1" fill="#F9A8D4" opacity=".75"/>' +
-      '<path d="M25.5 52.5Q30 57 34.5 52.5" fill="none" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>' + (hats[hat] || '') + '</svg>';
+  /* the character, drawn by buddy.js: still in a tile or a list, and moving in the room itself (it breathes and blinks, and
+     says hi when tapped) */
+  function roomAvatar(av, o) { o = o || {}; return budSVG(roomLook(roomAvClean(av)), { still: !o.live, cls: 'room-av' + (o.live ? ' bud-live' : '') }); }
+  /* tapped in a room: one of the skin's own moves, and what it says in a bubble over its head */
+  function roomHi(spot, av) {
+    var svg = spot ? $('.room-av', spot) : null, say = spot ? $('.room-say', spot) : null, sk = av[2] ? PZ_BY[av[2]] : null, W = budWho(sk ? sk.key : ''), t = W.tap[Math.floor(Math.random() * W.tap.length)];
+    if (!svg || !t) { return; }
+    if (!FX_REDUCE) { budPlay(svg, t[0]); }
+    if (say) { say.textContent = t[1]; say.hidden = false; clearTimeout(spot.sayT); spot.sayT = setTimeout(function () { say.hidden = true; }, 3800); }
   }
   var ROOM_FLOOR = (function () {
     var s = '<svg class="room-floor" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true"><rect width="400" height="100" class="room-f1"/>';
@@ -143,7 +161,7 @@
     if (spot === 'shelf') { return R.sh.length ? R.sh.map(function (id) { return PZ_BY[id].name; }).join(', ') : 'Empty'; }
     if (spot === 'board') { return R.bd.length ? plural(R.bd.length, 'sticker') : 'No stickers yet'; }
     if (spot === 'plate') { return roomName(R.nm) + (o.title ? ', ' + o.title : ''); }
-    if (spot === 'me') { var h = roomHat(R.av[1]); return roomColor(R.av[0])[1] + (h[0] ? ', with a ' + h[1].toLowerCase() : ''); }
+    if (spot === 'me') { var sk = R.av[2] ? PZ_BY[R.av[2]] : null, h = roomHat(R.av[1]); return sk ? 'The ' + sk.name + ' skin' : roomColor(R.av[0])[1] + (h[0] ? ', with a ' + h[1].toLowerCase() : ''); }
     if (spot === 'desk') { return 'A calendar: ' + plural(o.n, 'day') + ' in a row'; }
     return '';
   }
@@ -173,7 +191,7 @@
       var inside = !x ? (o.edit ? '<span class="room-plus" aria-hidden="true">+</span>' : '') : x.kind === 'aura' ? '<canvas data-room-aura="' + x.key + '" aria-hidden="true"></canvas>' : '<span class="pz-ans room-ans"><b>B</b>Correct</span>';
       html += spot('s' + i, 'room-stand room-st' + i + (x ? '' : ' room-none'), '<span class="room-case">' + inside + '</span><span class="room-plinth">' + (x ? '<span class="room-tag"><i class="pz-t-' + x.tier + '"></i>' + esc(x.name) + '</span>' : '') + '</span>');
     }
-    html += spot('me', 'room-me', roomAvatar(R.av));
+    html += spot('me', 'room-me', roomAvatar(R.av, { live: true }) + '<span class="room-say" hidden></span>');
     return '<div class="room-room' + (V.dark ? ' room-dark' : '') + (o.edit ? ' room-edit' : '') + '" style="' + V.style + '" role="group" aria-label="' + esc(roomName(R.nm)) + '">' +
       '<span class="room-wallp" aria-hidden="true"></span><span class="room-wains" aria-hidden="true"></span><span class="room-base" aria-hidden="true"></span>' + ROOM_FLOOR + '<span class="room-rug" aria-hidden="true"></span>' + html + '</div>';
   }
@@ -215,8 +233,8 @@
     if (it.series === 'test') { return 'Won in the Test Day crate, which opens in the last week before the test date in a study plan: 1 in ' + n + '.'; }
     return ser ? 'Won in a crate. In the ' + ser.name + ' crate it is 1 in ' + n + '.' : 'Won in a crate.';
   }
-  function roomCard(it, extra) {
-    return '<div class="room-card"><div class="room-card-pic">' + pzPicture(it, true) + '</div><div class="room-card-t"><p class="room-card-k">' + esc(PZ_KIND[it.kind]) + '</p><h3 class="h3">' + esc(it.name) + '</h3>' +
+  function roomCard(it, extra, pic) {
+    return '<div class="room-card"><div class="room-card-pic">' + (pic || pzPicture(it, true)) + '</div><div class="room-card-t"><p class="room-card-k">' + esc(PZ_KIND[it.kind]) + '</p><h3 class="h3">' + esc(it.name) + '</h3>' +
       '<p class="room-card-m">' + pzTierChip(it.tier) + '</p><p>' + esc(it.what) + '</p><p class="fine">' + esc(roomHow(it)) + (extra || '') + '</p>' +
       (it.kind === 'fx' ? '<p><button class="btn ghost sm" type="button" data-room-play="' + it.key + '">Play it</button></p>' : '') + '</div></div>';
   }
@@ -246,7 +264,11 @@
       var t = roomTitles().filter(function (y) { return y.id === R.tl; })[0];
       return h + '<p><b>' + esc(roomName(R.nm)) + '</b></p>' + (t ? '<p>Title: <b>' + esc(t.name) + '</b>. Earned for this: ' + esc(t.how.charAt(0).toLowerCase() + t.how.slice(1)) + '</p>' : '<p class="fine">Titles are earned by what you do, like practicing 7 days in a row.</p>') + (mine ? '<p class="fine">Press Decorate to change your name or title.</p>' : '');
     }
-    if (spot === 'me') { return h + '<p>This is you.</p><p class="fine">' + (mine ? 'Press Decorate to pick a color and a hat.' : 'Pick a color and a hat below.') + '</p>'; }
+    if (spot === 'me') {
+      x = it(R.av[2]);
+      var W = budWho(x ? x.key : ''), tail = '<p class="fine">' + (mine ? 'Tap yourself in the room to say hi. Press Decorate to change how you look.' : 'Pick how you look below.') + '</p>';
+      return h + (x ? roomCard(x, ' Your study buddy wears it too.', '<span class="pz-pic pz-pic-skin big">' + roomAvatar(R.av) + '</span>') : '<p>This is you. Your study buddy looks the same.</p>') + '<p>Mood: ' + esc(W.mood) + '.</p>' + tail;
+    }
     if (spot === 'desk') { return h + '<p>The calendar shows your streak: <b>' + plural(o.n, 'day') + ' in a row</b>' + (o.best > o.n ? ', and ' + plural(o.best, 'day') + ' at your best' : '') + '.</p><p class="fine">' + (o.n ? 'Practice today to keep it going.' : 'Answer one question today to start a streak.') + ' <a href="#home">Open Today</a></p>'; }
     return '';
   }
@@ -257,7 +279,7 @@
     var p = ROOM_CLASSIC;
     return '<span class="pz-mini" style="background:' + p.paper + ';border-color:' + p.line + '" aria-hidden="true"><span class="pz-mini-card" style="background:' + p.card + ';border-color:' + p.line + '"><i style="background:' + p.ink + '"></i><i style="background:' + p.ink + ';width:60%"></i><b style="background:' + p.act + '"></b></span></span>';
   }
-  function roomNone(kind) { return '<p class="room-none-msg">You have no ' + kind + ' yet. They come in crates, which you open with coins you earn by studying. <a href="#crates">Open crates</a></p>'; }
+  function roomNone(kind, more) { return '<p class="room-none-msg">You have no ' + kind + ' yet. They come in crates, which you open with coins you earn by studying.' + (more || '') + ' <a href="#crates">Open crates</a></p>'; }
   function roomPickHTML(spot, R) {
     var h = '<p class="room-side-k">' + esc(roomSpotName(spot)) + '</p>', tiles = '', list;
     if (spot === 'walls') {
@@ -293,8 +315,16 @@
         '<p class="room-lbl">Title</p>' + (T.length ? '<div class="room-chips">' + [{ id: '', name: 'No title' }].concat(T).map(function (t) { return '<button type="button" class="room-chip" data-room-title="' + t.id + '" aria-pressed="' + (R.tl === t.id ? 'true' : 'false') + '">' + esc(t.name) + '</button>'; }).join('') + '</div>' : '<p class="fine">You have no titles yet. Titles are earned by what you do, like practicing 7 days in a row.</p>');
     }
     if (spot === 'me') {
-      return h + '<p class="room-lbl">Color</p><div class="room-chips">' + ROOM_COLORS.map(function (c) { return '<button type="button" class="room-sw" data-room-color="' + c[0] + '" aria-pressed="' + (R.av[0] === c[0] ? 'true' : 'false') + '" aria-label="' + c[1] + '" style="background:' + c[2] + '"></button>'; }).join('') + '</div>' +
-        '<p class="room-lbl">Hat</p><div class="room-tiles room-hats">' + ROOM_HATS.map(function (x) { return roomTile(x[0], x[1], roomAvatar([R.av[0], x[0]]), R.av[1] === x[0], '', '', 'data-room-hat'); }).join('') + '</div>';
+      var A = R.av, skins = roomOwn(['skin']);
+      function sw(attr, list, on) { return '<div class="room-chips">' + list.map(function (c) { return '<button type="button" class="room-sw" ' + attr + '="' + c[0] + '" aria-pressed="' + (on === c[0] ? 'true' : 'false') + '" aria-label="' + c[1] + '" style="background:' + c[2] + '"></button>'; }).join('') + '</div>'; }
+      return h + '<p class="room-lbl">Boy or girl</p><div class="room-chips">' + [['b', 'Boy'], ['g', 'Girl']].map(function (x) { return '<button type="button" class="room-chip" data-room-g="' + x[0] + '" aria-pressed="' + (A[3] === x[0] ? 'true' : 'false') + '">' + x[1] + '</button>'; }).join('') + '</div>' +
+        '<p class="room-lbl">Skin tone</p>' + sw('data-room-tone', BUD_TONES, A[4]) + '<p class="room-lbl">Hair</p>' + sw('data-room-hair', BUD_HAIRS, A[5]) +
+        '<p class="room-lbl">Character skin</p><div class="room-tiles room-skins">' + roomTile('', 'No skin', roomAvatar(roomPlain(A, A[1])), !A[2], '', '', 'data-room-skin') +
+        skins.map(function (it) { return roomTile(it.id, it.name, roomAvatar([A[0], '', it.id, A[3], A[4], A[5]]), A[2] === it.id, it.tier, '', 'data-room-skin'); }).join('') + '</div>' +
+        (skins.length ? '' : roomNone('character skins', ' The Dress-Up crate has the most.')) +
+        '<p class="room-lbl">Color</p>' + sw('data-room-color', ROOM_COLORS, A[0]) +
+        '<p class="room-lbl">Hat</p><p class="fine room-hatnote"' + (A[2] ? '' : ' hidden') + '>A skin comes with its own look, so a hat shows only with No skin.</p>' +
+        '<div class="room-tiles room-hats">' + ROOM_HATS.map(function (x) { return roomTile(x[0], x[1], roomAvatar(roomPlain(A, x[0])), A[1] === x[0], '', '', 'data-room-hat'); }).join('') + '</div>';
     }
     if (spot === 'desk') { return h + '<p>The calendar on the desk shows your streak. It changes when you practice, so there is nothing to pick here.</p>'; }
     return '';
@@ -353,6 +383,7 @@
     roomDrawSide();
     if (ROOM.edit) { roomShowSide(); return; }
     var m = /^s(\d)$/.exec(spot), R = roomCur(), it = m ? PZ_BY[R.st[+m[1]]] : null;
+    if (spot === 'me') { roomHi($('.room-me', viewEl.room), R.av); }
     if (it && it.kind === 'fx') { fxRight(it.key, $('.room-st' + m[1] + ' .room-ans', viewEl.room)); }
   }
   function roomPick(val) {
@@ -381,8 +412,13 @@
       if (note) { note.textContent = txt; note.hidden = !txt; }
     });
     $$('[data-room-title]', side).forEach(function (b) { b.setAttribute('aria-pressed', R.tl === b.getAttribute('data-room-title') ? 'true' : 'false'); });
-    $$('[data-room-color]', side).forEach(function (b) { b.setAttribute('aria-pressed', R.av[0] === b.getAttribute('data-room-color') ? 'true' : 'false'); });
-    $$('[data-room-hat]', side).forEach(function (b) { var h = b.getAttribute('data-room-hat'); b.setAttribute('aria-pressed', R.av[1] === h ? 'true' : 'false'); $('.room-tile-pic', b).innerHTML = roomAvatar([R.av[0], h]); });
+    var A = R.av, look = [A[0], A[3], A[4], A[5]].join(), redraw = side.getAttribute('data-room-look') !== look;
+    [['data-room-color', 0], ['data-room-g', 3], ['data-room-tone', 4], ['data-room-hair', 5]].forEach(function (k) { $$('[' + k[0] + ']', side).forEach(function (b) { b.setAttribute('aria-pressed', A[k[1]] === b.getAttribute(k[0]) ? 'true' : 'false'); }); });
+    /* the pictures on the skin and hat tiles change only when the color, boy or girl, skin tone or hair does */
+    $$('[data-room-skin]', side).forEach(function (b) { var v = b.getAttribute('data-room-skin'); b.setAttribute('aria-pressed', A[2] === v ? 'true' : 'false'); if (redraw) { $('.room-tile-pic', b).innerHTML = roomAvatar(v ? [A[0], '', v, A[3], A[4], A[5]] : roomPlain(A, A[1])); } });
+    $$('[data-room-hat]', side).forEach(function (b) { var h = b.getAttribute('data-room-hat'); b.setAttribute('aria-pressed', A[1] === h ? 'true' : 'false'); if (redraw) { $('.room-tile-pic', b).innerHTML = roomAvatar(roomPlain(A, h)); } });
+    var note = $('.room-hatnote', side); if (note) { note.hidden = !A[2]; }
+    side.setAttribute('data-room-look', look);
   }
   var roomFlashT = 0;
   function roomFlash(msg) {
@@ -398,7 +434,7 @@
       if (!t || !viewEl.room || !viewEl.room.contains(t)) { return; }
       var b, R;
       if (t.closest('#room-edit')) { ROOM.edit = true; ROOM.draft = roomCopy(roomGet()); ROOM.spot = ''; ROOM.said = ''; roomDrawAll(); focusQuiet($('#room-save', viewEl.room)); return; }
-      if (t.closest('#room-save')) { roomSave(ROOM.draft || roomGet()); ROOM.edit = false; ROOM.draft = null; ROOM.spot = ''; ROOM.said = 'Your room is saved.'; roomDrawAll(); focusQuiet($('#room-edit', viewEl.room)); return; }
+      if (t.closest('#room-save')) { roomSave(ROOM.draft || roomGet()); palDraw(); ROOM.edit = false; ROOM.draft = null; ROOM.spot = ''; ROOM.said = 'Your room is saved.'; roomDrawAll(); focusQuiet($('#room-edit', viewEl.room)); return; }
       if (t.closest('#room-cancel')) { ROOM.edit = false; ROOM.draft = null; ROOM.spot = ''; ROOM.said = ''; roomDrawAll(); focusQuiet($('#room-edit', viewEl.room)); return; }
       if (t.closest('[data-room-all]')) { ROOM.spot = ''; $$('.room-spot.room-on', viewEl.room).forEach(function (x) { x.classList.remove('room-on'); }); roomDrawSide(); focusQuiet($('.room-allb', viewEl.room)); return; }
       if ((b = t.closest('[data-room-play]'))) { var card = b.closest('.room-card'), ans = card ? $('.pz-ans', card) : null; if (ans) { fxRight(b.getAttribute('data-room-play'), ans); } return; }
@@ -412,7 +448,14 @@
       if ((b = t.closest('[data-room-pick]'))) { roomPick(b.getAttribute('data-room-pick')); return; }
       if ((b = t.closest('[data-room-title]'))) { R.tl = b.getAttribute('data-room-title'); roomDrawRoom(); roomRefresh(); return; }
       if ((b = t.closest('[data-room-color]'))) { R.av[0] = b.getAttribute('data-room-color'); roomDrawRoom(); roomRefresh(); return; }
-      if ((b = t.closest('[data-room-hat]'))) { R.av[1] = b.getAttribute('data-room-hat'); roomDrawRoom(); roomRefresh(); }
+      if ((b = t.closest('[data-room-g]'))) { R.av[3] = b.getAttribute('data-room-g'); roomDrawRoom(); roomRefresh(); return; }
+      if ((b = t.closest('[data-room-tone]'))) { R.av[4] = b.getAttribute('data-room-tone'); roomDrawRoom(); roomRefresh(); return; }
+      if ((b = t.closest('[data-room-hair]'))) { R.av[5] = b.getAttribute('data-room-hair'); roomDrawRoom(); roomRefresh(); return; }
+      if ((b = t.closest('[data-room-skin]'))) { R.av[2] = b.getAttribute('data-room-skin'); roomDrawRoom(); roomRefresh(); return; }
+      if ((b = t.closest('[data-room-hat]'))) {
+        R.av[1] = b.getAttribute('data-room-hat'); roomDrawRoom(); roomRefresh();
+        var none = $('#room-side [data-room-skin=""] .room-tile-pic', viewEl.room); if (none) { none.innerHTML = roomAvatar(roomPlain(R.av, R.av[1])); }
+      }
     });
     /* the name shows on the plate as it is typed; the room itself is not drawn again, so nothing restarts */
     document.addEventListener('input', function (e) {

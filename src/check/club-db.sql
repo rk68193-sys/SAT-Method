@@ -59,6 +59,7 @@ select (select id from public.club_catalog where series = 'pencil' and tier = 'c
        (select id from public.club_catalog where id like 'theme:%' order by id limit 1) as th1,
        (select id from public.club_catalog where id like 'paper:%' order by id limit 1) as pp1,
        (select string_agg(id, ',' order by id) from (select id from public.club_catalog where id like 'streak:%' order by id limit 4) s) as sks,
+       (select id from public.club_catalog where id like 'skin:%' order by id limit 1) as sk1,
        jsonb_array_length((:'catalog')::jsonb -> 'items') as n_items,
        (select sum(value::int) from jsonb_each_text((:'catalog')::jsonb -> 'stickers')) as n_stickers,
        (select count(*) from jsonb_object_keys((:'catalog')::jsonb -> 'stickers')) as n_pages \gset
@@ -399,21 +400,28 @@ select public.club_room_save(jsonb_build_object('w', :'th1', 'win', :'pp1', 'st'
   'tl', 'week', 'av', jsonb_build_array('Teal!', 'x'))) as a_room \gset
 reset role;
 select t.ok(((:'a_room')::jsonb -> 'layout') - 't' = jsonb_build_object('v', 1, 'w', '', 'win', '', 'st', jsonb_build_array(:'pc1', '', ''), 'sh', '[]'::jsonb,
-  'bd', '["pencil-3", "arcade-2"]'::jsonb, 'tl', 'week', 'av', '["violet", ""]'::jsonb), 'a room keeps only what its owner has won: ' || :'a_room');
+  'bd', '["pencil-3", "arcade-2"]'::jsonb, 'tl', 'week', 'av', '["violet", "", "", "b", "t2", "dark"]'::jsonb), 'a room keeps only what its owner has won: ' || :'a_room');
 select t.as_user(:'A');
 select t.ok(public.club_room_save('{"tl": "century"}') -> 'layout' ->> 'tl' = '', 'a title the server can check must be earned');
 select t.ok(public.club_room_save('{"tl": "collector"}') -> 'layout' ->> 'tl' = '', '25 prizes for the Collector');
 select t.ok(public.club_room_save('{"tl": "planner"}') -> 'layout' ->> 'tl' = 'planner', 'a title only the device can know is taken on trust');
 select t.ok(public.club_room_save('{"tl": "boss"}') -> 'layout' ->> 'tl' = '', 'a title that does not exist is dropped');
+select t.ok(public.club_room_save(jsonb_build_object('av', jsonb_build_array('teal', 'beanie', :'sk1', 'g', 't9', 'Red!'))) -> 'layout' -> 'av'
+  = '["teal", "beanie", "", "g", "t2", "dark"]', 'a character skin not won is dropped, and so are a skin tone and hair the site does not have');
+select t.ok(public.club_room_save('{"av": ["teal", "beanie", "theme:x", "boy", "t4", "red"]}') -> 'layout' -> 'av'
+  = '["teal", "beanie", "", "b", "t4", "red"]', 'only a skin can be worn, and a figure is a boy or a girl');
+select t.ok(public.club_room_save('{"av": ["pink", "bow"]}') -> 'layout' -> 'av' = '["pink", "bow", "", "b", "t2", "dark"]',
+  'a page from before character skins keeps its color and hat');
 select t.as_user(:'G');
 select public.club_room_save(jsonb_build_object('w', :'th1', 'win', :'pp1', 'st', jsonb_build_array(:'aura9', :'aura9', :'fx1'),
   'sh', to_jsonb(string_to_array(:'sks', ',')), 'bd', '["pencil-0", "pencil-1", "pencil-2", "pencil-3", "pencil-4", "pencil-5", "pencil-6"]'::jsonb,
-  'tl', 'century', 'av', '["teal", "beanie"]'::jsonb)) as g_room \gset
+  'tl', 'century', 'av', jsonb_build_array('teal', 'beanie', :'sk1', 'g', 't5', 'silver'))) as g_room \gset
 reset role;
 select t.ok((:'g_room')::jsonb -> 'layout' ->> 'w' = :'th1' and (:'g_room')::jsonb -> 'layout' ->> 'win' = :'pp1'
   and (:'g_room')::jsonb -> 'layout' -> 'st' = jsonb_build_array(:'aura9', '', :'fx1') and jsonb_array_length((:'g_room')::jsonb -> 'layout' -> 'sh') = 3
   and jsonb_array_length((:'g_room')::jsonb -> 'layout' -> 'bd') = 6 and (:'g_room')::jsonb -> 'layout' ->> 'tl' = 'century'
-  and (:'g_room')::jsonb -> 'layout' -> 'av' = '["teal", "beanie"]', 'a full room: 3 stands, 3 streak styles, 6 stickers, any title with the owner''s link');
+  and (:'g_room')::jsonb -> 'layout' -> 'av' = jsonb_build_array('teal', 'beanie', :'sk1', 'g', 't5', 'silver'),
+  'a full room: 3 stands, 3 streak styles, 6 stickers, any title and a character skin with the owner''s link');
 select t.as_user(:'E');
 select t.fails('select public.club_room_link(true)', 'choose a nickname first');
 select t.as_user(:'A');

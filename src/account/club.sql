@@ -28,11 +28,15 @@ end $$;
 
 -- ---------- the prize list and its rules, copied from satsprint.org/catalog.json ----------
 create table if not exists public.club_catalog (
-  id     text primary key check (id ~ '^(theme|fx|aura|paper|streak):[a-z0-9-]{1,40}$'),
+  id     text primary key check (id ~ '^(theme|fx|aura|paper|streak|skin):[a-z0-9-]{1,40}$'),
   tier   text not null check (tier ~ '^[a-z]$'),
   series text not null check (series ~ '^[a-z]{1,20}$'),
   active boolean not null default true          -- false once the site no longer lists it; owned copies stay
 );
+-- the kinds of prize the list may hold, set again on every run: a project made from an older copy of this file has a shorter
+-- list (no character skins), and a list with a kind the check does not know is refused whole
+alter table public.club_catalog drop constraint if exists club_catalog_id_check;
+alter table public.club_catalog add constraint club_catalog_id_check check (id ~ '^(theme|fx|aura|paper|streak|skin):[a-z0-9-]{1,40}$');
 create table if not exists public.club_rules (
   id       int primary key default 1 check (id = 1),
   rules    jsonb,            -- catalog.json without its items: odds, prices, limits, seasons, sticker pages, titles
@@ -635,7 +639,7 @@ end $$;
 create or replace function public.club_room_clean(u uuid, p jsonb) returns jsonb
 language plpgsql stable set search_path = '' as $$
 declare own text[]; stk text[]; st jsonb := '[]'::jsonb; sh jsonb := '[]'::jsonb; bd jsonb := '[]'::jsonb; x text; i int; tl text := '';
-  s record; gifted boolean; av jsonb := '["violet", ""]'::jsonb;
+  s record; gifted boolean; av jsonb := '["violet", "", "", "b", "t2", "dark"]'::jsonb;
 begin
   p := case when jsonb_typeof(p) = 'object' then p else '{}'::jsonb end;
   select coalesce(array_agg(distinct cr.item), '{}') into own from public.club_crates cr join public.club_catalog c on c.id = cr.item where cr.user_id = u;
@@ -659,8 +663,14 @@ begin
        when 'collector' then cardinality(own) >= 25
        when 'mythic' then exists (select 1 from public.club_catalog where id = any (own) and tier in ('m', 'z'))
        else true end) then tl := x; end if;
+  -- the character: a color and a hat (names the site checks again when it draws them), a character skin this student has,
+  -- boy or girl, a skin tone and a hair color
   if jsonb_typeof(p -> 'av') = 'array' and coalesce(p -> 'av' ->> 0, '') ~ '^[a-z]{1,12}$' and coalesce(p -> 'av' ->> 1, '') ~ '^[a-z]{0,12}$' then
-    av := jsonb_build_array(p -> 'av' ->> 0, coalesce(p -> 'av' ->> 1, ''));
+    av := jsonb_build_array(p -> 'av' ->> 0, coalesce(p -> 'av' ->> 1, ''),
+      case when p -> 'av' ->> 2 = any (own) and p -> 'av' ->> 2 like 'skin:%' then p -> 'av' ->> 2 else '' end,
+      case when p -> 'av' ->> 3 = 'g' then 'g' else 'b' end,
+      case when coalesce(p -> 'av' ->> 4, '') ~ '^t[1-5]$' then p -> 'av' ->> 4 else 't2' end,
+      case when coalesce(p -> 'av' ->> 5, '') ~ '^[a-z]{1,12}$' then p -> 'av' ->> 5 else 'dark' end);
   end if;
   return jsonb_build_object('v', 1, 't', public.club_ms(now()),
     'w', case when p ->> 'w' = any (own) and p ->> 'w' like 'theme:%' then p ->> 'w' else '' end,

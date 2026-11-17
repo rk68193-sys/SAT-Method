@@ -2,9 +2,11 @@
   function pzTierChip(t) { return '<span class="pz-tier pz-t-' + t + '">' + PZ_TIER[t] + '</span>'; }
   function pzOdd(it) { return '<span class="pz-one">1 in ' + pzOneIn(it).toLocaleString('en-US') + '</span>'; }
   function pzPct(v) { return v >= 10 ? v.toFixed(0) + '%' : v >= 1 ? v.toFixed(1).replace(/\.0$/, '') + '%' : v.toFixed(2).replace(/0$/, '') + '%'; }
-  /* a picture of a prize: a theme in its own colors, an aura on its plate, the others drawn small */
+  /* a picture of a prize: a theme in its own colors, an aura on its plate, a skin on the student's own character (moving when
+     big, as when it is won), the others drawn small */
   function pzPicture(it, big) {
     if (it.kind === 'theme') { return fxThemeMini(it.key); }
+    if (it.kind === 'skin') { var av = roomGet().av.slice(); av[2] = it.id; return '<span class="pz-pic pz-pic-skin pz-t-' + it.tier + '-soft' + (big ? ' big' : '') + '" aria-hidden="true">' + budSVG(roomLook(av), { still: !big, cls: big ? 'bud-live' : 'bud-pic' }) + '</span>'; }
     if (it.kind === 'aura') { return '<span class="pz-plate pz-plate-sm' + (big ? ' big' : '') + fxStageCls(it.key) + '"><canvas class="pz-aura" data-pz-aura="' + it.key + '" aria-hidden="true"></canvas><span class="pz-badge">' + PZ_FLAME + '12</span></span>'; }
     if (it.kind === 'streak') { return '<span class="pz-pic pz-pic-streak">' + fxStreakIcon(it.key, { plant: 1, tree: 1, rainbow: 1, lotus: 1, ouroboros: 1, marquee: 1 }[it.key] ? 100 : 30) + '</span>'; }
     if (it.kind === 'paper') { return '<span class="pz-pic pz-pt pz-pt-' + it.key + '" aria-hidden="true"></span>'; }
@@ -112,7 +114,12 @@
       '<button class="linkbtn pz-skip" type="button" id="pz-skip">Skip</button></div>';
     document.body.appendChild(host); pzModalOpen = true;
     var stage = $('#pz-stage', host), prize = $('#pz-prize', host), skipped = false, timers = [];
-    function show() { if (prize.classList.contains('show')) { return; } prize.classList.add('show'); $('#pz-skip', host).hidden = true; fxScan(); focusQuiet($('#pz-wear-now', host) || $('#pz-close', host)); }
+    function show() {
+      if (prize.classList.contains('show')) { return; }
+      prize.classList.add('show'); $('#pz-skip', host).hidden = true; fxScan(); focusQuiet($('#pz-wear-now', host) || $('#pz-close', host));
+      var sv = it.kind === 'skin' && !FX_REDUCE ? $('.pz-prize-pic .bud', host) : null;
+      if (sv) { timers.push(setTimeout(function () { budPlay(sv, budWho(it.key).tap[0][0]); }, 500)); }
+    }
     function close() { timers.forEach(clearTimeout); host.remove(); pzModalOpen = false; buildCrates(); }
     function skip() { if (skipped) { return; } skipped = true; timers.forEach(clearTimeout); $$('canvas.pz-rv', stage).forEach(function (n) { n.remove(); }); $('#pz-locker', host).classList.add('open'); show(); }
     host.addEventListener('click', function (e) {

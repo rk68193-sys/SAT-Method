@@ -119,7 +119,7 @@ jobs:
       matrix:
         include:
           - group: accounts, prizes, rooms, visits and challenges
-            checks: account prizes room visits challenge
+            checks: account prizes room visits challenge buddy
           - group: pages and practice
             checks: additions habit smoke nav msmoke
           - group: tracks, text and sources
@@ -143,7 +143,7 @@ jobs:
           failed=""
           for c in $CHECKS; do
             case $c in
-              symbols|suggest|skip|visits) args="index.html" ;;
+              symbols|suggest|skip|visits|buddy) args="index.html" ;;
               msmoke) args="index.html 390 light" ;;
               text) args="index.html $RUNNER_TEMP/text-dump.txt" ;;
               *) args="index.html 390" ;;

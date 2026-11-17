@@ -4,9 +4,9 @@ S = os.path.dirname(b)
 shell = open(os.path.join(b, 'shell.html'), encoding='utf-8').read()
 css = open(os.path.join(b, 'app.css'), encoding='utf-8').read()
 # prizes (prizes.js, fx.js, radiant.js, gems-weather.js, looks.js, crates.js): the prize themes, written by src/tools/themes.py --prizes, then
-# their own styles, then the room that shows them off (room.js)
-css += ''.join(open(os.path.join(b, f), encoding='utf-8').read() for f in ('prize-themes.css', 'prizes.css', 'room.css'))
-parts = ['core.js', 'grammar.js', 'reasoning.js', 'data-patterns.js', 'review-findings.js', 'reading.js', 'vocab.js', 'para.js', 'drills.js', 'practice.js', 'start.js', 'lookup.js', 'math.js', 'mfound.js', 'mfirst.js', 'math-text.js', 'math-study.js', 'math-track.js', 'module-core.js', 'math-module.js', 'msheet.js', 'rw-track.js', 'rw-module.js', 'plan.js', 'course.js', 'habit.js', 'prizes.js', 'fx.js', 'radiant.js', 'gems-weather.js', 'looks.js', 'crates.js', 'challenge.js', 'room.js', 'data.js', 'account.js', 'club.js', 'live.js', 'visits.js', 'hub.js', 'tour.js', 'help.js', 'home.js', 'boot.js']
+# their own styles, then the room that shows them off (room.js), then the character and its skins (buddy.js) and the study buddy (pal.js)
+css += ''.join(open(os.path.join(b, f), encoding='utf-8').read() for f in ('prize-themes.css', 'prizes.css', 'room.css', 'buddy.css'))
+parts = ['core.js', 'grammar.js', 'reasoning.js', 'data-patterns.js', 'review-findings.js', 'reading.js', 'vocab.js', 'para.js', 'drills.js', 'practice.js', 'start.js', 'lookup.js', 'math.js', 'mfound.js', 'mfirst.js', 'math-text.js', 'math-study.js', 'math-track.js', 'module-core.js', 'math-module.js', 'msheet.js', 'rw-track.js', 'rw-module.js', 'plan.js', 'course.js', 'habit.js', 'buddy.js', 'prizes.js', 'fx.js', 'radiant.js', 'gems-weather.js', 'looks.js', 'crates.js', 'challenge.js', 'room.js', 'data.js', 'account.js', 'club.js', 'live.js', 'visits.js', 'hub.js', 'tour.js', 'help.js', 'pal.js', 'home.js', 'boot.js']
 js = "(function () {\n  'use strict';\n" + ''.join(open(os.path.join(b, p), encoding='utf-8').read() for p in parts) + "}());\n"
 open(os.path.join(b, 'bundle.js'), 'w', encoding='utf-8').write(js)
 data = json.load(open(os.path.join(S, 'build', 'data.json'), encoding='utf-8'))
