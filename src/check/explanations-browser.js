@@ -40,6 +40,9 @@ const norm=s=>s.replace(/\*\*/g,'').replace(/\s+/g,' ').trim();
     const card=host.locator('[data-explanation="'+key+'"]');await card.waitFor();
     assert.ok(norm(await card.innerText()).includes(norm(item.paragraphs[0])),key+' exact text');
     assert.ok((await host.innerText()).includes('College Board'),key+' attribution/reference');
+    // Answering schedules the existing welcome reward after 60 ms. Wait for that
+    // answer-triggered save before measuring whether a variation changes anything.
+    await p.waitForFunction(key=>{const s=JSON.parse(localStorage.getItem(key));return !!(s&&s.s&&s.s.pz&&s.s.pz.g&&s.s.pz.g.welcome);},KEY);
     const before=await saved();
     if(item.variation){
       const v=card.locator('.ex-variation');await v.locator(':scope > summary').click();

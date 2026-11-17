@@ -26,6 +26,7 @@ const hook=`window.__exDuplicateTest={
      const answer=await p.evaluate(({id,type})=>window.__exDuplicateTest.draw(id,type),{id:g.id,type});
      await p.locator('#tcard .opt[data-k="'+answer+'"]').click();
      const card=p.locator('#tcard [data-explanation="rw:'+g.id+'"]');await card.waitFor();
+     await p.waitForFunction(key=>{const s=JSON.parse(localStorage.getItem(key));return !!(s&&s.s&&s.s.pz&&s.s.pz.g&&s.s.pz.g.welcome);},'sat-grammar-sprint.v1');
      const saved=await p.evaluate(()=>localStorage.getItem('sat-grammar-sprint.v1'));
      if(await card.locator('.ex-variation').count())await card.locator('.ex-variation > summary').click();
      assert.equal(await p.evaluate(()=>localStorage.getItem('sat-grammar-sprint.v1')),saved,'variation must not create an attempt');
