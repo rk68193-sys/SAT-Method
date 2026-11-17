@@ -24073,9 +24073,14 @@ function rReasoningHTML() {
   }
   /* on My room: the way in (asking the server for the latest when it is over 30 seconds old; fresh: it was just asked) */
   function crewCardHTML(fresh) {
-    if (!acctOn || CREW.missing) { return ''; }
+    var inn = acctIn();
+    /* no crews here: not switched on (no club-crew.sql, or no clubhouse at all), or switched off for this account */
+    if (!acctOn || CREW.missing || (inn && (CLUB.none || (clubOn() && CLUB.st.blocked)))) { return ''; }
     if (!fresh && clubOn() && !CREW.loading && Date.now() - CREW.at > 30000) { crewLoad(); }
-    var c = CREW.v && CREW.uid && A && CREW.uid === A.uid ? CREW.v.crew : null, goal = c ? CREW.v.goals[c.step] : 0;
+    /* signed in, before the server has said whether there is a crew: a place for the card, filled in when it answers */
+    var known = !!(CREW.v && CREW.uid && A && CREW.uid === A.uid);
+    if (inn && !known) { return '<div class="crew-card" hidden></div>'; }
+    var c = known ? CREW.v.crew : null, goal = c ? CREW.v.goals[c.step] : 0;
     return '<section class="room-share crew-card" aria-labelledby="crew-card-h"><h3 class="h3" id="crew-card-h">' + (c ? 'My crew: ' + esc(c.name) : 'Build a room with friends') + '</h3>' +
       '<p>' + (c ? (goal ? c.n + ' of ' + goal + ' study sessions toward ' + crewUp(c.step + 1, true) + '.' : 'Your crew built the whole room.') : 'In a crew, up to 8 friends study to build a room together: a study corner, then an aquarium, then the whole room under the sea.') + '</p>' +
       '<p><a class="btn ghost" href="#crew">' + (c ? 'Open my crew' : 'Find out about crews') + '</a></p></section>';
