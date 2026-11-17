@@ -85,7 +85,7 @@ async function student(b, data, opt) {
   await N.wide('decorating an empty room');
   await pn.click('#room-save'); await pn.waitForTimeout(200);
   let sn = await N.store();
-  ok(sn.s.room && sn.s.room.v === 1 && sn.s.room.st.join() === ',,' && sn.s.room.av.join() === 'violet,' && (await N.text('.room-said')) === 'Your room is saved.', 'saving an empty room keeps it, and says so: ' + JSON.stringify(sn.s.room));
+  ok(sn.s.room && sn.s.room.v === 1 && sn.s.room.st.join() === ',,' && sn.s.room.av.join() === 'violet,,,b,t2,dark' && (await N.text('.room-said')) === 'Your room is saved.', 'saving an empty room keeps it, and says so: ' + JSON.stringify(sn.s.room));
   ok(plainSave(sn, 'store'), 'everything saved is what a backup may hold');
 
   // ---------- a student with prizes: the room it starts with ----------
@@ -165,7 +165,7 @@ async function student(b, data, opt) {
   await pa.click('#room-save'); await pa.waitForTimeout(300);
   let sa = await A.store();
   const R = sa.s.room;
-  ok(R && R.v === 1 && R.w === 'theme:prize-nebula' && R.win === 'paper:stars' && R.st.join() === 'aura:glow,fx:confetti,fx:supernova' && R.sh.join() === 'streak:candle,streak:crown,streak:egg' && R.tl === 'week' && R.av.join() === 'pink,phones' && R.bd.length === 6, 'Save keeps the room: ' + JSON.stringify(R));
+  ok(R && R.v === 1 && R.w === 'theme:prize-nebula' && R.win === 'paper:stars' && R.st.join() === 'aura:glow,fx:confetti,fx:supernova' && R.sh.join() === 'streak:candle,streak:crown,streak:egg' && R.tl === 'week' && R.av.join() === 'pink,phones,,b,t2,dark' && R.bd.length === 6, 'Save keeps the room: ' + JSON.stringify(R));
   ok(sa.s.chn === 'Zoe' && plainSave(sa, 'store'), 'the name is kept in plain letters, and the save is what a backup may hold');
   await pa.reload(); await pa.waitForSelector('#v-room .room-room', { timeout: 15000 }); await pa.waitForTimeout(300);
   ok((await A.css('--room-wall')) === '#0B0820' && !!(await pa.$('.room-st2 .room-ans')) && (await A.plate()) === 'Zoe’s room | Week Strong', 'after a reload the saved room is the one shown: ' + (await A.css('--room-wall')) + ' ' + (await A.plate()) + ' ' + !!(await pa.$('.room-st2 .room-ans')));

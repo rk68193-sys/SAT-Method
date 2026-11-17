@@ -43,6 +43,17 @@ const { chromium } = require('playwright');
   await p.waitForSelector('#htry .mtx[data-mtx-s="d"]', { timeout: 15000 });
   ok((await p.$$('#htry .mpchoices.txt .mpch .mpch-c')).length === 4, 'a Math question is ready to answer, its choices in the buttons');
   ok(await p.evaluate(() => /Easy/.test(document.querySelector('#htry .mdiff').textContent)), 'and it is an Easy one');
+  /* answers and buttons lift a pixel under the pointer; one resting on the bottom edge must not set them shaking, lifted
+     off the pointer and dropping back under it (a click there may never land): how many places it takes in 30 frames */
+  const still = async sel => {
+    const at = await p.$eval(sel, e => { e.scrollIntoView({ block: 'center' }); const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.bottom - 0.5 }; });
+    await p.mouse.move(at.x, at.y); await p.waitForTimeout(300);
+    return p.$eval(sel, e => new Promise(done => { const tops = new Set(); let n = 0;
+      const f = () => { tops.add(Math.round(e.getBoundingClientRect().top * 100)); if (++n < 30) { requestAnimationFrame(f); } else { done(tops.size); } };
+      requestAnimationFrame(f); }));
+  };
+  const shake = [await still('#htry .mpch[data-k="B"]'), await still('#v-home .btn:not(.ghost)')];
+  ok(shake.join() === '1,1', 'an answer or a button that lifts under the pointer holds still with the pointer on its bottom edge (' + shake.join(', ') + ' places)');
   await p.click('#htry .mpch[data-k="B"]'); await p.waitForTimeout(250);
   const fb = await text('#htry-fb');
   ok(/^(Correct\.|Not this time\. The answer is [A-D]\.)/.test(fb) && fb.includes('How to spot it:') && fb.includes('Watch out'), 'answering shows how to spot that kind of question');

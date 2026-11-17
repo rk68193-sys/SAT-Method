@@ -302,7 +302,7 @@
   }
 
   /* ---------- my room on the server, for sharing ---------- */
-  function clubRoomLayout() { var r = store.s.room; return { w: r.w || '', win: r.win || '', st: r.st || [], sh: r.sh || [], bd: r.bd || [], tl: r.tl || '', av: r.av || [] }; }
+  function clubRoomLayout() { var r = roomGet(); return { w: r.w || '', win: r.win || '', st: r.st || [], sh: r.sh || [], bd: r.bd || [], tl: r.tl || '', av: r.av || [] }; }
   /* this device's room goes to the server when it is newer than the one there */
   function clubRoomCheck() {
     if (!clubOn() || !roomSaved()) { return; }
@@ -387,11 +387,11 @@
     L = isObj(L) ? L : {};
     var item = function (id, kinds) { var it = typeof id === 'string' ? PZ_BY[id] : null; return it && kinds.indexOf(it.kind) >= 0 ? id : ''; };
     var list = function (a, n, f) { var out = []; (Array.isArray(a) ? a : []).forEach(function (x) { var v = f(x); if (v && out.indexOf(v) < 0 && out.length < n) { out.push(v); } }); return out; };
-    var st = [], av = Array.isArray(L.av) ? L.av : [];
+    var st = [];
     for (var i = 0; i < ROOM_STANDS; i++) { st.push(item(Array.isArray(L.st) ? L.st[i] : '', ['aura', 'fx'])); }
     return { w: item(L.w, ['theme']), win: item(L.win, ['paper']), st: st, sh: list(L.sh, ROOM_SHELF, function (x) { return item(x, ['streak']); }),
       bd: list(L.bd, ROOM_BOARD, function (x) { return typeof x === 'string' && pzStickerName(x) ? x : ''; }), tl: typeof L.tl === 'string' ? L.tl : '',
-      av: [roomColor(av[0])[0], roomHat(av[1])[0]], nm: nick || '' };
+      av: roomAvClean(L.av), nm: nick || '' };
   }
   function clubVisitPage(head, body) {
     viewEl.visit.innerHTML = '<div class="wrap room-page room-visit"><header class="room-head"><p class="eyebrow">Clubhouse</p><h2 class="vtitle">' + head + '</h2>' + body + '</header></div>';
@@ -450,6 +450,7 @@
     $$('#visit-box .room-spot', viewEl.visit).forEach(function (b) { b.classList.toggle('room-on', b.getAttribute('data-room-spot') === spot); });
     if (side) { side.innerHTML = clubVisitSideHTML(M.R, M.o); }
     if (it && it.kind === 'fx') { fxRight(it.key, $('#visit-box .room-st' + m[1] + ' .room-ans', viewEl.visit)); }
+    if (spot === 'me') { roomHi($('#visit-box .room-me', viewEl.visit), M.R.av); }
   }
 
   /* ---------- taps and forms ---------- */

@@ -240,7 +240,9 @@
       }).join('') + '</div></fieldset>' +
       '<fieldset class="theme-list"><legend>Colors</legend>' + THEMES.concat(pzThemeRows()).map(function (t) {
         return '<label class="theme-opt"><input type="radio" name="theme" value="' + t[0] + '"' + (t[0] === cur ? ' checked' : '') + '><span class="theme-sw" aria-hidden="true" style="background:linear-gradient(135deg,' + t[3][0] + ' 50%,' + t[3][1] + ' 50%)"></span><span class="theme-tx"><b>' + t[1] + '</b><span>' + t[2] + '</span></span></label>';
-      }).join('') + '</fieldset><p class="theme-foot"><span class="theme-note">Saved on this device.</span><button class="btn sm" type="button" id="theme-done">Done</button></p>';
+      }).join('') + '</fieldset>' +
+      '<fieldset class="buddy-set"><legend>Study buddy</legend><label class="buddy-opt"><input type="checkbox" name="buddy"' + (palOn() ? ' checked' : '') + '><span><b>Show my study buddy</b><span>A little you in the corner of the page, to cheer you on. Change how it looks in <a href="#room">My room</a>.</span></span></label></fieldset>' +
+      '<p class="theme-foot"><span class="theme-note">Saved on this device.</span><button class="btn sm" type="button" id="theme-done">Done</button></p>';
   }
   var themeBtn = document.getElementById('theme-btn'), themePop = document.getElementById('theme-pop');
   function openTheme(open) {
@@ -254,8 +256,13 @@
     themePop.addEventListener('change', function (e) {
       if (e.target && e.target.name === 'theme') { setTheme(e.target.value); }
       if (e.target && e.target.name === 'tsize') { setSize(e.target.value); }
+      if (e.target && e.target.name === 'buddy') { palSet(e.target.checked); }
     });
-    themePop.addEventListener('click', function (e) { e.stopPropagation(); if (e.target && e.target.id === 'theme-done') { openTheme(false); focusQuiet(themeBtn); } });
+    themePop.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (e.target && e.target.id === 'theme-done') { openTheme(false); focusQuiet(themeBtn); }
+      if (e.target && e.target.closest && e.target.closest('a[href]')) { openTheme(false); }
+    });
     document.addEventListener('click', function (e) {
       if (e.target && e.target.closest && e.target.closest('.foot-theme')) { e.stopPropagation(); openTheme(true); return; }
       if (!themePop.hidden) { openTheme(false); }
