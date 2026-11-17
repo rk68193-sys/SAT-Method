@@ -5,7 +5,7 @@
 // the effect on a right answer, a timed module staying plain, reduced motion, owned themes in Appearance, an aura on Home, the
 // coin count (top bar only where it fits on one line, always on Home), the note when coins come in, the owner's link that
 // unlocks everything (tested on a copy of the page holding the hash of a throwaway code, never the real one), the Radiant tier
-// (every one of its nine arrivals, the 100-day crate, and the promised Epic never bringing one), and the page at phone widths.
+// (every one of its ten arrivals, the 100-day crate, and the promised Epic never bringing one), and the page at phone widths.
 // Each part starts from its own saved progress in a fresh browser.
 const { chromium } = require('playwright');
 const fs = require('fs'), os = require('os'), path = require('path');
@@ -16,7 +16,7 @@ let fails = 0, passes = 0;
 /* the catalog, read from the source (PZ_ITEMS in site/prizes.js): { id: kind:key, tier, series } */
 const CATALOG = (() => {
   const src = fs.readFileSync(path.join(__dirname, '..', 'site', 'prizes.js'), 'utf8'), a = src.indexOf('var PZ_ITEMS = [');
-  return [...src.slice(a, src.indexOf('].map(function (r)', a)).matchAll(/\['([^']+)', '(?:[^'\\]|\\.)*', '([crelmz])', '(theme|paper|fx|streak|aura)', '([a-z]+)'/g)].map(m => ({ id: m[3] + ':' + m[1], tier: m[2], series: m[4] }));
+  return [...src.slice(a, src.indexOf('].map(function (r)', a)).matchAll(/\['([^']+)', '(?:[^'\\]|\\.)*', '([crelmz])', '(theme|paper|fx|streak|aura|skin)', '([a-z]+)'/g)].map(m => ({ id: m[3] + ':' + m[1], tier: m[2], series: m[4] }));
 })();
 const TOTAL = CATALOG.length;
 /* the sticker pages (PZ_STK): one per series, eight stickers each */
@@ -117,6 +117,8 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     await t.p.click('#pz-wear-now'); await t.p.waitForTimeout(150);
     const st2 = await t.saved();
     if (kind === 'theme') { ok((await t.p.evaluate(() => document.documentElement.getAttribute('data-theme'))) === rec[2].split(':')[1], 'Wear it puts the theme on'); }
+    /* any crate can hold a prize from another series, a skin too, and a skin is worn by the character, in the room's record */
+    else if (kind === 'skin') { ok(!!st2.s.room && st2.s.room.av[2] === rec[2], 'Wear it puts the skin on the character: ' + JSON.stringify(st2.s.room)); }
     else { ok(st2.s.pz.eq[kind] === rec[2], 'Wear it puts the ' + kind + ' on'); }
     await t.p.click('#pz-close'); await t.p.waitForTimeout(200);
     ok(!(await t.p.$('.pz-modal')), 'Close returns to the page');
@@ -169,16 +171,16 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     await t.done('luck');
   }
 
-  /* ---------- Radiant: 0.1% of every crate, its own arrival for each of the nine, the 100-day crate, and the promise never brings one ---------- */
+  /* ---------- Radiant: 0.1% of every crate, its own arrival for each of the ten, the 100-day crate, and the promise never brings one ---------- */
   {
     const RAD = CATALOG.filter(it => it.tier === 'z');
-    ok(RAD.length === 9 && new Set(RAD.map(it => it.id.split(':')[0])).size === 5, RAD.length + ' Radiant prizes, covering all five kinds');
+    ok(RAD.length === 10 && new Set(RAD.map(it => it.id.split(':')[0])).size === 6, RAD.length + ' Radiant prizes, covering all six kinds');
     const t = await fresh((st, a, dk) => { st.s.pz = { e: { seed: 1000 } }; st.s.days = {}; for (let i = 0; i < 120; i++) { st.s.days[dk(Date.now() - i * 864e5)] = [1, 0]; } });
     await t.go('crates');
     const odds = (await t.p.textContent('.pz-ser-pencil .pz-odds')).replace(/\s+/g, ' ');
     ok(/Radiant\s*0\.19%/.test(odds) && /Mythic\s*0\.97%/.test(odds), 'every crate can give a Radiant, and study luck doubles it: ' + odds);
     const locked = await t.p.$$eval('#pz-collection .pz-item.locked', els => els.filter(e => e.querySelector('.pz-t-z')).map(e => e.textContent.replace(/\s+/g, ' ')));
-    ok(locked.length === 9 && locked.every(x => /1 in 9,000/.test(x) && /In any crate/.test(x)), 'each Radiant still to find says 1 in 9,000, in any crate: ' + (locked[0] || 'none'));
+    ok(locked.length === RAD.length && locked.every(x => /1 in 10,000/.test(x) && /In any crate/.test(x)), 'each Radiant still to find says 1 in 10,000, in any crate: ' + (locked[0] || 'none'));
     /* the 100-day crate is Mythic or better */
     const free = await t.p.$$eval('.pz-free h4', hs => hs.map(h => h.textContent));
     ok(free.some(h => /Mythic or better/.test(h)), 'the 100-day streak crate is Mythic or better: ' + free.join(' · '));
@@ -188,7 +190,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     ok(!!g && ['m', 'z'].indexOf(g[1][3]) >= 0, 'and opening it gives a Mythic or a Radiant (' + (g && g[1][3]) + ')');
     await t.p.click('#pz-close'); await t.p.waitForTimeout(200);
     /* the draw takes four random numbers in turn: the crate's id, the tier, the prize and the sticker. These make the next crate a
-       Radiant, and pick the prize: in the Pencil Case crate each Radiant is as likely as the next, so (j + 0.5) / 9 picks the j-th. */
+       Radiant, and pick the prize: in the Pencil Case crate each Radiant is as likely as the next, so (j + 0.5) / 10 picks the j-th. */
     const force = q => t.p.evaluate(q => {
       const real = Math.random;
       document.addEventListener('click', function once(e) {
@@ -215,11 +217,11 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
       const ms = Date.now() - t0, card = (await t.p.textContent('#pz-prize')).replace(/\s+/g, ' ');
       if (ms < 7400 || ms > 9800) { slow.push(RAD[j].id + ' ' + ms + ' ms'); }
       got.push(RAD[j].id.split(':')[1] + ' ' + (ms / 1000).toFixed(1) + ' s');
-      if (!/Radiant/.test(card) || !/1 in 9,000/.test(card)) { wrong.push(RAD[j].id + ' card: ' + card); }
+      if (!/Radiant/.test(card) || !/1 in 10,000/.test(card)) { wrong.push(RAD[j].id + ' card: ' + card); }
       await t.p.waitForTimeout(1300);
       await t.p.click('#pz-close'); await t.p.waitForTimeout(250);
     }
-    ok(!wrong.length, 'all nine can be won, and each card names its tier and odds' + (wrong.length ? ': ' + wrong.join('; ') : ''));
+    ok(!wrong.length, 'all ten can be won, and each card names its tier and odds' + (wrong.length ? ': ' + wrong.join('; ') : ''));
     ok(!dark.length, 'each plays its own arrival, with the card hidden until it ends' + (dark.length ? '; not drawing: ' + dark.join(', ') : ''));
     ok(!slow.length, 'and the card shows once the arrival ends, about 8 seconds after opening: ' + got.join(', ') + (slow.length ? '; off: ' + slow.join(', ') : ''));
     ok(!(await t.p.$('canvas.pz-rv')), 'nothing is left on screen after the last one');

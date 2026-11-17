@@ -815,6 +815,41 @@
     return out;
   }
 
+  /* a small figure in silhouette for Daybreak: big head, short hair or long, a small body and a cape in the wind. Each part is
+     filled on its own (the parts overlap), at sc times its size about its middle, so a gold copy a little larger makes its edge */
+  function zHero(c, x, y, h, girl, t, col, sc, a) {
+    if (!(a > 0)) { return; }
+    var hr = h * 0.27, hcy = y - h * 0.68, wv = Math.sin(t * 2.6) * h * 0.035, bt = y - h * 0.42, bb = y - h * 0.12, bw = h * 0.16;
+    c.save(); c.globalAlpha = Math.min(1, a); c.fillStyle = col;
+    c.translate(x, y - h * 0.5); c.scale(sc, sc); c.translate(-x, -(y - h * 0.5));
+    function poly(pts) { c.beginPath(); c.moveTo(pts[0][0], pts[0][1]); for (var i = 1; i < pts.length; i++) { c.lineTo(pts[i][0], pts[i][1]); } c.closePath(); c.fill(); }
+    /* the cape, behind: from the shoulders out to the right, rippling */
+    c.beginPath(); c.moveTo(x - bw * 0.7, bt + h * 0.01); c.lineTo(x + bw * 0.7, bt + h * 0.01);
+    c.quadraticCurveTo(x + bw * 2.0 + wv, bt + h * 0.1, x + bw * 2.7 + wv * 1.6, bb + h * 0.05 - wv * 0.5);
+    c.quadraticCurveTo(x + bw * 1.6, bb + h * 0.02 + wv * 0.4, x + bw * 0.6, bb); c.lineTo(x - bw * 0.6, bb); c.closePath(); c.fill();
+    if (girl) {
+      /* a high ponytail streaming out in the wind, a bow where it is tied, and a lock of hair by each cheek */
+      var tx = x + hr * 0.62, ty = hcy - hr * 0.72;
+      c.beginPath(); c.moveTo(tx - hr * 0.18, ty - hr * 0.1);
+      c.quadraticCurveTo(x + hr * 1.7 + wv, ty - hr * 0.35, x + hr * 2.25 + wv * 1.8, hcy + hr * 0.55 - wv);
+      c.quadraticCurveTo(x + hr * 1.45 + wv, hcy - hr * 0.05, tx + hr * 0.2, ty + hr * 0.3); c.closePath(); c.fill();
+      poly([[x - hr * 0.98, hcy - hr * 0.1], [x - hr * 0.74, hcy + hr * 1.08], [x - hr * 0.6, hcy + hr * 0.2]]);
+      poly([[x + hr * 0.98, hcy - hr * 0.1], [x + hr * 0.74, hcy + hr * 1.08], [x + hr * 0.6, hcy + hr * 0.2]]);
+      poly([[tx, ty], [tx - hr * 0.42, ty - hr * 0.3], [tx - hr * 0.4, ty + hr * 0.22]]);
+      poly([[tx, ty], [tx + hr * 0.36, ty - hr * 0.38], [tx + hr * 0.42, ty + hr * 0.12]]);
+    }
+    /* legs, body and arms */
+    poly([[x - bw * 0.78, bb - 1], [x - bw * 0.12, bb - 1], [x - bw * 0.14, y], [x - bw * 0.8, y]]);
+    poly([[x + bw * 0.12, bb - 1], [x + bw * 0.78, bb - 1], [x + bw * 0.8, y], [x + bw * 0.14, y]]);
+    poly([[x - bw * 0.82, bt], [x + bw * 0.82, bt], [x + bw, bb], [x - bw, bb]]);
+    poly([[x - bw * 0.8, bt + h * 0.01], [x - bw * 1.45, bb - h * 0.05], [x - bw * 1.12, bb - h * 0.01], [x - bw * 0.62, bt + h * 0.1]]);
+    poly([[x + bw * 0.8, bt + h * 0.01], [x + bw * 1.45, bb - h * 0.05], [x + bw * 1.12, bb - h * 0.01], [x + bw * 0.62, bt + h * 0.1]]);
+    /* the head, and short spiky hair on top for a boy */
+    c.beginPath(); c.arc(x, hcy, hr, 0, FX_TAU); c.fill();
+    if (!girl) { for (var i = 0; i < 5; i++) { var a0 = Math.PI * (1.14 + i * 0.15), am = a0 + 0.2, len = hr * (i === 0 || i === 4 ? 1.2 : 1.36); poly([[x + Math.cos(a0) * hr * 0.86, hcy + Math.sin(a0) * hr * 0.86], [x + Math.cos(am) * len + hr * 0.08, hcy + Math.sin(am) * len], [x + Math.cos(a0 + 0.36) * hr * 0.86, hcy + Math.sin(a0 + 0.36) * hr * 0.86]]); } }
+    c.restore();
+  }
+
   var Z_SCENE = {
     /* ---- Diamond ring: the moon slides across the sun, the day goes dark, the stars come out, and the corona opens ---- */
     diamond: function (s) {
@@ -1127,6 +1162,55 @@
       };
     },
 
+    /* ---- Daybreak: night on the hills. The sky warms from the horizon up and the sun rises behind a small figure on the hilltop,
+       its cape in the wind. The rays open, birds cross, the land lights up, and the sun on the figure's chest catches the light ---- */
+    dawn: function (s) {
+      var W = s.w, H = s.h, hy = H * 0.72, R = Math.min(W, H) * 0.085, cx = W / 2, fig = Math.min(H * 0.18, W * 0.22), ST = [], CL = [], BI = [], i, girl = false;
+      try { girl = roomGet().av[3] === 'g'; } catch (e) { girl = false; }
+      for (i = 0; i < 80; i++) { ST.push({ x: Math.random(), y: Math.random() * 0.7, p: fxR(0, 6), z: fxR(0.5, 1.4) }); }
+      for (i = 0; i < 5; i++) { CL.push({ x: fxR(-0.1, 1.1), y: fxR(0.2, 0.52), w: fxR(0.16, 0.32), h: fxR(0.012, 0.022), v: fxR(0.006, 0.016) }); }
+      for (i = 0; i < 3; i++) { BI.push({ t0: 2.1 + i * 0.25, y: fxR(0.26, 0.4), z: fxR(0.8, 1.15), p: fxR(0, 6) }); }
+      /* the far hills, and the near one with its top in the middle, where the figure stands */
+      function far(x) { return hy - H * 0.035 * (1.1 + 0.6 * Math.sin(x / W * 7.3 + 1.1) + 0.3 * Math.sin(x / W * 17 + 0.4)); }
+      function near(x) { var d = (x - cx) / (W * 0.24); return hy + H * 0.1 * (1 - Math.exp(-d * d)) + H * 0.008 * Math.sin(x / W * 23); }
+      function land(f, top) { var c = s.ctx; c.beginPath(); c.moveTo(0, top ? f(0) : H); for (var x = 0; x <= W + 8; x += 8) { c.lineTo(x, f(x)); } if (top) { return; } c.lineTo(W, H); c.closePath(); c.fill(); }
+      function mix(a0, a1, u) { return 'rgb(' + a0.map(function (v, j) { return Math.round(v + (a1[j] - v) * u); }).join(',') + ')'; }
+      return function (t, dt, k) {
+        var c = s.ctx, a = fxEnv(t, 0.5, 1.0, 99, 100) * k, p = fxEase((t - 0.9) / 2.7), sx = cx, sy = hy + R * 1.6 - (H * 0.25 + R * 1.6) * p, j;
+        /* the night, then the dawn coming up from the horizon */
+        c.globalCompositeOperation = 'lighter';
+        c.globalAlpha = 0.5 * a * (1 - 0.5 * p); c.fillStyle = '#141838'; c.fillRect(0, 0, W, H); c.globalAlpha = 1;
+        var sky = c.createLinearGradient(0, hy, 0, 0); sky.addColorStop(0, 'rgba(255,176,120,' + (0.5 * p * a) + ')'); sky.addColorStop(0.35, 'rgba(236,112,150,' + (0.3 * p * a) + ')'); sky.addColorStop(0.75, 'rgba(110,80,190,' + (0.18 * p * a) + ')'); sky.addColorStop(1, 'rgba(60,70,170,' + (0.1 * p * a) + ')');
+        c.fillStyle = sky; c.fillRect(0, 0, W, hy + 2);
+        ST.forEach(function (q) { var tw = 0.5 + 0.5 * Math.sin(t * 3 + q.p); fxGlow(c, '255,255,255', q.x * W, q.y * H, 1 + q.z * (0.7 + 0.5 * tw), Math.pow(1 - p, 2) * a * (0.3 + 0.5 * tw)); });
+        /* the rays open behind the sun and turn slowly */
+        var ray = fxEase((t - 1.7) / 1.5) * a;
+        if (ray > 0) { for (j = 0; j < 14; j++) { var ang = Math.PI + (j + 0.5) / 14 * Math.PI + Math.sin(t * 0.4) * 0.05; fxBeam(c, sx, sy, ang, Math.max(W, H) * 0.95, j % 2 ? 0.018 : 0.034, 'rgba(255,226,160,' + (0.2 * ray) + ')'); } }
+        /* the sun */
+        fxGlow(c, '255,170,110', sx, sy, R * 8, 0.38 * p * a); fxGlow(c, '255,236,190', sx, sy, R * 2.8, 0.85 * p * a);
+        c.globalCompositeOperation = 'source-over'; c.globalAlpha = Math.min(1, p * 1.6) * a;
+        var sun = c.createRadialGradient(sx, sy, 0, sx, sy, R); sun.addColorStop(0, '#FFFFFF'); sun.addColorStop(0.6, '#FFF4D6'); sun.addColorStop(1, '#FFD98A');
+        c.fillStyle = sun; c.beginPath(); c.arc(sx, sy, R, 0, FX_TAU); c.fill(); c.globalAlpha = 1;
+        /* thin clouds lit from below */
+        c.globalCompositeOperation = 'lighter';
+        CL.forEach(function (q) { var x = ((q.x + t * q.v) % 1.3 - 0.15) * W, y = q.y * H, w = q.w * W, h2 = Math.max(2, q.h * H), g = c.createLinearGradient(0, y - h2, 0, y + h2); g.addColorStop(0, 'rgba(150,110,200,' + (0.1 * p * a) + ')'); g.addColorStop(1, 'rgba(255,186,150,' + (0.5 * p * a) + ')'); c.fillStyle = g; c.beginPath(); c.ellipse(x, y, w / 2, h2, 0, 0, FX_TAU); c.fill(); });
+        /* birds cross the sky */
+        c.globalCompositeOperation = 'source-over'; c.strokeStyle = '#140E22'; c.lineCap = 'round';
+        BI.forEach(function (b) { var u = (t - b.t0) / 2.4; if (u <= 0 || u >= 1) { return; } var x = -W * 0.08 + u * W * 1.16, y = b.y * H + Math.sin(u * 7 + b.p) * H * 0.012, wl = fig * 0.09 * b.z, fl = Math.sin(t * 11 + b.p) * wl * 0.55; c.globalAlpha = Math.min(1, p * 1.4) * a; c.lineWidth = 1.6 * b.z; c.beginPath(); c.moveTo(x - wl, y - fl); c.quadraticCurveTo(x - wl * 0.4, y - fl * 0.2 - wl * 0.15, x, y); c.quadraticCurveTo(x + wl * 0.4, y - fl * 0.2 - wl * 0.15, x + wl, y - fl); c.stroke(); });
+        c.globalAlpha = 1;
+        /* the land: dark at night, warmer as the light comes, with a line of light along the hilltop once the sun is up */
+        var lit = fxEase((t - 3.0) / 0.8);
+        c.globalAlpha = a; c.fillStyle = mix([12, 9, 26], [74, 44, 82], p * 0.75); land(far); c.fillStyle = mix([6, 5, 13], [40, 26, 46], p * 0.6 + lit * 0.25); land(near); c.globalAlpha = 1;
+        if (lit > 0) { c.globalCompositeOperation = 'lighter'; land(near, true); c.strokeStyle = 'rgba(255,214,150,' + (0.55 * lit * a) + ')'; c.lineWidth = 1.6; c.stroke(); fxGlow(c, '255,200,140', cx, hy, W * 0.3, 0.16 * lit * a); }
+        /* the figure: a gold edge as the sun comes up behind it, then the sun on its chest flares */
+        var rim = fxEase((t - 2.2) / 0.9) * a;
+        if (rim > 0) { c.globalCompositeOperation = 'lighter'; zHero(c, cx, hy + 1, fig, girl, t, '#FFD98A', 1 + 5 / fig, rim * 0.9); }
+        c.globalCompositeOperation = 'source-over'; zHero(c, cx, hy + 1, fig, girl, t, '#05040B', 1, a);
+        var em = t - 3.35;
+        if (em > 0 && em < 1.1) { var e = Math.sin(Math.min(1, em / 1.1) * Math.PI), ey = hy - fig * 0.3; c.globalCompositeOperation = 'lighter'; fxGlow(c, '255,214,140', cx, ey, fig * 0.7, 0.75 * e * a); fxGlow(c, '255,255,255', cx, ey, fig * 0.14, e * a); fxStar4(c, cx, ey, fig * 0.42 * e, e * a, '#FFF7E0'); fxRing(c, cx, ey, fig * 0.12 + em * fig * 0.9, fig * 0.12 + em * fig * 0.9, '253,224,140', (1 - em / 1.1) * a, 1.6); }
+      };
+    },
+
     /* ---- Beacon: a dark lighthouse in the rain. Its lamp lights for the first time, the beam sweeps across the sea and turns to you ---- */
     'prize-beacon': function (s) {
       var sub = zSub(FX_LIVING['prize-beacon'], s.w, s.h, { lit: 1.2, speed: -1.75, ph: 6.82 });
@@ -1140,8 +1224,8 @@
 
   /* the whole arrival: the dark, the rising star, the look's own scene, its name and odds, and the flash as the prize card shows.
      Every arrival takes the same time (FX_RV.z), so the card always shows at 5.4 seconds. */
-  var Z_KIND = { theme: 'Living theme', fx: 'Right-answer effect', aura: 'Aura', paper: 'Moving paper', streak: 'Streak style' };
-  var Z_COL = { 'prize-beacon': '245,181,71', diamond: '244,114,182', fortissimo: '217,70,239', starforge: '251,146,60', kintsugi: '250,204,21', orrery: '234,179,8', rose: '165,180,252', gyre: '103,232,249', tree: '134,239,172' };
+  var Z_KIND = { theme: 'Living theme', fx: 'Right-answer effect', aura: 'Aura', paper: 'Moving paper', streak: 'Streak style', skin: 'Character skin' };
+  var Z_COL = { 'prize-beacon': '245,181,71', diamond: '244,114,182', fortissimo: '217,70,239', starforge: '251,146,60', kintsugi: '250,204,21', orrery: '234,179,8', rose: '165,180,252', gyre: '103,232,249', tree: '134,239,172', dawn: '253,224,140' };
   FX_RV.z = { dur: 6.4, show: 5.4 };
   FX_REVEAL.z = function (s, cfg, odds, it) {
     if (!it || !Z_SCENE[it.key]) { return FX_REVEAL.m(s, cfg, odds); }

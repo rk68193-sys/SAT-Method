@@ -6,7 +6,7 @@
 #   python3 -I src/site/catalog.py [src/site/prizes.js] > catalog.json
 import json, os, re, sys
 
-KINDS = ('theme', 'fx', 'aura', 'paper', 'streak')
+KINDS = ('theme', 'fx', 'aura', 'paper', 'streak', 'skin')
 
 
 class Lit:

@@ -124,7 +124,7 @@
       if (!Array.isArray(m) || typeof m[0] !== 'string' || now[m[0]]) { return; }
       var pid = m[0], p = had[pid] || { pid: pid, x: 60, y: 90, wAt: 0 };
       if (asked && LIVE.byeAt[pid] > asked) { return; }
-      p.nick = chalName(m[1]) || 'A friend'; p.c = roomColor(m[2])[0]; p.h = roomHat(m[3])[0]; p.own = m[6] === 1;
+      p.nick = chalName(m[1]) || 'A friend'; p.av = roomAvClean(Array.isArray(m[7]) && m[7].length ? m[7] : [m[2], m[3]]); p.c = p.av[0]; p.own = m[6] === 1;
       if (!(pid === LIVE.me && walking && had[pid]) && !(asked && p.wAt > asked)) { p.x = liveNum(m[4], 5, 95, 60); p.y = liveNum(m[5], 78, 98, 90); }
       now[pid] = p; order.push(pid);
       if (!first && !had[pid] && pid !== LIVE.me) { liveAnnounce(p.nick + ' came in.'); }
@@ -514,11 +514,11 @@
     if (!fl) { fl = document.createElement('div'); fl.className = 'live-floor'; fl.setAttribute('aria-hidden', 'true'); room.appendChild(fl); }
     var keep = {};
     LIVE.order.forEach(function (pid) {
-      var p = LIVE.ppl[pid], look = p.c + '|' + p.h + '|' + p.nick + '|' + (pid === LIVE.me);
+      var p = LIVE.ppl[pid], look = p.av.join() + '|' + p.nick + '|' + (pid === LIVE.me);
       keep[pid] = 1;
       if (!p.el || p.el.parentNode !== fl) { p.el = document.createElement('div'); p.el.setAttribute('data-live-pid', pid); p.look = ''; fl.appendChild(p.el); }
       if (p.look !== look) {
-        p.el.innerHTML = '<span class="live-body">' + roomAvatar([p.c, p.h]) + '</span><span class="live-tag">' + esc(pid === LIVE.me ? 'You' : p.nick) + '</span><span class="live-bub" hidden></span>';
+        p.el.innerHTML = '<span class="live-body">' + roomAvatar(p.av, { live: true }) + '</span><span class="live-tag">' + esc(pid === LIVE.me ? 'You' : p.nick) + '</span><span class="live-bub" hidden></span>';
         p.look = look;
       }
       p.el.className = 'live-fig' + (pid === LIVE.me ? ' live-you' : '') + (LIVE.mute[pid] ? ' live-muted' : '');
@@ -527,11 +527,18 @@
     $$('.live-fig', fl).forEach(function (el) { if (!keep[el.getAttribute('data-live-pid')]) { el.parentNode.removeChild(el); } });
     room.classList.toggle('live-owner-in', LIVE.order.some(function (pid) { return LIVE.ppl[pid].own; }));
   }
-  function liveFigPos(p) { if (p.el) { p.el.style.left = p.x + '%'; p.el.style.top = p.y + '%'; p.el.style.zIndex = String(10 + p.y); } }
+  function liveFigPos(p) {
+    if (!p.el) { return; }
+    var moved = p.el.style.left && (p.el.style.left !== p.x + '%' || p.el.style.top !== p.y + '%'), svg = $('.room-av', p.el);
+    p.el.style.left = p.x + '%'; p.el.style.top = p.y + '%'; p.el.style.zIndex = String(10 + p.y);
+    if (moved && svg && !FX_REDUCE) { budPlay(svg, 'walk'); clearTimeout(p.walkT); p.walkT = setTimeout(function () { budRest(svg); }, 1000); }
+  }
   /* a phrase in a bubble for 4.5 seconds; a reaction floats up and fades */
   function liveBubble(p, text, pop) {
     if (!p || !p.el) { return; }
     if (pop) {
+      var svg = $('.room-av', p.el);
+      if (svg && !FX_REDUCE) { budPlay(svg, 'hop'); }
       var f = document.createElement('span');
       f.className = 'live-pop'; f.textContent = text;
       p.el.appendChild(f);

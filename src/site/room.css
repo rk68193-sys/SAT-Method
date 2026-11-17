@@ -112,8 +112,12 @@
 .room-tag i { flex: none; width: 1.1cqw; height: 1.1cqw; border-radius: 50%; animation: none; }
 
 /* the student */
-.room-me { left: 27%; top: 70%; width: 9.5%; height: 26.5%; }
+.room-me { left: 24.5%; top: 70%; width: 14.5%; height: 26.5%; }
 .room-me .room-av { inset: 0; width: 100%; height: 100%; }
+/* what the character says when tapped */
+.room-me .room-say { left: 50%; bottom: calc(100% + 1cqw); width: max-content; max-width: 30cqw; padding: .35em .7em; border-radius: 12px; background: #FFFFFF; color: #111827; font: 700 max(12px, 1.8cqw)/1.25 var(--body); text-align: center; box-shadow: 0 2px 8px rgba(0, 0, 0, .28); transform: translateX(-50%); pointer-events: none; z-index: 2; }
+.room-me .room-say::after { content: ""; position: absolute; left: 50%; top: 100%; margin-left: -6px; border: 6px solid transparent; border-top-color: #FFFFFF; }
+.room-me .room-say[hidden] { display: none; }
 
 /* the panel beside the room */
 .room-side { display: grid; gap: .85rem; min-width: 0; padding: 1.1rem; border-radius: 18px; border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); }
@@ -167,8 +171,8 @@
 .room-tile b { font-size: .84rem; line-height: 1.2; overflow-wrap: anywhere; }
 .room-tile-note { font-size: .74rem; font-weight: 600; color: var(--muted); }
 .room-tile-empty { background: repeating-linear-gradient(135deg, var(--sunk) 0 8px, var(--card) 8px 16px); }
-.room-hats .room-tile-pic { display: grid; place-items: center; height: 64px; }
-.room-hats .room-av { height: 60px; width: auto; }
+.room-hats .room-tile-pic, .room-skins .room-tile-pic { display: grid; place-items: center; height: 72px; overflow: hidden; }
+.room-hats .room-av, .room-skins .room-av { height: 68px; width: auto; }
 .room-lbl { font-weight: 700; }
 .room-name { width: 100%; max-width: 22rem; padding: .6rem .75rem; border-radius: 10px; border: 1.5px solid var(--line-strong); background: var(--card); color: var(--ink); font: inherit; }
 .room-name:focus { outline: 3px solid var(--focus); outline-offset: 1px; }
@@ -235,7 +239,7 @@
 
 /* the figures in the room: (left, top) is where the feet are; they let taps through to the room */
 .live-floor { position: absolute; inset: 0; z-index: 9; pointer-events: none; }
-.live-fig { position: absolute; width: 9.5%; height: 26.5%; transform: translate(-50%, -100%); transition: left 1s ease-in-out, top 1s ease-in-out; }
+.live-fig { position: absolute; width: 14.5%; height: 26.5%; transform: translate(-50%, -100%); transition: left 1s ease-in-out, top 1s ease-in-out; }
 .live-body { position: absolute; inset: 0; display: block; }
 .live-body .room-av { display: block; width: 100%; height: 100%; }
 .live-tag { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); max-width: 26cqw; padding: .1em .55em; border-radius: 999px; background: rgba(17, 24, 39, .88); color: #FFFFFF; font: 700 max(11px, 1.7cqw)/1.3 var(--body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

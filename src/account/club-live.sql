@@ -226,13 +226,17 @@ begin
 end $$;
 
 -- what a page in a room shows: its topic, its own id, who is there (each [id, nickname, color, hat, x, y, 1 for the room's
--- owner]), the ids not to show (a block either way), and how many actions the student has left today
+-- owner, the whole character from the saved room: color, hat, skin, boy or girl, skin tone, hair]), the ids not to show (a
+-- block either way), and how many actions the student has left today. A page from before character skins reads the first
+-- seven and draws the color and hat.
 create or replace function public.club_live_view(u uuid) returns jsonb
 language sql stable set search_path = '' as $$
   select jsonb_build_object('ok', true, 'topic', r.topic, 'me', l.pid, 'mine', l.room_id = u,
     'members', coalesce((
       select jsonb_agg(jsonb_build_array(m.pid, coalesce(p.nickname, ''), coalesce(a.layout -> 'av' ->> 0, 'violet'),
-                                         coalesce(a.layout -> 'av' ->> 1, ''), m.x, m.y, (m.user_id = m.room_id)::int) order by m.joined_at)
+                                         coalesce(a.layout -> 'av' ->> 1, ''), m.x, m.y, (m.user_id = m.room_id)::int,
+                                         case when jsonb_typeof(a.layout -> 'av') = 'array' then a.layout -> 'av' else '[]'::jsonb end)
+                        order by m.joined_at)
       from public.club_live_leases m
       left join public.club_profiles p on p.user_id = m.user_id
       left join public.club_rooms a on a.user_id = m.user_id
