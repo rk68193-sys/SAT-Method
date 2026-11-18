@@ -5,7 +5,7 @@
 // the effect on a right answer, a timed module staying plain, reduced motion, owned themes in Appearance, an aura on Home, the
 // coin count (top bar only where it fits on one line, always on Home), the note when coins come in, the owner's link that
 // unlocks everything (tested on a copy of the page holding the hash of a throwaway code, never the real one), the Radiant tier
-// (every one of its fifteen arrivals, the 100-day crate, and the promised Epic never bringing one), and the page at phone widths.
+// (every one of its twenty-one arrivals, the 100-day crate, and the promised Epic never bringing one), and the page at phone widths.
 // Each part starts from its own saved progress in a fresh browser.
 const { chromium } = require('playwright');
 const fs = require('fs'), os = require('os'), path = require('path');
@@ -171,16 +171,16 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     await t.done('luck');
   }
 
-  /* ---------- Radiant: 0.1% of every crate, its own arrival for each of the fifteen, the 100-day crate, and the promise never brings one ---------- */
+  /* ---------- Radiant: 0.1% of every crate, its own arrival for each of the twenty-one, the 100-day crate, and the promise never brings one ---------- */
   {
     const RAD = CATALOG.filter(it => it.tier === 'z');
-    ok(RAD.length === 15 && new Set(RAD.map(it => it.id.split(':')[0])).size === 6, RAD.length + ' Radiant prizes, covering all six kinds');
-    const t = await fresh((st, a, dk) => { st.s.pz = { e: { seed: 1000 } }; st.s.days = {}; for (let i = 0; i < 120; i++) { st.s.days[dk(Date.now() - i * 864e5)] = [1, 0]; } });
+    ok(RAD.length === 21 && new Set(RAD.map(it => it.id.split(':')[0])).size === 6, RAD.length + ' Radiant prizes, covering all six kinds');
+    const t = await fresh((st, a, dk) => { st.s.pz = { e: { seed: 1500 } }; st.s.days = {}; for (let i = 0; i < 120; i++) { st.s.days[dk(Date.now() - i * 864e5)] = [1, 0]; } });
     await t.go('crates');
     const odds = (await t.p.textContent('.pz-ser-pencil .pz-odds')).replace(/\s+/g, ' ');
     ok(/Radiant\s*0\.19%/.test(odds) && /Mythic\s*0\.97%/.test(odds), 'every crate can give a Radiant, and study luck doubles it: ' + odds);
     const locked = await t.p.$$eval('#pz-collection .pz-item.locked', els => els.filter(e => e.querySelector('.pz-t-z')).map(e => e.textContent.replace(/\s+/g, ' ')));
-    ok(locked.length === RAD.length && locked.every(x => /1 in 15,000/.test(x) && /In any crate/.test(x)), 'each Radiant still to find says 1 in 15,000, in any crate: ' + (locked[0] || 'none'));
+    ok(locked.length === RAD.length && locked.every(x => /1 in 21,000/.test(x) && /In any crate/.test(x)), 'each Radiant still to find says 1 in 21,000, in any crate: ' + (locked[0] || 'none'));
     /* the 100-day crate is Mythic or better */
     const free = await t.p.$$eval('.pz-free h4', hs => hs.map(h => h.textContent));
     ok(free.some(h => /Mythic or better/.test(h)), 'the 100-day streak crate is Mythic or better: ' + free.join(' · '));
@@ -217,11 +217,11 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
       const ms = Date.now() - t0, card = (await t.p.textContent('#pz-prize')).replace(/\s+/g, ' ');
       if (ms < 7400 || ms > 9800) { slow.push(RAD[j].id + ' ' + ms + ' ms'); }
       got.push(RAD[j].id.split(':')[1] + ' ' + (ms / 1000).toFixed(1) + ' s');
-      if (!/Radiant/.test(card) || !/1 in 15,000/.test(card)) { wrong.push(RAD[j].id + ' card: ' + card); }
+      if (!/Radiant/.test(card) || !/1 in 21,000/.test(card)) { wrong.push(RAD[j].id + ' card: ' + card); }
       await t.p.waitForTimeout(1300);
       await t.p.click('#pz-close'); await t.p.waitForTimeout(250);
     }
-    ok(!wrong.length, 'all fifteen can be won, and each card names its tier and odds' + (wrong.length ? ': ' + wrong.join('; ') : ''));
+    ok(!wrong.length, 'all twenty-one can be won, and each card names its tier and odds' + (wrong.length ? ': ' + wrong.join('; ') : ''));
     ok(!dark.length, 'each plays its own arrival, with the card hidden until it ends' + (dark.length ? '; not drawing: ' + dark.join(', ') : ''));
     ok(!slow.length, 'and the card shows once the arrival ends, about 8 seconds after opening: ' + got.join(', ') + (slow.length ? '; off: ' + slow.join(', ') : ''));
     ok(!(await t.p.$('canvas.pz-rv')), 'nothing is left on screen after the last one');
@@ -470,7 +470,7 @@ const bal = st => { const pz = (st.s && st.s.pz) || {}; let n = 0; Object.values
     }
     ok(auras.length === CATALOG.filter(it => it.id.indexOf('aura:') === 0).length && !dark.length, 'all ' + auras.length + ' auras draw on their tiles' + (dark.length ? '; blank: ' + dark.join(', ') : ''));
     const bare = [];
-    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'paper:cobweb', 'paper:meteors', 'paper:ufo', 'paper:lava', 'paper:kaleido', 'paper:whale', 'paper:planes', 'paper:rain', 'paper:gears', 'paper:orbit-view', 'paper:gyre', 'paper:heraldry', 'paper:scroller', 'paper:dogfight', 'paper:castle', 'paper:overworld', 'paper:shadowplay', 'theme:prize-vellum', 'theme:prize-pocket', 'theme:prize-dungeon', 'theme:prize-vespers', 'theme:prize-stormkeep', 'theme:prize-stacks', 'theme:prize-beacon', 'theme:prize-metropolis', 'theme:prize-summit', 'theme:prize-haunted', 'theme:prize-eldritch', 'theme:prize-lanterns', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal', 'paper:cumulus', 'paper:agate', 'paper:kites', 'paper:wxmap', 'paper:cgarden', 'paper:cloudsea', 'theme:prize-opal', 'theme:prize-thunderhead', 'theme:prize-cavern', 'paper:honeycomb', 'paper:meadow', 'paper:balloons', 'paper:inkwash', 'paper:wanderers', 'theme:prize-clouds', 'theme:prize-pond', 'theme:prize-mycelium', 'theme:prize-dunes', 'theme:prize-thinice']) {
+    for (const id of ['paper:bubbles', 'paper:kelp', 'paper:fireflies', 'paper:circuit', 'paper:warp', 'paper:cobweb', 'paper:meteors', 'paper:ufo', 'paper:lava', 'paper:kaleido', 'paper:whale', 'paper:planes', 'paper:rain', 'paper:gears', 'paper:orbit-view', 'paper:gyre', 'paper:heraldry', 'paper:scroller', 'paper:dogfight', 'paper:castle', 'paper:overworld', 'paper:shadowplay', 'theme:prize-vellum', 'theme:prize-pocket', 'theme:prize-dungeon', 'theme:prize-vespers', 'theme:prize-stormkeep', 'theme:prize-stacks', 'theme:prize-beacon', 'theme:prize-metropolis', 'theme:prize-summit', 'theme:prize-haunted', 'theme:prize-eldritch', 'theme:prize-lanterns', 'theme:prize-abyss', 'theme:prize-enchanted', 'theme:prize-terminal', 'paper:cumulus', 'paper:agate', 'paper:kites', 'paper:wxmap', 'paper:cgarden', 'paper:cloudsea', 'theme:prize-opal', 'theme:prize-thunderhead', 'theme:prize-cavern', 'paper:honeycomb', 'paper:meadow', 'paper:balloons', 'paper:inkwash', 'paper:wanderers', 'theme:prize-clouds', 'theme:prize-pond', 'theme:prize-mycelium', 'theme:prize-dunes', 'theme:prize-thinice', 'paper:boats', 'paper:signals', 'paper:forest', 'paper:map', 'paper:tunnel', 'paper:maze', 'theme:prize-crossword', 'theme:prize-cutpaper', 'theme:prize-darkroom', 'theme:prize-bigtop', 'theme:prize-puzzlebox', 'theme:prize-astro']) {
       const slot = id.split(':')[0], b = await t.p.$('[data-pz-wear="' + slot + '"][data-pz-id="' + id + '"]');
       if (!b) { bare.push(id + ' (no Wear)'); continue; }
       await b.evaluate(el => el.scrollIntoView({ block: 'center' })); await b.click(); await t.p.waitForTimeout(900);
