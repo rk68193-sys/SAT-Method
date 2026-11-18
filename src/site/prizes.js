@@ -659,11 +659,12 @@
   /* a short note at the bottom when coins come in or a free crate arrives; never during a timed module. It never takes a
      tap, so a button under it still works while it shows. */
   var pzToastT = 0;
-  function pzToast(head, why, ms) {
+  /* icon: a picture to show instead of the coin (crews have their own) */
+  function pzToast(head, why, ms, icon) {
     if (document.querySelector('.view:not([hidden]) .mmwrap')) { return; }
     var el = document.getElementById('pz-toast');
     if (!el) { el = document.createElement('div'); el.id = 'pz-toast'; el.className = 'pz-toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
-    el.innerHTML = '<p class="pz-toast-in">' + PZ_COIN + '<b>' + esc(head) + '</b>' + (why ? ' <span>' + esc(why) + '</span>' : '') + '</p>';
+    el.innerHTML = '<p class="pz-toast-in">' + (icon || PZ_COIN) + '<b>' + esc(head) + '</b>' + (why ? ' <span>' + esc(why) + '</span>' : '') + '</p>';
     el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
     clearTimeout(pzToastT); pzToastT = setTimeout(function () { el.classList.remove('show'); }, ms || 3500);
   }

@@ -1,7 +1,8 @@
 # Runs the site's checks (src/README.md, "Checks") on every push and pull request, and on demand from the Actions tab.
 # "Build and data" rebuilds index.html from src/ and compares it with the one committed, then runs the checks that need no
-# browser. "Clubhouse database" tests src/account/club.sql and club-live.sql on PostgreSQL, then the page against them (live
-# rooms with three students on a stand-in for Supabase Realtime). The browser checks run in three groups at once.
+# browser. "Clubhouse database" tests src/account/club.sql, club-live.sql and club-crew.sql on PostgreSQL, then the page against
+# them (live rooms with three students on a stand-in for Supabase Realtime, and crews with four). The browser checks run in
+# three groups at once.
 # A red run means a change broke something the checks cover; the failing step's log names the check. Nothing here
 # deploys: GitHub Pages still publishes main as it is.
 name: Checks
@@ -111,6 +112,12 @@ jobs:
           PGUSER: postgres
           PGPASSWORD: postgres
         run: node src/check/live.js index.html 390
+      - name: crews with four students
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+        run: node src/check/crew.js index.html 390
 
   browser:
     name: Browser checks (${{ matrix.group }})

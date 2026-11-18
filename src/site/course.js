@@ -73,9 +73,11 @@
   });
 
   /* ---------- sets you have done: the last few finished sets of a subject, each with its score and a way to retry its misses ---------- */
-  /* store.s.sets = [{ t: time, s: 'm' | 'rw', h: name, n: answered, r: right, miss: [ids] }], newest last, the last 24 kept */
+  /* store.s.sets = [{ t: time, s: 'm' | 'rw', h: name, n: answered, r: right, miss: [ids] }], newest last, the last 24 kept.
+     ids: every question answered, for the student's crew (crew.js) */
   function setsAll() { if (!Array.isArray(store.s.sets)) { store.s.sets = []; } return store.s.sets; }
-  function setsNote(subj, name, n, right, miss) {
+  function setsNote(subj, name, n, right, miss, ids) {
+    crewSet(subj, ids);
     if (!n) { return; }
     var L = setsAll();
     L.push({ t: Date.now(), s: subj, h: String(name || 'Practice set').slice(0, 80), n: n, r: right, miss: (miss || []).slice(0, 40) });

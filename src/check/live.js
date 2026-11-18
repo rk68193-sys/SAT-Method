@@ -1,6 +1,7 @@
 /* Live rooms on the page (src/site/live.js) with three students, against the real src/account/club.sql and club-live.sql on
    PostgreSQL: joining a shared room live, figures walking where a student taps, reactions and quick phrases reaching the
-   others, who's here, mute, report, block and unblock, the owner asking someone to leave (the room moves to a new topic),
+   others, typed chat (the birth question and the rules, lines reaching the others, a line held back, typing while the
+   panel is drawn again, a student under 13 who sees no typed lines, mute), who's here, mute, report, block and unblock, the owner asking someone to leave (the room moves to a new topic),
    a student coming back, stopping sharing, the monthly limit, five quiet minutes, a hidden tab, closing the tab, a visitor
    who is signed out, a student with no nickname, and a project where club-live.sql was never run.
    The account service is a small stand-in for Supabase (sessions, the progress table, and club_* functions called the way
@@ -61,7 +62,7 @@ const APIKEY = 'test-public-key-0123456789';
   let base = '', noLive = false;
   const send = (res, code, body) => { res.writeHead(code, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); res.end(body === undefined ? '' : JSON.stringify(body)); };
   const ARGT = { p: 'jsonb', p_series: 'text', p_grant: 'text', p_code: 'text', p_name: 'text', p_on: 'boolean', p_link: 'text', p_sticker: 'text', p_id: 'bigint',
-    p_kind: 'text', p_key: 'text', p_x: 'int', p_y: 'int', p_pid: 'text', p_why: 'text', p_nick: 'text', p_active: 'boolean' };
+    p_kind: 'text', p_key: 'text', p_x: 'int', p_y: 'int', p_pid: 'text', p_why: 'text', p_nick: 'text', p_active: 'boolean', p_text: 'text', p_month: 'int', p_year: 'int' };
   const missing = fn => [404, { code: 'PGRST202', message: 'Could not find the function public.' + fn + ' in the schema cache' }];
   const rpc = (fn, args, uid) => new Promise(done => {
     const keys = Object.keys(args || {});
@@ -288,13 +289,29 @@ const APIKEY = 'test-public-key-0123456789';
     d.pidOf = nick => p.evaluate(n => { const b = document.querySelector('#live-slot [data-live-open][aria-label$=" ' + n + '"]'); return b ? b.getAttribute('data-live-open') : ''; }, nick);
     d.fig = pid => p.evaluate(id => { const f = document.querySelector('#visit-box .live-fig[data-live-pid="' + id + '"]'); return f ? { x: parseFloat(f.style.left), y: parseFloat(f.style.top), bub: (f.querySelector('.live-bub:not([hidden])') || {}).textContent || '', pop: (f.querySelector('.live-pop') || {}).textContent || '' } : null; }, pid);
     d.news = () => p.evaluate(() => (document.querySelector('.live-news') || {}).textContent || '');
+    /* the typed lines this page shows */
+    d.lines = () => p.evaluate(() => Array.from(document.querySelectorAll('#live-slot .live-lines li:not([hidden])')).map(li => li.textContent).join(' | '));
+    /* answer the birth question (a year this many years ago) and agree to the rules */
+    d.born = async years => {
+      await p.waitForSelector('#live-slot .live-age select[name="y"]', { timeout: 10000 });
+      await p.selectOption('#live-slot .live-age select[name="m"]', '5');
+      await p.selectOption('#live-slot .live-age select[name="y"]', String(new Date().getFullYear() - years));
+      await p.click('#live-slot .live-age button[type="submit"]');
+    };
     /* a tap in the room, as a share of its width and height (measured at the time: the page may have scrolled) */
     d.tap = async (fx, fy) => { const room = p.locator('#visit-box .room-room'), bb = await room.boundingBox(); await room.click({ position: { x: bb.width * fx, y: bb.height * fy } }); };
-    d.wide = async t => { const r = await p.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]); if (r[0] > r[1] + 1) { over.push(name + ' ' + t + ': ' + r[0] + '>' + r[1]); } };
+    /* sideways scrolling, with the elements that reach past the right edge */
+    d.wide = async t => {
+      const r = await p.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth,
+        Array.from(document.querySelectorAll('body *')).filter(e => e.getBoundingClientRect().right > document.documentElement.clientWidth + 1 && e.getClientRects().length)
+          .slice(0, 6).map(e => e.tagName.toLowerCase() + (e.className && typeof e.className === 'string' ? '.' + e.className.trim().split(/\s+/).join('.') : '') + ' ' + Math.round(e.getBoundingClientRect().right)).join(', ')]);
+      if (r[0] > r[1] + 1) { over.push(name + ' ' + t + ': ' + r[0] + '>' + r[1] + ' (' + r[2] + ')'); }
+    };
     d.shot = async (n, sel) => {
       if (!dir) { return; }
       const f = path.join(dir, 'live-' + width + '-' + n + '.png');
-      if (sel) { const el = await p.$(sel); if (el) { await el.screenshot({ path: f }); } return; }
+      /* a part of the page, with the bars that stay on screen put back in the page's flow, so they do not cover it */
+      if (sel) { const el = await p.$(sel); if (el) { const st = await p.addStyleTag({ content: '.top, .guide, .subj { position: static !important; }' }); await el.screenshot({ path: f }); await st.evaluate(n => n.remove()); } return; }
       await p.screenshot({ path: f });
     };
     return d;
@@ -369,6 +386,64 @@ const APIKEY = 'test-public-key-0123456789';
   ok(await A.until(() => /Quill: Nice room!/.test((document.querySelector('.live-news') || {}).textContent || '')), 'a screen reader hears “Quill: Nice room!”');
   await B.shot('room-talk', '#visit-box');
 
+  /* ---------- typed chat ---------- */
+  ok(await B.until(() => !!document.querySelector('#live-slot .live-age select[name="m"]') && /The chat rules/.test(document.querySelector('#live-slot .live-chat').textContent))
+    && !(await B.p.$('#live-text')), 'before typing, Pine is asked when they were born and shown the chat rules, with no box to type in yet');
+  await B.p.click('#live-slot .live-age button[type="submit"]');
+  ok(/Choose the month and the year/.test(await B.text('#live-slot .live-cmsg')), 'leaving the question blank asks again');
+  await B.wide('chat question'); await B.shot('chat-ask', '#live-slot');
+  await B.born(16);
+  ok(await B.until(() => document.activeElement && document.activeElement.id === 'live-text'), 'Pine agrees to the rules: the box to type in appears, with the keyboard in it');
+  await A.born(30);
+  ok(await A.until(() => !!document.querySelector('#live-text')), 'Oak answers too');
+  await C.born(11);
+  ok(await C.until(() => /Typed chat isn’t available on your account/.test(document.querySelector('#live-slot').textContent)) && !(await C.p.$('#live-text')),
+    'Quill, who is 11, is told typed chat isn’t available, and gets no box');
+  ok(sql('select string_agg(ok::text, \',\' order by ok) from public.club_chat_ok') === 'false,true,true', 'the server keeps only yes or no for each');
+  await B.p.waitForTimeout(3100);
+  await B.p.keyboard.type('Hi everyone, ready to study?');
+  ok(await B.until(() => document.querySelector('#live-slot .live-n').textContent === '28'), 'the count under the box follows the typing');
+  await B.p.keyboard.press('Enter');
+  ok(await A.until(() => /Pine: Hi everyone, ready to study\?/.test((document.querySelector('#live-slot .live-lines') || {}).textContent || ''), null, 8000),
+    'Pine presses Enter, and the line reaches Oak’s chat', () => 'Oak’s chat: ' + '');
+  ok(await A.until(id => ((document.querySelector('#visit-box .live-fig[data-live-pid="' + id + '"] .live-bub:not([hidden])') || {}).textContent || '') === 'Hi everyone, ready to study?', pPine, 5000),
+    'and a bubble over Pine on Oak’s screen');
+  ok(await B.until(() => document.getElementById('live-text').value === '' && /You: Hi everyone, ready to study\?/.test(document.querySelector('#live-slot .live-lines').textContent)),
+    'Pine’s box empties, and the line shows as You');
+  ok(await A.p.evaluate(() => document.querySelector('#live-slot .live-lines').getAttribute('role') === 'log'), 'the lines are a log a screen reader reads out');
+  await C.p.waitForTimeout(800);
+  ok(!(await C.p.$('#live-slot .live-lines')) && ((await C.fig(pPine)) || {}).bub !== 'Hi everyone, ready to study?', 'Quill sees no typed lines at all');
+  await B.p.waitForTimeout(3100);
+  await B.p.keyboard.type('text me at 555 123 4567');
+  await B.p.keyboard.press('Enter');
+  ok(await B.until(() => /That line wasn’t sent/.test(document.querySelector('#live-slot .live-cmsg').textContent), null, 8000)
+    && (await B.p.inputValue('#live-text')) === 'text me at 555 123 4567', 'a phone number is held back: Pine is told why, and the line stays in the box');
+  /* typing on while the panel is drawn again (the buttons wake 3 seconds after a line) keeps the text, the box and the keyboard */
+  await B.p.evaluate(() => { document.getElementById('live-text').dataset.same = '1'; });
+  await B.p.fill('#live-text', '');
+  await B.p.keyboard.type('Let’s do the math set');
+  await B.p.waitForTimeout(3300);
+  ok(await B.p.evaluate(() => { const t = document.getElementById('live-text'); return t.dataset.same === '1' && document.activeElement === t && t.value === 'Let’s do the math set'; }),
+    'typing while the panel is drawn again keeps the box, its text and the keyboard');
+  await B.p.keyboard.press('Enter');
+  ok(await A.until(() => /Pine: Let’s do the math set/.test(document.querySelector('#live-slot .live-lines').textContent), null, 8000) && !/555/.test(await A.lines()),
+    'Oak sees the next line, and never the one held back');
+  await A.p.fill('#live-text', 'Welcome!'); await A.p.keyboard.press('Enter');
+  ok(await B.until(() => /Oak: Welcome!/.test(document.querySelector('#live-slot .live-lines').textContent), null, 8000), 'Oak types back');
+  await B.opts('Oak');
+  await B.p.click('#live-slot [data-live-mute="' + await B.pidOf('Oak') + '"]');
+  ok(!/Welcome/.test(await B.lines()), 'Pine mutes Oak: Oak’s lines are hidden on Pine’s screen');
+  await A.p.waitForTimeout(3100);
+  await A.p.fill('#live-text', 'Can you see this?'); await A.p.keyboard.press('Enter');
+  await B.p.waitForTimeout(1500);
+  ok(!/Can you see this/.test(await B.lines()) && /Can you see this/.test(await A.lines()), 'and new ones do not show');
+  await B.p.click('#live-slot [data-live-mute="' + await B.pidOf('Oak') + '"]');
+  ok(/Oak: Welcome!/.test(await B.lines()), 'unmuted, Oak’s earlier line shows again');
+  await B.p.click('#live-slot [data-live-open="' + await B.pidOf('Oak') + '"]');
+  ok(sql("select string_agg(value, ' | ' order by id) from public.club_live_log where kind in ('chat', 'held')") === 'Hi everyone, ready to study? | contact | Let’s do the math set | Welcome! | Can you see this?',
+    'the server keeps the lines sent, and only why a line was held back', () => sql("select string_agg(kind || ':' || value, ' | ' order by id) from public.club_live_log where kind in ('chat', 'held')"));
+  await A.wide('chat'); await B.wide('chat'); await B.shot('chat', '#live-slot'); await B.shot('chat-room', '#visit-box');
+
   /* ---------- mute, report ---------- */
   await A.opts('Quill');
   await A.p.click('#live-slot [data-live-mute="' + pQuill + '"]');
@@ -381,11 +456,14 @@ const APIKEY = 'test-public-key-0123456789';
   await B.opts('Quill');
   await B.p.click('#live-slot [data-live-ask="report:' + pQuill + '"]');
   ok(/What happened\?/.test(await B.panel()) && await B.p.evaluate(() => document.activeElement && document.activeElement.hasAttribute('data-live-cancel')), 'Report asks what happened, with focus on Cancel');
+  ok(/Asked for or shared personal details/.test(await B.panel()) && /and the room’s chat/.test(await B.panel()), 'a student who can chat can also report personal details, and the room’s chat goes with it');
   await B.p.click('#live-slot [data-live-do="report:' + pQuill + ':unkind"]');
   ok(await B.until(() => /Your report went to the site’s owner/.test(document.querySelector('#live-slot').textContent)), 'Pine reports Quill and is thanked');
-  const rep = JSON.parse(sql("select row_to_json(r) from (select from_nick, about_nick, room_nick, reason, recent from public.club_reports order by id desc limit 1) r"));
+  const rep = JSON.parse(sql("select row_to_json(r) from (select from_nick, about_nick, room_nick, reason, recent, room_chat from public.club_reports order by id desc limit 1) r"));
   ok(rep.from_nick === 'Pine' && rep.about_nick === 'Quill' && rep.room_nick === 'Oak' && rep.reason === 'unkind' && rep.recent.some(x => x[1] === 'say' && x[2] === 'luck'),
     'the report keeps who, about whom, where, why, and what Quill said: ' + JSON.stringify(rep.recent.map(x => x[1] + ' ' + x[2])));
+  ok(rep.room_chat.map(x => x[1] + ': ' + x[2]).join(' | ') === 'Pine: Hi everyone, ready to study? | Pine: Let’s do the math set | Oak: Welcome! | Oak: Can you see this?',
+    'and the room’s typed lines', () => JSON.stringify(rep.room_chat));
 
   /* ---------- block and unblock (two visitors) ---------- */
   await B.opts('Quill');

@@ -155,6 +155,7 @@
     }
     clubRoomCheck();
     clubTick();
+    crewFlush();
     if (!same) { pzChip(); clubRedraw(); }
   }
   /* when the account resolves: true in club mode (the gift link waits for this) */
@@ -170,6 +171,7 @@
     CLUB.on = false; CLUB.uid = ''; CLUB.st = null; CLUB.P = null; CLUB.none = false; CLUB.wait = null; CLUB.trying = false; CLUB.next = 0; CLUB.at = 0;
     CLUB.pend = {}; CLUB.sent = {}; CLUB.nickEdit = false; CLUB.said = '';
     try { window.localStorage.removeItem(CLUB_LS); } catch (e) {}
+    crewForget();
   }
   /* the account was deleted: this device keeps the prizes it was showing, as its own record again */
   function clubHandBack() {
@@ -187,8 +189,9 @@
     if (f && /^(INPUT|TEXTAREA|SELECT)$/.test(f.tagName)) { return; }
     var y = window.scrollY;
     if (cur.view === 'crates') { buildCrates(); window.scrollTo(0, y); }
-    else if (cur.view === 'room') { if (!ROOM.edit) { roomDrawAll(); } clubShareDraw(); }
+    else if (cur.view === 'room') { if (!ROOM.edit) { roomDrawAll(); } clubShareDraw(); crewCardDraw(); }
     else if (cur.view === 'visit') { clubVisitDraw(); window.scrollTo(0, y); }
+    else if (cur.view === 'crew') { crewDraw(); window.scrollTo(0, y); }
     else if (cur.view === 'home') { acctRedraw(); }
   }
 
@@ -518,7 +521,9 @@
       btn.disabled = false;
       if (r.ok && b && b.ok) {
         CLUB.st.nick = b.nick; CLUB.nickEdit = false; CLUB.said = 'Your nickname is saved.';
-        if (cur.view === 'visit') { clubVisitDraw(); } else { clubShareDraw(); var m = $('.room-share .room-msg', viewEl.room); if (m) { focusQuiet(m); } }
+        if (cur.view === 'visit') { clubVisitDraw(); }
+        else if (cur.view === 'crew') { crewDraw(); var cn = $('h2', viewEl.crew); if (cn) { cn.setAttribute('tabindex', '-1'); focusQuiet(cn); } }
+        else { clubShareDraw(); var m = $('.room-share .room-msg', viewEl.room); if (m) { focusQuiet(m); } }
         return;
       }
       msg.textContent = !r.ok ? r.msg : b && b.why === 'taken' ? 'Someone already has that nickname. Try another.'

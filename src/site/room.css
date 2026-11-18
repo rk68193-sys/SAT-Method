@@ -235,6 +235,25 @@
 .live-msg { font-weight: 600; }
 .live-msg:empty { display: none; }
 .live-msg:focus { outline: none; }
+/* live: the parts around the chat, and the chat (live.js keeps the chat in place while the parts are drawn again) */
+.live-on .live-a, .live-on .live-b, .live-chat, .live-age { display: grid; gap: .75rem; }
+.live-chat[hidden], .live-none[hidden] { display: none; }
+.live-chat p, .live-age p { margin: 0; }
+.live-lines { list-style: none; margin: 0; padding: .55rem .7rem; display: grid; gap: .3rem; max-height: 12.5rem; overflow-y: auto; border-radius: 12px; background: var(--sunk); overflow-wrap: anywhere; line-height: 1.4; }
+.live-lines:empty { display: none; }
+.live-lines:focus-visible { outline: 3px solid var(--hl); outline-offset: 2px; }
+.live-lines li[hidden] { display: none; }
+.live-mine b { color: var(--pencil); }
+.live-type { display: flex; gap: .5rem; align-items: stretch; }
+.live-text { flex: 1 1 0%; width: 0; min-width: 0; min-height: 44px; padding: .55rem .8rem; border: 1.5px solid var(--line-strong); border-radius: 12px; background: var(--card); color: var(--ink); font: 1rem/1.3 var(--body); }
+.live-text:focus { border-color: var(--pencil); outline: 3px solid var(--hl); outline-offset: 0; }
+.live-cmsg { font-weight: 600; }
+.live-cmsg:empty { display: none; }
+.live-born { display: flex; flex-wrap: wrap; gap: .5rem .8rem; margin: 0; padding: 0; border: 0; min-width: 0; }
+.live-born legend { margin: 0 0 .4rem; padding: 0; font-weight: 700; }
+.live-born .field { flex: 1 1 8.5rem; }
+.live-rules-box { display: grid; gap: .35rem; padding: .7rem .85rem; border-radius: 12px; background: var(--sunk); }
+.live-rules { margin: 0; padding-left: 1.2rem; display: grid; gap: .3rem; list-style: disc; }
 .live-news { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* the figures in the room: (left, top) is where the feet are; they let taps through to the room */

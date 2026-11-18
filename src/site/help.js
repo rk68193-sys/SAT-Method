@@ -62,10 +62,16 @@
       ['What if someone is unkind?', 'Press <b>Options</b> next to their name. <b>Mute</b> hides what they send on your screen, <b>Block</b> keeps them out of your room and out of sight in every room, and <b>Report</b> tells the site’s owner. The room’s owner can also ask someone to leave.'],
       ['What does the owner see about me?', 'Your nickname and the sticker you leave, and when you join live, your figure and what you send. Nothing else.'],
       ['Can I have a room too?', 'Yes. Every lesson and question here is free. Studying earns coins, coins open crates, and the prizes in them decorate your own room.']]],
+    crew: ['crews', [
+      ['What is a crew?', 'A small group of friends, up to 8, who build a room together by studying. One of you makes the crew and sends the others its invite link.'],
+      ['How does my studying count?', 'Finish a practice set or a test section with at least 5 questions you haven’t counted for a crew before. Each one adds a study session to your crew’s project, up to 2 a day for each of you. 20 sessions build a study corner, 30 more an aquarium corner, and 40 more turn the whole room into a deep-sea room.'],
+      ['Who can join?', 'Anyone signed in who opens your crew’s invite link, until the crew has 8 members. Only the crew’s owner has the link. The owner can make a new link (the old one stops working), turn it off, or take someone out of the crew.'],
+      ['What does my crew see about me?', 'Your nickname, your character, and that you helped build something. Never your scores, your answers or your email.'],
+      ['Can I leave?', 'Yes, at any time, with <b>Leave the crew</b> at the bottom of the crew page. You can join again with an invite link, unless the owner took you out.']]],
     other: ['this page', [
       ['Where do I start?', 'Press <b>Home</b> at the top, then press <b>Start</b> on Reading &amp; Writing or on Math.']]]
   };
-  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge', room: 'room', visit: 'visit' };
+  var HELP_VIEW = { home: 'home', start: 'start', mstart: 'start', practice: 'setup', mprac: 'setup', drills: 'drills', mdrills: 'drills', rwmap: 'progress', mmap: 'progress', data: 'saved', account: 'saved', suggest: 'other', plan: 'other', crates: 'crates', challenge: 'challenge', room: 'room', visit: 'visit', crew: 'crew' };
   var helpEl = null, helpFrom = null;
   function helpKey() {
     var v = cur.view;

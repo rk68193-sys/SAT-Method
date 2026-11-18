@@ -320,7 +320,7 @@
       TS.noted = true;
       var kinds = {}; R.forEach(function (r) { kinds[r.it.t === 'g' || r.it.t === 'a' ? 'Grammar' : r.it.t === 'x' ? 'Linking words' : r.it.t === 'n' ? 'Notes' : r.it.t === 'v' ? 'Tables and graphs' : 'Reading'] = 1; });
       var kn = Object.keys(kinds);
-      setsNote('rw', chal ? chalSetName(chal) : kn.length === 1 ? kn[0] : 'A mix of topics', n, right, R.filter(function (r) { return !r.ok; }).map(function (r) { return r.it.id; }));
+      setsNote('rw', chal ? chalSetName(chal) : kn.length === 1 ? kn[0] : 'A mix of topics', n, right, R.filter(function (r) { return !r.ok; }).map(function (r) { return r.it.id; }), R.map(function (r) { return r.it.id; }));
     }
     var retry = review.map(function (r) { return r.it; }), st = TS.settings;
     var lineFor = function (r) {
@@ -334,7 +334,7 @@
     };
     document.getElementById('thost').innerHTML = '<p class="eyebrow">' + (chal ? 'Challenge finished' : 'Set finished · ' + (paced.length ? 'paced practice' : 'untimed learning')) + '</p><p class="dresult">' + right + ' of ' + n + ' right' + (paced.length ? ' · ' + under + ' inside the practice target' : '') + '</p>' +
       (paced.length || !chal || n < total ? '<p class="lede">' + (paced.length ? 'Average ' + clock(avg) + ' a question.' : chal ? '' : 'No speed rating in untimed learning.') + (n < total ? ' You answered ' + n + ' of ' + total + '.' : '') + '</p>' : '') +
-      (chal ? chalEndHTML(chal, rows) : '') +
+      (chal ? chalEndHTML(chal, rows) : '') + crewNoteHTML() +
       '<p class="pretty"><b>First recorded answers:</b> ' + summary.firstRight + ' of ' + summary.first + ' right. <b>Repeat answers:</b> ' + summary.repeatRight + ' of ' + summary.repeat + ' right.</p>' +
       '<p class="fine">A first recorded answer may still be familiar from a lesson. Repeats help learning; check transfer on unfamiliar questions. This set does not predict an SAT score.</p>' + (paced.length ? chartHTML(paced) : '') +
       (review.length ? '<h3 class="subh">Review misses and uncertain answers</h3><ul class="missed">' + review.map(function (r) {

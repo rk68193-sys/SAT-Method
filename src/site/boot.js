@@ -1,5 +1,5 @@
   /* =================== views, router, keyboard =================== */
-  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge', 'room', 'visit'];
+  var VIEWS = ['home', 'start', 'reading', 'grammar', 'drills', 'practice', 'lookup', 'mstart', 'mlearn', 'mfound', 'mfirst', 'mpat', 'mdes', 'mtypes', 'mstudy', 'mshort', 'mref', 'mprac', 'mdrills', 'mmap', 'rwmap', 'mhub', 'rwhub', 'plan', 'data', 'account', 'suggest', 'crates', 'challenge', 'room', 'visit', 'crew'];
   var viewEl = {};
   VIEWS.forEach(function (v) { viewEl[v] = document.getElementById('v-' + v); });
   var cur = { view: '' }, built = {}, lastToken = 'start', viewY = {}, viewTok = {};
@@ -134,6 +134,9 @@
     if (token === 'room') { showView('room'); buildRoom(); toTop(); return; }
     /* a friend's shared room (club.js) */
     if ((m = /^r-([0-9a-f]{32})$/.exec(token))) { showView('visit'); clubVisit(m[1]); toTop(); return; }
+    /* crews (crew.js): the student's own, or an invite link to one */
+    if (token === 'crew') { showView('crew'); crewOpen(''); toTop(); return; }
+    if ((m = /^c-([0-9a-f]{32})$/.exec(token))) { showView('crew'); crewOpen(m[1]); toTop(); return; }
     if (token === 'my-data' || token === 'my-data-offline') {
       showView('data'); buildData();
       if (token === 'my-data-offline') { scrollToEl(document.getElementById('my-data-offline')); } else { toTop(); }

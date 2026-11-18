@@ -626,11 +626,11 @@
       MP.noted = true;
       var sk = {}; done.forEach(function (r) { sk[MQBY[r.id].k] = 1; });
       var skn = Object.keys(sk);
-      setsNote('m', MP.chal ? chalSetName(MP.chal) : skn.length === 1 && MSK[skn[0]] ? MSK[skn[0]].name : 'A mix of topics', done.length, right, done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; }));
+      setsNote('m', MP.chal ? chalSetName(MP.chal) : skn.length === 1 && MSK[skn[0]] ? MSK[skn[0]].name : 'A mix of topics', done.length, right, done.filter(function (r) { return !r.ok; }).map(function (r) { return r.id; }), done.map(function (r) { return r.id; }));
     }
     var rows = done.map(function (r) { return { id: r.id, ok: r.ok }; });
     viewEl.mprac.innerHTML = '<div class="wrap">' + mHead(MP.chal ? 'Math · Challenge' : 'Math · Practice', done.length ? 'You got ' + right + ' of ' + done.length + ' right' : 'Set ended', done.length ? 'Average time ' + avg + ' seconds a question (the real test allows about 95).' : '') +
-      (MP.chal ? chalEndHTML(MP.chal, rows) : '') +
+      (MP.chal ? chalEndHTML(MP.chal, rows) : '') + crewNoteHTML() +
       (mt.length ? '<section class="msec"><h3 class="h3">Question types to review</h3><div class="mtypes">' + mt.map(function (t) { return mTypeCard(t, { showSkill: true }); }).join('') + '</div></section>' : (done.length ? '<p class="mpraise">Every one right. Try a harder set.</p>' : '')) +
       '<section class="msec"><h3 class="h3">Your answers</h3><ol class="mpsum">' + done.map(function (r) {
         var q = MQBY[r.id];

@@ -102,11 +102,13 @@ select t.ok(not exists (select 1 from pg_class c join pg_namespace n on n.oid = 
     and (has_table_privilege('anon', c.oid, 'select, insert, update, delete') or has_table_privilege('authenticated', c.oid, 'select, insert, update, delete'))),
   'no clubhouse table can be read or written from a page');
 select t.ok((select array_agg(p.proname::text order by p.proname) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-  where n.nspname = 'public' and p.proname like 'club\_%' and p.proname not like 'club\_live\_%' and has_function_privilege('authenticated', p.oid, 'execute'))
+  where n.nspname = 'public' and p.proname like 'club\_%' and p.proname not like 'club\_live\_%' and p.proname not like 'club\_crew\_%'
+    and has_function_privilege('authenticated', p.oid, 'execute'))
   = array['club_board_add', 'club_board_remove', 'club_claim', 'club_erase', 'club_freeze', 'club_gift', 'club_join', 'club_nick',
           'club_open', 'club_room_link', 'club_room_save', 'club_room_view', 'club_state'], 'a signed-in student can call only the page''s functions');
 select t.ok((select array_agg(p.proname::text) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-  where n.nspname = 'public' and p.proname like 'club\_%' and p.proname not like 'club\_live\_%' and has_function_privilege('anon', p.oid, 'execute')) = array['club_room_view'],
+  where n.nspname = 'public' and p.proname like 'club\_%' and p.proname not like 'club\_live\_%' and p.proname not like 'club\_crew\_%'
+    and has_function_privilege('anon', p.oid, 'execute')) = array['club_room_view'],
   'a visitor with no account can only look at a shared room');
 select t.as_user(null);
 select t.fails('select * from public.club_profiles', 'permission denied');

@@ -30,6 +30,16 @@ begin
   execute 'reset role';
   return v;
 end $$;
+-- a typed line from a student, as soon as they may send one (the 3-second wait is skipped)
+create function t.chat(u uuid, line text) returns jsonb language plpgsql as $$
+declare v jsonb;
+begin
+  update public.club_live_leases set say_at = null where user_id = u;
+  perform t.as_user(u);
+  v := public.club_live_chat(line);
+  execute 'reset role';
+  return v;
+end $$;
 grant execute on all functions in schema t to anon, authenticated;
 
 \set O '00000000-0000-0000-0002-000000000001'
@@ -98,13 +108,15 @@ select t.ok((:'v')::jsonb ->> 'me' = :'pid_o' and t.sent() = :b1, 'joining again
 \echo '    who can listen and send'
 select t.ok((select array_agg(p.proname::text order by p.proname) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
   where n.nspname = 'public' and p.proname like 'club\_live\_%' and has_function_privilege('authenticated', p.oid, 'execute'))
-  = array['club_live_block', 'club_live_blocks', 'club_live_can_listen', 'club_live_count', 'club_live_join', 'club_live_leave', 'club_live_ping',
-          'club_live_remove', 'club_live_report', 'club_live_say', 'club_live_unblock'], 'a signed-in student can call only the page''s live functions');
+  = array['club_live_block', 'club_live_blocks', 'club_live_can_listen', 'club_live_chat', 'club_live_chat_start', 'club_live_count', 'club_live_join',
+          'club_live_leave', 'club_live_ping', 'club_live_remove', 'club_live_report', 'club_live_say', 'club_live_unblock'],
+  'a signed-in student can call only the page''s live functions');
 select t.ok((select array_agg(p.proname::text) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
   where n.nspname = 'public' and p.proname like 'club\_live\_%' and has_function_privilege('anon', p.oid, 'execute')) = array['club_live_count'],
   'and a visitor with no account can only ask how many are live in a room');
 select t.as_user(null);
-select t.ok(public.club_live_count(:'link1') = '{"on": true, "n": 3}' and public.club_live_count('nothing') = '{"on": true, "n": 0}', 'which shows 3 in room 1');
+select t.ok(public.club_live_count(:'link1') = '{"on": true, "n": 3, "chat": true}' and public.club_live_count('nothing') = '{"on": true, "n": 0, "chat": true}',
+  'which shows 3 in room 1, and that typed chat is on');
 reset role;
 select t.as_user(:'P'); select t.ok(t.hears(:'topic1'), 'a student in the room can listen to it');
 select t.as_user(:'R'); select t.ok(not t.hears(:'topic1'), 'one who is not in it cannot');
@@ -117,6 +129,9 @@ select t.fails('select * from public.club_blocks', 'permission denied');
 select t.fails(format('select public.club_live_send(%L::uuid, %L, %L::jsonb)', :'O', 's', '{}'), 'permission denied');
 select t.fails(format('select public.club_live_close(%L::uuid, %L)', :'O', 'off'), 'permission denied');
 select t.fails('update public.club_live_config set live_on = false', 'permission denied');
+select t.fails('select * from public.club_chat_ok', 'permission denied');
+select t.fails('select * from public.club_chat_words', 'permission denied');
+select t.fails('select public.club_live_check(''hi'')', 'permission denied');
 
 \echo '    moves, reactions and phrases'
 select t.as_user(:'P');
@@ -158,6 +173,75 @@ update public.club_live_leases set say_at = null, walk_at = null where user_id =
 select t.as_user(:'P');
 select t.ok(public.club_live_say('react', 'wow') ->> 'why' = 'day', 'each student has 400 actions a day');
 reset role;
+update public.club_live_usage set n = 10 where user_id = :'P';
+update public.club_live_leases set say_at = null where user_id = :'P';
+
+\echo '    typed chat'
+select extract(year from public.club_day())::int as cy, extract(month from public.club_day())::int as cm,
+       extract(year from public.club_day() - interval '13 years 1 month')::int as by, extract(month from public.club_day() - interval '13 years 1 month')::int as bm \gset
+select t.as_user(:'P');
+select t.ok(public.club_live_ping() ->> 'chat' = 'ask' and public.club_live_chat('Hello') ->> 'why' = 'chat',
+  'typing waits until the student has said when they were born');
+select t.ok(public.club_live_chat_start(13, 2000) ->> 'why' = 'form' and public.club_live_chat_start(5, :cy + 1) ->> 'why' = 'form'
+  and public.club_live_chat_start(null, 2000) ->> 'why' = 'form' and public.club_live_chat_start(5, :cy - 121) ->> 'why' = 'form', 'a month and a year it could be');
+select t.ok(public.club_live_chat_start(5, :cy - 16) = '{"ok": true, "chat": "ok"}' and public.club_live_ping() ->> 'chat' = 'ok', 'a student of 13 or older can type');
+select t.ok(public.club_live_chat_start(1, :cy - 5) = '{"ok": true, "chat": "ok"}', 'and a second answer changes nothing');
+select t.as_user(:'O');
+select t.ok(public.club_live_chat_start(:bm, :by) ->> 'chat' = 'ok', 'one who was 13 by last month can type');
+select t.as_user(:'Q');
+select t.ok(public.club_live_chat_start(:cm, :cy - 13) = '{"ok": true, "chat": "no"}', 'one who may turn 13 later this month cannot');
+select t.ok(public.club_live_chat_start(1, :cy - 30) ->> 'chat' = 'no' and public.club_live_ping() ->> 'chat' = 'no'
+  and public.club_live_chat('Hello') ->> 'why' = 'chat', 'nor change the answer, or type');
+select t.as_user(:'X');
+select t.ok(public.club_live_chat_start(5, 2000) ->> 'why' = 'join', 'a student who is not in the clubhouse is not asked');
+reset role;
+select t.ok((select array_agg(ok order by ok) from public.club_chat_ok) = array[false, true, true]
+  and (select array_agg(column_name::text order by column_name) from information_schema.columns where table_schema = 'public' and table_name = 'club_chat_ok') = array['at', 'ok', 'user_id'],
+  'only whether they are 13 or older is kept, never the date');
+select t.sent() as b2 \gset
+select t.as_user(:'P');
+select public.club_live_chat(E'  Hello  \n everyone ') as v \gset
+reset role;
+select t.ok((:'v')::jsonb ->> 'ok' = 'true' and (:'v')::jsonb ->> 't' = 'Hello everyone' and ((:'v')::jsonb ->> 'left')::int = 389
+  and t.last_msg(:'topic1') = jsonb_build_array('c', jsonb_build_object('p', :'pid_p', 't', 'Hello everyone')) and t.sent() = :b2 + 4,
+  'a typed line goes to the room, tidied, and counts like a phrase');
+select t.as_user(:'P');
+select t.ok(public.club_live_chat('Again') ->> 'why' = 'wait' and public.club_live_say('react', 'clap') ->> 'why' = 'wait', 'it shares the 3-second wait with reactions and phrases');
+reset role;
+select t.ok(t.chat(:'P', 'hello EVERYONE') ->> 'why' = 'same', 'the same line twice in a minute is not sent again');
+select t.ok(t.chat(:'P', repeat('a', 161)) ->> 'why' = 'long' and t.chat(:'P', E' \n\u200B ') ->> 'why' = 'form', 'a line has 1 to 160 characters');
+select t.ok(t.chat(:'P', repeat('é', 160)) ->> 't' = repeat('é', 160) and t.chat(:'P', 'I got 1450, aiming for 1500-1550 in Niger with my therapist') ->> 'ok' = 'true',
+  'letters of any kind count as one, and scores, places and words with others inside them are fine');
+select t.as_user(:'O');
+select t.ok(public.club_live_chat('Welcome to my room!') ->> 'ok' = 'true', 'the room''s owner can type too');
+reset role;
+select t.sent() as b3 \gset
+insert into public.club_chat_words (word) values ('zorp*');
+select t.ok(t.chat(:'P', 'Text me at 555 123 4567') ->> 'why' = 'contact', 'a phone number is held back');
+select t.ok(t.chat(:'P', 'my email is pine@example.org') ->> 'why' = 'contact', 'and an email or @handle');
+select t.ok(t.chat(:'P', 'see www.example.com') ->> 'why' = 'link', 'and a link');
+select t.ok(t.chat(:'P', 'Which school do you go to?') ->> 'why' = 'contact', 'and asking where someone is');
+select t.ok(t.chat(:'P', 'You zorpy thing') ->> 'why' = 'words', 'and a word on the list');
+select t.ok(t.chat(:'P', 'Sorry') ->> 'why' = 'pause', 'after 5 held back in 10 minutes, typing waits');
+select t.ok(t.sent() = :b3 and t.last_msg(:'topic1') ->> 0 = 'c' and t.last_msg(:'topic1') -> 1 ->> 't' = 'Welcome to my room!', 'nothing held back reaches the room');
+select t.ok((select array_agg(value order by id) from public.club_live_log where user_id = :'P' and kind = 'held') = array['contact', 'contact', 'link', 'contact', 'words'],
+  'the log keeps why each line was held back, not the line');
+delete from public.club_live_log where kind = 'held';
+select t.ok(t.chat(:'P', 'z o r p') ->> 'why' = 'words' and t.chat(:'P', 'zooorrrp') ->> 'why' = 'words' and t.chat(:'P', 'Z0RP!') ->> 'why' = 'words'
+  and t.chat(:'P', E'\uFF3A\uFF2F\uFF32\uFF30') ->> 'why' = 'words', 'spaced out, stretched, with numbers or in wide letters too');
+delete from public.club_live_log where kind = 'held';
+delete from public.club_chat_words where word = 'zorp*';
+select t.as_user(:'Q');
+select t.ok(public.club_live_chat('Hi') ->> 'why' = 'chat', 'a student who cannot type sends nothing');
+reset role;
+update public.club_live_config set chat_on = false;
+select t.ok(t.chat(:'P', 'Still here') ->> 'why' = 'chat', 'switching typed chat off stops it');
+select t.as_user(:'P');
+select t.ok(public.club_live_ping() ->> 'chat' = 'off' and public.club_live_say('react', 'wow') ->> 'ok' = 'true', 'pages hear it at their next ping, and reactions still work');
+select t.as_user(null);
+select t.ok(public.club_live_count(:'link1') ->> 'chat' = 'false', 'and a room''s page can tell before joining');
+reset role;
+update public.club_live_config set chat_on = true;
 update public.club_live_usage set n = 10 where user_id = :'P';
 update public.club_live_leases set say_at = null where user_id = :'P';
 
@@ -294,11 +378,27 @@ reset role;
 select t.ok((select from_nick = 'Pine' and about_nick = 'Oak' and room_nick = 'Oak' and reason = 'unkind' and not done
                and recent -> -1 ->> 1 = 'say' and recent -> -1 ->> 2 = 'luck' and from_id = :'P' and about_id = :'O'
              from public.club_reports order by id desc limit 1), 'it keeps who sent it, about whom, where, why, and what they did last');
+select t.ok(t.chat(:'O', 'Shh, no one is looking') ->> 'ok' = 'true', 'Oak types');
+select t.ok(t.chat(:'P', 'That feels odd') ->> 'ok' = 'true', 'and Pine');
+select t.ok(t.chat(:'O', 'Text me at 555 123 4567') ->> 'why' = 'contact', 'and Oak''s next line is held back');
+select t.as_user(:'P');
+select t.ok(public.club_live_report(:'pid_o', 'personal') ->> 'ok' = 'true', 'a report can say someone asked for or shared personal details');
+reset role;
+select t.ok((select reason = 'personal' and room_chat -> -2 = jsonb_build_array(room_chat -> -2 ->> 0, 'Oak', 'Shh, no one is looking')
+               and room_chat -> -1 ->> 1 = 'Pine' and room_chat -> -1 ->> 2 = 'That feels odd'
+               and recent -> -1 ->> 1 = 'held' and recent -> -1 ->> 2 = 'contact' and recent -> -2 ->> 2 = 'Shh, no one is looking'
+             from public.club_reports order by id desc limit 1), 'it keeps every typed line in the room, and what the student had held back');
+delete from public.club_reports where reason = 'personal';
 insert into public.club_reports (from_id, reason) select :'P', 'spam' from generate_series(1, 9);
 select t.as_user(:'P');
 select t.ok(public.club_live_report(:'pid_q', 'spam') ->> 'why' = 'day', 'at most 10 reports a day');
 reset role;
 delete from public.club_reports where from_id = :'P' and about_id is null;
+update public.club_live_log set at = now() - interval '8 days' where kind = 'chat' and value = 'Hello everyone';
+select public.club_live_sweep();
+select t.ok(not exists (select 1 from public.club_live_log where value = 'Hello everyone') and exists (select 1 from public.club_live_log where kind = 'chat'),
+  'typed lines are deleted after 7 days');
+select t.ok((select schedule = '41 * * * *' and command = 'select public.club_live_sweep()' from cron.job where jobname = 'club-live-sweep'), 'by a tidy that runs every hour');
 
 \echo '    what ends live visits'
 select topic as topic1c from public.club_live_rooms where room_id = :'O' \gset
